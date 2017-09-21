@@ -1,0 +1,146 @@
+/* main layout */
+.wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.head {
+  height: 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid lightgray;
+  padding-top: 5px;
+  padding-left: 5px;
+  z-index: 1;
+}
+
+.bodywrap {
+  margin-top: 55px;
+}
+
+.center, .bodywrap {
+  height: 100%;
+}
+
+.center {
+  width: 66%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.right {
+  width: 34%;
+  height: calc(100vh - 55px);
+  top: 55px;
+  bottom: 0px;
+  right: 0px;
+  position: fixed;
+}
+
+@media all and (max-width: 767px) {
+  .right {
+      display: none;
+      position: relative;
+  }
+  .head {
+      position: relative;
+      height: auto;
+      border-bottom: none;
+  }
+  .bodywrap {
+      margin-top: 0px;
+  }
+  .center {
+      width: 100%;
+  }
+}
+/* end main layout */
+
+.GridRowSpacer {
+  height: 150px;
+}
+
+.SearchButton {
+  width: 10em;
+}
+
+/* time-picker */
+.TimePicker {
+  min-width: inherit;
+  width: 100%;
+}
+
+/* end time-picker */
+
+/* react-dates */
+.DateInput {
+  font-size: 14px !important;
+  padding: 2px !important;
+  border-radius: 5px;
+  width: 100% !important;
+}
+
+.SingleDatePicker {
+  width: 100%;
+}
+
+.SingleDatePickerInput {
+  border-radius: 5px;
+}
+
+.SingleDatePicker__picker {
+  margin-top: -20px;
+}
+
+.DateInput--with-caret::before {
+  margin-top: -20px;
+}
+
+.DateInput--with-caret::after {
+  margin-top: -20px;
+}
+
+.DateInput__display-text {
+  color: rgba(191,191,191,.87);
+}
+/* end react-dates */
+
+/* Google Autocomplete box */
+.AutocompleteBox > div {
+  width: 100%;
+  border: none;
+}
+
+.AutocompleteBox {
+  width: 100%;
+  -webkit-box-flex: inherit;
+  flex: inherit;
+  transition: none;
+}
+
+.pac-container {
+  font-family: inherit;
+}
+
+.pac-logo:after {
+  background-image: none;
+}
+
+/* End Google Autocomplete box */
+/*
+div .grid {
+  border: 1px solid black;
+}
+
+div .column {
+  border: 1px solid red;
+}
+
+div .row {
+  border: 1px solid blue;
+}
+*/

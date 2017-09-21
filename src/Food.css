@@ -1,0 +1,15 @@
+.FoodCard {
+    height: 100%;
+    /*
+    max-width: 400px !important;
+    min-width: 300px !important;
+    */
+}
+
+.FoodCardHeader {
+    margin-top: 5px !important;
+}
+
+.FoodCardGroup {
+    margin-top: 5px !important;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "semantic-ui-react-todos",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "google-maps-react": "^1.1.0",
+    "invariant": "^2.2.2",
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-addons-shallow-compare": "^15.6.0",
+    "react-dates": "^12.4.0",
+    "react-dom": "^15.6.1",
+    "react-google-autocomplete": "^1.0.13",
+    "react-redux": "^5.0.3",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.6.0",
+    "semantic-ui-react": "^0.73.0"
+  },
+  "devDependencies": {
+    "enzyme": "^2.7.1",
+    "gulp": "^3.9.1",
+    "react-scripts": "0.9.4",
+    "semantic-ui": "^2.2.9",
+    "yarn": "^0.27.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://cosmo-cleaners"
+  }
+}
