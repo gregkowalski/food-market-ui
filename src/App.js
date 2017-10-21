@@ -77,7 +77,10 @@ class App extends Component {
 
   handleAddressChange(place) {
     console.log(place);
-    this.setState({ address: place });
+    this.setState({
+        address: place,
+        mapLocation: place.geometry.location
+    });
   };
 
   handleSearch(event, data) {
@@ -170,7 +173,7 @@ class App extends Component {
             />
           </div>
           <div className='right'>
-            <MapContainer selectedItemId={this.state.hoveredFoodItemId} />
+            <MapContainer selectedItemId={this.state.hoveredFoodItemId} center={this.state.mapLocation} />
           </div>
         </div>
 

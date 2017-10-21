@@ -1,4 +1,4 @@
-export const FoodItems = [
+const FoodItemTemplates = [
     {
         id: 1,
         image: '/assets/images/veggies.jpg',
@@ -6,7 +6,8 @@ export const FoodItems = [
         header: 'Veggies',
         meta: 'Fresh vegetables. Enough said',
         description: 'Health veggies for everyone.  Try some!',
-        position: { lat: 49.287324, lng: -123.141840 },
+        // position: { lat: 49.287324, lng: -123.141840 },
+        position: { lat: 49.284911, lng: -122.867756 },
         rating: 1,
         ratingCount: 12,
         price: 3,
@@ -19,7 +20,8 @@ export const FoodItems = [
         header: 'Burger and Fries',
         meta: 'Beef burger, bun, mayo, fries, salt',
         description: 'Very tasty burger!!!',
-        position: { lat: 49.281982, lng: -123.135252 },
+        // position: { lat: 49.281982, lng: -123.135252 },
+        position: { lat: 49.283763, lng: -122.793206 },
         rating: 3,
         ratingCount: 35,
         price: 5,
@@ -32,7 +34,8 @@ export const FoodItems = [
         header: 'Salmon and Salad',
         meta: 'Wild salmon, lettuce, tomato, tiny onions',
         description: 'Healthy meal of salmon and veggies with slight dressing.',
-        position: { lat: 49.285982, lng: -123.125252 },
+        // position: { lat: 49.285982, lng: -123.125252 },
+        position: { lat: 49.248809, lng: -122.980510 },
         rating: 5,
         ratingCount: 153,
         price: 10.99,
@@ -45,7 +48,8 @@ export const FoodItems = [
         header: 'Italian Pizza',
         meta: 'Crust, cheese, olives, tomatoes, peppers, the works',
         description: 'Awesome pizza, finger lickin\' good',
-        position: { lat: 49.289982, lng: -123.124252 },
+        // position: { lat: 49.289982, lng: -123.124252 },
+        position: { lat: 49.282729, lng: -123.120738 },
         rating: 2,
         ratingCount: 36,
         price: 8.99,
@@ -58,6 +62,7 @@ export const FoodItems = [
         header: 'Xiao Long Bao',
         meta: 'Dumpling, meat, juice, MSG',
         description: 'Only an after-hours place on Fuxian South Road in Taipei may beat these.  Otherwise, they\'re the best.',
+        // position: { lat: 49.285982, lng: -123.128252 },
         position: { lat: 49.285982, lng: -123.128252 },
         rating: 5,
         ratingCount: 98,
@@ -71,7 +76,8 @@ export const FoodItems = [
         header: 'Pasta',
         meta: 'Pasta, sauce, veggies, meat',
         description: 'Some kind of pipe-like pasta that probably has a name but it eludes me. ..but buy it!!!',
-        position: { lat: 49.284982, lng: -123.130252 },
+        // position: { lat: 49.284982, lng: -123.130252 },
+        position: { lat: 49.166590, lng: -123.133569 },
         rating: 4,
         ratingCount: 46,
         price: 1
@@ -83,6 +89,7 @@ export const FoodItems = [
         header: 'Donair',
         meta: 'Donair, meat, bread, Turkish magic touch',
         description: 'Best Kebab',
+        // position: { lat: 49.282982, lng: -123.129252 },
         position: { lat: 49.282982, lng: -123.129252 },
         rating: 4,
         ratingCount: 98,
@@ -90,3 +97,36 @@ export const FoodItems = [
         availability: 3
     }
 ];
+
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function getRandomFoodItem() {
+    return FoodItemTemplates[getRandomInt(0, FoodItemTemplates.length - 1)];
+}
+
+function getRandomSign() {
+    return Math.random() > 0.5 ? 1 : -1;
+}
+
+let foodItems = [];
+for (let i = 0; i < 200; i++) {
+    var foodItemTemplate = getRandomFoodItem();
+    var foodItem = {...foodItemTemplate};
+    foodItem.id = i;
+    foodItem.rating = getRandomInt(0, 5);
+    foodItem.ratingCount = getRandomInt(0, 1500);
+    foodItem.price = getRandomInt(3, 20);
+    foodItem.availability = getRandomInt(1, 50);
+    foodItem.position = {
+        lat: foodItem.position.lat + (getRandomSign() * Math.random() * (getRandomInt(10, 20) + i)/(10000 * Math.random())),
+        lng: foodItem.position.lng + (getRandomSign() * Math.random() * (getRandomInt(10, 20) + i)/(10000 * Math.random()))
+    };
+    foodItems.push(foodItem);
+}
+
+export const FoodItems = foodItems;

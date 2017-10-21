@@ -56,6 +56,10 @@ export class MapContainer extends React.Component {
     return '/assets/images/food-icon.png';
   }
 
+  getZIndex(foodItem, selectedItemId) {
+    return (foodItem.id === selectedItemId) ? 9999 : null;
+  }
+
   render() {
     // const style = {
     //   width: '100vw',
@@ -75,6 +79,7 @@ export class MapContainer extends React.Component {
         onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
         header={foodItem.header}
         icon={this.getMarkerImage(foodItem, selectedItemId)}
+        zIndex={this.getZIndex(foodItem, selectedItemId)}
         image={foodItem.image}
         imageSmall={foodItem.imageSmall}
         rating={foodItem.rating}
@@ -86,7 +91,6 @@ export class MapContainer extends React.Component {
         position={foodItem.position} />
     );
 
-    //<div style={style}>
     return (
       <Map
         google={window.google}
@@ -101,7 +105,8 @@ export class MapContainer extends React.Component {
         scrollwheel={true}
         centerAroundCurrentLocation={true}
         gestureHandling='greedy'
-        onClick={() => this.onMapClick()}>
+        onClick={() => this.onMapClick()}
+        center={this.props.center}>
 
         {markers}
 
