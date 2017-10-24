@@ -11,6 +11,7 @@ import Autocomplete from 'react-google-autocomplete';
 import { Route } from 'react-router-dom'
 import { MapContainer } from './MapContainer'
 import Food from './Food'
+import Map from './Map'
 
 function pad(num, size) {
   var s = num + "";
@@ -77,9 +78,14 @@ class App extends Component {
 
   handleAddressChange(place) {
     console.log(place);
+    let mapZoom = Map.defaultProps.zoom;
+    if (!mapZoom) {
+      mapZoom = 13;
+    }
     this.setState({
         address: place,
-        mapLocation: place.geometry.location
+        mapLocation: place.geometry.location,
+        mapZoom: mapZoom
     });
   };
 
@@ -173,7 +179,10 @@ class App extends Component {
             />
           </div>
           <div className='right'>
-            <MapContainer selectedItemId={this.state.hoveredFoodItemId} center={this.state.mapLocation} />
+            <MapContainer
+              selectedItemId={this.state.hoveredFoodItemId}
+              center={this.state.mapLocation}
+              zoom={this.state.mapZoom} />
           </div>
         </div>
 

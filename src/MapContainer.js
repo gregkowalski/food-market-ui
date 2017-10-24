@@ -106,7 +106,9 @@ export class MapContainer extends React.Component {
         centerAroundCurrentLocation={true}
         gestureHandling='greedy'
         onClick={() => this.onMapClick()}
-        center={this.props.center}>
+        center={this.props.center}
+        zoom={this.props.zoom}
+        >
 
         {markers}
 
@@ -116,7 +118,7 @@ export class MapContainer extends React.Component {
           onClose={() => this.onInfoWindowClose()}>
 
           <a style={{ cursor: 'pointer' }} target='_blank'
-            href={'https://mojokitchn.wixsite.com/dumplings?src=' + item.header}>
+            href={'/#/foods/' + item.id}>
             <Card>
               <Card.Content>
                 <Image width='100%' shape='rounded' src={item.imageSmall} />

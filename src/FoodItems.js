@@ -60,7 +60,7 @@ const FoodItemTemplates = [
         image: '/assets/images/xiao_long_bao.jpg',
         imageSmall: '/assets/images/xiao_long_bao_small.jpg',
         header: 'Xiao Long Bao',
-        meta: 'Dumpling, meat, juice, MSG',
+        meta: 'Dumpling, meat, juice',
         description: 'Only an after-hours place on Fuxian South Road in Taipei may beat these.  Otherwise, they\'re the best.',
         // position: { lat: 49.285982, lng: -123.128252 },
         position: { lat: 49.285982, lng: -123.128252 },
@@ -98,11 +98,16 @@ const FoodItemTemplates = [
     }
 ];
 
+var seed = 1;
+function random() {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    return Math.floor(random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
 function getRandomFoodItem() {
@@ -110,22 +115,23 @@ function getRandomFoodItem() {
 }
 
 function getRandomSign() {
-    return Math.random() > 0.5 ? 1 : -1;
+    return random() > 0.5 ? 1 : -1;
 }
 
 let foodItems = [];
-for (let i = 0; i < 200; i++) {
+for (let i = 0; i < 50; i++) {
     var foodItemTemplate = getRandomFoodItem();
-    var foodItem = {...foodItemTemplate};
+    var foodItem = { ...foodItemTemplate };
     foodItem.id = i;
     foodItem.rating = getRandomInt(0, 5);
     foodItem.ratingCount = getRandomInt(0, 1500);
     foodItem.price = getRandomInt(3, 20);
     foodItem.availability = getRandomInt(1, 50);
     foodItem.position = {
-        lat: foodItem.position.lat + (getRandomSign() * Math.random() * (getRandomInt(10, 20) + i)/(10000 * Math.random())),
-        lng: foodItem.position.lng + (getRandomSign() * Math.random() * (getRandomInt(10, 20) + i)/(10000 * Math.random()))
+        lat: foodItem.position.lat + (getRandomSign() * random() * (getRandomInt(10, 20) + i) / (10000 * random())),
+        lng: foodItem.position.lng + (getRandomSign() * random() * (getRandomInt(10, 20) + i) / (10000 * random()))
     };
+    foodItem.supplierId = getRandomInt(1,6);
     foodItems.push(foodItem);
 }
 

@@ -87,9 +87,8 @@ export class Map extends React.Component {
       this.map.setZoom(this.props.zoom);
     }
     if (this.props.center !== prevProps.center) {
-      this.setState({
-        currentLocation: this.props.center
-      });
+      this.setState({ currentLocation: this.props.center });
+      this.map.setZoom(this.props.zoom);
     }
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();

@@ -23,11 +23,13 @@ class Food extends Component {
     console.log(`Clicked item id=${id}`);
   }
 
+  // href={'https://mojokitchn.wixsite.com/dumplings?src=' + item.header}
   render() {
     const cards = FoodItems.map((item) =>
       <Grid.Column mobile={16} tablet={8} computer={5} key={item.id}>
-        <a target='_blank'
-          href={'https://mojokitchn.wixsite.com/dumplings?src=' + item.header}
+        <a 
+          target='_blank'
+          href={'/#/foods/' + item.id}
           onMouseEnter={(a, b) => this.handleMouseEnter(a, b, item.id)}
           onMouseLeave={(a, b) => this.handleMouseLeave(a, b, item.id)}>
           <Card fluid className='FoodCard'>
