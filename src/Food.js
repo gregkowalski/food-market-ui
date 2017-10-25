@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Food.css'
 import { Grid, Button, Card, Image, Rating } from 'semantic-ui-react'
-import { FoodItems } from './FoodItems'
+import FoodItems from './data/FoodItems'
 
 class Food extends Component {
 

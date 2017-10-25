@@ -135,4 +135,5 @@ for (let i = 0; i < 50; i++) {
     foodItems.push(foodItem);
 }
 
-export const FoodItems = foodItems;
+const FoodItems = foodItems;
+export default FoodItems;

@@ -4,7 +4,7 @@ import { Map, Marker, InfoWindow } from './Map'
 // import { Container, Button } from 'semantic-ui-react'
 import { Image, Card, Button, Rating } from 'semantic-ui-react'
 // import {GoogleApiWrapper} from 'google-maps-react';
-import { FoodItems } from './FoodItems'
+import FoodItems from './data/FoodItems'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
