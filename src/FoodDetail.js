@@ -6,6 +6,10 @@ import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import _ from 'lodash'
+import Scroll from 'react-scroll'; // Imports all Mixins
+
+var Link = Scroll.Link;
+var Element = Scroll.Element;
 
 export default class FoodDetail extends Component {
 
@@ -18,6 +22,12 @@ export default class FoodDetail extends Component {
         // eslint-disable-next-line 
         let item = FoodItems.find(x => x.id == id);
         document.title = item.header;
+
+        Scroll.scrollSpy.update();
+    }
+
+    handleScroll() {
+        console.log('scrolling');
     }
 
     render() {
@@ -43,146 +53,160 @@ export default class FoodDetail extends Component {
             </div>
         ));
 
+        const content = (
+            <div className='detail-content'>
+
+                <Element name="overview">
+
+                    <Header as='h2'>{food.header}</Header>
+                    {food.description}
+
+                    <Divider section />
+
+                    <Header as='h2'>Availability</Header>
+                    <div>There are {food.availability} units available</div>
+
+                    <Divider section />
+
+                    <Header as='h2'>Ingredients</Header>
+                    <div>{food.meta}</div>
+
+                    <Divider section />
+
+                    <Header as='h2'>Cooking Process</Header>
+                    <div>Prepared in the most healthy way you can imagine</div>
+
+                    <Divider section />
+
+                </Element>
+
+                <Element name="cook">
+                    <Header as='h2'>Meet the chef</Header>
+                    <Image width='100%' size='medium' src={supplier.image} />
+                    <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
+                    <div><strong>City:</strong> {supplier.city}</div>
+                    {supplier.info}
+
+                    <Divider section />
+
+                </Element>
+
+                <Element name="reviews">
+
+                    <Header as='h2'>
+                        <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
+                            {food.ratingCount} Reviews
+                                            <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
+                                style={{ marginTop: '4px', marginLeft: '14px' }} />
+                            <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
+                        </div>
+                    </Header>
+
+                    <Divider section />
+
+                    <Grid columns={2} className='rating-grid' stackable>
+                        <Grid.Row>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Accuracy</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Location</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Quality</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Healthy</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Fresh</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Taste</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
+                    <Divider hidden />
+
+                    {reviews}
+
+                </Element>
+            </div>
+        );
+
         const { contextRef } = this.state;
         return (
+            <div class='flex-simple'>
+                <Image className='food-image' src={food.image} />
+                <div className='detail-head-main'>
+                    <div className="flex-container">
+                        <div className="flex-item-main">
+                            <Link activeClass="content-link-active" className='content-link' to="overview"
+                                spy={true} smooth={true} container={document}
+                                offset={-85} duration={500}>
+                                Overview
+                            </Link>
 
-            <div className='wrap'>
+                            <Link activeClass="content-link-active" className='content-link' to="cook"
+                                spy={true} smooth={true} container={document}
+                                offset={-85} duration={500}>
+                                The Chef
+                            </Link>
 
-                <div className='head'>
-                    <Image width='85%' style={{ maxHeight: '400px' }} shape='rounded' src={food.image} centered />
-                </div>
-
-                <div className='bodywrap'>
-                    <div className='center'>
-
-                        <Grid stackable>
-                            <Grid.Row columns={1}>
-                                <Grid.Column>
-                                    <Image width='85%' style={{ maxHeight: '400px' }} shape='rounded' src={food.image} centered />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row columns={2}>
-
-                                <Grid.Column style={{ marginLeft: '10%' }}>
-                                    <div ref={this.handleContextRef}>
-
-                                        <Header as='h2'>{food.header}</Header>
-                                        {food.description}
-
-                                        <Divider section />
-
-                                        <Header as='h2'>Availability</Header>
-                                        <div>There are {food.availability} units available</div>
-
-                                        <Divider section />
-
-                                        <Header as='h2'>Ingredients</Header>
-                                        <div>{food.meta}</div>
-
-                                        <Divider section />
-
-                                        <Header as='h2'>Cooking Process</Header>
-                                        <div>Prepared in the most healthy way you can imagine</div>
-
-                                        <Divider section />
-
-                                        <Header as='h2'>
-                                            <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                                                {food.ratingCount} Reviews
-                                    <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
-                                                    style={{ marginTop: '4px', marginLeft: '14px' }} />
-                                                <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
-                                            </div>
-                                        </Header>
-
-                                        <Divider section />
-
-                                        <Grid columns={4} className='rating-grid'>
-                                            <Grid.Row className='rating-row'>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Accuracy</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Location</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                            </Grid.Row>
-                                            <Grid.Row className='rating-row'>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Quality</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Healthiness</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                            </Grid.Row>
-                                            <Grid.Row className='rating-row'>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Accuracy</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Location</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Freshness</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                                <Grid.Column><div style={{ fontSize: 'large' }}>Taste</div></Grid.Column>
-                                                <Grid.Column><Rating disabled={true} maxRating={5} rating={food.rating} /></Grid.Column>
-                                            </Grid.Row>
-                                        </Grid>
-
-                                        <Divider hidden />
-
-                                        {reviews}
-
-                                        <Header as='h2'>Meet the chef</Header>
-                                        <Image width='100%' size='medium' shape='rounded' src={supplier.image} />
-                                        <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
-                                        <div><strong>City:</strong> {supplier.city}</div>
-                                        {supplier.info}
-
-                                        <Divider section />
-
-                                        <Rail position='right'>
-                                            <Sticky context={contextRef}>
-                                                <Card>
-                                                    <Card.Content>
-                                                        <Card.Header className='FoodCardHeader'>
-                                                            <div style={{ float: 'left' }}>${food.price} CAD</div>
-                                                            <div style={{ clear: 'left' }}></div>
-                                                            <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                                                                <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
-                                                                    style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                                                <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
-                                                            </div>
-                                                        </Card.Header>
-                                                        <Divider section />
-                                                        <Button fluid color='black' onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
-                                                        <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
-                                                    </Card.Content>
-                                                </Card>
-                                            </Sticky>
-                                        </Rail>
-                                    </div>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-
+                            <Link activeClass="content-link-active" className='content-link' to="reviews"
+                                spy={true} smooth={true} container={document}
+                                offset={-85} duration={500}>
+                                Reviews
+                            </Link>
+                        </div>
+                        <div className="flex-item-right">
+                        </div>
+                        <div className='detail-head-right'>
+                        </div>
                     </div>
-                    <div className='right'>
-                        <Card>
-                            <Card.Content>
-                                <Card.Header className='FoodCardHeader'>
-                                    <div style={{ float: 'left' }}>${food.price} CAD</div>
-                                    <div style={{ clear: 'left' }}></div>
-                                    <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                                        <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
-                                            style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                        <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
-                                    </div>
-                                </Card.Header>
-                                <Divider section />
-                                <Button fluid color='black' onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
-                                <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
-                            </Card.Content>
-                        </Card>
+                </div>
+                <div className="flex-container">
+                    <div className="flex-item-main">
+                        {content}
+                    </div>
+                    <div className="flex-item-right">
+                        <div className='detail-head-right'>
+                            <Card>
+                                <Card.Content>
+                                    <Card.Header className='OrderHeader'>
+                                        <div style={{ float: 'left' }}>${food.price} CAD</div>
+                                        <div style={{ clear: 'left' }}></div>
+                                        <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
+                                            <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
+                                                style={{ marginTop: '4px', marginLeft: '-2px' }} />
+                                            <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
+                                        </div>
+                                    </Card.Header>
+                                    <Divider section />
+                                    <Button fluid color='black' onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
+                                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
+                                </Card.Content>
+                            </Card>
+                        </div>
                     </div>
                 </div>
 
-
+                <div className='detail-footer'>
+                    <Button className='detail-footer-button' color='black'
+                        onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
+                    <div className='detail-footer-text'>You won't be charged yet</div>
+                </div>
             </div>
         )
     }

@@ -14,6 +14,7 @@ import mytest from './test'
 
 const store = createStore(reducer)
 
+
 render(
   <Provider store={store}>
     <HashRouter>
