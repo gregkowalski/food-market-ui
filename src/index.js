@@ -8,6 +8,7 @@ import FoodDetail from './FoodDetail'
 import reducer from './reducers'
 import './index.css'
 import '../semantic/dist/semantic.min.css';
+import Order from './Order'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import mytest from './test'
@@ -23,7 +24,8 @@ render(
         <Route path='/search' component={App} />
         <Route path='/food' component={Food} />
         <Route path='/test' component={mytest} />
-        <Route path='/foods/:id' component={FoodDetail} />
+        <Route path='/foods/:id/order' component={Order} />
+        <Route path='/foods/:id' exact component={FoodDetail} />
       </Switch>
     </HashRouter>
   </Provider>,

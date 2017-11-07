@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
 import { Button, Card, Image, Rating } from 'semantic-ui-react'
-import { Grid, Header, Rail, Sticky, Divider, Feed } from 'semantic-ui-react'
+import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import _ from 'lodash'
 import Scroll from 'react-scroll'; // Imports all Mixins
 
-var Link = Scroll.Link;
-var Element = Scroll.Element;
+var ScrollLink = Scroll.Link;
+var ScrollElement = Scroll.Element;
 
 export default class FoodDetail extends Component {
 
     state = {};
 
-    handleContextRef = contextRef => this.setState({ contextRef });
+    getFoodItemId() {
+        return this.props.match.params.id;
+    }
 
     componentDidMount() {
-        let id = this.props.match.params.id;
+        let id = this.getFoodItemId();
         // eslint-disable-next-line 
         let item = FoodItems.find(x => x.id == id);
         document.title = item.header;
@@ -26,12 +29,8 @@ export default class FoodDetail extends Component {
         Scroll.scrollSpy.update();
     }
 
-    handleScroll() {
-        console.log('scrolling');
-    }
-
     render() {
-        let id = this.props.match.params.id;
+        let id = this.getFoodItemId();
         // eslint-disable-next-line 
         let food = FoodItems.find(x => x.id == id);
         // eslint-disable-next-line 
@@ -56,7 +55,7 @@ export default class FoodDetail extends Component {
         const content = (
             <div className='detail-content'>
 
-                <Element name="overview">
+                <ScrollElement name="overview">
 
                     <Header as='h2'>{food.header}</Header>
                     {food.description}
@@ -78,9 +77,9 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
-                </Element>
+                </ScrollElement>
 
-                <Element name="cook">
+                <ScrollElement name="cook">
                     <Header as='h2'>Meet the chef</Header>
                     <Image width='100%' size='medium' src={supplier.image} />
                     <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
@@ -89,9 +88,9 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
-                </Element>
+                </ScrollElement>
 
-                <Element name="reviews">
+                <ScrollElement name="reviews">
 
                     <Header as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
@@ -141,34 +140,33 @@ export default class FoodDetail extends Component {
 
                     {reviews}
 
-                </Element>
+                </ScrollElement>
             </div>
         );
 
-        const { contextRef } = this.state;
         return (
             <div class='flex-simple'>
                 <Image className='food-image' src={food.image} />
                 <div className='detail-head-main'>
                     <div className="flex-container">
                         <div className="flex-item-main">
-                            <Link activeClass="content-link-active" className='content-link' to="overview"
+                            <ScrollLink activeClass="content-link-active" className='content-link' to="overview"
                                 spy={true} smooth={true} container={document}
                                 offset={-85} duration={500}>
                                 Overview
-                            </Link>
+                            </ScrollLink>
 
-                            <Link activeClass="content-link-active" className='content-link' to="cook"
+                            <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
                                 spy={true} smooth={true} container={document}
                                 offset={-85} duration={500}>
                                 The Chef
-                            </Link>
+                            </ScrollLink>
 
-                            <Link activeClass="content-link-active" className='content-link' to="reviews"
+                            <ScrollLink activeClass="content-link-active" className='content-link' to="reviews"
                                 spy={true} smooth={true} container={document}
                                 offset={-85} duration={500}>
                                 Reviews
-                            </Link>
+                            </ScrollLink>
                         </div>
                         <div className="flex-item-right">
                         </div>
@@ -194,7 +192,11 @@ export default class FoodDetail extends Component {
                                         </div>
                                     </Card.Header>
                                     <Divider section />
-                                    <Button fluid color='black' onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
+
+                                    <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                                        <Button fluid color='black'>Order</Button>
+                                    </RouterLink>
+
                                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
                                 </Card.Content>
                             </Card>
@@ -203,8 +205,9 @@ export default class FoodDetail extends Component {
                 </div>
 
                 <div className='detail-footer'>
-                    <Button className='detail-footer-button' color='black'
-                        onClick={() => { console.log('button clicked item=' + food.id) }}>Order</Button>
+                    <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                        <Button fluid color='black' className='detail-footer-button'>Order</Button>
+                    </RouterLink>
                     <div className='detail-footer-text'>You won't be charged yet</div>
                 </div>
             </div>

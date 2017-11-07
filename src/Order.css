@@ -1,0 +1,10 @@
+.align-left {
+    text-align:left;
+    padding:0;
+    margin:0;
+    position:absolute;
+}
+
+.align-right{
+  text-align: right;
+}

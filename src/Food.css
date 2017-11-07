@@ -4,6 +4,15 @@
     max-width: 400px !important;
     min-width: 300px !important;
     */
+    position: relative;
+}
+
+.FoodCard a {
+    color: inherit;
+}
+
+.FoodCard a:hover {
+    color: inherit;
 }
 
 .FoodCardHeader {
@@ -12,4 +21,10 @@
 
 .FoodCardGroup {
     margin-top: 5px !important;
+}
+
+.OrderButton {
+    position: absolute;
+    bottom: 0px;
+    height: 2.5em;
 }

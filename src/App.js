@@ -83,9 +83,9 @@ class App extends Component {
       mapZoom = 13;
     }
     this.setState({
-        address: place,
-        mapLocation: place.geometry.location,
-        mapZoom: mapZoom
+      address: place,
+      mapLocation: place.geometry.location,
+      mapZoom: mapZoom
     });
   };
 
