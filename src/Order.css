@@ -8,3 +8,21 @@
 .align-right{
   text-align: right;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.order-address > div {
+  width: 100%;
+  border: none;
+}
+
+.order-address {
+  width: 100%;
+  -webkit-box-flex: inherit;
+  flex: inherit;
+  transition: none;
+}
