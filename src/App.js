@@ -4,7 +4,7 @@
 // import VisibleTodoList from './containers/VisibleTodoList'
 import React, { Component } from 'react'
 import './App.css'
-import { Button, Dropdown, Grid } from 'semantic-ui-react'
+import { Button, Dropdown, Grid, Header } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Autocomplete from 'react-google-autocomplete';
@@ -112,18 +112,16 @@ class App extends Component {
       <div className='wrap'>
 
         <div className='head'>
-          <Grid stackable>
+          <Header as='h1' style={{textAlign: 'center', marginTop: '0.1em'}}>Food Marketplace</Header>
+          <Grid stackable style={{display: 'none'}}>
 
             <Grid.Row columns={5} verticalAlign='bottom'>
               <Grid.Column>
                 {/* <Input fluid placeholder='Street Address...' onChange={this.handleAddressChange} /> */}
                 <div className="AutocompleteBox ui input">
-                  <Autocomplete className="AutocompleteBox"
-                    onPlaceSelected={(place) => {
-                      this.handleAddressChange(place);
-                    }}
+                  <Autocomplete className="AutocompleteBox" onPlaceSelected={(place) => { this.handleAddressChange(place); }}
                     types={['address']}
-                  //componentRestrictions={{ country: "ru" }}
+                    //componentRestrictions={{ country: "ru" }}
                   />
                 </div>
               </Grid.Column>

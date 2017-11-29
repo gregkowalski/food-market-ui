@@ -6,6 +6,7 @@
     "aws-sdk": "^2.149.0",
     "google-maps-react": "^1.1.0",
     "invariant": "^2.2.2",
+    "libphonenumber-js": "^0.4.42",
     "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",

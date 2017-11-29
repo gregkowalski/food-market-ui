@@ -10,6 +10,7 @@ import './index.css'
 import '../semantic/dist/semantic.min.css';
 import Order from './Order'
 import OrderSuccess from './OrderSuccess'
+import OrderError from './OrderError'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
 // import mytest from './test'
@@ -26,6 +27,7 @@ render(
         {/* <Route path='/food' component={Food} /> */}
         {/* <Route path='/test' component={mytest} /> */}
         <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
+        <Route path='/foods/:id/orderError' component={OrderError} />
         <Route path='/foods/:id/order' component={Order} />
         <Route path='/foods/:id' exact component={FoodDetail} />
       </Switch>
