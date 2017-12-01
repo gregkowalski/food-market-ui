@@ -6,7 +6,6 @@ import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
-import _ from 'lodash'
 import Scroll from 'react-scroll'; // Imports all Mixins
 
 var ScrollLink = Scroll.Link;
@@ -145,7 +144,7 @@ export default class FoodDetail extends Component {
         );
 
         return (
-            <div class='flex-simple'>
+            <div>
                 <Image className='food-image' src={food.image} />
                 <div className='detail-head-main'>
                     <div className="flex-container">

@@ -30,11 +30,6 @@
     padding-bottom: 2px;
 }
 
-.flex-simple {
-    display: -webkit-flex;
-    display: flex;
-}
-
 .flex-container {
     /* background-color: red; */
     display: -webkit-flex;
@@ -102,12 +97,13 @@
 
 .detail-footer-button {
     width: 80%;
+    height: 3em;
 }
 
 .detail-footer-text {
     margin-top: 10px;
     color: gray;
-    font-size: large;
+    font-size: medium;
 }
 
 .detail-rating {

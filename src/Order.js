@@ -7,10 +7,10 @@ import Suppliers from './data/Suppliers'
 import AWS from 'aws-sdk'
 import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import { Route } from 'react-router-dom'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-//import { parse as parsePhone, format as formatPhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 
 export default class Order extends React.Component {
 
@@ -370,7 +370,7 @@ export default class Order extends React.Component {
         let userEmail = this.createEmail(this.state.email, subject, orderText);
         var userSendPromise = new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(userEmail).promise();
 
-        return [systemSendPromise, userSendPromise];
+        return { systemSendPromise, userSendPromise };
     }
 
     createEmail(toAddress, subject, body) {
@@ -598,8 +598,6 @@ export default class Order extends React.Component {
                             onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
 
                         <OrderFormButton
-                            successLink="orderSuccess"
-                            errorLink="orderError"
                             style={{ marginTop: '20px', height: '4em' }} fluid color='black'
                             disabled={!this.state.acceptedTerms}
                             onClick={() => this.handleOrderButtonClick()}>
@@ -614,6 +612,9 @@ export default class Order extends React.Component {
 
 class OrderFormButton extends React.Component {
     render() {
+
+        const successLink = "orderSuccess";
+        const errorLink = "orderError"
         return (
             <Route render={({ history }) => {
                 let props = Object.assign({}, this.props);
@@ -623,34 +624,34 @@ class OrderFormButton extends React.Component {
                 return (
                     <Form.Button {...props}
                         onClick={(e) => {
+
                             let promises = this.props.onClick(e);
                             if (!promises)
                                 return;
 
-                            let successLink = this.props.successLink;
-                            let errorLink = this.props.errorLink;
-                            // Handle promise's fulfilled/rejected states
-                            Promise.all(promises)
-                                .then(function (results) {
-                                    for (let result in results) {
-                                        console.log(`email sent: ${result.MessageId}`);
-                                    }
-                                    if (successLink) {
-                                        history.push(successLink);
-                                    }
-                                }).catch(
-                                function (err) {
-                                    console.error(err, err.stack);
-                                    if (errorLink) {
-                                        history.push(errorLink);
-                                    }
+                            let { systemSendPromise, userSendPromise } = promises;
+                            systemSendPromise
+                                .then(result1 => {
+                                    console.log(`system email sent: ${result1.MessageId}`);
+
+                                    userSendPromise
+                                        .then(result2 => {
+                                            console.log(`user email sent: ${result2.MessageId}`);
+                                            history.push(`${successLink}?sentCount=2`);
+                                        })
+                                        .catch(err2 => {
+                                            console.error(err2, err2.stack);
+                                            history.push(`${successLink}?sentCount=1`);
+                                        })
+                                }).catch(err1 => {
+                                    console.error(err1, err1.stack);
+                                    history.push(errorLink);
                                 });
                         }}>
                         {this.props.children}
                     </Form.Button>
                 )
-            }
-            }
+            }}
             />
         )
     }

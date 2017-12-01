@@ -26,3 +26,18 @@ input[type=number]::-webkit-outer-spin-button {
   flex: inherit;
   transition: none;
 }
+
+/* .DateInput__display-text--focused {
+  background: #eeeeee !important;
+  border-color: lightgray !important;
+  color: black !important;
+}
+
+.CalendarDay--selected {
+  background: darkgray !important;
+  border: 1px double darkgray !important;
+}
+
+.DayPickerKeyboardShortcuts__show--bottom-right {
+  border-right: 33px solid darkgray !important;
+} */
