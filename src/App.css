@@ -11,13 +11,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: white;
-  border-bottom: 1px solid lightgray;
-  padding-top: 5px;
-  padding-left: 5px;
+  background: rgb(0, 255, 191); 
+  border-bottom: 2px solid rgb(116, 116, 116);
+  box-shadow: 0px 3px 5px rgba(85, 85, 85, 0.603);
   z-index: 1;
 }
-
+  
 .bodywrap {
   margin-top: 55px;
 }
@@ -41,21 +40,46 @@
   position: fixed;
 }
 
+.link {
+  color:  rgb(0, 0, 0);
+  text-decoration: none;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.link:hover {
+  color: rgb(63, 63, 63);
+}
+
+#content-desktop {
+  display: block;
+}
+  
+.head-content {
+  width: 100%;
+  height: 100%;
+  padding-left: 7px;
+  padding-top: 15px;
+}
+
+.head-logo {
+  display: inline-flex;
+}
+
 @media all and (max-width: 767px) {
   .right {
       display: none;
-      position: relative;
-  }
-  .head {
-      position: relative;
-      height: auto;
-      border-bottom: none;
-  }
-  .bodywrap {
-      margin-top: 0px;
   }
   .center {
       width: 100%;
+  }
+
+  #content-desktop {
+    display: none;
+  }
+    
+  .head-content {
+    text-align: center;
   }
 }
 /* end main layout */
@@ -131,6 +155,8 @@
 }
 
 /* End Google Autocomplete box */
+
+
 /*
 div .grid {
   border: 1px solid black;

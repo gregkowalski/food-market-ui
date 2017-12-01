@@ -36,7 +36,9 @@ class Food extends Component {
             onMouseLeave={(a, b) => this.handleMouseLeave(a, b, item.id)}>
             <Item style={{marginBottom: '3em'}}>
               <Item.Content>
-                <Image width='100%' shape='rounded' src={item.image}/>
+                <div className='FoodImageBox'>
+                  <Image className='FoodImage' src={item.image}/>
+                </div>
                 <Item.Header className='FoodCardHeader'>
                   <div style={{ float: 'left' }}>{item.header}</div>
                   <div style={{ float: 'right' }}>${item.price}</div>

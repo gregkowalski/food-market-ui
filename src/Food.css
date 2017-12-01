@@ -1,9 +1,5 @@
 .FoodCard {
     height: 100%;
-    /*
-    max-width: 400px !important;
-    min-width: 300px !important;
-    */
     position: relative;
 }
 
@@ -27,4 +23,27 @@
     position: absolute;
     bottom: 0px;
     height: 2.5em;
+}
+
+.FoodImage {
+    width: 100%;
+}
+
+@media all and (min-width: 768px) {
+    .FoodImageBox {
+        overflow: hidden;
+    }
+
+    .FoodImage {
+        height: 100%;
+        -moz-transition: all 0.2s;
+        -webkit-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    .FoodImage:hover {
+        -moz-transform: scale(1.03);
+        -webkit-transform: scale(1.03);
+        transform: scale(1.03);
+    }
 }
