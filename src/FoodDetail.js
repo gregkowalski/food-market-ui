@@ -35,7 +35,11 @@ export default class FoodDetail extends Component {
         // eslint-disable-next-line 
         let supplier = Suppliers.find(x => x.id == food.supplierId);
 
-        const reviews = Reviews.map(x => (
+        let reviews = Reviews
+            .filter(x => x.foodItemId == id);
+
+        reviews = reviews
+            .map(x => (
             <div key={x.id}>
                 <Feed>
                     <Feed.Event>

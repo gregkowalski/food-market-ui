@@ -1,20 +1,22 @@
-const FoodItemTemplates = [
+const MiaoFoodItems = [
     {
         id: 1,
+        supplierId: 1,
         image: '/assets/images/veggies.jpg',
         imageSmall: '/assets/images/veggies_small.jpg',
-        header: 'Veggies',
-        meta: 'Fresh vegetables. Enough said',
-        description: 'Health veggies for everyone.  Try some!',
+        header: 'Pork + Chive Dumplings',
+        meta: 'Hormone-free Pork, Chives, Garlic, non-GMO, gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
+        description: 'Beloved classic for a reason. Made with love and not MSG!',
         // position: { lat: 49.287324, lng: -123.141840 },
         position: { lat: 49.284911, lng: -122.867756 },
-        rating: 1,
-        ratingCount: 12,
-        price: 3,
+        rating: 4,
+        ratingCount: 3,
+        price: 8,
         availability: 5
     },
     {
         id: 2,
+        supplierId: 1,
         image: '/assets/images/burger_fries.jpeg',
         imageSmall: '/assets/images/burger_fries_small.jpeg',
         header: 'Burger and Fries',
@@ -22,8 +24,8 @@ const FoodItemTemplates = [
         description: 'Very tasty burger!!!',
         // position: { lat: 49.281982, lng: -123.135252 },
         position: { lat: 49.283763, lng: -122.793206 },
-        rating: 3,
-        ratingCount: 35,
+        rating: 5,
+        ratingCount: 1,
         price: 5,
         availability: 2
     },
@@ -98,42 +100,5 @@ const FoodItemTemplates = [
     }
 ];
 
-var seed = 1;
-function random() {
-    var x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
-
-function getRandomFoodItem() {
-    return FoodItemTemplates[getRandomInt(0, FoodItemTemplates.length - 1)];
-}
-
-function getRandomSign() {
-    return random() > 0.5 ? 1 : -1;
-}
-
-let foodItems = [];
-for (let i = 0; i < 50; i++) {
-    var foodItemTemplate = getRandomFoodItem();
-    var foodItem = { ...foodItemTemplate };
-    foodItem.id = i;
-    foodItem.rating = getRandomInt(0, 5);
-    foodItem.ratingCount = getRandomInt(0, 1500);
-    foodItem.price = getRandomInt(3, 20);
-    foodItem.availability = getRandomInt(1, 50);
-    foodItem.position = {
-        lat: foodItem.position.lat + (getRandomSign() * random() * (getRandomInt(10, 20) + i) / (10000 * random())),
-        lng: foodItem.position.lng + (getRandomSign() * random() * (getRandomInt(10, 20) + i) / (10000 * random()))
-    };
-    foodItem.supplierId = getRandomInt(1,6);
-    foodItems.push(foodItem);
-}
-
-const FoodItems = foodItems;
+const FoodItems = MiaoFoodItems
 export default FoodItems;
