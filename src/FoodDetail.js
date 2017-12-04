@@ -72,14 +72,14 @@ export default class FoodDetail extends Component {
                     <Divider section />
 
                     <Header as='h2'>Cooking Process</Header>
-                    <div>Prepared in the most healthy way you can imagine</div>
+                    <div>Prepared in the healthiest way imaginable</div>
 
                     <Divider section />
 
                 </ScrollElement>
 
                 <ScrollElement name="cook">
-                    <Header as='h2'>Meet the chef</Header>
+                    <Header as='h2'>Meet your neighbourhood cook</Header>
                     <Image width='100%' size='medium' src={supplier.image} />
                     <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
                     <div><strong>City:</strong> {supplier.city}</div>
@@ -155,17 +155,19 @@ export default class FoodDetail extends Component {
                                 Overview
                             </ScrollLink>
 
-                            <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
-                                spy={true} smooth={true} container={document}
-                                offset={-85} duration={500}>
-                                The Chef
-                            </ScrollLink>
-
                             <ScrollLink activeClass="content-link-active" className='content-link' to="reviews"
                                 spy={true} smooth={true} container={document}
                                 offset={-85} duration={500}>
                                 Reviews
                             </ScrollLink>
+                            
+                            <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
+                                spy={true} smooth={true} container={document}
+                                offset={-85} duration={500}>
+                                The Cook
+                            </ScrollLink>
+
+
                         </div>
                         <div className="flex-item-right">
                         </div>
