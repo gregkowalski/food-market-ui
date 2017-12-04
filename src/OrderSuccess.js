@@ -38,7 +38,7 @@ export default class Order extends React.Component {
         return (
             <div style={{marginLeft: '1em', marginTop: '1em'}}>
                 <h1>Success</h1>
-                <span>Your <strong>{food.header}</strong> order has been placed{message}!</span>
+                <span>Your <strong>{food.header}</strong> order has been placed{message}!!!</span>
             </div>
         );
     }
