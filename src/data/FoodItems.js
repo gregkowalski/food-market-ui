@@ -2,8 +2,8 @@ const MiaoFoodItems = [
     {
         id: 1,
         supplierId: 1,
-        image: '/assets/images/veggies.jpg',
-        imageSmall: '/assets/images/veggies_small.jpg',
+        image: '/assets/images/johanndumpling.jpg',
+        imageSmall: '/assets/images/johanndumpling_small.jpg',
         header: 'Pork + Chive Dumplings',
         meta: 'Hormone-free Pork, Chives, Garlic, non-GMO, gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
         description: 'Beloved classic for a reason. Made with love and not MSG!',
@@ -83,20 +83,6 @@ const MiaoFoodItems = [
         rating: 4,
         ratingCount: 46,
         price: 1
-    },
-    {
-        id: 7,
-        image: '/assets/images/Basha_Donair_with_cheese.jpg',
-        imageSmall: '/assets/images/Basha_Donair_with_cheese_small.jpg',
-        header: 'Donair',
-        meta: 'Donair, meat, bread, Turkish magic touch',
-        description: 'Best Kebab',
-        // position: { lat: 49.282982, lng: -123.129252 },
-        position: { lat: 49.282982, lng: -123.129252 },
-        rating: 4,
-        ratingCount: 98,
-        price: 6,
-        availability: 3
     }
 ];
 
