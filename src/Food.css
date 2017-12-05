@@ -40,14 +40,14 @@
 
     .FoodImage {
         height: 100%;
-        -moz-transition: all 0.2s;
-        -webkit-transition: all 0.2s;
-        transition: all 0.2s;
+        -moz-transition: all 0.4s;
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
     }
 
     .FoodImage:hover {
-        -moz-transform: scale(1.03);
-        -webkit-transform: scale(1.03);
-        transform: scale(1.03);
+        -moz-transform: scale(1.05);
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
     }
 }
