@@ -138,7 +138,7 @@ export default class FoodDetail extends Component {
                     <Header as='h2'>Meet your neighbourhood cook</Header>
                     <Image width='100%' size='medium' src={supplier.image} />
                     <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
-                    <div><strong>City:</strong> {supplier.city}</div>
+                    <div><strong>Neighbourhood:</strong> {supplier.city}</div>
                     {supplier.info}
 
                     <Divider section />

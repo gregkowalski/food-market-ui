@@ -3,7 +3,7 @@ import FoodItems from './data/FoodItems'
 import queryString from 'query-string'
 import { Image } from 'semantic-ui-react'
 
-export default class Order extends React.Component {
+export default class OrderSuccess extends React.Component {
 
 
 
@@ -60,7 +60,7 @@ export default class Order extends React.Component {
                     </div>
                 </div>
                 <div className='bodywrap'>
-                    <div style={{ marginLeft: '1em', marginTop: '1em' }}>
+                    <div style={{ marginLeft: '1em', marginTop: '5em' }}>
                         <h1>Success</h1>
                         <span>Your <strong>{food.header}</strong> order has been placed{message}!</span>
                     </div>

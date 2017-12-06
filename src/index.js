@@ -12,6 +12,7 @@ import Order from './Order'
 import OrderSuccess from './OrderSuccess'
 import OrderError from './OrderError'
 import { HashRouter, Switch, Route } from 'react-router-dom'
+import FoodEntry from './FoodEntry'
 
 // import mytest from './test'
 
@@ -30,6 +31,7 @@ render(
         <Route path='/foods/:id/orderError' component={OrderError} />
         <Route path='/foods/:id/order' component={Order} />
         <Route path='/foods/:id' exact component={FoodDetail} />
+        <Route path='/foodEntry' exact component={FoodEntry} />
       </Switch>
     </HashRouter>
   </Provider>,
