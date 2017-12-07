@@ -4,12 +4,12 @@ const MiaoFoodItems = [
         supplierId: 1,
         image: '/assets/images/johanndumpling.jpg',
         imageSmall: '/assets/images/johanndumpling_small.jpg',
-        header: 'Pork and Chive Dumplings',
+        header: 'Pork + Chive Dumplings',
         meta: 'Hormone-free Pork, Chives, Garlic, non-GMO, gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
-        description: 'Beloved classic for a reason. Made with love and not MSG!',
+        description: 'A beloved classic for a reason. Made with hormone-free pork and no MSG!',
         // position: { lat: 49.287324, lng: -123.141840 },
         position: { lat: 49.284911, lng: -122.867756 },
-        rating: 4,
+        rating: 5,
         ratingCount: 3,
         price: 8,
         availability: 5
@@ -82,7 +82,8 @@ const MiaoFoodItems = [
         position: { lat: 49.166590, lng: -123.133569 },
         rating: 4,
         ratingCount: 46,
-        price: 1
+        price: 1,
+        availability: 0
     }
 ];
 

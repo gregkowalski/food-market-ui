@@ -39,23 +39,21 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
+                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE</strong></div>
+                <br></br>
                 <Item.Header className='FoodCardHeader'>
-                  <div style={{ float: 'left' }}>{item.header}</div>
-                  <div style={{ float: 'right' }}>${item.price}</div>
+                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>{item.header}</div>
                   <div style={{ clear: 'both' }}></div>
                 </Item.Header>
                 <Item.Meta>
-                  <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
+                <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>${item.price}</div>
+                  <div style={{ clear: 'both' }}></div>
+                  <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
                     <Rating disabled={true} maxRating={5} rating={item.rating} size='large'
                       style={{ marginTop: '2px', marginLeft: '-2px' }} />
-                    <div>{item.ratingCount}</div>
-                  </div>
-                  <div><strong>Availability:</strong> {item.availability}</div>
-                  <div><strong>Ingredients:</strong> {item.meta}</div>
+                    <div>{item.ratingCount} reviews</div>
+                  </div>              
                 </Item.Meta>
-                <Item.Description>
-                  {item.description}
-                </Item.Description>
               </Item.Content>
             </Item>
           </a>
