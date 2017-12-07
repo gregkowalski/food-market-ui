@@ -4,7 +4,7 @@ const Suppliers = [
         image: '/assets/images/suppliers/steve.jpg',
         name: 'Johann K.',
         city: 'West End',
-        info: 'Johann believes healthy food can and should taste finger-lickin\' good. Sharing food is part of the joy!'
+        info: 'Johann believes healthy food can and should taste finger-lickin\' good.'
     },
     {
         id: 2,

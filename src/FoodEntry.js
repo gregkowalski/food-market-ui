@@ -167,20 +167,6 @@ export default class FoodEntry extends React.Component {
                 }
                 break;
 
-            case 'date':
-                hasErrors.date = false;
-                if (hasBlurred.date && !state.date) {
-                    hasErrors.date = true;
-                }
-                break;
-
-            case 'time':
-                hasErrors.time = false;
-                if (hasBlurred.time && !state.time) {
-                    hasErrors.time = true;
-                }
-                break;
-
             default:
                 break;
         }
@@ -302,10 +288,8 @@ export default class FoodEntry extends React.Component {
         });
 
         let address = (this.state.apt ? 'Apt ' + this.state.apt + ', ' : '') + this.state.address;
-        let orderText = 'The following order was submitted at ' + new Date() + '\r\n' +
-            'Quantity: ' + this.state.quantity + '\r\n' +
-            'Date: ' + this.state.date + '\r\n' +
-            'Time: ' + this.state.time + '\r\n\r\n' +
+        let orderText = 'The following information was submitted at ' + new Date() + '\r\n' +
+         
 
             'Contact Information\r\n' +
             'First Name: ' + this.state.firstName + '\r\n' +
@@ -314,7 +298,7 @@ export default class FoodEntry extends React.Component {
             'Email: ' + this.state.email + '\r\n' +
             'Address: ' + address + '\r\n\r\n' +
 
-            'Now go fill this order!'
+            'Now go add this information!'
 
 
 
@@ -368,34 +352,39 @@ export default class FoodEntry extends React.Component {
         return params;
     }
 
-    times = [
-        { key: 0, text: 'Breakfast (7 AM - 11 AM)', value: 0 },
-        { key: 1, text: 'Lunch (11 AM - 3 PM)', value: 1 },
-        { key: 2, text: 'Dinner (3 PM - 7 PM)', value: 2 },
-    ];
+    
 
     render() {
         return (
-            <div>
-                <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
+            <div className='wrap'>
 
-                    <Form.Group inline>
-                        <Form.Field>
-                            <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, 5, -1)} />
-                            <Input type='number'
-                                onChange={(e, { value }) => this.handleQuantityChange(1, 5, value)}
-                                value={this.state.quantity} min={1} max={5}
-                                style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                            <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, 5, 1)} />
-                        </Form.Field>
-                    </Form.Group>
+                <div className='headscroll'>
+                    <div className='head-content'>
+                        <div className='head-logo'>
+                            <a href="/">
+                                <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
+                            </a>
+                            <a href="/" className='link'>
+                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                            </a>
+                            <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
+                                local. homemade. fresh.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='bodywrap'>
+            <div>
+                <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px', marginTop: '5em' }}>
+
+                   
                     <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' />
 
                     <Divider />
 
                     <Form noValidate autoComplete='off'>
 
-                        <Header>Contact Information</Header>
+                        <Header>Your Information</Header>
                         <Form.Group widths='equal'>
                             <Form.Field required error={this.state.hasErrors.firstName}>
                                 <label>First name</label>
@@ -438,41 +427,7 @@ export default class FoodEntry extends React.Component {
                         </Form.Group>
                         <Form.Group widths='equal'>
 
-                            <Form.Field required error={this.state.hasErrors.date}>
-                                <label>Date</label>
-                                <SingleDatePicker
-                                    date={this.state.day} // momentPropTypes.momentObj or null
-                                    isOutsideRange={this.isDayOutsideRange}
-                                    onDateChange={day => {
-                                        this.setState({ day });
-                                        this.handleDateChange(day);
-                                    }} // PropTypes.func.isRequired
-                                    focused={this.state.focused} // PropTypes.bool
-                                    onFocusChange={({ focused }) => {
-                                        this.setState({ focused });
-                                        if (!focused) {
-                                            this.handleContactInfoBlur({ target: { name: 'date' } });
-                                        }
-                                    }} // PropTypes.func.isRequired
-                                    numberOfMonths={1}
-                                    placeholder="Date"
-                                    displayFormat={() =>
-                                        //moment.localeData().longDateFormat('LL')
-                                        'MMMM DD, YYYY'
-                                    }
-                                />
-                                <Message error visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Field required error={this.state.hasErrors.time}>
-                                <label>Time</label>
-                                <Dropdown
-                                    placeholder='Time'
-                                    selection
-                                    options={this.times}
-                                    onChange={this.handleTimeChange}
-                                    onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
-                                <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
-                            </Form.Field>
+                            
 
                         </Form.Group>
 
@@ -489,6 +444,8 @@ export default class FoodEntry extends React.Component {
                         </OrderFormButton>
                     </Form >
                 </div>
+            </div>
+            </div>
             </div>
         )
     }

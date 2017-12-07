@@ -149,6 +149,25 @@ export default class FoodDetail extends Component {
         );
 
         return (
+
+            <div className='wrap'>
+            
+                            <div className='headscroll'>
+                                <div className='head-content'>
+                                    <div className='head-logo'>
+                                        <a href="/">
+                                            <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
+                                        </a>
+                                        <a href="/" className='link'>
+                                            <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                                        </a>
+                                        <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
+                                            local. homemade. fresh.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            <div className='bodywrap'>
             <div>
                 <Image className='food-image' src={food.image} />
                 <div className='detail-head-main'>
@@ -208,6 +227,8 @@ export default class FoodDetail extends Component {
                             </Card>
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
 
                 <div className='detail-footer'>

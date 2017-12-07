@@ -427,7 +427,25 @@ export default class Order extends React.Component {
         const { showPricingDetails } = this.state;
 
         return (
-            <div>
+
+           <div className='wrap'>
+
+                <div className='headscroll'>
+                    <div className='head-content'>
+                        <div className='head-logo'>
+                            <a href="/">
+                                <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
+                            </a>
+                            <a href="/" className='link'>
+                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                            </a>
+                            <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
+                                local. homemade. fresh.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='bodywrap'>                
                 <Image src={food.image} className='food-image' />
 
                 <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
@@ -439,6 +457,7 @@ export default class Order extends React.Component {
                             <Image avatar src={supplier.image} style={{ marginLeft: '10px' }} />
                         </div>
                     </div>
+                
 
                     <Divider />
 
@@ -605,6 +624,7 @@ export default class Order extends React.Component {
                         </OrderFormButton>
                     </Form >
                 </div>
+            </div>
             </div>
         )
     }
