@@ -39,7 +39,7 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE</strong></div>
+                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE | {item.prep}</strong></div>
                 <br></br>
                 <Item.Header className='FoodCardHeader'>
                   <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>{item.header}</div>

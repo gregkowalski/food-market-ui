@@ -12,7 +12,8 @@ const MiaoFoodItems = [
         rating: 5,
         ratingCount: 3,
         price: 8,
-        availability: 5
+        availability: 5,
+        prep: 'frozen'
     },
     {
         id: 2,
@@ -27,7 +28,8 @@ const MiaoFoodItems = [
         rating: 5,
         ratingCount: 1,
         price: 5,
-        availability: 2
+        availability: 2,
+        prep: 'ready-to-eat'
     },
     {
         id: 3,
@@ -41,7 +43,8 @@ const MiaoFoodItems = [
         rating: 5,
         ratingCount: 153,
         price: 10.99,
-        availability: 4
+        availability: 4,
+        prep: 'ready-to-eat'
     },
     {
         id: 4,
@@ -55,7 +58,8 @@ const MiaoFoodItems = [
         rating: 2,
         ratingCount: 36,
         price: 8.99,
-        availability: 7
+        availability: 7,
+        prep: 'frozen'
     },
     {
         id: 5,
@@ -69,7 +73,8 @@ const MiaoFoodItems = [
         rating: 5,
         ratingCount: 98,
         price: 6.50,
-        availability: 10
+        availability: 10,
+        prep: 'frozen'
     },
     {
         id: 6,
@@ -83,7 +88,8 @@ const MiaoFoodItems = [
         rating: 4,
         ratingCount: 46,
         price: 1,
-        availability: 0
+        availability: 0,
+        prep: 'ready-to-eat'
     }
 ];
 
