@@ -3,6 +3,7 @@ import './Food.css'
 import { Grid, Button, Item, Image, Rating } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import { Link } from 'react-router-dom'
+import Suppliers from './data/Suppliers'
 
 class Food extends Component {
 
@@ -39,14 +40,14 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE | {item.prep}</strong></div>
+                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE · {item.prep}</strong></div>
                 <br></br>
                 <Item.Header className='FoodCardHeader'>
-                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>{item.header}</div>
+                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>${item.price} | {item.header}</div>
                   <div style={{ clear: 'both' }}></div>
                 </Item.Header>
                 <Item.Meta>
-                <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>${item.price}</div>
+                <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
                   <div style={{ clear: 'both' }}></div>
                   <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
                     <Rating disabled={true} maxRating={5} rating={item.rating} size='large'

@@ -17,14 +17,14 @@ const Suppliers = [
         id: 3,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Ian C.',
-        city: 'Burnaby',
+        city: 'East Van',
         info: 'Ian loves to eat and sharing food is part of that joy.'
     },
     {
         id: 4,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Pierre C.',
-        city: 'Burnaby',
+        city: 'North Burnaby',
         info: 'Pierre really enjoys making food for others.'
     }
 ];

@@ -5,6 +5,11 @@
   position: relative;
 }
 
+.dtest{
+
+  color: #696868
+}
+
 .head {
   height: 55px;
   position: fixed;

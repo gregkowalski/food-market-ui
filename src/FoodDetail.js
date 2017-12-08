@@ -60,23 +60,29 @@ export default class FoodDetail extends Component {
 
                 <ScrollElement name="overview">
 
-                    <Header as='h2'>{food.header}</Header>
-                    {food.description}
+                    <Header as='h2'>
+                    <div style={{ fontSize: '1.1em'}}> {food.header}</div></Header>
+                    <div style={{ float: 'left', color: '#696868', marginTop: '4px', fontSize: '1em'}}>{food.availability} available · {supplier.name}</div>        
+                    <div style={{ clear: 'both' }}></div>
 
-                    <Divider section />
-
-                    <Header as='h2'>Availability</Header>
-                    <div>There are {food.availability} units available</div>
-
-                    <Divider section />
-
-                    <Header as='h2'>Ingredients</Header>
+                    <Header as='h3'>Ingredients</Header>
                     <div>{food.meta}</div>
+                 
+                    <Divider section />
+                   
+                    <Header as='h3'>The Food</Header>
+                    <div>{food.description}</div>   
 
                     <Divider section />
 
-                    <Header as='h2'>Cooking Process</Header>
-                    <div>Prepared in the healthiest way imaginable</div>
+                    <Header as='h3'>Special Features</Header>
+
+                    No MSG
+
+                    <Divider section />
+
+                    <Header as='h3'>Bite Sizes</Header>
+                    <div><strong>{food.unit} units </strong> per order. Feeds approximately {food.feed} people. </div>
 
                     <Divider section />
 
@@ -102,27 +108,27 @@ export default class FoodDetail extends Component {
                                 <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
                             </Grid.Column>
                             <Grid.Column className='detail-rating'>
-                                <span className='detail-rating-label'>Location</span>
-                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column className='detail-rating'>
                                 <span className='detail-rating-label'>Quality</span>
                                 <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
                             </Grid.Column>
-                            <Grid.Column className='detail-rating'>
-                                <span className='detail-rating-label'>Healthy</span>
-                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
-                            </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column className='detail-rating'>
-                                <span className='detail-rating-label'>Fresh</span>
+                                <span className='detail-rating-label'>Communication</span>
                                 <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
                             </Grid.Column>
                             <Grid.Column className='detail-rating'>
                                 <span className='detail-rating-label'>Taste</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Freshness</span>
+                                <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                            </Grid.Column>
+                            <Grid.Column className='detail-rating'>
+                                <span className='detail-rating-label'>Value</span>
                                 <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
                             </Grid.Column>
                         </Grid.Row>
@@ -137,8 +143,10 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet your neighbourhood cook</Header>
                     <Image width='100%' size='medium' src={supplier.image} />
+                    <div style={{ float: 'left', color: '#157c9b', marginTop: '4px', fontWeight: 'bold', fontSize: '1em'}}>{supplier.city}</div>
+                    <br></br>
                     <div style={{ fontSize: '1.6em', fontWeight: '800', marginTop: '0.5em', marginBottom: '0.4em' }}>{supplier.name}</div>
-                    <div><strong>Neighbourhood:</strong> {supplier.city}</div>
+
                     {supplier.info}
 
                     <Divider section />
