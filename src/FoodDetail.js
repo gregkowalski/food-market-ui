@@ -77,12 +77,12 @@ export default class FoodDetail extends Component {
 
                     <Header as='h3'>Special Features</Header>
 
-                    No MSG
+                    <div>{food.feat}</div>
 
                     <Divider section />
 
                     <Header as='h3'>Bite Sizes</Header>
-                    <div><strong>{food.unit} units </strong> per order. Feeds approximately {food.feed} people. </div>
+                    <div><strong>{food.unit} </strong> per order.  Feeds approximately {food.feed} people. </div>
 
                     <Divider section />
 
