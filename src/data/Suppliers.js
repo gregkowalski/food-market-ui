@@ -4,28 +4,36 @@ const Suppliers = [
         image: '/assets/images/suppliers/steve.jpg',
         name: 'Johann K.',
         city: 'West End',
-        info: 'Johann believes healthy food can and should taste finger-lickin\' good.'
+        info: 'I\'m an American who, alongside her Canadian husband, globetrots the world and VanCity for good authentic eats.  In our home, sharing food is our family creed.   So, I\'m excited to share both a family tradition as well as my own fusion recipes.  I believe healthy food can and should taste finger-lickin\' good! ',
+        join: 'September 2017',
+        lang: 'English, Mandarin'
     },
     {
         id: 2,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Holly H.',
         city: 'Richmond',
-        info: 'Holly enjoys making food for family and friends. Her kitchen is always cooking up something new!'
+        info: 'I enjoy making food for family and friends. Her kitchen is always cooking up something new!',
+        join: 'December 2017',
+        lang: 'English'
     },
     {
         id: 3,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Ian C.',
         city: 'East Van',
-        info: 'Ian loves to eat and sharing food is part of that joy.'
+        info: 'Ian loves to eat and sharing food is part of that joy.',
+        join: 'September 2017',
+        lang: 'English'
     },
     {
         id: 4,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Pierre C.',
         city: 'North Burnaby',
-        info: 'Pierre really enjoys making food for others.'
+        info: 'Pierre really enjoys making food for others.',
+        join: 'December 2017',
+        lang: 'English, Mandarin'
     }
 ];
 
