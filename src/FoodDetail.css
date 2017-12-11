@@ -16,6 +16,13 @@
     font-size: large; 
     cursor: pointer;
 }
+
+.author-link{
+    cursor: pointer;
+    color: teal;
+    margin-left: 0.2em;
+}
+
 /* 
 .content-link:hover {
     text-decoration: underline !important;
@@ -122,7 +129,11 @@
 }
 
 .ui.rating .active.icon {
-    color: rgb(52, 152, 165) !important;
+    color: rgb(48, 152, 160) !important;
+}
+
+.food-detail-header{
+    color: teal !important; 
 }
 
 @media all and (max-width: 767px) {

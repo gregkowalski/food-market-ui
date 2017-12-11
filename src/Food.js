@@ -40,7 +40,7 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#da4242', marginTop: '4px', fontSize: '.9em'}}><strong>{item.availability} AVAILABLE · {item.prep}</strong></div>
+                <div style={{ float: 'left', color: '#2a7bbe', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · {item.prep}</strong></div>
                 <br></br>
                 <Item.Header className='FoodCardHeader'>
                   <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>${item.price} | {item.header}</div>
@@ -59,7 +59,7 @@ class Food extends Component {
             </Item>
           </a>
           <Link to={'/foods/' + item.id + '/order'}>
-            <Button as='div' fluid color='black' className='OrderButton'>Order</Button>
+            <Button as='div' fluid color='teal' className='OrderButton'>Order</Button>
           </Link>
         </div>
       </Grid.Column>

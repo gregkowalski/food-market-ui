@@ -75,33 +75,39 @@ export default class FoodDetail extends Component {
 
                     <Header as='h2'>
                     <div style={{ fontSize: '1.1em'}}> {food.header}</div></Header>
-                    <div style={{ float: 'left', color: '#696868', marginTop: '4px', fontSize: '1em'}}>{food.availability} available · by {supplier.name}</div>        
+                    <div style={{ float: 'left', color: '#4e4e4e', marginTop: '4px', fontSize: '1.1em'}}>{food.availability} available · by 
+                        <ScrollLink className="author-link" to="cook"
+                                spy={true} smooth={true} container={document}
+                                offset={-85} duration={500}>
+                                 {supplier.name}
+                        </ScrollLink>
+                    </div>        
                     <div style={{ clear: 'both' }}></div>
 
-                    <Header as='h3'>Ingredients</Header>
+                    <Header as='h3' className='food-detail-header'>Ingredients</Header>
                     <div>{food.meta}</div>
                  
                     <Divider section />
                    
-                    <Header as='h3'>The Food</Header>
+                    <Header as='h3' className='food-detail-header'>The Food</Header>
                     <div>{food.description}</div>   
 
                     <Divider section />
 
-                    <Header as='h3'>Cooking Instructions</Header>
+                    <Header as='h3' className='food-detail-header'>Cooking Instructions</Header>
                     <div className='user-text'>{food.instruction}</div>
                     <br/>
                     <div>{prep}</div>
 
                     <Divider section />
 
-                    <Header as='h3'>Special Features</Header>
+                    <Header as='h3' className='food-detail-header'>Special Features</Header>
 
                     <div>{food.feat}</div>
 
                     <Divider section />
 
-                    <Header as='h3'>Bite Sizes</Header>
+                    <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
                     <div><strong>{food.unit} </strong> per order.  Feeds approximately {food.feed} people. </div>
 
                     <Divider section />
@@ -251,7 +257,7 @@ export default class FoodDetail extends Component {
                                     <Divider section />
 
                                     <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                        <Button fluid color='black'>Order</Button>
+                                        <Button fluid color='teal'>Order</Button>
                                     </RouterLink>
 
                                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
@@ -265,7 +271,7 @@ export default class FoodDetail extends Component {
 
                 <div className='detail-footer'>
                     <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                        <Button fluid color='black' className='detail-footer-button'>Order</Button>
+                        <Button fluid color='teal' className='detail-footer-button'>Order</Button>
                     </RouterLink>
                     <div className='detail-footer-text'>You won't be charged yet</div>
                 </div>
