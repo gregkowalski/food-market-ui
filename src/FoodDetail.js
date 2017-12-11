@@ -115,7 +115,7 @@ export default class FoodDetail extends Component {
                             {food.ratingCount} Reviews
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
                                 style={{ marginTop: '4px', marginLeft: '14px' }} />
-                            <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
+                            <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
                         </div>
                     </Header>
 
@@ -245,7 +245,7 @@ export default class FoodDetail extends Component {
                                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
                                                 style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                            <div style={{ fontSize: 'small', color: 'gray' }}>{food.ratingCount}</div>
+                                            <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
                                         </div>
                                     </Card.Header>
                                     <Divider section />

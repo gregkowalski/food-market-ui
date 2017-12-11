@@ -121,6 +121,10 @@
     margin-left: 55px;
 }
 
+.ui.rating .active.icon {
+    color: rgb(52, 152, 165) !important;
+}
+
 @media all and (max-width: 767px) {
     .detail-footer {
         display: inherit;
