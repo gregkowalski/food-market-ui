@@ -260,7 +260,7 @@ export default class FoodDetail extends Component {
                                         <Button fluid color='teal'>Order</Button>
                                     </RouterLink>
 
-                                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontSize: 'small' }}>You won't be charged yet</div>
+                                    <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                 </Card.Content>
                             </Card>
                         </div>
