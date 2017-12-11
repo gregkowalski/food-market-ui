@@ -6,7 +6,24 @@ const MiaoFoodItems = [
         imageSmall: '/assets/images/Johanndumplings_small.jpeg',
         header: 'Pork + Chive Dumplings (hormone and MSG-free)',
         meta: 'Hormone-free Pork, Chives, Garlic, non-GMO, gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
-        description: 'A beloved classic for a reason.  Always made with all-natural hormone-free pork and no MSG!  Recommended dipping sauce is vinegar, water, soy sauce, sesame oil, a pinch of brown sugar, chopped garlic, and chopped green onions.  Enjoy!',
+        description: 'A beloved classic for a reason.  Always made with all-natural hormone-free pork and no MSG!\n\n'
+            + 'Recommended dipping sauce: mix to taste using vinegar, water, soy sauce, a splash of sesame oil, a pinch of brown '
+            + 'sugar, chopped garlic, and chopped green onions.  Enjoy!',
+        instruction: 'To boil: fill a large pot two-thirds of the way with water. Cover and bring to a boil over high heat. '
+            + 'Add as many dumplings as can fit comfortably in a single layer in the pot and cook them until they float. '
+            + 'Let them cook an additional two to three minutes. Strain them and serve.\n\nTo steam: you will need a bamboo '
+            + 'or stainless steel steamer. Use parchment paper (or Napa cabbage) to make a breathable non-stick surface and place '
+            + 'your dumplings on top. Fill your steamer pot, wok, or saucepan with about one inch of water. Cover the '
+            + 'steamer and bring the water to a hard boil. Steam the dumplings until cooked through, about 10 minutes if coming '
+            + 'directly from the freezer.\n\nTo steam-fry (a classic method for Japanese gyoza or Chinese guo tie): First pan-fry '
+            + 'by heating a couple tablespoons of oil in the bottom of a non-stick or cast iron skillet over moderate heat until '
+            + 'shimmering. Add the dumplings in a single layer and cook, swirling the pan, until an even deep golden brown '
+            + 'appears on the bottom. This should take one to two minutes. '
+            + 'Swirling helps create a more even and tasty crust! Next, increase heat to medium high and add water until it '
+            + 'covers the dumplings by a third to a half. Cover with a lid and steam until the dumplings are cooked through. '
+            + 'Frozen dumplings should take between 6 to 10 minutes depending on size (you can also cut one in half and take a '
+            + 'peek to make sure it\'s fully cooked). Remove the lid and continue to cook and swirling the pan regularly until '
+            + 'the remaining water has evaporated and the dumplings are once again nice and crisp.',
         // position: { lat: 49.287324, lng: -123.141840 },
         position: { lat: 49.284911, lng: -122.867756 },
         rating: 5,

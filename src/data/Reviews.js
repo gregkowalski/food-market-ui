@@ -13,7 +13,7 @@ const Reviews = [
         date: 'October 2017',
         image: '/assets/images/suppliers/elliot.jpg',
         summary: 'Troy',
-        extraText: "Dumplings were good. I only made 1 bag so will do the 2nd this weeks so Kristin can try, too.",
+        extraText: "Dumplings were good. I only made 1 bag so will do the 2nd this week so Kristin can try, too.",
     },
     {
         id: 3,

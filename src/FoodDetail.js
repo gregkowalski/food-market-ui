@@ -28,6 +28,17 @@ export default class FoodDetail extends Component {
         Scroll.scrollSpy.update();
     }
 
+    getFoodPrepSafetyMessage(food) {
+        let prep = 'None';
+        if (food.prep === 'frozen') {
+            prep = 'Frozen products must be fully cooked for food safety and quality.';
+        }
+        else if (food.prep === 'blank') {
+            prep = 'blank';
+        }
+        return prep;
+    }
+
     render() {
         let id = this.getFoodItemId();
         // eslint-disable-next-line 
@@ -55,6 +66,8 @@ export default class FoodDetail extends Component {
             </div>
         ));
 
+        let prep = this.getFoodPrepSafetyMessage(food);
+        
         const content = (
             <div className='detail-content'>
 
@@ -62,7 +75,7 @@ export default class FoodDetail extends Component {
 
                     <Header as='h2'>
                     <div style={{ fontSize: '1.1em'}}> {food.header}</div></Header>
-                    <div style={{ float: 'left', color: '#696868', marginTop: '4px', fontSize: '1em'}}>{food.availability} available · {supplier.name}</div>        
+                    <div style={{ float: 'left', color: '#696868', marginTop: '4px', fontSize: '1em'}}>{food.availability} available · by {supplier.name}</div>        
                     <div style={{ clear: 'both' }}></div>
 
                     <Header as='h3'>Ingredients</Header>
@@ -72,6 +85,13 @@ export default class FoodDetail extends Component {
                    
                     <Header as='h3'>The Food</Header>
                     <div>{food.description}</div>   
+
+                    <Divider section />
+
+                    <Header as='h3'>Cooking Instructions</Header>
+                    <div className='user-text'>{food.instruction}</div>
+                    <br/>
+                    <div>{prep}</div>
 
                     <Divider section />
 

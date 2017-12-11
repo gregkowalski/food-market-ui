@@ -4,7 +4,7 @@ const Suppliers = [
         image: '/assets/images/suppliers/steve.jpg',
         name: 'Johann',
         city: 'West End',
-        info: 'I\'m an American who, alongside her Canadian husband, globetrots the world and VanCity for good authentic eats.  In our home, sharing food is our family creed.   So, I\'m excited to share both a family tradition as well as my own fusion recipes.  I believe healthy food can and should taste finger-lickin\' good! ',
+        info: 'I\'m an American who, alongside her Canadian husband, globetrots the world and VanCity for good authentic eats.  In our home, sharing food is a family creed.   So, I\'m excited to share both a family tradition as well as my own fusion recipes.  I believe healthy food can and should taste finger-lickin\' good! ',
         join: 'September 2017',
         lang: 'English, Mandarin'
     },

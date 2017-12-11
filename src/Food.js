@@ -3,7 +3,7 @@ import './Food.css'
 import { Grid, Button, Item, Image, Rating } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import { Link } from 'react-router-dom'
-import Suppliers from './data/Suppliers'
+
 
 class Food extends Component {
 

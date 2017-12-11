@@ -142,3 +142,7 @@
 .OrderHeader {
     margin-top: 5px !important;
 }
+
+.user-text {
+    white-space: pre-wrap;
+}
