@@ -149,7 +149,8 @@
         display: none;
     }
     .detail-head-main {
-        display: inherit;
+        display: flex;
+
     }
 }
 /* end main layout */

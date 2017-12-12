@@ -40,12 +40,19 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#2a7bbe', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · {item.prep}</strong></div>
+                <div style={{ float: 'left', color: '#CD853F', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · 
+                  <span style={{color: '#CFB53B'}}> {item.prep}
+                  </span></strong>
+                </div>
+            
                 <br></br>
+
                 <Item.Header className='FoodCardHeader'>
-                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>${item.price} | {item.header}</div>
+                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>
+                    ${item.price} | {item.header}</div>
                   <div style={{ clear: 'both' }}></div>
                 </Item.Header>
+
                 <Item.Meta>
                 <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
                   <div style={{ clear: 'both' }}></div>
@@ -55,6 +62,7 @@ class Food extends Component {
                     <div>{item.ratingCount} reviews</div>
                   </div>              
                 </Item.Meta>
+
               </Item.Content>
             </Item>
           </a>

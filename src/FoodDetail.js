@@ -119,7 +119,7 @@ export default class FoodDetail extends Component {
                     <Header as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
                             {food.ratingCount} Reviews
-                                            <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
+                                    <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
                                 style={{ marginTop: '4px', marginLeft: '14px' }} />
                             <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
                         </div>
@@ -168,7 +168,9 @@ export default class FoodDetail extends Component {
 
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
-                    <div style={{float: 'left', color: '#157c9b', marginTop: '-8px', fontWeight: 'bold', fontSize: '1em'}}>{supplier.city}  · Joined in {supplier.join}</div>
+                    <div style={{float: 'left', color: '#CD853F', marginTop: '-8px', fontWeight: 'bold', fontSize: '1em'}}>
+                        {supplier.city}  ·<span style={{color: '#D4AF37'}}> Joined in {supplier.join}</span>
+                    </div>
                     <div style={{ clear: 'both', marginTop: '30px' }}></div>
 
                     <div>{supplier.info}</div>

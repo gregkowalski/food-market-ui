@@ -7,7 +7,7 @@
 
 .dtest{
 
-  color: #4e4e4e
+  color: D4AF37
 }
 
 .head {
@@ -60,14 +60,14 @@
 }
 
 .link {
-  color:  rgb(0, 0, 0);
+  color:  #3f3f3f;
   text-decoration: none;
   padding-right: 5px;
   padding-left: 5px;
 }
 
 .link:hover {
-  color: rgb(63, 63, 63);
+  color: #008080;
 }
 
 #content-desktop {

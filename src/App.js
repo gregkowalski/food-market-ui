@@ -69,7 +69,7 @@ class App extends Component {
                 <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
               </a>
               <a href="/" className='link'>
-                <div style={{ fontSize: '1.6em', fontWeight: 'bolder' }}>foodcraft</div>
+                <div style={{ fontSize: '1.6em', fontWeight: 'bolder', fontColor: '#D2691E' }}>neighbourfood</div>
               </a>
               <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
                 local. homemade. fresh.
