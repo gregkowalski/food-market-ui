@@ -138,7 +138,7 @@
 }
 
 .food-detail-header{
-    color: teal !important; 
+    color: #008080 !important; 
 }
 
 @media all and (max-width: 767px) {    
