@@ -14,7 +14,7 @@ import OrderError from './OrderError'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 import FoodEntry from './FoodEntry'
 
-// import mytest from './test'
+/*import mytest from './test'*/
 
 const store = createStore(reducer)
 
@@ -26,7 +26,7 @@ render(
         <Route exact path='/' component={App} />
         <Route path='/search' component={App} />
         {/* <Route path='/food' component={Food} /> */}
-        {/* <Route path='/test' component={mytest} /> */}
+        {/*<Route path='/test' component={mytest} />*/}
         <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
         <Route path='/foods/:id/orderError' component={OrderError} />
         <Route path='/foods/:id/order' component={Order} />

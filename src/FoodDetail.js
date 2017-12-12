@@ -178,7 +178,7 @@ export default class FoodDetail extends Component {
                     <br></br>
                     <div> Languages: <strong> {supplier.lang}</strong></div>
                     <br></br>
-                        <Image width='100%' size='medium' src={supplier.image} />
+                        <Image size='medium' shape='circular' src={supplier.image} />
                     
                     
                     

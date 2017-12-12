@@ -25,7 +25,15 @@ const Reviews = [
     },
     {
         id: 4,
-        foodItemId: 2,
+        foodItemId: 3,
+        date: 'November 2017',
+        image: '/assets/images/suppliers/steve.jpg',
+        summary: 'Ian',
+        extraText: "Test review.",
+    },
+    {
+        id: 5,
+        foodItemId: 3,
         date: 'November 2017',
         image: '/assets/images/suppliers/steve.jpg',
         summary: 'Ian',

@@ -36,7 +36,7 @@ const MiaoFoodItems = [
         prep: 'frozen'
     },
     {
-        id: 2,
+        id: 3,
         supplierId: 3,
         image: '/assets/images/IanC_pasta.jpg',
         imageSmall: '/assets/images/IanC_pasta_small.jpeg',
@@ -52,7 +52,7 @@ const MiaoFoodItems = [
         prep: 'ready-to-eat'
     },
     {
-        id: 3,
+        id: 2,
         image: '/assets/images/salmon-dish-food-meal.jpeg',
         imageSmall: '/assets/images/salmon-dish-food-meal_small.jpeg',
         header: 'Salmon and Salad',
