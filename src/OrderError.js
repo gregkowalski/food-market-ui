@@ -30,7 +30,7 @@ export default class OrderError extends React.Component {
 
         <div className='wrap'>
 
-                <div className='head'>
+                <div className='headscroll'>
                     <div className='head-content'>
                         <div className='head-logo'>
                             <a href="/">
