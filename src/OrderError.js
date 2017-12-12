@@ -1,6 +1,7 @@
 import React from 'react'
 import FoodItems from './data/FoodItems'
 import { Image } from 'semantic-ui-react'
+import { Constants } from './Constants'
 
 export default class OrderError extends React.Component {
 
@@ -36,7 +37,7 @@ export default class OrderError extends React.Component {
                                 <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
                             </a>
                             <a href="/" className='link'>
-                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{Constants.AppName}</div>
                             </a>
                             <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
                                 local. homemade. fresh.

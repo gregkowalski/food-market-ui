@@ -7,6 +7,7 @@ import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
+import { Constants } from './Constants'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -199,7 +200,7 @@ export default class FoodDetail extends Component {
                                             <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
                                         </a>
                                         <a href="/" className='link'>
-                                            <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                                            <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{Constants.AppName}</div>
                                         </a>
                                         <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
                                             local. homemade. fresh.

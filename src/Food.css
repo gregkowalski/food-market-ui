@@ -29,10 +29,6 @@
     width: 100%;
 }
 
-.TextHighlight{
-    color: #C5B358;
-}
-
 @media all and (min-width: 768px) {
     .FoodImageBox {
         overflow: hidden;

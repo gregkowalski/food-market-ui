@@ -8,6 +8,7 @@ import { Image } from 'semantic-ui-react'
 import { MapContainer } from './MapContainer'
 import Food from './Food'
 import Map from './Map'
+import { Constants } from './Constants'
 
 class App extends Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class App extends Component {
                 <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
               </a>
               <a href="/" className='link'>
-                <div style={{ fontSize: '1.6em', fontWeight: 'bolder', fontColor: '#D2691E' }}>neighbourfood</div>
+                <div style={{ fontSize: '1.6em', fontWeight: 'bolder'}}>{Constants.AppName}</div>
               </a>
               <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
                 local. homemade. fresh.

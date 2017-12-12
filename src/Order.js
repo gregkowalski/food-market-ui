@@ -11,6 +11,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import { Route } from 'react-router-dom'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
+import { Constants } from './Constants'
 
 export default class Order extends React.Component {
 
@@ -437,7 +438,7 @@ export default class Order extends React.Component {
                                 <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
                             </a>
                             <a href="/" className='link'>
-                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>foodcraft</div>
+                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{Constants.AppName}</div>
                             </a>
                             <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
                                 local. homemade. fresh.
