@@ -21,7 +21,7 @@ const Suppliers = [
         id: 3,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Ian',
-        city: 'East Van',
+        city: 'North Burnaby',
         info: 'Ian loves to eat and sharing food is part of that joy.',
         join: 'September 2017',
         lang: 'English'

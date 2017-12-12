@@ -38,8 +38,8 @@ const MiaoFoodItems = [
     {
         id: 2,
         supplierId: 3,
-        image: '/assets/images/burger_fries.jpeg',
-        imageSmall: '/assets/images/burger_fries_small.jpeg',
+        image: '/assets/images/IanC_pasta.jpg',
+        imageSmall: '/assets/images/IanC_pasta_small.jpeg',
         header: 'Super Pasta Specialty',
         meta: 'Pasta, tomatoes',
         description: 'A very tasty pasta',
