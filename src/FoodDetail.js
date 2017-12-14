@@ -171,8 +171,8 @@ export default class FoodDetail extends Component {
 
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
-                    <div style={{ float: 'left', color: '#CD853F', marginTop: '-8px', fontWeight: 'bold', fontSize: '1em' }}>
-                        {supplier.city}  ·<span style={{ color: '#D4AF37' }}> Joined in {supplier.join}</span>
+                    <div style={{ float: 'left', color: '#f56363', marginTop: '-8px', fontWeight: 'bold', fontSize: '1em' }}>
+                        {supplier.city}  ·<span style={{ color: '#FF9D26' }}> Joined in {supplier.join}</span>
                     </div>
                     <div style={{ clear: 'both', marginTop: '30px' }}></div>
 
