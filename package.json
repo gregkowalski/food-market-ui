@@ -8,6 +8,7 @@
     "invariant": "^2.2.2",
     "libphonenumber-js": "^0.4.42",
     "moment": "^2.18.1",
+    "nuka-carousel": "^3.0.0",
     "query-string": "^5.0.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",
