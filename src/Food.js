@@ -40,8 +40,8 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#f56363', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · 
-                  <span style={{color: '#FF9D26'}}> {item.prep}
+                <div style={{ float: 'left', color: '#60b0f4', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · 
+                  <span style={{color: '#0fb5c3'}}> {item.prep}
                   </span></strong>
                 </div>
             

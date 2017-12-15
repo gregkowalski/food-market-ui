@@ -38,8 +38,8 @@ const MiaoFoodItems = [
     {
         id: 2,
         supplierId: 2,
-        image: '/assets/images/salmon-dish-food-meal.jpeg',
-        imageSmall: '/assets/images/salmon-dish-food-meal_small.jpeg',
+        image: '/assets/images/HollyC_peartart.jpg',
+        imageSmall: '/assets/images/HollyC_peartart_small.jpeg',
         header: 'Pear Almond Tart',
         meta: 'Almond flour, flour, almond extract, butter, pears, eggs, cinnamon, sugar.',
         description: 'A pear tart that hits the sweet spot.',
@@ -58,8 +58,8 @@ const MiaoFoodItems = [
     {
         id: 3,
         supplierId: 2,
-        image: '/assets/images/vegetables-italian-pizza-restaurant.jpg',
-        imageSmall: '/assets/images/vegetables-italian-pizza-restaurant_small.jpg',
+        image: '/assets/images/HollyC_baconcasserole.jpg',
+        imageSmall: '/assets/images/HollyC_baconcasserole.jpeg',
         header: 'Spinach, Bacon, and Sausage Casserole',
         meta: 'Onions, cheese, bacon, sausage, bread, spinach, milk, eggs',
         description: 'Our family favourite casserole.',
