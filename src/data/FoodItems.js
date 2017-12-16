@@ -127,7 +127,7 @@ const MiaoFoodItems = [
         supplierId: 2,
         image: '/assets/images/HollyC_redjamcookies.jpg',
         imageSmall: '/assets/images/HollyC_redjamcookies_small.jpeg',
-        header: 'Mix&Match: Almond Raspberry',
+        header: 'Mix&Match: Almond Raspberry Thumbprint',
         meta: 'Almond extract, flour, butter, and seedless raspberry jam',
         description: 'Delicious small batch cookies made from scratch.\n\n Mix & Match orders: 36 '
             + 'cookies for $20!',
