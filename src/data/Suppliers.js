@@ -13,7 +13,7 @@ const Suppliers = [
         image: '/assets/images/suppliers/matthew.png',
         name: 'Holly',
         city: 'Richmond',
-        info: 'I enjoy making food for family and friends. Her kitchen is always cooking up something new!',
+        info: 'I enjoy making food for family and friends. My kitchen is always cooking up something new!',
         join: 'December 2017',
         lang: 'English'
     },
@@ -22,7 +22,7 @@ const Suppliers = [
         image: '/assets/images/suppliers/matthew.png',
         name: 'Ian',
         city: 'North Burnaby',
-        info: 'Ian loves to eat and sharing food is part of that joy.',
+        info: 'I love to eat and sharing food is part of that joy.',
         join: 'September 2017',
         lang: 'English'
     },
@@ -31,7 +31,7 @@ const Suppliers = [
         image: '/assets/images/suppliers/matthew.png',
         name: 'Pierre',
         city: 'North Burnaby',
-        info: 'Pierre really enjoys making food for others.',
+        info: 'I really enjoy making food for others.',
         join: 'December 2017',
         lang: 'English, Mandarin'
     }
