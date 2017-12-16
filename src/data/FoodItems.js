@@ -52,9 +52,11 @@ const MiaoFoodItems = [
         ratingCount: 3,
         price: 18,
         availability: 3,
+        feat: 'All-natural',
         unit: '1 pie',
         feed: '6-8',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'nuts, wheat, eggs, milk, gluten'
     },
     {
         id: 3,
@@ -70,9 +72,11 @@ const MiaoFoodItems = [
         ratingCount: 3,
         price: 25,
         availability: 3,
+        feat: 'All-natural',
         unit: '1 9x13 casserole dish',
         feed: '6-8',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     },
     {
         id: 4,
@@ -88,57 +92,85 @@ const MiaoFoodItems = [
         ratingCount: 1,
         price: 8.50,
         availability: 3,
+        feat: 'All-natural',
         unit: '5 cups',
         feed: '2-3',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten'
     },
     {
         id: 5,
         supplierId: 2,
         image: '/assets/images/HollyC_bwcookies.jpg',
         imageSmall: '/assets/images/HollyC_bwcookies_small.jpeg',
-        header: 'Mix&Match: Chocolate Crinkles',
-        meta: 'Flour, butter, eggs, sugar',
-        description: 'Cookies made from scratch.',
+        header: 'Mix&Match: Chocolate Crinkle',
+        meta: 'Dark chocolate cocoa powder, eggs, icing sugar, vanilla, vegetable oil, salt, and sugar',
+        description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+            + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+            + 'harder type cookies can be placed in a loosely covered container.',
         // position: { lat: 49.284982, lng: -123.130252 },
         position: { lat: 49.166590, lng: -123.133569 },
         rating: 5,
         ratingCount: 1,
         price: 7,
         availability: 6,
-        prep: 'ready-to-eat'
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     },
     {
         id: 6,
         supplierId: 2,
         image: '/assets/images/HollyC_redjamcookies.jpg',
         imageSmall: '/assets/images/HollyC_redjamcookies_small.jpeg',
-        header: 'Mix&Match: Raspberry Jam',
-        meta: 'Flour, butter, eggs, sugar',
-        description: 'Cookies made from scratch.',
+        header: 'Mix&Match: Almond Raspberry',
+        meta: 'Almond extract, flour, butter, and seedless raspberry jam',
+        description: 'Delicious small batch cookies made from scratch.\n\n Mix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+        + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+        + 'harder type cookies can be placed in a loosely covered container.',
         // position: { lat: 49.284982, lng: -123.130252 },
         position: { lat: 49.166590, lng: -123.133569 },
         rating: 5,
         ratingCount: 1,
         price: 7,
         availability: 6,
-        prep: 'ready-to-eat'
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, nuts'
     },
     {
         id: 7,
         supplierId: 2,
         image: '/assets/images/HollyC_chocolatechipcookies.jpg',
         imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpeg',
-        header: 'Mix&Match: Chocolate Chip',
-        meta: 'Flour, butter, eggs, sugar',
-        description: 'Cookies made from scratch.',
+        header: 'Mix&Match: Oatmeal Chocolate',
+        meta: 'Belgium milk chocolate, flour, butter, raw sugar, demerara brown sugar, '
+            + 'baking powder, baking soda, salt, eggs, and ground oatmeal',
+        description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+            + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+            + 'harder type cookies can be placed in a loosely covered container.',
+        // position: { lat: 49.284982, lng: -123.130252 },
         // position: { lat: 49.284982, lng: -123.130252 },
         position: { lat: 49.166590, lng: -123.133569 },
         rating: 5,
         ratingCount: 1,
         price: 7,
         availability: 6,
-        prep: 'ready-to-eat'
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     }
 ];
 

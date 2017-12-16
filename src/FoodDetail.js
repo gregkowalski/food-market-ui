@@ -31,12 +31,12 @@ export default class FoodDetail extends Component {
     }
 
     getFoodPrepSafetyMessage(food) {
-        let prep = 'None';
+        let prep = '';
         if (food.prep === 'frozen') {
             prep = 'Frozen products must be fully cooked for food safety and quality.';
         }
-        else if (food.prep === 'blank') {
-            prep = 'blank';
+        else if (food.prep === 'ready-to-eat') {
+            prep = '';
         }
         return prep;
     }
@@ -94,18 +94,18 @@ export default class FoodDetail extends Component {
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
-                    <div>{food.description}</div>
+                    <div className='user-text'>{food.description}</div>
 
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Allergy Information</Header>
-                    <div><strong>Dishes may contain one or more of the following allergens: </strong> {food.allergy}.</div>
+                    <div className='user-text'><strong>Dishes may contain one or more of the following allergens: </strong> {food.allergy}.</div>
                         
                     <div style={{ marginTop: '15px' }}>For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly. </div>
 
                     <Divider section />
 
-                    <Header as='h3' className='food-detail-header'>Cooking Instructions</Header>
+                    <Header as='h3' className='food-detail-header'>Additional Instructions</Header>
                     <div className='user-text'>{food.instruction}</div>
                     <div style={{marginTop: '15px'}}>{prep}</div>
 
