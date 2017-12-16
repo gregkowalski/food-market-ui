@@ -16,7 +16,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: #f8f8ff; 
+  background: #fbfeff; 
   border-bottom: 2px solid rgb(116, 116, 116);
   box-shadow: 0px 3px 5px rgba(85, 85, 85, 0.603);
   z-index: 1;
@@ -60,7 +60,7 @@
 }
 
 .link {
-  color:  #2d8e9b;
+  color:  #52c5d5;
   text-decoration: none;
   padding-right: 5px;
   padding-left: 5px;
@@ -101,6 +101,12 @@
     text-align: center;
   }
 }
+
+@fontface {
+  font-family: 'Comfortaa', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Comfortaa:300')
+} 
+
 /* end main layout */
 
 .GridRowSpacer {
