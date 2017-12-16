@@ -172,12 +172,11 @@ export default class FoodDetail extends Component {
 
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
-                    <div style={{ float: 'left', color: '#f56363', marginTop: '-8px', fontWeight: 'bold', fontSize: '1em' }}>
-                        {supplier.city}  ·<span style={{ color: '#FF9D26' }}> Joined in {supplier.join}</span>
+                    <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em'}}>
+                        {supplier.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {supplier.join}</span>
                     </div>
-                    <div style={{ clear: 'both', marginTop: '30px' }}></div>
-
-                    <div>{supplier.info}</div>
+                    <div style={{ clear: 'both'}}></div>
+                    <div style={{marginTop: '15px'}}>{supplier.info}</div>
                     <br></br>
                     <div> Languages: <strong> {supplier.lang}</strong></div>
                     <br></br>
