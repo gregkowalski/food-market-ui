@@ -98,10 +98,21 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
+                    <Header as='h3' className='food-detail-header'>Allergy Information</Header>
+                    <div><strong>Dishes may contain one or more of the following allergens: </strong> {food.allergy}.</div>
+                        
+                    <div style={{ marginTop: '15px' }}>For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly. </div>
+
+                    <Divider section />
+
                     <Header as='h3' className='food-detail-header'>Cooking Instructions</Header>
                     <div className='user-text'>{food.instruction}</div>
-                    <br />
-                    <div>{prep}</div>
+                    <div style={{marginTop: '15px'}}>{prep}</div>
+
+                    <Divider section />
+
+                    <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
+                    <div><strong>{food.unit} </strong> per order.  Feeds approximately {food.feed} people. </div>
 
                     <Divider section />
 
@@ -111,10 +122,7 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
-                    <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
-                    <div><strong>{food.unit} </strong> per order.  Feeds approximately {food.feed} people. </div>
-
-                    <Divider section />
+                    
 
                 </ScrollElement>
 
@@ -163,31 +171,21 @@ export default class FoodDetail extends Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-
                     <Divider hidden />
-
-                    {reviews}
+                        {reviews}
 
                 </ScrollElement>
-
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
-                    <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em'}}>
+                    <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
                         {supplier.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {supplier.join}</span>
                     </div>
-                    <div style={{ clear: 'both'}}></div>
-                    <div style={{marginTop: '15px'}}>{supplier.info}</div>
-                    <br></br>
-                    <div> Languages: <strong> {supplier.lang}</strong></div>
-                    <br></br>
-                    <Image size='small' shape='circular' src={supplier.image} />
-
-
-
+                    <div style={{ clear: 'both' }}></div>
+                    <div style={{ marginTop: '15px' }}>{supplier.info}</div>
+                    <div style={{ marginTop: '15px' }}> Languages: <strong> {supplier.lang}</strong></div>
+                    <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={supplier.image} /></div>
                     <Divider section />
-
                 </ScrollElement>
-
             </div>
         );
 

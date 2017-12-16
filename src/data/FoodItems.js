@@ -33,7 +33,8 @@ const MiaoFoodItems = [
         feat: 'No MSG, all-natural',
         unit: '20 dumplings',
         feed: '1-2',
-        prep: 'frozen'
+        prep: 'frozen',
+        allergy: 'gluten, sesame oil'
     },
     {
         id: 2,
