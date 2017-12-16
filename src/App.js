@@ -9,7 +9,7 @@ import { MapContainer } from './MapContainer'
 import Food from './Food'
 import Map from './Map'
 import { Constants } from './Constants'
-
+import AppHeader from './components/AppHeader'
 
 class App extends Component {
   constructor(props) {
@@ -58,28 +58,12 @@ class App extends Component {
     });
   }
 
-
-  
   render() {
     return (
       <div className='wrap'>
 
-        <div className='head'>
-          <div className='head-content'>
-            <div className='head-logo'>
-              <a href="/">
-                <Image style={{ margin: '0 auto' }} height='20px' src='/assets/images/appicon5.png' />
-              </a>
-              <a href="/" className='head-link'>
-                <div style={{ fontSize: '1.6em', fontWeight: 'bolder'}}>{Constants.AppName}</div>
-              </a>
-              <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
-                local. homemade. fresh.
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <AppHeader fixed />
+        
         <div className='bodywrap'>
           <div className='center'>
             <Food

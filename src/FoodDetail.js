@@ -8,6 +8,7 @@ import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import { Constants } from './Constants'
+import AppHeader from './components/AppHeader'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -81,8 +82,8 @@ export default class FoodDetail extends Component {
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
                             offset={-85} duration={500}>
-                            {supplier.name} 
-                           
+                            {supplier.name}
+
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -192,83 +193,65 @@ export default class FoodDetail extends Component {
         );
 
         return (
-
-            <div className='wrap'>
-
-                <div className='headscroll'>
-                    <div className='head-content'>
-                        <div className='head-logo'>
-                            <a href="/">
-                                <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
-                            </a>
-                            <a href="/" className='link'>
-                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{Constants.AppName}</div>
-                            </a>
-                            <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
-                                local. homemade. fresh.
-                                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='bodywrap'>
-                    <div>
-                        <Image className='food-image' src={food.image} />
-                        <div className='detail-head-main'>
-                            <div className="flex-container">
-                                <div className="flex-item-main">
-                                    <ScrollLink activeClass="content-link-active" className='content-link' to="overview"
-                                        spy={true} smooth={true} container={document}
-                                        offset={-85} duration={500}>
-                                        Overview
-                            </ScrollLink>
-
-                                    <ScrollLink activeClass="content-link-active" className='content-link' to="reviews"
-                                        spy={true} smooth={true} container={document}
-                                        offset={-85} duration={500}>
-                                        Reviews
-                            </ScrollLink>
-
-                                    <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
-                                        spy={true} smooth={true} container={document}
-                                        offset={-85} duration={500}>
-                                        The Cook
-                            </ScrollLink>
-
-
-                                </div>
-                                <div className="flex-item-right">
-                                </div>
-                                <div className='detail-head-right'>
-                                </div>
-                            </div>
-                        </div>
+            <div>
+                <AppHeader />
+                <div>
+                    <Image className='food-image' src={food.image} />
+                    <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">
-                                {content}
+                                <ScrollLink activeClass="content-link-active" className='content-link' to="overview"
+                                    spy={true} smooth={true} container={document}
+                                    offset={-85} duration={500}>
+                                    Overview
+                            </ScrollLink>
+
+                                <ScrollLink activeClass="content-link-active" className='content-link' to="reviews"
+                                    spy={true} smooth={true} container={document}
+                                    offset={-85} duration={500}>
+                                    Reviews
+                            </ScrollLink>
+
+                                <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
+                                    spy={true} smooth={true} container={document}
+                                    offset={-85} duration={500}>
+                                    The Cook
+                            </ScrollLink>
+
+
                             </div>
                             <div className="flex-item-right">
-                                <div className='detail-head-right'>
-                                    <Card>
-                                        <Card.Content>
-                                            <Card.Header className='OrderHeader'>
-                                                <div style={{ float: 'left' }}>${food.price} CAD</div>
-                                                <div style={{ clear: 'left' }}></div>
-                                                <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                                                    <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
-                                                        style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                                    <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
-                                                </div>
-                                            </Card.Header>
-                                            <Divider section />
+                            </div>
+                            <div className='detail-head-right'>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex-container">
+                        <div className="flex-item-main">
+                            {content}
+                        </div>
+                        <div className="flex-item-right">
+                            <div className='detail-head-right'>
+                                <Card>
+                                    <Card.Content>
+                                        <Card.Header className='OrderHeader'>
+                                            <div style={{ float: 'left' }}>${food.price} CAD</div>
+                                            <div style={{ clear: 'left' }}></div>
+                                            <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
+                                                <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
+                                                    style={{ marginTop: '4px', marginLeft: '-2px' }} />
+                                                <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
+                                            </div>
+                                        </Card.Header>
+                                        <Divider section />
 
-                                            <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                                <Button fluid color='teal'>Order</Button>
-                                            </RouterLink>
+                                        <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                                            <Button fluid color='teal'>Order</Button>
+                                        </RouterLink>
 
-                                            <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
-                                        </Card.Content>
-                                    </Card>
-                                </div>
+                                        <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
+                                    </Card.Content>
+                                </Card>
                             </div>
                         </div>
                     </div>

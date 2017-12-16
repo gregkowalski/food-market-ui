@@ -3,6 +3,7 @@ import FoodItems from './data/FoodItems'
 import queryString from 'query-string'
 import { Image } from 'semantic-ui-react'
 import { Constants } from './Constants'
+import AppHeader from './components/AppHeader'
 
 export default class OrderSuccess extends React.Component {
 
@@ -41,33 +42,13 @@ export default class OrderSuccess extends React.Component {
         }
 
         return (
-
-
-            <div className='wrap'>
-
-                <div className='headscroll'>
-                    <div className='head-content'>
-                        <div className='head-logo'>
-                            <a href="/">
-                                <Image style={{ margin: '0 auto' }} height='24px' src='/assets/images/heart.png' />
-                            </a>
-                            <a href="/" className='link'>
-                                <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{Constants.AppName}</div>
-                            </a>
-                            <div id="content-desktop" style={{ fontSize: '1.1em', fontWeight: 'bold', marginLeft: '2px' }}>
-                                local. homemade. fresh.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='bodywrap'>
-                    <div style={{ marginLeft: '1em', marginTop: '5em' }}>
-                        <h1>Success</h1>
-                        <span>Your <strong>{food.header}</strong> order has been placed{message}!</span>
-                    </div>
+            <div>
+                <AppHeader />
+                <div style={{ marginLeft: '1em', marginTop: '2em' }}>
+                <h1 style={{ color: '#52c5d5' }}>Success!</h1>
+                    <span>Your <strong>{food.header}</strong> order has been placed{message}.</span>
                 </div>
             </div>
-
         );
     }
 }

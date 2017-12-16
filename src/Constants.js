@@ -1,3 +1,3 @@
 export const Constants = {
-    AppName: 'foodcraft'
+    AppName: 'foodnomenon'
 }
