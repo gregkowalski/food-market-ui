@@ -33,13 +33,14 @@ const MiaoFoodItems = [
         feat: 'No MSG, all-natural',
         unit: '20 dumplings',
         feed: '1-2',
-        prep: 'frozen'
+        prep: 'frozen',
+        allergy: 'gluten, sesame oil'
     },
     {
         id: 2,
         supplierId: 2,
-        image: '/assets/images/salmon-dish-food-meal.jpeg',
-        imageSmall: '/assets/images/salmon-dish-food-meal_small.jpeg',
+        image: '/assets/images/HollyC_peartart.jpg',
+        imageSmall: '/assets/images/HollyC_peartart_small.jpeg',
         header: 'Pear Almond Tart',
         meta: 'Almond flour, flour, almond extract, butter, pears, eggs, cinnamon, sugar.',
         description: 'A pear tart that hits the sweet spot.',
@@ -51,15 +52,17 @@ const MiaoFoodItems = [
         ratingCount: 3,
         price: 18,
         availability: 3,
+        feat: 'All-natural',
         unit: '1 pie',
         feed: '6-8',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'nuts, wheat, eggs, milk, gluten'
     },
     {
         id: 3,
         supplierId: 2,
-        image: '/assets/images/vegetables-italian-pizza-restaurant.jpg',
-        imageSmall: '/assets/images/vegetables-italian-pizza-restaurant_small.jpg',
+        image: '/assets/images/HollyC_baconcasserole.jpg',
+        imageSmall: '/assets/images/HollyC_baconcasserole.jpeg',
         header: 'Spinach, Bacon, and Sausage Casserole',
         meta: 'Onions, cheese, bacon, sausage, bread, spinach, milk, eggs',
         description: 'Our family favourite casserole.',
@@ -69,9 +72,11 @@ const MiaoFoodItems = [
         ratingCount: 3,
         price: 25,
         availability: 3,
+        feat: 'All-natural',
         unit: '1 9x13 casserole dish',
         feed: '6-8',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     },
     {
         id: 4,
@@ -87,24 +92,85 @@ const MiaoFoodItems = [
         ratingCount: 1,
         price: 8.50,
         availability: 3,
+        feat: 'All-natural',
         unit: '5 cups',
         feed: '2-3',
-        prep: 'ready-to-eat'
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten'
+    },
+    {
+        id: 5,
+        supplierId: 2,
+        image: '/assets/images/HollyC_bwcookies.jpg',
+        imageSmall: '/assets/images/HollyC_bwcookies_small.jpeg',
+        header: 'Mix&Match: Chocolate Crinkle',
+        meta: 'Dark chocolate cocoa powder, eggs, icing sugar, vanilla, vegetable oil, salt, and sugar',
+        description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+            + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+            + 'harder type cookies can be placed in a loosely covered container.',
+        // position: { lat: 49.284982, lng: -123.130252 },
+        position: { lat: 49.166590, lng: -123.133569 },
+        rating: 5,
+        ratingCount: 1,
+        price: 7,
+        availability: 6,
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     },
     {
         id: 6,
-        image: '/assets/images/pastaveg.jpg',
-        imageSmall: '/assets/images/pastaveg_small.jpg',
-        header: 'Pasta',
-        meta: 'Pasta, sauce, veggies, meat',
-        description: 'Some kind of pipe-like pasta that probably has a name but it eludes me. ..but buy it!!!',
+        supplierId: 2,
+        image: '/assets/images/HollyC_redjamcookies.jpg',
+        imageSmall: '/assets/images/HollyC_redjamcookies_small.jpeg',
+        header: 'Mix&Match: Almond Raspberry Thumbprint',
+        meta: 'Almond extract, flour, butter, and seedless raspberry jam',
+        description: 'Delicious small batch cookies made from scratch.\n\n Mix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+        + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+        + 'harder type cookies can be placed in a loosely covered container.',
         // position: { lat: 49.284982, lng: -123.130252 },
         position: { lat: 49.166590, lng: -123.133569 },
-        rating: 4,
-        ratingCount: 46,
-        price: 1,
-        availability: 0,
-        prep: 'ready-to-eat'
+        rating: 5,
+        ratingCount: 1,
+        price: 7,
+        availability: 6,
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, nuts'
+    },
+    {
+        id: 7,
+        supplierId: 2,
+        image: '/assets/images/HollyC_chocolatechipcookies.jpg',
+        imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpeg',
+        header: 'Mix&Match: Oatmeal Chocolate',
+        meta: 'Belgium milk chocolate, flour, butter, raw sugar, demerara brown sugar, '
+            + 'baking powder, baking soda, salt, eggs, and ground oatmeal',
+        description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
+            + 'cookies for $20!',
+        instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
+            + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
+            + 'harder type cookies can be placed in a loosely covered container.',
+        // position: { lat: 49.284982, lng: -123.130252 },
+        // position: { lat: 49.284982, lng: -123.130252 },
+        position: { lat: 49.166590, lng: -123.133569 },
+        rating: 5,
+        ratingCount: 1,
+        price: 7,
+        availability: 6,
+        feat: 'All-natural, no shortening',
+        unit: '12 cookies',
+        feed: '3-6',
+        prep: 'ready-to-eat',
+        allergy: 'wheat, gluten, milk, eggs'
     }
 ];
 

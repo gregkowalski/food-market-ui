@@ -40,16 +40,16 @@ class Food extends Component {
                 <div className='FoodImageBox'>
                   <Image className='FoodImage' src={item.image}/>
                 </div>
-                <div style={{ float: 'left', color: '#f56363', marginTop: '4px', fontSize: '1em'}}><strong>{item.availability} AVAILABLE · 
-                  <span style={{color: '#FF9D26'}}> {item.prep}
+                <div style={{ float: 'left', color: '#60b0f4', marginTop: '4px', fontSize: '1.2em', fontFamily: 'Athiti', fontWeight: '300'}}><strong>{item.availability} available · 
+                  <span style={{color: '#0fb5c3'}}> {item.prep}
                   </span></strong>
                 </div>
             
                 <br></br>
 
                 <Item.Header className='FoodCardHeader'>
-                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>
-                    ${item.price} | {item.header}</div>
+                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti'}}>
+                    ${item.price} · {item.header}</div>
                   <div style={{ clear: 'both' }}></div>
                 </Item.Header>
 
@@ -58,7 +58,7 @@ class Food extends Component {
                   <div style={{ clear: 'both' }}></div>
                   <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
                     <Rating disabled={true} maxRating={5} rating={item.rating} size='large'
-                      style={{ marginTop: '2px', marginLeft: '-2px' }} />
+                      style={{ marginTop: '2px', marginLeft: '-2px', fontFamily: 'Athiti', fontWeight:'300' }} />
                     <div>{item.ratingCount} reviews</div>
                   </div>              
                 </Item.Meta>
