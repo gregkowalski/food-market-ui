@@ -2,22 +2,29 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './test.css'
 import { Image } from 'semantic-ui-react'
-var Carousel = require('nuka-carousel');
+import FoodItems from './data/FoodItems'
+import Carousel from 'nuka-carousel'
 
 class mytest extends React.Component {
 
     render() {
+        // style={{width: '600px', height:'400px', textAlign: 'center'}}>
+        const images = FoodItems.map((item) =>
+            <Image key={item.id} style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }} src={item.images} />
+        );
+
+        
+
         return (
-            <Carousel>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"/>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
-        <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
-      </Carousel>
+            <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
+                {images}
+            </Carousel>
         )
-      }
+    }
 }
+
+{/* <div key={item.id} >
+<Image style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} src={item.image} />
+</div> */}
 
 export default mytest;

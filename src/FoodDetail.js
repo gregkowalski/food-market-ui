@@ -9,6 +9,7 @@ import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import { Constants } from './Constants'
 import AppHeader from './components/AppHeader'
+import Carousel from 'nuka-carousel'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -100,14 +101,14 @@ export default class FoodDetail extends Component {
 
                     <Header as='h3' className='food-detail-header'>Allergy Information</Header>
                     <div className='user-text'><strong>Dishes may contain one or more of the following allergens: </strong> {food.allergy}.</div>
-                        
+
                     <div style={{ marginTop: '15px' }}>For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly. </div>
 
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Additional Instructions</Header>
                     <div className='user-text'>{food.instruction}</div>
-                    <div style={{marginTop: '15px'}}>{prep}</div>
+                    <div style={{ marginTop: '15px' }}>{prep}</div>
 
                     <Divider section />
 
@@ -122,7 +123,7 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
-                    
+
 
                 </ScrollElement>
 
@@ -172,7 +173,7 @@ export default class FoodDetail extends Component {
                         </Grid.Row>
                     </Grid>
                     <Divider hidden />
-                        {reviews}
+                    {reviews}
 
                 </ScrollElement>
                 <ScrollElement name="cook">
@@ -189,11 +190,18 @@ export default class FoodDetail extends Component {
             </div>
         );
 
+        const images = food.images.map((current, index) =>
+            <Image key={index} className='food-image' src={current} />
+        );
+
         return (
             <div>
                 <AppHeader />
                 <div>
-                    <Image className='food-image' src={food.image} />
+                    {/* <Image className='food-image' src={food.image} /> */}
+                    <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
+                        {images}
+                    </Carousel>
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">
@@ -201,21 +209,19 @@ export default class FoodDetail extends Component {
                                     spy={true} smooth={true} container={document}
                                     offset={-85} duration={500}>
                                     Overview
-                            </ScrollLink>
+                                </ScrollLink>
 
                                 <ScrollLink activeClass="content-link-active" className='content-link' to="reviews"
                                     spy={true} smooth={true} container={document}
                                     offset={-85} duration={500}>
                                     Reviews
-                            </ScrollLink>
+                                </ScrollLink>
 
                                 <ScrollLink activeClass="content-link-active" className='content-link' to="cook"
                                     spy={true} smooth={true} container={document}
                                     offset={-85} duration={500}>
                                     The Cook
-                            </ScrollLink>
-
-
+                                </ScrollLink>
                             </div>
                             <div className="flex-item-right">
                             </div>

@@ -2,6 +2,7 @@ const MiaoFoodItems = [
     {
         id: 1,
         supplierId: 1,
+        images: ['/assets/images/Johanndumplings.jpg', '/assets/images/Johannfreezed.jpg'],
         image: '/assets/images/Johanndumplings.jpg',
         imageSmall: '/assets/images/Johanndumplings_small.jpeg',
         header: 'Pork + Chive Dumplings (hormone and MSG-free)',
@@ -39,6 +40,7 @@ const MiaoFoodItems = [
     {
         id: 2,
         supplierId: 2,
+        images: ['/assets/images/HollyC_peartart.jpg'],
         image: '/assets/images/HollyC_peartart.jpg',
         imageSmall: '/assets/images/HollyC_peartart_small.jpeg',
         header: 'Pear Almond Tart',
@@ -61,6 +63,7 @@ const MiaoFoodItems = [
     {
         id: 3,
         supplierId: 2,
+        images: ['/assets/images/HollyC_baconcasserole.jpg'],
         image: '/assets/images/HollyC_baconcasserole.jpg',
         imageSmall: '/assets/images/HollyC_baconcasserole.jpeg',
         header: 'Spinach, Bacon, and Sausage Casserole',
@@ -81,6 +84,7 @@ const MiaoFoodItems = [
     {
         id: 4,
         supplierId: 3,
+        images: ['/assets/images/IanC_pasta.jpg'],
         image: '/assets/images/IanC_pasta.jpg',
         imageSmall: '/assets/images/IanC_pasta_small.jpeg',
         header: 'Super Pasta Specialty',
@@ -101,6 +105,7 @@ const MiaoFoodItems = [
     {
         id: 5,
         supplierId: 2,
+        images: ['/assets/images/HollyC_bwcookies.jpg'],
         image: '/assets/images/HollyC_bwcookies.jpg',
         imageSmall: '/assets/images/HollyC_bwcookies_small.jpeg',
         header: 'Mix&Match: Chocolate Crinkle',
@@ -125,6 +130,7 @@ const MiaoFoodItems = [
     {
         id: 6,
         supplierId: 2,
+        images: ['/assets/images/HollyC_redjamcookies.jpg'],
         image: '/assets/images/HollyC_redjamcookies.jpg',
         imageSmall: '/assets/images/HollyC_redjamcookies_small.jpeg',
         header: 'Mix&Match: Almond Raspberry Thumbprint',
@@ -149,6 +155,7 @@ const MiaoFoodItems = [
     {
         id: 7,
         supplierId: 2,
+        images: ['/assets/images/HollyC_chocolatechipcookies.jpg'],
         image: '/assets/images/HollyC_chocolatechipcookies.jpg',
         imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpeg',
         header: 'Mix&Match: Oatmeal Chocolate',
