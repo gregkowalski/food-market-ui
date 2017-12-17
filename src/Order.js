@@ -19,7 +19,7 @@ export default class Order extends React.Component {
     state = {
         quantity: 1,
         showPricingDetails: false,
-        serviceFeeRate: 0.03,
+        serviceFeeRate: 0.12,
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {}
