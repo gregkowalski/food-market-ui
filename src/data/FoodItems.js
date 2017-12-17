@@ -2,7 +2,7 @@ const MiaoFoodItems = [
     {
         id: 1,
         supplierId: 1,
-        images: ['/assets/images/Johanndumplings.jpg', '/assets/images/Johannfreezed.jpg'],
+        images: ['/assets/images/Johanndumplings.jpg'],
         image: '/assets/images/Johanndumplings.jpg',
         imageSmall: '/assets/images/Johanndumplings_small.jpeg',
         header: 'Pork + Chive Dumplings (hormone and MSG-free)',
@@ -40,7 +40,7 @@ const MiaoFoodItems = [
     {
         id: 2,
         supplierId: 2,
-        images: ['/assets/images/HollyC_peartart.jpg'],
+        images: ['/assets/images/HollyC_peartart.jpg', '/assets/images/HollyC_peartart2.jpg'],
         image: '/assets/images/HollyC_peartart.jpg',
         imageSmall: '/assets/images/HollyC_peartart_small.jpeg',
         header: 'Pear Almond Tart',
@@ -63,7 +63,7 @@ const MiaoFoodItems = [
     {
         id: 3,
         supplierId: 2,
-        images: ['/assets/images/HollyC_baconcasserole.jpg'],
+        images: ['/assets/images/HollyC_baconcasserole.jpg', '/assets/images/HollyC_baconcasserole2.jpeg'],
         image: '/assets/images/HollyC_baconcasserole.jpg',
         imageSmall: '/assets/images/HollyC_baconcasserole.jpeg',
         header: 'Spinach, Bacon, and Sausage Casserole',
@@ -105,11 +105,11 @@ const MiaoFoodItems = [
     {
         id: 5,
         supplierId: 2,
-        images: ['/assets/images/HollyC_bwcookies.jpg'],
+        images: ['/assets/images/HollyC_bwcookies.jpg', '/assets/images/HollyC_bwcookies2.jpg'],
         image: '/assets/images/HollyC_bwcookies.jpg',
         imageSmall: '/assets/images/HollyC_bwcookies_small.jpeg',
         header: 'Mix&Match: Chocolate Crinkle',
-        meta: 'Dark chocolate cocoa powder, eggs, icing sugar, vanilla, vegetable oil, salt, and sugar',
+        meta: 'Dark chocolate cocoa powder, eggs, icing sugar, vanilla, vegetable oil, salt, sugar',
         description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
             + 'cookies for $20!',
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
@@ -130,11 +130,11 @@ const MiaoFoodItems = [
     {
         id: 6,
         supplierId: 2,
-        images: ['/assets/images/HollyC_redjamcookies.jpg'],
+        images: ['/assets/images/HollyC_redjamcookies.jpg', '/assets/images/HollyC_redjamcookies2.jpg'],
         image: '/assets/images/HollyC_redjamcookies.jpg',
         imageSmall: '/assets/images/HollyC_redjamcookies_small.jpeg',
         header: 'Mix&Match: Almond Raspberry Thumbprint',
-        meta: 'Almond extract, flour, butter, and seedless raspberry jam',
+        meta: 'Almond extract, flour, butter, icing sugar, seedless raspberry jam',
         description: 'Delicious small batch cookies made from scratch.\n\n Mix & Match orders: 36 '
             + 'cookies for $20!',
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
@@ -155,12 +155,12 @@ const MiaoFoodItems = [
     {
         id: 7,
         supplierId: 2,
-        images: ['/assets/images/HollyC_chocolatechipcookies.jpg'],
+        images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
         image: '/assets/images/HollyC_chocolatechipcookies.jpg',
         imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpeg',
         header: 'Mix&Match: Oatmeal Chocolate',
         meta: 'Belgium milk chocolate, flour, butter, raw sugar, demerara brown sugar, '
-            + 'baking powder, baking soda, salt, eggs, and ground oatmeal',
+            + 'baking powder, baking soda, salt, eggs, ground oatmeal',
         description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
             + 'cookies for $20!',
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
