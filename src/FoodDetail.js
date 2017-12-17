@@ -77,7 +77,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header as='h2'>
-                        <div style={{ fontSize: '1.1em' }}> {food.header}</div></Header>
+                        <div style={{ fontSize: '1.1em' }}> ${food.price} · {food.header}</div></Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         {food.availability} available · by
                         <ScrollLink className="author-link" to="cook"
@@ -210,7 +210,7 @@ export default class FoodDetail extends Component {
                 <AppHeader />
                 <div>
                     {imageElement}
-                    
+
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">

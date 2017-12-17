@@ -10,7 +10,7 @@ const Suppliers = [
     },
     {
         id: 2,
-        image: '/assets/images/suppliers/matthew.png',
+        image: '/assets/images/suppliers/molly.png',
         name: 'Holly',
         city: 'Richmond',
         info: 'I enjoy making food for family and friends. My kitchen is always cooking up something new!',
