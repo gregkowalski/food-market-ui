@@ -190,18 +190,27 @@ export default class FoodDetail extends Component {
             </div>
         );
 
-        const images = food.images.map((current, index) =>
-            <Image key={index} className='food-image' src={current} />
-        );
+        let imageElement;
+        if (food.images && food.images.length > 1) {
+            const images = food.images.map((current, index) =>
+                <Image key={index} className='food-image' src={current} />
+            );
+            imageElement =
+                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
+                    {images}
+                </Carousel>
+        }
+        else {
+            imageElement =
+                <Image className='food-image' src={food.image} />
+        }
 
         return (
             <div>
                 <AppHeader />
                 <div>
-                    {/* <Image className='food-image' src={food.image} /> */}
-                    <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
-                        {images}
-                    </Carousel>
+                    {imageElement}
+                    
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">
