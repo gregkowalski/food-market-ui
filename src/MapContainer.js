@@ -144,7 +144,7 @@ export class MapContainer extends React.Component {
             </a>
             <Divider hidden />
             <a href={'/#/foods/' + item.id + '/order'}>
-              <Button as='div' fluid color='black'>Order</Button>
+              <Button as='div' fluid color='teal'>Order</Button>
             </a>
           </div>
 
