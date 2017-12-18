@@ -13,6 +13,7 @@ import OrderSuccess from './OrderSuccess'
 import OrderError from './OrderError'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 import FoodEntry from './FoodEntry'
+import 'whatwg-fetch'
 
 import mytest from './test'
 

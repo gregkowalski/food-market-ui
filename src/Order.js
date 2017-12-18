@@ -342,6 +342,21 @@ export default class Order extends React.Component {
             credentials: creds
         });
 
+        var payload = {
+            foodId: food.id,
+            foodName: food.header,
+            totalPrice: this.getTotal(food.price),
+            quantity: this.state.quantity,
+            date: this.state.date,
+            time: this.state.time,
+            apt: this.state.apt,
+            address: this.state.address,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            phone: this.state.phone,
+            email: this.state.email
+        };
+
         let food = this.getFoodItem();
         let address = (this.state.apt ? 'Apt ' + this.state.apt + ', ' : '') + this.state.address;
         let orderText = 'The following order was submitted at ' + new Date() + '\r\n' +
