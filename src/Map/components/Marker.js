@@ -70,7 +70,7 @@ export class Marker extends React.Component {
       icon: icon,
       label: label,
       title: title,
-      draggable: draggable
+      draggable: draggable,
     };
     if (zIndex) {
       pref.zIndex = zIndex;

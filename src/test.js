@@ -1,8 +1,8 @@
 import React from 'react'
 import './test.css'
-import { Image } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
-import Carousel from 'nuka-carousel'
+// import { Image } from 'semantic-ui-react'
+// import FoodItems from './data/FoodItems'
+// import Carousel from 'nuka-carousel'
 
 class mytest extends React.Component {
 

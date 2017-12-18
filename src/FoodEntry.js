@@ -1,12 +1,9 @@
 import React from 'react'
 import './Order.css'
-import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-react'
-import { Accordion, Header, Divider, Form, Segment, Input } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
-import Suppliers from './data/Suppliers'
+import { Image, Message } from 'semantic-ui-react'
+import { Header, Divider, Form, Input } from 'semantic-ui-react'
 import AWS from 'aws-sdk'
 import Autocomplete from 'react-google-autocomplete';
-import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { Route } from 'react-router-dom'
 import moment from 'moment'

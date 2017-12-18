@@ -1,14 +1,9 @@
 import React from 'react'
 import FoodItems from './data/FoodItems'
 import queryString from 'query-string'
-import { Image } from 'semantic-ui-react'
-import { Constants } from './Constants'
 import AppHeader from './components/AppHeader'
 
 export default class OrderSuccess extends React.Component {
-
-
-
 
     state = {
         quantity: 1,

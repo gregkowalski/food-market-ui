@@ -7,7 +7,6 @@ import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
-import { Constants } from './Constants'
 import AppHeader from './components/AppHeader'
 import Carousel from 'nuka-carousel'
 
@@ -19,13 +18,12 @@ export default class FoodDetail extends Component {
     state = {};
 
     getFoodItemId() {
-        return this.props.match.params.id;
+        return parseInt(this.props.match.params.id, 10);
     }
 
     componentDidMount() {
         let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let item = FoodItems.find(x => x.id == id);
+        let item = FoodItems.find(x => x.id === id);
         document.title = item.header;
 
         Scroll.scrollSpy.update();
@@ -44,13 +42,11 @@ export default class FoodDetail extends Component {
 
     render() {
         let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
-        // eslint-disable-next-line 
-        let supplier = Suppliers.find(x => x.id == food.supplierId);
+        let food = FoodItems.find(x => x.id === id);
+        let supplier = Suppliers.find(x => x.id === food.supplierId);
 
         let reviews = Reviews
-            .filter(x => x.foodItemId == id);
+            .filter(x => x.foodItemId === id);
 
         reviews = reviews
             .map(x => (

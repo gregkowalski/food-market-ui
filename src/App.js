@@ -4,11 +4,9 @@
 // import VisibleTodoList from './containers/VisibleTodoList'
 import React, { Component } from 'react'
 import './App.css'
-import { Image } from 'semantic-ui-react'
 import { MapContainer } from './MapContainer'
 import Food from './Food'
 import Map from './Map'
-import { Constants } from './Constants'
 import AppHeader from './components/AppHeader'
 
 class App extends Component {

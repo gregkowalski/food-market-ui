@@ -25,8 +25,7 @@ const MiaoFoodItems = [
             + 'Frozen dumplings should take between 6 to 10 minutes depending on size (you can also cut one in half and take a '
             + 'peek to make sure it\'s fully cooked). Remove the lid and continue to cook and swirling the pan regularly until '
             + 'the remaining water has evaporated and the dumplings are once again nice and crisp.',
-        // position: { lat: 49.287324, lng: -123.141840 },
-        position: { lat: 49.284911, lng: -122.867756 },
+        position: { lat: 49.287324, lng: -123.141840 },
         rating: 5,
         ratingCount: 3,
         price: 8,
@@ -48,8 +47,7 @@ const MiaoFoodItems = [
         description: 'A pear tart that hits the sweet spot.',
         instruction: '*Also available ready-to-eat!\n\nHeating instructions: preheat oven at 350 degrees Fahrenheit (174 degrees Celsius).'
             +' Place into oven and bake for 25-30 mins. Let stand for 5 mins and sprinkle icing sugar on tart.',
-        // position: { lat: 49.285982, lng: -123.125252 },
-        position: { lat: 49.248809, lng: -122.980510 },
+        position: { lat: 49.285982, lng: -123.125252 },
         rating: 5,
         ratingCount: 3,
         price: 18,
@@ -69,8 +67,7 @@ const MiaoFoodItems = [
         header: 'Spinach, Bacon, and Sausage Casserole',
         meta: 'Onions, cheese, bacon, sausage, bread, spinach, milk, eggs',
         description: 'Our family favourite casserole.',
-        // position: { lat: 49.289982, lng: -123.124252 },
-        position: { lat: 49.282729, lng: -123.120738 },
+        position: { lat: 49.289982, lng: -123.124252 },
         rating: 5,
         ratingCount: 3,
         price: 25,
@@ -90,8 +87,7 @@ const MiaoFoodItems = [
         header: 'Super Pasta Specialty',
         meta: 'Rotini durum wheat pasta, tomatoes',
         description: 'A very tasty pasta',
-        // position: { lat: 49.281982, lng: -123.135252 },
-        position: { lat: 49.283763, lng: -122.793206 },
+        position: { lat: 49.281982, lng: -123.135252 },
         rating: 5,
         ratingCount: 1,
         price: 8.50,
@@ -115,8 +111,7 @@ const MiaoFoodItems = [
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
             + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
             + 'harder type cookies can be placed in a loosely covered container.',
-        // position: { lat: 49.284982, lng: -123.130252 },
-        position: { lat: 49.166590, lng: -123.133569 },
+        position: { lat: 49.284982, lng: -123.130252 },
         rating: 5,
         ratingCount: 1,
         price: 7,
@@ -140,8 +135,7 @@ const MiaoFoodItems = [
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
         + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
         + 'harder type cookies can be placed in a loosely covered container.',
-        // position: { lat: 49.284982, lng: -123.130252 },
-        position: { lat: 49.166590, lng: -123.133569 },
+         position: { lat: 49.284982, lng: -123.130252 },
         rating: 5,
         ratingCount: 1,
         price: 7,
@@ -166,9 +160,7 @@ const MiaoFoodItems = [
         instruction: 'When properly stored, freshly baked cookies will last for about 2-3 weeks '
             + 'at normal room temperature. Sealed containers are recommended for soft cookies while '
             + 'harder type cookies can be placed in a loosely covered container.',
-        // position: { lat: 49.284982, lng: -123.130252 },
-        // position: { lat: 49.284982, lng: -123.130252 },
-        position: { lat: 49.166590, lng: -123.133569 },
+        position: { lat: 49.284982, lng: -123.130252 },
         rating: 5,
         ratingCount: 1,
         price: 7,
