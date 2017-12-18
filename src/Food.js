@@ -3,7 +3,7 @@ import './Food.css'
 import { Grid, Button, Item, Image, Rating } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import { Link } from 'react-router-dom'
-
+import Carousel from 'nuka-carousel'
 
 class Food extends Component {
 
@@ -26,52 +26,69 @@ class Food extends Component {
   }
 
   render() {
-    const cards = FoodItems.map((item) =>
+    const cards = FoodItems.map((food) => {
 
-      <Grid.Column mobile={16} tablet={8} computer={5} key={item.id}>
-        <div className='FoodCard'>
-          <a
-            target='_blank'
-            href={'/#/foods/' + item.id}
-            onMouseEnter={(a, b) => this.handleMouseEnter(a, b, item.id)}
-            onMouseLeave={(a, b) => this.handleMouseLeave(a, b, item.id)}>
-            <Item style={{marginBottom: '3em'}}>
-              <Item.Content>
-                <div className='FoodImageBox'>
-                  <Image className='FoodImage' src={item.image}/>
-                </div>
-                <div style={{ float: 'left', color: '#60b0f4', marginTop: '4px', fontSize: '1.2em', fontFamily: 'Athiti', fontWeight: '300'}}><strong>{item.availability} available · 
-                  <span style={{color: '#0fb5c3'}}> {item.prep}
-                  </span></strong>
-                </div>
-            
-                <br></br>
+      let imageElement;
+      if (food.images && food.images.length > 1) {
+        const images = food.images.map((current, index) =>
+          <Image key={index} className='FoodImage' src={current} />
+        );
+        imageElement =
+          <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" decorators={[]}>
+            {images}
+          </Carousel>
+      }
+      else {
+        imageElement = <Image className='FoodImage' src={food.image} />
+      }
 
-                <Item.Header className='FoodCardHeader'>
-                  <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti'}}>
-                    ${item.price} · {item.header}</div>
-                  <div style={{ clear: 'both' }}></div>
-                </Item.Header>
+      return (
+        <Grid.Column mobile={16} tablet={8} computer={5} key={food.id}>
+          <div className='FoodCard'>
+            <a
+              target='_blank'
+              href={'/#/foods/' + food.id}
+              onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.id)}
+              onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.id)}>
+              <Item style={{ marginBottom: '3em' }}>
+                <Item.Content>
+                  <div className='FoodImageBox'>
+                    {imageElement}
+                    {/* <Image className='FoodImage' src={food.image} /> */}
+                  </div>
+                  <div style={{ float: 'left', color: '#60b0f4', marginTop: '4px', fontSize: '1.2em', fontFamily: 'Athiti', fontWeight: '300' }}><strong>{food.availability} available ·
+                  <span style={{ color: '#0fb5c3' }}> {food.prep}
+                    </span></strong>
+                  </div>
 
-                <Item.Meta>
-                <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
-                  <div style={{ clear: 'both' }}></div>
-                  <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
-                    <Rating disabled={true} maxRating={5} rating={item.rating} size='large'
-                      style={{ marginTop: '2px', marginLeft: '-2px', fontFamily: 'Athiti', fontWeight:'300' }} />
-                    <div>{item.ratingCount} reviews</div>
-                  </div>              
-                </Item.Meta>
+                  <br></br>
 
-              </Item.Content>
-            </Item>
-          </a>
-          <Link to={'/foods/' + item.id + '/order'}>
-            <Button as='div' fluid color='teal' className='OrderButton'>Order</Button>
-          </Link>
-        </div>
-      </Grid.Column>
-    );
+                  <Item.Header className='FoodCardHeader'>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti' }}>
+                      ${food.price} · {food.header}</div>
+                    <div style={{ clear: 'both' }}></div>
+                  </Item.Header>
+
+                  <Item.Meta>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
+                    <div style={{ clear: 'both' }}></div>
+                    <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
+                      <Rating disabled={true} maxRating={5} rating={food.rating} size='large'
+                        style={{ marginTop: '2px', marginLeft: '-2px', fontFamily: 'Athiti', fontWeight: '300' }} />
+                      <div>{food.ratingCount} reviews</div>
+                    </div>
+                  </Item.Meta>
+
+                </Item.Content>
+              </Item>
+            </a>
+            <Link to={'/foods/' + food.id + '/order'}>
+              <Button as='div' fluid color='teal' className='OrderButton'>Order</Button>
+            </Link>
+          </div>
+        </Grid.Column>
+      )
+    });
     return (
       <Grid stackable className='FoodCardGroup'>
         {cards}
