@@ -25,7 +25,7 @@ const MiaoFoodItems = [
             + 'Frozen dumplings should take between 6 to 10 minutes depending on size (you can also cut one in half and take a '
             + 'peek to make sure it\'s fully cooked). Remove the lid and continue to cook and swirling the pan regularly until '
             + 'the remaining water has evaporated and the dumplings are once again nice and crisp.',
-        position: { lat: 49.287324, lng: -123.141840 },
+        position: { lat: 49.282094, lng: -123.135252 },
         rating: 5,
         ratingCount: 3,
         price: 8,
@@ -67,7 +67,7 @@ const MiaoFoodItems = [
         header: 'Spinach, Bacon, and Sausage Casserole',
         meta: 'Onions, cheese, bacon, sausage, bread, spinach, milk, eggs',
         description: 'Our family favourite casserole.',
-        position: { lat: 49.289982, lng: -123.124252 },
+        position: { lat: 49.273766, lng: -123.127394},
         rating: 5,
         ratingCount: 3,
         price: 25,
@@ -87,7 +87,7 @@ const MiaoFoodItems = [
         header: 'Super Pasta Specialty',
         meta: 'Rotini durum wheat pasta, tomatoes',
         description: 'A very tasty pasta',
-        position: { lat: 49.281982, lng: -123.135252 },
+        position: { lat: 49.283775, lng: -123.138489 },
         rating: 5,
         ratingCount: 1,
         price: 8.50,
