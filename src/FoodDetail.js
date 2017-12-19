@@ -8,6 +8,7 @@ import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
+import { Icon } from 'semantic-ui-react'
 import Carousel from 'nuka-carousel'
 
 var ScrollLink = Scroll.Link;
@@ -260,6 +261,7 @@ export default class FoodDetail extends Component {
                                         <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
+                                <div style={{textAlign: 'center', color:'#5e5d5d'}}><Icon name='flag outline'/>Report this listing</div>
                             </div>
                         </div>
                     </div>
