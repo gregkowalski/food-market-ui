@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
-import { Button, Card, Image, Rating } from 'semantic-ui-react'
+import { Button, Card, Image, Icon, Rating } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
-import { Icon } from 'semantic-ui-react'
 import Carousel from 'nuka-carousel'
 
 var ScrollLink = Scroll.Link;
@@ -261,7 +260,8 @@ export default class FoodDetail extends Component {
                                         <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
-                                <div style={{textAlign: 'center', color:'#5e5d5d'}}><Icon name='flag outline'/>Report this listing</div>
+                                <div style={{textAlign: 'center', color:'#5e5d5d'}}>
+                                <a href="url"> <Icon name='flag outline'/>Report this listing</a></div>
                             </div>
                         </div>
                     </div>
