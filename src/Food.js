@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Food.css'
-import { Grid, Button, Item, Image, Icon, Rating } from 'semantic-ui-react'
+import { Grid, Button, Item, Image, Rating } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import { Link } from 'react-router-dom'
 import Carousel from 'nuka-carousel'
@@ -31,8 +31,8 @@ class Food extends Component {
       let imageElement;
       if (food.images && food.images.length > 1) {
         const images = food.images.map((current, index) =>
-          <Image 
-            fluid label={{ as: 'a', color: 'olive', content: 'ready', icon: 'checkmark box', ribbon: true }} 
+          <Image
+            fluid label={{ as: 'a', color: 'olive', content: [food.prep], icon: 'checkmark box', ribbon: true }}
             key={index} className='FoodImage' src={current} />
         );
         imageElement =
@@ -41,7 +41,7 @@ class Food extends Component {
           </Carousel>
       }
       else {
-        imageElement = <Image fluid label={{ as: 'a', color: 'pink', content: 'ingredient', icon: 'shopping basket', ribbon: true }}
+        imageElement = <Image fluid label={{ as: 'a', color: 'pink', content: [food.prep], icon: 'shopping basket', ribbon: true }}
           className='FoodImage' src={food.image} />
       }
 
@@ -59,13 +59,6 @@ class Food extends Component {
                     {imageElement}
                     {/* <Image className='FoodImage' src={food.image} /> */}
                   </div>
-                  <div style={{ float: 'left', color: '#60b0f4', marginTop: '4px', fontSize: '1.2em', fontFamily: 'Athiti', fontWeight: '300' }}><strong>{food.availability} available ·
-                  <span style={{ color: '#0fb5c3' }}> {food.prep}
-                    </span></strong>
-                  </div>
-
-                  <br></br>
-
                   <Item.Header className='FoodCardHeader'>
                     <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti' }}>
                       ${food.price} · {food.header}</div>
