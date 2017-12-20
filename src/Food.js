@@ -36,11 +36,19 @@ class Food extends Component {
         foodPrepColor = 'olive';
       }
 
+      let foodPrepIcon = 'shopping basket';
+      if (food.prep === FoodPrepType.frozen) {
+        foodPrepIcon = 'snowflake outline';
+      }
+      else if (food.prep === FoodPrepType.ready) {
+        foodPrepIcon = 'checkmark box';
+      }
+
       let imageElement;
       if (food.images && food.images.length > 1) {
         const images = food.images.map((current, index) =>
           <Image
-            fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: 'checkmark box', ribbon: true }}
+            fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: foodPrepIcon, ribbon: true }}
             key={index} className='FoodImage' src={current} />
         );
         imageElement =
@@ -49,7 +57,7 @@ class Food extends Component {
           </Carousel>
       }
       else {
-        imageElement = <Image fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: 'shopping basket', ribbon: true }}
+        imageElement = <Image fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: foodPrepIcon, ribbon: true }}
           className='FoodImage' src={food.image} />
       }
 
