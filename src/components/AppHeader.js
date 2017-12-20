@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Dropdown, Input } from 'semantic-ui-react'
+import { Image, Dropdown } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
 
@@ -25,12 +25,12 @@ export default class AppHeader extends React.Component {
                      </div>
 
                     </div>
-                    <Dropdown text='search' icon='search' className='head-filter' inline labeled button inline noResultsMessage closeOnChange className='icon'>
+                    <Dropdown text='search' icon='search' className='head-filter' inline labeled button closeOnChange>
                         <Dropdown.Menu>
                             <Dropdown.Header icon='tags' content='Filter by tag' />
                             <Dropdown.Divider />
                             <Dropdown.Item icon='checkmark box' text='Ready-to-eat' />
-                            <Dropdown.Item icon='fire' text='Re-heat' />
+                            <Dropdown.Item icon='fire' text='Reheat' />
                             <Dropdown.Item icon='snowflake outline' text='Frozen' />
                             <Dropdown.Item icon='shopping basket' text='Ingredient' />
                         </Dropdown.Menu>
