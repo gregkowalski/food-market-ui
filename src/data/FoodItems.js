@@ -1,4 +1,10 @@
-const MiaoFoodItems = [
+export const FoodPrepType = {
+    frozen: 'frozen',
+    ready: 'ready-to-eat',
+    ingredient: 'ingredient'
+};
+
+const FoodItems = [
     {
         id: 1,
         supplierId: 1,
@@ -33,7 +39,7 @@ const MiaoFoodItems = [
         feat: 'No MSG, all-natural',
         unit: '20 dumplings',
         feed: '1-2',
-        prep: 'frozen',
+        prep: FoodPrepType.frozen,
         allergy: 'gluten, sesame oil'
     },
     {
@@ -55,7 +61,7 @@ const MiaoFoodItems = [
         feat: 'All-natural',
         unit: '1 pie',
         feed: '6-8',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'nuts, wheat, eggs, milk, gluten'
     },
     {
@@ -75,7 +81,7 @@ const MiaoFoodItems = [
         feat: 'All-natural',
         unit: '1 9x13 casserole dish',
         feed: '6-8',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'wheat, gluten, milk, eggs'
     },
     {
@@ -95,7 +101,7 @@ const MiaoFoodItems = [
         feat: 'All-natural',
         unit: '5 cups',
         feed: '2-3',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'wheat, gluten'
     },
     {
@@ -119,7 +125,7 @@ const MiaoFoodItems = [
         feat: 'All-natural, no shortening',
         unit: '12 cookies',
         feed: '3-6',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'wheat, gluten, milk, eggs'
     },
     {
@@ -143,7 +149,7 @@ const MiaoFoodItems = [
         feat: 'All-natural, no shortening',
         unit: '12 cookies',
         feed: '3-6',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'wheat, gluten, milk, nuts'
     },
     {
@@ -168,10 +174,8 @@ const MiaoFoodItems = [
         feat: 'All-natural, no shortening',
         unit: '12 cookies',
         feed: '3-6',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'wheat, gluten, milk, eggs'
-    }
+    },
 ];
-
-const FoodItems = MiaoFoodItems
 export default FoodItems;

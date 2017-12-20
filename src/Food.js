@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Food.css'
 import { Grid, Button, Item, Image, Rating } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
+import FoodItems, { FoodPrepType } from './data/FoodItems'
 import { Link } from 'react-router-dom'
 import Carousel from 'nuka-carousel'
 
@@ -28,11 +28,19 @@ class Food extends Component {
   render() {
     const cards = FoodItems.map((food) => {
 
+      let foodPrepColor = 'pink';
+      if (food.prep === FoodPrepType.frozen) {
+        foodPrepColor = 'blue';
+      }
+      else if (food.prep === FoodPrepType.ready) {
+        foodPrepColor = 'olive';
+      }
+
       let imageElement;
       if (food.images && food.images.length > 1) {
         const images = food.images.map((current, index) =>
           <Image
-            fluid label={{ as: 'a', color: 'olive', content: [food.prep], icon: 'checkmark box', ribbon: true }}
+            fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: 'checkmark box', ribbon: true }}
             key={index} className='FoodImage' src={current} />
         );
         imageElement =
@@ -41,7 +49,7 @@ class Food extends Component {
           </Carousel>
       }
       else {
-        imageElement = <Image fluid label={{ as: 'a', color: 'pink', content: [food.prep], icon: 'shopping basket', ribbon: true }}
+        imageElement = <Image fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: 'shopping basket', ribbon: true }}
           className='FoodImage' src={food.image} />
       }
 
@@ -78,9 +86,9 @@ class Food extends Component {
                 </Item.Content>
               </Item>
             </a>
-            <Link to={'/foods/' + food.id + '/order'}>
+            {/* <Link to={'/foods/' + food.id + '/order'}>
               <Button as='div' fluid color='teal' className='OrderButton'>Order</Button>
-            </Link>
+            </Link> */}
           </div>
         </Grid.Column>
       )
