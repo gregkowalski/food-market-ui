@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Dropdown } from 'semantic-ui-react'
+import { Image, Dropdown, Icon } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
 
@@ -15,17 +15,16 @@ export default class AppHeader extends React.Component {
                 <div className='head-content'>
                     <div className='head-logo'>
                         <a href="/">
-                            <Image style={{ marginTop: '5px' }} height='30px' src='/assets/images/newcart11.png' />
+                            <Image style={{ marginTop: '5px' }} height='25px' src='/assets/images/newcart11.png' />
                         </a>
-                        
                         <a href="/" className='head-link'>
-                            <div style={{ marginTop: '10px', fontSize: '1.6em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
+                            <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
                             local. homemade. fresh.
                         </div>
                     </div>
-                    <div className='head-filter'>
+                    <div className='head-right'>
                     <Dropdown text='search' icon='search' floating labeled button closeOnChange className='icon'>
                         <Dropdown.Menu>
                             <Dropdown.Header icon='tags' content='Filter by tag' />
@@ -36,7 +35,10 @@ export default class AppHeader extends React.Component {
                             <Dropdown.Item icon='shopping basket' text='Ingredient' />
                         </Dropdown.Menu>
                     </Dropdown>
+
+                    <a href="url" style= {{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
                     </div>
+                    
                 </div>
 
 
