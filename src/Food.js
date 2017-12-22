@@ -83,27 +83,28 @@ class Food extends Component {
               href={'/#/foods/' + food.id}
               onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.id)}
               onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.id)}>
-              <Item style={{ marginBottom: '3em' }}>
+              <Item style={{ marginBottom: '1px' }}>
                 <Item.Content>
                   <div className='FoodImageBox'>
                     {foodImageComponent}
                     {/* <Image className='FoodImage' src={food.image} /> */}
                   </div>
-                  <Item.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti' }}>
-                      ${food.price} · {food.header}</div>
-                    <div style={{ clear: 'both' }}></div>
-                  </Item.Header>
 
                   <Item.Meta>
                     <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ display: 'flex', marginTop: '3px', marginBottom: '10px' }}>
+                    <div style={{ display: 'flex', marginTop: '3px', marginBottom: '3px' }}>
                       <Rating disabled={true} maxRating={5} rating={food.rating} size='large'
                         style={{ marginTop: '2px', marginLeft: '-2px', fontFamily: 'Athiti', fontWeight: '300' }} />
                       <div>{food.ratingCount} reviews</div>
                     </div>
                   </Item.Meta>
+
+                  <Item.Header className='FoodCardHeader'>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti' }}>
+                      ${food.price} · {food.header}</div>
+                    <div style={{ clear: 'both' }}></div>
+                  </Item.Header>
 
                 </Item.Content>
               </Item>
