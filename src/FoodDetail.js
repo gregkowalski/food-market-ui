@@ -261,7 +261,7 @@ export default class FoodDetail extends Component {
                                     </Card.Content>
                                 </Card>
                                 <div style={{textAlign: 'center', color:'#5e5d5d'}}>
-                                <a href="url"> <Icon name='flag outline'/>Report this listing</a></div>
+                                <a href="url" style= {{color: '#5e5d5d'}}> <Icon name='flag outline'/>Report this listing</a></div>
                             </div>
                         </div>
                     </div>
