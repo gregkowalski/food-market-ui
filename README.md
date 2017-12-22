@@ -1,9 +1,3 @@
-# semantic-ui-react-todos
-
-<p align="center"><img src="https://i.imgur.com/3H4CDEK.png" /></p>
-
-This project is the [react-redux Todo List example](https://github.com/reactjs/redux/tree/master/examples/todos) modified to use [semantic-ui](http://semantic-ui.com) components via the [semantic-ui-react](http://react.semantic-ui.com) integration. It is meant as a variation on a well-known example project to familiarize ReactJS developers with the installation and use of Semantic UI.
-
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Running
