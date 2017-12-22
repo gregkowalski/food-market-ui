@@ -443,188 +443,189 @@ export default class Order extends React.Component {
         const { showPricingDetails } = this.state;
 
         return (
-           <div>
+            <div>
                 <AppHeader />
                 <div>
-                <Image src={food.image} className='food-image' />
+                    <Image src={food.image} className='food-image' />
 
-                <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
+                    <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
 
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '2em', fontWeight: 'bold' }}>{food.header}</div>
-                        <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
-                            by {supplier.name}
-                            <Image avatar src={supplier.image} style={{ marginLeft: '10px' }} />
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '2em', fontWeight: 'bold' }}>{food.header}</div>
+                            <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
+                                by {supplier.name}
+                                <Image avatar src={supplier.image} style={{ marginLeft: '10px' }} />
+                            </div>
                         </div>
-                    </div>
-                
 
-                    <Divider />
 
-                    <Header>Quantity ({food.availability} available)</Header>
-                    <Form.Group inline>
-                        <Form.Field>
-                            <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
-                            <Input type='number'
-                                onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
-                                value={this.state.quantity} min={1} max={food.availability}
-                                style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                            <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
-                        </Form.Field>
-                    </Form.Group>
-                    <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
-                    <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' />
+                        <Divider />
 
-                    <Divider />
-
-                    <Form noValidate autoComplete='off'>
-
-                        <Header>Contact Information</Header>
-                        <Form.Group widths='equal'>
-                            <Form.Field required error={this.state.hasErrors.firstName}>
-                                <label>First name</label>
-                                <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Field required error={this.state.hasErrors.lastName}>
-                                <label>Last name</label>
-                                <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
+                        <Header>Quantity ({food.availability} available)</Header>
+                        <Form.Group inline>
+                            <Form.Field>
+                                <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
+                                <Input type='number'
+                                    onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
+                                    value={this.state.quantity} min={1} max={food.availability}
+                                    style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
                             </Form.Field>
                         </Form.Group>
-                        <Form.Group widths='equal'>
-                            <Form.Field required error={this.state.hasErrors.phone}>
-                                <label>Phone</label>
-                                <Input required name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                            </Form.Field>
+                        <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
+                        <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' />
 
-                            <Form.Field required error={this.state.hasErrors.email}>
-                                <label>Email</label>
-                                <Input required name='email' type='email' placeholder='Email' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' />
-                            </Form.Field>
-                        </Form.Group>
-                        <Form.Group widths='equal'>
-                            <Form.Field required error={this.state.hasErrors.address}>
-                                <label>Street Address</label>
-                                <Autocomplete className="order-address"
-                                    name='address'
-                                    onPlaceSelected={(place) => this.handleAddressChange(place)}
-                                    onChange={this.handleContactInfoChange}
-                                    onBlur={this.handleContactInfoBlur}
-                                    types={['address']}
-                                    placeholder='Address'
-                                    componentRestrictions={{ country: 'ca' }} />
-                                <Message error visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Input name='apt' label='Apartment' placeholder='Apartment' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                        </Form.Group>
-                        <Form.Group widths='equal'>
+                        <Divider />
 
-                            <Form.Field required error={this.state.hasErrors.date}>
-                                <label>Date</label>
-                                <SingleDatePicker
-                                    date={this.state.day} // momentPropTypes.momentObj or null
-                                    isOutsideRange={this.isDayOutsideRange}
-                                    onDateChange={day => {
-                                        this.setState({ day });
-                                        this.handleDateChange(day);
-                                    }} // PropTypes.func.isRequired
-                                    focused={this.state.focused} // PropTypes.bool
-                                    onFocusChange={({ focused }) => {
-                                        this.setState({ focused });
-                                        if (!focused) {
-                                            this.handleContactInfoBlur({ target: { name: 'date' } });
+                        <Form noValidate autoComplete='off'>
+
+                            <Header>Contact Information</Header>
+                            <Form.Group widths='equal'>
+                                <Form.Field required error={this.state.hasErrors.firstName}>
+                                    <label>First name</label>
+                                    <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                    <Message error visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
+                                </Form.Field>
+                                <Form.Field required error={this.state.hasErrors.lastName}>
+                                    <label>Last name</label>
+                                    <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                    <Message error visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
+                                </Form.Field>
+                            </Form.Group>
+                            <Form.Group widths='equal'>
+                                <Form.Field required error={this.state.hasErrors.phone}>
+                                    <label>Phone</label>
+                                    <Input required name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                    <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                </Form.Field>
+
+                                <Form.Field required error={this.state.hasErrors.email}>
+                                    <label>Email</label>
+                                    <Input required name='email' type='email' placeholder='Email' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                    <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' />
+                                </Form.Field>
+                            </Form.Group>
+                            <Form.Group widths='equal'>
+                                <Form.Field required error={this.state.hasErrors.address}>
+                                    <label>Street Address</label>
+                                    <Autocomplete className="order-address"
+                                        name='address'
+                                        onPlaceSelected={(place) => this.handleAddressChange(place)}
+                                        onChange={this.handleContactInfoChange}
+                                        onBlur={this.handleContactInfoBlur}
+                                        types={['address']}
+                                        placeholder='Address'
+                                        componentRestrictions={{ country: 'ca' }} />
+                                    <Message error visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
+                                </Form.Field>
+                                <Form.Input name='apt' label='Apartment' placeholder='Apartment' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                            </Form.Group>
+                            <Form.Group widths='equal'>
+
+                                <Form.Field required error={this.state.hasErrors.date}>
+                                    <label>Date</label>
+                                    <SingleDatePicker
+                                        date={this.state.day} // momentPropTypes.momentObj or null
+                                        isOutsideRange={this.isDayOutsideRange}
+                                        onDateChange={day => {
+                                            this.setState({ day });
+                                            this.handleDateChange(day);
+                                        }} // PropTypes.func.isRequired
+                                        focused={this.state.focused} // PropTypes.bool
+                                        onFocusChange={({ focused }) => {
+                                            this.setState({ focused });
+                                            if (!focused) {
+                                                this.handleContactInfoBlur({ target: { name: 'date' } });
+                                            }
+                                        }} // PropTypes.func.isRequired
+                                        numberOfMonths={1}
+                                        placeholder="Date"
+                                        displayFormat={() =>
+                                            //moment.localeData().longDateFormat('LL')
+                                            'MMMM DD, YYYY'
                                         }
-                                    }} // PropTypes.func.isRequired
-                                    numberOfMonths={1}
-                                    placeholder="Date"
-                                    displayFormat={() =>
-                                        //moment.localeData().longDateFormat('LL')
-                                        'MMMM DD, YYYY'
-                                    }
-                                />
-                                <Message error visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Field required error={this.state.hasErrors.time}>
-                                <label>Time</label>
-                                <Dropdown
-                                    placeholder='Time'
-                                    selection
-                                    options={this.times}
-                                    onChange={this.handleTimeChange}
-                                    onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
-                                <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
-                            </Form.Field>
+                                    />
+                                    <Message error visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
+                                </Form.Field>
+                                <Form.Field required error={this.state.hasErrors.time}>
+                                    <label>Time</label>
+                                    <Dropdown
+                                        placeholder='Time'
+                                        selection
+                                        options={this.times}
+                                        onChange={this.handleTimeChange}
+                                        onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
+                                    <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
+                                </Form.Field>
 
-                        </Form.Group>
+                            </Form.Group>
 
-                        <Divider />
+                            <Divider />
 
-                        <Header>Order Summary</Header>
+                            <Header>Order Summary</Header>
 
-                        ${this.getTotal(food.price)} for {this.state.quantity} {food.header}
+                            ${this.getTotal(food.price)} for {this.state.quantity} {food.header}
 
-                        <Accordion>
-                            <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
-                                <Icon name='dropdown' />
-                                See pricing details
+                            <Accordion>
+                                <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
+                                    <Icon name='dropdown' />
+                                    See pricing details
                             </Accordion.Title>
-                            <Accordion.Content active={showPricingDetails}>
-                                <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                                    <Header as='h5'>Payment Breakdown</Header>
-                                    <div>
-                                        <div className='align-left'>
-                                            ${food.price} x {this.state.quantity} {food.header}
-                                        </div>
-                                        <div className='align-right'>
-                                            ${this.getBaseTotal(food.price)}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className='align-left'>
-                                            Service fee
+                                <Accordion.Content active={showPricingDetails}>
+                                    <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
+                                        <Header as='h5'>Payment Breakdown</Header>
+                                        <div>
+                                            <div className='align-left'>
+                                                ${food.price} x {this.state.quantity} {food.header}
                                             </div>
-                                        <div className='align-right'>
-                                            ${this.getServiceFee(food.price)}
+                                            <div className='align-right'>
+                                                ${this.getBaseTotal(food.price)}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style={{
-                                        fontSize: '0.8em', marginLeft: '10px', color: 'gray',
-                                        maxWidth: '250px'
-                                    }}>
-                                        this helps run our platform and keep the lights on
-                                    </div>
-
-                                    <Divider />
-
-                                    <div>
-                                        <div className='align-left'>
-                                            Total (CAD)
+                                        <div>
+                                            <div className='align-left'>
+                                                Service fee
+                                            </div>
+                                            <div className='align-right'>
+                                                ${this.getServiceFee(food.price)}
+                                            </div>
                                         </div>
-                                        <div className='align-right'>
-                                            ${this.getTotal(food.price)}
-                                        </div>
+                                        <div style={{
+                                            fontSize: '0.8em', marginLeft: '10px', color: 'gray',
+                                            maxWidth: '250px'
+                                        }}>
+                                            this helps run our platform and keep the lights on
                                     </div>
-                                </Segment>
-                            </Accordion.Content>
-                        </Accordion>
 
-                        <Divider />
+                                        <Divider />
 
-                        <Checkbox label='I agree to sales policy and customer refund policy.  I also agree to pay the total amount shown, which includes service fees.'
-                            onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
+                                        <div>
+                                            <div className='align-left'>
+                                                Total (CAD)
+                                        </div>
+                                            <div className='align-right'>
+                                                ${this.getTotal(food.price)}
+                                            </div>
+                                        </div>
+                                    </Segment>
+                                </Accordion.Content>
+                            </Accordion>
 
-                        <OrderFormButton
-                            style={{ marginTop: '20px', height: '4em' }} fluid color='black'
-                            disabled={!this.state.acceptedTerms}
-                            onClick={() => this.handleOrderButtonClick()}>
-                            Confirm order for ${this.getTotal(food.price)}
-                        </OrderFormButton>
-                    </Form >
+                            <Divider />
+
+                            <Checkbox label='I agree to sales policy and customer refund policy.  I also agree to pay the total amount shown, which includes service fees.'
+                                onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
+
+                            <OrderFormButton
+                                className='order-confirm-button'
+                                style={{ marginTop: '20px', height: '4em' }} fluid                                
+                                disabled={!this.state.acceptedTerms}
+                                onClick={() => this.handleOrderButtonClick()}>
+                                Confirm my order for ${this.getTotal(food.price)}
+                            </OrderFormButton>
+                        </Form >
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }

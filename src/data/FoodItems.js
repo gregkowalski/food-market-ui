@@ -1,7 +1,8 @@
 export const FoodPrepType = {
     frozen: 'frozen',
     ready: 'ready-to-eat',
-    ingredient: 'ingredient'
+    ingredient: 'ingredient',
+    uncooked: 'uncooked'
 };
 
 const FoodItems = [

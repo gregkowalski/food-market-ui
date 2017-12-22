@@ -25,17 +25,6 @@ class Food extends Component {
     console.log(`Clicked item id=${id}`);
   }
 
-  getFoodPrepTypeColor(food) {
-    let foodPrepColor = 'pink';
-    if (food.prep === FoodPrepType.frozen) {
-      foodPrepColor = 'blue';
-    }
-    else if (food.prep === FoodPrepType.ready) {
-      foodPrepColor = 'olive';
-    }
-    return foodPrepColor;
-  }
-
   getFoodPrepTypeIcon(food) {
     let foodPrepIcon = 'shopping basket';
     if (food.prep === FoodPrepType.frozen) {
@@ -48,14 +37,14 @@ class Food extends Component {
   }
 
   getFoodImageComponent(food) {
-    let foodPrepColor = this.getFoodPrepTypeColor(food);
+    let foodPrepClassName = 'LabelPrep-' + food.prep;
     let foodPrepIcon = this.getFoodPrepTypeIcon(food);
 
     let imageElement;
     if (food.images && food.images.length > 1) {
       const images = food.images.map((current, index) =>
         <Image
-          fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+          fluid label={{ as: 'a', className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
           key={index} className='FoodImage' src={current} />
       );
       imageElement =
@@ -64,7 +53,7 @@ class Food extends Component {
         </Carousel>
     }
     else {
-      imageElement = <Image fluid label={{ as: 'a', color: foodPrepColor, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+      imageElement = <Image fluid label={{ as: 'a', className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
         className='FoodImage' src={food.image} />
     }
     return imageElement;

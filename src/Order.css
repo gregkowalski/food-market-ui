@@ -27,6 +27,14 @@ input[type=number]::-webkit-outer-spin-button {
   transition: none;
 }
 
+.order-confirm-button {
+  background-color:  #4cb99e !important;
+}
+
+.order-confirm-button > .ui.button {
+  background-color:  #4cb99e !important;
+}
+
 /* .DateInput__display-text--focused {
   background: #eeeeee !important;
   border-color: lightgray !important;
