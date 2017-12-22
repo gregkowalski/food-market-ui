@@ -12,7 +12,7 @@
 }
 
 .FoodCardHeader {
-    margin-top: 2px !important;
+    margin-top: 5px !important;
 }
 
 .FoodCardGroup {
@@ -23,11 +23,37 @@
     position: absolute;
     bottom: 0px;
     height: 2.5em;
+    color: #4cb9a0 !important;
 }
 
 .FoodImage {
     width: 100%;
 }
+
+.LabelPrep-ingredient {
+    background-color: rgb(221, 116, 167) !important;
+    font-family: Athiti !important;
+    font-weight: 600 !important;
+}
+
+.LabelPrep-uncooked {
+    background-color: #dfd578 !important;
+    font-family: Athiti !important;
+    font-weight: 600 !important;
+}
+
+.LabelPrep-ready-to-eat {
+    background-color: #7fcfbd !important;
+    font-family: Athiti !important;
+    font-weight: 600 !important;
+}
+
+.LabelPrep-frozen {
+    background-color: #64d4e7 !important;
+    font-family: Athiti !important;
+    font-weight: 600 !important;
+}
+
 
 @media all and (min-width: 768px) {
     .FoodImageBox {

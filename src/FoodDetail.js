@@ -80,7 +80,6 @@ export default class FoodDetail extends Component {
                             spy={true} smooth={true} container={document}
                             offset={-85} duration={500}>
                             {supplier.name}
-
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -254,14 +253,14 @@ export default class FoodDetail extends Component {
                                         <Divider section />
 
                                         <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                            <Button fluid color='teal'>Order</Button>
+                                            <Button fluid color='teal' className='detail-desktop-button'>Order Now</Button>
                                         </RouterLink>
 
                                         <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
                                 <div style={{textAlign: 'center', color:'#5e5d5d'}}>
-                                <a href="url" style= {{color: '#5e5d5d'}}> <Icon name='flag outline'/>Report this listing</a></div>
+                                <a href="url" style={{color: '#5e5d5d'}}> <Icon name='flag outline'/>Report this listing</a></div>
                             </div>
                         </div>
                     </div>
@@ -269,7 +268,7 @@ export default class FoodDetail extends Component {
 
                 <div className='detail-footer'>
                     <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                        <Button fluid color='teal' className='detail-footer-button'>Order</Button>
+                        <Button fluid color='teal' className='detail-footer-button'>Order Now</Button>
                     </RouterLink>
                     <div className='detail-footer-text'>You won't be charged yet</div>
                 </div>

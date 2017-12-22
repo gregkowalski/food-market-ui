@@ -36,7 +36,7 @@ export default class AppHeader extends React.Component {
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    <a href="url" style= {{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
+                    <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
                     </div>
                     
                 </div>
