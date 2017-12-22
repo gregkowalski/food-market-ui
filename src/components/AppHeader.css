@@ -19,6 +19,7 @@
     text-decoration: none;
     padding-right: 5px;
     padding-left: 5px;
+    padding-top: 2px;
     font-family: 'Comfortaa', cursive; 
     font-weight: 300;
     font-size: 1.2em;
@@ -33,6 +34,7 @@
     font-size: 1.26em;
     font-weight: bold;
     margin-left: 2px;
+    margin-top: 9px;
     font-family: 'Special Elite', cursive;    
   }
     
@@ -40,13 +42,13 @@
     width: 100%;
     height: 100%;
     padding-left: 7px;
-    padding-right: 55px;
-    padding-top: 15px;
+    padding-right: 45px;
+    padding-top: 9px;
     padding-bottom: 10px;
   }
 
   .head-filter {
-    float: 'right';
+    float: right;
   }
 
 @media all and (max-width: 767px) {
@@ -55,7 +57,7 @@
     }
       
     .head-content {
-      text-align: center;
+      text-align: justify;
     }
 }
   
