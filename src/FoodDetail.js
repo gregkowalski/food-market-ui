@@ -86,7 +86,9 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-
+                    <div style={{marginTop: '20px'}}>
+                    <Icon name='snowflake' />
+                    </div>
                     <Header as='h3' className='food-detail-header'>Ingredients</Header>
                     <div>{food.meta}</div>
 
