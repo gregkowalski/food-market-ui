@@ -48,6 +48,7 @@ export default class FoodDetail extends Component {
         let reviews = Reviews
             .filter(x => x.foodItemId === id);
 
+
         reviews = reviews
             .map(x => (
                 <div key={x.id}>
@@ -55,6 +56,8 @@ export default class FoodDetail extends Component {
                         <Feed.Event>
                             <Feed.Content>
                                 <Image src={x.image} size='mini' floated='left' shape='circular' />
+                                <div style={{ float: 'right', color: '#5e5d5d' }}>
+                                    <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                                 <Feed.Summary content={x.summary} />
                                 <Feed.Date content={x.date} style={{ marginTop: '-1px' }} />
                                 <Feed.Extra content={x.extraText} style={{ marginTop: '0.8em', maxWidth: '100%' }} />
@@ -129,7 +132,6 @@ export default class FoodDetail extends Component {
                             {food.ratingCount} Reviews
                                     <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
                                 style={{ marginTop: '4px', marginLeft: '14px' }} />
-                            <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
                         </div>
                     </Header>
 
@@ -180,6 +182,9 @@ export default class FoodDetail extends Component {
                     <div style={{ marginTop: '15px' }}>{supplier.info}</div>
                     <div style={{ marginTop: '15px' }}> Languages: <strong> {supplier.lang}</strong></div>
                     <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={supplier.image} /></div>
+
+
+
                     <Divider section />
                 </ScrollElement>
             </div>
@@ -259,8 +264,8 @@ export default class FoodDetail extends Component {
                                         <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
-                                <div style={{textAlign: 'center', color:'#5e5d5d'}}>
-                                <a href="url" style={{color: '#5e5d5d'}}> <Icon name='flag outline'/>Report this listing</a></div>
+                                <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
+                                    <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' />Report this listing</a></div>
                             </div>
                         </div>
                     </div>
