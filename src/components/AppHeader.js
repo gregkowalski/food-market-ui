@@ -25,7 +25,7 @@ export default class AppHeader extends React.Component {
                         </div>
                     </div>
                     <div className='head-right'>
-                    <Dropdown text='search' icon='search' floating labeled button closeOnChange className='icon'>
+                    <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
                         <Dropdown.Menu>
                             <Dropdown.Header icon='tags' content='Filter by tag' />
                             <Dropdown.Divider />
@@ -33,6 +33,8 @@ export default class AppHeader extends React.Component {
                             <Dropdown.Item icon='fire' text='Uncooked' />
                             <Dropdown.Item icon='snowflake outline' text='Frozen' />
                             <Dropdown.Item icon='shopping basket' text='Ingredient' />
+                            <Dropdown.Item icon='motorcycle' text='Delivery' />
+                            <Dropdown.Item icon='hand rock' text='Pick-up' />
                         </Dropdown.Menu>
                     </Dropdown>
 
