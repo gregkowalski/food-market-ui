@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './Food.css'
 import { Grid, Item, Image, Rating } from 'semantic-ui-react'
-import FoodItems, { FoodPrepType } from './data/FoodItems'
-
+import FoodItems from './data/FoodItems'
+import Util from './Util'
 import Carousel from 'nuka-carousel'
 
 class Food extends Component {
@@ -25,26 +25,15 @@ class Food extends Component {
     console.log(`Clicked item id=${id}`);
   }
 
-  getFoodPrepTypeIcon(food) {
-    let foodPrepIcon = 'shopping basket';
-    if (food.prep === FoodPrepType.frozen) {
-      foodPrepIcon = 'snowflake outline';
-    }
-    else if (food.prep === FoodPrepType.ready) {
-      foodPrepIcon = 'checkmark box';
-    }
-    return foodPrepIcon;
-  }
-
   getFoodImageComponent(food) {
     let foodPrepClassName = 'LabelPrep-' + food.prep;
-    let foodPrepIcon = this.getFoodPrepTypeIcon(food);
+    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
     let imageElement;
     if (food.images && food.images.length > 1) {
       const images = food.images.map((current, index) =>
         <Image
-          fluid label={{ as: 'a', className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+          fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
           key={index} className='FoodImage' src={current} />
       );
       imageElement =
@@ -53,7 +42,7 @@ class Food extends Component {
         </Carousel>
     }
     else {
-      imageElement = <Image fluid label={{ as: 'a', className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+      imageElement = <Image fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
         className='FoodImage' src={food.image} />
     }
     return imageElement;

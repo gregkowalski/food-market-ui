@@ -9,6 +9,7 @@ import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
 import Carousel from 'nuka-carousel'
+import Util from './Util'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -69,6 +70,7 @@ export default class FoodDetail extends Component {
             ));
 
         let prep = this.getFoodPrepSafetyMessage(food);
+        let foodPrepIcon = Util.getFoodPrepTypeIcon(food);      
 
         const content = (
             <div className='detail-content'>
@@ -87,7 +89,8 @@ export default class FoodDetail extends Component {
                     </div>
                     <div style={{ clear: 'both' }}></div>
                     <div style={{marginTop: '20px'}}>
-                    <Icon name='snowflake' />
+                                        
+                    <Icon name={foodPrepIcon} /> {food.prep}
                     </div>
                     <Header as='h3' className='food-detail-header'>Ingredients</Header>
                     <div>{food.meta}</div>
