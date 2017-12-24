@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Food.css'
-import { Grid, Item, Image, Rating } from 'semantic-ui-react'
+import { Grid, Item, Image, Rating, Label } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Util from './Util'
 import Carousel from 'nuka-carousel'
@@ -48,10 +48,22 @@ class Food extends Component {
     return imageElement;
   }
 
+  getFoodPrepLabelComponent(food) {
+    let foodPrepClassName = 'LabelPrep-' + food.prep;
+    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
+
+    let labelElement; {
+      labelElement =
+        <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
+    }
+    return labelElement;
+  }
+
   render() {
     const cards = FoodItems.map((food) => {
 
       let foodImageComponent = this.getFoodImageComponent(food);
+      let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
       return (
         <Grid.Column mobile={16} tablet={8} computer={5} key={food.id}>
@@ -68,19 +80,25 @@ class Food extends Component {
                     {/* <Image className='FoodImage' src={food.image} /> */}
                   </div>
 
+
                   <Item.Meta>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}></div>
-                    <div style={{ clear: 'both' }}></div>
-                    <div style={{ display: 'flex', marginTop: '3px', marginBottom: '3px' }}>
-                      <Rating disabled={true} maxRating={5} rating={food.rating} size='large'
-                        style={{ marginTop: '2px', marginLeft: '-2px', fontFamily: 'Athiti', fontWeight: '300' }} />
-                      <div>{food.ratingCount} reviews</div>
+                    <div style={{ display: 'flex', marginTop: '3px' }}>
+                      <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                        style={{ marginTop: '5px', marginLeft: '-2px' }} />
+                      <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500'}}>{food.ratingCount} reviews</span></div>
                     </div>
                   </Item.Meta>
 
+                  <Item.Meta>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '1px', fontWeight: 'bold' }}>
+                      {foodPrepLabelComponent}
+                    </div>
+                  </Item.Meta>
+
+
                   <Item.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: '500', fontFamily: 'Athiti' }}>
-                      ${food.price} · {food.header}</div>
+                    <div style={{ float: 'left', marginTop: '3px', fontSize: '1.36em', fontWeight: '500', fontFamily: 'Athiti' }}>
+                      <span style={{ fontSize: '1.3em' }}> ${food.price} </span>· {food.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Item.Header>
 
