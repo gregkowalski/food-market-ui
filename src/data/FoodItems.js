@@ -181,9 +181,9 @@ const FoodItems = [
     {
         id: 8,
         supplierId: 5,
-        images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
-        image: '/assets/images/HollyC_chocolatechipcookies.jpg',
-        imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpg',
+        images: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rotisserie_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rack_600x410.jpg'],
+        image: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
+        imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
         header: 'Hickory Smoked Beer Can Chicken',
         meta: 'Portobello mushrooms, garlic powder, chili flakes, salt, pepper, olive '
             + 'oil, beer and hickory wood for smoking',
@@ -198,7 +198,7 @@ const FoodItems = [
         feat: 'All-natural, hormone free, hickory smoked',
         unit: '1 whole chicken',
         feed: '3-4',
-        prep: 'ready-to-eat',
+        prep: FoodPrepType.ready,
         allergy: 'gluten'
     }
 ];

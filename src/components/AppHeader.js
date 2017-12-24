@@ -24,7 +24,8 @@ export default class AppHeader extends React.Component {
                             wholesome. homemade. local.
                         </div>
                     </div>
-                    <div className='head-right'>
+                </div>
+                <div className='head-right'>
                     <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
                         <Dropdown.Menu>
                             <Dropdown.Header icon='tags' content='Filter by tag' />
@@ -39,11 +40,7 @@ export default class AppHeader extends React.Component {
                     </Dropdown>
 
                     <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
-                    </div>
                 </div>
-
-
-
             </div>
         );
     }
