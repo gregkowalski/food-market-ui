@@ -181,9 +181,9 @@ const FoodItems = [
     {
         id: 8,
         supplierId: 5,
-        images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
-        image: '/assets/images/HollyC_chocolatechipcookies.jpg',
-        imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpg',
+        images: ['/assets/images/GabeC_SmokedChicken_BeerCan.JPG', '/assets/images/GabeC_SmokedChicken_Rotisserie.JPG', '/assets/images/GabeC_SmokedChicken_Cooling.JPG'],
+        image: '/assets/images/GabeC_SmokedChicken_BeerCan.JPG',
+        imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan.JPG',
         header: 'Hickory Smoked Beer Can Chicken',
         meta: 'Portobello mushrooms, garlic powder, chili flakes, salt, pepper, olive '
             + 'oil, beer and hickory wood for smoking',
