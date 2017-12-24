@@ -19,7 +19,7 @@ const Suppliers = [
     },
     {
         id: 3,
-        image: '/assets/images/suppliers/matthew.png',
+        image: '/assets/images/suppliers/ianchan_profilepic.jpg',
         name: 'Ian',
         city: 'North Burnaby',
         info: 'I love to eat and sharing food is part of that joy.',
@@ -37,7 +37,7 @@ const Suppliers = [
     },
     {
         id: 5,
-        image: '/assets/images/suppliers/matthew.png',
+        image: '/assets/images/suppliers/steve.jpg',
         name: 'Gabe',
         city: 'North Burnaby',
         info: 'I love cooking in my spare time and I get a lot of joy from  making delicous meals for my family and friends. I am eager to share my creations with the world!',
