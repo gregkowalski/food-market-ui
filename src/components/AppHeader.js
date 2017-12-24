@@ -21,7 +21,7 @@ export default class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                            local. homemade. fresh.
+                            wholesome. homemade. local.
                         </div>
                     </div>
                     <div className='head-right'>
@@ -40,7 +40,6 @@ export default class AppHeader extends React.Component {
 
                     <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
                     </div>
-                    
                 </div>
 
 

@@ -12,10 +12,10 @@ const Suppliers = [
         id: 2,
         image: '/assets/images/suppliers/molly.png',
         name: 'Holly',
-        city: 'Richmond',
+        city: 'Coquitlam',
         info: 'I enjoy making food for family and friends. My kitchen is always cooking up something new!',
         join: 'December 2017',
-        lang: 'English'
+        lang: 'English, Cantonese'
     },
     {
         id: 3,
@@ -24,16 +24,25 @@ const Suppliers = [
         city: 'North Burnaby',
         info: 'I love to eat and sharing food is part of that joy.',
         join: 'September 2017',
-        lang: 'English'
+        lang: 'English, Cantonese'
     },
     {
         id: 4,
         image: '/assets/images/suppliers/matthew.png',
         name: 'Pierre',
-        city: 'North Burnaby',
+        city: 'Coquitlam',
         info: 'I really enjoy making food for others.',
         join: 'December 2017',
-        lang: 'English, Mandarin'
+        lang: 'English, Cantonese'
+    },
+    {
+        id: 5,
+        image: '/assets/images/suppliers/matthew.png',
+        name: 'Gabe',
+        city: 'North Burnaby',
+        info: 'I love cooking in my spare time and I get a lot of joy from  making delicous meals for my family and friends. I am eager to share my creations with the world!',
+        join: 'December 2017',
+        lang: 'English, Cantonese'
     }
 ];
 
