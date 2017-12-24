@@ -19,7 +19,7 @@ const Suppliers = [
     },
     {
         id: 3,
-        image: '/assets/images/suppliers/ianchan_profilepic.jpg',
+        image: '/assets/images/suppliers/IanChan_ProfilePic_500x500.jpg',
         name: 'Ian',
         city: 'North Burnaby',
         info: 'I love to eat and sharing food is part of that joy.',
