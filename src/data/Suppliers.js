@@ -37,11 +37,7 @@ const Suppliers = [
     },
     {
         id: 5,
-<<<<<<< af71b57171df6a60256de75457a5c03dfefdf721
         image: '/assets/images/suppliers/steve.jpg',
-=======
-        image: '/assets/images/suppliers/matthew.png',
->>>>>>> Added Gabe cook profile, added Hickory Smoked Beer Can Chicken post, minor change to tag line
         name: 'Gabe',
         city: 'North Burnaby',
         info: 'I love cooking in my spare time and I get a lot of joy from  making delicous meals for my family and friends. I am eager to share my creations with the world!',
