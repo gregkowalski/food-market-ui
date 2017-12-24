@@ -181,9 +181,9 @@ const FoodItems = [
     {
         id: 8,
         supplierId: 5,
-        images: ['/assets/images/GabeC_SmokedChicken_BeerCan.JPG', '/assets/images/GabeC_SmokedChicken_Rotisserie.JPG', '/assets/images/GabeC_SmokedChicken_Cooling.JPG'],
-        image: '/assets/images/GabeC_SmokedChicken_BeerCan.JPG',
-        imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan.JPG',
+        images: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rotisserie_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rack_600x410.jpg'],
+        image: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
+        imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
         header: 'Hickory Smoked Beer Can Chicken',
         meta: 'Portobello mushrooms, garlic powder, chili flakes, salt, pepper, olive '
             + 'oil, beer and hickory wood for smoking',
