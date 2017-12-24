@@ -178,5 +178,28 @@ const FoodItems = [
         prep: FoodPrepType.ready,
         allergy: 'wheat, gluten, milk, eggs'
     },
+    {
+        id: 8,
+        supplierId: 5,
+        images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
+        image: '/assets/images/HollyC_chocolatechipcookies.jpg',
+        imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpg',
+        header: 'Hickory Smoked Beer Can Chicken',
+        meta: 'Portobello mushrooms, garlic powder, chili flakes, salt, pepper, olive '
+            + 'oil, beer and hickory wood for smoking',
+        description: 'Rich hickory smoked flavour, juicy and moist with every bite.'
+            + '\nTry it and you will not believe your taste buds!',
+        instruction: 'Warm and ready to eat.',
+        position: { lat: 49.284982, lng: -123.130252 },
+        rating: 5,
+        ratingCount: 1,
+        price: 25,
+        availability: 3,
+        feat: 'All-natural, hormone free, hickory smoked',
+        unit: '1 whole chicken',
+        feed: '3-4',
+        prep: FoodPrepType.ready,
+        allergy: 'gluten'
+    }
 ];
 export default FoodItems;
