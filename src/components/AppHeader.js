@@ -24,22 +24,21 @@ export default class AppHeader extends React.Component {
                             wholesome. homemade. local.
                         </div>
                     </div>
-                </div>
-                <div className='head-right'>
-                    <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
-                        <Dropdown.Menu>
-                            <Dropdown.Header icon='tags' content='Filter by tag' />
-                            <Dropdown.Divider />
-                            <Dropdown.Item icon='checkmark box' text='Cooked' />
-                            <Dropdown.Item icon='fire' text='Uncooked' />
-                            <Dropdown.Item icon='snowflake outline' text='Frozen' />
-                            <Dropdown.Item icon='shopping basket' text='Ingredient' />
-                            <Dropdown.Item icon='motorcycle' text='Delivery' />
-                            <Dropdown.Item icon='hand rock' text='Pick-up' />
-                        </Dropdown.Menu>
-                    </Dropdown>
-
-                    <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
+                    <div className='head-right'>
+                        <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
+                            <Dropdown.Menu>
+                                <Dropdown.Header icon='tags' content='Filter by tag' />
+                                <Dropdown.Divider />
+                                <Dropdown.Item icon='checkmark box' text='Cooked' />
+                                <Dropdown.Item icon='fire' text='Uncooked' />
+                                <Dropdown.Item icon='snowflake outline' text='Frozen' />
+                                <Dropdown.Item icon='shopping basket' text='Ingredient' />
+                                <Dropdown.Item icon='motorcycle' text='Delivery' />
+                                <Dropdown.Item icon='hand rock' text='Pick-up' />
+                            </Dropdown.Menu>
+                        </Dropdown>
+                        <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
+                    </div>
                 </div>
             </div>
         );
