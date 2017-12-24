@@ -22,7 +22,7 @@ export default class AppHeader extends React.Component {
                         </a>
                         <div className="content-desktop">
                             wholesome. homemade. local.
-              </div>
+                        </div>
                     </div>
                     <div className='head-right'>
                     <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
@@ -40,7 +40,6 @@ export default class AppHeader extends React.Component {
 
                     <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
                     </div>
-                    
                 </div>
 
 
