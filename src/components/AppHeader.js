@@ -29,7 +29,7 @@ export default class AppHeader extends React.Component {
                         <Dropdown.Menu>
                             <Dropdown.Header icon='tags' content='Filter by tag' />
                             <Dropdown.Divider />
-                            <Dropdown.Item icon='checkmark box' text='Ready-to-eat' />
+                            <Dropdown.Item icon='checkmark box' text='Cooked' />
                             <Dropdown.Item icon='fire' text='Uncooked' />
                             <Dropdown.Item icon='snowflake outline' text='Frozen' />
                             <Dropdown.Item icon='shopping basket' text='Ingredient' />
