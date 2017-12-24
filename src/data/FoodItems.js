@@ -1,6 +1,6 @@
 export const FoodPrepType = {
     frozen: 'frozen',
-    ready: 'ready-to-eat',
+    ready: 'cooked',
     ingredient: 'ingredient',
     uncooked: 'uncooked'
 };
