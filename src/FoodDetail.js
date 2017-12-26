@@ -92,13 +92,14 @@ export default class FoodDetail extends Component {
                                         
                     <Icon name={foodPrepIcon} /> {food.prep}
                     </div>
-                    <Header as='h3' className='food-detail-header'>Ingredients</Header>
-                    <div>{food.meta}</div>
-
-                    <Divider section />
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
                     <div className='user-text'>{food.description}</div>
+
+                    <Divider section />
+
+                    <Header as='h3' className='food-detail-header'>Ingredients</Header>
+                    <div>{food.meta}</div>
 
                     <Divider section />
 

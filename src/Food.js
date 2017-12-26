@@ -26,8 +26,8 @@ class Food extends Component {
   }
 
   getFoodImageComponent(food) {
-    let foodPrepClassName = 'LabelPrep-' + food.prep;
-    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
+    // let foodPrepClassName = 'LabelPrep-' + food.prep;
+    // let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
     let imageElement;
     if (food.images && food.images.length > 1) {
