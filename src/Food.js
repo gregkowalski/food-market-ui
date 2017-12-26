@@ -80,6 +80,18 @@ class Food extends Component {
                     {/* <Image className='FoodImage' src={food.image} /> */}
                   </div>
 
+                  <Item.Header className='FoodCardHeader'>
+                    <div style={{ float: 'left', marginTop: '3px', fontSize: '1.36em', fontWeight: '500', fontFamily: 'Athiti' }}>
+                      <span style={{ fontSize: '1.3em' }}> ${food.price} </span>· {food.header}</div>
+                    <div style={{ clear: 'both' }}></div>
+                  </Item.Header>
+
+                  <Item.Meta>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '1px', fontWeight: 'bold' }}>
+                      {foodPrepLabelComponent}
+                    </div>
+                    <div style={{ clear: 'both' }}></div>
+                  </Item.Meta>
 
                   <Item.Meta>
                     <div style={{ display: 'flex', marginTop: '3px' }}>
@@ -88,19 +100,6 @@ class Food extends Component {
                       <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500'}}>{food.ratingCount} reviews</span></div>
                     </div>
                   </Item.Meta>
-
-                  <Item.Meta>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '1px', fontWeight: 'bold' }}>
-                      {foodPrepLabelComponent}
-                    </div>
-                  </Item.Meta>
-
-
-                  <Item.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left', marginTop: '3px', fontSize: '1.36em', fontWeight: '500', fontFamily: 'Athiti' }}>
-                      <span style={{ fontSize: '1.3em' }}> ${food.price} </span>· {food.header}</div>
-                    <div style={{ clear: 'both' }}></div>
-                  </Item.Header>
 
                 </Item.Content>
               </Item>
