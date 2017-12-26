@@ -33,7 +33,7 @@ class Food extends Component {
     if (food.images && food.images.length > 1) {
       const images = food.images.map((current, index) =>
         <Image
-          fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+          // fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
           key={index} className='FoodImage' src={current} />
       );
       imageElement =
@@ -42,7 +42,8 @@ class Food extends Component {
         </Carousel>
     }
     else {
-      imageElement = <Image fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+      imageElement = <Image 
+      // fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
         className='FoodImage' src={food.image} />
     }
     return imageElement;
