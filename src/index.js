@@ -14,8 +14,11 @@ import OrderError from './OrderError'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 import FoodEntry from './FoodEntry'
 import 'whatwg-fetch'
+import { unregister } from './registerServiceWorker';
 
 import mytest from './test'
+
+unregister();
 
 const store = createStore(reducer)
 
