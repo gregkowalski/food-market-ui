@@ -53,18 +53,14 @@ class Food extends Component {
     let foodPrepClassName = 'LabelPrep-' + food.prep;
     let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
-    let labelElement; {
-      labelElement =
+    let labelElement =
         <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
-    }
+    
     return labelElement;
   }
 
   render() {
-
-    <div> Enter dates to see full pricing. Additional fees apply. Taxes may be added.</div>
     const cards = FoodItems.map((food) => {
-
       let foodImageComponent = this.getFoodImageComponent(food);
       let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
