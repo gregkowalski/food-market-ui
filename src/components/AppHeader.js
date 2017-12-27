@@ -15,7 +15,7 @@ export default class AppHeader extends React.Component {
                 <div className='head-content'>
                     <div className='head-logo'>
                         <a href="/">
-                            <Image style={{ marginTop: '5px' }} height='25px' src='/assets/images/bowl.png' />
+                            <Image style={{ marginTop: '9.5px' }} height='22px' src='/assets/images/bowlcity3.png' />
                         </a>
                         <a href="/" className='head-link'>
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
