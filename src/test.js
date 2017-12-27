@@ -288,6 +288,7 @@ class mytest extends React.Component {
         }
         cognitoUser.signOut();
         this.clearSession();
+        this.log('User has been signed out!');
     }
 
     clearSession() {
