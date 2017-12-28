@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
-import { Button, Card, Image, Icon, Rating } from 'semantic-ui-react'
-import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
+import { Button, Card, Image, Icon, Rating, Modal } from 'semantic-ui-react'
+import { Grid, Header, Divider, Feed, Popup } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
@@ -10,6 +10,7 @@ import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
 import Carousel from 'nuka-carousel'
 import Util from './Util'
+import { Constants } from './Constants'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -70,7 +71,7 @@ export default class FoodDetail extends Component {
             ));
 
         let prep = this.getFoodPrepSafetyMessage(food);
-        let foodPrepIcon = Util.getFoodPrepTypeIcon(food);      
+        let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
         const content = (
             <div className='detail-content'>
@@ -88,9 +89,9 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{marginTop: '20px'}}>
-                                        
-                    <Icon name={foodPrepIcon} /> {food.prep}
+                    <div style={{ marginTop: '20px' }}>
+
+                        <Icon name={foodPrepIcon} /> {food.prep}
                     </div>
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
@@ -126,13 +127,9 @@ export default class FoodDetail extends Component {
                     <div>{food.feat}</div>
 
                     <Divider section />
-
-
-
                 </ScrollElement>
 
                 <ScrollElement name="reviews">
-
                     <Header as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
                             {food.ratingCount} Reviews
@@ -175,7 +172,7 @@ export default class FoodDetail extends Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                    <Divider hidden />
+                    <Divider section />
                     {reviews}
 
                 </ScrollElement>
@@ -188,11 +185,49 @@ export default class FoodDetail extends Component {
                     <div style={{ marginTop: '15px' }}>{supplier.info}</div>
                     <div style={{ marginTop: '15px' }}> Languages: <strong> {supplier.lang}</strong></div>
                     <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={supplier.image} /></div>
-
-
-
-                    <Divider section />
                 </ScrollElement>
+                <Divider section />
+
+                <div className='report-listing-mobile'>
+                    {/* style={{ color: '#5e5d5d' }} */}
+                    <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
+                                    </Button>} closeIcon>
+                        <Header icon='lock' content='Do you want to anonymously report this listing?' />
+                        <Modal.Content>
+                            <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more</a></p>
+                        </Modal.Content>
+
+                        <Modal.Actions>
+                            <div className='report-listing-item'>
+                                <Button fluid >
+                                    This shouldn’t be on {Constants.AppName}.
+                                                </Button>
+                                <div>
+                                    <Button fluid >
+                                        I think I got sick from this food.
+                                    </Button>
+                                </div>
+                                <div>
+                                    <Button fluid >
+                                        This is not a real food product.
+                                    </Button>
+                                </div>
+                                <div>
+                                    <Button fluid >
+                                        It's offensive or scam.
+                                    </Button>
+                                </div>
+                                <div style={{marginBottom: '10px'}}>
+                                    <Button fluid >
+                                        It's something else.
+                                    </Button>
+                                </div>
+                            </div>
+                        </Modal.Actions>
+                    </Modal>
+                    <Divider section />
+                </div>
+
             </div>
         );
 
@@ -264,14 +299,83 @@ export default class FoodDetail extends Component {
                                         <Divider section />
 
                                         <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                            <Button fluid color='teal' className='detail-desktop-button'>Order Now</Button>
+                                            <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
+                                                <Button.Content visible>
+                                                    Order Now
+                                            </Button.Content>
+                                                <Button.Content hidden>
+                                                    ${food.price} CAD
+                                                </Button.Content>
+                                            </Button>
                                         </RouterLink>
 
                                         <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
                                 <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
-                                    <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' />Report this listing</a></div>
+                                    {/* style={{ color: '#5e5d5d' }} */}
+
+                                    <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
+                                    </Button>} closeIcon>
+                                        <Header icon='lock' content='Do you want to anonymously report this listing?' />
+                                        <Modal.Content>
+                                            <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more</a></p>
+                                        </Modal.Content>
+
+                                        <Modal.Actions>
+                                            <div className='report-listing-item'>
+                                                <Button>
+                                                    This shouldn’t be on {Constants.AppName}.
+                                                </Button>
+                                                <Popup
+                                                    trigger={<Icon size='large' name='question circle outline' />}
+                                                    content='This contains false/misleading information or may be a fake listing.'
+                                                    on={['click', 'hover']}
+                                                    hideOnScroll />
+                                                <div>
+                                                    <Button >
+                                                        I think I got sick from this food.
+                                                </Button>
+                                                    <Popup
+                                                        trigger={<Icon size='large' name='question circle outline' />}
+                                                        content='This may have unlisted allergens or be unsafe to eat. *Call 9-1-1 if you feel your life may be in danger.'
+                                                        on={['click', 'hover']}
+                                                        hideOnScroll />
+                                                </div>
+                                                <div>
+                                                    <Button >
+                                                        This is not a food product.
+                                                </Button>
+                                                    <Popup
+                                                        trigger={<Icon size='large' name='question circle outline' />}
+                                                        content='This is promoting a service, and not an actual product.'
+                                                        on={['click', 'hover']}
+                                                        hideOnScroll />
+                                                </div>
+                                                <div>
+                                                    <Button >
+                                                        Inappropriate content or spam.
+                                                </Button>
+                                                    <Popup
+                                                        trigger={<Icon size='large' name='question circle outline' />}
+                                                        content='The description of this listing contain violent, graphic, promotional, or other offensive content.'
+                                                        on={['click', 'hover']}
+                                                        hideOnScroll />
+                                                </div>
+                                                <div>
+                                                    <Button >
+                                                        Inappropriate or deceptive photo.
+                                                </Button>
+                                                    <Popup
+                                                        trigger={<Icon size='large' name='question circle outline' />}
+                                                        content='Photos doesn’t match description or it contains violent, graphic, promotional or other offensive content.'
+                                                        on={['click', 'hover']}
+                                                        hideOnScroll />
+                                                </div>
+                                            </div>
+                                        </Modal.Actions>
+                                    </Modal>
+                                </div>
                             </div>
                         </div>
                     </div>

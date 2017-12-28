@@ -21,7 +21,7 @@ export default class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                            wholesome. homemade. local.
+                        local. homemade. wholesome. 
                         </div>
                     </div>
                     <div className='head-right'>

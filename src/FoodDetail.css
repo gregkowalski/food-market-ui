@@ -142,8 +142,26 @@
     color: #52c5d5 !important;
 }
 
-.food-detail-header{
+.food-detail-header {
     color: #189da7 !important; 
+}
+
+.report-listing-item {
+    display: block;
+    align-items: center;
+    margin-top: 5px;
+    font-size: 1.36em; 
+    font-weight: 500  !important;
+    font-family: Athiti  !important;
+}
+
+.report-listing-item > div {
+    margin-top: 5px;
+}
+
+.report-listing-mobile {
+    display: none;
+    color: #5e5d5d;
 }
 
 @media all and (max-width: 767px) {    
@@ -160,7 +178,9 @@
     }
     .detail-head-main {
         display: flex;
-
+    }
+    .report-listing-mobile {
+        display: block;
     }
 }
 /* end main layout */

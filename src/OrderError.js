@@ -1,6 +1,7 @@
 import React from 'react'
 import FoodItems from './data/FoodItems'
 import AppHeader from './components/AppHeader'
+import { Constants } from './Constants'
 
 export default class OrderError extends React.Component {
 
@@ -34,7 +35,7 @@ export default class OrderError extends React.Component {
                 <br />
                     Please return to
                     <a href="/" className='head-link'>
-                        <div style={{ fontSize: '1em', fontWeight: 'bold', display: 'inline' }}>foodcraft</div>
+                        <div style={{ fontSize: '1em', fontWeight: 'bold', display: 'inline' }}>{Constants.AppName}.</div>
                     </a></span>
             </div>
             </div>
