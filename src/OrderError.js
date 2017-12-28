@@ -15,7 +15,7 @@ export default class OrderError extends React.Component {
         return this.props.match.params.id;
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let id = this.getFoodItemId();
         // eslint-disable-next-line 
         let food = FoodItems.find(x => x.id == id);

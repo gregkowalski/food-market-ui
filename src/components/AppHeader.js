@@ -2,14 +2,68 @@ import React from 'react'
 import { Image, Dropdown, Icon } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
+import CognitoUtil from '../CognitoUtil'
+import jwtDecode from 'jwt-decode'
+import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 
 export default class AppHeader extends React.Component {
+
+    state = {};
+    cognitoLoginUrl;
+
+    handleSignIn(e) {
+        e.preventDefault();
+
+        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        auth.getSession();
+    }
+
+    handleSignOut(e) {
+        e.preventDefault();
+
+        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        let session = auth.getCachedSession();
+        if (session && session.isValid()) {
+            auth.signOut();
+        }
+
+        this.setState({ username: null });
+    }
+
+    componentWillMount() {
+        console.log(`location=${location}, location.pathname=${location.pathname}`);
+        CognitoUtil.setLastPathname(location.pathname);
+
+        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        let session = auth.getCachedSession();
+        if (session && session.isValid()) {
+            const jwt = jwtDecode(session.getIdToken().getJwtToken());
+            this.setState({ username: jwt.preferred_username });
+        }
+    }
 
     render() {
         let pos = 'relative';
         if (this.props.fixed) {
             pos = 'fixed';
         }
+
+        const featureToggle = false;
+
+        let sessionElement;
+        if (featureToggle) {
+            if (this.state.username) {
+                sessionElement =
+                    <span>Hello, {this.state.username}
+                        <a href='' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
+                    </span>
+            }
+            else {
+                sessionElement =
+                    <a href='' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+            }
+        }
+
         return (
             <div className='head' style={{ position: pos }}>
                 <div className='head-content'>
@@ -21,7 +75,7 @@ export default class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                        local. homemade. wholesome. 
+                            local. homemade. wholesome.
                         </div>
                     </div>
                     <div className='head-right'>
@@ -37,7 +91,7 @@ export default class AppHeader extends React.Component {
                                 <Dropdown.Item icon='hand rock' text='Pick-up' />
                             </Dropdown.Menu>
                         </Dropdown>
-                        <a href="url" style={{color: 'teal'}}> <Icon name='user outline'/>Log In</a>
+                        {sessionElement}
                     </div>
                 </div>
             </div>

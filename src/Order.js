@@ -34,7 +34,7 @@ export default class Order extends React.Component {
         return FoodItems.find(x => x.id == foodItemId);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let foodItem = this.getFoodItem();
         document.title = foodItem.header;
     }

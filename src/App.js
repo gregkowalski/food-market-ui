@@ -10,6 +10,9 @@ import Map from './Map'
 import AppHeader from './components/AppHeader'
 
 class App extends Component {
+
+  isDebug = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -43,14 +46,18 @@ class App extends Component {
   }
 
   handleFoodItemEnter(itemId) {
-    console.log('handleFoodItemEnter id=' + itemId);
+    if (this.isDebug) {
+      console.log('handleFoodItemEnter id=' + itemId);
+    }
     this.setState({
       hoveredFoodItemId: itemId
     });
   }
 
   handleFoodItemLeave(itemId) {
-    console.log('handleFoodItemLeave id=' + itemId);
+    if (this.isDebug) {
+      console.log('handleFoodItemLeave id=' + itemId);
+    }
     this.setState({
       hoveredFoodItemId: -1
     });
@@ -61,7 +68,7 @@ class App extends Component {
       <div className='wrap'>
 
         <AppHeader fixed />
-        
+
         <div className='bodywrap'>
           <div className='center'>
             <Food
