@@ -120,24 +120,24 @@ export class MapContainer extends React.Component {
           <div>
             <a style={{ cursor: 'pointer' }} target='_blank'
               href={'/foods/' + item.id}>
-              <Card style={{margin: '4px 4px 4px 4px'}}>
+              <Card style={{ margin: '4px 4px 4px 4px' }}>
                 <Card.Content>
                   <Image width='100%' shape='rounded' src={item.imageSmall} />
                   <Card.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left' }}>${item.price} · {item.header}</div>
+                    <div className='marker-header'>${item.price} · {item.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Card.Header>
                   <Card.Meta>
-                    <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                      <Rating disabled={true} maxRating={5} rating={item.rating} size='large'
-                        style={{ marginTop: '-1px', marginLeft: '-2px' }} />
-                      <div>{item.ratingCount}</div>
+                    <div style={{ display: 'flex'}}>
+                      <Rating disabled={true} maxRating={5} rating={item.rating} size='mini'
+                        className='marker-rating-stars' />
+                      <div className='marker-rating-label'>{item.ratingCount} reviews</div>
                     </div>
-                    <div><strong>Ingredients:</strong> {item.meta}</div>
+                    <div className='marker-ingredients'>Ingredients: {item.meta}</div>
                   </Card.Meta>
                   <Card.Description>
-                  {item.description}
-                  
+                    <div className='marker-description'>{item.description} </div>
+
                   </Card.Description>
                 </Card.Content>
               </Card>

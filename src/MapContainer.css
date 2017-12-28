@@ -1,0 +1,58 @@
+.marker-header {
+    display: -webkit-box;
+    float: left;
+    margin-top: 3px;
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1;
+    font-family: Athiti !important;
+    font-weight: 600 !important;
+    font-size: 1.36em;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.marker-rating-stars {
+    margin-top: 7px;
+}
+
+.marker-rating-label {
+    margin-top: 1px;
+    margin-left: -2px;
+    font-family: Athiti !important;
+    font-weight: 500 !important;
+    font-size: 1.1em;
+}
+
+.marker-ingredients {
+    display: -webkit-box;
+    float: left;
+    margin-top: 1px;
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.2;
+    font-family: Athiti;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Athiti !important;
+    font-weight: 400 !important;
+
+}
+
+.marker-description {
+    display: -webkit-box;
+    float: left;
+    margin-top: 1px;
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.3;
+    font-family: Athiti !important;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -13,7 +13,7 @@ const FoodItems = [
         image: '/assets/images/Johanndumplings.jpg',
         imageSmall: '/assets/images/Johanndumplings_small.jpg',
         header: 'Pork + Chive Dumplings (hormone and MSG-free)',
-        meta: 'Hormone-free Pork, Chives, Garlic, non-GMO, gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
+        meta: 'Hormone-free Pork, Chives, Garlic, non-GMO and gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
         description: 'A so-called beloved classic for a reason.  Always made with all-natural hormone-free pork and no MSG!\n\n'
             + 'Recommended dipping sauce: mix to taste using vinegar, water, soy sauce, a splash of sesame oil, a pinch of brown '
             + 'sugar, chopped garlic, and chopped green onions.  Enjoy!',
