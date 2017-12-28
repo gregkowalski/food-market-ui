@@ -41,7 +41,9 @@ const FoodItems = [
         unit: '20 dumplings',
         feed: '1-2',
         prep: FoodPrepType.frozen,
-        allergy: 'gluten, sesame oil'
+        allergy: 'gluten, sesame oil',
+        delivery: true,
+        pickup: true
     },
     {
         id: 2,

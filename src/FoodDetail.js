@@ -74,6 +74,19 @@ export default class FoodDetail extends Component {
         let prep = this.getFoodPrepSafetyMessage(food);
         let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
+        let deliveryElement;
+        if (food.delivery) {
+            deliveryElement =
+                <span><Icon className='food-label-tags' name='motorcycle' /> delivery</span>
+        }
+
+        let pickupElement;
+        if (food.pickup) {
+            pickupElement =
+                <span><Icon className='food-label-tags' name='hand rock' />pick-up</span>
+        }
+
+
         const content = (
             <div className='detail-content'>
 
@@ -91,8 +104,10 @@ export default class FoodDetail extends Component {
                     </div>
                     <div style={{ clear: 'both' }}></div>
                     <div style={{ marginTop: '20px' }}>
-
                         <Icon name={foodPrepIcon} /> {food.prep}
+                        {deliveryElement}
+                        {pickupElement}
+
                     </div>
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
@@ -219,7 +234,7 @@ export default class FoodDetail extends Component {
                                 </div>
                                 <div>
                                     <Button fluid >
-                                        It's offensive or scam.
+                                        It's offensive or a scam.
                                     </Button>
                                 </div>
                                 <div style={{ marginBottom: '10px' }}>

@@ -164,6 +164,10 @@
     color: #5e5d5d;
 }
 
+.food-label-tags {
+    margin-left: 16px !important;
+}
+
 @media all and (max-width: 767px) {    
     .detail-footer {
         display: inherit;
