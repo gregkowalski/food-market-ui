@@ -55,12 +55,12 @@ export default class AppHeader extends React.Component {
             if (this.state.username) {
                 sessionElement =
                     <span>Hello, {this.state.username}
-                        <a href='' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
+                        <a href='#' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
                     </span>
             }
             else {
                 sessionElement =
-                    <a href='' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+                    <a href='#' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
             }
         }
 
