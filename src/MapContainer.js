@@ -1,9 +1,10 @@
 import React from 'react'
 import { Map, Marker, InfoWindow } from './Map'
 // import { Container, Button } from 'semantic-ui-react'
-import { Image, Card, Button, Rating, Divider } from 'semantic-ui-react'
+import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 // import {GoogleApiWrapper} from 'google-maps-react';
 import FoodItems from './data/FoodItems'
+import './MapContainer.css'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -50,9 +51,9 @@ export class MapContainer extends React.Component {
 
   getMarkerImage(foodItem, selectedItemId) {
     if (foodItem.id === selectedItemId) {
-      return '/assets/images/food-icon-selected.png';
+      return '/assets/images/food-icon-selected1.png';
     }
-    return '/assets/images/food-icon.png';
+    return '/assets/images/food-icon1.png';
   }
 
   getZIndex(foodItem, selectedItemId) {
@@ -123,8 +124,7 @@ export class MapContainer extends React.Component {
                 <Card.Content>
                   <Image width='100%' shape='rounded' src={item.imageSmall} />
                   <Card.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left' }}>{item.header}</div>
-                    <div style={{ float: 'right' }}>${item.price}</div>
+                    <div style={{ float: 'left' }}>${item.price} · {item.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Card.Header>
                   <Card.Meta>
@@ -133,19 +133,19 @@ export class MapContainer extends React.Component {
                         style={{ marginTop: '-1px', marginLeft: '-2px' }} />
                       <div>{item.ratingCount}</div>
                     </div>
-                    <div><strong>Availability:</strong> {item.availability}</div>
                     <div><strong>Ingredients:</strong> {item.meta}</div>
                   </Card.Meta>
                   <Card.Description>
-                    {item.description}
+                  {item.description}
+                  
                   </Card.Description>
                 </Card.Content>
               </Card>
             </a>
             <Divider hidden />
-            <a href={'/foods/' + item.id + '/order'}>
+            {/* <a href={'/foods/' + item.id + '/order'}>
               <Button as='div' fluid color='teal'>Order</Button>
-            </a>
+            </a> */}
           </div>
 
 
