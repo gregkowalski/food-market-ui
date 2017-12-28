@@ -7,22 +7,30 @@ import Carousel from 'nuka-carousel'
 
 class Food extends Component {
 
+  isDebug = false;
+
   handleMouseLeave(a, b, id) {
-    console.log(`Mouse left item id=${id}`);
+    if (this.isDebug) {
+      console.log(`Mouse left item id=${id}`);
+    }
     if (this.props.onFoodItemLeave) {
       this.props.onFoodItemLeave(id);
     }
   }
 
   handleMouseEnter(a, b, id) {
-    console.log(`Mouse entered item id=${id}`);
+    if (this.isDebug) {
+      console.log(`Mouse entered item id=${id}`);
+    }
     if (this.props.onFoodItemEnter) {
       this.props.onFoodItemEnter(id);
     }
   }
 
   handleClick(a, b, id) {
-    console.log(`Clicked item id=${id}`);
+    if (this.isDebug) {
+      console.log(`Clicked item id=${id}`);
+    }
   }
 
   getFoodImageComponent(food) {
@@ -42,8 +50,8 @@ class Food extends Component {
         </Carousel>
     }
     else {
-      imageElement = <Image 
-      // fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
+      imageElement = <Image
+        // fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
         className='FoodImage' src={food.image} />
     }
     return imageElement;
@@ -54,8 +62,8 @@ class Food extends Component {
     let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
     let labelElement =
-        <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
-    
+      <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
+
     return labelElement;
   }
 
@@ -69,7 +77,7 @@ class Food extends Component {
           <div className='FoodCard'>
             <a
               target='_blank'
-              href={'/#/foods/' + food.id}
+              href={'/foods/' + food.id}
               onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.id)}
               onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.id)}>
               <Item style={{ marginBottom: '1px' }}>
@@ -96,7 +104,7 @@ class Food extends Component {
                     <div style={{ display: 'flex', marginTop: '1px' }}>
                       <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                         style={{ marginTop: '5px', marginLeft: '-2px' }} />
-                      <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500'}}>{food.ratingCount} reviews</span></div>
+                      <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500' }}>{food.ratingCount} reviews</span></div>
                     </div>
                   </Item.Meta>
 
@@ -115,7 +123,7 @@ class Food extends Component {
         {cards}
       </Grid>
     );
-    
+
   }
 }
 

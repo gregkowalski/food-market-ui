@@ -118,7 +118,7 @@ export class MapContainer extends React.Component {
 
           <div>
             <a style={{ cursor: 'pointer' }} target='_blank'
-              href={'/#/foods/' + item.id}>
+              href={'/foods/' + item.id}>
               <Card style={{margin: '4px 4px 4px 4px'}}>
                 <Card.Content>
                   <Image width='100%' shape='rounded' src={item.imageSmall} />
@@ -143,7 +143,7 @@ export class MapContainer extends React.Component {
               </Card>
             </a>
             <Divider hidden />
-            <a href={'/#/foods/' + item.id + '/order'}>
+            <a href={'/foods/' + item.id + '/order'}>
               <Button as='div' fluid color='teal'>Order</Button>
             </a>
           </div>

@@ -3,7 +3,7 @@ import './test.css'
 import { Button, Icon, Input, Segment } from 'semantic-ui-react'
 import apigClientFactory from 'aws-api-gateway-client'
 import {
-    AWSCognito,
+    //AWSCognito,
     CognitoUserPool,
     CognitoUserAttribute,
     CognitoUser,
@@ -28,13 +28,12 @@ class mytest extends React.Component {
     _authenticatedUser;
     FB;
 
-    componentDidMount() {
+    componentWillMount() {
         var config = {
             region: 'us-west-2',
             invokeUrl: 'https://be.cosmo-test.com/v1'
         };
         this._apigClient = apigClientFactory.newClient(config);
-
 
         var poolData = {
             UserPoolId: 'us-west-2_mprqsYkPx',
