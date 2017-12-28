@@ -11,6 +11,7 @@ import AppHeader from './components/AppHeader'
 import Carousel from 'nuka-carousel'
 import Util from './Util'
 import { Constants } from './Constants'
+import ShowMore from 'react-show-more';
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -112,9 +113,12 @@ export default class FoodDetail extends Component {
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Additional Instructions</Header>
-                    <div className='user-text'>{food.instruction}</div>
-                    <div style={{ marginTop: '15px' }}>{prep}</div>
-
+                    <ShowMore>
+                        <div className='user-text'>
+                            {food.instruction}
+                        </div>
+                        <div style={{ marginTop: '15px' }}>{prep}</div>
+                    </ShowMore>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
@@ -217,7 +221,7 @@ export default class FoodDetail extends Component {
                                         It's offensive or scam.
                                     </Button>
                                 </div>
-                                <div style={{marginBottom: '10px'}}>
+                                <div style={{ marginBottom: '10px' }}>
                                     <Button fluid >
                                         It's something else.
                                     </Button>
