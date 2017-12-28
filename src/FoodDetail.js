@@ -77,13 +77,13 @@ export default class FoodDetail extends Component {
         let deliveryElement;
         if (food.delivery) {
             deliveryElement =
-                <span><Icon className='food-label-tags' name='motorcycle' /> delivery</span>
+                <span><Icon name='motorcycle' /> delivery</span>
         }
 
         let pickupElement;
         if (food.pickup) {
             pickupElement =
-                <span><Icon className='food-label-tags' name='hand rock' />pick-up</span>
+                <span><Icon name='hand rock' />pick-up</span>
         }
 
 
@@ -103,11 +103,20 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ marginTop: '20px' }}>
-                        <Icon name={foodPrepIcon} /> {food.prep}
-                        {deliveryElement}
-                        {pickupElement}
-
+                    <div style={{ color: '#5e5d5d',  marginTop: '20px' }}>
+                        <Grid doubling columns={5} columns='equal' textAlign='center' >
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <Icon name={foodPrepIcon} /> {food.prep}
+                                </Grid.Column>
+                                <Grid.Column>
+                                    {deliveryElement}
+                                </Grid.Column>
+                                <Grid.Column>
+                                    {pickupElement}
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
                     </div>
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
@@ -247,7 +256,6 @@ export default class FoodDetail extends Component {
                     </Modal>
                     <Divider section />
                 </div>
-
             </div>
         );
 
@@ -333,8 +341,6 @@ export default class FoodDetail extends Component {
                                     </Card.Content>
                                 </Card>
                                 <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
-                                    {/* style={{ color: '#5e5d5d' }} */}
-
                                     <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
                                     </Button>} closeIcon>
                                         <Header icon='lock' content='Do you want to anonymously report this listing?' />
