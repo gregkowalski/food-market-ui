@@ -88,7 +88,7 @@ class Food extends Component {
 
                   <Item.Header className='FoodCardHeader'>
                     <div className='FoodHeader'>
-                      <span style={{ fontSize: '1.3em' }}> ${food.price} </span>· {food.header}</div>
+                     ${food.price} · {food.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Item.Header>
 
