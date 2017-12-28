@@ -87,13 +87,13 @@ class Food extends Component {
                   </Item.Meta>
 
                   <Item.Header className='FoodCardHeader'>
-                    <div style={{ float: 'left', marginTop: '3px', fontSize: '1.36em', fontWeight: '500', fontFamily: 'Athiti' }}>
+                    <div className='FoodHeader'>
                       <span style={{ fontSize: '1.3em' }}> ${food.price} </span>· {food.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Item.Header>
 
                   <Item.Meta>
-                    <div style={{ display: 'flex', marginTop: '3px' }}>
+                    <div style={{ display: 'flex', marginTop: '1px' }}>
                       <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                         style={{ marginTop: '5px', marginLeft: '-2px' }} />
                       <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500'}}>{food.ratingCount} reviews</span></div>

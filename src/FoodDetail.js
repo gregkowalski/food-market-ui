@@ -11,7 +11,7 @@ import AppHeader from './components/AppHeader'
 import Carousel from 'nuka-carousel'
 import Util from './Util'
 import { Constants } from './Constants'
-import ShowMore from 'react-show-more';
+import ShowMore from 'react-show-more'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -112,7 +112,7 @@ export default class FoodDetail extends Component {
 
                     <Divider section />
 
-                    <Header as='h3' className='food-detail-header'>Additional Instructions</Header>
+                    <Header as='h3' className='food-detail-header'>Additional Cooking Instructions</Header>
                     <ShowMore>
                         <div className='user-text'>
                             {food.instruction}

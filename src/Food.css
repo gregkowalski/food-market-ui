@@ -12,7 +12,7 @@
 }
 
 .FoodCardHeader {
-    margin-top: 5px !important;
+    margin-top: 0px !important;
 }
 
 .FoodCardGroup {
@@ -52,6 +52,20 @@
     background-color: #64d4e7 !important;
     font-family: Athiti !important;
     font-weight: 600 !important;
+}
+
+.FoodHeader{
+    display: -webkit-box;
+    float: left;
+    margin-top: 1px;
+    font-size: 1.36em;
+    font-weight: 500;
+    line-height: 1.4;
+    font-family: Athiti;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media all and (min-width: 768px) {
