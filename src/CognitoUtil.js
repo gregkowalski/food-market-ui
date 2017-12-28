@@ -2,10 +2,26 @@ export default class CognitoUtil {
 
   static storageKeyRoot = 'food-market';
 
-  static CognitoDomain = 'https://local-cosmo-test.auth.us-west-2.amazoncognito.com';
+  static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
+  static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
   static CognitoClientAppId = 'dqkgel75ifc13rtlih1hooril';
-  static CognitoCallbackUri = 'http://localhost:3000/cognitoCallback';
+  static RedirectUriSignIn = 'http://localhost:3000/cognitoCallback';
+  static RedirectUriSignOut = 'http://localhost:3000/cognitoSignout';
   static CognitoUserPoolId = 'us-west-2_mprqsYkPx';
+
+  static getCognitoAuthData() {
+      var authData = {
+          ClientId: CognitoUtil.CognitoClientAppId,
+          AppWebDomain: CognitoUtil.AppWebDomain,
+          TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
+          RedirectUriSignIn: CognitoUtil.RedirectUriSignIn,
+          RedirectUriSignOut: CognitoUtil.RedirectUriSignOut,
+          UserPoolId: CognitoUtil.CognitoUserPoolId,
+          // IdentityProvider : '<TODO: your identity provider you want to specify here>',
+          // AdvancedSecurityDataCollectionFlag : <TODO: boolean value indicating whether you want to enable advanced security data collection>
+      };
+      return authData;
+  }
 
   static getUserPoolData() {
     return {
@@ -19,7 +35,7 @@ export default class CognitoUtil {
   }
 
   static getCognitoLoginUrl() {
-    const loginUrl = `${CognitoUtil.CognitoDomain}/login?response_type=token&client_id=${CognitoUtil.CognitoClientAppId}&redirect_uri=${CognitoUtil.CognitoCallbackUri}&scope=openid+profile+aws.cognito.signin.user.admin+email`;
+    const loginUrl = `${CognitoUtil.CognitoDomain}/login?response_type=token&client_id=${CognitoUtil.CognitoClientAppId}&redirect_uri=${CognitoUtil.RedirectUriSignIn}&scope=openid+profile+aws.cognito.signin.user.admin+email`;
     return loginUrl;
   }
 

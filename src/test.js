@@ -40,7 +40,7 @@ class mytest extends React.Component {
             ClientId: 'dqkgel75ifc13rtlih1hooril'
         };
         this._userPool = new CognitoUserPool(poolData);
-        this.FB = window.FB;
+        //this.FB = window.FB;
 
         // fetch('https://01rdlz5p50.execute-api.us-west-2.amazonaws.com/api/messages', {
         //     headers: {

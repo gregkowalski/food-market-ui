@@ -18,7 +18,7 @@ import { unregister } from './registerServiceWorker';
 import CognitoCallback from './CognitoCallback'
 import CognitoSignout from './CognitoSignout'
 
-import mytest from './test'
+//import mytest from './test'
 
 unregister();
 
@@ -31,8 +31,7 @@ render(
       <Switch>
         <Route exact path='/' component={App} />
         <Route path='/search' component={App} />
-        {/* <Route path='/food' component={Food} /> */}
-        <Route path='/test' component={mytest} />
+        {/* <Route path='/test' component={mytest} /> */}
         <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
         <Route path='/foods/:id/orderError' component={OrderError} />
         <Route path='/foods/:id/order' component={Order} />
