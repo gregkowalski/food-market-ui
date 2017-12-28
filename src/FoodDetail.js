@@ -103,8 +103,8 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ color: '#5e5d5d',  marginTop: '20px' }}>
-                        <Grid doubling columns={5} columns='equal' textAlign='center' >
+                    <div style={{ color: '#5e5d5d',  marginTop: '20px', marginLeft: '10px' }}>
+                        <Grid doubling columns={5}  >
                             <Grid.Row>
                                 <Grid.Column>
                                     <Icon name={foodPrepIcon} /> {food.prep}
