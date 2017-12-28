@@ -31,27 +31,31 @@
 }
 
 .LabelPrep-ingredient {
-    background-color: rgb(221, 116, 167) !important;
+    background-color: #ff53afb9 !important;
     font-family: Athiti !important;
     font-weight: 600 !important;
+    /* ff53afb9 */
 }
 
 .LabelPrep-uncooked {
-    background-color: #dfd578 !important;
+    background-color: #ffa86ec5 !important;
     font-family: Athiti !important;
     font-weight: 600 !important;
+    /* ffa86ec5 */
 }
 
 .LabelPrep-cooked {
-    background-color: #7fcfbb !important;
+    background-color: #6aebb9ce !important;
     font-family: Athiti !important;
     font-weight: 600 !important;
+    /* 6aebb9ce */
 }
 
 .LabelPrep-frozen {
-    background-color: #64d4e7 !important;
+    background-color: #59e8f5b9 !important;
     font-family: Athiti !important;
     font-weight: 600 !important;
+    /* 59e8f5b9 */
 }
 
 .FoodHeader{

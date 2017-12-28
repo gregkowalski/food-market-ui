@@ -8,7 +8,7 @@
     font-family: Athiti !important;
     font-weight: 600 !important;
     font-size: 1.36em;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
