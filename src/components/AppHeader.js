@@ -48,16 +48,20 @@ export default class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
+        const featureToggle = false;
+
         let sessionElement;
-        if (this.state.username) {
-            sessionElement =
-                <span>Hello, {this.state.username}
-                    <a href='' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
-                </span>
-        }
-        else {
-            sessionElement =
-                <a href='' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+        if (featureToggle) {
+            if (this.state.username) {
+                sessionElement =
+                    <span>Hello, {this.state.username}
+                        <a href='' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
+                    </span>
+            }
+            else {
+                sessionElement =
+                    <a href='' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+            }
         }
 
         return (
@@ -71,7 +75,7 @@ export default class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                        local. homemade. wholesome. 
+                            local. homemade. wholesome.
                         </div>
                     </div>
                     <div className='head-right'>
