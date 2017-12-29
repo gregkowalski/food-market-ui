@@ -5,6 +5,7 @@ import './AppHeader.css'
 import CognitoUtil from '../CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
+import { Link } from 'react-router-dom'
 
 export default class AppHeader extends React.Component {
 
@@ -54,9 +55,16 @@ export default class AppHeader extends React.Component {
         if (featureToggle) {
             if (this.state.username) {
                 sessionElement =
-                    <span>Hello, {this.state.username}
-                        <a href='#' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log Out</a>
-                    </span>
+                    <div>
+                        Hi, 
+                        <Link to='/profile'>
+                            {this.state.username}
+                        </Link>
+                        <a href='#' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}>
+                            <Icon name='user outline' />
+                            Log Out
+                        </a>
+                    </div>
             }
             else {
                 sessionElement =
@@ -94,7 +102,7 @@ export default class AppHeader extends React.Component {
                             </Dropdown>
                         }
                         {featureToggle &&
-                            <div style={{marginTop: '8px'}}>
+                            <div style={{ marginTop: '8px' }}>
                                 {sessionElement}
                             </div>
                         }

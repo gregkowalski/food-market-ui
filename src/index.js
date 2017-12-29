@@ -17,6 +17,7 @@ import 'whatwg-fetch'
 import { unregister } from './registerServiceWorker';
 import CognitoCallback from './CognitoCallback'
 import CognitoSignout from './CognitoSignout'
+import Profile from './Profile'
 
 //import mytest from './test'
 
@@ -39,6 +40,7 @@ render(
         <Route path='/foodEntry' exact component={FoodEntry} />
         <Route path='/cognitoCallback' exact component={CognitoCallback} />
         <Route path='/cognitoSignout' exact component={CognitoSignout} />
+        <Route path='/profile' exact component={Profile} />
       </Switch>
     </BrowserRouter>
   </Provider>,
