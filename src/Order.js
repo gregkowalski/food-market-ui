@@ -2,10 +2,11 @@ import React from 'react'
 import './Order.css'
 import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input } from 'semantic-ui-react'
+import { Radio } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Suppliers from './data/Suppliers'
 import AWS from 'aws-sdk'
-import Autocomplete from 'react-google-autocomplete';
+// import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { Route } from 'react-router-dom'
@@ -442,13 +443,25 @@ export default class Order extends React.Component {
 
         const { showPricingDetails } = this.state;
 
+        let deliveryElement;
+        if (food.delivery) {
+            deliveryElement =
+                <span><Icon name='motorcycle' /> delivery</span>
+        }
+
+        let pickupElement;
+        if (food.pickup) {
+            pickupElement =
+                <span><Icon name='hand rock' />pick-up</span>
+        }
+
         return (
             <div>
                 <AppHeader />
                 <div>
                     <Image src={food.image} className='food-image' />
 
-                    <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
+                    <div className='order-body'>
 
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
@@ -479,7 +492,7 @@ export default class Order extends React.Component {
 
                         <Form noValidate autoComplete='off'>
 
-                            <Header>Contact Information</Header>
+                            {/* <Header>Contact Information</Header>
                             <Form.Group widths='equal'>
                                 <Form.Field required error={this.state.hasErrors.firstName}>
                                     <label>First name</label>
@@ -519,7 +532,29 @@ export default class Order extends React.Component {
                                     <Message error visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
                                 </Form.Field>
                                 <Form.Input name='apt' label='Apartment' placeholder='Apartment' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                            </Form.Group> */}
+
+                            <Form.Group widths='equal'>
+                                <Form.Field>
+                                    <Radio
+                                        label={deliveryElement}
+                                        name='radioGroup'
+                                        value='this'
+                                        checked={this.state.value === 'this'}
+                                        onChange={this.handleChange}
+                                    />
+                                </Form.Field>
+                                <Form.Field>
+                                    <Radio
+                                        label={pickupElement}
+                                        name='radioGroup'
+                                        value='that'
+                                        checked={this.state.value === 'that'}
+                                        onChange={this.handleChange}
+                                    />
+                                </Form.Field>
                             </Form.Group>
+
                             <Form.Group widths='equal'>
 
                                 <Form.Field required error={this.state.hasErrors.date}>
@@ -568,7 +603,7 @@ export default class Order extends React.Component {
                                 {this.state.quantity} {food.header}
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
-                                
+
                             </Segment>
 
                             <Accordion>
@@ -618,7 +653,7 @@ export default class Order extends React.Component {
 
                             <Divider />
 
-                            <Checkbox label="I agree to this site's user policy and customer refund policy.  I also agree to pay the total amount shown, which includes service fees."
+                            <Checkbox label="I agree to this site's user and customer refund policy.  I also agree to pay the total amount shown, which includes service fees."
                                 onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
 
                             <OrderFormButton
