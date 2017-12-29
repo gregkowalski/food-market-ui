@@ -4,10 +4,10 @@ export default class CognitoUtil {
 
   static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
   static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
-  static CognitoClientAppId = 'dqkgel75ifc13rtlih1hooril';
+  static CognitoClientAppId = 'dkra9rqkjer2aqg23lrbp23hv';
   static RedirectUriSignIn = 'http://localhost:3000/cognitoCallback';
   static RedirectUriSignOut = 'http://localhost:3000/cognitoSignout';
-  static CognitoUserPoolId = 'us-west-2_mprqsYkPx';
+  static CognitoUserPoolId = 'us-west-2_TvRu5yb9m';
 
   static getCognitoAuthData() {
       var authData = {
