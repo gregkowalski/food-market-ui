@@ -22,8 +22,11 @@ export default class Order extends React.Component {
         serviceFeeRate: 0.12,
         acceptedTerms: false,
         hasBlurred: {},
-        hasErrors: {}
+        hasErrors: {},
+        value: 'pick-up'
     };
+
+    handleChange = (e, { value }) => this.setState({ value })
 
     getFoodItemId() {
         return this.props.match.params.id;
@@ -446,13 +449,13 @@ export default class Order extends React.Component {
         let deliveryElement;
         if (food.delivery) {
             deliveryElement =
-                <span><Icon name='motorcycle' /> delivery</span>
+                <span><Icon name='motorcycle' /> <strong> Delivery</strong></span>
         }
 
         let pickupElement;
         if (food.pickup) {
             pickupElement =
-                <span><Icon name='hand rock' />pick-up</span>
+                <span><Icon name='hand rock' /> <strong>Pick-up</strong></span>
         }
 
         return (
@@ -535,24 +538,30 @@ export default class Order extends React.Component {
                             </Form.Group> */}
 
                             <Form.Group widths='equal'>
-                                <Form.Field>
-                                    <Radio
-                                        label={deliveryElement}
-                                        name='radioGroup'
-                                        value='this'
-                                        checked={this.state.value === 'this'}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-                                <Form.Field>
-                                    <Radio
-                                        label={pickupElement}
-                                        name='radioGroup'
-                                        value='that'
-                                        checked={this.state.value === 'that'}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
+                                <Form>
+                                    <Form.Field>    
+                                        <Radio
+                                            label=''
+                                            name='radioGroup'
+                                            value='delivery'
+                                            checked={this.state.value === 'delivery'}
+                                            onChange={this.handleChange}
+                                        />
+                                        <span style={{marginLeft: '2px' }}> {deliveryElement}
+                                        </span>
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <Radio
+                                            label=''
+                                            name='radioGroup'
+                                            value='pick-up'
+                                            checked={this.state.value === 'pick-up'}
+                                            onChange={this.handleChange}
+                                        />
+                                        <span style={{marginLeft: '2px' }}> {pickupElement}
+                                        </span>
+                                    </Form.Field>
+                                </Form>
                             </Form.Group>
 
                             <Form.Group widths='equal'>
@@ -601,6 +610,9 @@ export default class Order extends React.Component {
 
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 {this.state.quantity} {food.header}
+                                <Form.Field>
+                                 Order type: <b>{this.state.value}</b>
+                                </Form.Field>
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
 
