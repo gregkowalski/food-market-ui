@@ -28,8 +28,14 @@ export default class CognitoCallback extends React.Component {
 
     render() {
         if (this.state.redirectTo) {
-            return <Redirect to={this.state.redirectTo} />
+            // verify redirect link starts with a / to ensure we're not redirecting to another site
+            if (this.state.redirectTo.length > 0 && this.state.redirectTo[0] === '/') {
+                return <Redirect to={this.state.redirectTo} />
+            }
+            console.error('Invalid redirect path');
+            return <div></div>;
         }
+        console.error('No redirect path');
         return <div></div>;
     }
 }
