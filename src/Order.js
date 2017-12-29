@@ -243,15 +243,15 @@ export default class Order extends React.Component {
             hasErrors.quantity = true;
         }
 
-        hasErrors.firstName = false;
-        if (!state.firstName) {
-            hasErrors.firstName = true;
-        }
+        // hasErrors.firstName = false;
+        // if (!state.firstName) {
+        //     hasErrors.firstName = true;
+        // }
 
-        hasErrors.lastName = false;
-        if (!state.lastName) {
-            hasErrors.lastName = true;
-        }
+        // hasErrors.lastName = false;
+        // if (!state.lastName) {
+        //     hasErrors.lastName = true;
+        // }
 
         hasErrors.phone = false;
         if (!this.validatePhoneNumber(state.phone)) {
@@ -263,10 +263,10 @@ export default class Order extends React.Component {
             hasErrors.email = true;
         }
 
-        hasErrors.address = false;
-        if (!state.address) {
-            hasErrors.address = true;
-        }
+        // hasErrors.address = false;
+        // if (!state.address) {
+        //     hasErrors.address = true;
+        // }
 
         hasErrors.date = false;
         if (!state.date) {
@@ -449,13 +449,13 @@ export default class Order extends React.Component {
         let deliveryElement;
         if (food.delivery) {
             deliveryElement =
-                <span><Icon name='motorcycle' /> <strong> Delivery</strong></span>
+                <strong> Delivery</strong>
         }
 
         let pickupElement;
         if (food.pickup) {
             pickupElement =
-                <span><Icon name='hand rock' /> <strong>Pick-up</strong></span>
+                <strong>Pick-up</strong>
         }
 
         return (
@@ -495,8 +495,39 @@ export default class Order extends React.Component {
 
                         <Form noValidate autoComplete='off'>
 
-                            {/* <Header>Contact Information</Header>
-                            <Form.Group widths='equal'>
+                            <Header>Your Information</Header>
+
+                            <Form.Group widths='4'>
+                                <Form.Field>
+                                    <Segment compact>
+                                        <span style={{ marginRight: '11px' }}>
+                                            {pickupElement}
+                                        </span>
+                                        <Radio toggle
+                                            label=''
+                                            name='radioGroup'
+                                            value='pick-up'
+                                            checked={this.state.value === 'pick-up'}
+                                            onChange={this.handleChange}
+                                        />
+                                    </Segment>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Segment compact>
+                                        <Radio toggle
+                                            label=''
+                                            name='radioGroup'
+                                            value='delivery'
+                                            checked={this.state.value === 'delivery'}
+                                            onChange={this.handleChange}
+                                        />
+                                        <span style={{ marginLeft: '4px' }}> {deliveryElement}
+                                        </span>
+                                    </Segment>
+                                </Form.Field>
+                            </Form.Group>
+
+                            {/* <Form.Group widths='equal'>
                                 <Form.Field required error={this.state.hasErrors.firstName}>
                                     <label>First name</label>
                                     <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
@@ -507,7 +538,7 @@ export default class Order extends React.Component {
                                     <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
                                     <Message error visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
                                 </Form.Field>
-                            </Form.Group>
+                            </Form.Group> */}
                             <Form.Group widths='equal'>
                                 <Form.Field required error={this.state.hasErrors.phone}>
                                     <label>Phone</label>
@@ -521,7 +552,7 @@ export default class Order extends React.Component {
                                     <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' />
                                 </Form.Field>
                             </Form.Group>
-                            <Form.Group widths='equal'>
+                            {/* <Form.Group widths='equal'>
                                 <Form.Field required error={this.state.hasErrors.address}>
                                     <label>Street Address</label>
                                     <Autocomplete className="order-address"
@@ -536,33 +567,6 @@ export default class Order extends React.Component {
                                 </Form.Field>
                                 <Form.Input name='apt' label='Apartment' placeholder='Apartment' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
                             </Form.Group> */}
-
-                            <Form.Group widths='equal'>
-                                <Form>
-                                    <Form.Field>    
-                                        <Radio
-                                            label=''
-                                            name='radioGroup'
-                                            value='delivery'
-                                            checked={this.state.value === 'delivery'}
-                                            onChange={this.handleChange}
-                                        />
-                                        <span style={{marginLeft: '2px' }}> {deliveryElement}
-                                        </span>
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Radio
-                                            label=''
-                                            name='radioGroup'
-                                            value='pick-up'
-                                            checked={this.state.value === 'pick-up'}
-                                            onChange={this.handleChange}
-                                        />
-                                        <span style={{marginLeft: '2px' }}> {pickupElement}
-                                        </span>
-                                    </Form.Field>
-                                </Form>
-                            </Form.Group>
 
                             <Form.Group widths='equal'>
 
@@ -601,7 +605,6 @@ export default class Order extends React.Component {
                                         onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
                                     <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
                                 </Form.Field>
-
                             </Form.Group>
 
                             <Divider />
@@ -611,7 +614,7 @@ export default class Order extends React.Component {
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 {this.state.quantity} {food.header}
                                 <Form.Field>
-                                 Order type: <b>{this.state.value}</b>
+                                    Order type: <b>{this.state.value}</b>
                                 </Form.Field>
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
