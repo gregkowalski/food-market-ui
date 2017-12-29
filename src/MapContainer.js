@@ -120,7 +120,7 @@ export class MapContainer extends React.Component {
           <div>
             <a style={{ cursor: 'pointer' }} target='_blank'
               href={'/foods/' + item.id}>
-              <Card style={{ margin: '4px 4px 4px 4px' }}>
+              <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                 <Card.Content>
                   <Image width='100%' shape='rounded' src={item.imageSmall} />
                   <Card.Header className='FoodCardHeader'>

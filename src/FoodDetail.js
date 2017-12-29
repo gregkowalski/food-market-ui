@@ -126,7 +126,7 @@ export default class FoodDetail extends Component {
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Ingredients</Header>
-                    <div>{food.meta}</div>
+                    <div>{food.meta}.</div>
 
                     <Divider section />
 

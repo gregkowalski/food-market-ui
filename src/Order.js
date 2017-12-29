@@ -17,7 +17,7 @@ export default class Order extends React.Component {
 
     state = {
         quantity: 1,
-        showPricingDetails: false,
+        showPricingDetails: true,
         serviceFeeRate: 0.12,
         acceptedTerms: false,
         hasBlurred: {},
@@ -451,7 +451,7 @@ export default class Order extends React.Component {
                     <div style={{ width: '90%', margin: '20px auto 0 auto', paddingBottom: '20px' }}>
 
                         <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2em', fontWeight: 'bold' }}>{food.header}</div>
+                            <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
                             <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
                                 by {supplier.name}
                                 <Image avatar src={supplier.image} style={{ marginLeft: '10px' }} />
@@ -562,9 +562,14 @@ export default class Order extends React.Component {
 
                             <Divider />
 
-                            <Header>Order Summary</Header>
+                            <Header>My Order Summary</Header>
 
-                            ${this.getTotal(food.price)} for {this.state.quantity} {food.header}
+                            <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
+                                {this.state.quantity} {food.header}
+                                <Divider />
+                                <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
+                                
+                            </Segment>
 
                             <Accordion>
                                 <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
@@ -574,15 +579,15 @@ export default class Order extends React.Component {
                                 <Accordion.Content active={showPricingDetails}>
                                     <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                         <Header as='h5'>Payment Breakdown</Header>
-                                        <div>
+                                        <div className='order-summary-row'>
                                             <div className='align-left'>
-                                                ${food.price} x {this.state.quantity} {food.header}
+                                                {this.state.quantity} x ${food.price} {food.header}
                                             </div>
                                             <div className='align-right'>
                                                 ${this.getBaseTotal(food.price)}
                                             </div>
                                         </div>
-                                        <div>
+                                        <div className='order-summary-row'>
                                             <div className='align-left'>
                                                 Service fee
                                             </div>
@@ -599,12 +604,12 @@ export default class Order extends React.Component {
 
                                         <Divider />
 
-                                        <div>
+                                        <div className='order-summary-row'>
                                             <div className='align-left'>
-                                                Total (CAD)
-                                        </div>
+                                                <strong>Total (CAD)</strong>
+                                            </div>
                                             <div className='align-right'>
-                                                ${this.getTotal(food.price)}
+                                                <strong> ${this.getTotal(food.price)}</strong>
                                             </div>
                                         </div>
                                     </Segment>
@@ -613,12 +618,12 @@ export default class Order extends React.Component {
 
                             <Divider />
 
-                            <Checkbox label='I agree to sales policy and customer refund policy.  I also agree to pay the total amount shown, which includes service fees.'
+                            <Checkbox label="I agree to this site's user policy and customer refund policy.  I also agree to pay the total amount shown, which includes service fees."
                                 onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
 
                             <OrderFormButton
                                 className='order-confirm-button'
-                                style={{ marginTop: '20px', height: '4em' }} fluid                                
+                                style={{ marginTop: '20px', height: '4em' }} fluid
                                 disabled={!this.state.acceptedTerms}
                                 onClick={() => this.handleOrderButtonClick()}>
                                 Confirm my order for ${this.getTotal(food.price)}

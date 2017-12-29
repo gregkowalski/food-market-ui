@@ -1,12 +1,18 @@
 .align-left {
     text-align:left;
-    padding:0;
-    margin:0;
-    position:absolute;
+    line-height: 1.2;
+    margin-right: 10px;
+    width: 100%;
 }
 
 .align-right{
-  text-align: right;
+  float: right;
+}
+
+.order-summary-row {
+  display: flex;
+  margin-top: 3px;
+  width: 100%;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
