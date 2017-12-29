@@ -48,7 +48,7 @@ export default class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = false;
+        const featureToggle = true;
 
         let sessionElement;
         if (featureToggle) {
