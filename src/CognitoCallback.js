@@ -7,7 +7,7 @@ export default class CognitoCallback extends React.Component {
 
     state = {};
 
-    componentDidMount() {
+    componentWillMount() {
         var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         auth.userhandler = {
             onSuccess: result => {
