@@ -20,7 +20,7 @@ export default class AppHeader extends React.Component {
         this.handleAuth(e, state => CognitoUtil.getCognitoSignUpUrl(state));
     }
 
-    handleAuth(e, getAuthUrl)  {
+    handleAuth(e, getAuthUrl) {
         e.preventDefault();
 
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
@@ -63,28 +63,28 @@ export default class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = false;
+        const featureToggle = true;
 
         let sessionElement;
         if (featureToggle) {
             if (this.state.username) {
                 sessionElement =
-                    <div>
-                        Hi,
+                    <div className='head-sign-in'>
+                        <span>Hi, </span>
                         <Link to='/profile'>
-                            {this.state.username}
+                            <span> <u>{this.state.username}</u> </span>|
                         </Link>
-                        <a href='#' onClick={(e) => this.handleSignOut(e)} style={{ color: 'teal' }}>
-                            <Icon name='user outline' />
-                            Log Out
+                        <a href='#' onClick={(e) => this.handleSignOut(e)} >
+                            <span> <u>Log Out</u></span>
                         </a>
                     </div>
             }
             else {
                 sessionElement =
                     <div>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Sign Up</a>
+                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='head-sign-in'> <u>Sign Up</u> |</a>
+                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='head-sign-in'> <u>Log In</u></a>
+
                     </div>
             }
         }

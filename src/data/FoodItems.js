@@ -65,7 +65,9 @@ const FoodItems = [
         unit: '1 pie',
         feed: '6-8',
         prep: FoodPrepType.ready,
-        allergy: 'nuts, wheat, eggs, milk, gluten'
+        allergy: 'nuts, wheat, eggs, milk, gluten',
+        delivery: true,
+        pickup: true
     },
     {
         id: 3,
@@ -85,7 +87,9 @@ const FoodItems = [
         unit: '1 9x13 casserole dish',
         feed: '6-8',
         prep: FoodPrepType.ready,
-        allergy: 'wheat, gluten, milk, eggs'
+        allergy: 'wheat, gluten, milk, eggs',
+        delivery: true,
+        pickup: true
     },
     {
         id: 4,
@@ -105,7 +109,9 @@ const FoodItems = [
         unit: '5 cups',
         feed: '2-3',
         prep: FoodPrepType.ready,
-        allergy: 'wheat, gluten'
+        allergy: 'wheat, gluten',
+        delivery: true,
+        pickup: true
     },
     {
         id: 5,
@@ -129,7 +135,9 @@ const FoodItems = [
         unit: '12 cookies',
         feed: '3-6',
         prep: FoodPrepType.ready,
-        allergy: 'wheat, gluten, milk, eggs'
+        allergy: 'wheat, gluten, milk, eggs',
+        delivery: true,
+        pickup: true
     },
     {
         id: 6,
@@ -153,7 +161,9 @@ const FoodItems = [
         unit: '12 cookies',
         feed: '3-6',
         prep: FoodPrepType.ready,
-        allergy: 'wheat, gluten, milk, nuts'
+        allergy: 'wheat, gluten, milk, nuts',
+        delivery: true,
+        pickup: true
     },
     {
         id: 7,
@@ -178,7 +188,9 @@ const FoodItems = [
         unit: '12 cookies',
         feed: '3-6',
         prep: FoodPrepType.ready,
-        allergy: 'wheat, gluten, milk, eggs'
+        allergy: 'wheat, gluten, milk, eggs',
+        delivery: true,
+        pickup: true
     },
     {
         id: 8,
@@ -201,7 +213,9 @@ const FoodItems = [
         unit: '1 whole chicken',
         feed: '3-4',
         prep: FoodPrepType.ready,
-        allergy: 'gluten'
+        allergy: 'gluten',
+        delivery: true,
+        pickup: true
     }
 ];
 export default FoodItems;
