@@ -1,6 +1,6 @@
 export default class CognitoUtil {
 
-  static storageKeyRoot = 'food-market';
+  static FoodMarketStorageKeyRoot = 'food-market';
 
   static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
   static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
@@ -10,17 +10,17 @@ export default class CognitoUtil {
   static CognitoUserPoolId = 'us-west-2_TvRu5yb9m';
 
   static getCognitoAuthData() {
-      var authData = {
-          ClientId: CognitoUtil.CognitoClientAppId,
-          AppWebDomain: CognitoUtil.AppWebDomain,
-          TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
-          RedirectUriSignIn: CognitoUtil.RedirectUriSignIn,
-          RedirectUriSignOut: CognitoUtil.RedirectUriSignOut,
-          UserPoolId: CognitoUtil.CognitoUserPoolId,
-          // IdentityProvider : '<TODO: your identity provider you want to specify here>',
-          // AdvancedSecurityDataCollectionFlag : <TODO: boolean value indicating whether you want to enable advanced security data collection>
-      };
-      return authData;
+    var authData = {
+      ClientId: CognitoUtil.CognitoClientAppId,
+      AppWebDomain: CognitoUtil.AppWebDomain,
+      TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
+      RedirectUriSignIn: CognitoUtil.RedirectUriSignIn,
+      RedirectUriSignOut: CognitoUtil.RedirectUriSignOut,
+      UserPoolId: CognitoUtil.CognitoUserPoolId,
+      // IdentityProvider : '<TODO: your identity provider you want to specify here>',
+      // AdvancedSecurityDataCollectionFlag : <TODO: boolean value indicating whether you want to enable advanced security data collection>
+    };
+    return authData;
   }
 
   static getUserPoolData() {
@@ -30,17 +30,24 @@ export default class CognitoUtil {
     };
   }
 
-  static getCognitoTokenUrl() {
-    return `${CognitoUtil.CognitoDomain}/oauth2/token`;
+  static getCognitoLoginUrl(state) {
+    return CognitoUtil.getCognitoUrl('login', state);
   }
 
-  static getCognitoLoginUrl() {
-    const loginUrl = `${CognitoUtil.CognitoDomain}/login?response_type=token&client_id=${CognitoUtil.CognitoClientAppId}&redirect_uri=${CognitoUtil.RedirectUriSignIn}&scope=openid+profile+aws.cognito.signin.user.admin+email`;
-    return loginUrl;
+  static getCognitoSignUpUrl(state) {
+    return CognitoUtil.getCognitoUrl('signup', state);
+  }
+
+  static getCognitoUrl(path, state) {
+    let url = `${CognitoUtil.CognitoDomain}/${path}?response_type=token&client_id=${CognitoUtil.CognitoClientAppId}&redirect_uri=${CognitoUtil.RedirectUriSignIn}&scope=openid+profile+aws.cognito.signin.user.admin+email`;
+    if (state) {
+      url += '&state=' + state;
+    }
+    return url;
   }
 
   static getStorageKey(keyName) {
-    return `${CognitoUtil.storageKeyRoot}.${CognitoUtil.CognitoClientAppId}.${keyName}`;
+    return `${CognitoUtil.FoodMarketStorageKeyRoot}.${CognitoUtil.CognitoClientAppId}.${keyName}`;
   }
 
   static setLastPathname(pathname) {
@@ -53,24 +60,13 @@ export default class CognitoUtil {
     return window.sessionStorage.getItem(key);
   }
 
-  static setCognitoAuth(cognitoAuth) {
-    window.sessionStorage.setItem(CognitoUtil.getStorageKey("access_token"), cognitoAuth.access_token);
-    window.sessionStorage.setItem(CognitoUtil.getStorageKey("token_type"), cognitoAuth.token_type);
-    window.sessionStorage.setItem(CognitoUtil.getStorageKey("expires_in"), cognitoAuth.expires_in);
-    window.sessionStorage.setItem(CognitoUtil.getStorageKey("id_token"), cognitoAuth.id_token);
+  static setCsrfState(state) {
+    let key = CognitoUtil.getStorageKey('cognito-csrf-state')
+    window.sessionStorage.setItem(key, state);
   }
 
-  static getCognitoAuth() {
-    const access_token = window.sessionStorage.getItem(CognitoUtil.getStorageKey("access_token"));
-    const id_token = window.sessionStorage.getItem(CognitoUtil.getStorageKey("id_token"));
-    if (!access_token || !id_token) {
-      return null;
-    }
-    return {
-      access_token: access_token,
-      id_token: id_token,
-      token_type: window.sessionStorage.getItem(CognitoUtil.getStorageKey("token_type")),
-      expires_in: window.sessionStorage.getItem(CognitoUtil.getStorageKey("expires_in"))
-    }
+  static getCsrfState() {
+    let key = CognitoUtil.getStorageKey('cognito-csrf-state')
+    return window.sessionStorage.getItem(key);
   }
 }
