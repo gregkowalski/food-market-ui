@@ -2,22 +2,11 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from './CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import queryString from 'query-string'
+import Util from './Util'
 
 export default class CognitoCallback extends React.Component {
 
     state = {};
-
-    parseQueryString(location) {
-        let query = location.search
-        if (!query) {
-            query = location.hash;
-        }
-        if (query && (query[0] === '#' || query[0] === '?')) {
-            query = query.substring(1);
-        }
-        return queryString.parse(query);
-    }
 
     componentWillMount() {
         var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
@@ -32,7 +21,7 @@ export default class CognitoCallback extends React.Component {
             }
         };
 
-        let query = this.parseQueryString(window.location);
+        let query = Util.parseQueryString(window.location);
         if (!query.state) {
             console.error('SECURITY ALERT: CSRF state parameter is missing');
             return;

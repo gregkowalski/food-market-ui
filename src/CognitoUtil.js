@@ -1,6 +1,6 @@
-export default class CognitoUtil {
+import { Constants } from './Constants'
 
-  static FoodMarketStorageKeyRoot = 'food-market';
+export default class CognitoUtil {
 
   static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
   static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
@@ -47,7 +47,7 @@ export default class CognitoUtil {
   }
 
   static getStorageKey(keyName) {
-    return `${CognitoUtil.FoodMarketStorageKeyRoot}.${CognitoUtil.CognitoClientAppId}.${keyName}`;
+    return `${Constants.FoodMarketStorageKeyRoot}.${CognitoUtil.CognitoClientAppId}.${keyName}`;
   }
 
   static setLastPathname(pathname) {

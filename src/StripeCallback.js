@@ -1,10 +1,11 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from './CognitoUtil'
-import queryString from 'query-string'
 import apigClientFactory from 'aws-api-gateway-client'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import Util from './Util'
+import StripeUtil from './StripeUtil'
 
 export default class StripeCallback extends React.Component {
 
@@ -48,9 +49,18 @@ export default class StripeCallback extends React.Component {
     }
 
     componentWillMount() {
-        console.log(window.location.href);
-        const query = queryString.parse(window.location.search);
-        // verify state to protect from CSRF
+
+        let query = Util.parseQueryString(window.location);
+        if (!query.state) {
+            console.error('SECURITY ALERT: CSRF state parameter is missing');
+            return;
+        }
+
+        let storedState = StripeUtil.getCsrfState();
+        if (query.state !== storedState) {
+            console.error('SECURITY ALERT: CSRF state parameter is invalid');
+            return;
+        }
 
         if (!query.code) {
             console.error('Not working, code not found: ' + query.error);

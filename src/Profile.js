@@ -7,6 +7,8 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Segment, Input, Form, Button, Image } from 'semantic-ui-react'
 import './Profile.css'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import StripeUtil from './StripeUtil';
+import crypto from 'crypto'
 
 export default class Profile extends React.Component {
 
@@ -107,6 +109,15 @@ export default class Profile extends React.Component {
         });
     }
 
+    handleConnectStripeClick(e) {
+        e.preventDefault();
+
+        const state = crypto.randomBytes(64).toString('hex');
+        let stripeConnectUrl = StripeUtil.getStripeConnectUrl(state);
+        StripeUtil.setCsrfState(state);
+        window.open(stripeConnectUrl, '_self');
+    }
+
     render() {
         if (!this.state.jwt) {
             return <Redirect to='/' />
@@ -121,13 +132,10 @@ export default class Profile extends React.Component {
                 </div>
         }
         else {
-            const stripeClientId = 'ca_C2ECxvqWXaiTNmA44vVjfx2clgV7OexY';
-            const stripeState = 'some-random-shit';
-            let stripeConnectUrl = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${stripeClientId}&scope=read_write&state=${stripeState}`;
             stripeComponent =
                 <div>
                     <div style={{ marginBottom: '10px' }}>If you'd like to become a food vendor and make money with Foodcraft, please create/link a Stripe account.</div>
-                    <a href={stripeConnectUrl}>
+                    <a href='#' onClick={(e) => this.handleConnectStripeClick(e)}>
                         <Image src='/assets/images/stripe-blue-on-light.png' />
                     </a>
                 </div>
