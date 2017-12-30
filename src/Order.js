@@ -19,7 +19,7 @@ export default class Order extends React.Component {
     state = {
         quantity: 1,
         showPricingDetails: true,
-        serviceFeeRate: 0.12,
+        serviceFeeRate: 0.15,
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
@@ -515,11 +515,12 @@ export default class Order extends React.Component {
                                 <Form.Field>
                                     <Segment compact>
                                         <Radio toggle
-                                            label=''
+                                            label='Disabled'
                                             name='radioGroup'
                                             value='delivery'
                                             checked={this.state.value === 'delivery'}
                                             onChange={this.handleChange}
+                                            disabled
                                         />
                                         <span style={{ marginLeft: '4px' }}> {deliveryElement}
                                         </span>

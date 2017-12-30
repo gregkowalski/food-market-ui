@@ -77,7 +77,7 @@ export default class FoodDetail extends Component {
         let deliveryElement;
         if (food.delivery) {
             deliveryElement =
-                <span><Icon name='motorcycle' /> delivery</span>
+                <span><Icon name='shipping' /> delivery</span>
         }
 
         let pickupElement;
