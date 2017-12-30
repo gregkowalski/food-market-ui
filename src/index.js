@@ -3,7 +3,6 @@ import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import App from './App'
-// import Food from './Food'
 import FoodDetail from './FoodDetail'
 import reducer from './reducers'
 import './index.css'
@@ -17,6 +16,7 @@ import 'whatwg-fetch'
 import { unregister } from './registerServiceWorker';
 import CognitoCallback from './CognitoCallback'
 import CognitoSignout from './CognitoSignout'
+import StripeCallback from './StripeCallback'
 import Profile from './Profile'
 
 //import mytest from './test'
@@ -31,7 +31,6 @@ render(
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={App} />
-        <Route path='/search' component={App} />
         {/* <Route path='/test' component={mytest} /> */}
         <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
         <Route path='/foods/:id/orderError' component={OrderError} />
@@ -40,6 +39,7 @@ render(
         <Route path='/foodEntry' exact component={FoodEntry} />
         <Route path='/cognitoCallback' exact component={CognitoCallback} />
         <Route path='/cognitoSignout' exact component={CognitoSignout} />
+        <Route path='/stripeCallback' exact component={StripeCallback} />
         <Route path='/profile' exact component={Profile} />
       </Switch>
     </BrowserRouter>

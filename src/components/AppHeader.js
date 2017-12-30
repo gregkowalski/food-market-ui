@@ -6,17 +6,31 @@ import CognitoUtil from '../CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Link } from 'react-router-dom'
+import crypto from 'crypto'
 
 export default class AppHeader extends React.Component {
 
     state = {};
-    cognitoLoginUrl;
 
     handleSignIn(e) {
+        this.handleAuth(e, state => CognitoUtil.getCognitoLoginUrl(state));
+    }
+
+    handleSignUp(e) {
+        this.handleAuth(e, state => CognitoUtil.getCognitoSignUpUrl(state));
+    }
+
+    handleAuth(e, getAuthUrl)  {
         e.preventDefault();
 
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        auth.getSession();
+        let session = auth.getCachedSession();
+        if (!session || !session.isValid()) {
+            const state = crypto.randomBytes(64).toString('hex');
+            CognitoUtil.setCsrfState(state);
+            let url = getAuthUrl(state);
+            window.open(url, '_self');
+        }
     }
 
     handleSignOut(e) {
@@ -49,14 +63,14 @@ export default class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = true;
+        const featureToggle = false;
 
         let sessionElement;
         if (featureToggle) {
             if (this.state.username) {
                 sessionElement =
                     <div>
-                        Hi, 
+                        Hi,
                         <Link to='/profile'>
                             {this.state.username}
                         </Link>
@@ -68,7 +82,10 @@ export default class AppHeader extends React.Component {
             }
             else {
                 sessionElement =
-                    <a href='#' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+                    <div>
+                        <a href='#' onClick={(e) => this.handleSignIn(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Log In</a>
+                        <a href='#' onClick={(e) => this.handleSignUp(e)} style={{ color: 'teal' }}> <Icon name='user outline' />Sign Up</a>
+                    </div>
             }
         }
 

@@ -1,3 +1,4 @@
 export const Constants = {
-    AppName: 'foodcraft'
+    AppName: 'foodcraft',
+    FoodMarketStorageKeyRoot: 'food-market'
 }
