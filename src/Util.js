@@ -25,3 +25,15 @@ export default class {
   }
 
 }
+
+export const triggerEvent = (target, type) => {
+  const doc = window.document;
+  if (doc.createEvent) {
+    const event = doc.createEvent('HTMLEvents');
+    event.initEvent(type, true, true);
+    target.dispatchEvent(event);
+  } else {
+    const event = doc.createEventObject();
+    target.fireEvent(`on${type}`, event);
+  }
+};

@@ -12,6 +12,7 @@ import Carousel from 'nuka-carousel'
 import Util from './Util'
 import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
+import { triggerEvent } from './Util';
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -42,6 +43,38 @@ export default class FoodDetail extends Component {
         }
         return prep;
     }
+
+    createCarousel(food) {
+        const images = food.images.map((current, index) => {
+            if (index === 0) {
+                return (
+                    <Image key={index} className='food-image' src={current}
+                        onLoad={() => triggerEvent(window, 'resize')} />
+                )
+            }
+            return (
+                <Image key={index} className='food-image' src={current} />
+            )
+        });
+
+        return (
+            <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
+                {images}
+            </Carousel>
+        )
+    }
+
+    createImageComponent(food) {
+        let imageComponent;
+        if (food.images && food.images.length > 1) {
+            imageComponent = this.createCarousel(food);
+        }
+        else {
+            imageComponent = <Image className='food-image' src={food.image} />
+        }
+        return imageComponent;
+    }
+
 
     render() {
         let id = this.getFoodItemId();
@@ -103,7 +136,7 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ color: '#5e5d5d',  marginTop: '20px', marginLeft: '10px' }}>
+                    <div style={{ color: '#5e5d5d', marginTop: '20px', marginLeft: '10px' }}>
                         <Grid doubling columns={5}  >
                             <Grid.Row>
                                 <Grid.Column>
@@ -259,26 +292,13 @@ export default class FoodDetail extends Component {
             </div>
         );
 
-        let imageElement;
-        if (food.images && food.images.length > 1) {
-            const images = food.images.map((current, index) =>
-                <Image key={index} className='food-image' src={current} />
-            );
-            imageElement =
-                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
-                    {images}
-                </Carousel>
-        }
-        else {
-            imageElement =
-                <Image className='food-image' src={food.image} />
-        }
+        let imageComponent = this.createImageComponent(food);
 
         return (
             <div>
                 <AppHeader />
                 <div>
-                    {imageElement}
+                    {imageComponent}
 
                     <div className='detail-head-main'>
                         <div className="flex-container">
