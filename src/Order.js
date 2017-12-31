@@ -495,7 +495,7 @@ export default class Order extends React.Component {
 
                         <Form noValidate autoComplete='off'>
 
-                            <Header>Your Information</Header>
+                            <Header>My Information</Header>
 
                             <Form.Group widths='4'>
                                 <Form.Field>
@@ -615,7 +615,7 @@ export default class Order extends React.Component {
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 {this.state.quantity} {food.header}
                                 <Form.Field>
-                                    Order type: <b>{this.state.value}</b>
+                                   <div style={{marginTop: '3px'}}> Order type: <strong>{this.state.value}</strong> </div>
                                 </Form.Field>
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>

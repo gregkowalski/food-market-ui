@@ -96,7 +96,14 @@ export default class FoodDetail extends Component {
                                     <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                                 <Feed.Summary content={x.summary} />
                                 <Feed.Date content={x.date} style={{ marginTop: '-1px' }} />
-                                <Feed.Extra content={x.extraText} style={{ marginTop: '0.8em', maxWidth: '100%' }} />
+                                <Feed.Extra style={{ marginTop: '0.8em', maxWidth: '100%' }} >
+                                    <ShowMore
+                                        lines={4}
+                                        more={<div style={{ color: '#189da7' }}>Read more</div>}
+                                        less=''>
+                                        {x.extraText}
+                                    </ShowMore>
+                                </Feed.Extra>
                             </Feed.Content>
                         </Feed.Event>
                     </Feed>
@@ -160,7 +167,7 @@ export default class FoodDetail extends Component {
                         anchorClass='showmore-text'>
                         <div className='user-text'>{food.description} </div>
                         <div>{food.moreDescription}</div>
-                        
+
                     </ShowMore>
                     <Divider section />
 
@@ -244,8 +251,7 @@ export default class FoodDetail extends Component {
                         </Grid.Row>
                     </Grid>
                     <Divider section />
-                    {reviews}
-
+                        {reviews}
                 </ScrollElement>
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
