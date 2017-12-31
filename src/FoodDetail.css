@@ -164,6 +164,11 @@
     color: #5e5d5d;
 }
 
+.showmore-text::before {
+    content: '\a\a';
+    white-space: pre;
+}
+
 @media all and (max-width: 767px) {    
     .detail-footer {
         display: inherit;

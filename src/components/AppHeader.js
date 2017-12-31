@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Dropdown, Icon } from 'semantic-ui-react'
+import { Image, Dropdown } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
 import CognitoUtil from '../CognitoUtil'
