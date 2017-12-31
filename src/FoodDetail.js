@@ -154,10 +154,13 @@ export default class FoodDetail extends Component {
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
                     <ShowMore
+                        lines={3}
                         more={<div style={{ color: '#189da7' }}>Read more about this food <Icon name='angle down' /></div>}
                         less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
                         anchorClass='showmore-text'>
-                        <div className='user-text'>{food.description}</div>
+                        <div className='user-text'>{food.description} </div>
+                        <div>{food.moreDescription}</div>
+                        
                     </ShowMore>
                     <Divider section />
 
