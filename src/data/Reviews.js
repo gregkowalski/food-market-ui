@@ -6,7 +6,7 @@ const Reviews = [
         image: '/assets/images/suppliers/jenny.jpg',
         summary: 'Matt',
         extraText: 'Dumplings were delicious bro! Generous on the meat, and chives were good too.'
-            + 'Skin was smooth and soft. I am ready to order more! ',
+            + 'Skin was smooth and soft. I am ready to order more! '
     },
     {
         id: 2,
