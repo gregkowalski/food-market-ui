@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import CognitoUtil from './CognitoUtil'
+import CognitoUtil from '../Cognito/CognitoUtil'
 import apigClientFactory from 'aws-api-gateway-client'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
-import Util from './Util'
+import Util from '../Util'
 import StripeUtil from './StripeUtil'
 
 export default class StripeCallback extends React.Component {
@@ -22,8 +22,7 @@ export default class StripeCallback extends React.Component {
         var userPool = new CognitoUserPool(CognitoUtil.getUserPoolData());
         var cognitoUser = userPool.getCurrentUser();
         if (!cognitoUser) {
-            console.error('current user is empty');
-            return;
+            throw new Error('current user is empty');
         }
 
         cognitoUser.getSession((err, session) => {
@@ -52,19 +51,16 @@ export default class StripeCallback extends React.Component {
 
         let query = Util.parseQueryString(window.location);
         if (!query.state) {
-            console.error('SECURITY ALERT: CSRF state parameter is missing');
-            return;
+            throw new Error('SECURITY ALERT: CSRF state parameter is missing');
         }
 
         let storedState = StripeUtil.getCsrfState();
         if (query.state !== storedState) {
-            console.error('SECURITY ALERT: CSRF state parameter is invalid');
-            return;
+            throw new Error('SECURITY ALERT: CSRF state parameter is invalid');
         }
 
         if (!query.code) {
-            console.error('Not working, code not found: ' + query.error);
-            return;
+            throw new Error('Not working, code not found: ' + query.error);
         }
 
         var config = {

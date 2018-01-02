@@ -13,7 +13,6 @@ import Util from './Util'
 import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
 
-
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
 

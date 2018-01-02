@@ -25,6 +25,7 @@
     "react-router-dom": "^4.2.2",
     "react-scroll": "^1.6.4",
     "react-show-more": "^1.1.1",
+    "react-stripe-elements": "^1.2.1",
     "redux": "^3.6.0",
     "semantic-ui-react": "^0.75.1",
     "universal-cookie": "^2.1.2",

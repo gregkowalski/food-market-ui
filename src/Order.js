@@ -9,18 +9,23 @@ import AWS from 'aws-sdk'
 // import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Route } from 'react-router-dom'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import AppHeader from './components/AppHeader'
 import FoodLightbox from './components/FoodLightbox'
+import Checkout from './Stripe/Checkout'
+import { FeatureToggles } from './FeatureToggles'
+import ApiClient from './Api/ApiClient'
+import CognitoUtil from './Cognito/CognitoUtil'
+import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
+import { Constants } from './Constants'
 
 export default class Order extends React.Component {
 
     state = {
         quantity: 1,
-        showPricingDetails: true,
-        serviceFeeRate: 0.15,
+        showPricingDetails: false,
+        serviceFeeRate: Constants.ServiceFeeRate,
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
@@ -30,13 +35,12 @@ export default class Order extends React.Component {
     handleChange = (e, { value }) => this.setState({ value })
 
     getFoodItemId() {
-        return this.props.match.params.id;
+        return parseInt(this.props.match.params.id, 10);
     }
 
     getFoodItem() {
         let foodItemId = this.getFoodItemId();
-        // eslint-disable-next-line
-        return FoodItems.find(x => x.id == foodItemId);
+        return FoodItems.find(x => x.id === foodItemId);
     }
 
     componentWillMount() {
@@ -333,10 +337,7 @@ export default class Order extends React.Component {
         return day1 < day2;
     }
 
-    handleOrderButtonClick() {
-        if (!this.validateForm())
-            return null;
-
+    sendEmails() {
         const aws_secret_access_key = '3Tb2qswQeoB31bMjlbM0OS1FEX0uEgzCF66LEbfK'
         const aws_access_key_id = 'AKIAI3G26HX46HETLCJQ'
 
@@ -439,11 +440,9 @@ export default class Order extends React.Component {
     ];
 
     render() {
-        let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
-        // eslint-disable-next-line 
-        let user = Users.find(x => x.id == food.userId);
+        let foodItemId = this.getFoodItemId();
+        let food = FoodItems.find(x => x.id === foodItemId);
+        let user = Users.find(x => x.id === food.userId);
 
         const { showPricingDetails } = this.state;
 
@@ -616,7 +615,7 @@ export default class Order extends React.Component {
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 {this.state.quantity} {food.header}
                                 <Form.Field>
-                                   <div style={{marginTop: '3px'}}> Order type: <strong>{this.state.value}</strong> </div>
+                                    <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.value}</strong> </div>
                                 </Form.Field>
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
@@ -647,12 +646,9 @@ export default class Order extends React.Component {
                                                 ${this.getServiceFee(food.price)}
                                             </div>
                                         </div>
-                                        <div style={{
-                                            fontSize: '0.8em', marginLeft: '10px', color: 'gray',
-                                            maxWidth: '250px'
-                                        }}>
+                                        <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
                                             this helps run our platform and keep the lights on
-                                    </div>
+                                        </div>
 
                                         <Divider />
 
@@ -670,67 +666,105 @@ export default class Order extends React.Component {
 
                             <Divider />
 
+                            {FeatureToggles.StripePayment &&
+                                <Checkout onRef={ref => (this.checkout = ref)} />
+                            }
+
                             <Checkbox label="I agree to this site's user and customer refund policy.  I also agree to pay the total amount shown, which includes service fees."
                                 onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
 
-                            <OrderFormButton
-                                className='order-confirm-button'
-                                style={{ marginTop: '20px', height: '4em' }} fluid
-                                disabled={!this.state.acceptedTerms}
-                                onClick={() => this.handleOrderButtonClick()}>
-                                Confirm my order for ${this.getTotal(food.price)}
-                            </OrderFormButton>
+                            <div style={{ marginTop: '20px' }}>
+                                <Button
+                                    className='order-confirm-button' fluid
+                                    disabled={!this.state.acceptedTerms}
+                                    onClick={() => this.handleOrderButtonClick()}>
+                                    Confirm my order for ${this.getTotal(food.price)}
+                                </Button>
+                            </div>
+
                         </Form >
                     </div>
                 </div>
             </div>
         )
     }
-}
 
-class OrderFormButton extends React.Component {
-    render() {
+    handleOrderButtonClick() {
+        if (FeatureToggles.StripePayment) {
+            this.submitOrderNew();
+        }
+        else {
+            this.submitOrderOld();
+        }
+    }
 
-        const successLink = "orderSuccess";
-        const errorLink = "orderError"
-        return (
-            <Route render={({ history }) => {
-                let props = Object.assign({}, this.props);
-                delete props.successLink;
-                delete props.errorLink;
-                delete props.onClick;
-                return (
-                    <Form.Button {...props}
-                        onClick={(e) => {
+    submitOrderOld() {
+        if (!this.validateForm())
+            return null;
 
-                            let promises = this.props.onClick(e);
-                            if (!promises)
-                                return;
+        let { systemSendPromise, userSendPromise } = this.sendEmails();
+        systemSendPromise.then(result1 => {
+            console.log(`system email sent: ${result1.MessageId}`);
 
-                            let { systemSendPromise, userSendPromise } = promises;
-                            systemSendPromise
-                                .then(result1 => {
-                                    console.log(`system email sent: ${result1.MessageId}`);
+            userSendPromise.then(result2 => {
+                console.log(`user email sent: ${result2.MessageId}`);
+                this.props.history.push('orderSuccess?sentCount=2');
+            })
+                .catch(err2 => {
+                    console.error(err2, err2.stack);
+                    this.props.history.push('orderSuccess?sentCount=1');
+                })
+        }).catch(err1 => {
+            console.error(err1, err1.stack);
+            this.props.history.push('orderError');
+        });
+    }
 
-                                    userSendPromise
-                                        .then(result2 => {
-                                            console.log(`user email sent: ${result2.MessageId}`);
-                                            history.push(`${successLink}?sentCount=2`);
-                                        })
-                                        .catch(err2 => {
-                                            console.error(err2, err2.stack);
-                                            history.push(`${successLink}?sentCount=1`);
-                                        })
-                                }).catch(err1 => {
-                                    console.error(err1, err1.stack);
-                                    history.push(errorLink);
-                                });
-                        }}>
-                        {this.props.children}
-                    </Form.Button>
-                )
-            }}
-            />
-        )
+    submitOrderNew() {
+        const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        const session = auth.getCachedSession();
+        if (!session || !session.isValid()) {
+            console.error('Cannot submit order without a logged-in user.  Please log in and try again.');
+            return;
+        }
+
+        if (!this.validateForm()) {
+            console.log('Order form validation failed.  Please correct your information and try again.');
+            return;
+        }
+
+        const food = this.getFoodItem();
+        const order = {
+            foodItemId: food.id,
+            quantity: this.state.quantity,
+            date: this.state.date,
+            time: this.state.time,
+            apt: this.state.apt,
+            address: this.state.address,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            phone: this.state.phone,
+            email: this.state.email
+        };
+
+        this.checkout.props.stripe.createToken()
+            .then(payload => {
+                if (payload.error) {
+                    console.error(payload.error.message);
+                    throw new Error(payload.error.message);
+                }
+                else {
+                    let apiClient = new ApiClient();
+                    return apiClient.submitFoodOrder(session.getIdToken().getJwtToken(), payload.token, order);
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.props.history.push('orderSuccess?sentCount=2');
+            })
+            .catch(err => {
+                console.error(err);
+                this.props.history.push('orderError');
+            });
     }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from './CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import Util from './Util'
+import Util from '../Util'
 
 export default class CognitoCallback extends React.Component {
 
@@ -23,14 +23,12 @@ export default class CognitoCallback extends React.Component {
 
         let query = Util.parseQueryString(window.location);
         if (!query.state) {
-            console.error('SECURITY ALERT: CSRF state parameter is missing');
-            return;
+            throw new Error('SECURITY ALERT: CSRF state parameter is missing');
         }
 
         let storedState = CognitoUtil.getCsrfState();
         if (query.state !== storedState) {
-            console.error('SECURITY ALERT: CSRF state parameter is invalid');
-            return;
+            throw new Error('SECURITY ALERT: CSRF state parameter is invalid');
         }
 
         auth.parseCognitoWebResponse(window.location.href);

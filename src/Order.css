@@ -35,11 +35,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .order-confirm-button {
   background-color:  #4cb99e !important;
-}
-
-.order-confirm-button > .ui.button {
-  background-color:  #4cb99e !important;
   color: #ffffff !important;
+  height: 4em;
 }
 
 .order-body {

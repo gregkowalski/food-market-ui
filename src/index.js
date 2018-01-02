@@ -14,17 +14,17 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import FoodEntry from './FoodEntry'
 import 'whatwg-fetch'
 import { unregister } from './registerServiceWorker';
-import CognitoCallback from './CognitoCallback'
-import CognitoSignout from './CognitoSignout'
-import StripeCallback from './StripeCallback'
+import CognitoCallback from './Cognito/CognitoCallback'
+import CognitoSignout from './Cognito/CognitoSignout'
+import StripeCallback from './Stripe/StripeCallback'
 import Profile from './Profile'
+import { StripeProvider } from 'react-stripe-elements'
 
 //import mytest from './test'
 
 unregister();
 
 const store = createStore(reducer)
-
 
 render(
   <Provider store={store}>

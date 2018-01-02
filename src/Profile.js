@@ -1,6 +1,6 @@
 import React from 'react'
 import AppHeader from './components/AppHeader'
-import CognitoUtil from './CognitoUtil'
+import CognitoUtil from './Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
@@ -8,7 +8,7 @@ import { Segment, Input, Form, Button, Image, Header, Icon } from 'semantic-ui-r
 import './Profile.css'
 import Users from './data/Users'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
-import StripeUtil from './StripeUtil';
+import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
 
 export default class Profile extends React.Component {

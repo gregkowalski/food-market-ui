@@ -2,11 +2,12 @@ import React from 'react'
 import { Image, Dropdown } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
-import CognitoUtil from '../CognitoUtil'
+import CognitoUtil from '../Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import crypto from 'crypto'
+import { FeatureToggles } from '../FeatureToggles'
 
 class AppHeader extends React.Component {
 
@@ -46,7 +47,7 @@ class AppHeader extends React.Component {
     }
 
     componentWillMount() {
-        console.log(`location=${location}, location.pathname=${location.pathname}`);
+        //console.log(`location=${location}, location.pathname=${location.pathname}`);
         CognitoUtil.setLastPathname(location.pathname);
 
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
@@ -73,7 +74,7 @@ class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = true;
+        const featureToggle = FeatureToggles.CognitoLogin;
 
         let sessionElement;
         if (featureToggle) {
