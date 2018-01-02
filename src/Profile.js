@@ -4,8 +4,9 @@ import CognitoUtil from './CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { Segment, Input, Form, Button, Image } from 'semantic-ui-react'
+import { Segment, Input, Form, Button, Image, Header, Icon } from 'semantic-ui-react'
 import './Profile.css'
+import Users from './data/Users'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import StripeUtil from './StripeUtil';
 import crypto from 'crypto'
@@ -140,33 +141,65 @@ export default class Profile extends React.Component {
                     </a>
                 </div>
         }
+
+        let userId = parseInt(this.props.match.params.userId, 10);
+        let user = Users.find(x => x.id === userId);
+
         return (
             <div>
                 <AppHeader />
-                <div style={{ width: '80%', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Segment>
-                        <Form noValidate autoComplete='off'>
-                            <Form.Field>
-                                <label>Email</label>
-                                <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
-                                {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
-                            </Form.Field>
-                            {/* <Form.Field required error={this.state.hasErrors.phone}> */}
-                            <Form.Field required>
-                                <label>Username</label>
-                                <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                                {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
-                            </Form.Field>
-                            <Form.Field required>
-                                <label>Stripe Account Id</label>
-                                <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                            </Form.Field>
-                            <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
-                        </Form>
-                    </Segment>
-                    <Segment>
-                        {stripeComponent}
-                    </Segment>
+                <div className='profile-body'>
+                    <div style={{ marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
+                        <Image floated='left' size='small' shape='circular' src={user.image} />
+                        <Header className='profile-header' as='h1'>Hi, I'm {user.name}!</Header>
+                        <div style={{ color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
+                            {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
+                        </div>
+                        <div style={{ clear: 'left' }}></div>
+                        <div style={{ marginTop: '15px' }}>{user.info}</div>
+                        <div style={{ marginTop: '15px' }}> Languages: <strong> {user.lang}</strong></div>
+                        <div style={{ clear: 'both' }}></div>
+                        <div className='profile-verify'>
+                            <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
+                                Verified info
+                        </Segment>
+                            <Segment style={{ textAlign: 'center' }} attached>
+                                <div className='profile-verify-items'>
+                                <div style={{float: 'left' }}>Email address</div>
+                                    <Icon style={{float: 'right' }} size='large' color='teal' name='check circle outline' />
+                                    <div style={{ clear: 'both' }}></div>
+                                <div style={{float: 'left', marginTop: '20px' }}>Phone number</div>
+                                    <Icon style={{float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
+                                    <div style={{ clear: 'both' }}></div>
+                                </div>
+                        </Segment>
+                        </div>
+
+
+                        <Segment>
+                            <Form noValidate autoComplete='off'>
+                                <Form.Field>
+                                    <label>Email</label>
+                                    <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
+                                    {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
+                                </Form.Field>
+                                {/* <Form.Field required error={this.state.hasErrors.phone}> */}
+                                <Form.Field required>
+                                    <label>Username</label>
+                                    <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                    {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
+                                </Form.Field>
+                                <Form.Field required>
+                                    <label>Stripe Account Id</label>
+                                    <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                </Form.Field>
+                                <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
+                            </Form>
+                        </Segment>
+                        <Segment>
+                            {stripeComponent}
+                        </Segment>
+                    </div>
                 </div>
             </div>
         );

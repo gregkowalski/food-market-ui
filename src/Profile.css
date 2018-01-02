@@ -1,3 +1,24 @@
 .profile-email-input > input {
     background-color: #f0ecec !important;
 }
+
+.profile-header {
+    font-size: '3em'; 
+    color: #525151 !important;
+}
+
+.profile-body {
+    width: 75%;
+    margin: 20px auto 0 auto;
+    padding-bottom: 20px;
+  
+  }
+
+  .profile-verify {
+      width: 200px;
+      vertical-align: middle;
+  }
+
+  .profile-verify-items {
+      padding: 10px;
+  }

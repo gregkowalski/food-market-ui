@@ -60,6 +60,11 @@
   }
 
   .head-dropdown {
+    padding: 50px;
+    background-color: red;
+  }
+
+  .head-dropdown-item {
     font-family: 'Athiti';
     font-weight: 300 !important;
     font-size: .95em !important;

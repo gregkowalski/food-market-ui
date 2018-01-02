@@ -99,7 +99,7 @@ export default class FoodDetail extends Component {
 
                 <ScrollElement name="overview">
 
-                    <Header as='h2'>
+                    <Header className='detail-main-header' as='h2'>
                         <div style={{ fontSize: '1.1em' }}> ${food.price} · {food.header}</div></Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         {food.availability} available · by
@@ -175,7 +175,7 @@ export default class FoodDetail extends Component {
                 </ScrollElement>
 
                 <ScrollElement name="reviews">
-                    <Header as='h2'>
+                    <Header className='detail-main-header' as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
                             {food.ratingCount} Reviews
                                     <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
@@ -221,7 +221,7 @@ export default class FoodDetail extends Component {
                     {reviews}
                 </ScrollElement>
                 <ScrollElement name="cook">
-                    <Header as='h2'>Meet {user.name}</Header>
+                    <Header className='detail-main-header' as='h2'>Meet {user.name}</Header>
                     <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
                         {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
                     </div>
@@ -236,9 +236,11 @@ export default class FoodDetail extends Component {
                     {/* style={{ color: '#5e5d5d' }} */}
                     <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
                                     </Button>} closeIcon>
-                        <Header color='red' icon='lock' content='Do you want to anonymously report this listing?' />
+                        <Header icon='lock' content='Do you want to anonymously report this listing?' />
                         <Modal.Content>
-                            <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more</a></p>
+                            <p>Please choose one of the following reasons. This won't be shared with the cook. 
+                                {/* <a href='url'>Learn more</a> */}
+                                </p>
                         </Modal.Content>
 
                         <Modal.Actions>

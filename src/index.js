@@ -40,7 +40,7 @@ render(
         <Route path='/cognitoCallback' exact component={CognitoCallback} />
         <Route path='/cognitoSignout' exact component={CognitoSignout} />
         <Route path='/stripeCallback' exact component={StripeCallback} />
-        <Route path='/profile' exact component={Profile} />
+        <Route path='/profile/:userId' exact component={Profile} />
       </Switch>
     </BrowserRouter>
   </Provider>,

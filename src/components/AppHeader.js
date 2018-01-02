@@ -91,10 +91,10 @@ export default class AppHeader extends React.Component {
                         <Dropdown text={this.state.username}>
                             <Dropdown.Menu>
                                 <Dropdown.Item>
-                                    <Link className='head-dropdown-link' to='/profile'>View Profile</Link>
+                                    <Link className='head-dropdown-link' to='/profile/1'>View Profile</Link>
                                 </Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item className='head-dropdown' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
+                                <Dropdown.Item className='head-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>

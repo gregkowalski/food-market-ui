@@ -135,6 +135,10 @@
     color: #189da7 !important; 
 }
 
+.detail-main-header {
+    color: #525151 !important;
+}
+
 .report-listing-item {
     display: block;
     align-items: center;
@@ -181,6 +185,7 @@
 
 .OrderHeader {
     margin-top: 5px !important;
+    color: #525151 !important;
 }
 
 .user-text {
