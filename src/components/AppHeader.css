@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     background: #fcfcfc; 
-    border-bottom: 2px solid rgb(116, 116, 116);
+    border-bottom: 1px solid rgb(201, 199, 199);
     box-shadow: 0px 3px 5px rgba(85, 85, 85, 0.603);
     z-index: 1;
     transition: top 0.2s ease-in-out;
@@ -12,6 +12,7 @@
 
 .head-logo {
     display: inline-flex;
+    margin-left: 10px;
 }
 
 .head-link {
@@ -26,23 +27,23 @@
   }
   
   .head-link:hover {
-    color: #66c3cb;
+    color: #68cfb5;
   }
   
   .content-desktop {
     display: block;
-    font-size: 1.18em;
+    font-size: 1.2em;
     color: #2b2b2b;
     margin-left: 2px;
     margin-top: 9px;
-    font-family: 'Special Elite', cursive;    
+    font-family: 'Athiti';    
   }
     
   .head-content {
     width: 100%;
     height: 100%;
     padding-left: 9px;
-    padding-right: 45px;
+    padding-right: 28px;
     padding-top: 9px;
     padding-bottom: 10px;
   }
@@ -54,11 +55,16 @@
   }
 
   .head-sign-in {
-    color: teal;
+    color: #525151;
     font-family: 'Athiti';
     font-weight: 400;
     font-size: 1.2em;
-    margin-top: 11px;
+    margin-top: 10px;
+    margin-right: 3px; 
+  }
+
+  .head-sign-in:hover {
+    color: #66c3cb;
   }
 
   .head-dropdown-profile-link {
@@ -80,6 +86,7 @@
     .content-desktop {
       display: none;
     }
+
     .head-content {
       padding-right: 10px;
       padding-left: 7px;

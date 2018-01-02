@@ -93,8 +93,9 @@ class AppHeader extends React.Component {
             else {
                 sessionElement =
                     <div>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='head-sign-in'> <u>Sign Up</u> |</a>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='head-sign-in'> <u>Log In</u></a>
+                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='head-sign-in'> Sign Up </a>
+                        <span style={{color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
+                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='head-sign-in'> Log In</a>
 
                     </div>
             }

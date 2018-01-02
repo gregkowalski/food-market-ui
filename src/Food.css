@@ -1,6 +1,7 @@
 .FoodCard {
     height: 100%;
     position: relative;
+    margin-left: 0px;
 }
 
 .FoodCard a {
@@ -74,6 +75,10 @@
 }
 
 @media all and (min-width: 768px) {
+    .FoodCard {
+        margin-left: 10px;
+    }
+
     .FoodImageBox {
         overflow: hidden;
     }
