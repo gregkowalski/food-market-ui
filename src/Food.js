@@ -73,7 +73,7 @@ class Food extends Component {
       let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
       return (
-        <Grid.Column mobile={16} tablet={8} computer={5} key={food.id}>
+        <Grid.Column style={{padding: '0px' }} mobile={16} tablet={16} computer={8} key={food.id}>
           <div className='FoodCard'>
             <a
               target='_blank'
@@ -88,7 +88,7 @@ class Food extends Component {
                   </div>
 
                   <Item.Meta>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '3px', fontWeight: 'bold' }}>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '8px', fontWeight: 'bold' }}>
                       {foodPrepLabelComponent}
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -101,10 +101,10 @@ class Food extends Component {
                   </Item.Header>
 
                   <Item.Meta>
-                    <div style={{ display: 'flex', marginTop: '1px' }}>
+                    <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
                       <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                         style={{ marginTop: '5px', marginLeft: '-2px' }} />
-                      <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500' }}>{food.ratingCount} reviews</span></div>
+                      <div> <span style={{fontFamily: 'Athiti', fontWeight: '500' }}>{food.ratingCount} reviews</span></div>
                     </div>
                   </Item.Meta>
 

@@ -2,6 +2,9 @@
     height: 100%;
     position: relative;
     margin-left: 0px;
+    padding-left: 1px;
+    margin-top: 5px;
+    /* padding-bottom: 5px; */
 }
 
 .FoodCard a {
@@ -13,11 +16,13 @@
 }
 
 .FoodCardHeader {
-    margin-top: 0px !important;
+    margin-top: 3px !important;
 }
 
 .FoodCardGroup {
-    margin-top: 5px !important;
+    margin-top: 10px !important;
+    margin-right: 5px !important;
+    margin-left: 3px !important;
 }
 
 .OrderButton {
@@ -76,7 +81,10 @@
 
 @media all and (min-width: 768px) {
     .FoodCard {
-        margin-left: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 15px;
+        margin-top: 15px;
     }
 
     .FoodImageBox {
