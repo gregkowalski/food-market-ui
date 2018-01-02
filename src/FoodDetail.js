@@ -12,14 +12,18 @@ import Carousel from 'nuka-carousel'
 import Util from './Util'
 import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
-import { triggerEvent } from './Util';
+import { triggerEvent } from './Util'
+import Lightbox from 'react-images'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
 
 export default class FoodDetail extends Component {
 
-    state = {};
+    state = {
+        currentImage: 0,
+        lightboxIsOpen: false
+    };
 
     getFoodItemId() {
         return parseInt(this.props.match.params.id, 10);
@@ -64,15 +68,70 @@ export default class FoodDetail extends Component {
         )
     }
 
+    openLightbox(event, obj) {
+        this.setState({
+            currentImage: 0,//obj.index,
+            lightboxIsOpen: true,
+        });
+    }
+
+    closeLightbox() {
+        this.setState({
+            currentImage: 0,
+            lightboxIsOpen: false,
+        });
+
+    }
+    gotoPrevious() {
+        this.setState({
+            currentImage: this.state.currentImage - 1,
+        });
+
+    }
+    gotoNext() {
+        this.setState({
+            currentImage: this.state.currentImage + 1,
+        });
+    }
+
+    gotoImage (index) {
+		this.setState({
+			currentImage: index,
+		});
+	}
+
     createImageComponent(food) {
-        let imageComponent;
-        if (food.images && food.images.length > 1) {
-            imageComponent = this.createCarousel(food);
-        }
-        else {
-            imageComponent = <Image className='food-image' src={food.image} />
-        }
-        return imageComponent;
+
+        const photos = food.images.map(image => {
+            return {
+                src: image
+            };
+        });
+
+        return (
+            <div>
+                <Image className='food-image' src={food.image} onClick={() => this.openLightbox()}/>
+                {/* <Gallery photos={photos} onClick={() => this.openLightbox()} /> */}
+                <Lightbox images={photos}
+                    onClose={() => this.closeLightbox()}
+                    onClickPrev={() => this.gotoPrevious()}
+                    onClickNext={() => this.gotoNext()}
+                    onClickThumbnail={(index) => this.gotoImage(index)}
+                    currentImage={this.state.currentImage}
+                    isOpen={this.state.lightboxIsOpen}
+                    showThumbnails={true}
+                />
+            </div>
+        )
+
+        // let imageComponent;
+        // if (food.images && food.images.length > 1) {
+        //     imageComponent = this.createCarousel(food);
+        // }
+        // else {
+        //     imageComponent = <Image className='food-image' src={food.image} />
+        // }
+        // return imageComponent;
     }
 
 
@@ -251,7 +310,7 @@ export default class FoodDetail extends Component {
                         </Grid.Row>
                     </Grid>
                     <Divider section />
-                        {reviews}
+                    {reviews}
                 </ScrollElement>
                 <ScrollElement name="cook">
                     <Header as='h2'>Meet {supplier.name}</Header>
