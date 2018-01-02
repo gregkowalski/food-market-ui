@@ -13,6 +13,7 @@ import { Route } from 'react-router-dom'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import AppHeader from './components/AppHeader'
+import FoodLightbox from './components/FoodLightbox'
 
 export default class Order extends React.Component {
 
@@ -462,7 +463,7 @@ export default class Order extends React.Component {
             <div>
                 <AppHeader />
                 <div>
-                    <Image src={food.image} className='food-image' />
+                    <FoodLightbox foodItemId={food.id} />
 
                     <div className='order-body'>
 

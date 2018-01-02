@@ -8,22 +8,17 @@ import Suppliers from './data/Suppliers'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
-import Carousel from 'nuka-carousel'
+import FoodLightbox from './components/FoodLightbox'
 import Util from './Util'
 import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
 import { triggerEvent } from './Util'
-import Lightbox from 'react-images'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
 
 export default class FoodDetail extends Component {
-
-    state = {
-        currentImage: 0,
-        lightboxIsOpen: false
-    };
+    state = {};
 
     getFoodItemId() {
         return parseInt(this.props.match.params.id, 10);
@@ -47,93 +42,6 @@ export default class FoodDetail extends Component {
         }
         return prep;
     }
-
-    createCarousel(food) {
-        const images = food.images.map((current, index) => {
-            if (index === 0) {
-                return (
-                    <Image key={index} className='food-image' src={current}
-                        onLoad={() => triggerEvent(window, 'resize')} />
-                )
-            }
-            return (
-                <Image key={index} className='food-image' src={current} />
-            )
-        });
-
-        return (
-            <Carousel dragging={true} cellSpacing={15} edgeEasing="linear">
-                {images}
-            </Carousel>
-        )
-    }
-
-    openLightbox(event, obj) {
-        this.setState({
-            currentImage: 0,//obj.index,
-            lightboxIsOpen: true,
-        });
-    }
-
-    closeLightbox() {
-        this.setState({
-            currentImage: 0,
-            lightboxIsOpen: false,
-        });
-
-    }
-    gotoPrevious() {
-        this.setState({
-            currentImage: this.state.currentImage - 1,
-        });
-
-    }
-    gotoNext() {
-        this.setState({
-            currentImage: this.state.currentImage + 1,
-        });
-    }
-
-    gotoImage (index) {
-		this.setState({
-			currentImage: index,
-		});
-	}
-
-    createImageComponent(food) {
-
-        const photos = food.images.map(image => {
-            return {
-                src: image
-            };
-        });
-
-        return (
-            <div>
-                <Image className='food-image' src={food.image} onClick={() => this.openLightbox()}/>
-                {/* <Gallery photos={photos} onClick={() => this.openLightbox()} /> */}
-                <Lightbox images={photos}
-                    onClose={() => this.closeLightbox()}
-                    onClickPrev={() => this.gotoPrevious()}
-                    onClickNext={() => this.gotoNext()}
-                    onClickThumbnail={(index) => this.gotoImage(index)}
-                    currentImage={this.state.currentImage}
-                    isOpen={this.state.lightboxIsOpen}
-                    showThumbnails={true}
-                />
-            </div>
-        )
-
-        // let imageComponent;
-        // if (food.images && food.images.length > 1) {
-        //     imageComponent = this.createCarousel(food);
-        // }
-        // else {
-        //     imageComponent = <Image className='food-image' src={food.image} />
-        // }
-        // return imageComponent;
-    }
-
 
     render() {
         let id = this.getFoodItemId();
@@ -202,7 +110,7 @@ export default class FoodDetail extends Component {
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ color: '#5e5d5d', marginTop: '20px', marginLeft: '10px' }}>
+                    <div style={{ color: '#5e5d5d', marginTop: '20px' }}>
                         <Grid doubling columns={5}  >
                             <Grid.Row>
                                 <Grid.Column>
@@ -328,7 +236,7 @@ export default class FoodDetail extends Component {
                     {/* style={{ color: '#5e5d5d' }} */}
                     <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
                                     </Button>} closeIcon>
-                        <Header icon='lock' content='Do you want to anonymously report this listing?' />
+                        <Header color='red' icon='lock' content='Do you want to anonymously report this listing?' />
                         <Modal.Content>
                             <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more</a></p>
                         </Modal.Content>
@@ -366,13 +274,11 @@ export default class FoodDetail extends Component {
             </div>
         );
 
-        let imageComponent = this.createImageComponent(food);
-
         return (
             <div>
                 <AppHeader />
                 <div>
-                    {imageComponent}
+                    <FoodLightbox foodItemId={food.id} />
 
                     <div className='detail-head-main'>
                         <div className="flex-container">
