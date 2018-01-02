@@ -5,10 +5,10 @@ import './AppHeader.css'
 import CognitoUtil from '../CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import crypto from 'crypto'
 
-export default class AppHeader extends React.Component {
+class AppHeader extends React.Component {
 
     state = {};
 
@@ -81,18 +81,9 @@ export default class AppHeader extends React.Component {
                 sessionElement =
                     <div className='head-sign-in'>
                         <span>Hi, </span>
-                        {/* <Link to='/profile'>
-                            <span> <u>{this.state.username}</u> </span>|
-                        </Link>
-                        <a href='#' onClick={(e) => this.handleSignOut(e)} >
-                            <span> <u>Log Out</u></span>
-                        </a> */}
-
-                        <Dropdown text={this.state.username}>
-                            <Dropdown.Menu>
-                                <Dropdown.Item>
-                                    <Link className='head-dropdown-link' to='/profile/1'>View Profile</Link>
-                                </Dropdown.Item>
+                        <Dropdown text={this.state.username} >
+                            <Dropdown.Menu className='left' style={{ width: '250px' }}>
+                                <Dropdown.Item className='head-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push('/profile/1')} />
                                 <Dropdown.Divider />
                                 <Dropdown.Item className='head-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                             </Dropdown.Menu>
@@ -149,3 +140,5 @@ export default class AppHeader extends React.Component {
         );
     }
 }
+
+export default withRouter(AppHeader);

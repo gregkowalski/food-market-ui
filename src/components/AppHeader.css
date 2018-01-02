@@ -49,6 +49,8 @@
 
   .head-right {
     float: right;
+    /* width: 240px !important;
+    text-align: right; */
   }
 
   .head-sign-in {
@@ -59,22 +61,19 @@
     margin-top: 11px;
   }
 
-  .head-dropdown {
-    padding: 50px;
-    background-color: red;
-  }
+  .head-dropdown-profile-link {
+    color: black !important;
+    font-family: 'Athiti';
+    font-weight: 300 !important;
+    font-size: .95em !important;
+    margin-top: 8px;
+}
 
   .head-dropdown-item {
     font-family: 'Athiti';
     font-weight: 300 !important;
     font-size: .95em !important;
-  }
-
-  .head-dropdown-link {
-    color: black !important;
-    font-family: 'Athiti';
-    font-weight: 300 !important;
-    font-size: 1.15em !important;
+    margin-bottom: 8px;
   }
 
 @media all and (max-width: 767px) {
