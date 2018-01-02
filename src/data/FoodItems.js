@@ -8,7 +8,7 @@ export const FoodPrepType = {
 const FoodItems = [
     {
         id: 1,
-        supplierId: 1,
+        userId: 1,
         images: ['/assets/images/Johanndumplings.jpg'],
         image: '/assets/images/Johanndumplings.jpg',
         imageSmall: '/assets/images/Johanndumplings_small.jpg',
@@ -47,7 +47,7 @@ const FoodItems = [
     },
     {
         id: 2,
-        supplierId: 2,
+        userId: 2,
         images: ['/assets/images/HollyC_peartart.jpg', '/assets/images/HollyC_peartart2.jpg'],
         image: '/assets/images/HollyC_peartart.jpg',
         imageSmall: '/assets/images/HollyC_peartart_small.jpg',
@@ -72,7 +72,7 @@ const FoodItems = [
     },
     {
         id: 3,
-        supplierId: 2,
+        userId: 2,
         images: ['/assets/images/HollyC_baconcasserole.jpg', '/assets/images/HollyC_baconcasserole2.jpg'],
         image: '/assets/images/HollyC_baconcasserole.jpg',
         imageSmall: '/assets/images/HollyC_baconcasserole.jpg',
@@ -95,7 +95,7 @@ const FoodItems = [
     },
     {
         id: 4,
-        supplierId: 3,
+        userId: 3,
         images: ['/assets/images/IanC_pasta.jpg'],
         image: '/assets/images/IanC_pasta.jpg',
         imageSmall: '/assets/images/IanC_pasta_small.jpg',
@@ -118,7 +118,7 @@ const FoodItems = [
     },
     {
         id: 5,
-        supplierId: 2,
+        userId: 2,
         images: ['/assets/images/HollyC_bwcookies.jpg', '/assets/images/HollyC_bwcookies2.jpg'],
         image: '/assets/images/HollyC_bwcookies.jpg',
         imageSmall: '/assets/images/HollyC_bwcookies_small.jpg',
@@ -145,7 +145,7 @@ const FoodItems = [
     },
     {
         id: 6,
-        supplierId: 2,
+        userId: 2,
         images: ['/assets/images/HollyC_redjamcookies.jpg', '/assets/images/HollyC_redjamcookies2.jpg'],
         image: '/assets/images/HollyC_redjamcookies.jpg',
         imageSmall: '/assets/images/HollyC_redjamcookies_small.jpg',
@@ -172,7 +172,7 @@ const FoodItems = [
     },
     {
         id: 7,
-        supplierId: 2,
+        userId: 2,
         images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
         image: '/assets/images/HollyC_chocolatechipcookies.jpg',
         imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpg',
@@ -200,7 +200,7 @@ const FoodItems = [
     },
     {
         id: 8,
-        supplierId: 5,
+        userId: 5,
         images: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rotisserie_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rack_600x410.jpg'],
         image: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
         imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',

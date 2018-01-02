@@ -4,7 +4,7 @@ import './FoodDetail.css'
 import { Button, Card, Image, Icon, Rating, Modal } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Popup } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
-import Suppliers from './data/Suppliers'
+import Users from './data/Users'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
@@ -12,7 +12,7 @@ import FoodLightbox from './components/FoodLightbox'
 import Util from './Util'
 import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
-import { triggerEvent } from './Util'
+
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -46,7 +46,7 @@ export default class FoodDetail extends Component {
     render() {
         let id = this.getFoodItemId();
         let food = FoodItems.find(x => x.id === id);
-        let supplier = Suppliers.find(x => x.id === food.supplierId);
+        let user = Users.find(x => x.id === food.userId);
 
         let reviews = Reviews
             .filter(x => x.foodItemId === id);
@@ -106,7 +106,7 @@ export default class FoodDetail extends Component {
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
                             offset={-85} duration={500}>
-                            {supplier.name}
+                            {user.name}
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -221,14 +221,14 @@ export default class FoodDetail extends Component {
                     {reviews}
                 </ScrollElement>
                 <ScrollElement name="cook">
-                    <Header as='h2'>Meet {supplier.name}</Header>
+                    <Header as='h2'>Meet {user.name}</Header>
                     <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
-                        {supplier.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {supplier.join}</span>
+                        {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ marginTop: '15px' }}>{supplier.info}</div>
-                    <div style={{ marginTop: '15px' }}> Languages: <strong> {supplier.lang}</strong></div>
-                    <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={supplier.image} /></div>
+                    <div style={{ marginTop: '15px' }}>{user.info}</div>
+                    <div style={{ marginTop: '15px' }}> Languages: <strong> {user.lang}</strong></div>
+                    <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={user.image} /></div>
                 </ScrollElement>
                 <Divider section />
 

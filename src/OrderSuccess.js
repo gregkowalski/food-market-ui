@@ -40,7 +40,7 @@ export default class OrderSuccess extends React.Component {
             <div>
                 <AppHeader />
                 <div style={{ marginLeft: '1em', marginTop: '2em' }}>
-                <h1 style={{ color: '#52c5d5' }}>Success!</h1>
+                <h1 style={{ color: '#4cb9a0' }}>Success!</h1>
                     <span>Your <strong>{food.header}</strong> order has been placed{message}.</span>
                 </div>
             </div>

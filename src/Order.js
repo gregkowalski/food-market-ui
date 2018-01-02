@@ -4,7 +4,7 @@ import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-re
 import { Accordion, Header, Divider, Form, Segment, Input } from 'semantic-ui-react'
 import { Radio } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
-import Suppliers from './data/Suppliers'
+import Users from './data/Users'
 import AWS from 'aws-sdk'
 // import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
@@ -443,7 +443,7 @@ export default class Order extends React.Component {
         // eslint-disable-next-line 
         let food = FoodItems.find(x => x.id == id);
         // eslint-disable-next-line 
-        let supplier = Suppliers.find(x => x.id == food.supplierId);
+        let user = Users.find(x => x.id == food.userId);
 
         const { showPricingDetails } = this.state;
 
@@ -470,8 +470,8 @@ export default class Order extends React.Component {
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
                             <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
-                                by {supplier.name}
-                                <Image avatar src={supplier.image} style={{ marginLeft: '10px' }} />
+                                by {user.name}
+                                <Image avatar src={user.image} style={{ marginLeft: '10px' }} />
                             </div>
                         </div>
 

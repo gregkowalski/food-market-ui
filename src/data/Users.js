@@ -1,7 +1,7 @@
-const Suppliers = [
+const Users = [
     {
         id: 1,
-        image: '/assets/images/suppliers/johannk.jpg',
+        image: '/assets/images/users/johannk.jpg',
         name: 'Johann',
         city: 'West End',
         info: 'I\'m an American who, alongside her Canadian husband, globetrots the world and VanCity for good authentic eats.  In our home, sharing food is a family creed.   So, I\'m excited to share both a family tradition as well as my own fusion recipes.  I believe healthy food can and should taste finger-lickin\' good! ',
@@ -10,16 +10,16 @@ const Suppliers = [
     },
     {
         id: 2,
-        image: '/assets/images/suppliers/molly.png',
+        image: '/assets/images/users/molly.png',
         name: 'Holly',
         city: 'Coquitlam',
         info: 'I enjoy making food for family and friends. My kitchen is always cooking up something new!',
         join: 'December 2017',
         lang: 'English, Cantonese'
-    },
+    }, 
     {
         id: 3,
-        image: '/assets/images/suppliers/IanChan_ProfilePic_500x500.jpg',
+        image: '/assets/images/users/IanChan_ProfilePic_500x500.jpg',
         name: 'Ian',
         city: 'North Burnaby',
         info: 'I love to eat and sharing food is part of that joy.',
@@ -28,7 +28,7 @@ const Suppliers = [
     },
     {
         id: 4,
-        image: '/assets/images/suppliers/matthew.png',
+        image: '/assets/images/users/matthew.png',
         name: 'Pierre',
         city: 'Coquitlam',
         info: 'I really enjoy making food for others.',
@@ -37,7 +37,7 @@ const Suppliers = [
     },
     {
         id: 5,
-        image: '/assets/images/suppliers/steve.jpg',
+        image: '/assets/images/users/steve.jpg',
         name: 'Gabe',
         city: 'North Burnaby',
         info: 'I love cooking in my spare time and I get a lot of joy from  making delicous meals for my family and friends. I am eager to share my creations with the world!',
@@ -46,4 +46,4 @@ const Suppliers = [
     }
 ];
 
-export default Suppliers;
+export default Users;
