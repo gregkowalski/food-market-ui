@@ -27,22 +27,24 @@ unregister();
 const store = createStore(reducer)
 
 render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/' component={App} />
-        {/* <Route path='/test' component={mytest} /> */}
-        <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
-        <Route path='/foods/:id/orderError' component={OrderError} />
-        <Route path='/foods/:id/order' component={Order} />
-        <Route path='/foods/:id' exact component={FoodDetail} />
-        <Route path='/foodEntry' exact component={FoodEntry} />
-        <Route path='/cognitoCallback' exact component={CognitoCallback} />
-        <Route path='/cognitoSignout' exact component={CognitoSignout} />
-        <Route path='/stripeCallback' exact component={StripeCallback} />
-        <Route path='/profile/:userId' exact component={Profile} />
-      </Switch>
-    </BrowserRouter>
-  </Provider>,
+  <StripeProvider apiKey="pk_test_3i1u1cO6uPgfdBh08rz9MIlN">
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/' component={App} />
+          {/* <Route path='/test' component={mytest} /> */}
+          <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
+          <Route path='/foods/:id/orderError' component={OrderError} />
+          <Route path='/foods/:id/order' component={Order} />
+          <Route path='/foods/:id' exact component={FoodDetail} />
+          <Route path='/foodEntry' exact component={FoodEntry} />
+          <Route path='/cognitoCallback' exact component={CognitoCallback} />
+          <Route path='/cognitoSignout' exact component={CognitoSignout} />
+          <Route path='/stripeCallback' exact component={StripeCallback} />
+          <Route path='/profile/:userId' exact component={Profile} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
+  </StripeProvider>,
   document.getElementById('root')
 )
