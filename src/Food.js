@@ -87,24 +87,33 @@ class Food extends Component {
                     {/* <Image className='FoodImage' src={food.image} /> */}
                   </div>
 
-                  <Item.Meta>
-                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '8px', fontWeight: 'bold' }}>
-                      {foodPrepLabelComponent}
-                    </div>
-                    <div style={{ clear: 'both' }}></div>
-                  </Item.Meta>
-
                   <Item.Header className='FoodCardHeader'>
                     <div className='FoodHeader'>
                      ${food.price} · {food.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Item.Header>
 
+                  {/* <Item.Meta>
+                    <div style={{ float: 'left', fontSize: '1.36em', marginTop: '8px', fontWeight: 'bold' }}>
+                      {foodPrepLabelComponent}
+                    </div>
+                    <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
+                      <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                        style={{ marginTop: '15px', marginLeft: '5px' }} />
+                      <div> <span style={{fontFamily: 'Athiti', fontWeight: '500' }}>{food.ratingCount} reviews</span></div>
+                    </div>
+                    <div style={{ clear: 'both' }}></div>
+                  </Item.Meta> */}
+
                   <Item.Meta>
                     <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
                       <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                         style={{ marginTop: '5px', marginLeft: '-2px' }} />
                       <div> <span style={{fontFamily: 'Athiti', fontWeight: '500' }}>{food.ratingCount} reviews</span></div>
+                    
+                    <div style={{ fontSize: '1.36em', marginTop: '-2px', marginLeft: '5px', fontWeight: 'bold' }}>
+                    {foodPrepLabelComponent}
+                    </div>
                     </div>
                   </Item.Meta>
 
