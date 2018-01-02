@@ -56,6 +56,20 @@
     font-family: 'Athiti';
     font-weight: 400;
     font-size: 1.2em;
+    margin-top: 11px;
+  }
+
+  .head-dropdown {
+    font-family: 'Athiti';
+    font-weight: 300 !important;
+    font-size: .95em !important;
+  }
+
+  .head-dropdown-link {
+    color: black !important;
+    font-family: 'Athiti';
+    font-weight: 300 !important;
+    font-size: 1.15em !important;
   }
 
 @media all and (max-width: 767px) {

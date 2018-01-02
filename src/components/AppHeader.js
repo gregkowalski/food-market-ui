@@ -57,6 +57,16 @@ export default class AppHeader extends React.Component {
         }
     }
 
+    handleLogOut(event, data) {
+        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        let session = auth.getCachedSession();
+        if (session && session.isValid()) {
+            auth.signOut();
+        }
+
+        this.setState({ username: null });
+    }
+
     render() {
         let pos = 'relative';
         if (this.props.fixed) {
@@ -71,12 +81,22 @@ export default class AppHeader extends React.Component {
                 sessionElement =
                     <div className='head-sign-in'>
                         <span>Hi, </span>
-                        <Link to='/profile'>
+                        {/* <Link to='/profile'>
                             <span> <u>{this.state.username}</u> </span>|
                         </Link>
                         <a href='#' onClick={(e) => this.handleSignOut(e)} >
                             <span> <u>Log Out</u></span>
-                        </a>
+                        </a> */}
+
+                        <Dropdown text={this.state.username}>
+                            <Dropdown.Menu>
+                                <Dropdown.Item>
+                                    <Link className='head-dropdown-link' to='/profile'>View Profile</Link>
+                                </Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item className='head-dropdown' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
             }
             else {
