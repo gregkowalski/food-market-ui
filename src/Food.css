@@ -15,6 +15,16 @@
     color: inherit;
 }
 
+.FoodCard:hover .FoodImageHideDecorator {
+    display: inherit;
+}
+
+.FoodCard .FoodImageHideDecorator {
+    display: none;
+}
+
+
+
 .FoodCardHeader {
     margin-top: 3px !important;
 }

@@ -1,2 +1,8 @@
 {
+    "search.exclude": {
+        "semantic/**": true,
+        "build/**": true,
+        "*lock*": true
+    },
+    "editor.detectIndentation": false
 }

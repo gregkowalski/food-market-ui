@@ -5,10 +5,6 @@
   position: relative;
 }
 
-.dtest{
-  color: #f35656;
-}
-
 .bodywrap {
   margin-top: 55px;
 }
@@ -23,7 +19,7 @@
   padding-left: 5px;
 }
 
-.right {
+.app-right {
   width: 34%;
   height: calc(100vh - 55px);
   top: 55px;
@@ -33,7 +29,7 @@
 }
 
 @media all and (max-width: 767px) {
-  .right {
+  .app-right {
       display: none;
   }
   .center {

@@ -76,7 +76,7 @@ class App extends Component {
               onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
             />
           </div>
-          <div className='right'>
+          <div className='app-right'>
             <MapContainer
               selectedItemId={this.state.hoveredFoodItemId}
               center={this.state.mapLocation}

@@ -80,10 +80,10 @@ class AppHeader extends React.Component {
         const taglines = [
             'handcrafted to taste like home',
             'homemade + local',
-            'good eats, next door',
             'this is...awesomesauce!',
             'because being hangry was so 2017.',
-            'easy peasy, lemon squeezy!'
+            'easy peasy, lemon squeezy!',
+            'so hot right now.'
         ];
         let index = this.getRandomInt(0, taglines.length - 1);
         return taglines[index];
