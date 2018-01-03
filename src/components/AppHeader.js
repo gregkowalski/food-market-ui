@@ -68,6 +68,24 @@ class AppHeader extends React.Component {
         this.setState({ username: null });
     }
 
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getRandomTagline() {
+
+        const taglines = [
+            'handcrafted to taste like home',
+            'homemade + local',
+            'good eats, next door',
+            'this is...awesomesauce!',
+            'because being hangry was so 2017.',
+            'easy peasy, lemon squeezy!'
+        ];
+        let index = this.getRandomInt(0, taglines.length - 1);
+        return taglines[index];
+    }
+
     render() {
         let pos = 'relative';
         if (this.props.fixed) {
@@ -95,7 +113,7 @@ class AppHeader extends React.Component {
                 sessionElement =
                     <div>
                         <a href='#' onClick={(e) => this.handleSignUp(e)} className='head-sign-in'> Sign Up </a>
-                        <span style={{color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
+                        <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
                         <a href='#' onClick={(e) => this.handleSignIn(e)} className='head-sign-in'> Log In</a>
 
                     </div>
@@ -113,7 +131,7 @@ class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                            handcrafted to taste like home
+                            {this.getRandomTagline()}
                         </div>
                     </div>
                     <div className='head-right'>

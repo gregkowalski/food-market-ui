@@ -57,7 +57,7 @@
 }
 
 .detail-head-right {
-    background: yellow;
+    /* background: yellow; */
     position: -webkit-sticky;
     position: sticky;
     top: 88px;

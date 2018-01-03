@@ -228,8 +228,8 @@ export default class Profile extends React.Component {
 
                         <div className="flex-item-right">
                             <div className='detail-head-right'>
-                                <Card>
-                                    <Card.Content>
+                                {/* <Card>
+                                    <Card.Content> */}
                                         <div className='profile-verify'>
                                             <Segment style={{ textAlign: 'left', fontWeight: 'bold' }} secondary attached='top'>
                                                 <div style={{ marginLeft: '7px' }}> Verified info</div>
@@ -259,8 +259,8 @@ export default class Profile extends React.Component {
                                                 </div>
                                             </Segment>
                                         </div>
-                                    </Card.Content>
-                                </Card>
+                                    {/* </Card.Content>
+                                </Card> */}
                             </div>
                         </div>
 
