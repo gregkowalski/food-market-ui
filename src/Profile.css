@@ -3,8 +3,19 @@
 }
 
 .profile-header {
-    font-size: '3em'; 
+    font-size: 2.8em !important; 
     color: #525151 !important;
+    font-family: 'Athiti' !important;
+    font-weight: 300 !important;
+    line-height: 40px !important;
+    margin-top: 25px !important;
+}
+
+.profile-sub-header {
+    color: #60b0f4;
+    font-family: 'Athiti' !important;
+    font-weight: 600;
+    font-size: 1.1em;
 }
 
 .profile-body {

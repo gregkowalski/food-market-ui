@@ -113,7 +113,7 @@ class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                            homemade. local. wholesome.
+                            handcrafted to taste like home
                         </div>
                     </div>
                     <div className='head-right'>

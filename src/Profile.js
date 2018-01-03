@@ -4,7 +4,7 @@ import CognitoUtil from './Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { Segment, Input, Form, Button, Image, Header, Icon } from 'semantic-ui-react'
+import { Segment, Input, Form, Button, Image, Header, Grid } from 'semantic-ui-react'
 import './Profile.css'
 import Users from './data/Users'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
@@ -146,34 +146,38 @@ export default class Profile extends React.Component {
         let user = Users.find(x => x.id === userId);
 
         return (
+            
             <div>
                 <AppHeader />
+                <Grid>
+                <Grid.Column style={{padding: '0px' }} mobile={16} tablet={16} computer={12}>
                 <div className='profile-body'>
-                    <div style={{ marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <div >
                         <Image floated='left' size='small' shape='circular' src={user.image} />
                         <Header className='profile-header' as='h1'>Hi, I'm {user.name}!</Header>
-                        <div style={{ color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
+                        <div className='profile-sub-header'>
                             {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
                         </div>
                         <div style={{ clear: 'left' }}></div>
                         <div style={{ marginTop: '15px' }}>{user.info}</div>
                         <div style={{ marginTop: '15px' }}> Languages: <strong> {user.lang}</strong></div>
                         <div style={{ clear: 'both' }}></div>
-                        <div className='profile-verify'>
+
+                        {/* <div className='profile-verify'>
                             <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
-                                Verified info
-                        </Segment>
+                                <div style={{ marginLeft: '7px' }}> Verified info</div>
+                            </Segment>
                             <Segment style={{ textAlign: 'center' }} attached>
                                 <div className='profile-verify-items'>
-                                <div style={{float: 'left' }}>Email address</div>
-                                    <Icon style={{float: 'right' }} size='large' color='teal' name='check circle outline' />
+                                    <div style={{ float: 'left' }}>Email address</div>
+                                    <Icon style={{ float: 'right' }} size='large' color='teal' name='check circle outline' />
                                     <div style={{ clear: 'both' }}></div>
-                                <div style={{float: 'left', marginTop: '20px' }}>Phone number</div>
-                                    <Icon style={{float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
+                                    <div style={{ float: 'left', marginTop: '20px' }}>Phone number</div>
+                                    <Icon style={{ float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
                                     <div style={{ clear: 'both' }}></div>
                                 </div>
-                        </Segment>
-                        </div>
+                            </Segment>
+                        </div> */}
 
 
                         <Segment>
@@ -201,6 +205,8 @@ export default class Profile extends React.Component {
                         </Segment>
                     </div>
                 </div>
+                </Grid.Column>
+                </Grid>
             </div>
         );
     }
