@@ -7,8 +7,8 @@
     color: #525151 !important;
     font-family: 'Athiti' !important;
     font-weight: 300 !important;
-    line-height: 40px !important;
-    margin-top: 25px !important;
+    line-height: 35px !important;
+    margin-top: 5px !important;
 }
 
 .profile-sub-header {
@@ -16,20 +16,70 @@
     font-family: 'Athiti' !important;
     font-weight: 600;
     font-size: 1.1em;
+    margin-bottom: 15px;
 }
 
 .profile-body {
-    width: 75%;
+    /* background-color: green; */
+    width: 100%;
     margin: 20px auto 0 auto;
-    padding-bottom: 20px;
+    padding: 30px;
   
   }
 
-  .profile-verify {
-      width: 200px;
+.profile-verify {
+      width: 262px;
       vertical-align: middle;
   }
 
-  .profile-verify-items {
+.profile-verify-items {
       padding: 10px;
   }
+
+.flex-container {
+    /* background-color: red; */
+    display: -webkit-flex;
+    display: flex;
+    min-height: 0px;
+    width: 100%;
+    height: auto;
+    padding-left: 10px;
+    /* margin-top: 1px; */
+    margin-bottom: 10px;
+}
+
+.flex-item-right {
+    /* background-color: blue; */
+    width: 300px;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 1%;
+}
+
+.detail-head-right {
+    background: yellow;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 88px;
+    z-index: 1;
+}
+
+@media all and (max-width: 767px) {    
+    .detail-footer {
+        display: inherit;
+    }
+    .flex-item-main {
+        margin-bottom: 100px;
+        width: 100%;
+        margin-right: 10px;
+    }
+    .flex-item-right {
+        display: none;
+    }
+    .detail-head-main {
+        display: flex;
+    }
+    .report-listing-mobile {
+        display: block;
+    }
+}

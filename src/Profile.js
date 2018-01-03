@@ -4,12 +4,14 @@ import CognitoUtil from './Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { Segment, Input, Form, Button, Image, Header, Grid } from 'semantic-ui-react'
+import { Segment, Input, Form, Button, Image, Header, Grid, Card, Popup, Icon, Modal } from 'semantic-ui-react'
 import './Profile.css'
 import Users from './data/Users'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
+import { Constants } from './Constants'
+
 
 export default class Profile extends React.Component {
 
@@ -145,69 +147,136 @@ export default class Profile extends React.Component {
         let userId = parseInt(this.props.match.params.userId, 10);
         let user = Users.find(x => x.id === userId);
 
+        const content = (
+
+            <Grid>
+                <Grid.Column style={{ padding: '0px' }} mobile={16} tablet={16} computer={13}>
+                    <div className='profile-body'>
+                        <Image floated='left' verticalAlign='middle' size='small' shape='circular' src={user.image} />
+                                <Header className='profile-header' as='h1'>Hi, I'm {user.name}! </Header>
+                                <div className='profile-sub-header'>
+                                    {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
+                                </div>
+                                <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this user
+                                </Button>} closeIcon>
+                                    <Header icon='lock' content='Do you want to anonymously report this listing?' />
+                                    <Modal.Content>
+                                        Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more </a>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <div className='report-listing-item'>
+                                            <Button>
+                                                This profile shouldn’t be on {Constants.AppName}.
+                                            </Button>
+                                            <Popup
+                                                trigger={<Icon size='large' name='question circle outline' />}
+                                                content='This contains false/misleading information or may be a fake listing.'
+                                                on={['click', 'hover']}
+                                                hideOnScroll />
+                                            <div>
+                                                <Button >
+                                                    Inappropriate content or spam.
+                                            </Button>
+                                                <Popup
+                                                    trigger={<Icon size='large' name='question circle outline' />}
+                                                    content='The description of this listing contain violent, graphic, promotional, or other offensive content.'
+                                                    on={['click', 'hover']}
+                                                    hideOnScroll />
+                                            </div>
+                                        </div>
+                                    </Modal.Actions>
+                                </Modal>
+                        <div style={{ clear: 'both' }}></div>
+                        <div style={{ marginTop: '15px', marginBottom: '15px' }}>{user.info}</div>
+
+                        <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
+                            <Segment>
+                                <Form noValidate autoComplete='off'>
+                                    <Form.Field>
+                                        <label>Email</label>
+                                        <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
+                                        {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
+                                    </Form.Field>
+                                    {/* <Form.Field required error={this.state.hasErrors.phone}> */}
+                                    <Form.Field required>
+                                        <label>Username</label>
+                                        <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                        {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
+                                    </Form.Field>
+                                    <Form.Field required>
+                                        <label>Stripe Account Id</label>
+                                        <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                    </Form.Field>
+                                    <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
+                                </Form>
+                            </Segment>
+                            <Segment>
+                                {stripeComponent}
+                            </Segment>
+                        </div>
+                    </div>
+                </Grid.Column>
+            </Grid >
+
+        );
+
         return (
-            
             <div>
                 <AppHeader />
-                <Grid>
-                <Grid.Column style={{padding: '0px' }} mobile={16} tablet={16} computer={12}>
-                <div className='profile-body'>
-                    <div >
-                        <Image floated='left' size='small' shape='circular' src={user.image} />
-                        <Header className='profile-header' as='h1'>Hi, I'm {user.name}!</Header>
-                        <div className='profile-sub-header'>
-                            {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
+                <div>
+                    <div className="flex-container">
+
+                        <div className="flex-item-right">
+                            <div className='detail-head-right'>
+                                <Card>
+                                    <Card.Content>
+                                        <div className='profile-verify'>
+                                            <Segment style={{ textAlign: 'left', fontWeight: 'bold' }} secondary attached='top'>
+                                                <div style={{ marginLeft: '7px' }}> Verified info</div>
+                                            </Segment>
+                                            <Segment style={{ textAlign: 'center' }} attached>
+                                                <div className='profile-verify-items'>
+                                                    <div style={{ float: 'left' }}>Email address</div>
+                                                    <Icon style={{ float: 'right' }} size='large' color='teal' name='check circle outline' />
+                                                    <div style={{ clear: 'both' }}></div>
+                                                    <div style={{ float: 'left', marginTop: '20px' }}>Phone number</div>
+                                                    <Icon style={{ float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
+                                                    <div style={{ clear: 'both' }}></div>
+                                                </div>
+                                            </Segment>
+                                        </div>
+                                        {/* <Divider section /> */}
+                                        <div className='profile-verify'>
+                                            <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
+                                                <div style={{ marginLeft: '7px' }}> About Me</div>
+                                            </Segment>
+                                            <Segment style={{ textAlign: 'center' }} attached>
+                                                <div className='profile-verify-items'>
+                                                    <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
+                                                    <div style={{ textAlign: 'left', marginTop: '3px' }}> {user.lang}</div>
+                                                    <div style={{ clear: 'left' }}></div>
+
+                                                </div>
+                                            </Segment>
+                                        </div>
+                                    </Card.Content>
+                                </Card>
+                            </div>
                         </div>
-                        <div style={{ clear: 'left' }}></div>
-                        <div style={{ marginTop: '15px' }}>{user.info}</div>
-                        <div style={{ marginTop: '15px' }}> Languages: <strong> {user.lang}</strong></div>
-                        <div style={{ clear: 'both' }}></div>
 
-                        {/* <div className='profile-verify'>
-                            <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
-                                <div style={{ marginLeft: '7px' }}> Verified info</div>
-                            </Segment>
-                            <Segment style={{ textAlign: 'center' }} attached>
-                                <div className='profile-verify-items'>
-                                    <div style={{ float: 'left' }}>Email address</div>
-                                    <Icon style={{ float: 'right' }} size='large' color='teal' name='check circle outline' />
-                                    <div style={{ clear: 'both' }}></div>
-                                    <div style={{ float: 'left', marginTop: '20px' }}>Phone number</div>
-                                    <Icon style={{ float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
-                                    <div style={{ clear: 'both' }}></div>
-                                </div>
-                            </Segment>
-                        </div> */}
+                        {content}
 
-
-                        <Segment>
-                            <Form noValidate autoComplete='off'>
-                                <Form.Field>
-                                    <label>Email</label>
-                                    <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
-                                    {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
-                                </Form.Field>
-                                {/* <Form.Field required error={this.state.hasErrors.phone}> */}
-                                <Form.Field required>
-                                    <label>Username</label>
-                                    <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                                    {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
-                                </Form.Field>
-                                <Form.Field required>
-                                    <label>Stripe Account Id</label>
-                                    <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                                </Form.Field>
-                                <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
-                            </Form>
-                        </Segment>
-                        <Segment>
-                            {stripeComponent}
-                        </Segment>
                     </div>
                 </div>
-                </Grid.Column>
-                </Grid>
-            </div>
-        );
+
+                {/* <div className='detail-footer'>
+
+                    <Button fluid color='teal' className='detail-footer-button'>Order Now</Button>
+
+                    <div className='detail-footer-text'>You won't be charged yet</div>
+                </div> */}
+            </div >
+
+        )
     }
 }
