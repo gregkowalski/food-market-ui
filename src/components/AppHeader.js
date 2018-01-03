@@ -12,6 +12,7 @@ import { FeatureToggles } from '../FeatureToggles'
 class AppHeader extends React.Component {
 
     state = {};
+    tagline;
 
     handleSignIn(e) {
         this.handleAuth(e, state => CognitoUtil.getCognitoLoginUrl(state));
@@ -56,6 +57,8 @@ class AppHeader extends React.Component {
             const jwt = jwtDecode(session.getIdToken().getJwtToken());
             this.setState({ username: jwt.preferred_username });
         }
+
+        this.tagline = this.getRandomTagline();
     }
 
     handleLogOut(event, data) {
@@ -131,7 +134,7 @@ class AppHeader extends React.Component {
                             <div style={{ marginTop: '10px', fontSize: '1.4em', fontWeight: 'bolder' }}>{Constants.AppName}</div>
                         </a>
                         <div className="content-desktop">
-                            {this.getRandomTagline()}
+                            {this.tagline}
                         </div>
                     </div>
                     <div className='head-right'>
