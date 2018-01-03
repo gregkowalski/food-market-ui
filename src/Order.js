@@ -675,7 +675,9 @@ export default class Order extends React.Component {
 
                             <div style={{ marginTop: '20px' }}>
                                 <Button
-                                    className='order-confirm-button' fluid
+                                    className='order-confirm-button'
+                                    fluid
+                                    loading={this.state.orderProcessing}
                                     disabled={!this.state.acceptedTerms}
                                     onClick={() => this.handleOrderButtonClick()}>
                                     Confirm my order for ${this.getTotal(food.price)}
@@ -721,6 +723,11 @@ export default class Order extends React.Component {
     }
 
     submitOrderNew() {
+        if (this.state.orderProcessing) {
+            console.log('Order is already processing...')
+            return;
+        }
+
         const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         const session = auth.getCachedSession();
         if (!session || !session.isValid()) {
@@ -732,6 +739,9 @@ export default class Order extends React.Component {
             console.log('Order form validation failed.  Please correct your information and try again.');
             return;
         }
+        
+        console.log('Order processing');
+        this.setState({ orderProcessing: true});
 
         const food = this.getFoodItem();
         const order = {
@@ -759,11 +769,15 @@ export default class Order extends React.Component {
                 }
             })
             .then(response => {
+                console.log('Order finished');
                 console.log(response);
+                this.setState({ orderProcessing: false});
                 this.props.history.push('orderSuccess?sentCount=2');
             })
             .catch(err => {
+                console.log('Order finished');
                 console.error(err);
+                this.setState({ orderProcessing: false});
                 this.props.history.push('orderError');
             });
     }

@@ -1,4 +1,4 @@
 export const FeatureToggles = {
-    CognitoLogin: true,
-    StripePayment: true,
+    CognitoLogin: false,
+    StripePayment: false,
 }
