@@ -46,7 +46,7 @@ class Food extends Component {
                     key={index} className='FoodImage' src={current} />
             );
             imageElement =
-                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear"
+                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}
                     decorators={CarouselDecorators}>
                     {images}
                 </Carousel>
