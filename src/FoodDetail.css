@@ -120,6 +120,16 @@
     font-family: 'Athiti' !important;
 }
 
+.detail-card-summary-row {
+    display: flex;
+    margin-top: 3px;
+    width: 100%;
+    font-size: 1.3em !important; 
+    font-weight: 400;
+    line-height: 22px !important;
+    font-family: 'Athiti' !important;
+  }
+
 .detail-footer {
     display: none;
     height: 100px;
@@ -130,26 +140,34 @@
     /* background: red; */
     background: whitesmoke;
     border-top: 1px solid lightgray;
-    padding-top: 12px;
+    padding-top: 5px;
     z-index: 1;
     text-align: center;
+}
+
+.detail-desktop-button {
+    background-color:  #4cb99e !important;
+    margin-top: 15px !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.4em !important;
+    font-weight: 500 !important;
 }
 
 .detail-footer-button {
     width: 80%;
     height: 3em;
     background-color:  #4cb99e !important;
-}
-
-.detail-desktop-button {
-    background-color:  #4cb99e !important;
-    margin-top: 15px !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.4em !important;
+    font-weight: 500 !important;
 }
 
 .detail-footer-text {
-    margin-top: 10px;
+    margin-top: 5px;
     color: gray;
-    font-size: 1em;
+    font-size: 1.1em;
+    font-family: 'Athiti' !important; 
+    font-weight: 500 !important;
 }
 
 .detail-rating {
@@ -193,10 +211,17 @@
     white-space: pre;
 }
 
-.detail-popup-icon-size {
-    font-size: '3em' !important;
-    font-weight: 700;
+.detail-card-header {
+    margin-top: 5px !important;
+    color: #494949 !important;
+    font-size: 1.55em !important;
+    font-weight: 700 !important;
 }
+
+.user-text {
+    white-space: pre-wrap;
+}
+
 
 @media all and (max-width: 767px) {    
     .detail-footer {
@@ -219,13 +244,3 @@
 }
 /* end main layout */
 
-.OrderHeader {
-    margin-top: 5px !important;
-    color: #494949 !important;
-    font-size: 1.55em !important;
-    font-weight: 700 !important;
-}
-
-.user-text {
-    white-space: pre-wrap;
-}

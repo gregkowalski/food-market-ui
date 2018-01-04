@@ -346,11 +346,11 @@ export default class FoodDetail extends Component {
                     </div>
                     <div style={{ clear: 'both' }}></div>
                     <div className='detail-cook-text'>{user.info}
-                        <div style={{marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {user.lang}</span></div>
+                        <div style={{ marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {user.lang}</span></div>
                     </div>
                     <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={user.image} /></div>
                 </ScrollElement>
-                <Divider section />          
+                <Divider section />
             </div>
         );
 
@@ -394,7 +394,7 @@ export default class FoodDetail extends Component {
                             <div className='detail-head-right'>
                                 <Card>
                                     <Card.Content>
-                                        <Card.Header className='OrderHeader'>
+                                        <Card.Header className='detail-card-header'>
                                             <div style={{ float: 'left' }}>${food.price} CAD</div>
                                             <div style={{ clear: 'left' }}></div>
                                             <div style={{ display: 'flex' }}>
@@ -402,14 +402,17 @@ export default class FoodDetail extends Component {
                                                     style={{ marginTop: '8px', marginLeft: '-2px' }} />
                                                 <div style={{ fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                             </div>
+                                            <Divider />
                                         </Card.Header>
 
-                                        Quantity ({food.availability} available)
-                                        <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                                            <Form.Group inline>
+                                        <div style={{ marginTop: '5px', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
+                                            Quantity ({food.availability} available)</div>
+                                        {/* <Segment style={{ maxWidth: '400px', minWidth: '250px' }}> */}
+                                            <Form.Group inline style={{ marginBottom: '20px' }}>
                                                 <Form.Field>
                                                     <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
-                                                    <Input type='number'
+                                                    <Input  
+                                                        type='number'
                                                         onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
                                                         onBlur={(e) => this.handleQuantityInputBlur(e)}
                                                         value={this.state.quantity} min={1} max={food.availability}
@@ -417,11 +420,11 @@ export default class FoodDetail extends Component {
                                                     <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
                                                 </Form.Field>
                                             </Form.Group>
-                                            <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
+                                            {/* <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div> */}
                                             {/* <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' /> */}
-                                        </Segment>
+                                        {/* </Segment> */}
 
-                                        <div className='order-summary-row'>
+                                        <div className='detail-card-summary-row'>
                                             <div className='align-left'>
                                                 {this.state.quantity} x ${food.price} {food.header}
                                             </div>
@@ -430,11 +433,12 @@ export default class FoodDetail extends Component {
                                             </div>
                                         </div>
                                         <Divider />
-                                        <div className='order-summary-row'>
+
+                                        <div className='detail-card-summary-row'>
                                             <div className='align-left'>
                                                 Service fee <Popup
-                                                    trigger={<Icon className='detail-popup-icon-size' size='small' name='question circle outline' />}
-                                                    content='This helps feed our platform and keep the lights on.'
+                                                    trigger={<Icon size='small' name='question circle outline' />}
+                                                    content='This helps run our platform and keep the lights on.'
                                                     on={['click']}
                                                     hideOnScroll />
                                             </div>
@@ -442,23 +446,21 @@ export default class FoodDetail extends Component {
                                                 ${this.getServiceFee(food.price)}
                                             </div>
                                         </div>
-
                                         <Divider />
 
-                                        <div className='order-summary-row'>
+                                        <div className='detail-card-summary-row'>
                                             <div className='align-left'>
                                                 <strong>Total </strong>
                                             </div>
                                             <div className='align-right'>
-                                                <strong> ${this.getTotal(food.price)}</strong>
+                                                <span style={{ fontWeight: '500' }}> ${this.getTotal(food.price)}</span>
                                             </div>
                                         </div>
-
 
                                         <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
                                             <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
                                                 <Button.Content visible>
-                                                    Request an order
+                                                    Request an Order
                                             </Button.Content>
                                                 <Button.Content hidden>
                                                     ${food.price}
@@ -466,7 +468,8 @@ export default class FoodDetail extends Component {
                                             </Button>
                                         </RouterLink>
 
-                                        <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray' }}>You won't be charged yet</div>
+                                        <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontFamily: 'Athiti', fontSize: '1.1em', fontWeight: '500' }}>
+                                        You won't be charged yet</div>
                                     </Card.Content>
                                 </Card>
                                 <FlagListing />
@@ -477,7 +480,7 @@ export default class FoodDetail extends Component {
 
                 <div className='detail-footer'>
                     <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                        <Button fluid color='teal' className='detail-footer-button'>Request an order</Button>
+                        <Button fluid color='teal' className='detail-footer-button'>Request an Order</Button>
                     </RouterLink>
                     <div className='detail-footer-text'>You won't be charged yet</div>
                 </div>
