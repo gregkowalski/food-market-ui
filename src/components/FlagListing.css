@@ -1,0 +1,12 @@
+.flag-listing-item {
+    display: block;
+    align-items: center;
+    margin-top: 5px;
+    font-size: 1.36em; 
+    font-weight: 500  !important;
+    font-family: Athiti  !important;
+}
+
+.flag-listing-item > div {
+    margin-top: 5px;
+}

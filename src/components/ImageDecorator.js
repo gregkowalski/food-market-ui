@@ -114,7 +114,7 @@ const CarouselDecorators = [
                     border: 0,
                     background: 'transparent',
                     // background: 'rgba(0,0,0,0.4)',
-                    color: '#82bcb7',
+                    color: 'white',
                     cursor: 'pointer',
                     padding: 5,
                     outline: 10,

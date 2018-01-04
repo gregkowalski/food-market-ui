@@ -1,0 +1,10 @@
+.flag-listing-mobile {
+    display: none;
+    color: #5e5d5d;
+}
+
+@media all and (max-width: 767px) {    
+    .flag-listing-mobile {
+        display: block;
+    }
+}

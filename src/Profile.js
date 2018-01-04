@@ -11,6 +11,7 @@ import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-j
 import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
 import { Constants } from './Constants'
+import FlagUser from './components/FlagUser'
 
 
 export default class Profile extends React.Component {
@@ -157,35 +158,9 @@ export default class Profile extends React.Component {
                                 <div className='profile-sub-header'>
                                     {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
                                 </div>
-                                <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this user
-                                </Button>} closeIcon>
-                                    <Header icon='lock' content='Do you want to anonymously report this listing?' />
-                                    <Modal.Content>
-                                        Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more </a>
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <div className='report-listing-item'>
-                                            <Button>
-                                                This profile shouldn’t be on {Constants.AppName}.
-                                            </Button>
-                                            <Popup
-                                                trigger={<Icon size='large' name='question circle outline' />}
-                                                content='This contains false/misleading information or may be a fake listing.'
-                                                on={['click', 'hover']}
-                                                hideOnScroll />
-                                            <div>
-                                                <Button >
-                                                    Inappropriate content or spam.
-                                            </Button>
-                                                <Popup
-                                                    trigger={<Icon size='large' name='question circle outline' />}
-                                                    content='The description of this listing contain violent, graphic, promotional, or other offensive content.'
-                                                    on={['click', 'hover']}
-                                                    hideOnScroll />
-                                            </div>
-                                        </div>
-                                    </Modal.Actions>
-                                </Modal>
+                               
+                        <FlagUser />
+
                         <div style={{ clear: 'both' }}></div>
                         <div style={{ marginTop: '15px', marginBottom: '15px' }}>{user.info}</div>
 
