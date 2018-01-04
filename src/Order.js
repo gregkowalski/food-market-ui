@@ -619,7 +619,6 @@ export default class Order extends React.Component {
                                 </Form.Field>
                                 <Divider />
                                 <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
-
                             </Segment>
 
                             <Accordion>
@@ -654,7 +653,7 @@ export default class Order extends React.Component {
 
                                         <div className='order-summary-row'>
                                             <div className='align-left'>
-                                                <strong>Total (CAD)</strong>
+                                                <strong>Total</strong>
                                             </div>
                                             <div className='align-right'>
                                                 <strong> ${this.getTotal(food.price)}</strong>

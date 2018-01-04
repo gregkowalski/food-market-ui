@@ -4,13 +4,12 @@ import CognitoUtil from './Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { Segment, Input, Form, Button, Image, Header, Grid, Card, Popup, Icon, Modal } from 'semantic-ui-react'
+import { Segment, Input, Form, Button, Image, Header, Grid, Icon } from 'semantic-ui-react'
 import './Profile.css'
 import Users from './data/Users'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
-import { Constants } from './Constants'
 import FlagUser from './components/FlagUser'
 
 
@@ -197,7 +196,7 @@ export default class Profile extends React.Component {
 
         return (
             <div>
-                <AppHeader />
+                <AppHeader fixed />
                 <div>
                     <div className="flex-container">
 

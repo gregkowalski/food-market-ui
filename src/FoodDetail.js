@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
-import { Button, Card, Image, Icon, Rating, Modal } from 'semantic-ui-react'
-import { Grid, Header, Divider, Feed, Popup } from 'semantic-ui-react'
+import { Button, Card, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
+import { Grid, Header, Divider, Feed, Form, Input } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Users from './data/Users'
 import Reviews from './data/Reviews'
@@ -10,8 +10,8 @@ import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
 import FoodLightbox from './components/FoodLightbox'
 import Util from './Util'
-import { Constants } from './Constants'
 import ShowMore from 'react-show-more'
+import { Constants } from './Constants'
 import FlagListing from './components/FlagListing'
 import FlagListingMobile from './components/FlagListingMobile'
 
@@ -19,18 +19,125 @@ var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
 
 export default class FoodDetail extends Component {
-    state = {};
+    state = {
+        quantity: 1,
+        serviceFeeRate: Constants.ServiceFeeRate,
+        hasErrors: {},
+    };
+
+    handleChange = (e, { value }) => this.setState({ value })
 
     getFoodItemId() {
         return parseInt(this.props.match.params.id, 10);
     }
 
-    componentDidMount() {
-        let id = this.getFoodItemId();
-        let item = FoodItems.find(x => x.id === id);
-        document.title = item.header;
+    getFoodItem() {
+        let foodItemId = this.getFoodItemId();
+        return FoodItems.find(x => x.id === foodItemId);
+    }
 
-        Scroll.scrollSpy.update();
+    // componentDidMount() {
+    //     let id = this.getFoodItemId();
+    //     let item = FoodItems.find(x => x.id === id);
+    //     document.title = item.header;
+
+    //     Scroll.scrollSpy.update();
+    // }
+
+    componentWillMount() {
+        let foodItem = this.getFoodItem();
+        document.title = foodItem.header;
+
+        let quantity = window.sessionStorage.getItem('quantity');
+        if (quantity) {
+            this.setState({ quantity: quantity });
+        }
+    }
+
+    getTotal(unitPrice) {
+        let total = (this.state.quantity * unitPrice * (1 + this.state.serviceFeeRate));
+        return total.toFixed(2);
+    }
+
+    getBaseTotal(unitPrice) {
+        let baseTotal = this.state.quantity * unitPrice;
+        return baseTotal.toFixed(2);
+    }
+
+    getServiceFee(unitPrice) {
+        let fee = this.state.quantity * unitPrice * this.state.serviceFeeRate;
+        return fee.toFixed(2);
+    }
+
+    quantityChanged(newQuantity) {
+        let foodItemId = this.getFoodItemId();
+        let key = 'foodItemQuantity-' + foodItemId;
+
+        window.sessionStorage.setItem( key , newQuantity);
+    }
+
+    handleQuantityChange(min, max, newValue) {
+        if (newValue.length === 0) {
+            this.setState({ quantity: newValue }, () => this.validateField('quantity', newValue));
+            return;
+        }
+        let newQuantity = parseInt(newValue, 10);
+        if (!newQuantity || isNaN(newQuantity) || newQuantity < min || newQuantity > max)
+            return;
+
+        this.setState({ quantity: newQuantity }, () => this.validateField('quantity', newQuantity));
+
+        this.quantityChanged(newQuantity);
+    };
+
+    handleClickQuantityChange(min, max, delta) {
+        var quantity = this.state.quantity;
+        if (quantity.length === 0) {
+            quantity = 0;
+        }
+        let change = (delta > 0) ? 1 : -1;
+        let newQuantity = quantity + change;
+        if (newQuantity < min || newQuantity > max)
+            return;
+
+        let newState = { quantity: newQuantity };
+        this.setState(newState, () => this.validateField('quantity', newQuantity));
+
+        this.quantityChanged(newQuantity);
+    }
+
+    handleQuantityInputBlur(e) {
+        console.log('blurQuantity');
+        if (e.target.value === "") {
+            this.setState({ quantity: 1 });
+        }
+    }
+
+    validateField(fieldName, fieldValue) {
+        if (!fieldValue) {
+            fieldValue = this.state[fieldName];
+        }
+
+        // let hasBlurred = this.state.hasBlurred;
+        let state = this.state;
+
+        let hasErrors = {};
+
+        switch (fieldName) {
+            case 'quantity':
+                let food = this.getFoodItem();
+                hasErrors.quantity = false;
+                if (!state.quantity || state.quantity < 1 || state.quantity > food.availability) {
+                    hasErrors.quantity = true;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        hasErrors = Object.assign(this.state.hasErrors, hasErrors);
+        this.setState({ hasErrors });
     }
 
     getFoodPrepSafetyMessage(food) {
@@ -93,7 +200,6 @@ export default class FoodDetail extends Component {
             pickupElement =
                 <span><Icon name='hand rock' />pick-up</span>
         }
-
 
         const content = (
             <div className='detail-content'>
@@ -233,7 +339,7 @@ export default class FoodDetail extends Component {
                 </ScrollElement>
                 <Divider section />
 
-                <FlagListingMobile />                  
+                <FlagListingMobile />
             </div>
         );
 
@@ -242,7 +348,6 @@ export default class FoodDetail extends Component {
                 <AppHeader />
                 <div>
                     <FoodLightbox foodItemId={food.id} />
-
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">
@@ -281,21 +386,74 @@ export default class FoodDetail extends Component {
                                         <Card.Header className='OrderHeader'>
                                             <div style={{ float: 'left' }}>${food.price} CAD</div>
                                             <div style={{ clear: 'left' }}></div>
-                                            <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                                                <Rating disabled={true} maxRating={5} rating={food.rating} size='small'
-                                                    style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                                <div style={{ fontSize: 'small', color: 'black' }}>{food.ratingCount}</div>
+                                            <div style={{ display: 'flex' }}>
+                                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                                                    style={{ marginTop: '8px', marginLeft: '-2px' }} />
+                                                <div style={{ fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                             </div>
                                         </Card.Header>
-                                        <Divider section />
+
+                                        Quantity ({food.availability} available)
+                                        <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
+                                            <Form.Group inline>
+                                                <Form.Field>
+                                                    <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
+                                                    <Input type='number'
+                                                        onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
+                                                        onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                                        value={this.state.quantity} min={1} max={food.availability}
+                                                        style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                                    <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
+                                                </Form.Field>
+                                            </Form.Group>
+                                            <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
+                                            {/* <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' /> */}
+                                        </Segment>
+
+                                        ({this.state.quantity}) {food.header}
+
+
+                                        <div className='order-summary-row'>
+                                            <div className='align-left'>
+                                                {this.state.quantity} x ${food.price} {food.header}
+                                            </div>
+                                            <div className='align-right'>
+                                                ${this.getBaseTotal(food.price)}
+                                            </div>
+                                        </div>
+                                        <Divider />
+                                        <div className='order-summary-row'>
+                                            <div className='align-left'>
+                                                Service fee <Popup
+                                                    trigger={<Icon className='detail-popup-icon-size' size='small' name='question circle outline' />}
+                                                    content='This helps feed our platform and keep the lights on.'
+                                                    on={['click']}
+                                                    hideOnScroll />
+                                            </div>
+                                            <div className='align-right'>
+                                                ${this.getServiceFee(food.price)}
+                                            </div>
+                                        </div>
+
+                                        <Divider />
+
+                                        <div className='order-summary-row'>
+                                            <div className='align-left'>
+                                                <strong>Total </strong>
+                                            </div>
+                                            <div className='align-right'>
+                                                <strong> ${this.getTotal(food.price)}</strong>
+                                            </div>
+                                        </div>
+
 
                                         <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
                                             <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
                                                 <Button.Content visible>
-                                                    Request an Order
+                                                    Request an order
                                             </Button.Content>
                                                 <Button.Content hidden>
-                                                    ${food.price} CAD
+                                                    ${food.price}
                                                 </Button.Content>
                                             </Button>
                                         </RouterLink>
@@ -311,7 +469,7 @@ export default class FoodDetail extends Component {
 
                 <div className='detail-footer'>
                     <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                        <Button fluid color='teal' className='detail-footer-button'>Request an Order</Button>
+                        <Button fluid color='teal' className='detail-footer-button'>Request an order</Button>
                     </RouterLink>
                     <div className='detail-footer-text'>You won't be charged yet</div>
                 </div>

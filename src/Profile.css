@@ -4,7 +4,7 @@
 
 .profile-header {
     font-size: 2.8em !important; 
-    color: #525151 !important;
+    color: #494949 !important;
     font-family: 'Athiti' !important;
     font-weight: 300 !important;
     line-height: 35px !important;
@@ -22,7 +22,7 @@
 .profile-body {
     /* background-color: green; */
     width: 100%;
-    margin: 20px auto 0 auto;
+    margin: 70px auto 0 auto;
     padding: 30px;
   
   }
