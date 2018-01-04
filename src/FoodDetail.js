@@ -73,7 +73,7 @@ export default class FoodDetail extends Component {
         let foodItemId = this.getFoodItemId();
         let key = 'foodItemQuantity-' + foodItemId;
 
-        window.sessionStorage.setItem( key , newQuantity);
+        window.sessionStorage.setItem(key, newQuantity);
     }
 
     handleQuantityChange(min, max, newValue) {
@@ -141,12 +141,14 @@ export default class FoodDetail extends Component {
     }
 
     getFoodPrepSafetyMessage(food) {
-        let prep = '';
+        let prep = {}
         if (food.prep === 'frozen') {
-            prep = 'Frozen products must be fully cooked for food safety and quality.';
+            prep = <span><Icon color='teal' name='angle double right' />
+                Frozen products must be fully cooked for food safety and quality.</span>
         }
-        else if (food.prep === 'ready-to-eat') {
-            prep = '';
+        else if (food.prep === 'cooked') {
+            prep = <span><Icon color='teal' name='angle double right' />
+                Store your food properly: keep cold food cold and hot food hot.</span>
         }
         return prep;
     }
@@ -169,15 +171,17 @@ export default class FoodDetail extends Component {
                                 <Image src={x.image} size='mini' floated='left' shape='circular' />
                                 <div style={{ float: 'right', color: '#5e5d5d' }}>
                                     <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
-                                <Feed.Summary content={x.summary} />
-                                <Feed.Date content={x.date} style={{ marginTop: '-1px' }} />
+                                <Feed.Summary className='detail-body-text'>{x.summary} </Feed.Summary>
+                                <Feed.Date content={x.date} style={{ fontFamily: 'Athiti', fontSize: '1.1em', fontWeight: '600', marginTop: '-1px' }} />
                                 <Feed.Extra style={{ marginTop: '0.8em', maxWidth: '100%' }} >
-                                    <ShowMore
-                                        lines={4}
-                                        more={<div style={{ color: '#189da7' }}>Read more</div>}
-                                        less=''>
-                                        {x.extraText}
-                                    </ShowMore>
+                                    <div className='detail-body-text'>
+                                        <ShowMore
+                                            lines={4}
+                                            more={<div style={{ color: '#189da7' }}>Read more</div>}
+                                            less=''>
+                                            {x.extraText}
+                                        </ShowMore>
+                                    </div>
                                 </Feed.Extra>
                             </Feed.Content>
                         </Feed.Event>
@@ -207,7 +211,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header className='detail-main-header' as='h2'>
-                        <div style={{ fontSize: '1.1em' }}> ${food.price} · {food.header}</div></Header>
+                        ${food.price} · {food.header}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         {food.availability} available · by
                         <ScrollLink className="author-link" to="cook"
@@ -234,62 +238,67 @@ export default class FoodDetail extends Component {
                     </div>
 
                     <Header as='h3' className='food-detail-header'>The Food</Header>
-                    <ShowMore
-                        lines={3}
-                        more={<div style={{ color: '#189da7' }}>Read more about this food <Icon name='angle down' /></div>}
-                        less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
-                        anchorClass='showmore-text'>
-                        <div className='user-text'>{food.description} </div>
-                        <div>{food.moreDescription}</div>
+                    <div className='detail-body-text'>
+                        <ShowMore
+                            lines={3}
+                            more={<div style={{ color: '#189da7' }}>Read more about this food <Icon name='angle down' /></div>}
+                            less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
+                            anchorClass='showmore-text'>
 
-                    </ShowMore>
+                            <div className='user-text'>{food.description} </div>
+                            <div>{food.moreDescription}</div>
+                        </ShowMore>  </div>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Ingredients</Header>
-                    <div>{food.meta}.</div>
+                    <div className='detail-body-text'>{food.meta}.</div>
 
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Allergy Information</Header>
-                    <div className='user-text'><strong>Dishes may contain one or more of the following allergens: </strong> {food.allergy}.</div>
-
-                    <div style={{ marginTop: '15px' }}>For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly. </div>
-
+                    <div className='detail-body-text'>
+                        <div className='user-text'>
+                            <div style={{ fontWeight: '600' }} >
+                                May contain one or more of the following allergens: </div>
+                        </div>
+                        <div style={{ marginLeft: '15px', marginTop: '15px' }}>{food.allergy}.</div>
+                        <div style={{ marginTop: '15px' }}>
+                            <Icon color='teal' name='angle double right' />For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly.
+                            </div>
+                    </div>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Prep + Storage</Header>
-                    <ShowMore
-                        more={<div style={{ color: '#189da7' }}>Get more details <Icon name='angle down' /></div>}
-                        less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
-                        anchorClass='showmore-text'>
-                        <div className='user-text'>
-                            {food.instruction}
-                        </div>
-                        <div style={{ marginTop: '15px' }}>{prep}</div>
-                    </ShowMore>
+                    <div className='detail-body-text'>
+                        <ShowMore
+                            more={<div style={{ color: '#189da7' }}>Get more details <Icon name='angle down' /></div>}
+                            less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
+                            anchorClass='showmore-text'>
+                            <div className='user-text'>
+                                {food.instruction}
+                            </div>
+                            <div style={{ marginTop: '15px' }}>{prep}</div>
+                        </ShowMore>
+                    </div>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
-                    <div><strong>{food.unit} </strong> per order.  Feeds approximately {food.feed} people. </div>
-
+                    <div className='detail-body-text'><span style={{ fontWeight: '600' }}>{food.unit} </span> per order.  Feeds approximately {food.feed} people. </div>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Special Features</Header>
-
-                    <div>{food.feat}</div>
-
+                    <div className='detail-body-text'>{food.feat}</div>
                     <Divider section />
                 </ScrollElement>
 
                 <ScrollElement name="reviews">
-                    <Header className='detail-main-header' as='h2'>
+                    <Header className='detail-sub-header' as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
                             {food.ratingCount} Reviews
                                     <Rating disabled={true} maxRating={5} rating={food.rating} size='huge'
-                                style={{ marginTop: '4px', marginLeft: '14px' }} />
+                                style={{ marginTop: '10px', marginLeft: '14px' }} />
                         </div>
                     </Header>
-
                     <Divider section />
 
                     <Grid columns={2} className='rating-grid' stackable>
@@ -326,16 +335,18 @@ export default class FoodDetail extends Component {
                     </Grid>
                     <Divider section />
                     {reviews}
+
                 </ScrollElement>
                 <ScrollElement name="cook">
-                    <Header className='detail-main-header' as='h2'>Meet {user.name}</Header>
-                    <div style={{ float: 'left', color: '#60b0f4', fontWeight: 'bold', fontSize: '1em' }}>
+                    <Header className='detail-sub-header' as='h2'>Meet {user.name}</Header>
+                    <div className='detail-cook-sub-header'>
                         {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
                     </div>
                     <div style={{ clear: 'both' }}></div>
-                    <div style={{ marginTop: '15px' }}>{user.info}</div>
-                    <div style={{ marginTop: '15px' }}> Languages: <strong> {user.lang}</strong></div>
-                    <div style={{ marginTop: '15px' }}><Image size='small' shape='circular' src={user.image} /></div>
+                    <div className='detail-cook-text'>{user.info}
+                        <div style={{marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {user.lang}</span></div>
+                    </div>
+                    <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={user.image} /></div>
                 </ScrollElement>
                 <Divider section />
 

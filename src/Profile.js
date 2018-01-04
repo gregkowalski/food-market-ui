@@ -153,16 +153,15 @@ export default class Profile extends React.Component {
                 <Grid.Column style={{ padding: '0px' }} mobile={16} tablet={16} computer={13}>
                     <div className='profile-body'>
                         <Image floated='left' verticalAlign='middle' size='small' shape='circular' src={user.image} />
-                                <Header className='profile-header' as='h1'>Hi, I'm {user.name}! </Header>
-                                <div className='profile-sub-header'>
-                                    {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
-                                </div>
-                               
+                        <Header className='profile-header' as='h1'>Hi, I'm {user.name}! </Header>
+                        <div className='profile-sub-header'>
+                            {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
+                        </div>
+
                         <FlagUser />
 
                         <div style={{ clear: 'both' }}></div>
-                        <div style={{ marginTop: '15px', marginBottom: '15px' }}>{user.info}</div>
-
+                        <div className='profile-user-info'>{user.info}</div>
                         <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
                             <Segment>
                                 <Form noValidate autoComplete='off'>
@@ -199,42 +198,37 @@ export default class Profile extends React.Component {
                 <AppHeader fixed />
                 <div>
                     <div className="flex-container">
-
                         <div className="flex-item-right">
                             <div className='detail-head-right'>
-                                {/* <Card>
-                                    <Card.Content> */}
-                                        <div className='profile-verify'>
-                                            <Segment style={{ textAlign: 'left', fontWeight: 'bold' }} secondary attached='top'>
-                                                <div style={{ marginLeft: '7px' }}> Verified info</div>
-                                            </Segment>
-                                            <Segment style={{ textAlign: 'center' }} attached>
-                                                <div className='profile-verify-items'>
-                                                    <div style={{ float: 'left' }}>Email address</div>
-                                                    <Icon style={{ float: 'right' }} size='large' color='teal' name='check circle outline' />
-                                                    <div style={{ clear: 'both' }}></div>
-                                                    <div style={{ float: 'left', marginTop: '20px' }}>Phone number</div>
-                                                    <Icon style={{ float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
-                                                    <div style={{ clear: 'both' }}></div>
-                                                </div>
-                                            </Segment>
+                                <div className='profile-verify'>
+                                    <Segment style={{ textAlign: 'left', fontWeight: 'bold' }} secondary attached='top'>
+                                        <div className='profile-card-header'>Verified info</div>
+                                    </Segment>
+                                    <Segment style={{ textAlign: 'center' }} attached>
+                                        <div className='profile-verify-items'>
+                                            <div style={{ float: 'left' }}>Email address</div>
+                                            <Icon style={{ float: 'right' }} size='large' color='teal' name='check circle outline' />
+                                            <div style={{ clear: 'both' }}></div>
+                                            <div style={{ float: 'left', marginTop: '20px' }}>Phone number</div>
+                                            <Icon style={{ float: 'right', marginTop: '20px' }} size='large' color='teal' name='check circle outline' />
+                                            <div style={{ clear: 'both' }}></div>
                                         </div>
-                                        {/* <Divider section /> */}
-                                        <div className='profile-verify'>
-                                            <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
-                                                <div style={{ marginLeft: '7px' }}> About Me</div>
-                                            </Segment>
-                                            <Segment style={{ textAlign: 'center' }} attached>
-                                                <div className='profile-verify-items'>
-                                                    <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
-                                                    <div style={{ textAlign: 'left', marginTop: '3px' }}> {user.lang}</div>
-                                                    <div style={{ clear: 'left' }}></div>
+                                    </Segment>
+                                </div>
+                                {/* <Divider section /> */}
+                                <div className='profile-verify'>
+                                    <Segment style={{ textAlign: 'left', marginTop: '20px', fontWeight: 'bold' }} secondary attached='top'>
+                                        <div className='profile-card-header'> About Me</div>
+                                    </Segment>
+                                    <Segment style={{ textAlign: 'center' }} attached>
+                                        <div className='profile-verify-items'>
+                                            <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
+                                            <div style={{ textAlign: 'left', marginTop: '3px' }}> {user.lang}</div>
+                                            <div style={{ clear: 'left' }}></div>
 
-                                                </div>
-                                            </Segment>
                                         </div>
-                                    {/* </Card.Content>
-                                </Card> */}
+                                    </Segment>
+                                </div>
                             </div>
                         </div>
 

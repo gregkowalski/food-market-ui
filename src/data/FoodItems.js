@@ -55,8 +55,8 @@ const FoodItems = [
         meta: 'Almond flour, flour, almond extract, butter, pears, eggs, cinnamon, sugar',
         description: 'A pear tart that hits the sweet spot.',
         moreDescription: '\n\nThis can also be available pre-cooked!\n\n Almond and pears are an exquisite pairing.',
-        instruction: 'Heating instructions: preheat oven at 350 degrees Fahrenheit (174 degrees Celsius).'
-            +' Place into oven and bake for 25-30 mins. Let stand for 5 mins and sprinkle icing sugar on tart.',
+        instruction: 'Heating instructions: preheat oven at 350 degrees Fahrenheit (174 degrees Celsius). '
+            + 'Place into oven and bake for 25-30 mins. Let stand for 5 mins and sprinkle icing sugar on tart. ',
         position: { lat: 49.285982, lng: -123.125252 },
         rating: 5,
         ratingCount: 3,

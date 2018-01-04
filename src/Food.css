@@ -1,9 +1,7 @@
 .FoodCard {
     height: 100%;
     position: relative;
-    margin-left: 0px;
-    padding-left: 1px;
-    margin-top: 5px;
+    margin-top: 1px;
     /* padding-bottom: 5px; */
 }
 
@@ -23,16 +21,26 @@
     display: none;
 }
 
-
-
-.FoodCardHeader {
-    margin-top: 3px !important;
+.FoodCardHeader{
+    display: -webkit-box;
+    margin-top: 1px;
+    float: left;
+    font-size: 1.7em;
+    font-weight: 500;
+    line-height: 1.4;
+    font-family: Athiti;
+    color: #3a3a3a;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .FoodCardGroup {
     margin-top: 10px !important;
     margin-right: 5px !important;
-    margin-left: 3px !important;
+    margin-left: 5px !important;
+    /* background-color: palevioletred; */
 }
 
 .OrderButton {
@@ -48,46 +56,30 @@
 
 .LabelPrep-ingredient {
     background-color: #ff53afb9 !important;
-    font-family: Athiti !important;
+    font-family: 'Athiti' !important;
     font-weight: 600 !important;
     /* ff53afb9 */
 }
 
 .LabelPrep-uncooked {
     background-color: #ffa86ec5 !important;
-    font-family: Athiti !important;
+    font-family: 'Athiti' !important;
     font-weight: 600 !important;
     /* ffa86ec5 */
 }
 
 .LabelPrep-cooked {
     background-color: #6aebb9ce !important;
-    font-family: Athiti !important;
+    font-family: 'Athiti' !important;
     font-weight: 600 !important;
     /* 6aebb9ce */
 }
 
 .LabelPrep-frozen {
     background-color: #59e8f5b9 !important;
-    font-family: Athiti !important;
+    font-family: 'Athiti' !important;
     font-weight: 600 !important;
     /* 59e8f5b9 */
-}
-
-.FoodHeader{
-    display: -webkit-box;
-    
-    float: left;
-    margin-top: 1px;
-    font-size: 1.5em;
-    font-weight: 600;
-    line-height: 1.4;
-    font-family: Athiti;
-    color: #3a3a3a;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 @media all and (min-width: 768px) {

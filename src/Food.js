@@ -89,8 +89,8 @@ class Food extends Component {
                                         {/* <Image className='FoodImage' src={food.image} /> */}
                                     </div>
 
-                                    <Item.Header className='FoodCardHeader'>
-                                        <div className='FoodHeader'>
+                                    <Item.Header>
+                                        <div className='FoodCardHeader'>
                                             ${food.price} · {food.header}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Item.Header>

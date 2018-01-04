@@ -81,6 +81,50 @@
     z-index: 1;
 }
 
+.food-detail-header {
+    color: #189da7 !important; 
+    font-size: 1.8em !important; 
+    font-weight: 500  !important;
+    font-family: 'Athiti' !important;
+}
+
+.detail-main-header {
+    color: #494949 !important;
+    font-size: 2.2em !important;
+    font-weight: 700 !important;
+}
+
+.detail-sub-header {
+    color: #494949 !important;
+    font-size: 2.1em !important;
+    font-weight: 600 !important;
+    font-family: 'Athiti' !important;
+}
+
+.detail-body-text {
+    font-size: 1.3em !important; 
+    font-weight: 400;
+    line-height: 22px !important;
+    font-family: 'Athiti' !important;
+}
+
+.detail-cook-sub-header {
+    color: #60b0f4;
+    font-family: 'Athiti' !important;
+    line-height: 20px !important;
+    font-weight: 500 !important;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.detail-cook-text {
+    margin-top: 15px;
+    font-size: 1.3em !important; 
+    font-weight: 400;
+    line-height: 22px !important;
+    font-family: 'Athiti' !important;
+}
+
 .detail-footer {
     display: none;
     height: 100px;
@@ -132,21 +176,12 @@
     color: #52c5d5 !important;
 }
 
-.food-detail-header {
-    color: #189da7 !important; 
-}
-
-.detail-main-header {
-    color: #494949 !important;
-}
-
 .report-listing-item {
     display: block;
     align-items: center;
     margin-top: 5px;
-    font-size: 1.36em; 
     font-weight: 500  !important;
-    font-family: Athiti  !important;
+    font-family: 'Athiti'  !important;
 }
 
 .report-listing-item > div {
