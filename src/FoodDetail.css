@@ -17,17 +17,12 @@
     margin-left: 0.2em;
 }
 
-/* 
-.content-link:hover {
-    text-decoration: underline !important;
-} */
-
 .content-link:active {
     text-decoration: none !important;
 }
 
 .content-link-active {
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid #4cb99e;
     padding-bottom: 2px;
 }
 

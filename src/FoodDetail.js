@@ -290,6 +290,7 @@ export default class FoodDetail extends Component {
                     <div className='detail-body-text'>{food.feat}</div>
                     <Divider section />
                 </ScrollElement>
+                <FlagListingMobile />
 
                 <ScrollElement name="reviews">
                     <Header className='detail-sub-header' as='h2'>
@@ -336,6 +337,7 @@ export default class FoodDetail extends Component {
                     <Divider section />
                     {reviews}
 
+
                 </ScrollElement>
                 <ScrollElement name="cook">
                     <Header className='detail-sub-header' as='h2'>Meet {user.name}</Header>
@@ -348,9 +350,7 @@ export default class FoodDetail extends Component {
                     </div>
                     <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={user.image} /></div>
                 </ScrollElement>
-                <Divider section />
-
-                <FlagListingMobile />
+                <Divider section />          
             </div>
         );
 
@@ -420,9 +420,6 @@ export default class FoodDetail extends Component {
                                             <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
                                             {/* <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' /> */}
                                         </Segment>
-
-                                        ({this.state.quantity}) {food.header}
-
 
                                         <div className='order-summary-row'>
                                             <div className='align-left'>
