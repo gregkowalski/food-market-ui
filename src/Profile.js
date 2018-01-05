@@ -197,9 +197,9 @@ export default class Profile extends React.Component {
             <div>
                 <AppHeader fixed />
                 <div>
-                    <div className="flex-container">
-                        <div className="flex-item-right">
-                            <div className='detail-head-right'>
+                    <div className="profile-flex-container">
+                        <div className="profile-flex-item-right">
+                            <div className='profile-head-right'>
                                 <div className='profile-verify'>
                                     <Segment style={{ textAlign: 'left', fontWeight: 'bold' }} secondary attached='top'>
                                         <div className='profile-card-header'>Verified info</div>

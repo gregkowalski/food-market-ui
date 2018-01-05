@@ -380,10 +380,6 @@ export default class FoodDetail extends Component {
                                     The Cook
                                 </ScrollLink>
                             </div>
-                            <div className="flex-item-right">
-                            </div>
-                            <div className='detail-head-right'>
-                            </div>
                         </div>
                     </div>
                     <div className="flex-container">
@@ -392,9 +388,8 @@ export default class FoodDetail extends Component {
                         </div>
                         <div className="flex-item-right">
                             <div className='detail-head-right'>
-                                <Card>
-                                    <Card.Content>
-                                        <Card.Header className='detail-card-header'>
+                                <Segment >
+                                        <div className='detail-card-header'>
                                             <div style={{ float: 'left' }}>${food.price} CAD</div>
                                             <div style={{ clear: 'left' }}></div>
                                             <div style={{ display: 'flex' }}>
@@ -403,7 +398,7 @@ export default class FoodDetail extends Component {
                                                 <div style={{ fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                             </div>
                                             <Divider />
-                                        </Card.Header>
+                                        </div>
 
                                         <div style={{ marginTop: '5px', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
                                             Quantity ({food.availability} available)</div>
@@ -468,11 +463,11 @@ export default class FoodDetail extends Component {
                                             </Button>
                                         </RouterLink>
 
-                                        <div style={{ textAlign: 'center', marginTop: '10px', color: 'gray', fontFamily: 'Athiti', fontSize: '1.1em', fontWeight: '500' }}>
+                                        <div className='detail-card-charged-footnote'>
                                         You won't be charged yet</div>
-                                    </Card.Content>
-                                </Card>
-                                <FlagListing />
+
+                                        <FlagListing />
+                                </Segment>
                             </div>
                         </div>
                     </div>

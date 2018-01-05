@@ -41,17 +41,17 @@
 .flex-item-main {
     /* background-color: cornflowerblue; */
     height: auto;
-    width: 60%;
-    margin-left: auto;
+    width: 55%;
+    margin-left: 8%;
     margin-right: auto;
 }
 
 .flex-item-right {
     /* background-color: blue; */
-    width: 300px;
+    width: 425px;
     height: auto;
-    margin-left: 30px;
-    margin-right: 5%;
+    margin-left: 20px;
+    margin-right: 8.5%;
 }
 
 .detail-head-main {
@@ -68,7 +68,7 @@
 }
 
 .detail-head-right {
-    /* background: yellow; */
+    background: pink;
     position: -webkit-sticky;
     position: sticky;
     margin-top: 18px;
@@ -129,6 +129,16 @@
     line-height: 22px !important;
     font-family: 'Athiti' !important;
   }
+
+.detail-card-charged-footnote {
+    text-align: center;
+    margin-top: 10px;
+    color: gray; 
+    font-family: 'Athiti' !important; 
+    font-size: 1.1em; 
+    font-weight: 500;
+    margin-bottom: 15px;
+}
 
 .detail-footer {
     display: none;
@@ -230,6 +240,7 @@
     .flex-item-main {
         margin-bottom: 100px;
         width: 100%;
+        margin-left: auto;
         margin-right: 10px;
     }
     .flex-item-right {
