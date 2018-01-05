@@ -1,11 +1,11 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from '../Cognito/CognitoUtil'
-import apigClientFactory from 'aws-api-gateway-client'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import Util from '../Util'
 import StripeUtil from './StripeUtil'
+import ApiClient from '../Api/ApiClient'
 
 export default class StripeCallback extends React.Component {
 
@@ -63,35 +63,16 @@ export default class StripeCallback extends React.Component {
             throw new Error('Not working, code not found: ' + query.error);
         }
 
-        var config = {
-            region: 'us-west-2',
-            invokeUrl: 'https://be.cosmo-test.com/v1'
-        };
-        let apigClient = apigClientFactory.newClient(config);
-
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         let session = auth.getCachedSession();
         if (session && session.isValid()) {
-            let body = {
-                code: query.code
-            }
-            var additionalParams = {
-                headers: {
-                    'X-FOOD-MARKET-JWT': session.getIdToken().getJwtToken(),
-                    'Content-Type': 'application/json'
-                },
-            };
 
-            apigClient.invokeApi(null, '/stripeconnect', 'POST', additionalParams, body)
+            let apiClient = new ApiClient();
+            apiClient.connectStripeAccount(session.getIdToken().getJwtToken(), query.code)
                 .then(response => {
                     console.log('Call API success!!!');
-                    console.log(JSON.stringify(response.data));
-
-                    let data = JSON.parse(response.data);
-                    console.log(data.stripeAccountId);
-
-                    this.saveStripeAccountId(data.stripe_user_id);
-
+                    console.log(`stripe_user_id=${response.data.stripeAccountId}`);
+                    this.saveStripeAccountId(response.data.stripe_user_id);
                 }).catch(result => {
                     //This is where you would put an error callback
                     console.error('Call API failed!!!');

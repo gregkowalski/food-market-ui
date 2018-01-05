@@ -7,7 +7,7 @@ export default class ApiClient {
     constructor() {
         var config = {
             region: 'us-west-2',
-            invokeUrl: 'https://local-api.cosmo-test.com/v1',
+            invokeUrl: 'https://api-dev.cosmo-test.com/v1',
         };
         this.apiGatewayClient = apigClientFactory.newClient(config);
     }
@@ -26,5 +26,18 @@ export default class ApiClient {
         };
 
         return this.apiGatewayClient.invokeApi(null, '/charges', 'POST', additionalParams, body);
+    }
+
+    connectStripeAccount(jwtToken, code) {
+        return this.apiGatewayClient.invokeApi(null, '/connectstripe', 'POST',
+            {
+                headers: {
+                    'Authorization': jwtToken,
+                    'Content-Type': 'application/json'
+                },
+            },
+            {
+                code
+            });
     }
 }
