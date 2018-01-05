@@ -141,14 +141,14 @@ export default class FoodDetail extends Component {
     }
 
     getFoodPrepSafetyMessage(food) {
-        let prep = {}
+        let prep;
         if (food.prep === 'frozen') {
-            prep = <span><Icon color='teal' name='angle double right' />
-                Frozen products must be fully cooked for food safety and quality.</span>
+            prep = (<span><Icon color='teal' name='angle double right' />
+                Frozen products must be fully cooked for food safety and quality.</span>)
         }
         else if (food.prep === 'cooked') {
-            prep = <span><Icon color='teal' name='angle double right' />
-                Store your food properly: keep cold food cold and hot food hot.</span>
+            prep = (<span><Icon color='teal' name='angle double right' />
+                Store your food properly: keep cold food cold and hot food hot.</span>)
         }
         return prep;
     }
@@ -277,8 +277,8 @@ export default class FoodDetail extends Component {
                             <div className='user-text'>
                                 {food.instruction}
                             </div>
-                            <div style={{ marginTop: '15px' }}>{prep}</div>
                         </ShowMore>
+                        <div style={{ marginTop: '15px' }}>{prep}</div>
                     </div>
                     <Divider section />
 
