@@ -394,8 +394,8 @@ export default class FoodDetail extends Component {
                                         <div style={{ clear: 'left' }}></div>
                                         <div style={{ display: 'flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                                style={{ marginTop: '4px', marginLeft: '-2px' }} />
-                                            <div style={{ fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
+                                                style={{ marginTop: '10px' }} />
+                                            <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                         </div>
                                         <Divider />
                                     </div>
@@ -403,15 +403,15 @@ export default class FoodDetail extends Component {
                                     <Form.Group inline style={{ marginBottom: '20px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
-                                            <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
-                                            <Input
-                                                type='number'
-                                                onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
-                                                onBlur={(e) => this.handleQuantityInputBlur(e)}
-                                                value={this.state.quantity} min={1} max={food.availability}
-                                                style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                            <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
-                                            
+                                                <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
+                                                <Input
+                                                    type='number'
+                                                    onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
+                                                    onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                                    value={this.state.quantity} min={1} max={food.availability}
+                                                    style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                                <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
+
                                                 Quantity ({food.availability} available)</div>
                                         </Form.Field>
                                     </Form.Group>
@@ -474,10 +474,20 @@ export default class FoodDetail extends Component {
                 </div>
 
                 <div className='detail-footer'>
-                    <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                        <Button fluid color='teal' className='detail-footer-button'>Request an Order</Button>
-                    </RouterLink>
-                    <div className='detail-footer-text'>You won't be charged yet</div>
+                        <div className='detail-footer-header' style={{ float: 'left' }}>${food.price} CAD
+                    <div style={{ display: 'flex' }}>
+                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                                    style={{ marginTop: '10px' }} />
+                                <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
+                            </div>
+                        </div>
+                        <div style={{ float: 'right', marginRight: '12px' }}>
+                            <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                                <Button color='teal' className='detail-footer-button'>Request an Order</Button>
+                            </RouterLink>
+                            <div className='detail-footer-text'>You won't be charged yet</div>
+                        </div>
+                        <div style={{ clear: 'both' }}></div>
                 </div>
             </div>
         )
