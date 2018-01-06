@@ -60,7 +60,7 @@ class Food extends Component {
     }
 
     getFoodPrepLabelComponent(food) {
-        let foodPrepClassName = 'LabelPrep-' + food.prep;
+        let foodPrepClassName = 'LabelPrep-' + food.prep
         let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
         let labelElement =
@@ -110,10 +110,10 @@ class Food extends Component {
                                     <Item.Meta>
                                         <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                                style={{ marginTop: '5px', marginLeft: '-2px' }} />
-                                            <div> <span style={{ fontFamily: 'Athiti', fontWeight: '500', fontSize: '1.1em' }}>{food.ratingCount} reviews</span></div>
-
-                                            <div style={{ marginLeft: '5px', fontWeight: 'bold' }}>
+                                                style={{ marginTop: '6px', marginLeft: '-2px' }} />
+                                            <div style={{ marginTop: '1px' }}> <span style={{ fontFamily: 'Athiti', fontWeight: '500', fontSize: '1.1em' }}>
+                                                {food.ratingCount} reviews</span></div>
+                                            <div className='food-label' style={{ marginTop: '-4px', marginLeft: '8px', fontWeight: 'bold' }}>
                                                 {foodPrepLabelComponent}
                                             </div>
                                         </div>

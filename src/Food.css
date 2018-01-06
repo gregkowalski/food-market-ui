@@ -24,6 +24,7 @@
 .FoodCardHeader{
     display: -webkit-box;
     margin-top: 1px;
+    margin-bottom: 2px !important;
     float: left;
     font-size: 1.7em;
     font-weight: 500;
@@ -58,6 +59,7 @@
     background-color: #ff53afb9 !important;
     font-family: 'Athiti' !important;
     font-weight: 600 !important;
+    font-size: .95em !important;
     /* ff53afb9 */
 }
 
@@ -65,6 +67,7 @@
     background-color: #ffa86ec5 !important;
     font-family: 'Athiti' !important;
     font-weight: 600 !important;
+    font-size: .95em !important;
     /* ffa86ec5 */
 }
 
@@ -72,6 +75,7 @@
     background-color: #6aebb9ce !important;
     font-family: 'Athiti' !important;
     font-weight: 600 !important;
+    font-size: .95em !important;
     /* 6aebb9ce */
 }
 
@@ -79,7 +83,13 @@
     background-color: #59e8f5b9 !important;
     font-family: 'Athiti' !important;
     font-weight: 600 !important;
+    font-size: .95em !important;
     /* 59e8f5b9 */
+}
+
+.food-label {
+    box-shadow: 0 4px 6px 0 rgba(83, 83, 83, 0.2), 0 6px 10px 0 rgba(110, 110, 110, 0.1) !important;
+    border-radius: 5px !important;
 }
 
 @media all and (min-width: 768px) {
