@@ -6,7 +6,6 @@ import CognitoUtil from '../Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
-import crypto from 'crypto'
 import { FeatureToggles } from '../FeatureToggles'
 
 class AppHeader extends React.Component {
@@ -15,24 +14,13 @@ class AppHeader extends React.Component {
     tagline;
 
     handleSignIn(e) {
-        this.handleAuth(e, state => CognitoUtil.getCognitoLoginUrl(state));
+        e.preventDefault();
+        CognitoUtil.redirectToLoginIfNoSession();
     }
 
     handleSignUp(e) {
-        this.handleAuth(e, state => CognitoUtil.getCognitoSignUpUrl(state));
-    }
-
-    handleAuth(e, getAuthUrl) {
         e.preventDefault();
-
-        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        let session = auth.getCachedSession();
-        if (!session || !session.isValid()) {
-            const state = crypto.randomBytes(64).toString('hex');
-            CognitoUtil.setCsrfState(state);
-            let url = getAuthUrl(state);
-            window.open(url, '_self');
-        }
+        CognitoUtil.redirectToSignupIfNoSession();
     }
 
     handleSignOut(e) {

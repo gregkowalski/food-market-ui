@@ -32,6 +32,14 @@ export default class Order extends React.Component {
         value: 'pick-up'
     };
 
+    componentWillMount() {
+        CognitoUtil.setLastPathname(location.pathname);
+        CognitoUtil.redirectToLoginIfNoSession();
+
+        let foodItem = this.getFoodItem();
+        document.title = foodItem.header;
+    }
+
     handleChange = (e, { value }) => this.setState({ value })
 
     getFoodItemId() {
@@ -41,11 +49,6 @@ export default class Order extends React.Component {
     getFoodItem() {
         let foodItemId = this.getFoodItemId();
         return FoodItems.find(x => x.id === foodItemId);
-    }
-
-    componentWillMount() {
-        let foodItem = this.getFoodItem();
-        document.title = foodItem.header;
     }
 
     getTotal(unitPrice) {
