@@ -231,9 +231,9 @@ export default class Profile extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-                        {content}
-
+                        <div style={{ paddingRight: '8%' }}>
+                            {content}
+                        </div>
                     </div>
                 </div>
 

@@ -81,7 +81,7 @@
     z-index: 1;
 }
 
-@media all and (max-width: 767px) {   
+@media all and (max-width: 1127px) {   
     .profile-flex-item-right {
         display: none;
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import createReactClass from 'create-react-class';
+import './ImageDecorator.css'
 
 const CarouselDecorators = [
     {
@@ -19,14 +20,13 @@ const CarouselDecorators = [
             getButtonStyles(disabled) {
                 return {
                     border: 0,
-                    background: 'linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',
+                    background: 'linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',                    
                     color: 'white',
-                    paddingTop: 110,
-                    paddingBottom: 110,
                     paddingRight: 10,
                     outline: 0,
                     opacity: disabled ? 0.3 : 1,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    height: '100%'
                 }
             }
         }),
@@ -48,14 +48,13 @@ const CarouselDecorators = [
             getButtonStyles(disabled) {
                 return {
                     border: 0,
-                    background: 'linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',
+                    background: 'linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',
                     color: 'white',
-                    paddingTop: 110,
-                    paddingBottom: 110,
                     paddingLeft: 10,
                     outline: 0,
                     opacity: disabled ? 0.3 : 1,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    height: '100%'
                 }
             }
         }),
@@ -99,7 +98,7 @@ const CarouselDecorators = [
                 return {
                     position: 'relative',
                     margin: 0,
-                    top: -10,
+                    top: 8,
                     padding: 0
                 }
             },
@@ -118,7 +117,7 @@ const CarouselDecorators = [
                     cursor: 'pointer',
                     padding: 5,
                     outline: 10,
-                    fontSize: 55,
+                    fontSize: 46,
                     opacity: active ? 1 : 0.5
                 }
             }

@@ -6,13 +6,13 @@
 }
 
 .align-right{
-  float: right;
+    float: right;
 }
 
 .order-summary-row {
-  display: flex;
-  margin-top: 3px;
-  width: 100%;
+    display: flex;
+    margin-top: 3px;
+    width: 100%;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -22,33 +22,36 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .order-address > div {
-  width: 100%;
-  border: none;
+    width: 100%;
+    border: none;
 }
 
 .order-address {
-  width: 100%;
-  -webkit-box-flex: inherit;
-  flex: inherit;
-  transition: none;
+    width: 100%;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+    transition: none;
 }
 
 .order-confirm-button {
-  background-color:  #4cb99e !important;
-  color: #ffffff !important;
-  height: 4em;
+    background-color:  #4cb99e !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.4em !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    height: 4em;
 }
 
 .order-body {
-  width: 75%;
-  margin: 20px auto 0 auto;
-  padding-bottom: 20px;
+    width: 75%;
+    margin: 20px auto 0 auto;
+    padding-bottom: 20px;
 
 }
 
 @media all and (max-width: 767px) {
-  .order-body {
-    width: 90%;
+    .order-body {
+        width: 90%;
   }
 }
 

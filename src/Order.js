@@ -669,7 +669,7 @@ export default class Order extends React.Component {
                                 <Checkout onRef={ref => (this.checkout = ref)} />
                             }
 
-                            <Checkbox label="I agree to this site's user and customer refund policy.  I also agree to pay the total amount shown, which includes service fees."
+                            <Checkbox label="I agree to this site's user and customer refund policy. I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
                                 onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
 
                             <div style={{ marginTop: '20px' }}>
