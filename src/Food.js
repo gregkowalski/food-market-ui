@@ -111,9 +111,9 @@ class Food extends Component {
                                         <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                                                 style={{ marginTop: '6px', marginLeft: '-2px' }} />
-                                            <div style={{ marginTop: '1px' }}> <span style={{ fontFamily: 'Athiti', fontWeight: '500', fontSize: '1.1em' }}>
+                                            <div style={{ marginTop: '1px' }}> <span style={{ fontFamily: 'Athiti', fontWeight: '500' }}>
                                                 {food.ratingCount} reviews</span></div>
-                                            <div className='food-label' style={{ marginTop: '-4px', marginLeft: '8px', fontWeight: 'bold' }}>
+                                            <div className='food-label' style={{ marginTop: '-3px', marginLeft: '8px', fontWeight: 'bold' }}>
                                                 {foodPrepLabelComponent}
                                             </div>
                                         </div>

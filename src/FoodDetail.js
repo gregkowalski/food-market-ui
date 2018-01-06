@@ -302,7 +302,7 @@ export default class FoodDetail extends Component {
                     </Header>
                     <Divider section />
 
-                    <Grid columns={2} className='rating-grid' stackable>
+                    <Grid stackable columns={2}>
                         <Grid.Row>
                             <Grid.Column className='detail-rating'>
                                 <span className='detail-rating-label'>Accuracy</span>

@@ -23,12 +23,12 @@
 
 .FoodCardHeader{
     display: -webkit-box;
-    margin-top: 1px;
-    margin-bottom: 2px !important;
+    margin-top: 5px;
+    margin-bottom: 1px !important;
     float: left;
-    font-size: 1.7em;
-    font-weight: 500;
-    line-height: 1.4;
+    font-size: 1.4em;
+    font-weight: 600;
+    line-height: 1.5;
     font-family: Athiti;
     color: #3a3a3a;
     -webkit-line-clamp: 1;

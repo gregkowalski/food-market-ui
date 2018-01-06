@@ -19,25 +19,30 @@
     color:  #4cb9a0;
     text-decoration: none;
     padding-right: 5px;
-    padding-left: 5px;
+    padding-left: 7px;
     padding-top: 2px;
+    margin-top: 10px;
     font-family: 'Comfortaa', cursive; 
-    font-weight: 300;
-    font-size: 1.2em;
+    font-weight: 500;
+    font-size: 1.9em;
+    text-shadow: 0 2px 6px rgba(104, 104, 104, 0.479);
+
+    
   }
   
-  .head-link:hover {
+.head-link:hover {
     color: #68cfb5;
   }
-  
+
   .content-desktop {
     display: block;
     font-size: 1.2em;
     color: #2b2b2b;
     margin-left: 3px;
-    margin-top: 13.25px;
+    margin-top: 13.75px;
     font-family: 'Athiti';    
     font-weight: 400;
+    text-shadow: 0 2px 4px rgba(88, 88, 88, 0.329);
   }
     
   .head-content {
