@@ -480,12 +480,12 @@ export default class Order extends React.Component {
                         <Header>Quantity ({food.availability} available)</Header>
                         <Form.Group inline>
                             <Form.Field>
-                                <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
+                                <Button className='order-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
                                 <Input type='number'
                                     onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
                                     value={this.state.quantity} min={1} max={food.availability}
                                     style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
+                                <Button className='order-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
                             </Form.Field>
                         </Form.Group>
                         <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>

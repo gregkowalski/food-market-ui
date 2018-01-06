@@ -403,14 +403,14 @@ export default class FoodDetail extends Component {
                                     <Form.Group inline style={{ marginBottom: '20px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
-                                            <Button icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
+                                            <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
                                             <Input
                                                 type='number'
                                                 onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
                                                 onBlur={(e) => this.handleQuantityInputBlur(e)}
                                                 value={this.state.quantity} min={1} max={food.availability}
                                                 style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                            <Button icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
+                                            <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
                                             
                                                 Quantity ({food.availability} available)</div>
                                         </Form.Field>
