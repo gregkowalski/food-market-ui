@@ -33,8 +33,10 @@ export default class Order extends React.Component {
     };
 
     componentWillMount() {
-        CognitoUtil.setLastPathname(location.pathname);
-        CognitoUtil.redirectToLoginIfNoSession();
+        if (FeatureToggles.CognitoLogin) {
+            CognitoUtil.setLastPathname(location.pathname);
+            CognitoUtil.redirectToLoginIfNoSession();
+        }
 
         let foodItem = this.getFoodItem();
         document.title = foodItem.header;
@@ -741,9 +743,9 @@ export default class Order extends React.Component {
             console.log('Order form validation failed.  Please correct your information and try again.');
             return;
         }
-        
+
         console.log('Order processing');
-        this.setState({ orderProcessing: true});
+        this.setState({ orderProcessing: true });
 
         const food = this.getFoodItem();
         const order = {
@@ -773,13 +775,13 @@ export default class Order extends React.Component {
             .then(response => {
                 console.log('Order finished');
                 console.log(response);
-                this.setState({ orderProcessing: false});
+                this.setState({ orderProcessing: false });
                 this.props.history.push('orderSuccess?sentCount=2');
             })
             .catch(err => {
                 console.log('Order finished');
                 console.error(err);
-                this.setState({ orderProcessing: false});
+                this.setState({ orderProcessing: false });
                 this.props.history.push('orderError');
             });
     }
