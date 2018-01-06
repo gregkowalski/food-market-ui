@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
-import { Button, Card, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
+import { Button, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Form, Input } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Users from './data/Users'

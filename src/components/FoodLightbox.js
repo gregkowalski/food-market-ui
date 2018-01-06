@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image } from 'semantic-ui-react'
+import { Image, Button } from 'semantic-ui-react'
 import Lightbox from 'react-images'
 import './FoodLightbox.css'
 import FoodItems from '../data/FoodItems'
@@ -55,7 +55,7 @@ export default class FoodLightbox extends React.Component {
         });
 
         return (
-            <div>
+            <div className='foodlightbox-image-wrap'>
                 <Image className='foodlightbox-food-image' src={food.image} onClick={() => this.openLightbox()} />
                 <Lightbox images={photos}
                     onClose={() => this.closeLightbox()}
@@ -66,6 +66,13 @@ export default class FoodLightbox extends React.Component {
                     isOpen={this.state.lightboxIsOpen}
                     showThumbnails={true}
                 />
+                <div className='foodlightbox-position'>
+                    <Button
+                        compact
+                        className='foodlightbox-button'
+                        content='View Photos'
+                        onClick={() => this.openLightbox()} />
+                </div>
             </div>
         )
     }

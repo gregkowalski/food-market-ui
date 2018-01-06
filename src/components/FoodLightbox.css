@@ -9,3 +9,24 @@
     object-fit: cover;
     cursor: pointer;
 }
+
+.foodlightbox-image-wrap {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.foodlightbox-position {
+    display: inline-block;
+    position: absolute;
+    bottom: 7%;
+    left: 3%;
+}
+
+.foodlightbox-button {
+    background-color: rgb(233, 233, 233) !important;
+    font-family: 'Athiti' !important;
+    font-weight: 500 !important;
+    font-size: 1.2em !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}

@@ -40,6 +40,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 500 !important;
     color: #ffffff !important;
     height: 4em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .order-body {

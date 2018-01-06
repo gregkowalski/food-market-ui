@@ -74,6 +74,7 @@
     margin-top: 18px;
     top: 88px;
     z-index: 1;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
 .food-detail-header {
@@ -161,6 +162,7 @@
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .detail-footer-button {
@@ -170,10 +172,11 @@
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .detail-footer-text {
-    margin-top: 5px;
+    margin-top: 7px;
     color: gray;
     font-size: 1.1em;
     font-family: 'Athiti' !important; 
