@@ -199,7 +199,7 @@ export default class FoodDetail extends Component {
                     <Modal style={{textAlign: 'center' }} dimmer='inverted' size='tiny' open={this.state.openConfirmUserDesktop} onClose={() => this.setState({ openConfirmUserDesktop: false })}>
                         <Modal.Header className='order-confirm-user-header-desktop'>
                             <Image style={{ display: 'inline', marginLeft: '4%' }} height='32px' src={Constants.AppLogo} />
-                            <span style={{ marginLeft: '15px' }}>Please log in or sign up to continue</span>
+                            <span style={{ marginLeft: '15px' }}>Please log in or sign up to check out</span>
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
                             We need a valid email to complete your food order.
@@ -252,7 +252,7 @@ export default class FoodDetail extends Component {
                         onClose={() => this.setState({ openConfirmUserMobile: false })}>
                         <Modal.Header className='order-confirm-user-header-mobile' >
                             <Image style={{ float: 'left', marginTop: '12px'  }} height='32px' src={Constants.AppLogo} />
-                            <div style={{ float: 'right', marginLeft: '10px' }}>Please log in or sign up to continue</div>
+                            <div style={{ float: 'right', marginLeft: '10px' }}>Please log in or sign up to check out</div>
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
