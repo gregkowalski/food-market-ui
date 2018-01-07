@@ -55,6 +55,10 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 0 2px 4px 0 rgba(88, 88, 88, 0.2), 0 3px 10px 0 rgba(145, 145, 145, 0.1) !important;
 }
 
+.order-quantity-button:hover {
+    background-color: #d1d1d1 !important;
+}
+
 @media all and (max-width: 767px) {
     .order-body {
         width: 90%;

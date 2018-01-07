@@ -172,12 +172,12 @@ export default class FoodDetail extends Component {
         if (this.isLoggedIn) {
             orderButton = (
                 <RouterLink to={this.getOrderPageUrl(food)}>
-                    <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
+                    <Button animated='fade' fluid className='detail-desktop-button'>
                         <Button.Content visible>
                             Request an Order
                         </Button.Content>
                         <Button.Content hidden>
-                            ${food.price}
+                            ${this.getTotal(food.price)} CAD
                         </Button.Content>
                     </Button>
                 </RouterLink>
@@ -186,29 +186,36 @@ export default class FoodDetail extends Component {
         else {
             orderButton = (
                 <div>
-                    <Button animated='fade' fluid color='teal' className='detail-desktop-button'
-                        onClick={() => this.setState({ open: true })}>Request an Order</Button>
+                    <Button animated='fade' fluid className='detail-desktop-button'
+                        onClick={() => this.setState({ open: true })}>
+                        <Button.Content visible>
+                            Request an Order
+                        </Button.Content>
+                        <Button.Content hidden>
+                            ${this.getTotal(food.price)} CAD
+                        </Button.Content>
+                    </Button>
                     <Modal dimmer='inverted' size='tiny' open={this.state.open} onClose={() => this.setState({ open: false })}>
                         <Modal.Header className='order-confirm-user-header'>
                             <Image style={{ display: 'inline' }} height='32px' src={Constants.AppLogo} />
-                            <span style={{ marginLeft:'15px' }}>Please log in to continue </span>
+                            <span style={{ marginLeft: '15px' }}>Please log in to continue </span>
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
-                             We need a valid email to confirm all food orders. Your current request will be saved.
+                            We need a valid email to confirm all food orders. Your current request will be saved.
                         </Modal.Content>
                         <Modal.Actions>
                             <Button
-                                className='order-confirm-user-cancel'
+                                className='order-confirm-user-cancel-button'
                                 floated='left'
                                 content="Go Back"
                                 onClick={() => this.setState({ open: false })} />
-                            <Button primary
-                                className='order-confirm-user-continue'
+                            <Button 
+                                className='order-confirm-user-continue-button'
                                 content="Sign Up"
-                                
+
                                 onClick={() => this.handleOrderConfirmUserSignup(food)} />
-                            <Button color='teal'
-                                className='order-confirm-user-continue'
+                            <Button
+                                className='order-confirm-user-continue-button'
                                 content="Log In"
                                 onClick={() => this.handleOrderConfirmUserLogin(food)} />
                         </Modal.Actions>
@@ -539,7 +546,7 @@ export default class FoodDetail extends Component {
                     </div>
                     <div style={{ float: 'right', marginRight: '12px' }}>
                         <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                            <Button color='teal' className='detail-footer-button'>Request an Order</Button>
+                            <Button className='detail-footer-button'>Request an Order</Button>
                         </RouterLink>
                         <div className='detail-footer-text'>You won't be charged yet</div>
                     </div>

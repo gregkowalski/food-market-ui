@@ -159,6 +159,7 @@
 
 .detail-desktop-button {
     background-color:  #4cb99e !important;
+    color: white !important;
     margin-top: 15px !important;
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
@@ -167,16 +168,25 @@
     border-radius: 5px !important;
 }
 
+.detail-desktop-button:hover {
+    background-color:  #2aad8a !important;
+}
+
 .detail-footer-button {
     width: 100%;
     height: 3em;
     margin-top: 6px !important;
     background-color:  #4cb99e !important;
+    color: white !important;
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
     box-shadow: 0 2px 6px 0 rgba(114, 114, 114, 0.2), 0 6px 20px 0 rgba(126, 126, 126, 0.1) !important;
     border-radius: 5px !important;
+}
+
+.detail-footer-button:hover {
+    background-color:  #2aad8a !important;
 }
 
 .detail-footer-header {
@@ -232,6 +242,10 @@
     box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
 }
 
+.detail-quantity-button:hover {
+    background-color: #d1d1d1 !important;
+}
+
 .user-text {
     white-space: pre-wrap;
 }
@@ -249,19 +263,30 @@
     font-weight: 500 !important;
 }
 
-.order-confirm-user-cancel {
+.order-confirm-user-cancel-button {
+    background-color:  #a7a7a7 !important;
+    color: white !important;
     font-family: 'Athiti' !important;
     font-size: 1.25em !important;
     font-weight: 500 !important;
     box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
 }
 
-.order-confirm-user-continue {
+.order-confirm-user-cancel-button:hover {
+    background-color:  #7c7c7c !important;
+}
+
+.order-confirm-user-continue-button {
     font-family: 'Athiti' !important;
-    /* background-color:  #4cb99e !important; */
+    background-color:  #4cb99e !important;
+    color: white !important;
     font-size: 1.25em !important;
     font-weight: 500 !important;
     box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
+}
+
+.order-confirm-user-continue-button:hover {
+    background-color:  #2aad8a !important;
 }
 
 @media all and (max-width: 767px) {    
