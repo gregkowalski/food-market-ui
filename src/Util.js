@@ -2,25 +2,37 @@ import { FoodPrepType } from './data/FoodItems'
 import queryString from 'query-string'
 
 export default class {
-  static getFoodPrepTypeIcon(food) {
-    let foodPrepIcon = 'shopping basket';
-    if (food.prep === FoodPrepType.frozen) {
-      foodPrepIcon = 'snowflake outline';
+    static getFoodPrepTypeIcon(food) {
+        let foodPrepIcon = 'shopping basket';
+        if (food.prep === FoodPrepType.frozen) {
+            foodPrepIcon = 'snowflake outline';
+        }
+        else if (food.prep === FoodPrepType.ready) {
+            foodPrepIcon = 'checkmark box';
+        }
+        return foodPrepIcon;
     }
-    else if (food.prep === FoodPrepType.ready) {
-      foodPrepIcon = 'checkmark box';
-    }
-    return foodPrepIcon;
-  }
 
-  static parseQueryString(location) {
-    let query = location.search
-    if (!query) {
-      query = location.hash;
+    static parseQueryString(location) {
+        let query = location.search
+        if (!query) {
+            query = location.hash;
+        }
+        if (query && (query[0] === '#' || query[0] === '?')) {
+            query = query.substring(1);
+        }
+        return queryString.parse(query);
     }
-    if (query && (query[0] === '#' || query[0] === '?')) {
-      query = query.substring(1);
+
+    static triggerEvent(target, type) {
+        const doc = window.document;
+        if (doc.createEvent) {
+            const event = doc.createEvent('HTMLEvents');
+            event.initEvent(type, true, true);
+            target.dispatchEvent(event);
+        } else {
+            const event = doc.createEventObject();
+            target.fireEvent(`on${type}`, event);
+        }
     }
-    return queryString.parse(query);
-  }
 }

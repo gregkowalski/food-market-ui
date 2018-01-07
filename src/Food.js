@@ -43,7 +43,7 @@ class Food extends Component {
             const images = food.images.map((current, index) =>
                 <Image
                     // fluid label={{ className: foodPrepClassName, content: food.prep, icon: foodPrepIcon, ribbon: true }}
-                    key={index} className='FoodImage' src={current} />
+                    key={index} className='FoodImage' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             );
             imageElement =
                 <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}
