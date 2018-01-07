@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import './FoodDetail.css'
 import { Button, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
-import { Grid, Header, Divider, Feed, Form, Input } from 'semantic-ui-react'
+import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Users from './data/Users'
 import Reviews from './data/Reviews'
@@ -14,6 +14,7 @@ import ShowMore from 'react-show-more'
 import { Constants } from './Constants'
 import FlagListing from './components/FlagListing'
 import FlagListingMobile from './components/FlagListingMobile'
+import CognitoUtil from './Cognito/CognitoUtil'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -23,7 +24,9 @@ export default class FoodDetail extends Component {
         quantity: 1,
         serviceFeeRate: Constants.ServiceFeeRate,
         hasErrors: {},
+        open: false,
     };
+    isLoggedIn;
 
     handleChange = (e, { value }) => this.setState({ value })
 
@@ -36,14 +39,6 @@ export default class FoodDetail extends Component {
         return FoodItems.find(x => x.id === foodItemId);
     }
 
-    // componentDidMount() {
-    //     let id = this.getFoodItemId();
-    //     let item = FoodItems.find(x => x.id === id);
-    //     document.title = item.header;
-
-    //     Scroll.scrollSpy.update();
-    // }
-
     componentWillMount() {
         let foodItem = this.getFoodItem();
         document.title = foodItem.header;
@@ -52,6 +47,8 @@ export default class FoodDetail extends Component {
         if (quantity) {
             this.setState({ quantity: quantity });
         }
+
+        this.isLoggedIn = CognitoUtil.isLoggedIn();
     }
 
     getTotal(unitPrice) {
@@ -153,6 +150,75 @@ export default class FoodDetail extends Component {
         return prep;
     }
 
+    handleOrderConfirmUserLogin(food) {
+        this.setState({ open: false });
+        CognitoUtil.setLastPathname(this.getOrderPageUrl(food));
+        CognitoUtil.redirectToLogin();
+    }
+
+    handleOrderConfirmUserSignup(food) {
+        this.setState({ open: false });
+        CognitoUtil.setLastPathname(this.getOrderPageUrl(food));
+        CognitoUtil.redirectToSignup();
+    }
+
+    getOrderPageUrl(food) {
+        //return '/foods/' + food.id + '/order';
+        return `/foods/${food.id}/order`;
+    }
+
+    getRequestOrderButton(food) {
+        let orderButton;
+        if (this.isLoggedIn) {
+            orderButton = (
+                <RouterLink to={this.getOrderPageUrl(food)}>
+                    <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
+                        <Button.Content visible>
+                            Request an Order
+                        </Button.Content>
+                        <Button.Content hidden>
+                            ${food.price}
+                        </Button.Content>
+                    </Button>
+                </RouterLink>
+            );
+        }
+        else {
+            orderButton = (
+                <div>
+                    <Button animated='fade' fluid color='teal' className='detail-desktop-button'
+                        onClick={() => this.setState({ open: true })}>Request an Order</Button>
+                    <Modal dimmer='inverted' size='tiny' open={this.state.open} onClose={() => this.setState({ open: false })}>
+                        <Modal.Header className='order-confirm-user-header'>
+                            <Image style={{ display: 'inline' }} height='32px' src='/assets/images/bowlcity8.png' />
+                            <span style={{ marginLeft:'15px' }}>Please log in to continue </span>
+                        </Modal.Header>
+                        <Modal.Content className='order-confirm-user-msg'>
+                             We need a valid email to confirm all food orders. Your current request will be saved.
+                        </Modal.Content>
+                        <Modal.Actions>
+                            <Button
+                                className='order-confirm-user-cancel'
+                                floated='left'
+                                content="Go Back"
+                                onClick={() => this.setState({ open: false })} />
+                            <Button primary
+                                className='order-confirm-user-continue'
+                                content="Sign Up"
+                                
+                                onClick={() => this.handleOrderConfirmUserSignup(food)} />
+                            <Button color='teal'
+                                className='order-confirm-user-continue'
+                                content="Log In"
+                                onClick={() => this.handleOrderConfirmUserLogin(food)} />
+                        </Modal.Actions>
+                    </Modal>
+                </div>
+            );
+        }
+        return orderButton;
+    }
+
     render() {
         let id = this.getFoodItemId();
         let food = FoodItems.find(x => x.id === id);
@@ -160,7 +226,6 @@ export default class FoodDetail extends Component {
 
         let reviews = Reviews
             .filter(x => x.foodItemId === id);
-
 
         reviews = reviews
             .map(x => (
@@ -452,16 +517,7 @@ export default class FoodDetail extends Component {
                                         </div>
                                     </div>
 
-                                    <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                        <Button animated='fade' fluid color='teal' className='detail-desktop-button'>
-                                            <Button.Content visible>
-                                                Request an Order
-                                            </Button.Content>
-                                            <Button.Content hidden>
-                                                ${food.price}
-                                            </Button.Content>
-                                        </Button>
-                                    </RouterLink>
+                                    {this.getRequestOrderButton(food)}
 
                                     <div className='detail-card-charged-footnote'>
                                         You won't be charged yet</div>
@@ -474,20 +530,20 @@ export default class FoodDetail extends Component {
                 </div>
 
                 <div className='detail-footer'>
-                        <div className='detail-footer-header' style={{ float: 'left' }}>${food.price} CAD
+                    <div className='detail-footer-header' style={{ float: 'left' }}>${food.price} CAD
                     <div style={{ display: 'flex' }}>
-                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                    style={{ marginTop: '10px' }} />
-                                <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
-                            </div>
+                            <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                                style={{ marginTop: '10px' }} />
+                            <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                         </div>
-                        <div style={{ float: 'right', marginRight: '12px' }}>
-                            <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                                <Button color='teal' className='detail-footer-button'>Request an Order</Button>
-                            </RouterLink>
-                            <div className='detail-footer-text'>You won't be charged yet</div>
-                        </div>
-                        <div style={{ clear: 'both' }}></div>
+                    </div>
+                    <div style={{ float: 'right', marginRight: '12px' }}>
+                        <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                            <Button color='teal' className='detail-footer-button'>Request an Order</Button>
+                        </RouterLink>
+                        <div className='detail-footer-text'>You won't be charged yet</div>
+                    </div>
+                    <div style={{ clear: 'both' }}></div>
                 </div>
             </div>
         )

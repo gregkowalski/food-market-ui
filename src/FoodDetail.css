@@ -214,22 +214,6 @@
     color: #52c5d5 !important;
 }
 
-.report-listing-item {
-    display: block;
-    align-items: center;
-    margin-top: 5px;
-    font-weight: 500  !important;
-    font-family: 'Athiti'  !important;
-}
-
-.report-listing-item > div {
-    margin-top: 5px;
-}
-
-.report-listing-mobile {
-    display: none;
-    color: #5e5d5d;
-}
 
 .showmore-text::before {
     content: '\a\a';
@@ -252,6 +236,33 @@
     white-space: pre-wrap;
 }
 
+.order-confirm-user-header {
+    font-family: 'Athiti' !important;
+    color: #494949 !important;
+    font-size: 1.85em !important;
+    font-weight: 600 !important;
+}
+
+.order-confirm-user-msg {
+    font-family: 'Athiti' !important;
+    font-size: 1.25em !important;
+    font-weight: 500 !important;
+}
+
+.order-confirm-user-cancel {
+    font-family: 'Athiti' !important;
+    font-size: 1.25em !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
+}
+
+.order-confirm-user-continue {
+    font-family: 'Athiti' !important;
+    /* background-color:  #4cb99e !important; */
+    font-size: 1.25em !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
+}
 
 @media all and (max-width: 767px) {    
     .detail-footer {
@@ -269,9 +280,7 @@
     .detail-head-main {
         display: flex;
     }
-    .report-listing-mobile {
-        display: block;
-    }
+
 }
 /* end main layout */
 
