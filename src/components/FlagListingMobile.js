@@ -11,8 +11,12 @@ export default class FlagListing extends React.Component {
         return (
             <div className='flag-listing-mobile'>
                 {/* style={{ color: '#5e5d5d' }} */}
-                <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' /> Report this listing
-                                    </Button>} closeIcon>
+                <Modal
+                    dimmer='inverted'
+                    size='mini'
+                    trigger={<Button basic><Icon name='flag outline' />
+                        Report this listing</Button>} 
+                     closeIcon>
                     <Header icon='lock' content='Do you want to anonymously report this listing?' />
                     <Modal.Content>
                         <p>Please choose one of the following reasons. This won't be shared with the cook.

@@ -24,7 +24,8 @@ export default class FoodDetail extends Component {
         quantity: 1,
         serviceFeeRate: Constants.ServiceFeeRate,
         hasErrors: {},
-        open: false,
+        openConfirmUserDesktop: false,
+        openConfirmUserMobile: false,
     };
     isLoggedIn;
 
@@ -145,7 +146,7 @@ export default class FoodDetail extends Component {
         }
         else if (food.prep === 'cooked') {
             prep = (<span><Icon color='teal' name='angle double right' />
-                Store your food properly: keep cold food cold and hot food hot.</span>)
+                Store your food properly: keep cold food cold and hot food hot!</span>)
         }
         return prep;
     }
@@ -167,7 +168,7 @@ export default class FoodDetail extends Component {
         return `/foods/${food.id}/order`;
     }
 
-    getRequestOrderButton(food) {
+    getRequestOrderButtonDesktop(food) {
         let orderButton;
         if (this.isLoggedIn) {
             orderButton = (
@@ -187,7 +188,7 @@ export default class FoodDetail extends Component {
             orderButton = (
                 <div>
                     <Button animated='fade' fluid className='detail-desktop-button'
-                        onClick={() => this.setState({ open: true })}>
+                        onClick={() => this.setState({ openConfirmUserDesktop: true })}>
                         <Button.Content visible>
                             Request an Order
                         </Button.Content>
@@ -195,27 +196,81 @@ export default class FoodDetail extends Component {
                             ${this.getTotal(food.price)} CAD
                         </Button.Content>
                     </Button>
-                    <Modal dimmer='inverted' size='tiny' open={this.state.open} onClose={() => this.setState({ open: false })}>
-                        <Modal.Header className='order-confirm-user-header'>
-                            <Image style={{ display: 'inline' }} height='32px' src={Constants.AppLogo} />
-                            <span style={{ marginLeft: '15px' }}>Please log in to continue </span>
+                    <Modal style={{textAlign: 'center' }} dimmer='inverted' size='tiny' open={this.state.openConfirmUserDesktop} onClose={() => this.setState({ openConfirmUserDesktop: false })}>
+                        <Modal.Header className='order-confirm-user-header-desktop'>
+                            <Image style={{ display: 'inline', marginLeft: '4%' }} height='32px' src={Constants.AppLogo} />
+                            <span style={{ marginLeft: '15px' }}>Please log in or sign up to continue</span>
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
-                            We need a valid email to confirm all food orders. Your current request will be saved.
+                            We need a valid email to complete your food order.
+                            <div>Details for your current order request will be saved.</div>
                         </Modal.Content>
                         <Modal.Actions>
                             <Button
                                 className='order-confirm-user-cancel-button'
                                 floated='left'
                                 content="Go Back"
-                                onClick={() => this.setState({ open: false })} />
-                            <Button 
-                                className='order-confirm-user-continue-button'
+                                onClick={() => this.setState({ openConfirmUserDesktop: false })} />
+                            <Button
+                                className='order-confirm-user-signup-button'
                                 content="Sign Up"
 
                                 onClick={() => this.handleOrderConfirmUserSignup(food)} />
                             <Button
-                                className='order-confirm-user-continue-button'
+                                className='order-confirm-user-login-button'
+                                content="Log In"
+                                onClick={() => this.handleOrderConfirmUserLogin(food)} />
+                        </Modal.Actions>
+                    </Modal>
+                </div>
+            );
+        }
+        return orderButton;
+    }
+
+    getRequestOrderButtonMobile(food) {
+        let orderButton;
+        if (this.isLoggedIn) {
+            orderButton = (
+                <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                    <Button className='detail-footer-button'>Request an Order</Button>
+                </RouterLink>
+            );
+        }
+        else {
+            orderButton = (
+                <div>
+                    <Button
+                        className='detail-footer-button'
+                        onClick={() => this.setState({ openConfirmUserMobile: true })}>
+                        Request an Order
+                    </Button>
+                    <Modal
+                        dimmer='inverted'
+                        size='tiny'
+                        open={this.state.openConfirmUserMobile}
+                        onClose={() => this.setState({ openConfirmUserMobile: false })}>
+                        <Modal.Header className='order-confirm-user-header-mobile' >
+                            <Image style={{ float: 'left', marginTop: '12px'  }} height='32px' src={Constants.AppLogo} />
+                            <div style={{ float: 'right', marginLeft: '10px' }}>Please log in or sign up to continue</div>
+                            <div style={{ clear: 'both' }} />
+                        </Modal.Header>
+                        <Modal.Content className='order-confirm-user-msg'>
+                            We need a valid email to complete your food order. Details for your current order request will be saved.
+                        </Modal.Content>
+                        <Modal.Actions style={{ textAlign: 'center' }}>
+                            {/* <Button
+                                className='order-confirm-user-cancel-button'
+                                floated='left'
+                                content="Go Back"
+                                onClick={() => this.setState({ open: false })} /> */}
+                            <Button
+                                className='order-confirm-user-signup-button'
+                                content="Sign Up"
+
+                                onClick={() => this.handleOrderConfirmUserSignup(food)} />
+                            <Button
+                                className='order-confirm-user-login-button'
                                 content="Log In"
                                 onClick={() => this.handleOrderConfirmUserLogin(food)} />
                         </Modal.Actions>
@@ -524,7 +579,7 @@ export default class FoodDetail extends Component {
                                         </div>
                                     </div>
 
-                                    {this.getRequestOrderButton(food)}
+                                    {this.getRequestOrderButtonDesktop(food)}
 
                                     <div className='detail-card-charged-footnote'>
                                         You won't be charged yet</div>
@@ -545,9 +600,7 @@ export default class FoodDetail extends Component {
                         </div>
                     </div>
                     <div style={{ float: 'right', marginRight: '12px' }}>
-                        <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
-                            <Button className='detail-footer-button'>Request an Order</Button>
-                        </RouterLink>
+                        {this.getRequestOrderButtonMobile(food)}
                         <div className='detail-footer-text'>You won't be charged yet</div>
                     </div>
                     <div style={{ clear: 'both' }}></div>

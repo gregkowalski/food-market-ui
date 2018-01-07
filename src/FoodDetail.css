@@ -239,7 +239,7 @@
 
 .detail-quantity-button {
     background-color: rgb(233, 233, 233) !important;
-    box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
+    box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 #8080801a !important;
 }
 
 .detail-quantity-button:hover {
@@ -250,11 +250,15 @@
     white-space: pre-wrap;
 }
 
-.order-confirm-user-header {
+.order-confirm-user-header-desktop {
+    display: inline-flex !important;
     font-family: 'Athiti' !important;
     color: #494949 !important;
     font-size: 1.85em !important;
     font-weight: 600 !important;
+    /* line-height: 28px !important; */
+    text-align: center !important;
+    width: 100% !important;
 }
 
 .order-confirm-user-msg {
@@ -273,20 +277,34 @@
 }
 
 .order-confirm-user-cancel-button:hover {
-    background-color:  #7c7c7c !important;
+    background-color: #7c7c7c !important;
 }
 
-.order-confirm-user-continue-button {
+.order-confirm-user-signup-button {
     font-family: 'Athiti' !important;
-    background-color:  #4cb99e !important;
+    background-color: #4cb99e !important;
     color: white !important;
     font-size: 1.25em !important;
     font-weight: 500 !important;
     box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
 }
 
-.order-confirm-user-continue-button:hover {
-    background-color:  #2aad8a !important;
+.order-confirm-user-signup-button:hover {
+    background-color: #2aad8a !important;
+}
+
+.order-confirm-user-login-button {
+    font-family: 'Athiti' !important;
+    background-color: #4cb99e !important;
+    width: 160px !important;
+    color: white !important;
+    font-size: 1.25em !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 4px 0 #44444433, 0 3px 10px 0 rgba(128, 128, 128, 0.1) !important;
+}
+
+.order-confirm-user-login-button:hover {
+    background-color: #2aad8a !important;
 }
 
 @media all and (max-width: 767px) {    
@@ -304,6 +322,17 @@
     }
     .detail-head-main {
         display: flex;
+    }
+
+    .order-confirm-user-header-mobile {
+        display: inline-flex !important;
+        font-family: 'Athiti' !important;
+        color: #494949 !important;
+        font-size: 1.85em !important;
+        font-weight: 600 !important;
+        line-height: 28px !important;
+        text-align: center !important;
+        width: 100%;
     }
 
 }
