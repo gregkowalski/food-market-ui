@@ -190,7 +190,7 @@ export default class FoodDetail extends Component {
                         onClick={() => this.setState({ open: true })}>Request an Order</Button>
                     <Modal dimmer='inverted' size='tiny' open={this.state.open} onClose={() => this.setState({ open: false })}>
                         <Modal.Header className='order-confirm-user-header'>
-                            <Image style={{ display: 'inline' }} height='32px' src='/assets/images/bowlcity8.png' />
+                            <Image style={{ display: 'inline' }} height='32px' src={Constants.AppLogo} />
                             <span style={{ marginLeft:'15px' }}>Please log in to continue </span>
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>

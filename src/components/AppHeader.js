@@ -116,7 +116,7 @@ class AppHeader extends React.Component {
                 <div className='head-content'>
                     <div className='head-logo'>
                         <a href="/">
-                            <Image style={{ marginTop: '9.5px' }} height='22px' src='/assets/images/bowlcity8.png' />
+                            <Image style={{ marginTop: '9.5px' }} height='22px' src={Constants.AppLogo} />
                         </a>
                         <a href="/" className='head-link'>
                             <div>{Constants.AppName}</div>
