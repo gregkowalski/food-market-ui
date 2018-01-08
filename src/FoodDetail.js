@@ -252,6 +252,7 @@ export default class FoodDetail extends Component {
                         onClose={() => this.setState({ openConfirmUserMobile: false })}>
                         <Modal.Header className='order-confirm-user-header-mobile' >
                             <Image style={{ float: 'left', marginTop: '12px'  }} height='32px' src={Constants.AppLogo} />
+                            
                             <div style={{ float: 'right', marginLeft: '10px' }}>Please log in or sign up to check out</div>
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>

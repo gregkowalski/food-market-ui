@@ -85,32 +85,6 @@ class OrderHeader extends React.Component {
 
         const featureToggle = FeatureToggles.CognitoLogin;
 
-        let sessionElement;
-        if (featureToggle) {
-            if (this.state.username) {
-                sessionElement =
-                    <div className='orderhead-sign-in'>
-                        <span>Hi, </span>
-                        <Dropdown text={this.state.username} >
-                            <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                                <Dropdown.Item className='orderhead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push('/profile/1')} />
-                                <Dropdown.Divider />
-                                <Dropdown.Item className='orderhead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-            }
-            else {
-                sessionElement =
-                    <div>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='orderhead-sign-in'> Sign Up </a>
-                        <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='orderhead-sign-in'> Log In</a>
-
-                    </div>
-            }
-        }
-
         return (
             <div className='orderhead' style={{ position: pos }}>
                 <div className='orderhead-content'>
@@ -156,13 +130,6 @@ class OrderHeader extends React.Component {
 
                                 </div>
                             </div>
-
-
-
-
-                            // <div style={{ marginTop: '8px' }}>
-                            //     {sessionElement}
-                            // </div>
                         }
                     </div>
                 </div>
