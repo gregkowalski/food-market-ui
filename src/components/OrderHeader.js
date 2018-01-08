@@ -1,14 +1,14 @@
 import React from 'react'
-import { Image, Dropdown } from 'semantic-ui-react'
+import { Image, Dropdown, Icon } from 'semantic-ui-react'
 import { Constants } from '../Constants'
-import './AppHeader.css'
+import './OrderHeader.css'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { FeatureToggles } from '../FeatureToggles'
 
-class AppHeader extends React.Component {
+class OrderHeader extends React.Component {
 
     state = {};
     tagline;
@@ -89,13 +89,13 @@ class AppHeader extends React.Component {
         if (featureToggle) {
             if (this.state.username) {
                 sessionElement =
-                    <div className='apphead-sign-in'>
+                    <div className='orderhead-sign-in'>
                         <span>Hi, </span>
                         <Dropdown text={this.state.username} >
                             <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push('/profile/1')} />
+                                <Dropdown.Item className='orderhead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push('/profile/1')} />
                                 <Dropdown.Divider />
-                                <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
+                                <Dropdown.Item className='orderhead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -103,29 +103,28 @@ class AppHeader extends React.Component {
             else {
                 sessionElement =
                     <div>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
+                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='orderhead-sign-in'> Sign Up </a>
                         <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
+                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='orderhead-sign-in'> Log In</a>
 
                     </div>
             }
         }
 
         return (
-            <div className='apphead' style={{ position: pos }}>
-                <div className='apphead-content'>
-                    <div className='apphead-logo'>
+            <div className='orderhead' style={{ position: pos }}>
+                <div className='orderhead-content'>
+                    <div className='orderhead-logo'>
                         <a href="/">
-                            <Image style={{ marginTop: '9.5px' }} height='22px' src={Constants.AppLogo} />
+                            <Image style={{ marginTop: '4px' }} height='30px' src={Constants.AppLogo} />
                         </a>
-                        <a href="/" className='apphead-link'>
+                        <a href="/" className='orderhead-link'>
                             <div>{Constants.AppName}</div>
                         </a>
-                        <div className="content-desktop">
-                            {this.tagline}
-                        </div>
+
                     </div>
-                    <div className='apphead-right'>
+                    <div className='orderhead-right'>
+
                         {!featureToggle &&
                             <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
                                 <Dropdown.Menu>
@@ -141,9 +140,29 @@ class AppHeader extends React.Component {
                             </Dropdown>
                         }
                         {featureToggle &&
-                            <div style={{ marginTop: '8px' }}>
-                                {sessionElement}
+                            <div style={{ display: 'inline-flex' }}>
+                                <div className="order-content-desktop">
+                                    <div className='orderhead-contact-support'>
+                                        <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
+                                            Support
+                                    </a>
+                                    </div>
+                                <span style={{ color: '#898989', fontSize: '2.1em', fontWeight: '10', marginTop: '6px', marginRight: '10px' }}>|</span>
+                                 </div>
+                                <div style={{ marginRight: '6px' }}><Image height='35px' src='/assets/images/ssl-certificate-green-lock.png' /></div>
+                                <div className='orderhead-ssl-text' >
+                                    <strong>SSL SECURED </strong>
+                                    <div style={{ color: '#7f7f7f' }}>CHECKOUT</div>
+
+                                </div>
                             </div>
+
+
+
+
+                            // <div style={{ marginTop: '8px' }}>
+                            //     {sessionElement}
+                            // </div>
                         }
                     </div>
                 </div>
@@ -152,4 +171,4 @@ class AppHeader extends React.Component {
     }
 }
 
-export default withRouter(AppHeader);
+export default withRouter(OrderHeader);

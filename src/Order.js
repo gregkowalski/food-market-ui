@@ -11,7 +11,7 @@ import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import AppHeader from './components/AppHeader'
+import OrderHeader from './components/OrderHeader'
 import FoodLightbox from './components/FoodLightbox'
 import Checkout from './Stripe/Checkout'
 import { FeatureToggles } from './FeatureToggles'
@@ -465,7 +465,7 @@ export default class Order extends React.Component {
 
         return (
             <div>
-                <AppHeader />
+                <OrderHeader fixed />
                 <div>
                     <FoodLightbox foodItemId={food.id} />
 

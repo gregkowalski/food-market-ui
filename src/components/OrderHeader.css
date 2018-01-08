@@ -1,4 +1,4 @@
-.apphead {
+.orderhead {
     height: 55px;
     top: 0;
     left: 0;
@@ -10,40 +10,31 @@
     transition: top 0.2s ease-in-out;
 }
 
-.apphead-logo {
+.orderhead-logo {
     display: inline-flex;
     margin-left: 10px;
 }
 
-.apphead-link {
+.orderhead-link {
     color:  #4cb9a0;
     text-decoration: none;
     padding-right: 5px;
     padding-left: 7px;
     padding-top: 2px;
-    margin-top: 10px;
+    margin-top: 9px;
     font-family: 'Comfortaa', cursive; 
     font-weight: 500;
     font-size: 1.9em;
-    text-shadow: 0 2px 4px rgba(104, 104, 104, 0.479);
+    text-shadow: 0 2px 6px rgba(104, 104, 104, 0.479);
+
+    
   }
   
-.apphead-link:hover {
+  .orderhead-link:hover {
     color: #68cfb5;
   }
-
-  .content-desktop {
-    display: block;
-    font-size: 1.2em;
-    color: #2b2b2b;
-    margin-left: 3px;
-    margin-top: 13.75px;
-    font-family: 'Athiti';    
-    font-weight: 400;
-    text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);
-  }
     
-  .apphead-content {
+  .orderhead-content {
     width: 100%;
     height: 100%;
     padding-left: 9px;
@@ -52,13 +43,12 @@
     padding-bottom: 10px;
   }
 
-  .apphead-right {
+  .orderhead-right {
     float: right;
-    /* width: 240px !important;
-    text-align: right; */
+    /* width: 150px; */
   }
 
-  .apphead-sign-in {
+  .orderhead-sign-in {
     color: #3a3a3a;
     font-family: 'Athiti';
     font-weight: 400;
@@ -67,11 +57,11 @@
     margin-right: 3px; 
   }
 
-  .apphead-sign-in:hover {
+  .orderhead-sign-in:hover {
     color: #66c3cb;
   }
 
-  .apphead-dropdown-profile-link {
+  .orderhead-dropdown-profile-link {
     color: black !important;
     font-family: 'Athiti';
     font-weight: 300 !important;
@@ -79,25 +69,62 @@
     margin-top: 8px;
 }
 
-  .apphead-dropdown-item {
+  .orderhead-dropdown-item {
     font-family: 'Athiti';
     font-weight: 300 !important;
     font-size: .95em !important;
     margin-bottom: 8px;
   }
 
+  .orderhead-contact-support {
+    color: #3a3a3a;
+    font-family: 'Athiti';
+    font-weight: 400;
+    font-size: 1.15em;
+    margin-top: 7px;
+    margin-right: 10px; 
+    text-align: center;
+    line-height: 14px;
+  }
+
+  .orderhead-contact-support-link {
+    color: #3a3a3a;
+  }
+
+  .orderhead-contact-support-link:hover {
+    color: #50aebb;
+
+  }
+
+  .order-content-desktop {
+    display: inline-flex;
+  }
+
+  .orderhead-ssl-text {
+    color: #3a3a3a;
+    font-family: 'Athiti';
+    font-weight: 400;
+    font-size: 1.25em;
+    margin-top: 3px;
+    margin-right: 3px; 
+    text-align: center;
+    line-height: 15px;
+    text-shadow: 0 1px 1px rgba(104, 104, 104, 0.479);
+  }
+
+
 @media all and (max-width: 767px) {
-    .content-desktop {
+    .order-content-desktop {
       display: none;
     }
 
-    .apphead-content {
+    .orderhead-content {
       padding-right: 10px;
       padding-left: 7px;
       
     }
       
-    .apphead-content {
+    .orderhead-content {
       text-align: left;
     }
 }
