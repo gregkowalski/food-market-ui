@@ -144,7 +144,7 @@ class OrderHeader extends React.Component {
                                 <div className="order-content-desktop">
                                     <div className='orderhead-contact-support'>
                                         <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
-                                            Support
+                                            Support 
                                     </a>
                                     </div>
                                 <span style={{ color: '#898989', fontSize: '2.1em', fontWeight: '10', marginTop: '6px', marginRight: '10px' }}>|</span>
