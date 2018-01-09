@@ -1,7 +1,7 @@
 import React from 'react'
 import './Order.css'
 import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-react'
-import { Accordion, Header, Divider, Form, Segment, Input } from 'semantic-ui-react'
+import { Accordion, Header, Divider, Form, Segment, Input, Step } from 'semantic-ui-react'
 import { Radio } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import Users from './data/Users'
@@ -20,6 +20,12 @@ import CognitoUtil from './Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Constants } from './Constants'
 
+const Steps = {
+    pickup: 0,
+    billing: 1,
+    confirm: 2
+}
+
 export default class Order extends React.Component {
 
     state = {
@@ -29,7 +35,8 @@ export default class Order extends React.Component {
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
-        value: 'pick-up'
+        value: 'pick-up',
+        currentStep: Steps.pickup
     };
 
     componentWillMount() {
@@ -463,6 +470,20 @@ export default class Order extends React.Component {
                 <strong>Pick-up</strong>
         }
 
+        let currentStepComponent;
+        if (this.state.currentStep === Steps.pickup) {
+            currentStepComponent = <div>This is how we do pick-up</div>;
+        }
+        else if (this.state.currentStep === Steps.billing) {
+            currentStepComponent = <div>This is how we do billing</div>;
+        }
+        else if (this.state.currentStep === Steps.confirm) {
+            currentStepComponent = <div>This is how we do confirm</div>;
+        }
+        else {
+            currentStepComponent = <div>We're done!</div>;
+        }
+
         return (
             <div>
                 <OrderHeader fixed />
@@ -471,6 +492,50 @@ export default class Order extends React.Component {
 
                     <div className='order-body'>
 
+                        <Step.Group widths={3}>
+                            <Step active={this.state.currentStep === Steps.pickup}
+                                completed={this.state.currentStep > Steps.pickup}
+                                disabled={this.state.currentStep < Steps.pickup}>
+                                <Icon name='shopping basket' />
+                                <Step.Content>
+                                    <Step.Title>Basket</Step.Title>
+                                </Step.Content>
+                            </Step>
+                            <Step active={this.state.currentStep === Steps.billing}
+                                completed={this.state.currentStep > Steps.billing}
+                                disabled={this.state.currentStep < Steps.billing}>
+                                <Icon name='credit card' />
+                                <Step.Content>
+                                    <Step.Title>Payment &amp; Billing</Step.Title>
+                                </Step.Content>
+                            </Step>
+                            <Step active={this.state.currentStep === Steps.confirm}
+                                completed={this.state.currentStep > Steps.confirm}
+                                disabled={this.state.currentStep < Steps.confirm}>
+                                <Icon name='info' />
+                                <Step.Content>
+                                    <Step.Title>Confirm Order</Step.Title>
+                                </Step.Content>
+                            </Step>
+                        </Step.Group>
+
+                        <Button size='massive' icon onClick={() => {
+                            if (this.state.currentStep > Steps.pickup) {
+                                this.setState({ currentStep: this.state.currentStep - 1 });
+                            }
+                        }}>
+                            <Icon name='left arrow' />
+                        </Button>
+                        <Button size='massive' icon onClick={() => {
+                            if (this.state.currentStep < Steps.confirm + 1) {
+                                this.setState({ currentStep: this.state.currentStep + 1 });
+                            }
+                        }}>
+                            <Icon name='right arrow' />
+                        </Button>
+
+                        {currentStepComponent}
+
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
                             <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
@@ -478,7 +543,6 @@ export default class Order extends React.Component {
                                 <Image avatar src={user.image} style={{ marginLeft: '10px' }} />
                             </div>
                         </div>
-
 
                         <Divider />
 

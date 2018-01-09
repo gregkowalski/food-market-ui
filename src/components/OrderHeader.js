@@ -123,7 +123,7 @@ class OrderHeader extends React.Component {
                                     </div>
                                 <span style={{ color: '#898989', fontSize: '2.1em', fontWeight: '10', marginTop: '6px', marginRight: '10px' }}>|</span>
                                  </div>
-                                <div style={{ marginRight: '6px' }}><Image height='35px' src='/assets/images/ssl-certificate-green-lock.png' /></div>
+                                <div style={{ marginRight: '6px', marginTop: '5px' }}><Image height='25px' src='/assets/images/ssl-certificate-green-lock.png' /></div>
                                 <div className='orderhead-ssl-text' >
                                     <strong>SSL SECURED </strong>
                                     <div style={{ color: '#7f7f7f' }}>CHECKOUT</div>
