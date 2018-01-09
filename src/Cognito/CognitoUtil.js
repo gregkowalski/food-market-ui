@@ -4,18 +4,22 @@ import crypto from 'crypto'
 
 export default class CognitoUtil {
 
-    static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
+    //static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
+    static AppWebDomain = 'food-market-dev.auth.us-west-2.amazoncognito.com';
     static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
-    static CognitoClientAppId = 'dkra9rqkjer2aqg23lrbp23hv';
+    //static CognitoClientAppId = 'dkra9rqkjer2aqg23lrbp23hv';
+    static CognitoClientAppId = '6n197h69pgu60msn8a8rvvj1u5';
     static RedirectUriSignIn = 'http://localhost:3000/cognitoCallback';
     static RedirectUriSignOut = 'http://localhost:3000/cognitoSignout';
-    static CognitoUserPoolId = 'us-west-2_TvRu5yb9m';
+    //static CognitoUserPoolId = 'us-west-2_TvRu5yb9m';
+    static CognitoUserPoolId = 'us-west-2_lZLhlTHmt';
 
     static getCognitoAuthData() {
         var authData = {
             ClientId: CognitoUtil.CognitoClientAppId,
             AppWebDomain: CognitoUtil.AppWebDomain,
-            TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
+            //TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
+            TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email'],
             RedirectUriSignIn: CognitoUtil.RedirectUriSignIn,
             RedirectUriSignOut: CognitoUtil.RedirectUriSignOut,
             UserPoolId: CognitoUtil.CognitoUserPoolId,
@@ -23,6 +27,19 @@ export default class CognitoUtil {
             // AdvancedSecurityDataCollectionFlag : <TODO: boolean value indicating whether you want to enable advanced security data collection>
         };
         return authData;
+    }
+
+    static getTokenScopesQueryParam() {
+        return this.getCognitoAuthData().TokenScopesArray.join('+');
+    }
+
+    static getLoggedInUserJwtToken() {
+        let auth = new CognitoAuth(this.getCognitoAuthData());
+        let session = auth.getCachedSession();
+        if (session && session.isValid()) {
+            return session.getIdToken().getJwtToken();
+        }
+        return null;
     }
 
     static isLoggedIn() {
@@ -76,7 +93,9 @@ export default class CognitoUtil {
     }
 
     static getCognitoUrl(path, state) {
-        let url = `${this.CognitoDomain}/${path}?response_type=token&client_id=${this.CognitoClientAppId}&redirect_uri=${this.RedirectUriSignIn}&scope=openid+profile+aws.cognito.signin.user.admin+email`;
+        const scope = this.getTokenScopesQueryParam();
+        //openid+profile+aws.cognito.signin.user.admin+email
+        let url = `${this.CognitoDomain}/${path}?response_type=token&client_id=${this.CognitoClientAppId}&redirect_uri=${this.RedirectUriSignIn}&scope=${scope}`;
         if (state) {
             url += '&state=' + state;
         }

@@ -15,6 +15,8 @@ import { Constants } from './Constants'
 import FlagListing from './components/FlagListing'
 import FlagListingMobile from './components/FlagListingMobile'
 import CognitoUtil from './Cognito/CognitoUtil'
+import { FeatureToggles } from './FeatureToggles';
+import ApiClient from './Api/ApiClient'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -28,6 +30,8 @@ export default class FoodDetail extends Component {
         openConfirmUserMobile: false,
     };
     isLoggedIn;
+    cook;
+    food;
 
     handleChange = (e, { value }) => this.setState({ value })
 
@@ -41,8 +45,8 @@ export default class FoodDetail extends Component {
     }
 
     componentWillMount() {
-        let foodItem = this.getFoodItem();
-        document.title = foodItem.header;
+        this.food = this.getFoodItem();
+        document.title = this.food.header;
 
         let quantity = window.sessionStorage.getItem('quantity');
         if (quantity) {
@@ -50,6 +54,21 @@ export default class FoodDetail extends Component {
         }
 
         this.isLoggedIn = CognitoUtil.isLoggedIn();
+
+        if (!FeatureToggles.DynamoUsers) {
+            this.cook = Users.find(x => x.id === this.food.userId);
+        }
+        else {
+            let apiClient = new ApiClient();
+            apiClient.getUserByJsUserId(this.food.userId)
+                .then(response => {
+                    this.cook = response.data;
+                    this.setState(this.state);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
     }
 
     getTotal(unitPrice) {
@@ -196,7 +215,7 @@ export default class FoodDetail extends Component {
                             ${this.getTotal(food.price)} CAD
                         </Button.Content>
                     </Button>
-                    <Modal style={{textAlign: 'center' }} dimmer='inverted' size='tiny' open={this.state.openConfirmUserDesktop} onClose={() => this.setState({ openConfirmUserDesktop: false })}>
+                    <Modal style={{ textAlign: 'center' }} dimmer='inverted' size='tiny' open={this.state.openConfirmUserDesktop} onClose={() => this.setState({ openConfirmUserDesktop: false })}>
                         <Modal.Header className='order-confirm-user-header-desktop'>
                             <Image style={{ display: 'inline', marginLeft: '4%' }} height='32px' src={Constants.AppLogo} />
                             <span style={{ marginLeft: '15px' }}>Please log in or sign up to check out</span>
@@ -251,8 +270,7 @@ export default class FoodDetail extends Component {
                         open={this.state.openConfirmUserMobile}
                         onClose={() => this.setState({ openConfirmUserMobile: false })}>
                         <Modal.Header className='order-confirm-user-header-mobile' >
-                            <Image style={{ float: 'left', marginTop: '12px'  }} height='32px' src={Constants.AppLogo} />
-                            
+                            <Image style={{ float: 'left', marginTop: '12px' }} height='32px' src={Constants.AppLogo} />
                             <div style={{ float: 'right', marginLeft: '10px' }}>Please log in or sign up to check out</div>
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>
@@ -283,12 +301,10 @@ export default class FoodDetail extends Component {
     }
 
     render() {
-        let id = this.getFoodItemId();
-        let food = FoodItems.find(x => x.id === id);
-        let user = Users.find(x => x.id === food.userId);
 
+        let food = this.food;
         let reviews = Reviews
-            .filter(x => x.foodItemId === id);
+            .filter(x => x.foodItemId === food.id);
 
         reviews = reviews
             .map(x => (
@@ -345,7 +361,7 @@ export default class FoodDetail extends Component {
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
                             offset={-85} duration={500}>
-                            {user.name}
+                            {this.cook ? this.cook.name : '...'}
                         </ScrollLink>
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -467,17 +483,19 @@ export default class FoodDetail extends Component {
 
 
                 </ScrollElement>
-                <ScrollElement name="cook">
-                    <Header className='detail-sub-header' as='h2'>Meet {user.name}</Header>
-                    <div className='detail-cook-sub-header'>
-                        {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
-                    </div>
-                    <div style={{ clear: 'both' }}></div>
-                    <div className='detail-cook-text'>{user.info}
-                        <div style={{ marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {user.lang}</span></div>
-                    </div>
-                    <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={user.image} /></div>
-                </ScrollElement>
+                {this.cook &&
+                    <ScrollElement name="cook">
+                        <Header className='detail-sub-header' as='h2'>Meet {this.cook.name}</Header>
+                        <div className='detail-cook-sub-header'>
+                            {this.cook.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {this.cook.join_date}</span>
+                        </div>
+                        <div style={{ clear: 'both' }}></div>
+                        <div className='detail-cook-text'>{this.cook.info}
+                            <div style={{ marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {this.cook.lang}</span></div>
+                        </div>
+                        <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={this.cook.image} /></div>
+                    </ScrollElement>
+                }
                 <Divider section />
             </div>
         );

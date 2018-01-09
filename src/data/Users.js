@@ -1,4 +1,6 @@
-const Users = [
+import { FeatureToggles } from '../FeatureToggles'
+
+let Users = [
     {
         id: 1,
         image: '/assets/images/users/johannk.jpg',
@@ -45,5 +47,9 @@ const Users = [
         lang: 'English, Cantonese'
     }
 ];
+
+if (FeatureToggles.DynamoUsers) {
+    Users = [];
+}
 
 export default Users;

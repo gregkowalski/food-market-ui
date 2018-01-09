@@ -1,17 +1,42 @@
 import React from 'react'
-import { Image, Dropdown } from 'semantic-ui-react'
+import { Image, Dropdown, Icon } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './AppHeader.css'
 import CognitoUtil from '../Cognito/CognitoUtil'
-import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { FeatureToggles } from '../FeatureToggles'
+import ApiClient from '../Api/ApiClient'
 
 class AppHeader extends React.Component {
 
-    state = {};
+    state = {
+        loadingUser: false
+    };
     tagline;
+
+    componentWillMount() {
+        CognitoUtil.setLastPathname(location.pathname);
+        if (CognitoUtil.isLoggedIn()) {
+            let api = new ApiClient();
+            this.setState({ loadingUser: true });
+            api.getCurrentUser()
+                .then(response => {
+                    const user = response.data;
+                    this.setState({
+                        username: user.username,
+                        loadingUser: false
+                    });
+
+                })
+                .catch(err => {
+                    this.setState({ loadingUser: false });
+                    console.error(err);
+                });
+        }
+
+        this.tagline = this.getRandomTagline();
+    }
 
     handleSignIn(e) {
         e.preventDefault();
@@ -33,20 +58,6 @@ class AppHeader extends React.Component {
         }
 
         this.setState({ username: null });
-    }
-
-    componentWillMount() {
-        //console.log(`location=${location}, location.pathname=${location.pathname}`);
-        CognitoUtil.setLastPathname(location.pathname);
-
-        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        let session = auth.getCachedSession();
-        if (session && session.isValid()) {
-            const jwt = jwtDecode(session.getIdToken().getJwtToken());
-            this.setState({ username: jwt.preferred_username });
-        }
-
-        this.tagline = this.getRandomTagline();
     }
 
     handleLogOut(event, data) {
@@ -83,17 +94,15 @@ class AppHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = FeatureToggles.CognitoLogin;
-
         let sessionElement;
-        if (featureToggle) {
+        if (FeatureToggles.CognitoLogin) {
             if (this.state.username) {
                 sessionElement =
                     <div className='apphead-sign-in'>
                         <span>Hi, </span>
-                        <Dropdown text={this.state.username} >
+                        <Dropdown text={this.state.username}>
                             <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push('/profile/1')} />
+                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/${this.state.username}`)} />
                                 <Dropdown.Divider />
                                 <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                             </Dropdown.Menu>
@@ -101,13 +110,17 @@ class AppHeader extends React.Component {
                     </div>
             }
             else {
-                sessionElement =
-                    <div>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
-                        <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
-
-                    </div>
+                if (this.state.loadingUser) {
+                    sessionElement = <div className='apphead-sign-in'><Icon loading name='refresh' />Loading...</div>
+                }
+                else {
+                    sessionElement =
+                        <div>
+                            <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
+                            <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
+                            <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
+                        </div>
+                }
             }
         }
 
@@ -125,27 +138,13 @@ class AppHeader extends React.Component {
                             {this.tagline}
                         </div>
                     </div>
-                    <div className='apphead-right'>
-                        {!featureToggle &&
-                            <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
-                                <Dropdown.Menu>
-                                    <Dropdown.Header icon='tags' content='Filter by tag' />
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item icon='checkmark box' text='Cooked' />
-                                    <Dropdown.Item icon='fire' text='Uncooked' />
-                                    <Dropdown.Item icon='snowflake outline' text='Frozen' />
-                                    <Dropdown.Item icon='shopping basket' text='Ingredient' />
-                                    <Dropdown.Item icon='motorcycle' text='Delivery' />
-                                    <Dropdown.Item icon='hand rock' text='Pick-up' />
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        }
-                        {featureToggle &&
+                    {FeatureToggles.CognitoLogin &&
+                        <div className='apphead-right'>
                             <div style={{ marginTop: '8px' }}>
                                 {sessionElement}
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
         );

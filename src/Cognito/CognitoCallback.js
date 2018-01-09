@@ -2,7 +2,9 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from './CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
+import jwtDecode from 'jwt-decode'
 import Util from '../Util'
+import ApiClient from '../Api/ApiClient'
 
 export default class CognitoCallback extends React.Component {
 
@@ -11,10 +13,24 @@ export default class CognitoCallback extends React.Component {
     componentWillMount() {
         var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         auth.userhandler = {
-            onSuccess: result => {
+            onSuccess: session => {
                 console.log('Login success');
-                const lastPathname = CognitoUtil.getLastPathname();
-                this.setState({ redirectTo: lastPathname });
+                const jwtToken = session.getIdToken().getJwtToken();
+                const jwt = jwtDecode(jwtToken);
+                let user = {
+                    user_id: jwt.sub,
+                    idp_name: jwt['custom:idp:name'],
+                    email: jwt.email
+                };
+                let apiClient = new ApiClient();
+                apiClient.updateUser(jwtToken, user)
+                    .then(x => {
+                        const lastPathname = CognitoUtil.getLastPathname();
+                        this.setState({ redirectTo: lastPathname });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
             },
             onFailure: err => {
                 console.error('Login failed: ' + err);
@@ -43,7 +59,6 @@ export default class CognitoCallback extends React.Component {
             console.error('Invalid redirect path');
             return <div></div>;
         }
-        console.error('No redirect path');
-        return <div></div>;
+        return <div>Logging in...</div>;
     }
 }

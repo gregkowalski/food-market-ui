@@ -14,11 +14,11 @@ import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber
 import OrderHeader from './components/OrderHeader'
 import FoodLightbox from './components/FoodLightbox'
 import Checkout from './Stripe/Checkout'
-import { FeatureToggles } from './FeatureToggles'
 import ApiClient from './Api/ApiClient'
 import CognitoUtil from './Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Constants } from './Constants'
+import { FeatureToggles } from './FeatureToggles';
 
 const Steps = {
     pickup: 0,
@@ -39,14 +39,32 @@ export default class Order extends React.Component {
         currentStep: Steps.pickup
     };
 
+    cook;
+    food;
+
     componentWillMount() {
         if (FeatureToggles.CognitoLogin) {
             CognitoUtil.setLastPathname(location.pathname);
             CognitoUtil.redirectToLoginIfNoSession();
         }
 
-        let foodItem = this.getFoodItem();
-        document.title = foodItem.header;
+        this.food = this.getFoodItem();
+        document.title = this.food.header;
+
+        if (!FeatureToggles.DynamoUsers) {
+            this.cook = Users.find(x => x.id === this.food.userId);
+        }
+        else {
+            let apiClient = new ApiClient();
+            apiClient.getUserByJsUserId(this.food.userId)
+                .then(response => {
+                    this.cook = response.data;
+                    this.setState(this.state);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
     }
 
     handleChange = (e, { value }) => this.setState({ value })
@@ -186,7 +204,7 @@ export default class Order extends React.Component {
 
         switch (fieldName) {
             case 'quantity':
-                let food = this.getFoodItem();
+                let food = this.food;
                 hasErrors.quantity = false;
                 if (!state.quantity || state.quantity < 1 || state.quantity > food.availability) {
                     hasErrors.quantity = true;
@@ -254,7 +272,7 @@ export default class Order extends React.Component {
         let state = this.state;
         let hasErrors = {};
 
-        let food = this.getFoodItem();
+        let food = this.food;
         hasErrors.quantity = false;
         if (!state.quantity || state.quantity < 1 || state.quantity > food.availability) {
             hasErrors.quantity = true;
@@ -374,7 +392,7 @@ export default class Order extends React.Component {
         //     email: this.state.email
         // };
 
-        let food = this.getFoodItem();
+        let food = this.food;
         let address = (this.state.apt ? 'Apt ' + this.state.apt + ', ' : '') + this.state.address;
         let orderText = 'The following order was submitted at ' + new Date() + '\r\n' +
             'Item Id: ' + food.id + '\r\n' +
@@ -452,10 +470,7 @@ export default class Order extends React.Component {
     ];
 
     render() {
-        let foodItemId = this.getFoodItemId();
-        let food = FoodItems.find(x => x.id === foodItemId);
-        let user = Users.find(x => x.id === food.userId);
-
+        let food = this.food;
         const { showPricingDetails } = this.state;
 
         let deliveryElement;
@@ -538,10 +553,12 @@ export default class Order extends React.Component {
 
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
-                            <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
-                                by {user.name}
-                                <Image avatar src={user.image} style={{ marginLeft: '10px' }} />
-                            </div>
+                            {this.cook &&
+                                <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
+                                    by {this.cook.name}
+                                    <Image avatar src={this.cook.image} style={{ marginLeft: '10px' }} />
+                                </div>
+                            }
                         </div>
 
                         <Divider />
@@ -811,7 +828,7 @@ export default class Order extends React.Component {
         console.log('Order processing');
         this.setState({ orderProcessing: true });
 
-        const food = this.getFoodItem();
+        const food = this.food;
         const order = {
             foodItemId: food.id,
             quantity: this.state.quantity,

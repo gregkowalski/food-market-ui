@@ -18,6 +18,7 @@ import CognitoCallback from './Cognito/CognitoCallback'
 import CognitoSignout from './Cognito/CognitoSignout'
 import StripeCallback from './Stripe/StripeCallback'
 import Profile from './Profile'
+import ProfileLink from './ProfileLink'
 import { StripeProvider } from 'react-stripe-elements'
 
 //import mytest from './test'
@@ -42,6 +43,7 @@ render(
           <Route path='/cognitoSignout' exact component={CognitoSignout} />
           <Route path='/stripeCallback' exact component={StripeCallback} />
           <Route path='/profile/:userId' exact component={Profile} />
+          <Route path='/profilelink' exact component={ProfileLink} />
         </Switch>
       </BrowserRouter>
     </Provider>

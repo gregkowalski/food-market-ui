@@ -11,13 +11,16 @@ import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-j
 import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
 import FlagUser from './components/FlagUser'
-
+import { FeatureToggles } from './FeatureToggles'
+import ApiClient from './Api/ApiClient'
 
 export default class Profile extends React.Component {
 
     state = {
         hasChanges: false
     };
+
+    user;
 
     componentWillMount() {
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
@@ -31,6 +34,28 @@ export default class Profile extends React.Component {
                 custom_stripeAccountId: jwt['custom:stripeAccountId']
             };
             this.setState(newState);
+
+            if (!FeatureToggles.DynamoUsers) {
+                let userId = parseInt(this.props.match.params.userId, 10);
+                this.user = Users.find(x => x.id === userId);
+            }
+            else {
+                let api = new ApiClient();
+                api.getUser(jwt.sub)
+                    .then(response => {
+                        console.log(response);
+                        this.user = response.data;
+
+                        let newState = {
+                            preferred_username: this.user.username,
+                            email: this.user.email,
+                        };
+                        this.setState(newState);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+            }
         }
     }
 
@@ -144,50 +169,49 @@ export default class Profile extends React.Component {
                 </div>
         }
 
-        let userId = parseInt(this.props.match.params.userId, 10);
-        let user = Users.find(x => x.id === userId);
-
         const content = (
 
             <Grid>
                 <Grid.Column style={{ padding: '0px' }} mobile={16} tablet={16} computer={13}>
-                    <div className='profile-body'>
-                        <Image floated='left' verticalAlign='middle' size='small' shape='circular' src={user.image} />
-                        <Header className='profile-header' as='h1'>Hi, I'm {user.name}! </Header>
-                        <div className='profile-sub-header'>
-                            {user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {user.join}</span>
-                        </div>
+                    {this.user &&
+                        <div className='profile-body'>
+                            <Image floated='left' verticalAlign='middle' size='small' shape='circular' src={this.user.image} />
+                            <Header className='profile-header' as='h1'>Hi, I'm {this.user.name}! </Header>
+                            <div className='profile-sub-header'>
+                                {this.user.city}  ·<span style={{ color: '#0fb5c3' }}> Joined in {this.user.join_date}</span>
+                            </div>
 
-                        <FlagUser />
+                            <FlagUser />
 
-                        <div style={{ clear: 'both' }}></div>
-                        <div className='profile-user-info'>{user.info}</div>
-                        <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
-                            <Segment>
-                                <Form noValidate autoComplete='off'>
-                                    <Form.Field>
-                                        <label>Email</label>
-                                        <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
-                                        {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
-                                    </Form.Field>
-                                    {/* <Form.Field required error={this.state.hasErrors.phone}> */}
-                                    <Form.Field required>
-                                        <label>Username</label>
-                                        <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                                        {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
-                                    </Form.Field>
-                                    <Form.Field required>
-                                        <label>Stripe Account Id</label>
-                                        <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
-                                    </Form.Field>
-                                    <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
-                                </Form>
-                            </Segment>
-                            <Segment>
-                                {stripeComponent}
-                            </Segment>
+                            <div style={{ clear: 'both' }}></div>
+                            <div className='profile-user-info'>{this.user.info}</div>
+                            <div style={{ textAlign: 'center', color: '#5e5d5d' }}>
+                                <Segment>
+                                    <Form noValidate autoComplete='off'>
+                                        <Form.Field>
+                                            <label>Email</label>
+                                            <Input readOnly className='profile-email-input' name='email' value={this.state.email} />
+                                            {/* <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' /> */}
+                                        </Form.Field>
+                                        {/* <Form.Field required error={this.state.hasErrors.phone}> */}
+                                        <Form.Field required>
+                                            <label>Username</label>
+                                            <Input required name='preferred_username' value={this.state.preferred_username} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                            {/* <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
+                                        </Form.Field>
+                                        <Form.Field required>
+                                            <label>Stripe Account Id</label>
+                                            <Input required name='custom_stripeAccountId' value={this.state.custom_stripeAccountId} onChange={(e) => this.handleChange(e)} onBlur={(e) => this.handleBlur(e)} />
+                                        </Form.Field>
+                                        <Button disabled={!this.state.hasChanges} color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save Changes</Button>
+                                    </Form>
+                                </Segment>
+                                <Segment>
+                                    {stripeComponent}
+                                </Segment>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </Grid.Column>
             </Grid >
 
@@ -221,12 +245,13 @@ export default class Profile extends React.Component {
                                         <div className='profile-card-header'> About Me</div>
                                     </Segment>
                                     <Segment style={{ textAlign: 'center' }} attached>
-                                        <div className='profile-verify-items'>
-                                            <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
-                                            <div style={{ textAlign: 'left', marginTop: '3px' }}> {user.lang}</div>
-                                            <div style={{ clear: 'left' }}></div>
-
-                                        </div>
+                                        {this.user &&
+                                            <div className='profile-verify-items'>
+                                                <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
+                                                <div style={{ textAlign: 'left', marginTop: '3px' }}> {this.user.lang}</div>
+                                                <div style={{ clear: 'left' }}></div>
+                                            </div>
+                                        }
                                     </Segment>
                                 </div>
                             </div>
