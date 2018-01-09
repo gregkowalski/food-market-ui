@@ -142,9 +142,8 @@ export default class FoodDetail extends Component {
 
         switch (fieldName) {
             case 'quantity':
-                let food = this.getFoodItem();
                 hasErrors.quantity = false;
-                if (!state.quantity || state.quantity < 1 || state.quantity > food.availability) {
+                if (!state.quantity || state.quantity < 1 || state.quantity > Constants.MaxFoodQuantity) {
                     hasErrors.quantity = true;
                 }
                 break;
@@ -357,7 +356,7 @@ export default class FoodDetail extends Component {
                     <Header className='detail-main-header' as='h2'>
                         ${food.price} · {food.header}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
-                        {food.availability} available · by
+                        locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
                             offset={-85} duration={500}>
@@ -549,16 +548,18 @@ export default class FoodDetail extends Component {
                                     <Form.Group inline style={{ marginBottom: '20px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
-                                                <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, -1)} />
-                                                <Input
-                                                    type='number'
-                                                    onChange={(e, { value }) => this.handleQuantityChange(1, food.availability, value)}
-                                                    onBlur={(e) => this.handleQuantityInputBlur(e)}
-                                                    value={this.state.quantity} min={1} max={food.availability}
-                                                    style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                                <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, food.availability, 1)} />
-
-                                                Quantity ({food.availability} available)</div>
+                                                Quantity ({food.unit} per order)</div>
+                                            <div>
+                                                    <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
+                                                    <Input
+                                                        type='number'
+                                                        onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
+                                                        onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                                        value={this.state.quantity} min={1} max={99}
+                                                        style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                                    <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                                                </div>
+                                            
                                         </Form.Field>
                                     </Form.Group>
                                     {/* <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div> */}

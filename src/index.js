@@ -11,7 +11,6 @@ import Order from './Order'
 import OrderSuccess from './OrderSuccess'
 import OrderError from './OrderError'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import FoodEntry from './FoodEntry'
 import 'whatwg-fetch'
 import { unregister } from './registerServiceWorker';
 import CognitoCallback from './Cognito/CognitoCallback'
@@ -38,7 +37,6 @@ render(
           <Route path='/foods/:id/orderError' component={OrderError} />
           <Route path='/foods/:id/order' component={Order} />
           <Route path='/foods/:id' exact component={FoodDetail} />
-          <Route path='/foodEntry' exact component={FoodEntry} />
           <Route path='/cognitoCallback' exact component={CognitoCallback} />
           <Route path='/cognitoSignout' exact component={CognitoSignout} />
           <Route path='/stripeCallback' exact component={StripeCallback} />
