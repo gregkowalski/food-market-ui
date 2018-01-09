@@ -754,7 +754,7 @@ export default class Order extends React.Component {
                                 className='order-step-boxes'>
                                 {/* <Icon name='shopping basket' /> */}
                                 <Step.Content>
-                                    <Step.Title>Review</Step.Title>
+                                    <Step.Title>Review Order</Step.Title>
                                 </Step.Content>
                             </Step>
                             <Step active={this.state.currentStep === Steps.billing}
@@ -763,7 +763,7 @@ export default class Order extends React.Component {
                                 className='order-step-boxes'>
                                 {/* <Icon name='credit card' /> */}
                                 <Step.Content>
-                                    <Step.Title>Billing</Step.Title>
+                                    <Step.Title>Payment</Step.Title>
                                 </Step.Content>
                             </Step>
                             <Step active={this.state.currentStep === Steps.confirm}
