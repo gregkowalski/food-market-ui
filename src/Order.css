@@ -55,13 +55,14 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .order-navigation-middle-content {
     color:  #4cb9a0;
     padding-right: 5px;
     padding-left: 7px;
-    padding-top: 2px;
+    padding-top: 9px;
     margin-top: 9px;
     font-family: 'Comfortaa', cursive; 
     font-weight: 500;
@@ -79,12 +80,12 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: pink;
 } */
 
-.order-quantity-button {
+.order-button {
     background-color: rgb(233, 233, 233) !important;
     box-shadow: 0 2px 4px 0 rgba(88, 88, 88, 0.2), 0 3px 10px 0 rgba(145, 145, 145, 0.1) !important;
 }
 
-.order-quantity-button:hover {
+.order-button:hover {
     background-color: #d1d1d1 !important;
 }
 

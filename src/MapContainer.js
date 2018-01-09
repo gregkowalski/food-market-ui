@@ -81,7 +81,6 @@ export class MapContainer extends React.Component {
         icon={this.getMarkerImage(foodItem, selectedItemId)}
         zIndex={this.getZIndex(foodItem, selectedItemId)}
         image={foodItem.image}
-        imageSmall={foodItem.imageSmall}
         rating={foodItem.rating}
         ratingCount={foodItem.ratingCount}
         price={foodItem.price}
@@ -122,13 +121,13 @@ export class MapContainer extends React.Component {
               href={'/foods/' + item.id}>
               <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                 <Card.Content>
-                  <Image width='100%' shape='rounded' src={item.imageSmall} />
+                  <Image width='100%' shape='rounded' src={item.image} />
                   <Card.Header className='FoodCardHeader'>
                     <div className='marker-header'>${item.price} · {item.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Card.Header>
                   <Card.Meta>
-                    <div style={{ display: 'flex'}}>
+                    <div style={{ display: 'inline-flex'}}>
                       <Rating disabled={true} maxRating={5} rating={item.rating} size='mini'
                         className='marker-rating-stars' />
                       <div className='marker-rating-label'>{item.ratingCount} reviews</div>

@@ -11,7 +11,6 @@ const FoodItems = [
         userId: 1,
         images: ['/assets/images/Johanndumplings.jpg'],
         image: '/assets/images/Johanndumplings.jpg',
-        imageSmall: '/assets/images/Johanndumplings_small.jpg',
         header: 'Pork + Chive Dumplings (hormone and MSG-free)',
         meta: 'Hormone-free pork, chives, garlic, non-GMO and gluten-free natural soy sauce, sesame oil, black pepper, flour, water',
         description: 'A beloved classic for a reason.  Always made with all-natural hormone-free pork and no MSG!',
@@ -49,7 +48,6 @@ const FoodItems = [
         userId: 2,
         images: ['/assets/images/HollyC_peartart.jpg', '/assets/images/HollyC_peartart2.jpg'],
         image: '/assets/images/HollyC_peartart.jpg',
-        imageSmall: '/assets/images/HollyC_peartart_small.jpg',
         header: 'Pear Almond Tart',
         meta: 'Almond flour, flour, almond extract, butter, pears, eggs, cinnamon, sugar',
         description: 'A pear tart that hits the sweet spot.',
@@ -73,7 +71,6 @@ const FoodItems = [
         userId: 2,
         images: ['/assets/images/HollyC_baconcasserole.jpg', '/assets/images/HollyC_baconcasserole2.jpg'],
         image: '/assets/images/HollyC_baconcasserole.jpg',
-        imageSmall: '/assets/images/HollyC_baconcasserole.jpg',
         header: 'Spinach, Bacon, and Sausage Casserole',
         meta: 'Onions, cheese, bacon, sausage, bread, spinach, milk, eggs',
         description: 'Our family favourite casserole is a crowd-pleaser that fills the belly!',
@@ -95,7 +92,6 @@ const FoodItems = [
         userId: 3,
         images: ['/assets/images/IanC_pasta.jpg'],
         image: '/assets/images/IanC_pasta.jpg',
-        imageSmall: '/assets/images/IanC_pasta_small.jpg',
         header: 'Super Pasta Specialty',
         meta: 'Rotini durum wheat pasta, tomatoes',
         description: 'A very tasty pasta',
@@ -117,7 +113,6 @@ const FoodItems = [
         userId: 2,
         images: ['/assets/images/HollyC_bwcookies.jpg', '/assets/images/HollyC_bwcookies2.jpg'],
         image: '/assets/images/HollyC_bwcookies.jpg',
-        imageSmall: '/assets/images/HollyC_bwcookies_small.jpg',
         header: 'Chocolate Crinkle Cookies',
         meta: 'Dark chocolate cocoa powder, eggs, icing sugar, vanilla, vegetable oil, salt, sugar',
         description: 'Delicious small batch cookies made from scratch.\n\nMix & Match orders: 36 '
@@ -143,7 +138,6 @@ const FoodItems = [
         userId: 2,
         images: ['/assets/images/HollyC_redjamcookies.jpg', '/assets/images/HollyC_redjamcookies2.jpg'],
         image: '/assets/images/HollyC_redjamcookies.jpg',
-        imageSmall: '/assets/images/HollyC_redjamcookies_small.jpg',
         header: 'Almond Raspberry Thumbprint Cookies',
         meta: 'Almond extract, flour, butter, icing sugar, seedless raspberry jam',
         description: 'Delicious small batch cookies made from scratch.\n\n Mix & Match orders: 36 '
@@ -169,7 +163,6 @@ const FoodItems = [
         userId: 2,
         images: ['/assets/images/HollyC_chocolatechipcookies.jpg', '/assets/images/HollyC_chocolatechipcookies2.jpg'],
         image: '/assets/images/HollyC_chocolatechipcookies.jpg',
-        imageSmall: '/assets/images/HollyC_chocolatechipcookies_small.jpg',
         header: 'Oatmeal Chocolate Cookies',
         meta: 'Belgium milk chocolate, flour, butter, raw sugar, demerara brown sugar, '
             + 'baking powder, baking soda, salt, eggs, ground oatmeal',
@@ -196,7 +189,6 @@ const FoodItems = [
         userId: 5,
         images: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rotisserie_600x410.jpg', '/assets/images/GabeC_SmokedChicken_Rack_600x410.jpg'],
         image: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
-        imageSmall: '/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg',
         header: 'Hickory Smoked Beer Can Chicken',
         meta: 'Portobello mushrooms, garlic powder, chili flakes, salt, pepper, olive '
             + 'oil, beer and hickory wood for smoking',

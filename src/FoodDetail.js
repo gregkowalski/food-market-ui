@@ -273,7 +273,7 @@ export default class FoodDetail extends Component {
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
-                            We need a valid email to complete your food order.
+                            We need a valid email to complete your food order. 
                         </Modal.Content>
                         <Modal.Actions className='order-confirm-button-spacing'>
                             <Button

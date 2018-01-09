@@ -488,20 +488,24 @@ export default class Order extends React.Component {
             currentStepComponent =
                 <div>
                     <Form noValidate autoComplete='off'>
-                        <Header>Quantity</Header>
+                        <Header>My Order</Header>
                         <Form.Group inline>
                             <Form.Field>
-                                <Button className='order-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
-                                <Input type='number'
-                                    onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
-                                    value={this.state.quantity} min={1} max={Constants.MaxFoodQuantity}
-                                    style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                <Button className='order-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                                <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.15em' }}>
+                                    Quantity ({food.unit} per order)</div>
+                                <div>
+                                    <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
+                                    <Input
+                                        type='number'
+                                        onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
+                                        onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                        value={this.state.quantity} min={1} max={99}
+                                        style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                    <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                                </div>
                             </Form.Field>
                         </Form.Group>
-                        <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div>
-                        <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' />
-
+                        
                         <Divider />
 
                         <FoodLightbox foodItemId={food.id} />
@@ -723,7 +727,7 @@ export default class Order extends React.Component {
                 <OrderHeader fixed />
                 <div className='order-body'>
                     <div className='order-navigation-header'>
-                        <div><Button size='huge' icon onClick={() => {
+                        <div><Button className='order-button' size='huge' icon onClick={() => {
                             if (this.state.currentStep > Steps.pickup) {
                                 this.setState({ currentStep: this.state.currentStep - 1 });
                             }
@@ -732,7 +736,7 @@ export default class Order extends React.Component {
                         </Button>
                         </div>
                         <div className='order-navigation-middle-content'>{Constants.AppName}</div>
-                        <div><Button size='huge' icon onClick={() => {
+                        <div><Button className='order-button' size='huge' icon onClick={() => {
                             if (this.state.currentStep < Steps.confirm + 1) {
                                 this.setState({ currentStep: this.state.currentStep + 1 });
                             }
