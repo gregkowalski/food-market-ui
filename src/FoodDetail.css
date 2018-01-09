@@ -283,6 +283,7 @@
 .order-confirm-user-signup-button {
     font-family: 'Athiti' !important;
     background-color: #4cb99e !important;
+    width: 109px !important;
     color: white !important;
     font-size: 1.25em !important;
     font-weight: 500 !important;
@@ -305,6 +306,12 @@
 
 .order-confirm-user-login-button:hover {
     background-color: #2aad8a !important;
+}
+
+.order-confirm-button-spacing {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 @media all and (max-width: 767px) {    

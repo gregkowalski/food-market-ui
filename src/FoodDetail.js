@@ -221,9 +221,8 @@ export default class FoodDetail extends Component {
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
                             We need a valid email to complete your food order.
-                            <div>Details for your current order request will be saved.</div>
                         </Modal.Content>
-                        <Modal.Actions>
+                        <Modal.Actions className='order-confirm-button-spacing'>
                             <Button
                                 className='order-confirm-user-cancel-button'
                                 floated='left'
@@ -274,14 +273,9 @@ export default class FoodDetail extends Component {
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
-                            We need a valid email to complete your food order. Details for your current order request will be saved.
+                            We need a valid email to complete your food order.
                         </Modal.Content>
-                        <Modal.Actions style={{ textAlign: 'center' }}>
-                            {/* <Button
-                                className='order-confirm-user-cancel-button'
-                                floated='left'
-                                content="Go Back"
-                                onClick={() => this.setState({ open: false })} /> */}
+                        <Modal.Actions className='order-confirm-button-spacing'>
                             <Button
                                 className='order-confirm-user-signup-button'
                                 content="Sign Up"
