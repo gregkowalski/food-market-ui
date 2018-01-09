@@ -44,11 +44,40 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .order-body {
+    position: relative;
     width: 75%;
-    margin: 20px auto 0 auto;
+    margin: 65px auto 0 auto;
     padding-bottom: 20px;
 
 }
+
+.order-navigation-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.order-navigation-middle-content {
+    color:  #4cb9a0;
+    padding-right: 5px;
+    padding-left: 7px;
+    padding-top: 2px;
+    margin-top: 9px;
+    font-family: 'Comfortaa', cursive; 
+    font-weight: 500;
+    font-size: 1.9em;
+    text-shadow: 0 1px 2px rgba(104, 104, 104, 0.479);
+}
+
+.order-step-header {
+    /* background-color: blue; */
+    padding-bottom: 10px;
+    margin-top: 5px;
+}
+/* 
+.order-step-content {
+    background-color: pink;
+} */
 
 .order-quantity-button {
     background-color: rgb(233, 233, 233) !important;
@@ -57,6 +86,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .order-quantity-button:hover {
     background-color: #d1d1d1 !important;
+}
+
+.order-step-boxes {
+    color: #4cb99e !important;
 }
 
 @media all and (max-width: 767px) {

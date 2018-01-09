@@ -92,9 +92,9 @@ class OrderHeader extends React.Component {
                         <a href="/">
                             <Image style={{ marginTop: '4px' }} height='30px' src={Constants.AppLogo} />
                         </a>
-                        <a href="/" className='orderhead-link'>
+                        {/* <a href="/" className='orderhead-link'>
                             <div>{Constants.AppName}</div>
-                        </a>
+                        </a> */}
 
                     </div>
                     <div className='orderhead-right'>
@@ -117,7 +117,7 @@ class OrderHeader extends React.Component {
                             <div style={{ display: 'inline-flex' }}>
                                 <div className="order-content-desktop">
                                     <div className='orderhead-contact-support'>
-                                        <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
+                                        <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' flipped='horizontally' size='large' />
                                             Support 
                                     </a>
                                     </div>

@@ -68,7 +68,7 @@
 }
 
 .detail-head-right {
-    background: pink;
+    /* background: pink; */
     position: -webkit-sticky;
     position: sticky;
     margin-top: 18px;
