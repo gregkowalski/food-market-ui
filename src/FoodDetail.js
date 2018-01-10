@@ -17,6 +17,7 @@ import FlagListingMobile from './components/FlagListingMobile'
 import CognitoUtil from './Cognito/CognitoUtil'
 import { FeatureToggles } from './FeatureToggles';
 import ApiClient from './Api/ApiClient'
+import PriceCalc from './PriceCalc'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -24,7 +25,6 @@ var ScrollElement = Scroll.Element;
 export default class FoodDetail extends Component {
     state = {
         quantity: 1,
-        serviceFeeRate: Constants.ServiceFeeRate,
         hasErrors: {},
         openConfirmUserDesktop: false,
         openConfirmUserMobile: false,
@@ -69,21 +69,6 @@ export default class FoodDetail extends Component {
                     console.error(err);
                 });
         }
-    }
-
-    getTotal(unitPrice) {
-        let total = (this.state.quantity * unitPrice * (1 + this.state.serviceFeeRate));
-        return total.toFixed(2);
-    }
-
-    getBaseTotal(unitPrice) {
-        let baseTotal = this.state.quantity * unitPrice;
-        return baseTotal.toFixed(2);
-    }
-
-    getServiceFee(unitPrice) {
-        let fee = this.state.quantity * unitPrice * this.state.serviceFeeRate;
-        return fee.toFixed(2);
     }
 
     quantityChanged(newQuantity) {
@@ -196,7 +181,7 @@ export default class FoodDetail extends Component {
                             Request an Order
                         </Button.Content>
                         <Button.Content hidden>
-                            ${this.getTotal(food.price)} CAD
+                            ${PriceCalc.getTotal(food.price, this.state.quantity)} CAD
                         </Button.Content>
                     </Button>
                 </RouterLink>
@@ -211,7 +196,7 @@ export default class FoodDetail extends Component {
                             Request an Order
                         </Button.Content>
                         <Button.Content hidden>
-                            ${this.getTotal(food.price)} CAD
+                            ${PriceCalc.getTotal(food.price, this.state.quantity)} CAD
                         </Button.Content>
                     </Button>
                     <Modal style={{ textAlign: 'center' }} dimmer='inverted' size='tiny' open={this.state.openConfirmUserDesktop} onClose={() => this.setState({ openConfirmUserDesktop: false })}>
@@ -348,7 +333,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header className='detail-main-header' as='h2'>
-                    ${this.getTotal(food.price)} · {food.header}</Header>
+                    ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
@@ -529,7 +514,7 @@ export default class FoodDetail extends Component {
                             <div className='detail-head-right'>
                                 <Segment >
                                     <div className='detail-card-header'>
-                                        <div style={{ float: 'left' }}>${this.getTotal(food.price)} CAD</div>
+                                        <div style={{ float: 'left' }}>${PriceCalc.getTotal(food.price, this.state.quantity)} CAD</div>
                                         <div style={{ clear: 'left' }}></div>
                                         <div style={{ display: 'flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
@@ -556,16 +541,13 @@ export default class FoodDetail extends Component {
                                             
                                         </Form.Field>
                                     </Form.Group>
-                                    {/* <div style={{ marginTop: '0.5em' }}>{this.state.quantity} x ${food.price} (per unit) = ${this.getBaseTotal(food.price)} (base price)</div> */}
-                                    {/* <Message error hidden={!this.state.hasErrors.quantity} header='Invalid Quantity' content='Please select at least 1 unit per order.' icon='exclamation circle' /> */}
-                                    {/* </Segment> */}
 
                                     <div className='detail-card-summary-row'>
                                         <div className='align-left'>
-                                            {this.state.quantity} x ${food.price} {food.header}
+                                            {this.state.quantity} x ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} {food.header}
                                         </div>
                                         <div className='align-right'>
-                                            ${this.getBaseTotal(food.price)}
+                                            ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
                                         </div>
                                     </div>
                                     <Divider />
@@ -579,7 +561,7 @@ export default class FoodDetail extends Component {
                                                 hideOnScroll />
                                         </div>
                                         <div className='align-right'>
-                                            ${this.getServiceFee(food.price)}
+                                            ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                         </div>
                                     </div>
                                     <Divider />
@@ -589,7 +571,7 @@ export default class FoodDetail extends Component {
                                             <strong>Total </strong>
                                         </div>
                                         <div className='align-right'>
-                                            <span style={{ fontWeight: '500' }}> ${this.getTotal(food.price)}</span>
+                                            <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
                                         </div>
                                     </div>
 
@@ -606,7 +588,7 @@ export default class FoodDetail extends Component {
                 </div>
 
                 <div className='detail-footer'>
-                    <div className='detail-footer-header' style={{ float: 'left' }}>${food.price} CAD
+                    <div className='detail-footer-header' style={{ float: 'left' }}>${PriceCalc.getBaseTotal(food.price, this.state.quantity)} CAD
                     <div style={{ display: 'flex' }}>
                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                                 style={{ marginTop: '10px' }} />

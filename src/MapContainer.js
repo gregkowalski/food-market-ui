@@ -5,6 +5,7 @@ import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 // import {GoogleApiWrapper} from 'google-maps-react';
 import FoodItems from './data/FoodItems'
 import './MapContainer.css'
+import PriceCalc from './PriceCalc'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -84,7 +85,6 @@ export class MapContainer extends React.Component {
         rating={foodItem.rating}
         ratingCount={foodItem.ratingCount}
         price={foodItem.price}
-        availability={foodItem.availability}
         meta={foodItem.meta}
         description={foodItem.description}
         position={foodItem.position} />
@@ -123,7 +123,7 @@ export class MapContainer extends React.Component {
                 <Card.Content>
                   <Image width='100%' shape='rounded' src={item.image} />
                   <Card.Header className='FoodCardHeader'>
-                    <div className='marker-header'>${item.price} · {item.header}</div>
+                    <div className='marker-header'>${PriceCalc.getPrice(item.price)} · {item.header}</div>
                     <div style={{ clear: 'both' }}></div>
                   </Card.Header>
                   <Card.Meta>

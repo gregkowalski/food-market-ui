@@ -19,6 +19,7 @@ import CognitoUtil from './Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import { Constants } from './Constants'
 import { FeatureToggles } from './FeatureToggles'
+import PriceCalc from './PriceCalc'
 
 
 const Steps = {
@@ -32,7 +33,6 @@ export default class Order extends React.Component {
     state = {
         quantity: 1,
         showPricingDetails: false,
-        serviceFeeRate: Constants.ServiceFeeRate,
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
@@ -77,21 +77,6 @@ export default class Order extends React.Component {
     getFoodItem() {
         let foodItemId = this.getFoodItemId();
         return FoodItems.find(x => x.id === foodItemId);
-    }
-
-    getTotal(unitPrice) {
-        let total = (this.state.quantity * unitPrice * (1 + this.state.serviceFeeRate));
-        return total.toFixed(2);
-    }
-
-    getBaseTotal(unitPrice) {
-        let baseTotal = this.state.quantity * unitPrice;
-        return baseTotal.toFixed(2);
-    }
-
-    getServiceFee(unitPrice) {
-        let fee = this.state.quantity * unitPrice * this.state.serviceFeeRate;
-        return fee.toFixed(2);
     }
 
     handleAddressChange(place) {
@@ -376,21 +361,6 @@ export default class Order extends React.Component {
             credentials: creds
         });
 
-        // var payload = {
-        //     foodId: food.id,
-        //     foodName: food.header,
-        //     totalPrice: this.getTotal(food.price),
-        //     quantity: this.state.quantity,
-        //     date: this.state.date,
-        //     time: this.state.time,
-        //     apt: this.state.apt,
-        //     address: this.state.address,
-        //     firstName: this.state.firstName,
-        //     lastName: this.state.lastName,
-        //     phone: this.state.phone,
-        //     email: this.state.email
-        // };
-
         let food = this.food;
         let address = (this.state.apt ? 'Apt ' + this.state.apt + ', ' : '') + this.state.address;
         let orderText = 'The following order was submitted at ' + new Date() + '\r\n' +
@@ -410,9 +380,6 @@ export default class Order extends React.Component {
 
             'Now go fill this order!'
 
-
-
-        // Create the promise and SES service object
         let subject = 'New Order: ' + food.header;
 
         let systemEmail = this.createEmail('gregkowalski@hotmail.com', subject, orderText);
@@ -425,7 +392,6 @@ export default class Order extends React.Component {
     }
 
     createEmail(toAddress, subject, body) {
-        // Create sendEmail params 
         var params = {
             Destination: { /* required */
                 // CcAddresses: [
@@ -676,7 +642,7 @@ export default class Order extends React.Component {
                                         {this.state.quantity} x ${food.price} {food.header}
                                     </div>
                                     <div className='align-right'>
-                                        ${this.getBaseTotal(food.price)}
+                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <div className='order-summary-row'>
@@ -684,7 +650,7 @@ export default class Order extends React.Component {
                                         Service fee
                                             </div>
                                     <div className='align-right'>
-                                        ${this.getServiceFee(food.price)}
+                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
@@ -698,7 +664,7 @@ export default class Order extends React.Component {
                                         <strong>Total</strong>
                                     </div>
                                     <div className='align-right'>
-                                        <strong> ${this.getTotal(food.price)}</strong>
+                                        <strong> ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong>
                                     </div>
                                 </div>
                             </Segment>
@@ -717,7 +683,7 @@ export default class Order extends React.Component {
                             loading={this.state.orderProcessing}
                             disabled={!this.state.acceptedTerms}
                             onClick={() => this.handleOrderButtonClick()}>
-                            Confirm my order for ${this.getTotal(food.price)}
+                            Confirm my order for ${PriceCalc.getTotal(food.price, this.state.quantity)}
                         </Button>
                     </div>
                 </div>;
