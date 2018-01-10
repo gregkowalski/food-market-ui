@@ -16,9 +16,10 @@ import FoodLightbox from './components/FoodLightbox'
 import Checkout from './Stripe/Checkout'
 import ApiClient from './Api/ApiClient'
 import CognitoUtil from './Cognito/CognitoUtil'
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
+import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import { Constants } from './Constants'
-import { FeatureToggles } from './FeatureToggles';
+import { FeatureToggles } from './FeatureToggles'
+
 
 const Steps = {
     pickup: 0,
@@ -595,6 +596,9 @@ export default class Order extends React.Component {
                             </Form.Group> */}
 
                         <Form.Group widths='equal'>
+                            <Form.Field>
+                                
+                                </Form.Field>
 
                             <Form.Field required error={this.state.hasErrors.date}>
                                 <label>Date</label>

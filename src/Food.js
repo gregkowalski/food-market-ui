@@ -5,8 +5,15 @@ import FoodItems from './data/FoodItems'
 import Util from './Util'
 import Carousel from 'nuka-carousel'
 import CarouselDecorators from './components/ImageDecorator'
+import { Constants } from './Constants'
+import { FeatureToggles } from './FeatureToggles'
 
 class Food extends Component {
+
+    state = {
+        quantity: 1,
+        serviceFeeRate: Constants.ServiceFeeRate,
+    };
 
     isDebug = false;
 
@@ -64,6 +71,30 @@ class Food extends Component {
         return labelElement;
     }
 
+    getTotal(unitPrice) {
+        let total = (this.state.quantity * unitPrice * (1 + this.state.serviceFeeRate));
+        return total.toFixed(2);
+    }
+
+    getBaseTotal(unitPrice) {
+        let baseTotal = this.state.quantity * unitPrice;
+        return baseTotal.toFixed(2);
+    }
+
+    getServiceFee(unitPrice) {
+        let fee = this.state.quantity * unitPrice * this.state.serviceFeeRate;
+        return fee.toFixed(2);
+    }
+
+    getPrice(unitPrice) {
+        if (FeatureToggles.AllinPrice) {
+            return this.getTotal(unitPrice); 
+        }
+        else {
+            return unitPrice;
+        }
+    }
+
     render() {
         const cards = FoodItems.map((food) => {
             let foodImageComponent = this.getFoodImageComponent(food);
@@ -85,7 +116,7 @@ class Food extends Component {
 
                                     <Item.Header>
                                         <div className='FoodCardHeader'>
-                                            ${food.price} · {food.header}</div>
+                                        ${this.getPrice(food.price)} · {food.header}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Item.Header>
 
@@ -118,3 +149,5 @@ class Food extends Component {
 }
 
 export default Food;
+
+

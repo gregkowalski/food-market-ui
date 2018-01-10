@@ -99,7 +99,7 @@ const FoodItems = [
         position: { lat: 49.283775, lng: -123.138489 },
         rating: 5,
         ratingCount: 1,
-        price: 8.50,
+        price: 9,
         feat: 'All-natural',
         unit: '5 cups',
         feed: '2-3',

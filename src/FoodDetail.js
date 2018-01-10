@@ -348,7 +348,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header className='detail-main-header' as='h2'>
-                        ${food.price} · {food.header}</Header>
+                    ${this.getTotal(food.price)} · {food.header}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
@@ -529,7 +529,7 @@ export default class FoodDetail extends Component {
                             <div className='detail-head-right'>
                                 <Segment >
                                     <div className='detail-card-header'>
-                                        <div style={{ float: 'left' }}>${food.price} CAD</div>
+                                        <div style={{ float: 'left' }}>${this.getTotal(food.price)} CAD</div>
                                         <div style={{ clear: 'left' }}></div>
                                         <div style={{ display: 'flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
