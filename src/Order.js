@@ -689,7 +689,50 @@ export default class Order extends React.Component {
                 </div>;
         }
         else {
-            currentStepComponent = <div>We're done!</div>;
+            currentStepComponent = 
+            <div>
+                     <Accordion>
+                        <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
+                            <Icon name='dropdown' />
+                            See pricing details
+                            </Accordion.Title>
+                        <Accordion.Content active={showPricingDetails}>
+                            <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
+                                <Header as='h5'>Payment Breakdown</Header>
+                                <div className='order-summary-row'>
+                                    <div className='align-left'>
+                                        {this.state.quantity} x ${food.price} {food.header}
+                                    </div>
+                                    <div className='align-right'>
+                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                    </div>
+                                </div>
+                                <div className='order-summary-row'>
+                                    <div className='align-left'>
+                                        Service fee
+                                            </div>
+                                    <div className='align-right'>
+                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                    </div>
+                                </div>
+                                <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
+                                    this helps run our platform and keep the lights on
+                                        </div>
+
+                                <Divider />
+
+                                <div className='order-summary-row'>
+                                    <div className='align-left'>
+                                        <strong>Total</strong>
+                                    </div>
+                                    <div className='align-right'>
+                                        <strong> ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong>
+                                    </div>
+                                </div>
+                            </Segment>
+                        </Accordion.Content>
+                    </Accordion>
+            </div>;
         }
 
         return (

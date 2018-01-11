@@ -7,6 +7,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { FeatureToggles } from '../FeatureToggles'
 import ApiClient from '../Api/ApiClient'
+import LoadingIcon from './LoadingIcon'
 
 class AppHeader extends React.Component {
 
@@ -112,7 +113,10 @@ class AppHeader extends React.Component {
             }
             else {
                 if (this.state.loadingUser) {
-                    sessionElement = <div className='apphead-sign-in'><Icon loading name='refresh' />Loading...</div>
+                    sessionElement = 
+                        <div className='apphead-sign-in'>
+                        <LoadingIcon />
+                        </div>
                 }
                 else {
                     sessionElement =
