@@ -2,6 +2,7 @@ import { FoodPrepType } from './data/FoodItems'
 import queryString from 'query-string'
 
 export default class {
+
     static getFoodPrepTypeIcon(food) {
         let foodPrepIcon = 'shopping basket';
         if (food.prep === FoodPrepType.frozen) {
@@ -34,5 +35,10 @@ export default class {
             const event = doc.createEventObject();
             target.fireEvent(`on${type}`, event);
         }
+    }
+
+    static busySleep(seconds) {
+        var e = new Date().getTime() + (seconds * 1000);
+        while (new Date().getTime() <= e) { }
     }
 }

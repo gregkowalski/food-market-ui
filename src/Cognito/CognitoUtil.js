@@ -1,6 +1,7 @@
 import { Constants } from '../Constants'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import crypto from 'crypto'
+import jwtDecode from 'jwt-decode'
 
 export default class CognitoUtil {
 
@@ -38,6 +39,14 @@ export default class CognitoUtil {
         let session = auth.getCachedSession();
         if (session && session.isValid()) {
             return session.getIdToken().getJwtToken();
+        }
+        return null;
+    }
+
+    static getLoggedInUserJwt() {
+        const jwtToken = this.getLoggedInUserJwtToken();
+        if (jwtToken) {
+            return jwtDecode(jwtToken);
         }
         return null;
     }

@@ -26,6 +26,7 @@ class AppHeader extends React.Component {
                     const user = response.data;
                     this.setState({
                         username: user.username,
+                        userId: user.user_id,
                         loadingUser: false
                     });
 
@@ -104,7 +105,7 @@ class AppHeader extends React.Component {
                         <span>Hi, </span>
                         <Dropdown text={this.state.username}>
                             <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/${this.state.username}`)} />
+                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/view/${this.state.userId}`)} />
                                 <Dropdown.Divider />
                                 <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                             </Dropdown.Menu>

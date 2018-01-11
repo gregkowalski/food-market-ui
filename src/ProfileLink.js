@@ -52,6 +52,15 @@ export const JsUsers = [
         info: 'I love cooking in my spare time and I get a lot of joy from  making delicous meals for my family and friends. I am eager to share my creations with the world!',
         join_date: 'December 2017',
         lang: 'English, Cantonese'
+    },
+    {
+        js_user_id: 6,
+        image: '/assets/images/users/greg.jpg',
+        name: 'Greg',
+        city: 'West End',
+        info: 'I rarely cook and when I do it kinda tastes ok but it\'s super healthy as demonstrated by my rockin\' body',
+        join_date: 'August 2017',
+        lang: 'English, Polish, Intermediate Spanish, Beginner Turkish, Beginner Mandarin'
     }
 ];
 
