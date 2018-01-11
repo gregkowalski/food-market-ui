@@ -5,17 +5,17 @@ export default class PriceCalc {
     
     static getTotal(unitPrice, quantity) {
         let total = (quantity * unitPrice * (1 + Constants.ServiceFeeRate));
-        return total.toFixed(2);
+        return total.toFixed(0);
     }
 
     static getBaseTotal(unitPrice, quantity) {
         let baseTotal = quantity * unitPrice;
-        return baseTotal.toFixed(2);
+        return baseTotal.toFixed(0);
     }
 
     static getServiceFee(unitPrice, quantity) {
         let fee = quantity * unitPrice * Constants.ServiceFeeRate;
-        return fee.toFixed(2);
+        return fee.toFixed(0);
     }
 
     static getPrice(unitPrice, quantity) {
