@@ -13,13 +13,7 @@
     color: inherit;
 }
 
-.FoodCard:hover .FoodImageHideDecorator {
-    display: inherit;
-}
 
-.FoodCard .FoodImageHideDecorator {
-    display: none;
-}
 
 .FoodCardHeader{
     display: -webkit-box;

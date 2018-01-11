@@ -5,3 +5,11 @@
 .slider-decorator-1 {
     height: 100%;
 }
+
+.FoodCard:hover .FoodImageHideDecorator {
+    display: inherit;
+}
+
+.FoodCard .FoodImageHideDecorator {
+    display: none;
+}

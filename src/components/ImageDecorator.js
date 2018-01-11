@@ -71,7 +71,7 @@ const CarouselDecorators = [
                             indexes.map(function (index) {
                                 return (
                                     <li style={self.getListItemStyles()} key={index}>
-                                        <button
+                                        <button className='FoodImageHideDecorator'
                                             style={self.getButtonStyles(self.props.currentSlide === index)}
                                             onClick={(e) => this.handleClick(e, index)}>
                                             &bull;
@@ -112,7 +112,6 @@ const CarouselDecorators = [
                 return {
                     border: 0,
                     background: 'transparent',
-                    // background: 'rgba(0,0,0,0.4)',
                     color: 'white',
                     cursor: 'pointer',
                     padding: 5,
