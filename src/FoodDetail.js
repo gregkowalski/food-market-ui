@@ -588,7 +588,7 @@ export default class FoodDetail extends Component {
                 </div>
 
                 <div className='detail-footer'>
-                    <div className='detail-footer-header' style={{ float: 'left' }}>${PriceCalc.getBaseTotal(food.price, this.state.quantity)} CAD
+                    <div className='detail-footer-header' style={{ float: 'left' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)} CAD
                     <div style={{ display: 'flex' }}>
                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                                 style={{ marginTop: '10px' }} />
