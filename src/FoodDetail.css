@@ -231,10 +231,23 @@
 }
 
 .detail-card-header {
+    display: inline-block !important;
     margin-top: 5px !important;
     color: #494949 !important;
-    font-size: 1.55em !important;
-    font-weight: 700 !important;
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+    padding: 10px 10px 0px 10px;
+}
+
+.detail-card-header-overflow {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left; 
+    width: 200px; 
+    margin: 10px auto 3px auto;
 }
 
 .detail-quantity-button {

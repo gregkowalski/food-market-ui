@@ -258,7 +258,7 @@ export default class FoodDetail extends Component {
                             <div style={{ clear: 'both' }} />
                         </Modal.Header>
                         <Modal.Content className='order-confirm-user-msg'>
-                            We need a valid email to complete your food order. 
+                            We need a valid email to complete your food order.
                         </Modal.Content>
                         <Modal.Actions className='order-confirm-button-spacing'>
                             <Button
@@ -333,7 +333,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header className='detail-main-header' as='h2'>
-                    ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
+                        ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
@@ -512,68 +512,70 @@ export default class FoodDetail extends Component {
                         </div>
                         <div className="flex-item-right">
                             <div className='detail-head-right'>
-                                <Segment >
+                                <Segment>
                                     <div className='detail-card-header'>
-                                        <div style={{ float: 'left' }}>${PriceCalc.getTotal(food.price, this.state.quantity)} CAD</div>
-                                        <div style={{ clear: 'left' }}></div>
-                                        <div style={{ display: 'flex' }}>
+                                        <Image floated='right' marginTop='5px, 0px, 0px, 15px' src={food.image} height='auto' width='26%' />
+                                        <div className='detail-card-header-overflow'>{food.header} </div>
+                                        <div style={{ display: 'inline-flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                                style={{ marginTop: '10px' }} />
-                                            <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
+                                                style={{ marginTop: '4px' }} />
+                                            <div style={{ marginTop: '0px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                         </div>
-                                        <Divider />
+                                        <div style={{ clear: 'both' }}></div>
                                     </div>
-                                    {/* <Segment style={{ maxWidth: '400px', minWidth: '250px' }}> */}
-                                    <Form.Group inline style={{ marginBottom: '20px' }}>
+                                    <Divider style={{marginTop: '0px'}} />
+                                    <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
                                                 Quantity ({food.unit} per order)</div>
                                             <div>
-                                                    <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
-                                                    <Input
-                                                        type='number'
-                                                        onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
-                                                        onBlur={(e) => this.handleQuantityInputBlur(e)}
-                                                        value={this.state.quantity} min={1} max={99}
-                                                        style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                                    <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
-                                                </div>
-                                            
+                                                <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
+                                                <Input
+                                                    type='number'
+                                                    onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
+                                                    onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                                    value={this.state.quantity} min={1} max={99}
+                                                    style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                                <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                                            </div>
+
                                         </Form.Field>
                                     </Form.Group>
+                                    <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
+                                        <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
+                                            <div className='align-left'>
+                                                ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
+                                        </div>
+                                            <div className='align-right'>
+                                                ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                            </div>
+                                        </div>
+                                        <Divider />
 
-                                    <div className='detail-card-summary-row'>
-                                        <div className='align-left'>
-                                            {this.state.quantity} x ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} {food.header}
+                                        <div className='detail-card-summary-row'>
+                                            <div className='align-left'>
+                                                Service fee <Popup
+                                                    trigger={<Icon size='small' name='question circle outline' />}
+                                                    content='This helps run our platform and keep the lights on.'
+                                                    on={['click']}
+                                                    hideOnScroll />
+                                            </div>
+                                            <div className='align-right'>
+                                                ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                            </div>
                                         </div>
-                                        <div className='align-right'>
-                                            ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
-                                        </div>
-                                    </div>
-                                    <Divider />
 
-                                    <div className='detail-card-summary-row'>
-                                        <div className='align-left'>
-                                            Service fee <Popup
-                                                trigger={<Icon size='small' name='question circle outline' />}
-                                                content='This helps run our platform and keep the lights on.'
-                                                on={['click']}
-                                                hideOnScroll />
-                                        </div>
-                                        <div className='align-right'>
-                                            ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
-                                        </div>
-                                    </div>
-                                    <Divider />
+                                        <Divider />
 
-                                    <div className='detail-card-summary-row'>
-                                        <div className='align-left'>
-                                            <strong>Total </strong>
+                                        <div className='detail-card-summary-row'>
+                                            <div className='align-left'>
+                                                <strong>Total </strong>
+                                            </div>
+                                            <div className='align-right'>
+                                                <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
+                                            </div>
                                         </div>
-                                        <div className='align-right'>
-                                            <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
-                                        </div>
-                                    </div>
+                                    </Form.Group>
 
                                     {this.getRequestOrderButtonDesktop(food)}
 
