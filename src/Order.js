@@ -1,8 +1,7 @@
 import React from 'react'
 import './Order.css'
-import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-react'
-import { Accordion, Header, Divider, Form, Segment, Input, Step } from 'semantic-ui-react'
-import { Radio } from 'semantic-ui-react'
+import { Button, Image, Icon, Message, Dropdown, Checkbox, Rating, Popup } from 'semantic-ui-react'
+import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
 import AWS from 'aws-sdk'
 import { SingleDatePicker } from 'react-dates';
@@ -10,7 +9,6 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import OrderHeader from './components/OrderHeader'
-import FoodLightbox from './components/FoodLightbox'
 import Checkout from './Stripe/Checkout'
 import ApiClient from './Api/ApiClient'
 import CognitoUtil from './Cognito/CognitoUtil'
@@ -429,113 +427,170 @@ export default class Order extends React.Component {
         let food = this.food;
         const { showPricingDetails } = this.state;
 
-        let deliveryElement;
-        if (food.delivery) {
-            deliveryElement = ''
-            // <strong> Delivery</strong>
-        }
+        // let deliveryElement;
+        // if (food.delivery) {
+        //     deliveryElement = ''
+        //     // <strong> Delivery</strong>
+        // }
 
-        let pickupElement;
-        if (food.pickup) {
-            pickupElement =
-                <strong>Pick-up</strong>
-        }
+        // let pickupElement;
+        // if (food.pickup) {
+        //     pickupElement =
+        //         <strong>Pick-up</strong>
+        // }
 
         let currentStepComponent;
         if (this.state.currentStep === Steps.pickup) {
             currentStepComponent =
-                <div>
-                    <Form noValidate autoComplete='off'>
-                        <Header>My Order</Header>
-                        <Form.Group inline>
-                            <Form.Field>
-                                <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.15em' }}>
-                                    Quantity ({food.unit} per order)</div>
-                                <div>
-                                    <Button className='detail-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
-                                    <Input
-                                        type='number'
-                                        onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
-                                        onBlur={(e) => this.handleQuantityInputBlur(e)}
-                                        value={this.state.quantity} min={1} max={99}
-                                        style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                    <Button className='detail-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                <div className='order-detail-summary-container'>
+                    {/* <Form className='order-detail-summary-container' noValidate autoComplete='off'> */}
+                    <div className='order-detail-summary-left'>
+                        <Segment>
+                            <Header>My Order</Header>
+                            <Divider />
+                            <div className='order-card-header'>
+                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
+                                <div className='order-card-header-overflow'>{food.header} </div>
+                                <div style={{ display: 'inline-flex', width: '200px' }}>
+                                    <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                                        style={{ marginTop: '4px' }} />
+                                    <div style={{ marginTop: '0px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                                 </div>
-                            </Form.Field>
-                        </Form.Group>
-                        
-                        <Divider />
-
-                        <FoodLightbox foodItemId={food.id} />
-
-                        <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2em', fontWeight: 'bold', lineHeight: '1.1' }}>{food.header}</div>
-                            {this.cook &&
-                                <div style={{ fontSize: '1.2em', marginTop: '0.5em' }}>
-                                    by {this.cook.name}
-                                    <Image avatar src={this.cook.image} style={{ marginLeft: '10px' }} />
+                                <div style={{ clear: 'both' }}></div>
+                            </div>
+                            <Divider />
+                            <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
+                                <Form.Field>
+                                    <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
+                                        Quantity ({food.unit} per order)</div>
+                                    <div>
+                                        <Button className='order-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
+                                        <Input
+                                            type='number'
+                                            onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
+                                            onBlur={(e) => this.handleQuantityInputBlur(e)}
+                                            value={this.state.quantity} min={1} max={99}
+                                            style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
+                                        <Button className='order-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
+                                    </div>
+                                </Form.Field>
+                            </Form.Group>
+                            <div style={{ padding: '0px 10px 10px 10px' }}>
+                                <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
+                                    <div className='order-summary-align-left'>
+                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
+                                        </div>
+                                    <div className='order-summary-align-right'>
+                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                    </div>
                                 </div>
-                            }
-                        </div>
+                                <Divider />
+                                <div className='detail-card-summary-row'>
+                                    <div className='order-summary-align-left'>
+                                        Service fee <Popup
+                                            trigger={<Icon size='small' name='question circle outline' />}
+                                            content='This helps run our platform and keep the lights on.'
+                                            on={['click']}
+                                            hideOnScroll />
+                                    </div>
+                                    <Divider />
+                                    <div className='order-summary-align-right'>
+                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                    </div>
+                                </div>
+                                <Divider />
+                                <div className='detail-card-summary-row'>
+                                    <div className='order-summary-align-left'>
+                                        <strong>Total </strong>
+                                    </div>
+                                    <div className='order-summary-align-right'>
+                                        <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </Segment>
+                    </div>
+                    <div className='order-detail-summary-right'>
+                        <Segment>
+                            <Header as='h1'>My Information Profile</Header>
+                            <Divider />
+                            <Grid stackable columns='equal'>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <div>First name</div>
+                                        <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.firstName}
+                                            hidden={!this.state.hasErrors.firstName}
+                                            visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <div>Last name</div>
+                                        <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.lastName}
+                                            hidden={!this.state.hasErrors.lastName}
+                                            visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        </Segment>
 
-                        <Divider />
+                        {/* <Segment>
+                                <Header>My Information</Header>
+                                <Divider /> */}
+                        {/* <Form.Group widths='4'>
+                                    <Form.Field>
+                                        <Segment compact>
+                                            <span style={{ marginRight: '11px' }}>
+                                                {pickupElement}
+                                            </span>
+                                            <Radio
+                                                label=''
+                                                name='radioGroup'
+                                                value='pick-up'
+                                                checked={this.state.value === 'pick-up'}
+                                                onChange={this.handleChange} />
+                                        </Segment>
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <Segment compact>
+                                            <span style={{ marginLeft: '4px' }}> {deliveryElement}
+                                            </span>
+                                            <Radio
+                                                label='Delivery (Disabled)'
+                                                name='radioGroup'
+                                                value='delivery'
+                                                checked={this.state.value === 'delivery'}
+                                                onChange={this.handleChange}
+                                                disabled />
+                                        </Segment>
+                                    </Form.Field>
+                                </Form.Group> */}
 
-                        <Header>My Information</Header>
+                        {/* <Form.Group widths='equal'>
+                                    <Form.Field required error={this.state.hasErrors.firstName}>
+                                        <label>First name</label>
+                                        <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
+                                    </Form.Field>
+                                    <Form.Field required error={this.state.hasErrors.lastName}>
+                                        <label>Last name</label>
+                                        <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
+                                    </Form.Field>
+                                </Form.Group>
+                                <Form.Group widths='equal'>
+                                    <Form.Field required error={this.state.hasErrors.phone}>
+                                        <label>Phone</label>
+                                        <Input required name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                    </Form.Field>
 
-                        <Form.Group widths='4'>
-                            <Form.Field>
-                                <Segment compact>
-                                    <span style={{ marginRight: '11px' }}>
-                                        {pickupElement}
-                                    </span>
-                                    <Radio
-                                        label=''
-                                        name='radioGroup'
-                                        value='pick-up'
-                                        checked={this.state.value === 'pick-up'}
-                                        onChange={this.handleChange} />
-                                </Segment>
-                            </Form.Field>
-                            <Form.Field>
-                                <Segment compact>
-                                    <span style={{ marginLeft: '4px' }}> {deliveryElement}
-                                    </span>
-                                    <Radio
-                                        label='Delivery (Disabled)'
-                                        name='radioGroup'
-                                        value='delivery'
-                                        checked={this.state.value === 'delivery'}
-                                        onChange={this.handleChange}
-                                        disabled />
-                                </Segment>
-                            </Form.Field>
-                        </Form.Group>
-
-                        <Form.Group widths='equal'>
-                            <Form.Field required error={this.state.hasErrors.firstName}>
-                                <label>First name</label>
-                                <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Field required error={this.state.hasErrors.lastName}>
-                                <label>Last name</label>
-                                <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
-                            </Form.Field>
-                        </Form.Group>
-                        <Form.Group widths='equal'>
-                            <Form.Field required error={this.state.hasErrors.phone}>
-                                <label>Phone</label>
-                                <Input required name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                            </Form.Field>
-
-                            <Form.Field required error={this.state.hasErrors.email}>
-                                <label>Email</label>
-                                <Input required name='email' type='email' placeholder='Email' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' />
-                            </Form.Field>
-                        </Form.Group>
+                                    <Form.Field required error={this.state.hasErrors.email}>
+                                        <label>Email</label>
+                                        <Input required name='email' type='email' placeholder='Email' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error visible={this.state.hasErrors.email} header='Invalid email' content='Please enter your email address' icon='exclamation circle' />
+                                    </Form.Field>
+                                </Form.Group> */}
                         {/* <Form.Group widths='equal'>
                                 <Form.Field required error={this.state.hasErrors.address}>
                                     <label>Street Address</label>
@@ -552,48 +607,48 @@ export default class Order extends React.Component {
                                 <Form.Input name='apt' label='Apartment' placeholder='Apartment' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
                             </Form.Group> */}
 
-                        <Form.Group widths='equal'>
-                            <Form.Field>
-                                
-                                </Form.Field>
+                        {/* <Form.Group widths='equal'>
+                                    <Form.Field required error={this.state.hasErrors.date}>
+                                        <label>Date</label>
+                                        <SingleDatePicker
+                                            date={this.state.day} // momentPropTypes.momentObj or null
+                                            isOutsideRange={this.isDayOutsideRange}
+                                            onDateChange={day => {
+                                                this.setState({ day });
+                                                this.handleDateChange(day);
+                                            }} // PropTypes.func.isRequired
+                                            focused={this.state.focused} // PropTypes.bool
+                                            onFocusChange={({ focused }) => {
+                                                this.setState({ focused });
+                                                if (!focused) {
+                                                    this.handleContactInfoBlur({ target: { name: 'date' } });
+                                                }
+                                            }} // PropTypes.func.isRequired
+                                            numberOfMonths={1}
+                                            placeholder="Date"
+                                            displayFormat={() =>
+                                                //moment.localeData().longDateFormat('LL')
+                                                'MMMM DD, YYYY'
+                                            }
+                                        />
+                                        <Message error visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
+                                    </Form.Field>
+                                    <Form.Field required error={this.state.hasErrors.time}>
+                                        <label>Time</label>
+                                        <Dropdown
+                                            placeholder='Time'
+                                            selection
+                                            options={this.times}
+                                            onChange={this.handleTimeChange}
+                                            onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
+                                        <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
+                                    </Form.Field>
+                                </Form.Group>
+                            </Segment> */}
 
-                            <Form.Field required error={this.state.hasErrors.date}>
-                                <label>Date</label>
-                                <SingleDatePicker
-                                    date={this.state.day} // momentPropTypes.momentObj or null
-                                    isOutsideRange={this.isDayOutsideRange}
-                                    onDateChange={day => {
-                                        this.setState({ day });
-                                        this.handleDateChange(day);
-                                    }} // PropTypes.func.isRequired
-                                    focused={this.state.focused} // PropTypes.bool
-                                    onFocusChange={({ focused }) => {
-                                        this.setState({ focused });
-                                        if (!focused) {
-                                            this.handleContactInfoBlur({ target: { name: 'date' } });
-                                        }
-                                    }} // PropTypes.func.isRequired
-                                    numberOfMonths={1}
-                                    placeholder="Date"
-                                    displayFormat={() =>
-                                        //moment.localeData().longDateFormat('LL')
-                                        'MMMM DD, YYYY'
-                                    }
-                                />
-                                <Message error visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
-                            </Form.Field>
-                            <Form.Field required error={this.state.hasErrors.time}>
-                                <label>Time</label>
-                                <Dropdown
-                                    placeholder='Time'
-                                    selection
-                                    options={this.times}
-                                    onChange={this.handleTimeChange}
-                                    onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
-                                <Message error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
-                            </Form.Field>
-                        </Form.Group>
-                    </Form>
+                    </div>
+
+                    {/* </Form> */}
                 </div>;
         }
         else if (this.state.currentStep === Steps.billing) {
@@ -680,9 +735,9 @@ export default class Order extends React.Component {
                 </div>;
         }
         else {
-            currentStepComponent = 
-            <div>
-                     <Accordion>
+            currentStepComponent =
+                <div>
+                    <Accordion>
                         <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
                             <Icon name='dropdown' />
                             See pricing details
@@ -723,7 +778,7 @@ export default class Order extends React.Component {
                             </Segment>
                         </Accordion.Content>
                     </Accordion>
-            </div>;
+                </div>;
         }
 
         return (
@@ -781,7 +836,7 @@ export default class Order extends React.Component {
                             </Step>
                         </Step.Group>
                     </div>
-                    <div className='order-step-content'>
+                    <div>
                         {currentStepComponent}
                     </div>
                 </div>

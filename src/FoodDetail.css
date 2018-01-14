@@ -245,9 +245,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.1;
     float: left; 
     width: 200px; 
-    margin: 10px auto 3px auto;
+    margin: 5px auto 3px auto;
 }
 
 .detail-quantity-button {
@@ -261,6 +262,17 @@
 
 .user-text {
     white-space: pre-wrap;
+}
+
+.detail-card-align-left {
+    text-align:left;
+    line-height: 1.2;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.detail-card-align-right{
+    float: right;
 }
 
 .order-confirm-user-header-desktop {

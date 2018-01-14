@@ -507,7 +507,7 @@ export default class FoodDetail extends Component {
                             <div className='detail-head-right'>
                                 <Segment>
                                     <div className='detail-card-header'>
-                                        <Image floated='right' marginTop='5px, 0px, 0px, 15px' src={food.image} height='auto' width='26%' />
+                                        <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
                                         <div className='detail-card-header-overflow'>{food.header} </div>
                                         <div style={{ display: 'inline-flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
@@ -516,7 +516,7 @@ export default class FoodDetail extends Component {
                                         </div>
                                         <div style={{ clear: 'both' }}></div>
                                     </div>
-                                    <Divider style={{marginTop: '0px'}} />
+                                    <Divider style={{ marginTop: '0px' }} />
                                     <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
@@ -536,24 +536,24 @@ export default class FoodDetail extends Component {
                                     </Form.Group>
                                     <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
                                         <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
-                                            <div className='align-left'>
+                                            <div className='detail-card-align-left'>
                                                 ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
                                         </div>
-                                            <div className='align-right'>
+                                            <div className='detail-card-align-right'>
                                                 ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
                                             </div>
                                         </div>
                                         <Divider />
 
                                         <div className='detail-card-summary-row'>
-                                            <div className='align-left'>
+                                            <div className='detail-card-align-left'>
                                                 Service fee <Popup
                                                     trigger={<Icon size='small' name='question circle outline' />}
                                                     content='This helps run our platform and keep the lights on.'
                                                     on={['click']}
                                                     hideOnScroll />
                                             </div>
-                                            <div className='align-right'>
+                                            <div className='detail-card-align-right'>
                                                 ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                             </div>
                                         </div>
@@ -561,10 +561,10 @@ export default class FoodDetail extends Component {
                                         <Divider />
 
                                         <div className='detail-card-summary-row'>
-                                            <div className='align-left'>
+                                            <div className='detail-card-align-left'>
                                                 <strong>Total </strong>
                                             </div>
-                                            <div className='align-right'>
+                                            <div className='detail-card-align-right'>
                                                 <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
                                             </div>
                                         </div>

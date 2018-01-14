@@ -114,9 +114,9 @@
 
 
 @media all and (max-width: 767px) {
-    .order-content-desktop {
+    /* .order-content-desktop {
       display: none;
-    }
+    } */
 
     .orderhead-content {
       padding-right: 10px;
