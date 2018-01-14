@@ -4,9 +4,7 @@ import { Button, Image, Icon, Message, Dropdown, Checkbox } from 'semantic-ui-re
 import { Accordion, Header, Divider, Form, Segment, Input, Step } from 'semantic-ui-react'
 import { Radio } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
-import Users from './data/Users'
 import AWS from 'aws-sdk'
-// import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
@@ -44,28 +42,21 @@ export default class Order extends React.Component {
     food;
 
     componentWillMount() {
-        if (FeatureToggles.CognitoLogin) {
-            CognitoUtil.setLastPathname(location.pathname);
-            CognitoUtil.redirectToLoginIfNoSession();
-        }
+        CognitoUtil.setLastPathname(location.pathname);
+        CognitoUtil.redirectToLoginIfNoSession();
 
         this.food = this.getFoodItem();
         document.title = this.food.header;
 
-        if (!FeatureToggles.DynamoUsers) {
-            this.cook = Users.find(x => x.id === this.food.userId);
-        }
-        else {
-            let apiClient = new ApiClient();
-            apiClient.getUserByJsUserId(this.food.userId)
-                .then(response => {
-                    this.cook = response.data;
-                    this.setState(this.state);
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        }
+        let apiClient = new ApiClient();
+        apiClient.getUserByJsUserId(this.food.userId)
+            .then(response => {
+                this.cook = response.data;
+                this.forceUpdate();
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     handleChange = (e, { value }) => this.setState({ value })

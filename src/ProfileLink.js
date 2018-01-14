@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Dropdown, Button, Input } from 'semantic-ui-react'
 import ApiClient from './Api/ApiClient'
-import { FeatureToggles } from './FeatureToggles'
 
 export const JsUsers = [
     {
@@ -126,7 +125,7 @@ export default class ProfileLink extends React.Component {
     }
 
     render() {
-        if (!this.jwt || !FeatureToggles.DynamoUsers) {
+        if (!this.jwt) {
             return <Redirect to='/' />
         }
 

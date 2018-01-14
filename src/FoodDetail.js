@@ -4,7 +4,6 @@ import './FoodDetail.css'
 import { Button, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-react'
 import FoodItems from './data/FoodItems'
-import Users from './data/Users'
 import Reviews from './data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from './components/AppHeader'
@@ -15,7 +14,6 @@ import { Constants } from './Constants'
 import FlagListing from './components/FlagListing'
 import FlagListingMobile from './components/FlagListingMobile'
 import CognitoUtil from './Cognito/CognitoUtil'
-import { FeatureToggles } from './FeatureToggles';
 import ApiClient from './Api/ApiClient'
 import PriceCalc from './PriceCalc'
 
@@ -55,20 +53,15 @@ export default class FoodDetail extends Component {
 
         this.isLoggedIn = CognitoUtil.isLoggedIn();
 
-        if (!FeatureToggles.DynamoUsers) {
-            this.cook = Users.find(x => x.id === this.food.userId);
-        }
-        else {
-            let apiClient = new ApiClient();
-            apiClient.getUserByJsUserId(this.food.userId)
-                .then(response => {
-                    this.cook = response.data;
-                    this.setState(this.state);
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        }
+        let apiClient = new ApiClient();
+        apiClient.getUserByJsUserId(this.food.userId)
+            .then(response => {
+                this.cook = response.data;
+                this.forceUpdate();
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     quantityChanged(newQuantity) {

@@ -20,7 +20,8 @@ export default class CognitoCallback extends React.Component {
                 let user = {
                     user_id: jwt.sub,
                     idp_name: jwt['custom:idp:name'],
-                    email: jwt.email
+                    email: jwt.email,
+                    email_verified: CognitoUtil.isEmailVerified(jwt)
                 };
                 let apiClient = new ApiClient();
                 apiClient.updateUser(jwtToken, user)

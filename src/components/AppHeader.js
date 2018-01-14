@@ -5,7 +5,6 @@ import './AppHeader.css'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
-import { FeatureToggles } from '../FeatureToggles'
 import ApiClient from '../Api/ApiClient'
 import LoadingIcon from './LoadingIcon'
 
@@ -98,35 +97,33 @@ class AppHeader extends React.Component {
         }
 
         let sessionElement;
-        if (FeatureToggles.CognitoLogin) {
-            if (this.state.username) {
+        if (this.state.username) {
+            sessionElement =
+                <div className='apphead-sign-in'>
+                    <span>Hi, </span>
+                    <Dropdown text={this.state.username}>
+                        <Dropdown.Menu className='left' style={{ width: '250px' }}>
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/view/${this.state.userId}`)} />
+                            <Dropdown.Divider />
+                            <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+        }
+        else {
+            if (this.state.loadingUser) {
                 sessionElement =
                     <div className='apphead-sign-in'>
-                        <span>Hi, </span>
-                        <Dropdown text={this.state.username}>
-                            <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                                <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/view/${this.state.userId}`)} />
-                                <Dropdown.Divider />
-                                <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <LoadingIcon />
                     </div>
             }
             else {
-                if (this.state.loadingUser) {
-                    sessionElement = 
-                        <div className='apphead-sign-in'>
-                        <LoadingIcon />
-                        </div>
-                }
-                else {
-                    sessionElement =
-                        <div>
-                            <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
-                            <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                            <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
-                        </div>
-                }
+                sessionElement =
+                    <div>
+                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
+                        <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
+                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
+                    </div>
             }
         }
 
@@ -144,13 +141,11 @@ class AppHeader extends React.Component {
                             {this.tagline}
                         </div>
                     </div>
-                    {FeatureToggles.CognitoLogin &&
-                        <div className='apphead-right'>
-                            <div style={{ marginTop: '8px' }}>
-                                {sessionElement}
-                            </div>
+                    <div className='apphead-right'>
+                        <div style={{ marginTop: '8px' }}>
+                            {sessionElement}
                         </div>
-                    }
+                    </div>
                 </div>
             </div>
         );

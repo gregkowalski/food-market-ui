@@ -25,17 +25,9 @@
     font-family: 'Athiti' !important;
 }
 
-.profileview-body {
-    width: 100%;
-    margin: 70px auto 0 auto;
-    padding: 30px;
-    background-color: lightgray;
-}
-
 .profileview-card {
     width: 262px;
     vertical-align: middle;
-    background-color: lightgreen;
 }
 
 .profileview-card-header {
@@ -49,36 +41,30 @@
     padding: 10px;
 }
 
-.profileview-flex-container {
-    background-color: lightseagreen;
-    display: -webkit-flex;
-    display: flex;
-    min-height: 0px;
-    width: 100%;
-    height: auto;
-    padding-left: 9%;
-    /* margin-top: 1px; */
-    margin-bottom: 10px;
-}
-
-.profileview-flex-item-left {
-    background-color: blue;
-    width: 400px;
-    /* height: auto; */
-    margin-left: 5%;
-    margin-right: 1%;
-}
-
-.profileview-head-left {
-    background: yellow;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 88px;
-    z-index: 1;
-}
-
 @media all and (max-width: 1127px) {
-    .profileview-flex-item-left {
+    .profileview-left {
         display: none;
     }
 }
+
+.profileview-container {
+    display: flex;
+    margin-top: 100px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profileview-container:after {
+    clear: both;
+}
+
+.profileview-left {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.profileview-main {
+    margin-top: 20px;
+}
+

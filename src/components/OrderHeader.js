@@ -1,12 +1,11 @@
 import React from 'react'
-import { Image, Dropdown, Icon } from 'semantic-ui-react'
+import { Image, Icon } from 'semantic-ui-react'
 import { Constants } from '../Constants'
 import './OrderHeader.css'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
-import { FeatureToggles } from '../FeatureToggles'
 
 class OrderHeader extends React.Component {
 
@@ -83,8 +82,6 @@ class OrderHeader extends React.Component {
             pos = 'fixed';
         }
 
-        const featureToggle = FeatureToggles.CognitoLogin;
-
         return (
             <div className='orderhead' style={{ position: pos }}>
                 <div className='orderhead-content'>
@@ -92,45 +89,24 @@ class OrderHeader extends React.Component {
                         <a href="/">
                             <Image style={{ marginTop: '4px' }} height='30px' src={Constants.AppLogo} />
                         </a>
-                        {/* <a href="/" className='orderhead-link'>
-                            <div>{Constants.AppName}</div>
-                        </a> */}
-
                     </div>
                     <div className='orderhead-right'>
-
-                        {!featureToggle &&
-                            <Dropdown text='filter' icon='search' floating labeled button closeOnChange className='icon'>
-                                <Dropdown.Menu>
-                                    <Dropdown.Header icon='tags' content='Filter by tag' />
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item icon='checkmark box' text='Cooked' />
-                                    <Dropdown.Item icon='fire' text='Uncooked' />
-                                    <Dropdown.Item icon='snowflake outline' text='Frozen' />
-                                    <Dropdown.Item icon='shopping basket' text='Ingredient' />
-                                    <Dropdown.Item icon='motorcycle' text='Delivery' />
-                                    <Dropdown.Item icon='hand rock' text='Pick-up' />
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        }
-                        {featureToggle &&
-                            <div style={{ display: 'inline-flex' }}>
-                                <div className="order-content-desktop">
-                                    <div className='orderhead-contact-support'>
-                                        <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' flipped='horizontally' size='large' />
-                                            Support 
+                        <div style={{ display: 'inline-flex' }}>
+                            <div className="order-content-desktop">
+                                <div className='orderhead-contact-support'>
+                                    <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
+                                        Support
                                     </a>
-                                    </div>
-                                <span style={{ color: '#898989', fontSize: '2.1em', fontWeight: '10', marginTop: '6px', marginRight: '10px' }}>|</span>
-                                 </div>
-                                <div style={{ marginRight: '6px', marginTop: '5px' }}><Image height='25px' src='/assets/images/ssl-certificate-green-lock.png' /></div>
-                                <div className='orderhead-ssl-text' >
-                                    <strong>SSL SECURED </strong>
-                                    <div style={{ color: '#7f7f7f' }}>CHECKOUT</div>
-
                                 </div>
+                                <span style={{ color: '#898989', fontSize: '2.1em', fontWeight: '10', marginTop: '6px', marginRight: '10px' }}>|</span>
                             </div>
-                        }
+                            <div style={{ marginRight: '6px', marginTop: '5px' }}><Image height='25px' src='/assets/images/ssl-certificate-green-lock.png' /></div>
+                            <div className='orderhead-ssl-text' >
+                                <strong>SSL SECURED </strong>
+                                <div style={{ color: '#7f7f7f' }}>CHECKOUT</div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

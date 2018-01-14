@@ -68,4 +68,17 @@ export default class ApiClient {
         return this.apiGatewayClient.invokeApi(null, `/users/${userId}`, 'GET',
             { headers: this.jsonHttpHeader() });
     }
+
+    getPublicUser(userId) {
+        return this.apiGatewayClient.invokeApi(null, `/users/${userId}/public`, 'GET');
+    }
+
+    loadUserProfile(userId) {
+        return this.apiGatewayClient.invokeApi(null, `/users/${userId}/private`, 'GET', { headers: this.jsonHttpHeader() });
+    }
+
+    saveUserProfile(user) {
+        return this.apiGatewayClient.invokeApi(null, `/users/${user.user_id}/private`, 'PATCH', { headers: this.jsonHttpHeader() }, user);
+    }
+
 }

@@ -43,6 +43,26 @@ export default class CognitoUtil {
         return null;
     }
 
+    static isExternalIdp(jwt) {
+        if (!jwt.identities) {
+            return false;
+        }
+        if (jwt.identities.length > 0) {
+            let providerName = jwt.identities[0].providerName;
+            if (providerName === "Google" || providerName === "Facebook") {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static isEmailVerified(jwt) {
+        if (jwt.email_verified) {
+            return true;
+        }
+        return this.isExternalIdp(jwt);
+    }
+
     static getLoggedInUserJwt() {
         const jwtToken = this.getLoggedInUserJwtToken();
         if (jwtToken) {
