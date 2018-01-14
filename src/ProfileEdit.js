@@ -119,6 +119,9 @@ export default class ProfileEdit extends React.Component {
     }
 
     getAsYouTypePhone(value) {
+        if (!value) {
+            return '';
+        }
         if (!value.startsWith('+1')) {
             if (value.startsWith('1')) {
                 value = '+' + value;
