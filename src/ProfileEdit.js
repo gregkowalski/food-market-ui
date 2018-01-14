@@ -3,12 +3,13 @@ import AppHeader from './components/AppHeader'
 import CognitoUtil from './Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
-import { Segment, Input, Button, Image, Header, Grid, Icon, Message, TextArea } from 'semantic-ui-react'
+import { Segment, Input, Button, Image, Header, Grid, Message, TextArea } from 'semantic-ui-react'
 import StripeUtil from './Stripe/StripeUtil';
 import crypto from 'crypto'
 import ApiClient from './Api/ApiClient'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
+import LoadingIcon from './components/LoadingIcon'
 import './ProfileEdit.css'
 
 export default class ProfileEdit extends React.Component {
@@ -281,7 +282,7 @@ export default class ProfileEdit extends React.Component {
             content =
                 <div style={{ marginTop: '70px', width: '100%' }}>
                     <div style={{ margin: '0 auto', width: '100px' }}>
-                        <Icon loading name='refresh' />Loading...
+                        <LoadingIcon />
                     </div>
                 </div>
         }

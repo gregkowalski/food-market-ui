@@ -1,13 +1,14 @@
 import React from 'react'
 import AppHeader from './components/AppHeader'
 import CognitoUtil from './Cognito/CognitoUtil'
-import { Segment, Button, Image, Header, Grid, Icon } from 'semantic-ui-react'
+import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
 import './ProfileView.css'
 import FlagUser from './components/FlagUser'
 import VerifiedInfo from './components/VerifiedInfo'
 import ApiClient from './Api/ApiClient'
 import jwtDecode from 'jwt-decode'
 import { Link } from 'react-router-dom'
+import LoadingIcon from './components/LoadingIcon'
 
 export default class ProfileView extends React.Component {
 
@@ -48,7 +49,7 @@ export default class ProfileView extends React.Component {
             content =
                 <div style={{ marginTop: '70px', width: '100%' }}>
                     <div style={{ margin: '0 auto', width: '100px' }}>
-                        <Icon loading name='refresh' />Loading...
+                        <LoadingIcon />
                     </div>
                 </div>
         }
