@@ -1,8 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import CognitoUtil from '../Cognito/CognitoUtil'
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import Util from '../Util'
 import StripeUtil from './StripeUtil'
 import ApiClient from '../Api/ApiClient'
@@ -10,42 +8,6 @@ import ApiClient from '../Api/ApiClient'
 export default class StripeCallback extends React.Component {
 
     state = {};
-
-    saveStripeAccountId(stripeAccountId) {
-        let attributeList = [];
-        let attribute = {
-            Name: 'custom:stripeAccountId',
-            Value: stripeAccountId
-        };
-        attributeList.push(new CognitoUserAttribute(attribute));
-
-        var userPool = new CognitoUserPool(CognitoUtil.getUserPoolData());
-        var cognitoUser = userPool.getCurrentUser();
-        if (!cognitoUser) {
-            throw new Error('current user is empty');
-        }
-
-        cognitoUser.getSession((err, session) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            console.log('session validity: ' + session.isValid());
-
-            cognitoUser.updateAttributes(attributeList, (err, result) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                console.log('call result: ' + result);
-
-                const lastPathname = CognitoUtil.getLastPathname();
-                console.log(`lastPathname=${lastPathname}`);
-
-                this.setState({ redirectTo: lastPathname });
-            });
-        });
-    }
 
     componentWillMount() {
 
@@ -63,22 +25,19 @@ export default class StripeCallback extends React.Component {
             throw new Error('Not working, code not found: ' + query.error);
         }
 
-        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        let session = auth.getCachedSession();
-        if (session && session.isValid()) {
-
-            let apiClient = new ApiClient();
-            apiClient.connectStripeAccount(session.getIdToken().getJwtToken(), query.code)
-                .then(response => {
-                    console.log('Call API success!!!');
-                    console.log(`stripe_user_id=${response.data.stripeAccountId}`);
-                    this.saveStripeAccountId(response.data.stripe_user_id);
-                }).catch(result => {
-                    //This is where you would put an error callback
-                    console.error('Call API failed!!!');
-                    console.log(JSON.stringify(result));
-                });
-        }
+        let apiClient = new ApiClient();
+        apiClient.connectStripeAccount(query.code)
+            .then(response => {
+                console.log('Stripe account connected');
+                const lastPathname = CognitoUtil.getLastPathname();
+                console.log(`lastPathname=${lastPathname}`);
+                this.setState({ redirectTo: lastPathname });
+            })
+            .catch(result => {
+                //This is where you would put an error callback
+                console.error('Call API failed!!!');
+                console.log(JSON.stringify(result));
+            });
     }
 
     render() {

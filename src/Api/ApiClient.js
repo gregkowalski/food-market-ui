@@ -1,6 +1,5 @@
 import apigClientFactory from 'aws-api-gateway-client'
 import CognitoUtil from '../Cognito/CognitoUtil'
-import jwtDecode from 'jwt-decode'
 import Config from '../Config'
 
 export default class ApiClient {
@@ -28,11 +27,6 @@ export default class ApiClient {
         return headers;
     }
 
-    connectStripeAccount(jwt, code) {
-        return this.apiGatewayClient.invokeApi(null, '/connectstripe', 'POST',
-            { headers: this.jsonHttpHeader(jwt) }, { code });
-    }
-
     submitFoodOrder(jwt, stripeToken, order) {
         let body = {
             stripeTokenId: stripeToken.id,
@@ -58,11 +52,12 @@ export default class ApiClient {
     }
 
     getCurrentUser() {
-        const jwtToken = CognitoUtil.getLoggedInUserJwtToken();
-        const jwt = jwtDecode(jwtToken);
-        const userId = jwt.sub;
+        const userId = CognitoUtil.getLoggedInUserId();
+        if (!userId) {
+            throw new Error('No user is currently logged in');
+        }
         return this.apiGatewayClient.invokeApi(null, `/users/${userId}`, 'GET',
-            { headers: this.jsonHttpHeader(jwtToken) });
+            { headers: this.jsonHttpHeader() });
     }
 
     getUser(userId) {
@@ -82,4 +77,12 @@ export default class ApiClient {
         return this.apiGatewayClient.invokeApi(null, `/users/${user.user_id}/private`, 'PATCH', { headers: this.jsonHttpHeader() }, user);
     }
 
+    connectStripeAccount(code) {
+        const userId = CognitoUtil.getLoggedInUserId();
+        if (!userId) {
+            throw new Error('No user is currently logged in');
+        }
+        return this.apiGatewayClient.invokeApi(null, `/users/${userId}/connectstripe`, 'POST',
+            { headers: this.jsonHttpHeader() }, { code });
+    }
 }

@@ -71,6 +71,7 @@ export default class ProfileEdit extends React.Component {
                     address: user.address,
                     phone: phone,
                     apt: user.apt === null ? '' : user.apt,
+                    stripe_user_id: user.stripe_user_id,
                     loading: false
                 };
                 this.setState(newState);
@@ -263,7 +264,7 @@ export default class ProfileEdit extends React.Component {
         }
 
         let stripeComponent;
-        if (this.state.custom_stripeAccountId) {
+        if (this.state.stripe_user_id) {
             stripeComponent =
                 <div>
                     <div style={{ marginBottom: '10px' }}>You are ready to be a foodcraft cook!!!</div>

@@ -22,6 +22,14 @@ export default class CognitoUtil {
         return this.getCognitoAuthData().TokenScopesArray.join('+');
     }
 
+    static getLoggedInUserId() {
+        const jwt = this.getLoggedInUserJwt();
+        if (!jwt) {
+            return null;
+        }
+        return jwt.sub;
+    }
+
     static getLoggedInUserJwtToken() {
         let auth = new CognitoAuth(this.getCognitoAuthData());
         let session = auth.getCachedSession();
