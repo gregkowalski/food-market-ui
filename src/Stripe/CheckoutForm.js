@@ -1,4 +1,5 @@
 import React from 'react';
+import './CheckoutForm.css'
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -79,7 +80,7 @@ class CheckoutForm extends React.Component {
     render() {
         return (
             <div>
-                <label>
+                <label className='checkoutform-label'>
                     Card number
                     <CardNumberElement
                         onBlur={handleBlur}
@@ -89,7 +90,7 @@ class CheckoutForm extends React.Component {
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
-                <label>
+                <label className='checkoutform-label'>
                     Expiration date
                     <CardExpiryElement
                         onBlur={handleBlur}
@@ -99,7 +100,7 @@ class CheckoutForm extends React.Component {
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
-                <label>
+                <label className='checkoutform-label'>
                     CVC
                     <CardCVCElement
                         onBlur={handleBlur}
@@ -109,7 +110,7 @@ class CheckoutForm extends React.Component {
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
-                <label>
+                <label className='checkoutform-label'>
                     Postal code
                     <PostalCodeElement
                         onBlur={handleBlur}

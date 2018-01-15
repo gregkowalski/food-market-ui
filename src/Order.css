@@ -33,7 +33,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .order-confirm-continue-button:hover {
-    background-color:  #2aad8a !important;
+    background-color: #2aad8a !important;
 }
 
 .order-body {
@@ -72,6 +72,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     font-size: 1.8em !important;
     font-weight: 600 !important;
     font-family: 'Athiti' !important;
+    margin-left: 5px !important;
 }
 
 .order-detail-summary-next-button-header {
@@ -89,6 +90,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .order-detail-summary-container {
     display: flex !important;
+    flex-direction: row-reverse !important;
 }
 
 .order-detail-summary-left {
@@ -99,7 +101,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     min-width: 350px;
     /* display: inline-block; */
     /* vertical-align: top; */
-    margin-right: 10px;
+    margin-left: 50px;
     /* padding: 0px 10px 0px 0px; */
     /* box-shadow: 0 2px 6px 0 rgba(117, 117, 117, 0.2), 0 6px 20px 0 rgba(114, 114, 114, 0.19) !important; */
 }
@@ -186,8 +188,23 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .order-summary-align-right {
     float: right;
 }
+.order-billing-header {
+    color: #494949 !important;
+    font-size: 1.8em !important;
+    font-weight: 600 !important;
+    font-family: 'Athiti' !important;
+    margin-left: 5px !important;
+    line-height: 1.1 !important;
+}
 
+.order-powered-by-stripe {
+    font-family: 'Athiti' !important;
+    font-size: .7em !important;
+}
 
+/* .order-powered-by-stripe-image {
+    display: inline-flex;
+} */
 
 @media all and (max-width: 767px) {
     .order-body {
@@ -196,12 +213,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     .order-detail-summary-container {
         display: flex !important;
         flex-flow: row wrap !important;
+        flex-direction: row !important;
     }
     .order-detail-summary-left {
         width: 100%;
         min-width: 100%;
         padding: 0px 0px 0px 0px;
-        margin-left: none;
+        margin-left: 0px !important;
     }
     .order-detail-summary-right {
         width: 100%;
