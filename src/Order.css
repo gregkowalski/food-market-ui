@@ -62,7 +62,12 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     margin-top: 5px;
 }
 
-
+.order-detail-summary-left-header {
+    color: #494949 !important;
+    font-size: 1.6em !important;
+    font-weight: 600 !important;
+    font-family: 'Athiti' !important;
+}
 
 .order-button {
     background-color: rgb(233, 233, 233) !important;
@@ -118,7 +123,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     display: inline-block !important;
     margin-top: 5px !important;
     color: #494949 !important;
-    font-size: 1.4em !important;
+    font-size: 1.2em !important;
     font-weight: 600 !important;
     padding: 10px 10px 0px 10px;
 }
@@ -152,6 +157,17 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     font-weight: 400;
     line-height: 22px !important;
     font-family: 'Athiti' !important;
+}
+
+.detail-card-summary-row-total {
+    display: flex;
+    margin-top: 3px;
+    width: 100%;
+    font-size: 1.5em !important;
+    font-weight: 400;
+    line-height: 22px !important;
+    font-family: 'Athiti' !important;
+    background-color: #d6fdf5;
 }
 
 .order-summary-align-left {

@@ -443,10 +443,9 @@ export default class Order extends React.Component {
         if (this.state.currentStep === Steps.pickup) {
             currentStepComponent =
                 <div className='order-detail-summary-container'>
-                    {/* <Form className='order-detail-summary-container' noValidate autoComplete='off'> */}
                     <div className='order-detail-summary-left'>
                         <Segment>
-                            <Header>My Order</Header>
+                            <Header className='order-detail-summary-left-header'>Order Details</Header>
                             <Divider />
                             <div className='order-card-header'>
                                 <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
@@ -499,7 +498,7 @@ export default class Order extends React.Component {
                                     </div>
                                 </div>
                                 <Divider />
-                                <div className='detail-card-summary-row'>
+                                <div className='detail-card-summary-row-total'>
                                     <div className='order-summary-align-left'>
                                         <strong>Total </strong>
                                     </div>
@@ -512,7 +511,7 @@ export default class Order extends React.Component {
                     </div>
                     <div className='order-detail-summary-right'>
                         <Segment>
-                            <Header as='h1'>My Information Profile</Header>
+                            <Header className='order-detail-summary-left-header'>Contact Information</Header>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
@@ -532,39 +531,70 @@ export default class Order extends React.Component {
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
+
+                            <Grid stackable columns='equal'>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <div>Phone</div>
+                                        <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.phone}
+                                            hidden={!this.state.hasErrors.phone}
+                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        {/* placeholder column to keep a single column aligned */}
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
                         </Segment>
 
-                        {/* <Segment>
-                                <Header>My Information</Header>
-                                <Divider /> */}
-                        {/* <Form.Group widths='4'>
-                                    <Form.Field>
-                                        <Segment compact>
-                                            <span style={{ marginRight: '11px' }}>
-                                                {pickupElement}
-                                            </span>
-                                            <Radio
-                                                label=''
-                                                name='radioGroup'
-                                                value='pick-up'
-                                                checked={this.state.value === 'pick-up'}
-                                                onChange={this.handleChange} />
-                                        </Segment>
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Segment compact>
-                                            <span style={{ marginLeft: '4px' }}> {deliveryElement}
-                                            </span>
-                                            <Radio
-                                                label='Delivery (Disabled)'
-                                                name='radioGroup'
-                                                value='delivery'
-                                                checked={this.state.value === 'delivery'}
-                                                onChange={this.handleChange}
-                                                disabled />
-                                        </Segment>
-                                    </Form.Field>
-                                </Form.Group> */}
+                        <Segment>
+                        <Header className='order-detail-summary-left-header'>Date &amp; Time</Header>
+                            <Divider />
+                            <Grid stackable columns='equal'>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <div>Date</div>
+                                        <SingleDatePicker
+                                            date={this.state.day} // momentPropTypes.momentObj or null
+                                            isOutsideRange={this.isDayOutsideRange}
+                                            onDateChange={day => {
+                                                this.setState({ day });
+                                                this.handleDateChange(day);
+                                            }} // PropTypes.func.isRequired
+                                            focused={this.state.focused} // PropTypes.bool
+                                            onFocusChange={({ focused }) => {
+                                                this.setState({ focused });
+                                                if (!focused) {
+                                                    this.handleContactInfoBlur({ target: { name: 'date' } });
+                                                }
+                                            }} // PropTypes.func.isRequired
+                                            numberOfMonths={1}
+                                            placeholder="Date"
+                                            displayFormat={() =>
+                                                //moment.localeData().longDateFormat('LL')
+                                                'MMMM DD, YYYY'
+                                            }
+                                        />
+                                        <Message
+                                            hidden={!this.state.hasErrors.phone}
+                                            visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <div>Time</div>
+                                        <Dropdown
+                                            placeholder='Time'
+                                            selection
+                                            options={this.times}
+                                            onChange={this.handleTimeChange}
+                                            onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
+                                        <Message
+                                            hidden={this.state.hasErrors.time}
+                                            error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                            </Segment>
 
                         {/* <Form.Group widths='equal'>
                                     <Form.Field required error={this.state.hasErrors.firstName}>
