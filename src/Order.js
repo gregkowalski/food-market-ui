@@ -562,7 +562,8 @@ export default class Order extends React.Component {
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
-                                    <Grid.Column>
+                                <div>Preferred contact</div>
+                                    {/* <Grid.Column>
                                         <div>First name</div>
                                         <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
                                         <Message error={this.state.hasErrors.firstName}
@@ -575,7 +576,7 @@ export default class Order extends React.Component {
                                         <Message error={this.state.hasErrors.lastName}
                                             hidden={!this.state.hasErrors.lastName}
                                             visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
-                                    </Grid.Column>
+                                    </Grid.Column> */}
                                 </Grid.Row>
                             </Grid>
 
@@ -824,7 +825,7 @@ export default class Order extends React.Component {
             <div>
                 <OrderHeader fixed />
                 <div className='order-body'>
-                    <div className='order-navigation-header'>
+                    {/* <div className='order-navigation-header'>
                         <div><Button className='order-button' size='huge' icon onClick={() => {
                             if (this.state.currentStep > Steps.pickup) {
                                 this.setState({ currentStep: this.state.currentStep - 1 });
@@ -842,8 +843,8 @@ export default class Order extends React.Component {
                             <Icon name='right arrow' />
                         </Button>
                         </div>
-                        {/* <div style={{ clear: 'both' }} /> */}
-                    </div>
+                        
+                    </div> */}
                     <div className='order-step-header'>
                         <Step.Group unstackable widths={3}>
                             <Step active={this.state.currentStep === Steps.pickup}

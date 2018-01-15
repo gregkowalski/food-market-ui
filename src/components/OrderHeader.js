@@ -90,6 +90,12 @@ class OrderHeader extends React.Component {
                         <a href="/">
                             <Image style={{ marginTop: '4px' }} height='30px' src={Constants.AppLogo} />
                         </a>
+                        <a href="/" className='orderhead-link'>
+                            <div>{Constants.AppName}</div>
+                        </a>
+                        <div className="order-tagline-desktop">
+                            {this.tagline}
+                        </div>
                     </div>
                     <div className='orderhead-right'>
                         <div style={{ display: 'inline-flex' }}>
