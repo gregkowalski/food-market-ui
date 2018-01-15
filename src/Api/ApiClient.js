@@ -1,6 +1,7 @@
 import apigClientFactory from 'aws-api-gateway-client'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
+import Config from '../Config'
 
 export default class ApiClient {
 
@@ -8,8 +9,8 @@ export default class ApiClient {
 
     constructor() {
         var config = {
-            region: 'us-west-2',
-            invokeUrl: 'https://api-dev.cosmo-test.com/v1',
+            region: Config.Api.Region,
+            invokeUrl: Config.Api.BaseUrl,
         };
         this.apiGatewayClient = apigClientFactory.newClient(config);
     }

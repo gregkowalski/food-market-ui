@@ -2,30 +2,18 @@ import { Constants } from '../Constants'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
+import Config from '../Config'
 
 export default class CognitoUtil {
 
-    //static AppWebDomain = 'local-cosmo-test.auth.us-west-2.amazoncognito.com';
-    static AppWebDomain = 'food-market-dev.auth.us-west-2.amazoncognito.com';
-    static CognitoDomain = 'https://' + CognitoUtil.AppWebDomain;
-    //static CognitoClientAppId = 'dkra9rqkjer2aqg23lrbp23hv';
-    static CognitoClientAppId = '6n197h69pgu60msn8a8rvvj1u5';
-    static RedirectUriSignIn = 'http://localhost:3000/cognitoCallback';
-    static RedirectUriSignOut = 'http://localhost:3000/cognitoSignout';
-    //static CognitoUserPoolId = 'us-west-2_TvRu5yb9m';
-    static CognitoUserPoolId = 'us-west-2_lZLhlTHmt';
-
     static getCognitoAuthData() {
         var authData = {
-            ClientId: CognitoUtil.CognitoClientAppId,
-            AppWebDomain: CognitoUtil.AppWebDomain,
-            //TokenScopesArray: ['openid', 'profile', 'aws.cognito.signin.user.admin', 'email'],
-            TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email'],
-            RedirectUriSignIn: CognitoUtil.RedirectUriSignIn,
-            RedirectUriSignOut: CognitoUtil.RedirectUriSignOut,
-            UserPoolId: CognitoUtil.CognitoUserPoolId,
-            // IdentityProvider : '<TODO: your identity provider you want to specify here>',
-            // AdvancedSecurityDataCollectionFlag : <TODO: boolean value indicating whether you want to enable advanced security data collection>
+            ClientId: Config.Cognito.ClientAppId,
+            AppWebDomain: Config.Cognito.AppWebDomain,
+            TokenScopesArray: Config.Cognito.TokenScopesArray,
+            RedirectUriSignIn: Config.Cognito.RedirectUriSignIn,
+            RedirectUriSignOut: Config.Cognito.RedirectUriSignOut,
+            UserPoolId: Config.Cognito.UserPoolId,
         };
         return authData;
     }
@@ -108,8 +96,8 @@ export default class CognitoUtil {
 
     static getUserPoolData() {
         return {
-            UserPoolId: CognitoUtil.CognitoUserPoolId,
-            ClientId: CognitoUtil.CognitoClientAppId
+            UserPoolId: Config.Cognito.UserPoolId,
+            ClientId: Config.Cognito.ClientAppId
         };
     }
 
@@ -123,8 +111,7 @@ export default class CognitoUtil {
 
     static getCognitoUrl(path, state) {
         const scope = this.getTokenScopesQueryParam();
-        //openid+profile+aws.cognito.signin.user.admin+email
-        let url = `${this.CognitoDomain}/${path}?response_type=token&client_id=${this.CognitoClientAppId}&redirect_uri=${this.RedirectUriSignIn}&scope=${scope}`;
+        let url = `https://${Config.Cognito.AppWebDomain}/${path}?response_type=token&client_id=${Config.Cognito.ClientAppId}&redirect_uri=${Config.Cognito.RedirectUriSignIn}&scope=${scope}`;
         if (state) {
             url += '&state=' + state;
         }
@@ -132,7 +119,7 @@ export default class CognitoUtil {
     }
 
     static getStorageKey(keyName) {
-        return `${Constants.FoodMarketStorageKeyRoot}.${CognitoUtil.CognitoClientAppId}.${keyName}`;
+        return `${Constants.FoodMarketStorageKeyRoot}.${Config.Cognito.ClientAppId}.${keyName}`;
     }
 
     static setLastPathname(pathname) {
