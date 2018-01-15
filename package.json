@@ -40,12 +40,25 @@
     "yarn": "^0.27.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "config:dev": "cp config/config.dev.js src/Config.js",
+    "config:yapa": "cp config/config.yapa.js src/Config.js",
+    "config:greg": "cp config/config.greg.js src/Config.js",
+
+    "start": "npm run start:dev",
+    "start:dev": "npm run config:dev; react-scripts start",
+    "start:yapa": "npm run config:yapa; react-scripts start",
+    "start:greg": "npm run config:greg; react-scripts start",
+
+    "build": "npm run build:dev",
+    "build:dev": "npm run config:dev; react-scripts build",
+    "build:yapa": "npm run config:yapa; react-scripts build",
+    "build:greg": "npm run config:greg; react-scripts build",
+
+    "deploy": "npm run deploy:test",
+    "deploy:test": "aws s3 sync build/ s3://cosmo-cleaners",
+    "deploy:live": "aws s3 sync build/ s3://food-market-ui",
+
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "npm run deploy-test",
-    "deploy-test": "aws s3 sync build/ s3://cosmo-cleaners",
-    "deploy-live": "aws s3 sync build/ s3://food-market-ui"
+    "eject": "react-scripts eject"
   }
 }
