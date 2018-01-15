@@ -450,7 +450,7 @@ export default class Order extends React.Component {
                             <div className='order-card-header'>
                                 <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
                                 <div className='order-card-header-overflow'>{food.header} </div>
-                                <div style={{ display: 'inline-flex', width: '200px' }}>
+                                <div style={{ display: 'flex', width: '200px' }}>
                                     <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                                         style={{ marginTop: '4px' }} />
                                     <div style={{ marginTop: '0px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
@@ -510,46 +510,8 @@ export default class Order extends React.Component {
                         </Segment>
                     </div>
                     <div className='order-detail-summary-right'>
-                        <Segment>
-                            <Header className='order-detail-summary-left-header'>Contact Information</Header>
-                            <Divider />
-                            <Grid stackable columns='equal'>
-                                <Grid.Row>
-                                    <Grid.Column>
-                                        <div>First name</div>
-                                        <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.firstName}
-                                            hidden={!this.state.hasErrors.firstName}
-                                            visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        <div>Last name</div>
-                                        <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.lastName}
-                                            hidden={!this.state.hasErrors.lastName}
-                                            visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-
-                            <Grid stackable columns='equal'>
-                                <Grid.Row>
-                                    <Grid.Column>
-                                        <div>Phone</div>
-                                        <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.phone}
-                                            hidden={!this.state.hasErrors.phone}
-                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        {/* placeholder column to keep a single column aligned */}
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-                        </Segment>
-
-                        <Segment>
-                        <Header className='order-detail-summary-left-header'>Date &amp; Time</Header>
+                        <Segment padded>
+                            <Header className='order-detail-summary-left-header'>Date &amp; Time</Header>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
@@ -594,7 +556,54 @@ export default class Order extends React.Component {
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
-                            </Segment>
+                        </Segment>
+                        <Segment padded>
+                            <Header className='order-detail-summary-left-header'>Contact Information</Header>
+                            <Divider />
+                            <Grid stackable columns='equal'>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <div>First name</div>
+                                        <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.firstName}
+                                            hidden={!this.state.hasErrors.firstName}
+                                            visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <div>Last name</div>
+                                        <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.lastName}
+                                            hidden={!this.state.hasErrors.lastName}
+                                            visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+
+                            <Grid stackable columns='equal'>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <div>Phone</div>
+                                        <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                        <Message error={this.state.hasErrors.phone}
+                                            hidden={!this.state.hasErrors.phone}
+                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        {/* placeholder column to keep a single column aligned */}
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        </Segment>
+                        <div>
+                            {/* <Header style={{ float: 'left' }} className='order-detail-summary-next-button-header'>Continue</Header> */}
+                            <Button className='order-confirm-continue-button' floated='right' size='huge' icon onClick={() => {
+                                if (this.state.currentStep < Steps.confirm + 1) {
+                                    this.setState({ currentStep: this.state.currentStep + 1 });
+                                }
+                            }}>
+                                Continue</Button>
+                        </div>
+                        {/* </Segment> */}
 
                         {/* <Form.Group widths='equal'>
                                     <Form.Field required error={this.state.hasErrors.firstName}>
@@ -843,7 +852,7 @@ export default class Order extends React.Component {
                                 className='order-step-boxes'>
                                 {/* <Icon name='shopping basket' /> */}
                                 <Step.Content>
-                                    <Step.Title>Review Order</Step.Title>
+                                    <Step.Title>Review</Step.Title>
                                 </Step.Content>
                             </Step>
                             <Step active={this.state.currentStep === Steps.billing}
@@ -861,7 +870,7 @@ export default class Order extends React.Component {
                                 className='order-step-boxes'>
                                 {/* <Icon name='info' /> */}
                                 <Step.Content>
-                                    <Step.Title>Confirm Order</Step.Title>
+                                    <Step.Title>Confirm</Step.Title>
                                 </Step.Content>
                             </Step>
                         </Step.Group>

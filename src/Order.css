@@ -21,14 +21,19 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     transition: none;
 }
 
-.order-confirm-button {
+.order-confirm-continue-button {
     background-color: #4cb99e !important;
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     color: #ffffff !important;
-    height: 4em;
+    height: 3em;
+    width: 205px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.order-confirm-continue-button:hover {
+    background-color:  #2aad8a !important;
 }
 
 .order-body {
@@ -64,18 +69,18 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .order-detail-summary-left-header {
     color: #494949 !important;
-    font-size: 1.6em !important;
+    font-size: 1.8em !important;
     font-weight: 600 !important;
     font-family: 'Athiti' !important;
 }
 
-.order-button {
-    background-color: rgb(233, 233, 233) !important;
-    box-shadow: 0 2px 4px 0 rgba(88, 88, 88, 0.2), 0 3px 10px 0 rgba(145, 145, 145, 0.1) !important;
-}
-
-.order-button:hover {
-    background-color: #d1d1d1 !important;
+.order-detail-summary-next-button-header {
+    color: #494949 !important;
+    font-size: 1.6em !important;
+    font-weight: 600 !important;
+    font-family: 'Athiti' !important;
+    margin: 10px !important;
+    vertical-align: 'center' !important;
 }
 
 .order-step-boxes {
@@ -130,6 +135,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .order-card-header-overflow {
     display: -webkit-box;
+    position: relative;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -167,7 +173,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     font-weight: 400;
     line-height: 22px !important;
     font-family: 'Athiti' !important;
-    background-color: #d6fdf5;
+    /* background-color: #d6fdf5; */
 }
 
 .order-summary-align-left {
@@ -181,17 +187,28 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     float: right;
 }
 
+
+
 @media all and (max-width: 767px) {
     .order-body {
         width: 90%;
     }
+    .order-detail-summary-container {
+        display: flex !important;
+        flex-flow: row wrap !important;
+    }
     .order-detail-summary-left {
         width: 100%;
+        min-width: 100%;
         padding: 0px 0px 0px 0px;
+        margin-left: none;
     }
     .order-detail-summary-right {
         width: 100%;
         padding: 20px 0px 0px 0px;
+    }
+    .order-confirm-continue-button {
+        width: 100%;
     }
 }
 
