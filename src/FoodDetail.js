@@ -8,7 +8,7 @@ import Reviews from 'data/Reviews'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import AppHeader from 'components/AppHeader'
 import FoodLightbox from 'components/FoodLightbox'
-import Util from 'Util'
+import Util from './Util'
 import ShowMore from 'react-show-more'
 import { Constants } from 'Constants'
 import FlagListing from 'components/FlagListing'
