@@ -24,7 +24,7 @@
     "react-images": "^0.5.14",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.2.2",
-    "react-scroll": "^1.7.5",
+    "react-scroll": "^1.7.6",
     "react-show-more": "^1.1.1",
     "react-stripe-elements": "^1.3.2",
     "redux": "^3.6.0",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "gulp": "^3.9.1",
-    "react-scripts": "0.9.4",
+    "react-scripts": "1.1.0",
     "semantic-ui": "^2.2.13"
   },
   "scripts": {
@@ -47,6 +47,7 @@
     "start:dev:https": "npm run config:dev; NODE_PATH=src HTTPS=true react-scripts start",
     "start:yapa": "npm run config:yapa; NODE_PATH=src react-scripts start",
     "start:greg": "npm run config:greg; NODE_PATH=src react-scripts start",
+    "semantic:build": "(cd semantic && gulp build)",
     "build": "npm run build:dev",
     "build:dev": "npm run config:dev; NODE_PATH=src react-scripts build",
     "build:yapa": "npm run config:yapa; NODE_PATH=src react-scripts build",

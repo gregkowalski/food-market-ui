@@ -16,7 +16,7 @@ class AppHeader extends React.Component {
     tagline;
 
     componentWillMount() {
-        CognitoUtil.setLastPathname(location.pathname);
+        CognitoUtil.setLastPathname(window.location.pathname);
         if (CognitoUtil.isLoggedIn()) {
             let api = new ApiClient();
             this.setState({ loadingUser: true });
@@ -120,9 +120,9 @@ class AppHeader extends React.Component {
             else {
                 sessionElement =
                     <div>
-                        <a href='#' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
+                        <a href='/signup' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
                         <span style={{ color: '#4cb9a0', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='#' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
+                        <a href='/login' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
                     </div>
             }
         }

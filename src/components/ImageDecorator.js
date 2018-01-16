@@ -64,7 +64,7 @@ const CarouselDecorators = [
         component: createReactClass({
             render() {
                 var self = this;
-                var indexes = this.getIndexes(self.props.slideCount, self.props.slidesToScroll);
+                var indexes = this.getIndexes(this.props.slideCount, this.props.slidesToScroll);
                 return (
                     <ul style={self.getListStyles()}>
                         {
@@ -85,7 +85,7 @@ const CarouselDecorators = [
             },
             handleClick(e, index) {
                 e.preventDefault();
-                self.props.goToSlide.bind(null, index);
+                this.props.goToSlide.bind(null, index);
             },
             getIndexes(count, inc) {
                 var arr = [];

@@ -35,8 +35,8 @@ class OrderHeader extends React.Component {
     }
 
     componentWillMount() {
-        //console.log(`location=${location}, location.pathname=${location.pathname}`);
-        CognitoUtil.setLastPathname(location.pathname);
+        //console.log(`location=${window.location}, location.pathname=${window.location.pathname}`);
+        CognitoUtil.setLastPathname(window.location.pathname);
 
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         let session = auth.getCachedSession();

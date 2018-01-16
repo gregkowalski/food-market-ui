@@ -40,7 +40,7 @@ export default class Order extends React.Component {
     food;
 
     componentWillMount() {
-        CognitoUtil.setLastPathname(location.pathname);
+        CognitoUtil.setLastPathname(window.location.pathname);
         CognitoUtil.redirectToLoginIfNoSession();
 
         this.food = this.getFoodItem();
