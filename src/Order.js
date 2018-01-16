@@ -1,6 +1,6 @@
 import React from 'react'
-import 'Order.css'
-import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup } from 'semantic-ui-react'
+import './Order.css'
+import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import FoodItems from 'data/FoodItems'
 import AWS from 'aws-sdk'
@@ -32,7 +32,7 @@ export default class Order extends React.Component {
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
-        value: 'pick-up',
+        value: 'email',
         currentStep: Steps.pickup
     };
 
@@ -445,7 +445,8 @@ export default class Order extends React.Component {
                 <div className='order-detail-summary-container'>
                     <div className='order-detail-summary-left'>
                         <Segment padded>
-                            <Header className='order-detail-summary-left-header'>My Order</Header>
+                            <Header className='order-detail-summary-left-header'>
+                                <Icon name='shopping basket' /> My Order</Header>
                             <Divider />
                             <div className='order-card-header'>
                                 <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
@@ -458,22 +459,6 @@ export default class Order extends React.Component {
                                 <div style={{ clear: 'both' }}></div> */}
                             </div>
                             <Divider />
-                            <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
-                                <Form.Field>
-                                    <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
-                                        Quantity ({food.unit} per order)</div>
-                                    <div>
-                                        <Button className='order-quantity-button' icon='minus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, -1)} />
-                                        <Input
-                                            type='number'
-                                            onChange={(e, { value }) => this.handleQuantityChange(1, Constants.MaxFoodQuantity, value)}
-                                            onBlur={(e) => this.handleQuantityInputBlur(e)}
-                                            value={this.state.quantity} min={1} max={99}
-                                            style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                                        <Button className='order-quantity-button' icon='plus' size='large' onClick={() => this.handleClickQuantityChange(1, Constants.MaxFoodQuantity, 1)} />
-                                    </div>
-                                </Form.Field>
-                            </Form.Group>
                             <div style={{ padding: '0px 10px 10px 10px' }}>
                                 <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
                                     <div className='order-summary-align-left'>
@@ -511,7 +496,8 @@ export default class Order extends React.Component {
                     </div>
                     <div className='order-detail-summary-right'>
                         <Segment padded>
-                            <Header className='order-detail-summary-left-header'>Date &amp; Time</Header>
+                            <Header className='order-detail-summary-left-header'>
+                                <Icon name='calendar' />Date &amp; Time</Header>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
@@ -558,42 +544,56 @@ export default class Order extends React.Component {
                             </Grid>
                         </Segment>
                         <Segment padded>
-                            <Header className='order-detail-summary-left-header'>Contact Information</Header>
+                            <Header className='order-detail-summary-left-header'>
+                                <Icon name='phone' />Contact Info</Header>
+                            <Divider hidden />
+                            <div>The information you provide will only be used for communication related to this order and will be kept private.
+                                </div>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
-                                    <div>Preferred contact</div>
-                                    {/* <Grid.Column>
-                                        <div>First name</div>
-                                        <Input name='firstName' placeholder='First name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.firstName}
-                                            hidden={!this.state.hasErrors.firstName}
-                                            visible={this.state.hasErrors.firstName} header='Invalid first name' content='Please enter your first name' icon='exclamation circle' />
+                                    <Grid.Column>
+                                        <Form>
+                                            <Form.Field>
+                                               <b> Preferred contact: </b>
+                                            </Form.Field>
+                                            <Form.Field>
+                                                <Radio
+                                                    label='Email'
+                                                    name='radioGroup'
+                                                    value='email'
+                                                    checked={this.state.value === 'email'}
+                                                    onChange={this.handleChange}
+                                                />
+                                            </Form.Field>
+                                            <Form.Field>
+                                                <Radio
+                                                    label='Phone (optional)'
+                                                    name='radioGroup'
+                                                    value='phone'
+                                                    checked={this.state.value === 'phone'}
+                                                    onChange={this.handleChange}
+                                                />
+                                                </Form.Field>
+                                        </Form>
+                                       <div className='order-contact-phone-input'>
+                                            <Input name='phone' type='tel' placeholder='123 456 7890' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                                <Message error={this.state.hasErrors.phone}
+                                                    hidden={!this.state.hasErrors.phone}
+                                                    visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                        </div>
                                     </Grid.Column>
+                        
                                     <Grid.Column>
-                                        <div>Last name</div>
-                                        <Input name='lastName' placeholder='Last name' onChange={this.handleContactInfoChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.lastName}
-                                            hidden={!this.state.hasErrors.lastName}
-                                            visible={this.state.hasErrors.lastName} header='Invalid last name' content='Please enter your last name' icon='exclamation circle' />
-                                    </Grid.Column> */}
-                                </Grid.Row>
-                            </Grid>
-
-                            <Grid stackable columns='equal'>
-                                <Grid.Row>
-                                    <Grid.Column>
-                                        <div>Phone</div>
+                                        {/* <div>Phone (optional)</div>
                                         <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
                                         <Message error={this.state.hasErrors.phone}
                                             hidden={!this.state.hasErrors.phone}
-                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
                                     </Grid.Column>
-                                    <Grid.Column>
-                                        {/* placeholder column to keep a single column aligned */}
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
+                                    </Grid.Row>
+                                    </Grid>
+                        
                         </Segment>
                         <div>
                             <Button className='order-confirm-continue-button' floated='left' size='huge' icon onClick={() => {
@@ -601,7 +601,7 @@ export default class Order extends React.Component {
                                     this.setState({ currentStep: this.state.currentStep + 1 });
                                 }
                             }}>
-                                Continue</Button>
+                                <Icon name='lock' /> Continue</Button>
                         </div>
 
 
@@ -659,20 +659,23 @@ export default class Order extends React.Component {
                     </div>
                     <div className='order-detail-summary-right'>
                         <Segment padded>
-                            <Header className='order-billing-header'>
-                                <Image floated='left' height='25px' src='/assets/images/ssl-certificate-green-shield.png' />
-                                <div>Billing Information
-                                <div className='order-powered-by-stripe'>SECURELY POWERED BY </div>
-                                <Image className='order-powered-by-stripe-image' height='30px' width='75px' src='/assets/images/stripe-logo-blue.png' />
-                                   
-                                </div>
-                            </Header>
+                            <div style={{ display: 'flex' }}>
+                                <Image className='order-padlock-icon' height='44px' src='/assets/images/padlock.png' />
+                                {/* <Icon floated='left' name='protect' color='#36af75' /> */}
+                                <Header className='order-billing-header'>
+                                    <div>Billing Information
+                                <div className='order-powered-by-stripe'>POWERED BY
+                                <Image className='order-powered-by-stripe-image' height='28px' width='75px' src='/assets/images/stripe-logo-blue.png' />
+                                        </div>
+                                    </div>
+                                </Header>
+                            </div>
                             <Divider />
                             {FeatureToggles.StripePayment &&
                                 <Checkout onRef={ref => (this.checkout = ref)} />
                             }
                         </Segment>
-                        <div><Button floated='left' className='order-button' size='huge' icon onClick={() => {
+                        <div><Button floated='left' className='order-back-button' size='huge' icon onClick={() => {
                             if (this.state.currentStep > Steps.pickup) {
                                 this.setState({ currentStep: this.state.currentStep - 1 });
                             }

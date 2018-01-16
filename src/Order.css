@@ -69,10 +69,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .order-detail-summary-left-header {
     color: #494949 !important;
-    font-size: 1.8em !important;
-    font-weight: 600 !important;
+    font-size: 1.9em !important;
+    font-weight: 500 !important;
     font-family: 'Athiti' !important;
-    margin-left: 5px !important;
+    margin: 15px 0px 0px 5px !important;
 }
 
 .order-detail-summary-next-button-header {
@@ -107,8 +107,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .order-detail-summary-right {
-    width: -moz-available;
-    width: -webkit-fill;
+    width: fill;
     /* background-color: blue; */
     /* background: pink; */
     /* position: -webkit-sticky;
@@ -191,20 +190,45 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .order-billing-header {
     color: #494949 !important;
     font-size: 1.8em !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     font-family: 'Athiti' !important;
     margin-left: 5px !important;
     line-height: 1.1 !important;
+    display: inline-flex !important;
 }
 
 .order-powered-by-stripe {
     font-family: 'Athiti' !important;
-    font-size: .7em !important;
+    font-size: .55em !important;
+    margin-left: 5px;
 }
 
-/* .order-powered-by-stripe-image {
-    display: inline-flex;
-} */
+.order-powered-by-stripe-image {
+    display: inline-flex !important;
+    margin-top: -3px;
+}
+
+.order-back-button {
+    background-color: rgb(189, 189, 189) !important;
+    box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 #8080801a !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+    height: 3em;
+    width: 100px;
+}
+
+.order-back-button:hover {
+    background-color: #a7a7a7 !important;
+}
+
+.order-padlock-icon {
+    margin-top: 27px;
+}
+
+.order-contact-phone-input{
+    margin: 5px 0px 0px 25px;
+}
 
 @media all and (max-width: 767px) {
     .order-body {
