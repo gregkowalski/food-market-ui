@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Button } from 'semantic-ui-react'
 import Lightbox from 'react-images'
 import './FoodLightbox.css'
-import FoodItems from '../data/FoodItems'
+import FoodItems from 'data/FoodItems'
 
 export default class FoodLightbox extends React.Component {
 

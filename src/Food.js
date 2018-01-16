@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import './Food.css'
+import 'Food.css'
 import { Grid, Item, Image, Rating, Label } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
-import Util from './Util'
+import FoodItems from 'data/FoodItems'
+import Util from 'Util'
 import Carousel from 'nuka-carousel'
-import CarouselDecorators from './components/ImageDecorator'
-import PriceCalc from './PriceCalc'
+import CarouselDecorators from 'components/ImageDecorator'
+import PriceCalc from 'PriceCalc'
 
 class Food extends Component {
 

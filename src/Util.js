@@ -1,4 +1,4 @@
-import { FoodPrepType } from './data/FoodItems'
+import { FoodPrepType } from 'data/FoodItems'
 import queryString from 'query-string'
 
 export default class {

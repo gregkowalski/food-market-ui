@@ -1,7 +1,7 @@
 import React from 'react'
-import FoodItems from './data/FoodItems'
-import AppHeader from './components/AppHeader'
-import { Constants } from './Constants'
+import FoodItems from 'data/FoodItems'
+import AppHeader from 'components/AppHeader'
+import { Constants } from 'Constants'
 import { Icon } from 'semantic-ui-react'
 
 export default class OrderError extends React.Component {

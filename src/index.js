@@ -1,27 +1,29 @@
 import React from 'react'
 import { render } from 'react-dom'
+import '../semantic/dist/semantic.min.css';
+import 'index.css'
+
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import App from './App'
-import FoodDetail from './FoodDetail'
-import reducer from './reducers'
-import './index.css'
-import '../semantic/dist/semantic.min.css';
-import Order from './Order'
-import OrderSuccess from './OrderSuccess'
-import OrderError from './OrderError'
+import App from 'App'
+import FoodDetail from 'FoodDetail'
+import reducer from 'reducers'
+
+import Order from 'Order'
+import OrderSuccess from 'OrderSuccess'
+import OrderError from 'OrderError'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import 'whatwg-fetch'
-import { unregister } from './registerServiceWorker';
-import CognitoCallback from './Cognito/CognitoCallback'
-import CognitoSignout from './Cognito/CognitoSignout'
-import StripeCallback from './Stripe/StripeCallback'
-import ProfileEdit from './ProfileEdit'
-import ProfileView from './ProfileView'
-import ProfileLink from './ProfileLink'
+import { unregister } from 'registerServiceWorker';
+import CognitoCallback from 'Cognito/CognitoCallback'
+import CognitoSignout from 'Cognito/CognitoSignout'
+import StripeCallback from 'Stripe/StripeCallback'
+import ProfileEdit from 'ProfileEdit'
+import ProfileView from 'ProfileView'
+import ProfileLink from 'ProfileLink'
 import { StripeProvider } from 'react-stripe-elements'
 
-//import mytest from './test'
+//import mytest from 'test'
 
 unregister();
 

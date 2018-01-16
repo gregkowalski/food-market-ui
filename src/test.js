@@ -1,5 +1,5 @@
 import React from 'react'
-import './test.css'
+import 'test.css'
 import { Button, Icon, Input, Segment } from 'semantic-ui-react'
 import apigClientFactory from 'aws-api-gateway-client'
 import {

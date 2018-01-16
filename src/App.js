@@ -1,13 +1,13 @@
 //import React from 'react'
-// import Footer from './components/Footer'
-// import AddTodo from './containers/AddTodo'
-// import VisibleTodoList from './containers/VisibleTodoList'
+// import Footer from 'components/Footer'
+// import AddTodo from 'containers/AddTodo'
+// import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
-import './App.css'
-import { MapContainer } from './MapContainer'
-import Food from './Food'
-import Map from './Map'
-import AppHeader from './components/AppHeader'
+import 'App.css'
+import { MapContainer } from 'MapContainer'
+import Food from 'Food'
+import Map from 'Map'
+import AppHeader from 'components/AppHeader'
 
 class App extends Component {
 

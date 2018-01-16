@@ -1,7 +1,7 @@
 import React from 'react'
 import './FlagListingMobile.css'
 import { Button, Icon, Modal, Header, Divider } from 'semantic-ui-react'
-import { Constants } from '../Constants'
+import { Constants } from 'Constants'
 
 export default class FlagListing extends React.Component {
     state = {};

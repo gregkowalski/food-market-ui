@@ -1,21 +1,21 @@
 import React from 'react'
-import './Order.css'
+import 'Order.css'
 import { Button, Image, Icon, Message, Dropdown, Checkbox, Rating, Popup } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
+import FoodItems from 'data/FoodItems'
 import AWS from 'aws-sdk'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import OrderHeader from './components/OrderHeader'
-import Checkout from './Stripe/Checkout'
-import ApiClient from './Api/ApiClient'
-import CognitoUtil from './Cognito/CognitoUtil'
+import OrderHeader from 'components/OrderHeader'
+import Checkout from 'Stripe/Checkout'
+import ApiClient from 'Api/ApiClient'
+import CognitoUtil from 'Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
-import { Constants } from './Constants'
-import { FeatureToggles } from './FeatureToggles'
-import PriceCalc from './PriceCalc'
+import { Constants } from 'Constants'
+import { FeatureToggles } from 'FeatureToggles'
+import PriceCalc from 'PriceCalc'
 
 
 const Steps = {

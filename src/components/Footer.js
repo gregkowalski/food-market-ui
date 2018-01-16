@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
-import FilterLink from '../containers/FilterLink'
+import FilterLink from 'containers/FilterLink'
 
 const Footer = () => (
   <div>

@@ -1,5 +1,5 @@
-import { Constants } from '../Constants'
-import Config from '../Config'
+import { Constants } from 'Constants'
+import Config from 'Config'
 
 export default class StripeUtil {
 

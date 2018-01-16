@@ -1,14 +1,14 @@
 import React from 'react'
-import AppHeader from './components/AppHeader'
-import CognitoUtil from './Cognito/CognitoUtil'
+import AppHeader from 'components/AppHeader'
+import CognitoUtil from 'Cognito/CognitoUtil'
 import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
-import './ProfileView.css'
-import FlagUser from './components/FlagUser'
-import VerifiedInfo from './components/VerifiedInfo'
-import ApiClient from './Api/ApiClient'
+import 'ProfileView.css'
+import FlagUser from 'components/FlagUser'
+import VerifiedInfo from 'components/VerifiedInfo'
+import ApiClient from 'Api/ApiClient'
 import jwtDecode from 'jwt-decode'
 import { Link } from 'react-router-dom'
-import LoadingIcon from './components/LoadingIcon'
+import LoadingIcon from 'components/LoadingIcon'
 
 export default class ProfileView extends React.Component {
 
