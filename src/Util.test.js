@@ -1,4 +1,4 @@
-const Util = require('../src/Util');
+import Util from 'Util'
 
 describe('add', () => {
     it('should add two numbers', () => {
@@ -6,7 +6,7 @@ describe('add', () => {
             search: '?x=5&y=3'
         }
         let query = Util.parseQueryString(location);
-        expect(query.x).toBe(5);
-        expect(query.y).toBe(3);
+        expect(query.x).toBe('5');
+        expect(query.y).toBe('3');
     });
 });

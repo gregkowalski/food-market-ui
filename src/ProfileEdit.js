@@ -300,7 +300,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Email:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input disabled={this.isExternalIdp} name='email' value={this.state.email}
+                                    <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.email}
                                         hidden={!this.state.hasErrors.email}

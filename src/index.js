@@ -2,13 +2,11 @@ import React from 'react'
 import { render } from 'react-dom'
 import '../semantic/dist/semantic.min.css';
 import 'index.css'
-
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import App from 'App'
 import FoodDetail from 'FoodDetail'
 import reducer from 'reducers'
-
 import Order from 'Order'
 import OrderSuccess from 'OrderSuccess'
 import OrderError from 'OrderError'
@@ -23,7 +21,7 @@ import ProfileView from 'ProfileView'
 import ProfileLink from 'ProfileLink'
 import { StripeProvider } from 'react-stripe-elements'
 
-//import mytest from 'test'
+//import temp from 'temp'
 
 unregister();
 
@@ -35,7 +33,7 @@ render(
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={App} />
-          {/* <Route path='/test' component={mytest} /> */}
+          {/* <Route path='/temp' component={temp} /> */}
           <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
           <Route path='/foods/:id/orderError' component={OrderError} />
           <Route path='/foods/:id/order' component={Order} />

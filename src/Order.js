@@ -1,6 +1,6 @@
 import React from 'react'
 import 'Order.css'
-import { Button, Image, Icon, Message, Dropdown, Checkbox, Rating, Popup } from 'semantic-ui-react'
+import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import FoodItems from 'data/FoodItems'
 import AWS from 'aws-sdk'
