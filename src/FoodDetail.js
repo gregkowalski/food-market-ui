@@ -311,13 +311,13 @@ export default class FoodDetail extends Component {
         let deliveryElement;
         if (food.delivery) {
             deliveryElement =
-                <span><Icon name='shipping' /> delivery</span>
+                <span className='food-detail-icon-tags'><Icon name='shipping' /> delivery</span>
         }
 
         let pickupElement;
         if (food.pickup) {
             pickupElement =
-                <span><Icon name='hand rock' />pick-up</span>
+                <span className='food-detail-icon-tags'><Icon name='hand rock' />pick-up</span>
         }
 
         const content = (
@@ -327,7 +327,7 @@ export default class FoodDetail extends Component {
 
                     <Header className='detail-main-header' as='h2'>
                         ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
-                    <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em', fontFamily: 'Athiti' }}>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em', fontFamily: 'Athiti' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
@@ -340,7 +340,7 @@ export default class FoodDetail extends Component {
                         <Grid doubling columns={5}  >
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Icon name={foodPrepIcon} /> {food.prep}
+                                    <span className='food-detail-icon-tags'><Icon name={foodPrepIcon} /> {food.prep}</span>
                                 </Grid.Column>
                                 <Grid.Column>
                                     {deliveryElement}
@@ -516,7 +516,7 @@ export default class FoodDetail extends Component {
                                         </div>
                                         <div style={{ clear: 'both' }}></div>
                                     </div>
-                                    <Divider style={{ marginTop: '0px' }} />
+                                    <Divider />
                                     <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
                                         <Form.Field>
                                             <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>

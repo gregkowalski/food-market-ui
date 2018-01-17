@@ -16,7 +16,7 @@
 
 
 .FoodCardHeader{
-    display: -webkit-box;
+    display: block;
     margin-top: 5px;
     margin-bottom: 1px !important;
     float: left;
@@ -26,9 +26,11 @@
     font-family: Athiti;
     color: #3a3a3a;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    /* -webkit-box-orient: vertical; */
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
+    max-width: 95%;
 }
 
 .FoodCardGroup {

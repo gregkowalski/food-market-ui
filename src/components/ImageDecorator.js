@@ -73,7 +73,7 @@ const CarouselDecorators = [
                                     <li style={self.getListItemStyles()} key={index}>
                                         <button className='FoodImageHideDecorator'
                                             style={self.getButtonStyles(self.props.currentSlide === index)}
-                                            onClick={(e) => this.handleClick(e, index)}>
+                                            onClick={(e) => self.handleClick(e, index)}>
                                             &bull;
                                         </button>
                                     </li>

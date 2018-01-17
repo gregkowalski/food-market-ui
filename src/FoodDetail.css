@@ -86,8 +86,8 @@
 
 .detail-main-header {
     color: #494949 !important;
-    font-size: 2.2em !important;
-    font-weight: 700 !important;
+    font-size: 2.3em !important;
+    font-weight: 600 !important;
 }
 
 .detail-sub-header {
@@ -240,15 +240,21 @@
 }
 
 .detail-card-header-overflow {
+    display: block;
     display: -webkit-box;
+    position: relative;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.1;
+    line-height: 1.3;
+    max-height: 2.6em;
     float: left; 
     width: 200px; 
     margin: 5px auto 3px auto;
+    font-size: 1.2em !important;
+    max-width: 95%;
+    /* white-space: nowrap; */
 }
 
 .detail-quantity-button {
@@ -337,6 +343,10 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+.food-detail-icon-tags {
+    font-size: 1.2em; 
 }
 
 @media all and (max-width: 767px) {    
