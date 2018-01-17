@@ -560,7 +560,7 @@ export default class FoodDetail extends Component {
 
                                         <Divider />
 
-                                        <div className='detail-card-summary-row'>
+                                        <div className='detail-card-summary-row-total'>
                                             <div className='detail-card-align-left'>
                                                 <strong>Total </strong>
                                             </div>

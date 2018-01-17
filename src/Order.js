@@ -364,7 +364,7 @@ export default class Order extends React.Component {
             currentStepComponent =
                 <div className='order-detail-summary-container'>
                     <div className='order-detail-summary-left'>
-                        <Segment padded>
+                        <Segment padded raised>
                             <Header className='order-detail-summary-left-header'>
                                 <Icon name='shopping basket' /> My Order</Header>
                             <Divider />
@@ -419,7 +419,7 @@ export default class Order extends React.Component {
                             <Header className='order-detail-summary-left-header'>
                                 <Icon name='calendar' />Date &amp; Time</Header>
                             <Divider />
-                            <Grid stackable columns='equal'>
+                            <Grid className='order-segment-content' stackable columns='equal'>
                                 <Grid.Row>
                                     <Grid.Column>
                                         <div>Date</div>
@@ -467,13 +467,13 @@ export default class Order extends React.Component {
                             <Header className='order-detail-summary-left-header'>
                                 <Icon name='phone' />Contact Info</Header>
                             <Divider hidden />
-                            <div>The information you provide will only be used for communication related to this order and will be kept private.
+                            <div className='order-segment-content'>The information you provide will only be used for communication related to this order and will be kept private.
                                 </div>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
                                     <Grid.Column>
-                                        <Form>
+                                        <Form className='order-segment-content'>
                                             <Form.Field>
                                                 <b> Preferred contact: </b>
                                             </Form.Field>
@@ -515,6 +515,10 @@ export default class Order extends React.Component {
                             </Grid>
 
                         </Segment>
+                        <Segment>
+                            <Checkbox label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
+                                onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
+                        </Segment>
                         <div>
                             <Button className='order-confirm-continue-button' floated='left' size='huge' icon onClick={() => {
                                 if (this.state.currentStep < Steps.confirm + 1) {
@@ -533,8 +537,8 @@ export default class Order extends React.Component {
         else if (this.state.currentStep === Steps.billing) {
             currentStepComponent =
                 <div className='order-detail-summary-container'>
-                    <div className='order-detail-summary-left'>
-                        <Segment padded>
+                    <div className='order-detail-summary-left-step-2'>
+                        <Segment padded raised>
                             <Header className='order-detail-summary-left-header'>My Order</Header>
                             <Divider />
                             <div className='order-card-header'>
@@ -602,12 +606,17 @@ export default class Order extends React.Component {
                         </Button>
                         </div>
                         <div>
-                            <Button className='order-confirm-continue-button' size='huge' icon onClick={() => {
-                                if (this.state.currentStep < Steps.confirm + 1) {
-                                    this.setState({ currentStep: this.state.currentStep + 1 });
-                                }
-                            }}>
-                                <Icon name='lock' /> Confirm and Pay</Button>
+                            <div style={{ marginTop: '20px' }}>
+                                <Button
+                                    className='order-confirm-continue-button'
+                                    fluid
+                                    loading={this.state.orderProcessing}
+                                    disabled={!this.state.acceptedTerms}
+                                    onClick={() => this.handleOrderButtonClick()}
+                                >
+                                    <Icon name='lock' /> Confirm and Pay
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>;
@@ -625,7 +634,7 @@ export default class Order extends React.Component {
                             <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.value}</strong> </div>
                         </Form.Field>
                         <Divider />
-                        <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price, this.state.quantity)}</strong></div>
+                        <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong></div>
                     </Segment>
 
                     <Accordion>
@@ -672,19 +681,6 @@ export default class Order extends React.Component {
 
                     <Divider />
 
-                    <Checkbox label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
-                        onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
-
-                    <div style={{ marginTop: '20px' }}>
-                        <Button
-                            className='order-confirm-button'
-                            fluid
-                            loading={this.state.orderProcessing}
-                            disabled={!this.state.acceptedTerms}
-                            onClick={() => this.handleOrderButtonClick()}>
-                            Confirm my order for ${PriceCalc.getTotal(food.price, this.state.quantity)}
-                        </Button>
-                    </div>
                 </div>;
         }
         else {
@@ -799,7 +795,7 @@ export default class Order extends React.Component {
 
     handleOrderButtonClick() {
         if (this.state.orderProcessing) {
-            console.log('Order is already processing...')
+            console.log('Order is already processing...');
             return;
         }
 
@@ -847,7 +843,9 @@ export default class Order extends React.Component {
                 console.log('Order finished');
                 console.log(response);
                 this.setState({ orderProcessing: false });
-                this.props.history.push('orderSuccess?sentCount=2');
+                if (this.state.currentStep < Steps.confirm + 1) {
+                    this.setState({ currentStep: this.state.currentStep + 1 });
+                }
             })
             .catch(err => {
                 console.log('Order finished');

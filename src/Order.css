@@ -14,6 +14,18 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     border: none;
 }
 
+/* .ui.steps .step {
+    font-size: 1.1em !important;
+} */
+
+.ui.steps .step.active {
+    background-color: #e8faf3;
+}
+
+.ui.steps .step:completed {
+    background-color: #b2ebda !important;
+}
+
 .order-address {
     width: 100%;
     -webkit-box-flex: inherit;
@@ -63,7 +75,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .order-step-header {
-    padding-bottom: 10px;
+    padding: 10px 0px 20px 0px;
     margin-top: 5px;
 }
 
@@ -85,7 +97,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 .order-step-boxes {
-    color: #4cb99e !important;
+    color: #5c5c5c !important;
 }
 
 .order-detail-summary-container {
@@ -95,30 +107,24 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .order-detail-summary-left {
     /* background: pink; */
-    /* position: -webkit-sticky;
-    position: sticky; */
     width: 350px;
     min-width: 350px;
-    /* display: inline-block; */
-    /* vertical-align: top; */
     margin-left: 50px;
-    /* padding: 0px 10px 0px 0px; */
-    /* box-shadow: 0 2px 6px 0 rgba(117, 117, 117, 0.2), 0 6px 20px 0 rgba(114, 114, 114, 0.19) !important; */
+}
+
+.order-detail-summary-left-step-2 {
+    /* background: pink; */
+    width: 350px;
+    min-width: 350px;
+    margin-left: 50px;
 }
 
 .order-detail-summary-right {
     width: stretch;
-    /* background-color: blue; */
-    /* background: pink; */
-    /* position: -webkit-sticky;
-    position: sticky; */
-    /* display: inline-block; */
-    /* top: 88px; */
-    /* max-width: 450px; */
-    /* width: 100%; */
-    /* padding: 10px 0px 0px 10px; */
-    /* margin: 0 auto; */
-    /* box-shadow: 0 2px 6px 0 rgba(117, 117, 117, 0.2), 0 6px 20px 0 rgba(114, 114, 114, 0.19) !important; */
+}
+
+.order-segment-content {
+    font-size: 1.3em !important;
 }
 
 .order-detail-summary-right .input {
@@ -251,6 +257,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     }
     .order-confirm-continue-button {
         width: 100%;
+    }
+    .order-detail-summary-left-step-2 {
+        display: none;
     }
 }
 
