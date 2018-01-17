@@ -283,7 +283,7 @@ export default class FoodDetail extends Component {
                     <Feed>
                         <Feed.Event>
                             <Feed.Content>
-                                <Image src={x.image} size='mini' floated='left' shape='circular' />
+                                <Image src={x.image} size='mini' floated='left' circular />
                                 <div style={{ float: 'right', color: '#5e5d5d' }}>
                                     <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                                 <Feed.Summary className='detail-body-text'>{x.summary} </Feed.Summary>
@@ -464,7 +464,7 @@ export default class FoodDetail extends Component {
                         <div className='detail-cook-text'>{this.cook.info}
                             <div style={{ marginTop: '15px' }}>Languages: <span style={{ fontWeight: '600' }}> {this.cook.lang}</span></div>
                         </div>
-                        <div style={{ marginTop: '25px' }}><Image size='small' shape='circular' src={this.cook.image} /></div>
+                        <div style={{ marginTop: '25px' }}><Image size='small' circular src={this.cook.image} /></div>
                     </ScrollElement>
                 }
                 <Divider section />

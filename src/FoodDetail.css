@@ -7,7 +7,8 @@
 .content-link, .content-link:hover {
     margin-right: 1em;
     color: inherit;
-    font-size: large; 
+    font-size: 1.45em;
+    font-weight: 500;
     cursor: pointer;
 }
 
@@ -23,7 +24,6 @@
 
 .content-link-active {
     border-bottom: 3px solid #4cb99e;
-    padding-bottom: 2px;
 }
 
 .flex-container {
@@ -33,9 +33,7 @@
     min-height: 0px;
     width: 100%;
     height: auto;
-    padding-left: 10px;
-    /* margin-top: 1px; */
-    margin-bottom: 10px;
+    padding: 0px 6px 0px 16px;
 }
 
 .flex-item-main {
@@ -136,7 +134,7 @@
     margin-top: 10px;
     color: gray; 
     font-family: 'Athiti' !important; 
-    font-size: 1.1em; 
+    font-size: 1.1em !important; 
     font-weight: 500;
     margin-bottom: 15px;
 }
@@ -190,11 +188,11 @@
 }
 
 .detail-footer-header {
-    margin-top: 25px !important;
-    margin-left: 12px !important;
+    margin-top: 18px !important;
+    margin-left: 18px !important;
     color: #494949 !important;
-    font-size: 1.55em !important;
-    font-weight: 700 !important;
+    font-size: 1.65em !important;
+    font-weight: 600 !important;
 }
 
 .detail-footer-text {
