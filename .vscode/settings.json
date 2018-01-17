@@ -4,5 +4,6 @@
         "build/**": true,
         "*lock*": true
     },
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "jest.enableCodeLens": false,
 }

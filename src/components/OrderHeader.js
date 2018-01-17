@@ -1,11 +1,11 @@
 import React from 'react'
-import { Image, Icon } from 'semantic-ui-react'
-import { Constants } from 'Constants'
-import './OrderHeader.css'
-import CognitoUtil from 'Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
+import { Image, Icon } from 'semantic-ui-react'
+import './OrderHeader.css'
+import { Constants } from '../Constants'
+import CognitoUtil from '../Cognito/CognitoUtil'
 
 class OrderHeader extends React.Component {
 

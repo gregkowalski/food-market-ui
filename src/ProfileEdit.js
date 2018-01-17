@@ -1,16 +1,16 @@
 import React from 'react'
-import AppHeader from 'components/AppHeader'
-import CognitoUtil from 'Cognito/CognitoUtil'
 import jwtDecode from 'jwt-decode'
 import { Redirect } from 'react-router-dom'
 import { Segment, Input, Button, Image, Header, Grid, Message, TextArea } from 'semantic-ui-react'
-import StripeUtil from 'Stripe/StripeUtil';
-import crypto from 'crypto'
-import ApiClient from 'Api/ApiClient'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import LoadingIcon from 'components/LoadingIcon'
-import 'ProfileEdit.css'
+import crypto from 'crypto'
+import './ProfileEdit.css'
+import AppHeader from './components/AppHeader'
+import LoadingIcon from './components/LoadingIcon'
+import CognitoUtil from './Cognito/CognitoUtil'
+import StripeUtil from './Stripe/StripeUtil';
+import ApiClient from './Api/ApiClient'
 
 export default class ProfileEdit extends React.Component {
 

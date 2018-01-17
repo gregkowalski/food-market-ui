@@ -1,7 +1,7 @@
 import React from 'react'
-import FoodItems from 'data/FoodItems'
 import queryString from 'query-string'
-import AppHeader from 'components/AppHeader'
+import FoodItems from './data/FoodItems'
+import AppHeader from './components/AppHeader'
 
 export default class OrderSuccess extends React.Component {
 

@@ -1,10 +1,10 @@
 import React from 'react'
-import AppHeader from 'components/AppHeader'
-import CognitoUtil from 'Cognito/CognitoUtil'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { Dropdown, Button, Input } from 'semantic-ui-react'
-import ApiClient from 'Api/ApiClient'
+import AppHeader from './components/AppHeader'
+import CognitoUtil from './Cognito/CognitoUtil'
+import ApiClient from './Api/ApiClient'
 
 export const JsUsers = [
     {

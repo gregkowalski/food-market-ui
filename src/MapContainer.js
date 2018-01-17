@@ -1,9 +1,9 @@
 import React from 'react'
-import { Map, Marker, InfoWindow } from 'Map'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
-import FoodItems from 'data/FoodItems'
-import PriceCalc from 'PriceCalc'
-import 'MapContainer.css'
+import './MapContainer.css'
+import { Map, Marker, InfoWindow } from './Map'
+import FoodItems from './data/FoodItems'
+import PriceCalc from './PriceCalc'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 

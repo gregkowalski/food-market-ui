@@ -1,24 +1,26 @@
 import React from 'react'
 import { render } from 'react-dom'
-import 'semantic/semantic.min.css';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import App from 'App'
-import FoodDetail from 'FoodDetail'
-import reducer from 'reducers'
-import Order from 'Order'
-import OrderSuccess from 'OrderSuccess'
-import OrderError from 'OrderError'
+import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import 'whatwg-fetch'
-import { unregister } from 'registerServiceWorker';
-import CognitoCallback from 'Cognito/CognitoCallback'
-import CognitoSignout from 'Cognito/CognitoSignout'
-import StripeCallback from 'Stripe/StripeCallback'
-import ProfileEdit from 'ProfileEdit'
-import ProfileView from 'ProfileView'
-import ProfileLink from 'ProfileLink'
-import { StripeProvider } from 'react-stripe-elements'
+import './semantic/semantic.min.css'
+import App from './App'
+import FoodDetail from './FoodDetail'
+import reducer from './reducers'
+import Order from './Order'
+import OrderSuccess from './OrderSuccess'
+import OrderError from './OrderError'
+import { unregister } from './registerServiceWorker'
+import CognitoCallback from './Cognito/CognitoCallback'
+import CognitoSignout from './Cognito/CognitoSignout'
+import StripeCallback from './Stripe/StripeCallback'
+import ProfileEdit from './ProfileEdit'
+import ProfileView from './ProfileView'
+import ProfileLink from './ProfileLink'
+import NotFoundPage from './NotFoundPage'
+import Config from './Config'
 
 //import temp from 'temp'
 
@@ -27,7 +29,7 @@ unregister();
 const store = createStore(reducer)
 
 render(
-  <StripeProvider apiKey="pk_test_3i1u1cO6uPgfdBh08rz9MIlN">
+  <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
@@ -43,6 +45,7 @@ render(
           <Route path='/profile/view/:userId' exact component={ProfileView} />
           <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
           <Route path='/profilelink' exact component={ProfileLink} />
+          <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
     </Provider>

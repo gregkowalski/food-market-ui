@@ -1,19 +1,19 @@
 import React from 'react'
-import './Order.css'
-import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
-import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
-import FoodItems from 'data/FoodItems'
-import { SingleDatePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import OrderHeader from 'components/OrderHeader'
-import Checkout from 'Stripe/Checkout'
-import ApiClient from 'Api/ApiClient'
-import CognitoUtil from 'Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
-import { Constants } from 'Constants'
-import PriceCalc from 'PriceCalc'
+import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
+import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import './Order.css'
+import FoodItems from './data/FoodItems'
+import OrderHeader from './components/OrderHeader'
+import Checkout from './Stripe/Checkout'
+import ApiClient from './Api/ApiClient'
+import CognitoUtil from './Cognito/CognitoUtil'
+import { Constants } from './Constants'
+import PriceCalc from './PriceCalc'
 
 const Steps = {
     pickup: 0,

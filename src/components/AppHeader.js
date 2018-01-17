@@ -1,11 +1,11 @@
 import React from 'react'
 import { Image, Dropdown } from 'semantic-ui-react'
-import { Constants } from 'Constants'
-import './AppHeader.css'
-import CognitoUtil from 'Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
-import ApiClient from 'Api/ApiClient'
+import './AppHeader.css'
+import { Constants } from '../Constants'
+import CognitoUtil from '../Cognito/CognitoUtil'
+import ApiClient from '../Api/ApiClient'
 import LoadingIcon from './LoadingIcon'
 
 class AppHeader extends React.Component {

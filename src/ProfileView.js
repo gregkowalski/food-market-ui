@@ -1,14 +1,14 @@
 import React from 'react'
-import AppHeader from 'components/AppHeader'
-import CognitoUtil from 'Cognito/CognitoUtil'
-import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
-import 'ProfileView.css'
-import FlagUser from 'components/FlagUser'
-import VerifiedInfo from 'components/VerifiedInfo'
-import ApiClient from 'Api/ApiClient'
 import jwtDecode from 'jwt-decode'
 import { Link } from 'react-router-dom'
-import LoadingIcon from 'components/LoadingIcon'
+import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
+import './ProfileView.css'
+import AppHeader from './components/AppHeader'
+import CognitoUtil from './Cognito/CognitoUtil'
+import FlagUser from './components/FlagUser'
+import VerifiedInfo from './components/VerifiedInfo'
+import ApiClient from './Api/ApiClient'
+import LoadingIcon from './components/LoadingIcon'
 
 export default class ProfileView extends React.Component {
 
@@ -84,7 +84,7 @@ export default class ProfileView extends React.Component {
                     <div className='profileview-main'>
                         <Grid>
                             <Grid.Column style={{ padding: '0px' }} mobile={16} tablet={16} computer={13}>
-                                <Image floated='left' verticalAlign='middle' size='small' shape='circular' src={this.user.image} />
+                                <Image floated='left' verticalAlign='middle' size='small' circular src={this.user.image} />
                                 <Header className='profileview-header' as='h1'>Hi, I'm {this.user.name}! </Header>
                                 <div className='profileview-sub-header'>
                                     {this.user.city} · <span style={{ color: '#0fb5c3' }}> Joined in {this.user.join_date}</span>
