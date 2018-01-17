@@ -3,7 +3,6 @@ import './Order.css'
 import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import FoodItems from 'data/FoodItems'
-import AWS from 'aws-sdk'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
@@ -14,9 +13,7 @@ import ApiClient from 'Api/ApiClient'
 import CognitoUtil from 'Cognito/CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import { Constants } from 'Constants'
-import { FeatureToggles } from 'FeatureToggles'
 import PriceCalc from 'PriceCalc'
-
 
 const Steps = {
     pickup: 0,
@@ -340,83 +337,6 @@ export default class Order extends React.Component {
         return day1 < day2;
     }
 
-    sendEmails() {
-        const aws_secret_access_key = '3Tb2qswQeoB31bMjlbM0OS1FEX0uEgzCF66LEbfK'
-        const aws_access_key_id = 'AKIAI3G26HX46HETLCJQ'
-
-        let creds = new AWS.Credentials(aws_access_key_id, aws_secret_access_key);
-        AWS.config.update({
-            region: 'us-west-2',
-            credentials: creds
-        });
-
-        let food = this.food;
-        let address = (this.state.apt ? 'Apt ' + this.state.apt + ', ' : '') + this.state.address;
-        let orderText = 'The following order was submitted at ' + new Date() + '\r\n' +
-            'Item Id: ' + food.id + '\r\n' +
-            'Name: ' + food.header + '\r\n' +
-            'Quantity: ' + this.state.quantity + '\r\n' +
-            'Total Price: $' + this.getTotal(food.price) + ' CAD\r\n' +
-            'Date: ' + this.state.date + '\r\n' +
-            'Time: ' + this.state.time + '\r\n\r\n' +
-
-            'Contact Information\r\n' +
-            'First Name: ' + this.state.firstName + '\r\n' +
-            'Last Name: ' + this.state.lastName + '\r\n' +
-            'Phone: ' + this.state.phone + '\r\n' +
-            'Email: ' + this.state.email + '\r\n' +
-            'Address: ' + address + '\r\n\r\n' +
-
-            'Now go fill this order!'
-
-        let subject = 'New Order: ' + food.header;
-
-        let systemEmail = this.createEmail('gregkowalski@hotmail.com', subject, orderText);
-        let systemSendPromise = new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(systemEmail).promise();
-
-        let userEmail = this.createEmail(this.state.email, subject, orderText);
-        var userSendPromise = new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(userEmail).promise();
-
-        return { systemSendPromise, userSendPromise };
-    }
-
-    createEmail(toAddress, subject, body) {
-        var params = {
-            Destination: { /* required */
-                // CcAddresses: [
-                //   'EMAIL_ADDRESS',
-                //   /* more items */
-                // ],
-                ToAddresses: [
-                    toAddress,
-                    /* more items */
-                ]
-            },
-            Message: { /* required */
-                Body: { /* required */
-                    // Html: {
-                    //     Charset: "UTF-8",
-                    //     Data: "<h3>this is formatted crap, <strong>bro</strong></h3>"
-                    // },
-                    Text: {
-                        Charset: "UTF-8",
-                        Data: body
-                    }
-                },
-                Subject: {
-                    Charset: 'UTF-8',
-                    Data: subject
-                }
-            },
-            Source: '"Food Market" <foodmarket@cosmo-test.com>'
-            //   ReplyToAddresses: [
-            //       'EMAIL_ADDRESS',
-            //     /* more items */
-            //   ],
-        };
-        return params;
-    }
-
     times = [
         { key: 0, text: 'Breakfast (7 AM - 11 AM)', value: 0 },
         { key: 1, text: 'Lunch (11 AM - 3 PM)', value: 1 },
@@ -555,7 +475,7 @@ export default class Order extends React.Component {
                                     <Grid.Column>
                                         <Form>
                                             <Form.Field>
-                                               <b> Preferred contact: </b>
+                                                <b> Preferred contact: </b>
                                             </Form.Field>
                                             <Form.Field>
                                                 <Radio
@@ -574,16 +494,16 @@ export default class Order extends React.Component {
                                                     checked={this.state.value === 'phone'}
                                                     onChange={this.handleChange}
                                                 />
-                                                </Form.Field>
+                                            </Form.Field>
                                         </Form>
-                                       <div className='order-contact-phone-input'>
+                                        <div className='order-contact-phone-input'>
                                             <Input name='phone' type='tel' placeholder='123 456 7890' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                                <Message error={this.state.hasErrors.phone}
-                                                    hidden={!this.state.hasErrors.phone}
-                                                    visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                            <Message error={this.state.hasErrors.phone}
+                                                hidden={!this.state.hasErrors.phone}
+                                                visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
                                         </div>
                                     </Grid.Column>
-                        
+
                                     <Grid.Column>
                                         {/* <div>Phone (optional)</div>
                                         <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
@@ -591,9 +511,9 @@ export default class Order extends React.Component {
                                             hidden={!this.state.hasErrors.phone}
                                             visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
                                     </Grid.Column>
-                                    </Grid.Row>
-                                    </Grid>
-                        
+                                </Grid.Row>
+                            </Grid>
+
                         </Segment>
                         <div>
                             <Button className='order-confirm-continue-button' floated='left' size='huge' icon onClick={() => {
@@ -671,9 +591,7 @@ export default class Order extends React.Component {
                                 </Header>
                             </div>
                             <Divider />
-                            {FeatureToggles.StripePayment &&
-                                <Checkout onRef={ref => (this.checkout = ref)} />
-                            }
+                            <Checkout onRef={ref => (this.checkout = ref)} />
                         </Segment>
                         <div><Button floated='left' className='order-back-button' size='huge' icon onClick={() => {
                             if (this.state.currentStep > Steps.pickup) {
@@ -880,37 +798,6 @@ export default class Order extends React.Component {
     }
 
     handleOrderButtonClick() {
-        if (FeatureToggles.StripePayment) {
-            this.submitOrderNew();
-        }
-        else {
-            this.submitOrderOld();
-        }
-    }
-
-    submitOrderOld() {
-        if (!this.validateForm())
-            return null;
-
-        let { systemSendPromise, userSendPromise } = this.sendEmails();
-        systemSendPromise.then(result1 => {
-            console.log(`system email sent: ${result1.MessageId}`);
-
-            userSendPromise.then(result2 => {
-                console.log(`user email sent: ${result2.MessageId}`);
-                this.props.history.push('orderSuccess?sentCount=2');
-            })
-                .catch(err2 => {
-                    console.error(err2, err2.stack);
-                    this.props.history.push('orderSuccess?sentCount=1');
-                })
-        }).catch(err1 => {
-            console.error(err1, err1.stack);
-            this.props.history.push('orderError');
-        });
-    }
-
-    submitOrderNew() {
         if (this.state.orderProcessing) {
             console.log('Order is already processing...')
             return;

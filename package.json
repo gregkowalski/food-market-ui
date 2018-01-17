@@ -6,7 +6,6 @@
     "amazon-cognito-auth-js": "^1.1.1",
     "amazon-cognito-identity-js": "^1.31.0",
     "aws-api-gateway-client": "^0.2.10",
-    "aws-sdk": "^2.182.0",
     "create-react-class": "^15.6.2",
     "form-urlencoded": "^2.0.4",
     "google-maps-react": "^1.1.2",
@@ -58,6 +57,7 @@
     "deploy:live": "aws s3 sync build/ s3://food-market-ui",
     "test": "NODE_PATH=src react-scripts test --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
+    "analyze": "source-map-explorer build/static/js/main.*",
     "eject": "react-scripts eject"
   }
 }

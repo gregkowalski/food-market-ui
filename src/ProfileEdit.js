@@ -300,7 +300,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Email:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email}
+                                    <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email} error={this.state.hasErrors.email}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.email}
                                         hidden={!this.state.hasErrors.email}
@@ -310,7 +310,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Name:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input name='name' value={this.state.name}
+                                    <Input name='name' value={this.state.name} error={this.state.hasErrors.name}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.name}
                                         hidden={!this.state.hasErrors.name}
@@ -320,7 +320,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>City:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input name='city' value={this.state.city}
+                                    <Input name='city' value={this.state.city} error={this.state.hasErrors.city}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.city}
                                         hidden={!this.state.hasErrors.city}
@@ -330,7 +330,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Username:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input name='username' value={this.state.username}
+                                    <Input name='username' value={this.state.username} error={this.state.hasErrors.username}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.username}
                                         hidden={!this.state.hasErrors.username}
@@ -340,7 +340,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>About:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <TextArea name='info' value={this.state.info} autoHeight rows={2}
+                                    <TextArea name='info' value={this.state.info} autoHeight rows={1}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.info}
                                         hidden={!this.state.hasErrors.info}
@@ -350,7 +350,7 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Languages:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input name='lang' value={this.state.lang}
+                                    <Input name='lang' value={this.state.lang} error={this.state.hasErrors.lang}
                                         onChange={this.handleChange} onBlur={this.handleBlur} />
                                     <Message error={this.state.hasErrors.lang}
                                         hidden={!this.state.hasErrors.lang}
@@ -365,7 +365,8 @@ export default class ProfileEdit extends React.Component {
                             <Grid.Row>
                                 <Grid.Column id='profileedit-grid-label' computer={3}>Phone:</Grid.Column>
                                 <Grid.Column computer={13}>
-                                    <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}/>
+                                    <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}
+                                        error={this.state.hasErrors.phone} />
                                     <Message error={this.state.hasErrors.phone}
                                         hidden={!this.state.hasErrors.phone}
                                         visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
