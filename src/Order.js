@@ -531,8 +531,8 @@ export default class Order extends React.Component {
                                     <Grid.Column>
                                         <div>Time</div>
                                         <Dropdown
-                                            placeholder='Time'
                                             selection
+                                            placeholder='Time'
                                             options={this.times}
                                             onChange={this.handleTimeChange}
                                             onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
@@ -707,7 +707,7 @@ export default class Order extends React.Component {
                             <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.value}</strong> </div>
                         </Form.Field>
                         <Divider />
-                        <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price)}</strong></div>
+                        <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${this.getTotal(food.price, this.state.quantity)}</strong></div>
                     </Segment>
 
                     <Accordion>
@@ -866,7 +866,7 @@ export default class Order extends React.Component {
                                 className='order-step-boxes'>
                                 {/* <Icon name='info' /> */}
                                 <Step.Content>
-                                    <Step.Title>Confirm</Step.Title>
+                                    <Step.Title>Done</Step.Title>
                                 </Step.Content>
                             </Step>
                         </Step.Group>
