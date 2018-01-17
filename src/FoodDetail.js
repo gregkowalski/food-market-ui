@@ -327,7 +327,7 @@ export default class FoodDetail extends Component {
 
                     <Header className='detail-main-header' as='h2'>
                         ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
-                    <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em' }}>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', marginTop: '10px', fontSize: '1.1em', fontFamily: 'Athiti' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
                             spy={true} smooth={true} container={document}
