@@ -1,7 +1,6 @@
 import React from 'react'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
@@ -21,6 +20,17 @@ const Steps = {
     confirm: 2
 }
 
+const ContactMethods = {
+    email: 0,
+    phone: 1
+}
+
+const OrderTimes = [
+    { key: 0, text: 'Breakfast (7 AM - 11 AM)', value: 0 },
+    { key: 1, text: 'Lunch (11 AM - 3 PM)', value: 1 },
+    { key: 2, text: 'Dinner (3 PM - 7 PM)', value: 2 },
+];
+
 export default class Order extends React.Component {
 
     state = {
@@ -29,8 +39,9 @@ export default class Order extends React.Component {
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
-        value: 'email',
-        currentStep: Steps.pickup
+        contactMethod: ContactMethods.email,
+        currentStep: Steps.pickup,
+        time: 0
     };
 
     cook;
@@ -54,7 +65,9 @@ export default class Order extends React.Component {
             });
     }
 
-    handleChange = (e, { value }) => this.setState({ value })
+    handleContactMethodChange = (e, { value }) => {
+        this.setState({ contactMethod: value });
+    }
 
     getFoodItemId() {
         return parseInt(this.props.match.params.id, 10);
@@ -101,14 +114,13 @@ export default class Order extends React.Component {
         this.setState({ showPricingDetails: showPricingDetails });
     };
 
-    handleDateChange(date) {
-        const value = date.toDate()
-        this.setState({ date: value }, () => this.validateField('date', value));
+    handleDateChange = (date) => {
+        console.dir(date);
+        this.setState({ date: date }, () => this.validateField('date', date.toDate()));
     };
 
     handleTimeChange = (event, data) => {
-        const value = this.times.find(time => time.value === data.value).text
-        this.setState({ time: value }, () => this.validateField('time', value));
+        this.setState({ time: data.value });
     };
 
     handlePhoneNumberChange = (e) => {
@@ -182,20 +194,6 @@ export default class Order extends React.Component {
                 }
                 break;
 
-            case 'firstName':
-                hasErrors.firstName = false;
-                if (hasBlurred.firstName && !state.firstName) {
-                    hasErrors.firstName = true;
-                }
-                break;
-
-            case 'lastName':
-                hasErrors.lastName = false;
-                if (hasBlurred.lastName && !state.lastName) {
-                    hasErrors.lastName = true;
-                }
-                break;
-
             case 'phone':
                 hasErrors.phone = false;
                 if (hasBlurred.phone && !this.validatePhoneNumber(state.phone)) {
@@ -203,31 +201,10 @@ export default class Order extends React.Component {
                 }
                 break;
 
-            case 'email':
-                hasErrors.email = false;
-                if (hasBlurred.email && !this.validateEmail(state.email)) {
-                    hasErrors.email = true;
-                }
-                break;
-
-            case 'address':
-                hasErrors.address = false;
-                if (hasBlurred.address && !state.address) {
-                    hasErrors.address = true;
-                }
-                break;
-
             case 'date':
                 hasErrors.date = false;
                 if (hasBlurred.date && !state.date) {
                     hasErrors.date = true;
-                }
-                break;
-
-            case 'time':
-                hasErrors.time = false;
-                if (hasBlurred.time && !state.time) {
-                    hasErrors.time = true;
                 }
                 break;
 
@@ -239,7 +216,37 @@ export default class Order extends React.Component {
         this.setState({ hasErrors });
     }
 
-    validateForm() {
+    handlePickupStepContinueClick = (e) => {
+        if (!this.validatePickupStep()) {
+            console.log('Pickup step validation failed.  Please enter the required information and try again.')
+            return;
+        }
+
+        if (this.state.currentStep < Steps.confirm + 1) {
+            this.setState({ currentStep: this.state.currentStep + 1 });
+        }
+    }
+
+    validatePickupStep() {
+        let state = this.state;
+        let hasErrors = {};
+
+        hasErrors.phone = false;
+        if (this.state.contactMethod === ContactMethods.phone && !this.validatePhoneNumber(state.phone)) {
+            hasErrors.phone = true;
+        }
+
+        hasErrors.date = false;
+        if (!state.date) {
+            hasErrors.date = true;
+        }
+
+        hasErrors = Object.assign(this.state.hasErrors, hasErrors);
+        this.setState({ hasErrors });
+        return this.isValid(hasErrors);
+    }
+
+    validatePaymentStep() {
         let state = this.state;
         let hasErrors = {};
 
@@ -248,52 +255,9 @@ export default class Order extends React.Component {
             hasErrors.quantity = true;
         }
 
-        // hasErrors.firstName = false;
-        // if (!state.firstName) {
-        //     hasErrors.firstName = true;
-        // }
-
-        // hasErrors.lastName = false;
-        // if (!state.lastName) {
-        //     hasErrors.lastName = true;
-        // }
-
-        hasErrors.phone = false;
-        if (!this.validatePhoneNumber(state.phone)) {
-            hasErrors.phone = true;
-        }
-
-        hasErrors.email = false;
-        if (!this.validateEmail(state.email)) {
-            hasErrors.email = true;
-        }
-
-        // hasErrors.address = false;
-        // if (!state.address) {
-        //     hasErrors.address = true;
-        // }
-
-        hasErrors.date = false;
-        if (!state.date) {
-            hasErrors.date = true;
-        }
-
-        hasErrors.time = false;
-        if (!state.time) {
-            hasErrors.time = true;
-        }
-
         hasErrors = Object.assign(this.state.hasErrors, hasErrors);
         this.setState({ hasErrors });
         return this.isValid(hasErrors);
-    }
-
-    validateEmail(email) {
-        if (!email) {
-            return false;
-        }
-        var pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(email);
     }
 
     validatePhoneNumber(phone) {
@@ -316,17 +280,17 @@ export default class Order extends React.Component {
 
     dateCutoff = moment().add(36, 'hours');
 
-    isDayOutsideRange = (day) => {
+    isDayOutsideRange = (date) => {
 
-        const year1 = day.year();
-        const month1 = day.month();
-        const day1 = day.date();
+        const year1 = date.year();
+        const month1 = date.month();
+        const day1 = date.date();
 
         const year2 = this.dateCutoff.year();
         const month2 = this.dateCutoff.month();
         const day2 = this.dateCutoff.date();
 
-        //console.log(`dateCutoff=${year2}-${month2}-${day2}, day=${year1}-${month1}-${day1}`);
+        //console.log(`dateCutoff=${year2}-${month2}-${day2}, date=${year1}-${month1}-${day1}`);
 
         if (year1 !== year2)
             return year1 < year2;
@@ -337,27 +301,9 @@ export default class Order extends React.Component {
         return day1 < day2;
     }
 
-    times = [
-        { key: 0, text: 'Breakfast (7 AM - 11 AM)', value: 0 },
-        { key: 1, text: 'Lunch (11 AM - 3 PM)', value: 1 },
-        { key: 2, text: 'Dinner (3 PM - 7 PM)', value: 2 },
-    ];
-
     render() {
         let food = this.food;
         const { showPricingDetails } = this.state;
-
-        // let deliveryElement;
-        // if (food.delivery) {
-        //     deliveryElement = ''
-        //     // <strong> Delivery</strong>
-        // }
-
-        // let pickupElement;
-        // if (food.pickup) {
-        //     pickupElement =
-        //         <strong>Pick-up</strong>
-        // }
 
         let currentStepComponent;
         if (this.state.currentStep === Steps.pickup) {
@@ -371,12 +317,6 @@ export default class Order extends React.Component {
                             <div className='order-card-header'>
                                 <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
                                 <div className='order-card-header-overflow'>{food.header} </div>
-                                {/* <div style={{ display: 'flex', width: '200px' }}>
-                                    <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                        style={{ marginTop: '4px' }} />
-                                    <div style={{ marginTop: '0px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
-                                </div>
-                                <div style={{ clear: 'both' }}></div> */}
                             </div>
                             <Divider />
                             <div style={{ padding: '0px 10px 10px 10px' }}>
@@ -424,12 +364,9 @@ export default class Order extends React.Component {
                                     <Grid.Column>
                                         <div>Date</div>
                                         <SingleDatePicker
-                                            date={this.state.day} // momentPropTypes.momentObj or null
+                                            date={this.state.date} // momentPropTypes.momentObj or null
                                             isOutsideRange={this.isDayOutsideRange}
-                                            onDateChange={day => {
-                                                this.setState({ day });
-                                                this.handleDateChange(day);
-                                            }} // PropTypes.func.isRequired
+                                            onDateChange={this.handleDateChange}
                                             focused={this.state.focused} // PropTypes.bool
                                             onFocusChange={({ focused }) => {
                                                 this.setState({ focused });
@@ -444,87 +381,86 @@ export default class Order extends React.Component {
                                                 'MMMM DD, YYYY'
                                             }
                                         />
-                                        <Message
-                                            hidden={!this.state.hasErrors.phone}
-                                            visible={this.state.hasErrors.date} header='Invalid date' content='Please select a date' icon='exclamation circle' />
+                                        <Message header='Invalid date' content='Please select a date' icon='exclamation circle'
+                                            error={this.state.hasErrors.date}
+                                            hidden={!this.state.hasErrors.date}
+                                            visible={this.state.hasErrors.date} />
                                     </Grid.Column>
                                     <Grid.Column>
                                         <div>Time</div>
-                                        <Dropdown
+                                        <Dropdown id='order-time-dropdown'
                                             selection
                                             placeholder='Time'
-                                            options={this.times}
+                                            options={OrderTimes}
                                             onChange={this.handleTimeChange}
-                                            onBlur={() => this.handleContactInfoBlur({ target: { name: 'time' } })} />
-                                        <Message
-                                            hidden={this.state.hasErrors.time}
-                                            error visible={this.state.hasErrors.time} header='Invalid time' content='Please select a time' icon='exclamation circle' />
+                                            value={this.state.time} />
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
                         </Segment>
                         <Segment padded>
                             <Header className='order-detail-summary-left-header'>
-                                <Icon name='phone' />Contact Info</Header>
+                                <Icon name='phone' />Contact Info
+                            </Header>
                             <Divider hidden />
-                            <div className='order-segment-content-header'>This will only be used for communication related to this order and will be kept private.
-                                </div>
+                            <div className='order-segment-content-header'>
+                                This will only be used for communication related to this order and will be kept private.
+                            </div>
                             <Divider />
                             <Grid stackable columns='equal'>
                                 <Grid.Row>
                                     <Grid.Column>
                                         <Form className='order-segment-content'>
                                             <Form.Field>
-                                                Preferred contact: 
+                                                Preferred contact:
                                             </Form.Field>
                                             <Form.Field className='order-segment-contact-option'>
                                                 <Radio
                                                     label='Email'
-                                                    name='radioGroup'
-                                                    value='email'
-                                                    checked={this.state.value === 'email'}
-                                                    onChange={this.handleChange}
+                                                    name='contactMethodRadioGroup'
+                                                    value={ContactMethods.email}
+                                                    checked={this.state.contactMethod === ContactMethods.email}
+                                                    onChange={this.handleContactMethodChange}
                                                 />
                                             </Form.Field>
                                             <Form.Field className='order-segment-contact-option'>
                                                 <Radio
                                                     label='Phone (optional)'
-                                                    name='radioGroup'
-                                                    value='phone'
-                                                    checked={this.state.value === 'phone'}
-                                                    onChange={this.handleChange}
+                                                    name='contactMethodRadioGroup'
+                                                    value={ContactMethods.phone}
+                                                    checked={this.state.contactMethod === ContactMethods.phone}
+                                                    onChange={this.handleContactMethodChange}
                                                 />
                                             </Form.Field>
                                         </Form>
                                         <div className='order-contact-phone-input'>
-                                            <Input name='phone' type='tel' placeholder='123 456 7890' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                            <Message error={this.state.hasErrors.phone}
-                                                hidden={!this.state.hasErrors.phone}
-                                                visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                            <Input name='phone' type='tel' placeholder='604 456 7890' value={this.state.phone}
+                                                disabled={this.state.contactMethod !== ContactMethods.phone}
+                                                onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
+                                            <Message header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle'
+                                                error={this.state.hasErrors.phone}
+                                                hidden={this.state.contactMethod !== ContactMethods.phone || !this.state.hasErrors.phone}
+                                                visible={this.state.contactMethod === ContactMethods.phone && this.state.hasErrors.phone} />
                                         </div>
                                     </Grid.Column>
                                     <Grid.Column>
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
-
                         </Segment>
                         <Segment padded='very'>
-                            <Checkbox className='order-segment-user-agree-text' label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
-                                onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
+                            <Checkbox className='order-segment-user-agree-text'
+                                label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
+                                onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })}
+                                checked={this.state.acceptedTerms} />
                         </Segment>
                         <div>
-                            <Button className='order-confirm-continue-button' floated='left' size='huge' icon onClick={() => {
-                                if (this.state.currentStep < Steps.confirm + 1) {
-                                    this.setState({ currentStep: this.state.currentStep + 1 });
-                                }
-                            }}>
-                                <Icon name='lock' /> Continue</Button>
+                            <Button className='order-confirm-continue-button' floated='left' size='huge' icon
+                                disabled={!this.state.acceptedTerms}
+                                onClick={this.handlePickupStepContinueClick}>
+                                <Icon name='lock' /> Continue
+                            </Button>
                         </div>
-
-
-
-
                     </div>
                 </div>;
         }
@@ -589,15 +525,25 @@ export default class Order extends React.Component {
                                 </Header>
                             </div>
                             <Divider />
-                            <Checkout onRef={ref => (this.checkout = ref)} />
+                            <Checkout onRef={ref => (this.checkout = ref)} onBlur={() => {
+                                if (this.state.hasErrors.payment) {
+                                    this.setState({ hasErrors: { payment: false } });
+                                }
+                            }} />
+                            <Message header={this.state.paymentError} icon='exclamation circle'
+                                error={this.state.hasErrors.payment}
+                                hidden={!this.state.hasErrors.payment}
+                                visible={this.state.hasErrors.payment} />
                         </Segment>
-                        <div><Button floated='left' className='order-back-button' size='huge' icon onClick={() => {
-                            if (this.state.currentStep > Steps.pickup) {
-                                this.setState({ currentStep: this.state.currentStep - 1 });
-                            }
-                        }}>
-                            <Icon name='left arrow' />
-                        </Button>
+                        <div>
+                            <Button floated='left' className='order-back-button' size='huge' icon
+                                onClick={() => {
+                                    if (this.state.currentStep > Steps.pickup) {
+                                        this.setState({ currentStep: this.state.currentStep - 1 });
+                                    }
+                                }}>
+                                <Icon name='left arrow' />
+                            </Button>
                         </div>
                         <div>
                             <div style={{ marginTop: '20px' }}>
@@ -617,15 +563,16 @@ export default class Order extends React.Component {
         }
         else if (this.state.currentStep === Steps.confirm) {
             currentStepComponent =
-                <div>This is how we do confirm
-                             <Divider />
+                <div>
+                    This is how we do confirm
+                    <Divider />
 
                     <Header>My Order Summary</Header>
 
                     <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                         {this.state.quantity} {food.header}
                         <Form.Field>
-                            <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.value}</strong> </div>
+                            <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.contactMethod}</strong> </div>
                         </Form.Field>
                         <Divider />
                         <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong></div>
@@ -635,7 +582,7 @@ export default class Order extends React.Component {
                         <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
                             <Icon name='dropdown' />
                             See pricing details
-                            </Accordion.Title>
+                        </Accordion.Title>
                         <Accordion.Content active={showPricingDetails}>
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 <Header as='h5'>Payment Breakdown</Header>
@@ -684,7 +631,7 @@ export default class Order extends React.Component {
                         <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
                             <Icon name='dropdown' />
                             See pricing details
-                            </Accordion.Title>
+                        </Accordion.Title>
                         <Accordion.Content active={showPricingDetails}>
                             <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
                                 <Header as='h5'>Payment Breakdown</Header>
@@ -706,7 +653,7 @@ export default class Order extends React.Component {
                                 </div>
                                 <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
                                     this helps run our platform and keep the lights on
-                                        </div>
+                                </div>
 
                                 <Divider />
 
@@ -793,15 +740,14 @@ export default class Order extends React.Component {
             return;
         }
 
-        const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        const session = auth.getCachedSession();
-        if (!session || !session.isValid()) {
-            console.error('Cannot submit order without a logged-in user.  Please log in and try again.');
+        if (!this.validatePaymentStep()) {
+            console.log('Order form validation failed.  Please correct your information and try again.');
             return;
         }
 
-        if (!this.validateForm()) {
-            console.log('Order form validation failed.  Please correct your information and try again.');
+        const jwtToken = CognitoUtil.getLoggedInUserJwtToken();
+        if (!jwtToken) {
+            console.error('Cannot submit order without a logged-in user.  Please log in and try again.');
             return;
         }
 
@@ -819,18 +765,18 @@ export default class Order extends React.Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             phone: this.state.phone,
-            email: this.state.email
         };
 
         this.checkout.props.stripe.createToken()
             .then(payload => {
                 if (payload.error) {
-                    console.error(payload.error.message);
-                    throw new Error(payload.error.message);
+                    let ex = new Error('Payment failed!');
+                    ex.error = payload.error;
+                    throw ex;
                 }
                 else {
                     let apiClient = new ApiClient();
-                    return apiClient.submitFoodOrder(session.getIdToken().getJwtToken(), payload.token, order);
+                    return apiClient.submitFoodOrder(jwtToken, payload.token, order);
                 }
             })
             .then(response => {
@@ -841,11 +787,21 @@ export default class Order extends React.Component {
                     this.setState({ currentStep: this.state.currentStep + 1 });
                 }
             })
-            .catch(err => {
-                console.log('Order finished');
-                console.error(err);
-                this.setState({ orderProcessing: false });
-                this.props.history.push('orderError');
+            .catch(ex => {
+                console.error(ex);
+                let paymentError = 'Payment failed.'
+                if (ex.error && ex.error.message) {
+                    paymentError = ex.error.message;
+                }
+                else if (ex.response && ex.response.data && ex.response.data.error) {
+                    paymentError = ex.response.data.error;
+                }
+                this.setState({
+                    orderProcessing: false,
+                    hasErrors: { payment: true },
+                    paymentError
+                });
+                //this.props.history.push('orderError');
             });
     }
 }

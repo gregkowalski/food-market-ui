@@ -282,6 +282,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 /* time-picker */
 
+#order-time-dropdown {
+    width: 100%;
+    min-width: inherit;
+    max-height: 2.71428571em;
+    /* height: 2em; */
+    /* padding: 2px; */
+}
+
 .TimePicker {
     min-width: inherit;
     width: 100%;
@@ -292,10 +300,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 /* react-dates */
 
 .DateInput {
-    /* font-size: 14px !important; */
-    padding: 2px !important;
     border-radius: 5px;
     width: 100%;
+    font-weight: 400 !important;
 }
 
 .SingleDatePicker {

@@ -9,7 +9,7 @@ export default class Checkout extends React.Component {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CheckoutForm onRef={ref => this.props.onRef(ref)} />
+                    <CheckoutForm onRef={ref => this.props.onRef(ref)} onBlur={this.props.onBlur} />
                 </Elements>
             </div>
         );

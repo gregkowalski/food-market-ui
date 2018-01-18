@@ -8,23 +8,6 @@ import {
     injectStripe,
 } from 'react-stripe-elements'
 
-
-const handleBlur = () => {
-    console.log('[blur]');
-};
-const handleChange = change => {
-    console.log('[change]', change);
-};
-// const handleClick = () => {
-//     console.log('[click]');
-// };
-const handleFocus = () => {
-    console.log('[focus]');
-};
-const handleReady = () => {
-    console.log('[ready]');
-};
-
 const createOptions = (fontSize) => {
     return {
         style: {
@@ -46,24 +29,24 @@ const createOptions = (fontSize) => {
 
 class CheckoutForm extends React.Component {
 
-    stripeTokenHandler(token) {
-        console.log('token=' + token);
-    }
+    // stripeTokenHandler(token) {
+    //     console.log('token=' + token);
+    // }
 
-    handleSubmit(e) {
-        //e.preventDefault();
+    // handleSubmit(e) {
+    //     //e.preventDefault();
 
-        this.props.stripe.createToken()
-            .then(payload => {
-                if (payload.error) {
-                    // Inform the customer that there was an error
-                    console.error(payload.error.message);
-                } else {
-                    // Send the token to your server
-                    this.stripeTokenHandler(payload.token);
-                }
-            });
-    };
+    //     this.props.stripe.createToken()
+    //         .then(payload => {
+    //             if (payload.error) {
+    //                 // Inform the customer that there was an error
+    //                 console.error(payload.error.message);
+    //             } else {
+    //                 // Send the token to your server
+    //                 this.stripeTokenHandler(payload.token);
+    //             }
+    //         });
+    // };
 
     componentDidMount() {
         if (this.props.onRef) {
@@ -77,46 +60,69 @@ class CheckoutForm extends React.Component {
         }
     }
 
+    handleBlur = () => {
+        console.log('[blur]');
+        if (this.props.onBlur) {
+            this.props.onBlur();
+        }
+    }
+
+    handleChange = change => {
+        console.log('[change]', change);
+    }
+
+    // const handleClick = () => {
+    //     console.log('[click]');
+    // };
+
+    handleFocus = () => {
+        console.log('[focus]');
+    }
+
+    handleReady = () => {
+        console.log('[ready]');
+    }
+
     render() {
         return (
             <div>
                 <label className='checkoutform-label'>
                     Card number
                     <CardNumberElement
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        onReady={handleReady}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                        onReady={this.handleReady}
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
                 <label className='checkoutform-label'>
                     Expiration date
                     <CardExpiryElement
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        onReady={handleReady}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                        onReady={this.handleReady}
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
                 <label className='checkoutform-label'>
                     CVC
                     <CardCVCElement
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        onReady={handleReady}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                        onReady={this.handleReady}
                         {...createOptions(this.props.fontSize) }
                     />
                 </label>
                 <label className='checkoutform-label'>
                     Postal code
                     <PostalCodeElement
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        onFocus={handleFocus}
-                        onReady={handleReady}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                        onReady={this.handleReady}
                         placeholder='Postal code'
                         {...createOptions(this.props.fontSize) }
                     />
