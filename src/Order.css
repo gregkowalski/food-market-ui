@@ -14,10 +14,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     border: none;
 }
 
-/* .ui.steps .step {
-    font-size: 1.1em !important;
-} */
-
 .ui.steps .step.active {
     background-color: #e8faf3;
 }
@@ -193,6 +189,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .order-summary-align-right {
     float: right;
 }
+
 .order-billing-header {
     color: #494949 !important;
     font-size: 1.8em !important;
@@ -232,7 +229,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     margin-top: 27px;
 }
 
-.order-contact-phone-input{
+.order-contact-phone-input {
     margin: 5px 0px 0px 25px;
 }
 
@@ -263,7 +260,60 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     }
 }
 
-/* .DateInput__display-text--focused {
+/* time-picker */
+
+.TimePicker {
+    min-width: inherit;
+    width: 100%;
+}
+
+/* end time-picker */
+
+/* react-dates */
+
+.DateInput {
+    /* font-size: 14px !important; */
+    padding: 2px !important;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.SingleDatePicker {
+    width: 100%;
+}
+
+.SingleDatePickerInput {
+    border-radius: 5px;
+}
+
+.SingleDatePicker__picker {
+    margin-top: -20px;
+}
+
+.DateInput--with-caret::before {
+    margin-top: -20px;
+}
+
+.DateInput--with-caret::after {
+    margin-top: -20px;
+}
+
+.DateInput__display-text {
+    /* color: rgba(191, 191, 191, .87); */
+}
+
+#CalendarMonth__caption {
+    margin-bottom: 15px;
+}
+
+.DayPickerKeyboardShortcuts__show_span {
+    bottom: -4px !important;
+    right: -30px !important;
+}
+
+/*
+
+.DateInput__display-text--focused {
   background: #eeeeee !important;
   border-color: lightgray !important;
   color: black !important;
@@ -276,4 +326,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .DayPickerKeyboardShortcuts__show--bottom-right {
   border-right: 33px solid darkgray !important;
-} */
+}
+*/
+
+/* end react-dates */

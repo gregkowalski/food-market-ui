@@ -54,46 +54,6 @@
   width: 10em;
 }
 
-/* time-picker */
-.TimePicker {
-  min-width: inherit;
-  width: 100%;
-}
-
-/* end time-picker */
-
-/* react-dates */
-.DateInput {
-  font-size: 14px !important;
-  padding: 2px !important;
-  border-radius: 5px;
-  width: 100% !important;
-}
-
-.SingleDatePicker {
-  width: 100%;
-}
-
-.SingleDatePickerInput {
-  border-radius: 5px;
-}
-
-.SingleDatePicker__picker {
-  margin-top: -20px;
-}
-
-.DateInput--with-caret::before {
-  margin-top: -20px;
-}
-
-.DateInput--with-caret::after {
-  margin-top: -20px;
-}
-
-.DateInput__display-text {
-  color: rgba(191,191,191,.87);
-}
-/* end react-dates */
 
 /* Google Autocomplete box */
 .AutocompleteBox > div {
