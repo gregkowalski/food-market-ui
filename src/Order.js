@@ -467,7 +467,7 @@ export default class Order extends React.Component {
                             <Header className='order-detail-summary-left-header'>
                                 <Icon name='phone' />Contact Info</Header>
                             <Divider hidden />
-                            <div className='order-segment-content'>The information you provide will only be used for communication related to this order and will be kept private.
+                            <div className='order-segment-content-header'>This will only be used for communication related to this order and will be kept private.
                                 </div>
                             <Divider />
                             <Grid stackable columns='equal'>
@@ -475,9 +475,9 @@ export default class Order extends React.Component {
                                     <Grid.Column>
                                         <Form className='order-segment-content'>
                                             <Form.Field>
-                                                <b> Preferred contact: </b>
+                                                Preferred contact: 
                                             </Form.Field>
-                                            <Form.Field>
+                                            <Form.Field className='order-segment-contact-option'>
                                                 <Radio
                                                     label='Email'
                                                     name='radioGroup'
@@ -486,7 +486,7 @@ export default class Order extends React.Component {
                                                     onChange={this.handleChange}
                                                 />
                                             </Form.Field>
-                                            <Form.Field>
+                                            <Form.Field className='order-segment-contact-option'>
                                                 <Radio
                                                     label='Phone (optional)'
                                                     name='radioGroup'
@@ -503,20 +503,14 @@ export default class Order extends React.Component {
                                                 visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
                                         </div>
                                     </Grid.Column>
-
                                     <Grid.Column>
-                                        {/* <div>Phone (optional)</div>
-                                        <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                        <Message error={this.state.hasErrors.phone}
-                                            hidden={!this.state.hasErrors.phone}
-                                            visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' /> */}
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
 
                         </Segment>
-                        <Segment>
-                            <Checkbox label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
+                        <Segment padded='very'>
+                            <Checkbox className='order-segment-user-agree-text' label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
                                 onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })} />
                         </Segment>
                         <div>
