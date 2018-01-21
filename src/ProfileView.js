@@ -1,6 +1,5 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
-import { Link } from 'react-router-dom'
 import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
 import './ProfileView.css'
 import AppHeader from './components/AppHeader'
@@ -89,21 +88,9 @@ export default class ProfileView extends React.Component {
                                 <div className='profileview-sub-header'>
                                     {this.user.city} · <span style={{ color: '#0fb5c3' }}> Joined in {this.user.join_date}</span>
                                 </div>
-
                                 <FlagUser />
-
                                 <div style={{ clear: 'both' }}></div>
-
                                 <div className='profileview-user-info'>{this.user.info}</div>
-
-                                {this.isOwnProfile &&
-                                    <div style={{ display: 'inline-flex' }}>
-                                        <Link to={`/profile/edit/${this.user.user_id}`}>
-                                            <Button color='blue'>Edit Profile</Button>
-                                        </Link>
-                                        <div style={{ marginTop: '8px' }}>(only you can see this)</div>
-                                    </div>
-                                }
                             </Grid.Column>
                         </Grid>
                     </div>

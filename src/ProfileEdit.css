@@ -11,6 +11,20 @@
     font-weight: 700;
 }
 
+.profileedit-view-button {
+    margin: 20px 0px 0px 0px !important;
+    background-color: #4cb99e !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.profileedit-view-button:hover {
+    background-color: #2aad8a !important;
+}
+
 @media all and (max-width: 767px) {
     #profileedit-grid-label {
         text-align: left;

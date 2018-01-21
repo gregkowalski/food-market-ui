@@ -103,7 +103,7 @@ class AppHeader extends React.Component {
                     <span>Hi, </span>
                     <Dropdown text={this.state.username}>
                         <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='View Profile' onClick={() => this.props.history.push(`/profile/view/${this.state.userId}`)} />
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${this.state.userId}`)} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
                         </Dropdown.Menu>

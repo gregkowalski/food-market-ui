@@ -1,6 +1,6 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { Segment, Input, Button, Image, Header, Grid, Message, TextArea } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
@@ -400,6 +400,14 @@ export default class ProfileEdit extends React.Component {
                     <Segment attached>
                         {stripeComponent}
                     </Segment>
+                    {this.isOwnProfile &&
+                                    <div style={{ display: 'inline-flex' }}>
+                                        <Link to={`/profile/view/${this.user.user_id}`}>
+                                            <Button className='profileedit-view-button' >view Profile</Button>
+                                        </Link>
+                                    </div>
+                                }
+
                     <div style={{ marginTop: '20px' }}>
                         <Button disabled={!this.state.hasChanges} loading={this.state.saving}
                             color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
