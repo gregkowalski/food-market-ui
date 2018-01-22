@@ -155,6 +155,7 @@ export default class ProfileEdit extends React.Component {
 
         console.log(name + ': ' + value);
         this.setState(newState, () => this.validateField(name, value));
+        // this.setState(newState);
     }
 
     handleBlur = (e) => {

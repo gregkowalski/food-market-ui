@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
-import { Grid, Item, Image, Rating, Label } from 'semantic-ui-react'
+import { Grid, Item, Image, Rating, Label, Icon } from 'semantic-ui-react'
 import './Food.css'
 import FoodItems from './data/FoodItems'
 import Util from './Util'
@@ -60,12 +60,12 @@ class Food extends Component {
     }
 
     getFoodPrepLabelComponent(food) {
-        let foodPrepClassName = 'LabelPrep-' + food.prep
+        let foodPrepClassName = 'LabelPrep-' + food.prep;
         let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
         let labelElement =
-            <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
-
+            // <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
+            <Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />
         return labelElement;
     }
 
@@ -96,14 +96,13 @@ class Food extends Component {
                                     </Item.Header>
 
                                     <Item.Meta>
-                                        <div style={{ display: 'flex', marginTop: '0px', marginBottom: '1px' }}>
+                                        <div style={{ display: 'flex' }}>
+                                        {foodPrepLabelComponent} 
+                                        <span className='food-label'> {food.prep} <span style={{ fontWeight: '900'}}>·</span> 
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                                style={{ marginTop: '6px', marginLeft: '-2px' }} />
-                                            <div style={{ marginTop: '1px' }}> <span style={{ fontFamily: 'Athiti', fontWeight: '500' }}>
-                                                {food.ratingCount} reviews</span></div>
-                                            <div className='food-label' style={{ marginTop: '-3px', marginLeft: '8px', fontWeight: 'bold' }}>
-                                                {foodPrepLabelComponent}
-                                            </div>
+                                                style={{ marginTop: '5px', marginLeft: '2px' }} />
+                                            {food.ratingCount} 
+                                            </span>
                                         </div>
                                     </Item.Meta>
 

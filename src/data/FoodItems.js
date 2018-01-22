@@ -3,7 +3,7 @@ export const FoodPrepType = {
     ready: 'cooked',
     ingredient: 'ingredient',
     uncooked: 'uncooked'
-};
+}; 
 
 const FoodItems = [
     {
