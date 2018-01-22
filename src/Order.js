@@ -462,7 +462,7 @@ export default class Order extends React.Component {
                             </Button>
                         </div>
                     </div>
-                </div>;
+                </div>
         }
         else if (this.state.currentStep === Steps.billing) {
             currentStepComponent =
@@ -552,14 +552,13 @@ export default class Order extends React.Component {
                                     fluid
                                     loading={this.state.orderProcessing}
                                     disabled={!this.state.acceptedTerms}
-                                    onClick={() => this.handleOrderButtonClick()}
-                                >
+                                    onClick={() => this.handleOrderButtonClick()}>
                                     <Icon name='lock' /> Confirm and Pay
                                 </Button>
                             </div>
                         </div>
                     </div>
-                </div>;
+                </div>
         }
         else if (this.state.currentStep === Steps.confirm) {
             currentStepComponent =
@@ -604,7 +603,7 @@ export default class Order extends React.Component {
                                 </div>
                                 <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
                                     this helps run our platform and keep the lights on
-                                        </div>
+                                </div>
 
                                 <Divider />
 
@@ -622,7 +621,18 @@ export default class Order extends React.Component {
 
                     <Divider />
 
-                </div>;
+
+                    {this.state.order_id &&
+                        <Button
+                            className='order-confirm-continue-button'
+                            fluid
+                            loading={this.state.orderProcessing}
+                            onClick={() => this.handleConfirmButtonClick()}>
+                            <Icon name='lock' /> Submit Payment
+                        </Button>
+                    }
+
+                </div>
         }
         else {
             currentStepComponent =
@@ -734,6 +744,43 @@ export default class Order extends React.Component {
         )
     }
 
+    handleError(ex) {
+        console.error(ex);
+        let paymentError = 'Payment failed.'
+        if (ex.error && ex.error.message) {
+            paymentError = ex.error.message;
+        }
+        else if (ex.response && ex.response.data && ex.response.data.error) {
+            paymentError = ex.response.data.error;
+        }
+        this.setState({
+            orderProcessing: false,
+            hasErrors: { payment: true },
+            paymentError
+        });
+    }
+
+    handleConfirmButtonClick() {
+        if (this.state.orderProcessing) {
+            console.log('Confirmation is already processing...');
+            return;
+        }
+
+        console.log('Confirmation processing');
+        this.setState({ orderProcessing: true });
+
+        let apiClient = new ApiClient();
+        apiClient.confirmFoodOrder(null, this.state.order_id)
+            .then(response => {
+                console.log('Confirmation finished');
+                console.log(response);
+                this.setState({ orderProcessing: false });
+            })
+            .catch(ex => {
+                this.handleError(ex);
+            });
+    }
+
     handleOrderButtonClick() {
         if (this.state.orderProcessing) {
             console.log('Order is already processing...');
@@ -755,53 +802,50 @@ export default class Order extends React.Component {
         this.setState({ orderProcessing: true });
 
         const food = this.food;
+        const payment = PriceCalc.getOrderPayment(food.price, this.state.quantity);
         const order = {
-            foodItemId: food.id,
+            food_id: food.id,
+            cook_js_user_id: food.userId,
             quantity: this.state.quantity,
-            date: this.state.date,
-            time: this.state.time,
-            apt: this.state.apt,
-            address: this.state.address,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            handoff_date: this.state.date,
+            handoff_time: this.state.time,
             phone: this.state.phone,
+            totalAmount: payment.totalAmount,
+            cookAmount: payment.cookAmount
         };
-
-        this.checkout.props.stripe.createToken()
-            .then(payload => {
-                if (payload.error) {
+        console.log(order);
+        this.checkout.props.stripe.createSource(
+            {
+                amount: order.amount,
+                currency: 'cad',
+                usage: 'single_use',
+                metadata: {
+                    user_id: CognitoUtil.getLoggedInUserId()
+                }
+            })
+            .then(result => {
+                if (result.error) {
                     let ex = new Error('Payment failed!');
-                    ex.error = payload.error;
+                    ex.error = result.error;
                     throw ex;
                 }
-                else {
-                    let apiClient = new ApiClient();
-                    return apiClient.submitFoodOrder(jwtToken, payload.token, order);
-                }
+                let apiClient = new ApiClient();
+                order.source = result.source;
+                return apiClient.submitFoodOrder(jwtToken, order);
             })
             .then(response => {
                 console.log('Order finished');
                 console.log(response);
-                this.setState({ orderProcessing: false });
+                this.setState({
+                    orderProcessing: false,
+                    order_id: response.data.order_id
+                });
                 if (this.state.currentStep < Steps.confirm + 1) {
                     this.setState({ currentStep: this.state.currentStep + 1 });
                 }
             })
             .catch(ex => {
-                console.error(ex);
-                let paymentError = 'Payment failed.'
-                if (ex.error && ex.error.message) {
-                    paymentError = ex.error.message;
-                }
-                else if (ex.response && ex.response.data && ex.response.data.error) {
-                    paymentError = ex.response.data.error;
-                }
-                this.setState({
-                    orderProcessing: false,
-                    hasErrors: { payment: true },
-                    paymentError
-                });
-                //this.props.history.push('orderError');
+                this.handleError(ex);
             });
     }
 }

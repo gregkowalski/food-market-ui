@@ -27,13 +27,14 @@ export default class ApiClient {
         return headers;
     }
 
-    submitFoodOrder(jwt, stripeToken, order) {
-        let body = {
-            stripeTokenId: stripeToken.id,
-            order: order
-        }
-        return this.apiGatewayClient.invokeApi(null, '/charges', 'POST',
-            { headers: this.jsonHttpHeader(jwt) }, body);
+    submitFoodOrder(jwt, order) {
+        return this.apiGatewayClient.invokeApi(null, '/orders', 'POST',
+            { headers: this.jsonHttpHeader(jwt) }, order);
+    }
+
+    confirmFoodOrder(jwt, order_id) {
+        return this.apiGatewayClient.invokeApi(null, `/orders/${order_id}/confirm`, 'POST',
+            { headers: this.jsonHttpHeader(jwt) });
     }
 
     updateUser(jwt, user) {
