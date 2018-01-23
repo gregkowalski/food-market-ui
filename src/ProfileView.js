@@ -1,6 +1,6 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
-import { Segment, Button, Image, Header, Grid } from 'semantic-ui-react'
+import { Segment, Image, Header, Grid } from 'semantic-ui-react'
 import './ProfileView.css'
 import AppHeader from './components/AppHeader'
 import CognitoUtil from './Cognito/CognitoUtil'

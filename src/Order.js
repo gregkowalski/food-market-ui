@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import { Button, Image, Icon, Message, Dropdown, Checkbox, Popup, Radio } from 'semantic-ui-react'
+import { Button, Image, Icon, Message, Dropdown, Checkbox, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';

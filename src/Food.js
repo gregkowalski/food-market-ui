@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
-import { Grid, Item, Image, Rating, Label, Icon } from 'semantic-ui-react'
+import { Grid, Item, Image, Rating, Icon } from 'semantic-ui-react'
 import './Food.css'
 import FoodItems from './data/FoodItems'
 import Util from './Util'

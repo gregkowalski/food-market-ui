@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Button, Image, Icon, Rating, Segment, Popup, Accordion } from 'semantic-ui-react'
+import { Button, Image, Icon, Rating, Segment, Accordion } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-react'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
