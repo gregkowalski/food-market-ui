@@ -35,6 +35,7 @@ export default class Order extends React.Component {
 
     state = {
         quantity: 1,
+        showServiceFee: false,
         showPricingDetails: false,
         acceptedTerms: false,
         hasBlurred: {},
@@ -108,6 +109,11 @@ export default class Order extends React.Component {
         let newState = { quantity: newQuantity };
         this.setState(newState, () => this.validateField('quantity', newQuantity));
     }
+
+    handleServiceFeeClick = (e, titleProps) => {
+        const showServiceFee = !this.state.showServiceFee;
+        this.setState({ showServiceFee: showServiceFee });
+    };
 
     handlePricingDetailsClick = (e, titleProps) => {
         const showPricingDetails = !this.state.showPricingDetails;
@@ -303,7 +309,7 @@ export default class Order extends React.Component {
 
     render() {
         let food = this.food;
-        const { showPricingDetails } = this.state;
+        const { showServiceFee, showPricingDetails } = this.state;
 
         let currentStepComponent;
         if (this.state.currentStep === Steps.pickup) {
@@ -331,14 +337,24 @@ export default class Order extends React.Component {
                                 <Divider />
                                 <div className='detail-card-summary-row'>
                                     <div className='order-summary-align-left'>
-                                        Service fee <Popup
+                                        <Accordion>
+                                            <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
+                                            Service Fee
+                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />  
+                                             </Accordion.Title>
+                                            <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
+                                                This helps run our platform and keep the lights on.
+                                            </Accordion.Content>
+                                        </Accordion>
+                                        {/* Service fee <Popup
                                             trigger={<Icon size='small' name='question circle outline' />}
                                             content='This helps run our platform and keep the lights on.'
                                             on={['click']}
-                                            hideOnScroll />
+                                            position='bottom center'
+                                            hideOnScroll /> */}
                                     </div>
                                     <Divider />
-                                    <div className='order-summary-align-right'>
+                                    <div className='order-summary-align-service-fee'>
                                         ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                     </div>
                                 </div>
@@ -488,14 +504,18 @@ export default class Order extends React.Component {
                                 <Divider />
                                 <div className='detail-card-summary-row'>
                                     <div className='order-summary-align-left'>
-                                        Service fee <Popup
-                                            trigger={<Icon size='small' name='question circle outline' />}
-                                            content='This helps run our platform and keep the lights on.'
-                                            on={['click']}
-                                            hideOnScroll />
+                                    <Accordion>
+                                            <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
+                                            Service Fee
+                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />  
+                                             </Accordion.Title>
+                                            <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
+                                                This helps run our platform and keep the lights on.
+                                            </Accordion.Content>
+                                        </Accordion>
                                     </div>
                                     <Divider />
-                                    <div className='order-summary-align-right'>
+                                    <div className='order-summary-align-service-fee'>
                                         ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                     </div>
                                 </div>

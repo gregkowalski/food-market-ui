@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Button, Image, Icon, Rating, Segment, Popup } from 'semantic-ui-react'
+import { Button, Image, Icon, Rating, Segment, Popup, Accordion } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-react'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
@@ -26,6 +26,7 @@ export default class FoodDetail extends Component {
         hasErrors: {},
         openConfirmUserDesktop: false,
         openConfirmUserMobile: false,
+        showServiceFee: false,
     };
     isLoggedIn;
     cook;
@@ -107,6 +108,11 @@ export default class FoodDetail extends Component {
             this.setState({ quantity: 1 });
         }
     }
+
+    handleServiceFeeClick = (e, titleProps) => {
+        const showServiceFee = !this.state.showServiceFee;
+        this.setState({ showServiceFee: showServiceFee });
+    };
 
     validateField(fieldName, fieldValue) {
         if (!fieldValue) {
@@ -273,6 +279,8 @@ export default class FoodDetail extends Component {
 
     render() {
 
+        const { showServiceFee } = this.state;
+
         let food = this.food;
         let reviews = Reviews
             .filter(x => x.foodItemId === food.id);
@@ -403,10 +411,10 @@ export default class FoodDetail extends Component {
 
                     <Header as='h3' className='food-detail-header'>Special Features</Header>
                     <div className='detail-body-text'>{food.feat}</div>
-                    <Divider section />
+                    <Divider section hidden />
                 </ScrollElement>
                 <FlagListingMobile />
-
+                <Divider section hidden />
                 <ScrollElement name="reviews">
                     <Header className='detail-sub-header' as='h2'>
                         <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
@@ -547,13 +555,23 @@ export default class FoodDetail extends Component {
 
                                         <div className='detail-card-summary-row'>
                                             <div className='detail-card-align-left'>
-                                                Service fee <Popup
+                                                <Accordion>
+                                                    <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
+                                                        Service Fee
+                                                    <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
+                                                    </Accordion.Title>
+                                                    <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
+                                                        This helps run our platform and keep the lights on.
+                                                     </Accordion.Content>
+                                                </Accordion>
+
+                                                {/* Service fee <Popup
                                                     trigger={<Icon size='small' name='question circle outline' />}
                                                     content='This helps run our platform and keep the lights on.'
                                                     on={['click']}
-                                                    hideOnScroll />
+                                                    hideOnScroll /> */}
                                             </div>
-                                            <div className='detail-card-align-right'>
+                                            <div className='detail-card-summary-align-service-fee'>
                                                 ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
                                             </div>
                                         </div>
