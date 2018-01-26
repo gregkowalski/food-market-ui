@@ -1,3 +1,5 @@
+# Food-Market-UI aka Foodcraft
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Running
@@ -27,7 +29,7 @@ $ npm run deploy
 
 ## Semantic-UI and Semantic-UI-React
 
-### Install `semantic-ui` and `semantic-ui-react`
+### `semantic-ui` and `semantic-ui-react`
 
 The following steps were done to install semantic-ui and semantic-ui-react but please note that this is for information only.  These packages are already installed so you do NOT need to run these commands.
 
