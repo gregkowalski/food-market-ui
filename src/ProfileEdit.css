@@ -1,6 +1,6 @@
 .profileedit-main {
     margin-top: 100px;
-    width: 90%;
+    width: 75%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -15,7 +15,7 @@
     margin: 20px 0px 0px 0px !important;
     background-color: #4cb99e !important;
     font-family: 'Athiti' !important;
-    font-size: 1.4em !important;
+    font-size: 1.2em !important;
     font-weight: 600 !important;
     color: #ffffff !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
