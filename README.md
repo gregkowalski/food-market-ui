@@ -9,9 +9,27 @@ $ npm start
 
 The server should be live at <http://localhost:3000>.
 
+## Build 
+
+The following command will bundle all the resources using react-scripts:
+
+```bash
+$ npm run build
+```
+
+## Deploy
+
+In order to deploy the code to the appropriate AWS S3 bucket, you first need to ensure that you have the appropriate AWS credentials configured in your environment.  The following command deploys the dev environment:
+
+```bash
+$ npm run deploy
+```
+
 ## Semantic-UI and Semantic-UI-React
 
 ### Install `semantic-ui` and `semantic-ui-react`
+
+The following steps were done to install semantic-ui and semantic-ui-react but please note that this is for information only.  These packages are already installed so you do NOT need to run these commands.
 
 ```bash
 $ npm install --save semantic-ui-react 
