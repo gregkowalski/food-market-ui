@@ -73,7 +73,8 @@ export default class ProfileEdit extends React.Component {
                     phone: phone,
                     apt: user.apt === null ? '' : user.apt,
                     stripe_user_id: user.stripe_user_id,
-                    loading: false
+                    loading: false,
+                    certification: 'FOODSAFE Level 1'
                 };
                 this.setState(newState);
             })
@@ -337,7 +338,7 @@ export default class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <Grid.Column id='profileedit-grid-label' computer={3}>City:</Grid.Column>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Neighbourhood:</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Input name='city' value={this.state.city} error={this.state.hasErrors.city}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
@@ -410,7 +411,14 @@ export default class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                         <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
                                         <Grid.Column computer={2} style={{ paddingTop: 0 }}>
-                                            <Input name='apt' placeholder='Apartment' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
+                                            <Input name='apt' placeholder='' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Certifications:</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='lang' value={this.state.certification} error={this.state.hasErrors.certification}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
                                         </Grid.Column>
                                     </Grid.Row>
                                 </Grid>
