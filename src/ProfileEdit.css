@@ -6,7 +6,6 @@
 }
 
 .profileedit-header {
-    font-size: 0.5em !important;
     background-color: #b3dbce60 !important;
 }
 
@@ -28,8 +27,8 @@
     margin: 20px 0px 0px 0px !important;
     background-color: #4cb99e !important;
     font-family: 'Athiti' !important;
-    font-size: 1.2em !important;
-    font-weight: 600 !important;
+    font-size: 1em !important;
+    font-weight: 500 !important;
     color: #ffffff !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
 }

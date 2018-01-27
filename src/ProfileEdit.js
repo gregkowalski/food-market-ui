@@ -304,17 +304,18 @@ export default class ProfileEdit extends React.Component {
                             <Menu fluid vertical tabular className='profileedit-menu'>
                                 <Menu.Item name='Edit Profile' active={activeItem === 'editProfile'} onClick={this.handleEditProfile} />
                                 <Menu.Item name='References' active={activeItem === 'references'} onClick={this.handleReferences} />
-                            </Menu>
+                            
                             {this.isOwnProfile &&
                                 <div style={{ display: 'inline-flex'}}>
                                     <Link to={`/profile/view/${this.user.user_id}`}>
-                                        <Button className='profileedit-view-button' >View Profile</Button>
+                                        <Button fluid className='profileedit-view-button' >View Profile</Button>
                                     </Link>
                                 </div>
                             }
+                            </Menu>
                         </Grid.Column>
                         <Grid.Column stretched width={12}>
-                            <Header className='profileedit-header' block attached='top'><span style={{fontSize: '0.8em', margin: '0px 10px' }}>Required</span></Header>
+                            <Header className='profileedit-header' block attached='top'>Required</Header>
                             <Segment attached>
                                 <Grid stackable className='profileedit-grid-body'>
                                     <Grid.Row>
@@ -369,7 +370,7 @@ export default class ProfileEdit extends React.Component {
                                     </Grid.Row>
                                 </Grid>
                             </Segment>
-                            <Header className='profileedit-header' block attached='top'><span style={{ fontSize: '0.8em', margin: '0px 10px' }}>Optional</span></Header>
+                            <Header className='profileedit-header' block attached='top'>Optional</Header>
                             <Segment attached>
                                 <Grid stackable className='profileedit-grid-body'>
                                 <Grid.Row>
@@ -423,7 +424,7 @@ export default class ProfileEdit extends React.Component {
                                     </Grid.Row>
                                 </Grid>
                             </Segment>
-                            <Header className='profileedit-header' block attached='top'><span style={{ fontSize: '0.8em', margin: '0px 10px' }}>Stripe</span></Header>
+                            <Header className='profileedit-header' block attached='top'>Stripe</Header>
                             <Segment attached >
                                 <div style={{margin: '10px 10px 10px 60px'}}>{stripeComponent}</div>
                             </Segment>

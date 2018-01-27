@@ -31,14 +31,15 @@
 }
 
 .profileview-card-header {
-    margin-left: 7px;
-    font-size: 1.65em !important;
+    margin: 0px 10px;
+    font-size: 1.5em !important;
     font-weight: 500 !important;
-    font-family: 'Athiti' !important;
+    background-color: #b3dbce60 !important;
 }
 
 .profileview-card-items {
     padding: 10px;
+    font-size: 1.2em;
 }
 
 @media all and (max-width: 1127px) {
