@@ -300,7 +300,7 @@ export default class ProfileEdit extends React.Component {
                 <div className='profileedit-main'>
                     <Grid>
                         <Grid.Column width={4}>
-                            <Menu fluid vertical tabular>
+                            <Menu fluid vertical tabular className='profileedit-menu'>
                                 <Menu.Item name='Edit Profile' active={activeItem === 'editProfile'} onClick={this.handleEditProfile} />
                                 <Menu.Item name='References' active={activeItem === 'references'} onClick={this.handleReferences} />
                             </Menu>
@@ -312,11 +312,10 @@ export default class ProfileEdit extends React.Component {
                                 </div>
                             }
                         </Grid.Column>
-
                         <Grid.Column stretched width={12}>
-                            <Header block attached='top'>Required</Header>
+                            <Header className='profileedit-header' block attached='top'><span style={{fontSize: '0.8em', margin: '0px 10px' }}>Required</span></Header>
                             <Segment attached>
-                                <Grid stackable>
+                                <Grid stackable className='profileedit-grid-body'>
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Email:</Grid.Column>
                                         <Grid.Column computer={13}>
@@ -367,7 +366,12 @@ export default class ProfileEdit extends React.Component {
                                                 visible={this.state.hasErrors.info} header='Invalid info' content='Please enter your info' icon='exclamation circle' />
                                         </Grid.Column>
                                     </Grid.Row>
-                                    <Grid.Row>
+                                </Grid>
+                            </Segment>
+                            <Header className='profileedit-header' block attached='top'><span style={{ fontSize: '0.8em', margin: '0px 10px' }}>Optional</span></Header>
+                            <Segment attached>
+                                <Grid stackable className='profileedit-grid-body'>
+                                <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Languages:</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Input name='lang' value={this.state.lang} error={this.state.hasErrors.lang}
@@ -377,49 +381,6 @@ export default class ProfileEdit extends React.Component {
                                                 visible={this.state.hasErrors.lang} header='Invalid languages' content='Please enter the languages you know' icon='exclamation circle' />
                                         </Grid.Column>
                                     </Grid.Row>
-                                </Grid>
-                            </Segment>
-
-                            <Header block attached='top'>Verification</Header>
-                            <Segment attached>
-                                <Grid stackable>
-                                    <Grid.Row>
-                                        <Grid.Column id='profileedit-grid-label' computer={3}>Phone:</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}
-                                                error={this.state.hasErrors.phone} />
-                                            <Message error={this.state.hasErrors.phone}
-                                                hidden={!this.state.hasErrors.phone}
-                                                visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column id='profileedit-grid-label' computer={3}>Street Address:</Grid.Column>
-                                        <Grid.Column computer={10}>
-                                            <Autocomplete className='profileedit-address'
-                                                name='address'
-                                                onPlaceSelected={(place) => this.handleAddressChange(place)}
-                                                onChange={this.handleChange}
-                                                onBlur={this.handleBlur}
-                                                types={['address']}
-                                                placeholder='Address'
-                                                componentRestrictions={{ country: 'ca' }}
-                                                value={this.state.address} />
-                                            <Message
-                                                error={this.state.hasErrors.address}
-                                                hidden={!this.state.hasErrors.address}
-                                                visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
-                                        </Grid.Column>
-                                        <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
-                                        <Grid.Column computer={2} style={{ paddingTop: 0 }}>
-                                            <Input name='apt' placeholder='Apartment' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                </Grid>
-                            </Segment>
-                            <Header block attached='top'>Optional</Header>
-                            <Segment attached>
-                                <Grid stackable>
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Phone:</Grid.Column>
                                         <Grid.Column computer={13}>
@@ -454,9 +415,9 @@ export default class ProfileEdit extends React.Component {
                                     </Grid.Row>
                                 </Grid>
                             </Segment>
-                            <Header block attached='top'>Stripe</Header>
-                            <Segment attached>
-                                {stripeComponent}
+                            <Header className='profileedit-header' block attached='top'><span style={{ fontSize: '0.8em', margin: '0px 10px' }}>Stripe</span></Header>
+                            <Segment attached >
+                                <div style={{margin: '10px 10px 10px 60px'}}>{stripeComponent}</div>
                             </Segment>
                             <div style={{ marginTop: '20px' }}>
                                 <Button disabled={!this.state.hasChanges} loading={this.state.saving}

@@ -5,10 +5,23 @@
     margin-right: auto;
 }
 
+.profileedit-header {
+    font-size: 0.5em !important;
+    background-color: #b3dbce60 !important;
+}
+
+.profileedit-menu {
+    font-size: 1.2em !important;
+}
+
 #profileedit-grid-label {
     text-align: right;
     padding-top: 8px;
-    font-weight: 700;
+    font-weight: 500;
+}
+
+.profileedit-grid-body {
+    margin: 10px 10px 10px 25px !important;
 }
 
 .profileedit-view-button {
