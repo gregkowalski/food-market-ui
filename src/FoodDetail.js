@@ -5,7 +5,7 @@ import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-rea
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
 import './FoodDetail.css'
-import FoodItems from './data/FoodItems'
+// import FoodItems from './data/FoodItems'
 import Reviews from './data/Reviews'
 import AppHeader from './components/AppHeader'
 import FoodLightbox from './components/FoodLightbox'
@@ -34,39 +34,79 @@ export default class FoodDetail extends Component {
 
     handleChange = (e, { value }) => this.setState({ value })
 
-    getFoodItemId() {
+    /*getFoodItemId() {
         return parseInt(this.props.match.params.id, 10);
     }
 
     getFoodItem() {
-        let foodItemId = this.getFoodItemId();
-        return FoodItems.find(x => x.id === foodItemId);
-    }
+        
+    }*/
 
     componentWillMount() {
-        this.food = this.getFoodItem();
-        document.title = this.food.header;
-
-        let quantity = window.sessionStorage.getItem('quantity');
-        if (quantity) {
-            this.setState({ quantity: quantity });
-        }
-
-        this.isLoggedIn = CognitoUtil.isLoggedIn();
-
+        let foodItemId = this.props.match.params.id;
+        
+        var self = this;
         let apiClient = new ApiClient();
-        apiClient.getUserByJsUserId(this.food.userId)
+        apiClient.getFood(foodItemId)
             .then(response => {
-                this.cook = response.data;
-                this.forceUpdate();
+                // todo: this is gonna be done in the API
+                // todo: fix the typo for long_description
+                // todo: rating and ratingCount
+                var foodDAO = response.data;
+
+                let food = {};
+                food.title = foodDAO.title;
+                food.unit = foodDAO.unit;
+                food.feed = foodDAO.feed;
+                food.pickup = foodDAO.pickup;
+                food.delivery = foodDAO.delivery;
+                food.food_id = foodDAO.food_id;
+                food.user_id = foodDAO.user_id;
+                food.imageUrls = foodDAO.imageUrls.values;
+                food.ingredients = foodDAO.ingredients.values;
+                food.features = foodDAO.features.values;
+                food.states = foodDAO.states.values;
+                food.allergies = foodDAO.allergies.values;
+                food.short_description = foodDAO.short_description;
+                food.long_desciption = foodDAO.long_desciption;
+                food.price = foodDAO.price;
+                food.price_currency = foodDAO.price_currency;
+
+                food.rating = 5;
+                food.ratingCount = 3;
+                food.position = { lat: 49.284982, lng: -123.130252 };
+                food.instruction = "Some instruction"
+
+                self.food = food;
+
+                document.title = this.food.title;
+
+                let quantity = window.sessionStorage.getItem('quantity');
+                if (quantity) {
+                    this.setState({ quantity: quantity });
+                }
+
+                this.isLoggedIn = CognitoUtil.isLoggedIn();
+
+                let apiClient = new ApiClient();
+                apiClient.getUserByJsUserId(this.food.user_id)
+                    .then(response => {
+                        this.cook = response.data;
+                        this.forceUpdate();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
             })
             .catch(err => {
                 console.error(err);
             });
+
+        
     }
 
     quantityChanged(newQuantity) {
-        let foodItemId = this.getFoodItemId();
+        let foodItemId = this.props.match.params.id;
         let key = 'foodItemQuantity-' + foodItemId;
 
         window.sessionStorage.setItem(key, newQuantity);
@@ -142,11 +182,11 @@ export default class FoodDetail extends Component {
 
     getFoodPrepSafetyMessage(food) {
         let prep;
-        if (food.prep === 'frozen') {
+        if (food.states[0] === 'frozen') {
             prep = (<span><Icon color='teal' name='angle double right' />
                 Frozen products must be fully cooked for food safety and quality.</span>)
         }
-        else if (food.prep === 'cooked') {
+        else if (food.states[0] === 'cooked') {
             prep = (<span><Icon color='teal' name='angle double right' />
                 Store your food properly: keep cold food cold and hot food hot!</span>)
         }
@@ -167,7 +207,7 @@ export default class FoodDetail extends Component {
 
     getOrderPageUrl(food) {
         //return '/foods/' + food.id + '/order';
-        return `/foods/${food.id}/order`;
+        return `/foods/${food.food_id}/order`;
     }
 
     getRequestOrderButtonDesktop(food) {
@@ -233,7 +273,7 @@ export default class FoodDetail extends Component {
         let orderButton;
         if (this.isLoggedIn) {
             orderButton = (
-                <RouterLink to={'/foods/' + this.getFoodItemId() + '/order'}>
+                <RouterLink to={'/foods/' + this.props.match.params.id + '/order'}>
                     <Button className='detail-footer-button'>Request an Order</Button>
                 </RouterLink>
             );
@@ -282,8 +322,12 @@ export default class FoodDetail extends Component {
         const { showServiceFee } = this.state;
 
         let food = this.food;
+        if (!food) {
+            return null;
+        }
+
         let reviews = Reviews
-            .filter(x => x.foodItemId === food.id);
+            .filter(x => x.foodItemId === food.food_id);
 
         reviews = reviews
             .map(x => (
@@ -334,7 +378,7 @@ export default class FoodDetail extends Component {
                 <ScrollElement name="overview">
 
                     <Header className='detail-main-header' as='h2'>
-                        ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.header}</Header>
+                        ${PriceCalc.getTotal(food.price, this.state.quantity)} · {food.title}</Header>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em', fontFamily: 'Athiti' }}>
                         locally handcrafted by
                         <ScrollLink className="author-link" to="cook"
@@ -348,7 +392,7 @@ export default class FoodDetail extends Component {
                         <Grid doubling columns={5}  >
                             <Grid.Row>
                                 <Grid.Column>
-                                    <span className='food-detail-icon-tags'><Icon name={foodPrepIcon} /> {food.prep}</span>
+                                    <span className='food-detail-icon-tags'><Icon name={foodPrepIcon} /> {food.states[0]}</span>
                                 </Grid.Column>
                                 <Grid.Column>
                                     {deliveryElement}
@@ -368,13 +412,13 @@ export default class FoodDetail extends Component {
                             less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
                             anchorClass='showmore-text'>
 
-                            <div className='user-text'>{food.description} </div>
-                            <div>{food.moreDescription}</div>
+                            <div className='user-text'>{food.short_description} </div>
+                            <div>{food.long_desciption}</div>
                         </ShowMore>  </div>
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Ingredients</Header>
-                    <div className='detail-body-text'>{food.meta}.</div>
+                    <div className='detail-body-text'>{food.title}.</div>
 
                     <Divider section />
 
@@ -384,7 +428,7 @@ export default class FoodDetail extends Component {
                             <div style={{ fontWeight: '600' }} >
                                 May contain one or more of the following allergens: </div>
                         </div>
-                        <div style={{ marginLeft: '15px', marginTop: '15px' }}>{food.allergy}.</div>
+                        <div style={{ marginLeft: '15px', marginTop: '15px' }}>{food.allergies.join(',')}.</div>
                         <div style={{ marginTop: '15px' }}>
                             <Icon color='teal' name='angle double right' />For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly.
                             </div>
@@ -410,7 +454,7 @@ export default class FoodDetail extends Component {
                     <Divider section />
 
                     <Header as='h3' className='food-detail-header'>Special Features</Header>
-                    <div className='detail-body-text'>{food.feat}</div>
+                    <div className='detail-body-text'>{food.features.join(', ')}</div>
                     <Divider section hidden />
                 </ScrollElement>
                 <FlagListingMobile />
@@ -483,7 +527,7 @@ export default class FoodDetail extends Component {
             <div>
                 <AppHeader />
                 <div>
-                    <FoodLightbox foodItemId={food.id} />
+                    <FoodLightbox foodItemId={food.food_id} />
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">
@@ -515,8 +559,8 @@ export default class FoodDetail extends Component {
                             <div className='detail-head-right'>
                                 <Segment>
                                     <div className='detail-card-header'>
-                                        <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
-                                        <div className='detail-card-header-overflow'>{food.header} </div>
+                                        <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
+                                        <div className='detail-card-header-overflow'>{food.title} </div>
                                         <div style={{ display: 'inline-flex' }}>
                                             <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
                                                 style={{ marginTop: '4px' }} />
