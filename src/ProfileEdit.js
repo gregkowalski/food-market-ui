@@ -1,7 +1,7 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
 import { Redirect, Link } from 'react-router-dom'
-import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu } from 'semantic-ui-react'
+import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import crypto from 'crypto'
@@ -9,8 +9,30 @@ import './ProfileEdit.css'
 import AppHeader from './components/AppHeader'
 import LoadingIcon from './components/LoadingIcon'
 import CognitoUtil from './Cognito/CognitoUtil'
-import StripeUtil from './Stripe/StripeUtil';
+import StripeUtil from './Stripe/StripeUtil'
 import ApiClient from './Api/ApiClient'
+
+
+const languageOptions = [
+    { key: 'en-CA', value: 'en-CA', text: 'English' },
+    { key: 'fr-CA', value: 'fr-CA', text: 'French' },
+    { key: 'pl-PL', value: 'pl-PL', text: 'Polish' },
+    { key: 'zh-CN', value: 'zh-CN', text: 'Chinese' },
+    { key: 'zh-HK', value: 'zh-HK', text: 'Cantonese' },
+    { key: 'tr-TR', value: 'tr-TR', text: 'Turkish' },
+    { key: 'es-ES', value: 'es-ES', text: 'Spanish' },
+    { key: 'sgn-US', value: 'sgn-US', text: 'Sign Language' },
+    { key: 'it-IT', value: 'it-IT', text: 'Italian' },
+    { key: 'pt-PT', value: 'pt-PT', text: 'Portuguese' },
+    { key: 'de-CH', value: 'de-CH', text: 'German' },
+    { key: 'ja-JP', value: 'ja-JP', text: 'Japanese' },
+    { key: 'tl-PH', value: 'tl-PH', text: 'Tagalog' },
+    { key: 'ko-KR', value: 'ko-KR', text: 'Korean' },
+    { key: 'ru-RU', value: 'ru-RU', text: 'Russian' },
+    { key: 'hi-IN', value: 'hi-IN', text: 'Hindi' },
+    { key: 'pa-IN', value: 'pa-IN', text: 'Punjabi' },
+    { key: 'el-GR', value: 'el-GR', text: 'Greek' }
+]
 
 export default class ProfileEdit extends React.Component {
 
@@ -304,14 +326,14 @@ export default class ProfileEdit extends React.Component {
                             <Menu fluid vertical tabular className='profileedit-menu'>
                                 <Menu.Item name='Edit Profile' active={activeItem === 'editProfile'} onClick={this.handleEditProfile} />
                                 <Menu.Item name='References' active={activeItem === 'references'} onClick={this.handleReferences} />
-                            
-                            {this.isOwnProfile &&
-                                <div style={{ display: 'inline-flex'}}>
-                                    <Link to={`/profile/view/${this.user.user_id}`}>
-                                        <Button fluid className='profileedit-view-button' >View Profile</Button>
-                                    </Link>
-                                </div>
-                            }
+
+                                {this.isOwnProfile &&
+                                    <div style={{ display: 'inline-flex' }}>
+                                        <Link to={`/profile/view/${this.user.user_id}`}>
+                                            <Button fluid className='profileedit-view-button' >View Profile</Button>
+                                        </Link>
+                                    </div>
+                                }
                             </Menu>
                         </Grid.Column>
                         <Grid.Column stretched width={12}>
@@ -383,14 +405,10 @@ export default class ProfileEdit extends React.Component {
                             <Header className='profileedit-header' block attached='top'>Optional</Header>
                             <Segment attached>
                                 <Grid stackable className='profileedit-grid-body'>
-                                <Grid.Row>
+                                    <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Languages:</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='lang' value={this.state.lang} error={this.state.hasErrors.lang}
-                                                onChange={this.handleChange} onBlur={this.handleBlur} />
-                                            <Message error={this.state.hasErrors.lang}
-                                                hidden={!this.state.hasErrors.lang}
-                                                visible={this.state.hasErrors.lang} header='Invalid languages' content='Please enter the languages you know' icon='exclamation circle' />
+                                            <Dropdown placeholder='Select Language' fluid multiple search selection options={languageOptions}  onChange={this.handleChange} onBlur={this.handleBlur} />
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
@@ -436,7 +454,7 @@ export default class ProfileEdit extends React.Component {
                             </Segment>
                             <Header className='profileedit-header' block attached='top'>Stripe</Header>
                             <Segment attached >
-                                <div style={{margin: '10px 10px 10px 60px'}}>{stripeComponent}</div>
+                                <div style={{ margin: '10px 10px 10px 60px' }}>{stripeComponent}</div>
                             </Segment>
                             <div style={{ marginTop: '20px' }}>
                                 <Button disabled={!this.state.hasChanges} loading={this.state.saving}
