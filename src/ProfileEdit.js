@@ -359,6 +359,16 @@ export default class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Home Address:</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='username' value={this.state.username} error={this.state.hasErrors.username}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <Message error={this.state.hasErrors.username}
+                                                hidden={!this.state.hasErrors.username}
+                                                visible={this.state.hasErrors.username} header='Invalid username' content='Please enter your username' icon='exclamation circle' />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>About:</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <TextArea name='info' value={this.state.info} autoHeight rows={1}
@@ -394,7 +404,7 @@ export default class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <Grid.Column id='profileedit-grid-label' computer={3}>Delivery Address:</Grid.Column>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Home Address:</Grid.Column>
                                         <Grid.Column computer={10}>
                                             <Autocomplete className='profileedit-address'
                                                 name='address'
