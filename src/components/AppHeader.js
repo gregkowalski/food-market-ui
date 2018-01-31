@@ -4,6 +4,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import './AppHeader.css'
 import { Constants } from '../Constants'
+import Config from '../Config'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import ApiClient from '../Api/ApiClient'
 import LoadingIcon from './LoadingIcon'
@@ -72,7 +73,7 @@ class AppHeader extends React.Component {
     }
 
     handleContactSupport (event, data) {
-
+        window.location.href = `mailto:<${Config.Foodcraft.SupportEmail}>?subject=${encodeURIComponent('Foodcraft Feedback')}`;
     }
 
     getRandomInt(min, max) {
