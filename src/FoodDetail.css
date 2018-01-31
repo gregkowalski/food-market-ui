@@ -167,12 +167,13 @@
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
-    box-shadow: 0 2px 6px 0 rgba(83, 83, 83, 0.2), 0 6px 20px 0 rgba(105, 105, 105, 0.1) !important;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px !important;
 }
 
 .detail-desktop-button:hover {
     background-color:  #2aad8a !important;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important; 
 }
 
 .detail-footer-button {
@@ -184,12 +185,13 @@
     font-family: 'Athiti' !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
-    box-shadow: 0 2px 6px 0 rgba(114, 114, 114, 0.2), 0 6px 20px 0 rgba(126, 126, 126, 0.1) !important;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px !important;
 }
 
 .detail-footer-button:hover {
     background-color:  #2aad8a !important;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important; 
 }
 
 .detail-footer-header {
