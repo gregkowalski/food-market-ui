@@ -7,6 +7,7 @@
 
 .profileedit-header {
     background-color: #b3dbce60 !important;
+    color: #494949 !important;
 }
 
 .profileedit-menu {
@@ -21,6 +22,8 @@
 
 .profileedit-grid-body {
     margin: 10px 10px 10px 25px !important;
+    font-size: 1.15em !important;
+    color: #494949 !important;
 }
 
 .profileedit-view-button {
@@ -35,7 +38,36 @@
 
 .profileedit-view-button:hover {
     background-color: #2aad8a !important;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.24), 0 8px 22px 0 rgba(0, 0, 0, 0.144) !important;    
 }
+
+.profileedit-save-button {
+    margin: 20px 0px 0px 0px !important;
+    background-color: #4cb99e !important;
+    font-family: 'Athiti' !important;
+    font-size: 1.2em !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.profileedit-save-button:hover {
+    background-color: #2aad8a !important;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.24), 0 8px 22px 0 rgba(0, 0, 0, 0.144) !important;
+    
+}
+
+.profileedit-input-descriptions {
+    color: rgb(131, 131, 131) !important;
+    margin: 5px 0px 0px 0px;
+    font-size: .95em;
+}
+
+.profileedit-secured-input {
+    color: #4cb99e !important; 
+}
+
+
 
 @media all and (max-width: 767px) {
     #profileedit-grid-label {
