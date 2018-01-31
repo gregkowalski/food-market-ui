@@ -20,6 +20,7 @@ import ProfileEdit from './ProfileEdit'
 import ProfileView from './ProfileView'
 import ProfileLink from './ProfileLink'
 import NotFoundPage from './NotFoundPage'
+import Login from './Login'
 import Config from './Config'
 
 //import temp from 'temp'
@@ -45,6 +46,7 @@ render(
           <Route path='/profile/view/:userId' exact component={ProfileView} />
           <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
           <Route path='/profilelink' exact component={ProfileLink} />
+          <Route path='/login' exact component={Login} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
