@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, Button } from 'semantic-ui-react'
 import Lightbox from 'react-images'
 import './FoodLightbox.css'
-import FoodItems from '../data/FoodItems'
 
 export default class FoodLightbox extends React.Component {
 
@@ -48,7 +47,7 @@ export default class FoodLightbox extends React.Component {
         let foodItemId = this.props.foodItemId;
         let food = FoodItems.find(x => x.id === foodItemId);
 
-        const photos = food.images.map(image => {
+        const photos = food.imageUrls.map(image => {
             return {
                 src: image
             };
@@ -56,7 +55,7 @@ export default class FoodLightbox extends React.Component {
 
         return (
             <div className='foodlightbox-image-wrap'>
-                <Image className='foodlightbox-food-image' src={food.image} onClick={() => this.openLightbox()} />
+                <Image className='foodlightbox-food-image' src={food.imageUrls[0]} onClick={() => this.openLightbox()} />
                 <Lightbox images={photos}
                     onClose={() => this.closeLightbox()}
                     onClickPrev={() => this.gotoPrevious()}

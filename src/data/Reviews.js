@@ -33,7 +33,7 @@ const Reviews = [
         extraText: "Test review.",
     },
     {
-        id: 'db3f5890-00c1-11e8-9a17-f5086d19e014',
+        id: 5,
         foodItemId: 5,
         date: 'November 2017',
         image: '/assets/images/users/steve.jpg',

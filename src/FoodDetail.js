@@ -34,14 +34,6 @@ export default class FoodDetail extends Component {
 
     handleChange = (e, { value }) => this.setState({ value })
 
-    /*getFoodItemId() {
-        return parseInt(this.props.match.params.id, 10);
-    }
-
-    getFoodItem() {
-        
-    }*/
-
     componentWillMount() {
         let foodItemId = this.props.match.params.id;
         
@@ -49,28 +41,10 @@ export default class FoodDetail extends Component {
         let apiClient = new ApiClient();
         apiClient.getFood(foodItemId)
             .then(response => {
-                // todo: this is gonna be done in the API
-                // todo: fix the typo for long_description
                 // todo: rating and ratingCount
                 var foodDAO = response.data;
 
-                let food = {};
-                food.title = foodDAO.title;
-                food.unit = foodDAO.unit;
-                food.feed = foodDAO.feed;
-                food.pickup = foodDAO.pickup;
-                food.delivery = foodDAO.delivery;
-                food.food_id = foodDAO.food_id;
-                food.user_id = foodDAO.user_id;
-                food.imageUrls = foodDAO.imageUrls.values;
-                food.ingredients = foodDAO.ingredients.values;
-                food.features = foodDAO.features.values;
-                food.states = foodDAO.states.values;
-                food.allergies = foodDAO.allergies.values;
-                food.short_description = foodDAO.short_description;
-                food.long_desciption = foodDAO.long_desciption;
-                food.price = foodDAO.price;
-                food.price_currency = foodDAO.price_currency;
+                let food = foodDAO;
 
                 food.rating = 5;
                 food.ratingCount = 3;
@@ -89,7 +63,7 @@ export default class FoodDetail extends Component {
                 this.isLoggedIn = CognitoUtil.isLoggedIn();
 
                 let apiClient = new ApiClient();
-                apiClient.getUserByJsUserId(this.food.user_id)
+                apiClient.getUser(this.food.user_id)
                     .then(response => {
                         this.cook = response.data;
                         this.forceUpdate();

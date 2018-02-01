@@ -75,32 +75,14 @@ class Food extends Component {
         let apiClient = new ApiClient();
         apiClient.getFoods()
             .then(response => {
-                // todo: this is gonna be done in the API
-                // todo: fix the typo for long_description
                 // todo: rating and ratingCount
                 var foodsDTO = [];
                 response.data.forEach(foodDAO => {
-                    let food = {};
-                    food.title = Object.keys(foodDAO.title).map(k => foodDAO.title[k])[0];
-                    food.unit = Object.keys(foodDAO.unit).map(k => foodDAO.unit[k])[0];
-                    food.feed = Object.keys(foodDAO.feed).map(k => foodDAO.feed[k])[0];
-                    food.pickup = Object.keys(foodDAO.pickup).map(k => foodDAO.pickup[k])[0];
-                    food.delivery = Object.keys(foodDAO.delivery).map(k => foodDAO.delivery[k])[0];
-                    food.food_id = Object.keys(foodDAO.food_id).map(k => foodDAO.food_id[k])[0];
-                    food.user_id = Object.keys(foodDAO.user_id).map(k => foodDAO.user_id[k])[0];
-                    food.imageUrls = Object.keys(foodDAO.imageUrls).map(k => foodDAO.imageUrls[k])[0];
-                    food.ingredients = Object.keys(foodDAO.ingredients).map(k => foodDAO.ingredients[k])[0];
-                    food.features = Object.keys(foodDAO.features).map(k => foodDAO.features[k])[0];
-                    food.states = Object.keys(foodDAO.states).map(k => foodDAO.states[k])[0];
-                    food.allergies = Object.keys(foodDAO.allergies).map(k => foodDAO.allergies[k])[0];
-                    food.short_description = Object.keys(foodDAO.short_description).map(k => foodDAO.short_description[k])[0];
-                    food.long_desciption = Object.keys(foodDAO.long_desciption).map(k => foodDAO.long_desciption[k])[0];
-                    food.price = Object.keys(foodDAO.price).map(k => foodDAO.price[k])[0];
-                    food.price_currency = Object.keys(foodDAO.price_currency).map(k => foodDAO.price_currency[k])[0];
-
+                    let food = foodDAO;
+                    
                     food.rating = 5;
                     food.ratingCount = 3;
-                    food.instruction = "Some instruction"
+                    food.instruction = "Some instruction" //todo: dont know what this is for
                     food.position = { lat: 49.284982, lng: -123.130252 };
 
                     foodsDTO.push(food);
