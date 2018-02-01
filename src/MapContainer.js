@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './MapContainer.css'
 import { Map, Marker, InfoWindow } from './Map'
-// import FoodItems from './data/FoodItems'
 import PriceCalc from './PriceCalc'
 import ApiClient from './Api/ApiClient'
 

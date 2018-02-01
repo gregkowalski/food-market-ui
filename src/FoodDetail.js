@@ -5,8 +5,6 @@ import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-rea
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
 import './FoodDetail.css'
-// import FoodItems from './data/FoodItems'
-import Reviews from './data/Reviews'
 import AppHeader from './components/AppHeader'
 import FoodLightbox from './components/FoodLightbox'
 import Util from './Util'
@@ -31,6 +29,7 @@ export default class FoodDetail extends Component {
     isLoggedIn;
     cook;
     food;
+    reviews;
 
     handleChange = (e, { value }) => this.setState({ value })
 
@@ -48,7 +47,6 @@ export default class FoodDetail extends Component {
 
                 food.rating = 5;
                 food.ratingCount = 3;
-                food.position = { lat: 49.284982, lng: -123.130252 };
                 food.instruction = "Some instruction"
 
                 self.food = food;
@@ -62,7 +60,17 @@ export default class FoodDetail extends Component {
 
                 this.isLoggedIn = CognitoUtil.isLoggedIn();
 
+                // todo: once the API ready use this call by food_id
                 let apiClient = new ApiClient();
+                apiClient.getReviews()
+                    .then(response => {
+                        this.reviews = response.data.filter(r => r.food_id === food.food_id);
+                        this.forceUpdate();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+
                 apiClient.getUser(this.food.user_id)
                     .then(response => {
                         this.cook = response.data;
@@ -300,16 +308,13 @@ export default class FoodDetail extends Component {
             return null;
         }
 
-        let reviews = Reviews
-            .filter(x => x.foodItemId === food.food_id);
-
-        reviews = reviews
+        let reviews = this.reviews
             .map(x => (
-                <div key={x.id}>
+                <div key={x.review_id}>
                     <Feed>
                         <Feed.Event>
                             <Feed.Content>
-                                <Image src={x.image} size='mini' floated='left' circular />
+                                <Image src={x.imageUrl} size='mini' floated='left' circular />
                                 <div style={{ float: 'right', color: '#5e5d5d' }}>
                                     <a href="url" style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                                 <Feed.Summary className='detail-body-text'>{x.summary} </Feed.Summary>
@@ -320,7 +325,7 @@ export default class FoodDetail extends Component {
                                             lines={4}
                                             more={<div style={{ color: '#189da7' }}>Read more</div>}
                                             less=''>
-                                            {x.extraText}
+                                            {x.comment}
                                         </ShowMore>
                                     </div>
                                 </Feed.Extra>

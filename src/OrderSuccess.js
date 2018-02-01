@@ -1,7 +1,7 @@
 import React from 'react'
 import queryString from 'query-string'
-import FoodItems from './data/FoodItems'
 import AppHeader from './components/AppHeader'
+import ApiClient from './Api/ApiClient'
 
 export default class OrderSuccess extends React.Component {
 
@@ -11,21 +11,25 @@ export default class OrderSuccess extends React.Component {
         serviceFeeRate: 0.03
     };
 
-    getFoodItemId() {
-        return this.props.match.params.id;
-    }
+    food;
 
     componentWillMount() {
-        let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
-        document.title = food.header;
+        let apiClient = new ApiClient();
+        apiClient.getFood(this.props.match.params.id)
+            .then(response => {                
+                this.food = response.data;
+
+                document.title = this.food.title;
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     render() {
-        let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
+        if (!this.food) {
+            return null;
+        }
 
         let message = '';
         const query = queryString.parse(this.props.location.search);
@@ -41,7 +45,7 @@ export default class OrderSuccess extends React.Component {
                 <AppHeader />
                 <div style={{ marginLeft: '1em', marginTop: '2em' }}>
                 <h1 style={{ color: '#4cb9a0' }}>Success!</h1>
-                    <span>Your <strong>{food.header}</strong> order has been placed{message}.</span>
+                    <span>Your <strong>{this.food.title}</strong> order has been placed{message}.</span>
                 </div>
             </div>
         );

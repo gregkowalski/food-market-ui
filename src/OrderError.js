@@ -1,8 +1,8 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
-import FoodItems from './data/FoodItems'
 import AppHeader from './components/AppHeader'
 import { Constants } from './Constants'
+import ApiClient from './Api/ApiClient'
 
 export default class OrderError extends React.Component {
 
@@ -12,27 +12,32 @@ export default class OrderError extends React.Component {
         serviceFeeRate: 0.03
     };
 
-    getFoodItemId() {
-        return this.props.match.params.id;
-    }
+    food;
 
     componentWillMount() {
-        let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
-        document.title = food.header;
+        let apiClient = new ApiClient();
+        apiClient.getFood(this.props.match.params.id)
+            .then(response => {                
+                this.food = response.data;
+
+                document.title = this.food.title;
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     render() {
-        let id = this.getFoodItemId();
-        // eslint-disable-next-line 
-        let food = FoodItems.find(x => x.id == id);
+        if (!this.food) {
+            return null;
+        }
+        
         return (
             <div>
                 <AppHeader />
                 <div style={{ marginLeft: '1em', marginTop: '2em' }}>
                 <h1 style={{ color: '#f35656' }}>Oops!!!</h1>
-                <span>It looks like your delicious order of <strong>{food.header} </strong>has<span style={{ color: '#f35656' }}> NOT</span> been placed!
+                <span>It looks like your delicious order of <strong>{this.food.title} </strong>has<span style={{ color: '#f35656' }}> NOT</span> been placed!
                 <br />
                     Please return to
                     <a href="/" className='head-link'>
