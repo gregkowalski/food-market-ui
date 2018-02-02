@@ -11,83 +11,83 @@ import AppHeader from './components/AppHeader'
 
 class App extends Component {
 
-  isDebug = false;
+    isDebug = false;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      hoveredFoodItemId: -1
+    constructor(props) {
+        super(props);
+        this.state = {
+            hoveredFoodItemId: -1
+        };
+    }
+
+    handleDateChange(date) {
+        this.setState({ date: date.toDate() });
     };
-  }
 
-  handleDateChange(date) {
-    this.setState({ date: date.toDate() });
-  };
+    handleTimeChange = (event, data) => {
+        this.setState({ time: data.value });
+    };
 
-  handleTimeChange = (event, data) => {
-    this.setState({ time: data.value });
-  };
+    handleAddressChange(place) {
+        console.log(place);
+        let mapZoom = Map.defaultProps.zoom;
+        if (!mapZoom) {
+            mapZoom = 13;
+        }
+        this.setState({
+            address: place,
+            mapLocation: place.geometry.location,
+            mapZoom: mapZoom
+        });
+    };
 
-  handleAddressChange(place) {
-    console.log(place);
-    let mapZoom = Map.defaultProps.zoom;
-    if (!mapZoom) {
-      mapZoom = 13;
+    handleSearch(event, data) {
+        console.log(this.state);
     }
-    this.setState({
-      address: place,
-      mapLocation: place.geometry.location,
-      mapZoom: mapZoom
-    });
-  };
 
-  handleSearch(event, data) {
-    console.log(this.state);
-  }
-
-  handleFoodItemEnter(itemId) {
-    if (this.isDebug) {
-      console.log('handleFoodItemEnter id=' + itemId);
+    handleFoodItemEnter(itemId) {
+        if (this.isDebug) {
+            console.log('handleFoodItemEnter id=' + itemId);
+        }
+        this.setState({
+            hoveredFoodItemId: itemId
+        });
     }
-    this.setState({
-      hoveredFoodItemId: itemId
-    });
-  }
 
-  handleFoodItemLeave(itemId) {
-    if (this.isDebug) {
-      console.log('handleFoodItemLeave id=' + itemId);
+    handleFoodItemLeave(itemId) {
+        if (this.isDebug) {
+            console.log('handleFoodItemLeave id=' + itemId);
+        }
+        this.setState({
+            hoveredFoodItemId: -1
+        });
     }
-    this.setState({
-      hoveredFoodItemId: -1
-    });
-  }
 
-  render() {
-    return (
-      <div className='wrap'>
+    render() {
+        return (
+            <div className='wrap'>
 
-        <AppHeader fixed />
+                <AppHeader fixed />
 
-        <div className='bodywrap'>
-          <div className='center'>
-            <Food
-              onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
-              onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
-            />
-          </div>
-          <div className='app-right'>
-            <MapContainer
-              selectedItemId={this.state.hoveredFoodItemId}
-              center={this.state.mapLocation}
-              zoom={this.state.mapZoom} />
-          </div>
-        </div>
+                <div className='bodywrap'>
+                    <div className='center'>
+                        <Food
+                            onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
+                            onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
+                        />
+                    </div>
+                    <div className='app-right'>
+                        <MapContainer
+                            selectedItemId={this.state.hoveredFoodItemId}
+                            center={this.state.mapLocation}
+                            zoom={this.state.mapZoom} />
+                    </div>
+                </div>
 
 
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 }
 
 export default App;

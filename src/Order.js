@@ -307,6 +307,9 @@ export default class Order extends React.Component {
 
     render() {
         let food = this.food;
+        if (!food) {
+            return null;
+        }
         const { showServiceFee, showPricingDetails } = this.state;
 
         let currentStepComponent;
