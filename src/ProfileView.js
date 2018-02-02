@@ -57,9 +57,7 @@ export default class ProfileView extends React.Component {
                 <div className='profileview-container'>
                     <div className='profileview-left'>
                         <div className='profileview-card'>
-                            <Segment secondary attached='top'>
-                                <div className='profileview-card-header'>Verified info</div>
-                            </Segment>
+                            <Header className='profileview-card-header' block attached='top'>Verified Info</Header>
                             <Segment attached>
                                 <div className='profileview-card-items'>
                                     <VerifiedInfo isVerified={this.user.email_verified} label='Email' />
@@ -68,13 +66,13 @@ export default class ProfileView extends React.Component {
                             </Segment>
                         </div>
                         <div className='profileview-card' style={{ marginTop: '20px' }}>
-                            <Segment secondary attached='top'>
-                                <div className='profileview-card-header'> About Me</div>
-                            </Segment>
+                            <Header className='profileview-card-header' block attached='top'>About Me</Header>
                             <Segment attached>
                                 <div className='profileview-card-items'>
-                                    <div style={{ textAlign: 'left' }}><strong>Languages</strong></div>
-                                    <div style={{ textAlign: 'left', marginTop: '3px' }}> {this.user.lang}</div>
+                                    <div style={{ textAlign: 'left', fontWeight: '600', fontSize: '1.1em' }}>Languages</div>
+                                    <div style={{ textAlign: 'left', marginTop: '8px' }}> {this.user.lang}</div>
+                                    <div style={{ textAlign: 'left', marginTop: '20px', fontWeight: '600', fontSize: '1.1em' }}>Certifications</div>
+                                    <div style={{ textAlign: 'left', marginTop: '8px' }}> FOODSAFE Level 1</div>
                                     <div style={{ clear: 'left' }}></div>
                                 </div>
                             </Segment>

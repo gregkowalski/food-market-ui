@@ -14,6 +14,9 @@ const Config = {
     Stripe: {
         ClientId: 'ca_C2ECxvqWXaiTNmA44vVjfx2clgV7OexY',
         PublicApiKey: 'pk_test_3i1u1cO6uPgfdBh08rz9MIlN'
+    },
+    Foodcraft: {
+        SupportEmail: 'gregkowalski@hotmail.com'
     }
 }
 

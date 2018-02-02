@@ -1,7 +1,7 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
 import { Redirect, Link } from 'react-router-dom'
-import { Segment, Input, Button, Image, Header, Grid, Message, TextArea } from 'semantic-ui-react'
+import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import crypto from 'crypto'
@@ -9,12 +9,35 @@ import './ProfileEdit.css'
 import AppHeader from './components/AppHeader'
 import LoadingIcon from './components/LoadingIcon'
 import CognitoUtil from './Cognito/CognitoUtil'
-import StripeUtil from './Stripe/StripeUtil';
+import StripeUtil from './Stripe/StripeUtil'
 import ApiClient from './Api/ApiClient'
+
+
+const languageOptions = [
+    { key: 'en-CA', value: 'en-CA', text: 'English' },
+    { key: 'fr-CA', value: 'fr-CA', text: 'French' },
+    { key: 'pl-PL', value: 'pl-PL', text: 'Polish' },
+    { key: 'zh-CN', value: 'zh-CN', text: 'Chinese' },
+    { key: 'zh-HK', value: 'zh-HK', text: 'Cantonese' },
+    { key: 'tr-TR', value: 'tr-TR', text: 'Turkish' },
+    { key: 'es-ES', value: 'es-ES', text: 'Spanish' },
+    { key: 'sgn-US', value: 'sgn-US', text: 'Sign Language' },
+    { key: 'it-IT', value: 'it-IT', text: 'Italian' },
+    { key: 'pt-PT', value: 'pt-PT', text: 'Portuguese' },
+    { key: 'de-CH', value: 'de-CH', text: 'German' },
+    { key: 'ja-JP', value: 'ja-JP', text: 'Japanese' },
+    { key: 'tl-PH', value: 'tl-PH', text: 'Tagalog' },
+    { key: 'ko-KR', value: 'ko-KR', text: 'Korean' },
+    { key: 'ru-RU', value: 'ru-RU', text: 'Russian' },
+    { key: 'hi-IN', value: 'hi-IN', text: 'Hindi' },
+    { key: 'pa-IN', value: 'pa-IN', text: 'Punjabi' },
+    { key: 'el-GR', value: 'el-GR', text: 'Greek' }
+]
 
 export default class ProfileEdit extends React.Component {
 
     state = {
+        activeItem: 'editProfile',
         hasChanges: false,
         hasErrors: {
             phone: false
@@ -72,7 +95,8 @@ export default class ProfileEdit extends React.Component {
                     phone: phone,
                     apt: user.apt === null ? '' : user.apt,
                     stripe_user_id: user.stripe_user_id,
-                    loading: false
+                    loading: false,
+                    certification: 'FOODSAFE Level 1'
                 };
                 this.setState(newState);
             })
@@ -80,6 +104,8 @@ export default class ProfileEdit extends React.Component {
                 console.error(err);
             });
     }
+
+    handleEditProfile = (e, { name }) => this.setState({ activeItem: name })
 
     handleChange = (e) => {
         const name = e.target.name;
@@ -275,7 +301,10 @@ export default class ProfileEdit extends React.Component {
         else {
             stripeComponent =
                 <div>
-                    <div style={{ marginBottom: '10px' }}>If you'd like to become a cook and make money with Foodcraft, please sign up with Stripe.</div>
+                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in becoming a cook and making money with Foodcraft? 
+                    <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account! 
+                        </div>
+                    </div>
                     <a href='stripe' onClick={(e) => this.handleConnectStripeClick(e)}>
                         <Image src='/assets/images/stripe-blue-on-light.png' />
                     </a>
@@ -292,127 +321,156 @@ export default class ProfileEdit extends React.Component {
                 </div>
         }
         else {
+            const { activeItem } = this.state
             content =
                 <div className='profileedit-main'>
-                    <Header as='h1'>Edit Profile</Header>
-                    <Header block attached='top'>Required</Header>
-                    <Segment attached>
-                        <Grid stackable>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Email:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email} error={this.state.hasErrors.email}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.email}
-                                        hidden={!this.state.hasErrors.email}
-                                        visible={this.state.hasErrors.email} header='Invalid email address' content='Please enter your valid email address' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Name:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input name='name' value={this.state.name} error={this.state.hasErrors.name}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.name}
-                                        hidden={!this.state.hasErrors.name}
-                                        visible={this.state.hasErrors.name} header='Invalid name' content='Please enter your name' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>City:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input name='city' value={this.state.city} error={this.state.hasErrors.city}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.city}
-                                        hidden={!this.state.hasErrors.city}
-                                        visible={this.state.hasErrors.city} header='Invalid city' content='Please enter your city' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Username:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input name='username' value={this.state.username} error={this.state.hasErrors.username}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.username}
-                                        hidden={!this.state.hasErrors.username}
-                                        visible={this.state.hasErrors.username} header='Invalid username' content='Please enter your username' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>About:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <TextArea name='info' value={this.state.info} autoHeight rows={1}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.info}
-                                        hidden={!this.state.hasErrors.info}
-                                        visible={this.state.hasErrors.info} header='Invalid info' content='Please enter your info' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Languages:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input name='lang' value={this.state.lang} error={this.state.hasErrors.lang}
-                                        onChange={this.handleChange} onBlur={this.handleBlur} />
-                                    <Message error={this.state.hasErrors.lang}
-                                        hidden={!this.state.hasErrors.lang}
-                                        visible={this.state.hasErrors.lang} header='Invalid languages' content='Please enter the languages you know' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Segment>
-                    <Header block attached='top'>Verification</Header>
-                    <Segment attached>
-                        <Grid stackable>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Phone:</Grid.Column>
-                                <Grid.Column computer={13}>
-                                    <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}
-                                        error={this.state.hasErrors.phone} />
-                                    <Message error={this.state.hasErrors.phone}
-                                        hidden={!this.state.hasErrors.phone}
-                                        visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column id='profileedit-grid-label' computer={3}>Street Address:</Grid.Column>
-                                <Grid.Column computer={10}>
-                                    <Autocomplete className='profileedit-address'
-                                        name='address'
-                                        onPlaceSelected={(place) => this.handleAddressChange(place)}
-                                        onChange={this.handleChange}
-                                        onBlur={this.handleBlur}
-                                        types={['address']}
-                                        placeholder='Address'
-                                        componentRestrictions={{ country: 'ca' }}
-                                        value={this.state.address} />
-                                    <Message
-                                        error={this.state.hasErrors.address}
-                                        hidden={!this.state.hasErrors.address}
-                                        visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
-                                </Grid.Column>
-                                <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
-                                <Grid.Column computer={2} style={{ paddingTop: 0 }}>
-                                    <Input name='apt' placeholder='Apartment' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Segment>
-                    <Header block attached='top'>Stripe</Header>
-                    <Segment attached>
-                        {stripeComponent}
-                    </Segment>
-                    {this.isOwnProfile &&
+                    <Grid>
+                        <Grid.Column width={4}>
+                            <Menu fluid vertical tabular className='profileedit-menu'>
+                                <Menu.Item name='Edit Profile' active={activeItem === 'editProfile'} onClick={this.handleEditProfile} />
+                                <Menu.Item name='References' active={activeItem === 'references'} onClick={this.handleReferences} />
+
+                                {this.isOwnProfile &&
                                     <div style={{ display: 'inline-flex' }}>
                                         <Link to={`/profile/view/${this.user.user_id}`}>
-                                            <Button className='profileedit-view-button' >view Profile</Button>
+                                            <Button fluid className='profileedit-view-button' >View Profile</Button>
                                         </Link>
                                     </div>
                                 }
-
-                    <div style={{ marginTop: '20px' }}>
-                        <Button disabled={!this.state.hasChanges} loading={this.state.saving}
-                            color='teal' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
-                    </div>
+                            </Menu>
+                        </Grid.Column>
+                        <Grid.Column stretched width={12}>
+                            <Header className='profileedit-header' block attached='top'>Required</Header>
+                            <Segment attached>
+                                <Grid stackable className='profileedit-grid-body'>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>First Name</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='name' value={this.state.name} error={this.state.hasErrors.name}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <Message error={this.state.hasErrors.name}
+                                                hidden={!this.state.hasErrors.name}
+                                                visible={this.state.hasErrors.name} header='Invalid name' content='Please enter your name' icon='exclamation circle' />
+                                            <div className='profileedit-input-descriptions'>Your public profile only shows your first name. When you order food, your cook will see your first and last name.
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Username</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='username' value={this.state.username} error={this.state.hasErrors.username}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <Message error={this.state.hasErrors.username}
+                                                hidden={!this.state.hasErrors.username}
+                                                visible={this.state.hasErrors.username} header='Invalid username' content='Please enter your username' icon='exclamation circle' />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Email <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email} error={this.state.hasErrors.email}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <Message error={this.state.hasErrors.email}
+                                                hidden={!this.state.hasErrors.email}
+                                                visible={this.state.hasErrors.email} header='Invalid email address' content='Please enter your valid email address' icon='exclamation circle' />
+                                            <div className='profileedit-input-descriptions'>Your email is never displayed publicly. It is only shared once you have a confirmed order request with another Foodcraft user.
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Neighbourhood</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='Where do you live?' value={this.state.city} error={this.state.hasErrors.city}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            {/* <Message error={this.state.hasErrors.city}
+                                                hidden={!this.state.hasErrors.city}
+                                                visible={this.state.hasErrors.city} header='Invalid neighbourhood' content='' icon='exclamation circle' /> */}
+                                            <div className='profileedit-input-descriptions'>Your neck of the woods (i.e. Kitslano, Yaletown, North Burnaby)
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>About:</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <TextArea name='info' value={this.state.info} autoHeight rows={1}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <Message error={this.state.hasErrors.info}
+                                                hidden={!this.state.hasErrors.info}
+                                                visible={this.state.hasErrors.info} header='Invalid info' content='Please enter your info' icon='exclamation circle' />
+                                         <div className='profileedit-input-descriptions'>Let other people in the Foodcraft community get to know you. 
+                                                <div style={{ marginTop: '5px' }}>What are some things you like to do? Or share the 5 foods you can't live without. Do you have a food philosophy? Share your life motto!
+                                                    </div>
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                </Grid>
+                            </Segment>
+                            <Header className='profileedit-header' block attached='top'>Optional</Header>
+                            <Segment attached>
+                                <Grid stackable className='profileedit-grid-body'>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Languages</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Dropdown placeholder='Select Language' fluid multiple search selection options={languageOptions} onChange={this.handleChange} onBlur={this.handleBlur} />
+                                            <div className='profileedit-input-descriptions'>Add any languages other people can use to chat with you.
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}
+                                                error={this.state.hasErrors.phone} />
+                                            <Message error={this.state.hasErrors.phone}
+                                                hidden={!this.state.hasErrors.phone}
+                                                visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
+                                            <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.
+                                                </div>
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Address <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                        <Grid.Column computer={10}>
+                                            <Autocomplete className='profileedit-address'
+                                                name='address'
+                                                onPlaceSelected={(place) => this.handleAddressChange(place)}
+                                                onChange={this.handleChange}
+                                                onBlur={this.handleBlur}
+                                                types={['address']}
+                                                placeholder='Address'
+                                                componentRestrictions={{ country: 'ca' }}
+                                                value={this.state.address} />
+                                            <Message
+                                                error={this.state.hasErrors.address}
+                                                hidden={!this.state.hasErrors.address}
+                                                visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
+                                            <div className='profileedit-input-descriptions'>Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                                                </div>
+                                        </Grid.Column>
+                                        <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
+                                        <Grid.Column computer={2} style={{ paddingTop: 0 }}>
+                                            <Input name='apt' placeholder='' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column id='profileedit-grid-label' computer={3}>Certifications</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <Input name='lang' value={this.state.certification} error={this.state.hasErrors.certification}
+                                                onChange={this.handleChange} onBlur={this.handleBlur} />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                </Grid>
+                            </Segment>
+                            <Header className='profileedit-header' block attached='top'>Stripe</Header>
+                            <Segment attached >
+                                <div style={{ margin: '10px 10px 10px 60px' }}>{stripeComponent}</div>
+                            </Segment>
+                            <div style={{ marginTop: '20px' }}>
+                                <Button disabled={!this.state.hasChanges} loading={this.state.saving}
+                                    className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
+                            </div>
+                        </Grid.Column>
+                    </Grid>
                 </div>
         }
 

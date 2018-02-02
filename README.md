@@ -1,3 +1,5 @@
+# Food-Market-UI aka Foodcraft
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Running
@@ -9,42 +11,50 @@ $ npm start
 
 The server should be live at <http://localhost:3000>.
 
-## How to get from react-redux todos example to this project
+## Build 
 
-### Install `semantic-ui` and `semantic-ui-react`
+The following command will bundle all the resources using react-scripts:
+
+```bash
+$ npm run build
+```
+
+## Deploy
+
+In order to deploy the code to the appropriate AWS S3 bucket, you first need to ensure that you have the appropriate AWS credentials configured in your environment.  The following command deploys the dev environment:
+
+```bash
+$ npm run deploy
+```
+
+## Semantic-UI and Semantic-UI-React
+
+### `semantic-ui` and `semantic-ui-react`
+
+The following steps were done to install semantic-ui and semantic-ui-react but please note that this is for information only.  These packages are already installed so you do NOT need to run these commands.
 
 ```bash
 $ npm install --save semantic-ui-react 
 $ npm install --save-dev semantic-ui
 ```
-Follow the prompts for the `semantic-ui` package, choosing the most customizable option, which saves to the project directory. There's also the option to leave the `semantic/` directory in `node_modules/`, which would result in no additional project directory files at the expense of not being able to specify a different Semantic UI theme. With these files in the project directory, theme customization can be done in `semantic/src/theme.config` and `semantic/src/themes/`. See [the Semantic UI usage docs](http://react.semantic-ui.com/usage) for more information.
+Follow the prompts for the `semantic-ui` package, choosing the most customizable option, which saves to the project directory. Theme customization can be done in `semantic/src/theme.config` and `semantic/src/themes/`. See [the Semantic UI usage docs](http://react.semantic-ui.com/usage) for more information.
 
 ### Build and link the Semantic UI `dist/` files
 
 Semantic UI uses the tool `gulp` to build. If you do not have it, you may want to [install it globally](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md). The following build steps must be done after every change to themes or other modifications to `semantic` itself.
 ```bash
-$ (cd semantic && gulp build)
+$ npm run semantic:build
 ```
 
-We must now link the newly generated CSS file as a dependency into `src/index.js` so that [Webpack](https://webpack.github.io/) knows to bundle it:
+You can look into the `packages.json` file to see that it uses the following gulp command underneath in the semantic folder: `(cd semantic && gulp build)`.  The above `semantic:build` task also copied the output css and theme files to the `src/semantic` folder, which is then referenced from `src/index.js`.  We link the newly generated CSS file as a dependency into `src/index.js` so that [Webpack](https://webpack.github.io/) knows to bundle it:
 
 In `src/index.js`, add:
 ```js
-import '../semantic/dist/semantic.min.css';
+import 'semantic/semantic.min.css';
 ```
-
-### Replace desired components
-
-The best way to understand this is to peek at the source files.
-
-- `src/components/Todo.js`: The individual `Todo` items have been changed to [`Checkbox`](http://react.semantic-ui.com/modules/checkbox).
-- `src/components/Footer.js`, `src/components/Link.js`: The filter links have been changed to [`Button`](http://react.semantic-ui.com/elements/button) and its subclasses.
-- `src/containers/AddTodo.js`: The input box has been changed to [`Input`](http://react.semantic-ui.com/elements/input), and the submit button has been changed to [`Button`](http://react.semantic-ui.com/elements/button).
 
 ### Notes
 
 - The swap-out process was very painless. ReactJS itself has great separation of concerns, and this framework respects that a lot. Aside from installing the libraries, there wasn't anything that had to be done outside of the component-specific file.
 - Caveat: Now we have more configuration files/folders to manage, but as discussed above, this isn't necessary and is simply a decision in the trade-off between customizability and configuration simplicity.
 - Caveat: Because `<input />` components are nested in the Semantic UI provided `<div></div>`s, [`ref=` properties](https://facebook.github.io/react/docs/refs-and-the-dom.html) on Semantic UI input elements will not work as intended. See discussions and workarounds in this thread: <https://github.com/Semantic-Org/Semantic-UI-React/issues/405>.
-
-Overall, I'm very happy with this framework, and I think it will play nicely with other ReactJS components without any hitches. It will definitely save me development time.
