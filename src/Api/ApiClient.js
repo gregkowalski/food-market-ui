@@ -70,6 +70,22 @@ export default class ApiClient {
         return this.apiGatewayClient.invokeApi(null, `/users/${userId}/public`, 'GET');
     }
 
+    getFoods() {
+        return this.apiGatewayClient.invokeApi(null, `/foods`, 'GET');
+    }
+
+    getFood(foodId) {
+        return this.apiGatewayClient.invokeApi(null, `/foods/${foodId}`, 'GET');
+    }
+
+    getReviews() {
+        return this.apiGatewayClient.invokeApi(null, `/reviews`, 'GET');
+    }
+
+    getReview(reviewId) {
+        return this.apiGatewayClient.invokeApi(null, `/foods/${reviewId}`, 'GET');
+    }
+
     loadUserProfile(userId) {
         return this.apiGatewayClient.invokeApi(null, `/users/${userId}/private`, 'GET', { headers: this.jsonHttpHeader() });
     }

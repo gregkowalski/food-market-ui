@@ -6,7 +6,6 @@ import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'se
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './Order.css'
-import FoodItems from './data/FoodItems'
 import OrderHeader from './components/OrderHeader'
 import Checkout from './Stripe/Checkout'
 import ApiClient from './Api/ApiClient'
@@ -52,14 +51,22 @@ export default class Order extends React.Component {
         CognitoUtil.setLastPathname(window.location.pathname);
         CognitoUtil.redirectToLoginIfNoSession();
 
-        this.food = this.getFoodItem();
-        document.title = this.food.header;
-
         let apiClient = new ApiClient();
-        apiClient.getUserByJsUserId(this.food.userId)
-            .then(response => {
-                this.cook = response.data;
-                this.forceUpdate();
+        apiClient.getFood(this.props.match.params.id)
+            .then(response => {                
+                this.food = response.data;
+
+                document.title = this.food.title;
+
+                let apiClient = new ApiClient();
+                apiClient.getUser(this.food.user_id)
+                    .then(response => {
+                        this.cook = response.data;
+                        this.forceUpdate();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
             })
             .catch(err => {
                 console.error(err);
@@ -68,15 +75,6 @@ export default class Order extends React.Component {
 
     handleContactMethodChange = (e, { value }) => {
         this.setState({ contactMethod: value });
-    }
-
-    getFoodItemId() {
-        return parseInt(this.props.match.params.id, 10);
-    }
-
-    getFoodItem() {
-        let foodItemId = this.getFoodItemId();
-        return FoodItems.find(x => x.id === foodItemId);
     }
 
     handleAddressChange(place) {
@@ -321,8 +319,8 @@ export default class Order extends React.Component {
                                 <Icon name='shopping basket' /> My Order</Header>
                             <Divider />
                             <div className='order-card-header'>
-                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
-                                <div className='order-card-header-overflow'>{food.header} </div>
+                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
+                                <div className='order-card-header-overflow'>{food.title} </div>
                             </div>
                             <Divider />
                             <div style={{ padding: '0px 10px 10px 10px' }}>
@@ -488,8 +486,8 @@ export default class Order extends React.Component {
                             <Header className='order-detail-summary-left-header'>My Order</Header>
                             <Divider />
                             <div className='order-card-header'>
-                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.image} height='auto' width='26%' />
-                                <div className='order-card-header-overflow'>{food.header} </div>
+                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
+                                <div className='order-card-header-overflow'>{food.title} </div>
                             </div>
                             <Divider />
                             <div style={{ padding: '0px 10px 10px 10px' }}>
@@ -589,7 +587,7 @@ export default class Order extends React.Component {
                     <Header>My Order Summary</Header>
 
                     <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                        {this.state.quantity} {food.header}
+                        {this.state.quantity} {food.title}
                         <Form.Field>
                             <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.contactMethod}</strong> </div>
                         </Form.Field>
@@ -607,7 +605,7 @@ export default class Order extends React.Component {
                                 <Header as='h5'>Payment Breakdown</Header>
                                 <div className='order-summary-row'>
                                     <div className='align-left'>
-                                        {this.state.quantity} x ${food.price} {food.header}
+                                        {this.state.quantity} x ${food.price} {food.title}
                                     </div>
                                     <div className='align-right'>
                                         ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
@@ -667,7 +665,7 @@ export default class Order extends React.Component {
                                 <Header as='h5'>Payment Breakdown</Header>
                                 <div className='order-summary-row'>
                                     <div className='align-left'>
-                                        {this.state.quantity} x ${food.price} {food.header}
+                                        {this.state.quantity} x ${food.price} {food.title}
                                     </div>
                                     <div className='align-right'>
                                         ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
@@ -824,8 +822,8 @@ export default class Order extends React.Component {
         const food = this.food;
         const payment = PriceCalc.getOrderPayment(food.price, this.state.quantity);
         const order = {
-            food_id: food.id,
-            cook_js_user_id: food.userId,
+            food_id: food.food_id,
+            cook_js_user_id: food.user_id,
             quantity: this.state.quantity,
             handoff_date: this.state.date,
             handoff_time: this.state.time,

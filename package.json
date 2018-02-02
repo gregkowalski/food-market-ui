@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "jest": {
-    "coverageReporters": ["text", "html"]
+    "coverageReporters": [
+      "text",
+      "html"
+    ]
   },
   "dependencies": {
     "amazon-cognito-auth-js": "^1.1.1",

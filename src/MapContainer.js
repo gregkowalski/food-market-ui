@@ -2,8 +2,8 @@ import React from 'react'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './MapContainer.css'
 import { Map, Marker, InfoWindow } from './Map'
-import FoodItems from './data/FoodItems'
 import PriceCalc from './PriceCalc'
+import ApiClient from './Api/ApiClient'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -17,6 +17,7 @@ export class MapContainer extends React.Component {
       selectedPlace: {},
       selectedItemId: props.selectedItemId
     };
+    this.foods = [];
   }
 
   onMarkerClick(props, marker, e) {
@@ -49,15 +50,39 @@ export class MapContainer extends React.Component {
   }
 
   getMarkerImage(foodItem, selectedItemId) {
-    if (foodItem.id === selectedItemId) {
+    if (foodItem.food_id === selectedItemId) {
       return '/assets/images/food-icon-selected1.png';
     }
     return '/assets/images/food-icon1.png';
   }
 
   getZIndex(foodItem, selectedItemId) {
-    return (foodItem.id === selectedItemId) ? 9999 : null;
+    return (foodItem.food_id === selectedItemId) ? 9999 : null;
   }
+
+  componentWillMount() {
+    var self = this;
+    let apiClient = new ApiClient();
+    apiClient.getFoods()
+        .then(response => {
+            // todo: rating and ratingCount
+            var foodsDTO = [];
+            response.data.forEach(foodDAO => {
+                let food = foodDAO;
+
+                food.rating = 5;
+                food.ratingCount = 3;
+                food.position = { lat: 49.284982, lng: -123.130252 };
+
+                foodsDTO.push(food);
+            });
+
+            self.foods = foodsDTO;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
 
   render() {
     // const style = {
@@ -71,20 +96,20 @@ export class MapContainer extends React.Component {
       selectedItemId = this.state.selectedItemId;
     }
 
-    const markers = FoodItems.map((foodItem) =>
+    const markers = this.foods.map((foodItem) =>
       <Marker
-        id={foodItem.id}
-        key={foodItem.id}
+        id={foodItem.food_id}
+        key={foodItem.food_id}
         onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
-        header={foodItem.header}
+        header={foodItem.title}
         icon={this.getMarkerImage(foodItem, selectedItemId)}
         zIndex={this.getZIndex(foodItem, selectedItemId)}
-        image={foodItem.image}
+        image={foodItem.imageUrls[0]}
         rating={foodItem.rating}
         ratingCount={foodItem.ratingCount}
         price={foodItem.price}
-        meta={foodItem.meta}
-        description={foodItem.description}
+        meta={foodItem.title}
+        description={foodItem.short_description}
         position={foodItem.position} />
     );
 
