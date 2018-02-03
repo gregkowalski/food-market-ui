@@ -1,7 +1,8 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
 import { Redirect, Link } from 'react-router-dom'
-import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown, Icon } from 'semantic-ui-react'
+import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown } from 'semantic-ui-react'
+import { Divider, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import crypto from 'crypto'
@@ -43,7 +44,10 @@ export default class ProfileEdit extends React.Component {
             phone: false
         },
         loading: true,
-        saving: false
+        saving: false,
+        message: {
+            show: false,
+        },
     };
 
     user;
@@ -266,13 +270,27 @@ export default class ProfileEdit extends React.Component {
             .then(response => {
                 this.setState({
                     hasChanges: false,
-                    saving: false
+                    saving: false,
+                    message: {
+                        show: true,
+                        icon: 'thumbs up',
+                        header: 'Success!',
+                        content: "Your profile has been updated."
+                    }
                 });
                 console.log('saved');
             })
             .catch(err => {
                 console.error(err);
-                this.setState({ saving: false });
+                this.setState({
+                    saving: false,
+                    message: {
+                        show: true,
+                        icon: 'warning',
+                        header: 'Oops!',
+                        content: "Profile not saved."
+                    }
+                });
             });
     }
 
@@ -301,8 +319,8 @@ export default class ProfileEdit extends React.Component {
         else {
             stripeComponent =
                 <div>
-                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in becoming a cook and making money with Foodcraft? 
-                    <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account! 
+                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in becoming a cook and making money with Foodcraft?
+                    <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account!
                         </div>
                     </div>
                     <a href='stripe' onClick={(e) => this.handleConnectStripeClick(e)}>
@@ -397,10 +415,10 @@ export default class ProfileEdit extends React.Component {
                                             <Message error={this.state.hasErrors.info}
                                                 hidden={!this.state.hasErrors.info}
                                                 visible={this.state.hasErrors.info} header='Invalid info' content='Please enter your info' icon='exclamation circle' />
-                                         <div className='profileedit-input-descriptions'>Let other people in the Foodcraft community get to know you. 
+                                            <div className='profileedit-input-descriptions'>Let other people in the Foodcraft community get to know you.
                                                 <div style={{ marginTop: '5px' }}>What are some things you like to do? Or share the 5 foods you can't live without. Do you have a food philosophy? Share your life motto!
                                                     </div>
-                                                </div>
+                                            </div>
                                         </Grid.Column>
                                     </Grid.Row>
                                 </Grid>
@@ -465,12 +483,22 @@ export default class ProfileEdit extends React.Component {
                             <Segment attached >
                                 <div style={{ margin: '10px 10px 10px 60px' }}>{stripeComponent}</div>
                             </Segment>
-                            <div style={{ marginTop: '20px' }}>
+                            <div style={{ display: 'flex', marginTop: '20px' }}>
                                 <Button disabled={!this.state.hasChanges} loading={this.state.saving}
                                     className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
+                                <Message
+                                    hidden={!this.state.message.show}
+                                    floating
+                                    icon={this.state.message.icon}
+                                    header={this.state.message.header}
+                                    content={this.state.message.content}
+                                    onDismiss={() => this.setState({ message: { show: false } })}
+                                />
                             </div>
                         </Grid.Column>
                     </Grid>
+                    <Divider hidden />
+                    <Divider hidden />
                 </div>
         }
 
