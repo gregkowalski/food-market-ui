@@ -17,38 +17,39 @@ const wrappedPromise = function () {
     return wrappedPromise;
 }
 
-export class Polygon extends React.Component {
+export class Circle extends React.Component {
     componentDidMount() {
-        this.polygonPromise = wrappedPromise();
-        this.renderPolygon();
+        this.circlePromise = wrappedPromise();
+        this.renderCircle();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.map !== prevProps.map || this.props.fillColor !== prevProps.fillColor) {
-            if (this.polygon) {
-                this.polygon.setMap(null);
-                this.renderPolygon();
+        if (this.props.map !== prevProps.map) {
+            if (this.circle) {
+                this.circle.setMap(null);
+                this.renderCircle();
             }
         }
     }
 
     componentWillUnmount() {
-        if (this.polygon) {
-            this.polygon.setMap(null);
+        if (this.circle) {
+            this.circle.setMap(null);
         }
     }
 
-    renderPolygon() {
+    renderCircle() {
         const {
             map,
             google,
-            paths,
+            center,
+            radius,
             strokeColor,
             strokeOpacity,
             strokeWeight,
             fillColor,
             fillOpacity
-    } = this.props;
+        } = this.props;
 
         if (!google) {
             return null;
@@ -56,7 +57,8 @@ export class Polygon extends React.Component {
 
         const params = {
             map,
-            paths,
+            center,
+            radius,
             strokeColor,
             strokeOpacity,
             strokeWeight,
@@ -64,24 +66,24 @@ export class Polygon extends React.Component {
             fillOpacity
         };
 
-        this.polygon = new google.maps.Polygon(params);
+        this.circle = new google.maps.Circle(params);
 
         evtNames.forEach(e => {
-            this.polygon.addListener(e, this.handleEvent(e));
+            this.circle.addListener(e, this.handleEvent(e));
         });
 
-        this.polygonPromise.resolve(this.polygon);
+        this.circlePromise.resolve(this.circle);
     }
 
-    getPolygon() {
-        return this.polygonPromise;
+    getCircle() {
+        return this.circlePromise;
     }
 
     handleEvent(evt) {
         return (e) => {
             const evtName = `on${camelize(evt)}`
             if (this.props[evtName]) {
-                this.props[evtName](this.props, this.polygon, e);
+                this.props[evtName](this.props, this.circle, e);
             }
         }
     }
@@ -91,8 +93,9 @@ export class Polygon extends React.Component {
     }
 }
 
-Polygon.propTypes = {
-    paths: T.array,
+Circle.propTypes = {
+    center: T.object,
+    radius: T.number,
     strokeColor: T.string,
     strokeOpacity: T.number,
     strokeWeight: T.number,
@@ -100,10 +103,10 @@ Polygon.propTypes = {
     fillOpacity: T.number
 }
 
-evtNames.forEach(e => Polygon.propTypes[e] = T.func)
+evtNames.forEach(e => Circle.propTypes[e] = T.func)
 
-Polygon.defaultProps = {
-    name: 'Polygon'
+Circle.defaultProps = {
+    name: 'Circle'
 }
 
-export default Polygon
+export default Circle

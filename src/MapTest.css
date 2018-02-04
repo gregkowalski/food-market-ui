@@ -1,46 +1,40 @@
 /* main layout */
 
-.wrap {
+.map {
+    height: 500px;
+    /* top: 255px;
+    bottom: 0px; */
+    /* right: 0px; */
+    /* /* position: fixed; */
+}
+
+.map-wrap {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.bodywrap {
+.map-bodywrap {
     margin-top: 55px;
-}
-
-.center, .bodywrap {
     height: 100%;
 }
 
-.center {
-    width: 66%;
+.map-center {
+    width: 100%;
+    height: 100%;
     padding-right: 5px;
     padding-left: 5px;
 }
 
-.app-filter {
-    background-color:  blanchedalmond;
-    width: 34%;
-    height: 150px;
-    top: 55px;
+.map-app-right {
+    /* width: 34%; */
+    height: 400px;
+    /* top: 55px;
     bottom: 0px;
-    right: 0px;
-    position: fixed;
-    z-index: 1;
+    right: 0px; */
 }
 
-.app-right {
-    width: 34%;
-    height: calc(100vh - 55px - 150px);
-    top: (55px + 150px);
-    bottom: 0px;
-    right: 0px;
-    position: fixed;
-}
-
-.app-address {
+.map-app-address {
     width: 100%;
     line-height: 1.21428571em;
     font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -55,32 +49,18 @@
 }
 
 @media all and (max-width: 767px) {
-    .app-right {
+    .map-app-right {
         /* display: none; */
     }
-    .app-filter {
+    .map-app-filter {
         /* display: none; */
     }
-    .center {
+    .map-center {
         width: 100%;
-    }
-    #content-desktop {
-        display: none;
-    }
-    .head-content {
-        text-align: center;
     }
 }
 
 /* end main layout */
-
-.GridRowSpacer {
-    height: 150px;
-}
-
-.SearchButton {
-    width: 10em;
-}
 
 /* Google Autocomplete box */
 

@@ -3,7 +3,7 @@
 // import AddTodo from 'containers/AddTodo'
 // import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
-import './App.css'
+import './MapTest.css'
 import { MapContainer } from './MapContainer'
 import Food from './Food'
 import Map from './Map'
@@ -15,7 +15,7 @@ import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 
-class App extends Component {
+class MapTest extends Component {
 
     isDebug = false;
 
@@ -150,53 +150,10 @@ class App extends Component {
     render() {
         const { pickup } = this.state;
         return (
-            <div className='wrap'>
+            <div className='map-wrap'>
                 <AppHeader fixed />
-                <div className='bodywrap'>
-                    <div className='center'>
-                        <Food foods={this.state.foods}
-                            onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
-                            onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
-                        />
-                    </div>
-                    <div className='app-filter'>
-                        <Button color={pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                            Pickup
-                        </Button>
-                        <Button color={!pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                            Delivery
-                        </Button>
-                        <div style={{ display: pickup ? 'none' : 'inherit' }}>
-                            <Autocomplete className='app-address'
-                                name='address'
-                                onPlaceSelected={(place) => this.handleAddressChange(place)}
-                                types={['address']}
-                                placeholder='Address'
-                                componentRestrictions={{ country: 'ca' }} />
-                        </div>
-
-                        <div>
-                            <SingleDatePicker
-                                date={this.state.date} // momentPropTypes.momentObj or null
-                                isOutsideRange={this.isDayOutsideRange}
-                                onDateChange={this.handleDateChange}
-                                focused={this.state.focused} // PropTypes.bool
-                                onFocusChange={({ focused }) => {
-                                    this.setState({ focused });
-                                    // if (!focused) {
-                                    //     this.handleContactInfoBlur({ target: { name: 'date' } });
-                                    // }
-                                }} // PropTypes.func.isRequired
-                                numberOfMonths={1}
-                                placeholder="Date"
-                                displayFormat={() =>
-                                    //moment.localeData().longDateFormat('LL')
-                                    'MMMM DD, YYYY'
-                                }
-                            />
-                        </div>
-                    </div>
-                    <div className='app-right'>
+                <div className='map-bodywrap'>
+                    <div className='map'>
                         <MapContainer foods={this.state.foods}
                             showRegions={!pickup}
                             selectedItemId={this.state.hoveredFoodItemId}
@@ -205,10 +162,16 @@ class App extends Component {
                             onGeoSearch={(geo) => this.geoSearchFoods(geo)}
                             onRegionSelected={(region) => this.handleRegionSelected(region)} />
                     </div>
+                    <div className='map-center'>
+                        <Food foods={this.state.foods}
+                            onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
+                            onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
+                        />
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-export default App;
+export default MapTest;

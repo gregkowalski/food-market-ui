@@ -4,114 +4,114 @@ import ReactDOMServer from 'react-dom/server'
 
 export class InfoWindow extends React.Component {
 
-  componentDidMount() {
-    this.renderInfoWindow();
-  }
-
-  componentDidUpdate(prevProps) {
-    const {google, map} = this.props;
-
-    if (!google || !map) {
-      return;
+    componentDidMount() {
+        this.renderInfoWindow();
     }
 
-    if (map !== prevProps.map) {
-      this.renderInfoWindow();
+    componentDidUpdate(prevProps) {
+        const { google, map } = this.props;
+
+        if (!google || !map) {
+            return;
+        }
+
+        if (map !== prevProps.map) {
+            this.renderInfoWindow();
+        }
+
+        if (this.props.position !== prevProps.position) {
+            this.updatePosition();
+        }
+
+        if (this.props.children !== prevProps.children) {
+            this.updateContent();
+        }
+
+        if ((this.props.visible !== prevProps.visible ||
+            this.props.marker !== prevProps.marker ||
+            this.props.position !== prevProps.position)) {
+            this.props.visible ?
+                this.openWindow() :
+                this.closeWindow();
+        }
     }
 
-    if (this.props.position !== prevProps.position) {
-      this.updatePosition();
+    renderInfoWindow() {
+        let { google } = this.props;
+        //let {map, google, mapCenter} = this.props;
+
+        if (!google || !google.maps) {
+            return;
+        }
+
+        const iw = this.infowindow = new google.maps.InfoWindow({
+            content: '',
+            enableEventPropagation: true,
+            disableAutoPan: false
+        });
+
+        google.maps.event.addListener(iw, 'closeclick', this.onClose.bind(this))
+        google.maps.event.addListener(iw, 'domready', this.onOpen.bind(this));
     }
 
-    if (this.props.children !== prevProps.children) {
-      this.updateContent();
+    onOpen() {
+        if (this.props.onOpen) {
+            this.props.onOpen();
+        }
     }
 
-    if ((this.props.visible !== prevProps.visible ||
-        this.props.marker !== prevProps.marker ||
-        this.props.position !== prevProps.position)) {
-        this.props.visible ?
-          this.openWindow() :
-          this.closeWindow();
-    }
-  }
-
-  renderInfoWindow() {
-    let { google } = this.props;
-    //let {map, google, mapCenter} = this.props;
-
-    if (!google || !google.maps) {
-      return;
+    onClose() {
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
     }
 
-    const iw = this.infowindow = new google.maps.InfoWindow({
-      content: '',
-      enableEventPropagation: true,
-      disableAutoPan: false
-    });
-
-    google.maps.event.addListener(iw, 'closeclick', this.onClose.bind(this))
-    google.maps.event.addListener(iw, 'domready', this.onOpen.bind(this));
-  }
-
-  onOpen() {
-    if (this.props.onOpen) {
-      this.props.onOpen();
+    openWindow() {
+        this.infowindow.open(this.props.map, this.props.marker);
     }
-  }
 
-  onClose() {
-    if (this.props.onClose) {
-      this.props.onClose();
+    updatePosition() {
+        let { google } = this.props;
+        let pos = this.props.position;
+        if (!(pos instanceof google.maps.LatLng)) {
+            pos = pos && new google.maps.LatLng(pos.lat, pos.lng);
+        }
+        this.infowindow.setPosition(pos);
     }
-  }
 
-  openWindow() {
-    this.infowindow.open(this.props.map, this.props.marker);
-  }
-
-  updatePosition() {
-    let {google} = this.props;
-    let pos = this.props.position;
-    if (!(pos instanceof google.maps.LatLng)) {
-      pos = pos && new google.maps.LatLng(pos.lat, pos.lng);
+    updateContent() {
+        const content = this.renderChildren();
+        this.infowindow.setContent(content);
     }
-    this.infowindow.setPosition(pos);
-  }
 
-  updateContent() {
-    const content = this.renderChildren();
-    this.infowindow.setContent(content);
-  }
+    closeWindow() {
+        this.infowindow.close();
+    }
 
-  closeWindow() {
-    this.infowindow.close();
-  }
+    renderChildren() {
+        const { children } = this.props;
+        return ReactDOMServer.renderToString(children);
+    }
 
-  renderChildren() {
-    const {children} = this.props;
-    return ReactDOMServer.renderToString(children);
-  }
-
-  render() {
-    return null;
-  }
+    render() {
+        return null;
+    }
 }
 
 InfoWindow.propTypes = {
-  children: PropTypes.element.isRequired,
-  map: PropTypes.object,
-  marker: PropTypes.object,
-  position: PropTypes.object,
-  visible: PropTypes.bool,
+    children: PropTypes.element.isRequired,
+    map: PropTypes.object,
+    marker: PropTypes.object,
+    position: PropTypes.object,
+    visible: PropTypes.bool,
 
-  // callbacks
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func
+    // callbacks
+    onClose: PropTypes.func,
+    onOpen: PropTypes.func
 }
 
 InfoWindow.defaultProps = {
-  visible: false
+    visible: false
 }
 
 export default InfoWindow

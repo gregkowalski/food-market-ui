@@ -5,13 +5,11 @@ import './Food.css'
 import Util from './Util'
 import CarouselDecorators from './components/ImageDecorator'
 import PriceCalc from './PriceCalc'
-import ApiClient from './Api/ApiClient'
 
 class Food extends Component {
 
     state = {
         quantity: 1,
-        foods: []
     };
 
     isDebug = false;
@@ -70,32 +68,8 @@ class Food extends Component {
         return labelElement;
     }
 
-    componentWillMount() {
-        let apiClient = new ApiClient();
-        apiClient.getFoods()
-            .then(response => {
-                // todo: rating and ratingCount
-                var foodsDTO = [];
-                response.data.forEach(foodDAO => {
-                    let food = foodDAO;
-                    
-                    food.rating = 5;
-                    food.ratingCount = 3;
-                    food.instruction = "Some instruction" //todo: dont know what this is for
-                    food.position = { lat: 49.284982, lng: -123.130252 };
-
-                    foodsDTO.push(food);
-                });
-
-                this.setState({foods: foodsDTO});
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }
-
     render() {
-        const cards = this.state.foods.map((food) => {
+        const cards = this.props.foods.map((food) => {
             let foodImageComponent = this.getFoodImageComponent(food);
             let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
@@ -115,17 +89,17 @@ class Food extends Component {
 
                                     <Item.Header>
                                         <div className='FoodCardHeader'>
-                                        ${PriceCalc.getPrice(food.price)} · {food.title}</div>
+                                            ${PriceCalc.getPrice(food.price)} · {food.title}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Item.Header>
 
                                     <Item.Meta>
                                         <div style={{ display: 'flex' }}>
-                                        {foodPrepLabelComponent} 
-                                        <span className='food-label'> {food.states} <span style={{ fontWeight: '900'}}>·</span> 
-                                            <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                                style={{ marginTop: '5px', marginLeft: '2px' }} />
-                                            {food.ratingCount} 
+                                            {foodPrepLabelComponent}
+                                            <span className='food-label'> {food.states} <span style={{ fontWeight: '900' }}>·</span>
+                                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
+                                                    style={{ marginTop: '5px', marginLeft: '2px' }} />
+                                                {food.ratingCount}
                                             </span>
                                         </div>
                                     </Item.Meta>
@@ -138,7 +112,7 @@ class Food extends Component {
             )
         });
         return (
-            <Grid stackable className='FoodCardGroup'>
+            <Grid stackable className='FoodCardGroup' width={16}>
                 {cards}
             </Grid>
         );

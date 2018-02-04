@@ -22,6 +22,8 @@ import ProfileLink from './ProfileLink'
 import NotFoundPage from './NotFoundPage'
 import Login from './Login'
 import Config from './Config'
+import Pricing from './Pricing'
+import MapTest from './MapTest'
 
 //import temp from 'temp'
 
@@ -47,6 +49,8 @@ render(
           <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
           <Route path='/profilelink' exact component={ProfileLink} />
           <Route path='/login' exact component={Login} />
+          <Route path='/pricing' exact component={Pricing} />
+          <Route path='/maptest' exact component={MapTest} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>

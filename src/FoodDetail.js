@@ -506,7 +506,7 @@ export default class FoodDetail extends Component {
             <div>
                 <AppHeader />
                 <div>
-                    <FoodLightbox foodItemId={food.food_id} />
+                    <FoodLightbox food={food} />
                     <div className='detail-head-main'>
                         <div className="flex-container">
                             <div className="flex-item-main">

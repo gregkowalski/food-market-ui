@@ -41,4 +41,15 @@ export default class {
         var e = new Date().getTime() + (seconds * 1000);
         while (new Date().getTime() <= e) { }
     }
+
+    static getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    static getRandomSign() {
+        if (Math.random() > 0.5) {
+            return 1;
+        }
+        return -1;
+    }
 }

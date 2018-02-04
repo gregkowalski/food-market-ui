@@ -102,4 +102,9 @@ export default class ApiClient {
         return this.apiGatewayClient.invokeApi(null, `/users/${userId}/connectstripe`, 'POST',
             { headers: this.jsonHttpHeader() }, { code });
     }
+
+    geoSearchFoods(geo) {
+        return this.apiGatewayClient.invokeApi(null, `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`,
+            'GET', { headers: this.jsonHttpHeader() });
+    }
 }
