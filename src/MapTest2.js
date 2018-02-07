@@ -3,7 +3,7 @@
 // import AddTodo from 'containers/AddTodo'
 // import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
-import './MapTest.css'
+import './MapTest2.css'
 import { MapContainer } from './MapContainer'
 import Food from './Food'
 import Map from './Map'
@@ -14,8 +14,9 @@ import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
+import FoodCarousel from './FoodCarousel';
 
-class MapTest extends Component {
+class MapTest2 extends Component {
 
     isDebug = false;
 
@@ -153,7 +154,7 @@ class MapTest extends Component {
         let { pickup, fullMap } = this.state;
 
         let mapStyle = {
-            height: fullMap ? 'calc(100vh - 55px)' : '500px',
+            height: fullMap ? 'calc(100vh - 55px - 220px)' : '500px',
             width: '100%',
             marginTop: '55px',
         };
@@ -166,9 +167,9 @@ class MapTest extends Component {
         }
 
         return (
-            <div className='map-wrap'>
+            <div className='map2-wrap'>
                 <AppHeader fixed />
-                <div className='map-bodywrap'>
+                <div className='map2-bodywrap'>
                     {this.hasBeenVisible &&
                         <div style={mapStyle}>
                             <MapContainer foods={this.state.foods}
@@ -183,9 +184,16 @@ class MapTest extends Component {
                                 onListViewClick={() => this.setState({ fullMap: false })} />
                         </div>
                     }
+                    {fullMap && this.state.foods && this.state.foods.length > 0 &&
+                        <div className='map2-food-carousel'>
+                            <FoodCarousel foods={this.state.foods}
+                                onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
+                                onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)} />
+                        </div>
+                    }
 
                     {!fullMap &&
-                        <div className='map-center'>
+                        <div className='map2-center'>
                             <Food foods={this.state.foods}
                                 onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
                                 onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
@@ -199,4 +207,4 @@ class MapTest extends Component {
     }
 }
 
-export default MapTest;
+export default MapTest2;

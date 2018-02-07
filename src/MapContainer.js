@@ -277,10 +277,11 @@ export class MapContainer extends React.Component {
                 clickableIcons={false}
                 scrollwheel={true}
                 centerAroundCurrentLocation={true}
-                gestureHandling='cooperative'
+                gestureHandling={this.props.gestureHandling}
                 onClick={(props, map, e) => this.onMapClick(props, map, e)}
                 center={this.props.center}
                 zoom={this.props.zoom}
+                visible={this.props.visible}
                 onBounds_changed={(props, map) => {
                     // let bounds = map.getBounds();
                     // let ne = bounds.getNorthEast();
@@ -311,7 +312,11 @@ export class MapContainer extends React.Component {
                     // console.log('zoom=' + map.getZoom());
                 }}>
 
-                <CustomControl />
+                <CustomControl onClick={() => {
+                    if (this.props.onListViewClick) {
+                        this.props.onListViewClick();
+                    }
+                }} />
 
                 {polygons}
                 {/* {circles} */}

@@ -1,0 +1,113 @@
+.FoodCard {
+    /* height: 100%; */
+    position: relative;
+    margin-top: 1px;
+    /* padding-bottom: 5px; */
+}
+
+.FoodCard a {
+    color: inherit;
+}
+
+.FoodCard a:hover {
+    color: inherit;
+}
+
+.FoodCardHeader {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 1px !important;
+    float: left;
+    font-size: 1.4em;
+    font-weight: 600;
+    line-height: 1.5;
+    font-family: Athiti;
+    color: #3a3a3a;
+    -webkit-line-clamp: 1;
+    /* -webkit-box-orient: vertical; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 95%;
+}
+
+.FoodCardGroup {
+    margin-top: 10px !important;
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+    /* background-color: palevioletred; */
+}
+
+.OrderButton {
+    position: absolute;
+    bottom: 0px;
+    height: 2.5em;
+    color: #4cb9a0 !important;
+}
+
+.FoodImage {
+    width: 100%;
+}
+
+.FoodImage2 {
+    height: 50px;
+}
+
+.LabelPrep-ingredient {
+    /* color: #ff53afb9 !important; */
+    font-weight: 600 !important;
+    font-size: .95em !important;
+    /* ff53afb9 */
+}
+
+.LabelPrep-uncooked {
+    /* color: #ffa86ec5 !important; */
+    font-weight: 600 !important;
+    font-size: .95em !important;
+    /* ffa86ec5 */
+}
+
+.LabelPrep-cooked {
+    /* color: #22eb9ace !important; */
+    font-weight: 600 !important;
+    font-size: .95em !important;
+    /* 6aebb9ce */
+}
+
+.LabelPrep-frozen {
+    /* color: #59e8f5b9 !important; */
+    font-weight: 600 !important;
+    font-size: .95em !important;
+    /* 59e8f5b9 */
+}
+
+.food-label {
+    /* box-shadow: 0 4px 6px 0 rgba(83, 83, 83, 0.2), 0 6px 10px 0 rgba(110, 110, 110, 0.1) !important; */
+    /* border-radius: 5px !important; */
+    margin: 2px 0px 0px 2px !important;
+    font-weight: 500 !important;
+    font-size: 1.1em !important;
+}
+
+@media all and (min-width: 768px) {
+    .FoodCard {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+    .FoodImageBox {
+        overflow: hidden;
+    }
+    .FoodImage {
+        height: 100%;
+        -moz-transition: all 0.4s;
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+    .FoodImage:hover {
+        -moz-transform: scale(1.05);
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+}

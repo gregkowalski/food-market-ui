@@ -39,31 +39,6 @@ export class CustomControl extends React.Component {
             return null;
         }
 
-        var chicago = { lat: 41.85, lng: -87.65 };
-
-        var control =
-            (
-                <div style={{
-                    backgroundColor: '#fff', border: '2px solid #fff', borderRadius: '3px',
-                    boxShadow: '0 2px 6px rgba(0,0,0,.3)',
-                    cursor: 'pointer',
-                    marginBottom: '22px',
-                    textAlign: 'center',
-                    title: 'Click to recenter the map'
-                }}>
-                    <div style={{
-                        color: 'rgb(25,25,25)',
-                        fontFamily: 'Roboto,Arial,sans-serif',
-                        fontSize: '16px',
-                        lineHeight: '38px',
-                        paddingLeft: '5px',
-                        paddingRight: '5px'
-                    }}>
-                        Center Map
-                    </div>
-                </div>
-            )
-
         var centerControlDiv = window.document.createElement('div');
 
         var controlUI = window.document.createElement('div');
@@ -74,7 +49,7 @@ export class CustomControl extends React.Component {
         controlUI.style.cursor = 'pointer';
         controlUI.style.marginBottom = '22px';
         controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to recenter the map';
+        controlUI.title = 'Click to go back to list view';
         centerControlDiv.appendChild(controlUI);
 
         // Set CSS for the control interior.
@@ -85,17 +60,20 @@ export class CustomControl extends React.Component {
         controlText.style.lineHeight = '38px';
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Center Map';
+        controlText.innerHTML = 'List View';
         controlUI.appendChild(controlText);
+
+        const { onClick } = this.props;
 
         // Setup the click event listeners: simply set the map to Chicago.
         controlUI.addEventListener('click', function () {
-            map.setCenter(chicago);
+            if (onClick) {
+                onClick();
+            }
         });
 
-        centerControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
-
+        // centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
         this.customControl = centerControlDiv;
 
         this.customControlPromise.resolve(this.customControl);

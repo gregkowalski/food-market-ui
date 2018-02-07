@@ -144,7 +144,7 @@ export class Map extends React.Component {
                     disableDoubleClickZoom: this.props.disableDoubleClickZoom,
                     noClear: this.props.noClear,
                     styles: this.props.styles,
-                    gestureHandling: this.props.gestureHandling
+                    gestureHandling: 'greedy'
                 }
             );
 
@@ -253,20 +253,20 @@ export class Map extends React.Component {
             this.props.containerStyle
         );
 
-        return (
-            <div style={{width: '100%', height: '100%'}} ref="map">
-                {this.renderChildren()}
-            </div>
-        )
-
         // return (
-        //     <div style={containerStyles} className={this.props.className}>
-        //         <div style={style} ref="map">
-        //             Loading map...
-        //         </div>
+        //     <div style={{width: '100%', height: '100%'}} ref="map">
         //         {this.renderChildren()}
         //     </div>
-        // );
+        // )
+
+        return (
+            <div style={containerStyles} className={this.props.className}>
+                <div style={style} ref="map">
+                    Loading map...
+                </div>
+                {this.renderChildren()}
+            </div>
+        );
     }
 }
 

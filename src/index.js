@@ -6,7 +6,7 @@ import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import 'whatwg-fetch'
 import './semantic/semantic.min.css'
-import App from './App'
+// import App from './App'
 import FoodDetail from './FoodDetail'
 import reducer from './reducers'
 import Order from './Order'
@@ -24,6 +24,8 @@ import Login from './Login'
 import Config from './Config'
 import Pricing from './Pricing'
 import MapTest from './MapTest'
+import MapTest2 from './MapTest2'
+import Map2 from './map2'
 
 //import temp from 'temp'
 
@@ -36,7 +38,7 @@ render(
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={App} />
+          {/* <Route exact path='/' component={App} /> */}
           {/* <Route path='/temp' component={temp} /> */}
           <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
           <Route path='/foods/:id/orderError' component={OrderError} />
@@ -51,6 +53,8 @@ render(
           <Route path='/login' exact component={Login} />
           <Route path='/pricing' exact component={Pricing} />
           <Route path='/maptest' exact component={MapTest} />
+          <Route path='/maptest2' exact component={MapTest2} />
+          <Route path='/map2' exact component={Map2} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
