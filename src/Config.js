@@ -1,7 +1,7 @@
 const Config = {
     Api: {
         Region: 'us-west-2',
-        BaseUrl: 'https://api-yapa.cosmo-test.com/v1',
+        BaseUrl: 'https://api-dev.cosmo-test.com/v1',
     },
     Cognito: {
         AppWebDomain: 'food-market-dev.auth.us-west-2.amazoncognito.com',

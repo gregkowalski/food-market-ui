@@ -273,9 +273,7 @@ export default class ProfileEdit extends React.Component {
                     saving: false,
                     message: {
                         show: true,
-                        icon: 'thumbs up',
-                        header: 'Success!',
-                        content: "Your profile has been updated."
+                        content: "Success! Your profile has been updated."
                     }
                 });
                 console.log('saved');
@@ -286,9 +284,7 @@ export default class ProfileEdit extends React.Component {
                     saving: false,
                     message: {
                         show: true,
-                        icon: 'warning',
-                        header: 'Oops!',
-                        content: "Profile not saved."
+                        content: "Oops, your profile was not saved."
                     }
                 });
             });
@@ -462,7 +458,7 @@ export default class ProfileEdit extends React.Component {
                                                 error={this.state.hasErrors.address}
                                                 hidden={!this.state.hasErrors.address}
                                                 visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
-                                            <div className='profileedit-input-descriptions'>Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                                            <div className='profileedit-input-descriptions'>We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
                                                 </div>
                                         </Grid.Column>
                                         <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
@@ -484,21 +480,23 @@ export default class ProfileEdit extends React.Component {
                                 <div style={{ margin: '10px 10px 10px 60px' }}>{stripeComponent}</div>
                             </Segment>
                             <div style={{ display: 'flex', marginTop: '20px' }}>
-                                <Button disabled={!this.state.hasChanges} loading={this.state.saving}
+                                <div><Button disabled={!this.state.hasChanges} loading={this.state.saving}
                                     className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
-                                <Message
-                                    hidden={!this.state.message.show}
-                                    floating
-                                    icon={this.state.message.icon}
-                                    header={this.state.message.header}
-                                    content={this.state.message.content}
-                                    onDismiss={() => this.setState({ message: { show: false } })}
-                                />
+                                </div>
+                                <div>
+                                    <Message
+                                        className='profileedit-save-confirm'
+                                        hidden={!this.state.message.show || this.state.hasChanges}
+                                        floating
+                                        size='tiny'
+                                        onDismiss={() => this.setState({ message: { show: false } })}
+                                    >{this.state.message.content}</Message></div>
                             </div>
+
                         </Grid.Column>
                     </Grid>
                     <Divider hidden />
-                    <Divider hidden />
+                    <Divider hi dden />
                 </div>
         }
 

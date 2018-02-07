@@ -57,6 +57,13 @@
     
 }
 
+.profileedit-save-confirm {
+    margin: 18px 50px 0px 50px !important;
+    padding: 12px 40px 12px 20px !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+}
+
 .profileedit-input-descriptions {
     color: rgb(131, 131, 131) !important;
     margin: 5px 0px 0px 0px;
