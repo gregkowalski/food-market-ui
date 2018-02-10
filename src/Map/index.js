@@ -90,7 +90,6 @@ export class Map extends React.Component {
         }
         if (this.props.center !== prevProps.center) {
             this.setState({ currentLocation: this.props.center });
-            this.map.setZoom(this.props.zoom);
         }
         if (prevState.currentLocation !== this.state.currentLocation) {
             this.recenterMap();
@@ -144,7 +143,7 @@ export class Map extends React.Component {
                     disableDoubleClickZoom: this.props.disableDoubleClickZoom,
                     noClear: this.props.noClear,
                     styles: this.props.styles,
-                    gestureHandling: 'greedy'
+                    gestureHandling: this.props.gestureHandling
                 }
             );
 
@@ -195,8 +194,8 @@ export class Map extends React.Component {
             if (!(center instanceof google.maps.LatLng)) {
                 center = new google.maps.LatLng(center.lat, center.lng);
             }
-            // map.panTo(center)
-            map.setCenter(center);
+            map.panTo(center);
+            // map.setCenter(center);
             maps.event.trigger(map, 'recenter');
         }
     }

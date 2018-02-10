@@ -310,7 +310,18 @@ export class MapContainer extends React.Component {
                     // console.log(`sw=(${sw.lat()}, ${sw.lng()})`);
                     this.handleGeoSearch(map);
                     // console.log('zoom=' + map.getZoom());
-                }}>
+                }}
+                onReady={(props, map, e) => {
+                    console.log('map ready');
+                    // let bounds = map.getBounds();
+                    // let ne = bounds.getNorthEast();
+                    // let sw = bounds.getSouthWest();
+                    // console.log(`ne=(${ne.lat()}, ${ne.lng()})`);
+                    // console.log(`sw=(${sw.lat()}, ${sw.lng()})`);
+                    //this.handleGeoSearch(map);
+                    // console.log('zoom=' + map.getZoom());
+                }}
+                >
 
                 <CustomControl onClick={() => {
                     if (this.props.onListViewClick) {

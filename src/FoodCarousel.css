@@ -1,19 +1,21 @@
-.FoodCard {
+.FoodCard2 {
     /* height: 100%; */
+    /* height: 300px; */
+    /* height: 200px; */
     position: relative;
     margin-top: 1px;
     /* padding-bottom: 5px; */
 }
 
-.FoodCard a {
-    color: inherit;
+.FoodCard2 a {
+    color: inherit !important;
 }
 
-.FoodCard a:hover {
-    color: inherit;
+.FoodCard2 a:hover {
+    color: inherit !important;
 }
 
-.FoodCardHeader {
+.FoodCardHeader2 {
     display: block;
     margin-top: 5px;
     margin-bottom: 1px !important;
@@ -26,12 +28,12 @@
     -webkit-line-clamp: 1;
     /* -webkit-box-orient: vertical; */
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 95%;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    max-width: 95% !important;
 }
 
-.FoodCardGroup {
+.FoodCardGroup2 {
     margin-top: 10px !important;
     margin-right: 5px !important;
     margin-left: 5px !important;
@@ -45,12 +47,14 @@
     color: #4cb9a0 !important;
 }
 
-.FoodImage {
-    width: 100%;
+.FoodImageBox2 {
+    /* width: 300px;
+    height: 300px; */
+    
 }
 
 .FoodImage2 {
-    height: 50px;
+    /* height: 160px; */
 }
 
 .LabelPrep-ingredient {
@@ -87,27 +91,4 @@
     margin: 2px 0px 0px 2px !important;
     font-weight: 500 !important;
     font-size: 1.1em !important;
-}
-
-@media all and (min-width: 768px) {
-    .FoodCard {
-        margin-left: 5px;
-        margin-right: 5px;
-        margin-bottom: 15px;
-        margin-top: 15px;
-    }
-    .FoodImageBox {
-        overflow: hidden;
-    }
-    .FoodImage {
-        height: 100%;
-        -moz-transition: all 0.4s;
-        -webkit-transition: all 0.4s;
-        transition: all 0.4s;
-    }
-    .FoodImage:hover {
-        -moz-transform: scale(1.05);
-        -webkit-transform: scale(1.05);
-        transform: scale(1.05);
-    }
 }
