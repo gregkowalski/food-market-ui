@@ -53,21 +53,9 @@ export default class {
         return -1;
     }
 
-    static getClientSize() {
-        let width = 0, height = 0;
-        if (typeof (window.innerWidth) === 'number') {
-            //Non-IE
-            width = window.innerWidth;
-            height = window.innerHeight;
-        } else if (window.document.documentElement && (window.document.documentElement.clientWidth || window.document.documentElement.clientHeight)) {
-            //IE 6+ in 'standards compliant mode'
-            width = window.document.documentElement.clientWidth;
-            height = window.document.documentElement.clientHeight;
-        } else if (window.document.body && (window.document.body.clientWidth || window.document.body.clientHeight)) {
-            //IE 4 compatible
-            width = window.document.body.clientWidth;
-            height = window.document.body.clientHeight;
-        }
-        return { width, height };
+    static convertMetersToDegrees(meters) {
+        const earthCircumference = 40075000;
+        const metersToDegrees = 360 / earthCircumference;
+        return meters * metersToDegrees;
     }
 }

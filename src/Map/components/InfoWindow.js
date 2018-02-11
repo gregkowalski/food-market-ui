@@ -67,15 +67,28 @@ export class InfoWindow extends React.Component {
     }
 
     openWindow() {
-        this.infowindow.open(this.props.map, this.props.marker);
+
+        let anchor = undefined;
+        if (this.props.marker) {
+            anchor = { LatLng: this.props.LatLng };
+        }
+        else if (this.props.position) {
+            anchor = { LatLng: this.getLatLngPosition() };
+        }
+        this.infowindow.open(this.props.map, anchor);
     }
 
-    updatePosition() {
+    getLatLngPosition() {
         let { google } = this.props;
         let pos = this.props.position;
         if (!(pos instanceof google.maps.LatLng)) {
             pos = pos && new google.maps.LatLng(pos.lat, pos.lng);
         }
+        return pos;
+    }
+
+    updatePosition() {
+        let pos = this.getLatLngPosition();
         this.infowindow.setPosition(pos);
     }
 

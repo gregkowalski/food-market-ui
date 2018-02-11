@@ -64,13 +64,14 @@ export class Map extends React.Component {
 
                 this.geoPromise.promise
                     .then(pos => {
-                        const coords = pos.coords;
-                        this.setState({
-                            currentLocation: {
-                                lat: coords.latitude,
-                                lng: coords.longitude
-                            }
-                        });
+                        const loc = {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude
+                        };
+                        this.setState({ currentLocation: loc });
+                        if (this.props.onGetCurrentPosition) {
+                            this.props.onGetCurrentPosition(this.props, this.map, loc);
+                        }
                     })
                     .catch(e => e);
             }
@@ -251,12 +252,6 @@ export class Map extends React.Component {
             mapStyles.container,
             this.props.containerStyle
         );
-
-        // return (
-        //     <div style={{width: '100%', height: '100%'}} ref="map">
-        //         {this.renderChildren()}
-        //     </div>
-        // )
 
         return (
             <div style={containerStyles} className={this.props.className}>

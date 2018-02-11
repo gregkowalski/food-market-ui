@@ -13,6 +13,7 @@ class FoodCarousel extends Component {
 
     state = {
         quantity: 1,
+        selectedSlideIndex: 0
     };
 
     isDebug = false;
@@ -63,9 +64,15 @@ class FoodCarousel extends Component {
 
             let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
+
+            let imageStyle = { height: '100px' };
+            const isSelected = index === this.state.selectedSlideIndex;
+            if (isSelected) {
+                imageStyle.border = '2px solid teal';
+            }
             return (
                 <div className='FoodCard2' key={food.food_id}>
-                    <a style={{color: 'inherit'}}
+                    <a style={{ color: 'inherit' }}
                         target='_blank'
                         href={'/foods/' + food.food_id}
                         onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.food_id)}
@@ -74,7 +81,8 @@ class FoodCarousel extends Component {
                         <Item style={{ marginBottom: '1px' }}>
                             <Item.Content>
                                 <div>
-                                    <Image src={food.imageUrls[0]} onLoad={() => Util.triggerEvent(window, 'resize')}
+                                    <Image src={food.imageUrls[0]} style={imageStyle}
+                                        onLoad={() => Util.triggerEvent(window, 'resize')}
                                         onClick={() => console.log('clicked: ' + food.food_id)} />
                                 </div>
                                 {/* href={'/foods/' + food.food_id} */}
@@ -109,9 +117,14 @@ class FoodCarousel extends Component {
             );
         });
 
+        let selectedSlideIndex = this.props.foods.findIndex(food => food.food_id === this.props.selectedFoodId);
+        if (selectedSlideIndex < 0) {
+            selectedSlideIndex = 0;
+        }
+
         return (
-            <Carousel dragging={true} cellSpacing={15} edgeEasing='easeInOutQuint' wrapAround={true} slidesToShow={1.25}
-                swiping={true} decorators={null} afterSlide={this.afterFoodSlide}>
+            <Carousel dragging={true} cellSpacing={15} edgeEasing='easeInOutQuint' wrapAround={true} slidesToShow={2.5}
+                swiping={true} decorators={null} afterSlide={this.afterFoodSlide} slideIndex={selectedSlideIndex} speed={750}>
                 {slides}
             </Carousel>
         )
@@ -122,7 +135,8 @@ class FoodCarousel extends Component {
             setTimeout(() => {
                 let selectedFood = this.props.foods[index];
                 this.props.onSelected(selectedFood);
-            }, 0);
+                this.setState({ selectedSlideIndex: index });
+            }, 50);
         }
     }
 }

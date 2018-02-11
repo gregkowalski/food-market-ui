@@ -1,4 +1,4 @@
-.marker-header {
+.mobilemap-marker-header {
     display: -webkit-box;
     float: left;
     margin-top: 3px;
@@ -14,11 +14,11 @@
     text-overflow: ellipsis;
 }
 
-.marker-rating-stars {
+.mobilemap-marker-rating-stars {
     margin-top: 7px;
 }
 
-.marker-rating-label {
+.mobilemap-marker-rating-label {
     margin-top: 1px;
     margin-left: -2px;
     font-family: Athiti !important;
@@ -26,7 +26,7 @@
     font-size: 1.1em;
 }
 
-.marker-ingredients {
+.mobilemap-marker-ingredients {
     display: -webkit-box;
     float: left;
     margin-top: 1px;
@@ -43,7 +43,7 @@
 
 }
 
-.marker-description {
+.mobilemap-marker-description {
     display: -webkit-box;
     float: left;
     margin-top: 1px;
@@ -57,7 +57,7 @@
     text-overflow: ellipsis;
 }
 
-.mapcontainer-foodcard-header {
+.mobilemap-foodcard-header {
     display: block;
     margin-top: 5px;
     margin-bottom: 1px !important;

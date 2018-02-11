@@ -1,42 +1,14 @@
 import React from 'react'
 import { Image, Card, Rating, Divider, Button } from 'semantic-ui-react'
-import './MapContainer.css'
+import './MobileMap.css'
 import { Map, Marker, InfoWindow, Circle, CustomControl } from './Map'
 import PriceCalc from './PriceCalc'
 import { Polygon } from './Map/components/Polygon';
+import Regions from './Map/Regions'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
-const google = window.google;
-
-const dt = {
-    id: 'dt',
-    paths: [
-        new google.maps.LatLng(49.28315, -123.09949),
-        new google.maps.LatLng(49.29334, -123.13073),
-        new google.maps.LatLng(49.293, -123.14361),
-        new google.maps.LatLng(49.28449, -123.14361),
-        new google.maps.LatLng(49.27094, -123.12764),
-        new google.maps.LatLng(49.27296, -123.11554),
-    ]
-};
-const kits = {
-    id: 'kits',
-    paths: [
-        new google.maps.LatLng(49.26557, -123.12335),
-        new google.maps.LatLng(49.27895, -123.14155),
-        new google.maps.LatLng(49.2743, -123.17708),
-        new google.maps.LatLng(49.2733, -123.19167),
-        new google.maps.LatLng(49.2631, -123.19013),
-        new google.maps.LatLng(49.24977, -123.19133),
-        new google.maps.LatLng(49.24966, -123.16172),
-        new google.maps.LatLng(49.24871, -123.12468)
-    ]
-};
-
-const regions = [dt, kits];
-
-export class MapContainer extends React.Component {
+export class MobileMap extends React.Component {
 
     constructor(props) {
         super(props);
@@ -44,17 +16,25 @@ export class MapContainer extends React.Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            selectedItemId: props.selectedItemId
+            selectedItemId: props.selectedItemId,
+            pickup: true,
+            selectedRegions: []
         };
     }
 
     onMarkerClick(props, marker, e) {
+        const selectedItemId = props.id;
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
+            // turn off info window for mobile map
+            // this should just scroll to the clicked item in the carousel
             showingInfoWindow: true,
-            selectedItemId: props.id
+            selectedItemId: selectedItemId
         });
+        if (this.props.onMarkerClick) {
+            this.props.onMarkerClick(selectedItemId);
+        }
     }
 
     onMapClick(props, map, e) {
@@ -108,10 +88,16 @@ export class MapContainer extends React.Component {
         }
     }
 
-    handleRegionSearch(region) {
+    handleRegionSearch(selectedRegionIds) {
         if (this.props.onRegionSelected) {
-            this.props.onRegionSelected(region);
+            const selectedRegions = Regions.filter(r => selectedRegionIds.includes(r.id));
+            this.props.onRegionSelected(selectedRegions);
         }
+    }
+
+    handlePickupClick = () => {
+        console.log(`pickup: ${!this.state.pickup}`);
+        this.setState({ pickup: !this.state.pickup });
     }
 
     render() {
@@ -122,11 +108,13 @@ export class MapContainer extends React.Component {
         }
 
         let polygons;
-        if (this.props.showRegions) {
-            polygons = regions.map(region => {
+        const showRegions = !this.state.pickup;
+        // if (this.props.showRegions) {
+        if (showRegions) {
+            polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.state.selectedRegionId === region.id) {
+                if (this.state.selectedRegions.includes(region.id)) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -145,8 +133,16 @@ export class MapContainer extends React.Component {
                             const lng = e.latLng.lng();
                             console.log({ lat, lng });
                             console.log(`clicked ${props.id}`);
-                            this.setState({ selectedRegionId: props.id });
-                            this.handleRegionSearch(region);
+
+                            const clickedRegionId = props.id;
+                            const includes = this.state.selectedRegions.includes(clickedRegionId);
+                            const newSelectedRegions = this.state.selectedRegions.filter(r => r !== clickedRegionId);
+                            if (!includes) {
+                                newSelectedRegions.push(clickedRegionId);
+                            }
+
+                            this.setState({ selectedRegions: newSelectedRegions });
+                            this.handleRegionSearch(newSelectedRegions);
                         }}
                     />);
             })
@@ -231,8 +227,6 @@ export class MapContainer extends React.Component {
             textAlign: 'center'
         };
 
-        const { pickup } = this.state;
-
         return (
             <Map
                 google={window.google}
@@ -277,16 +271,20 @@ export class MapContainer extends React.Component {
                     </div>
                 </CustomControl>
 
-                <CustomControl>
-                    <Button color='teal' style={{ marginBottom: '22px' }}>Pickup</Button>
+                <CustomControl position={window.google.maps.ControlPosition.LEFT_TOP}>
+                    <div>
+                        <div>
+                            <Button style={{ marginBottom: '5px' }} color={this.state.pickup ? 'teal' : 'grey'} onClick={this.handlePickupClick}>
+                                Pickup
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={!this.state.pickup ? 'teal' : 'grey'} onClick={this.handlePickupClick}>
+                                Delivery
+                            </Button>
+                        </div>
+                    </div>
                 </CustomControl>
-
-                <Button color={pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                    Pickup
-                </Button>
-                <Button color={!pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                    Delivery
-                </Button>
 
                 {polygons}
                 {/* {circles} */}
@@ -294,34 +292,12 @@ export class MapContainer extends React.Component {
                 {markers}
 
                 <InfoWindow
-                    marker={this.state.activeMarker}
+                    // marker={this.state.activeMarker}
+                    // position={this.props.center}
                     visible={this.state.showingInfoWindow}
                     onClose={() => this.onInfoWindowClose()}>
-
                     <div>
-                        <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={'/foods/' + item.id}>
-                            <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
-                                <Card.Content>
-                                    <Image width='100%' shape='rounded' src={item.image} />
-                                    <Card.Header className='mapcontainer-foodcard-header'>
-                                        <div className='marker-header'>${PriceCalc.getPrice(item.price)} · {item.header}</div>
-                                        <div style={{ clear: 'both' }}></div>
-                                    </Card.Header>
-                                    <Card.Meta>
-                                        <div style={{ display: 'inline-flex' }}>
-                                            <Rating disabled={true} maxRating={5} rating={item.rating} size='mini' className='marker-rating-stars' />
-                                            <div className='marker-rating-label'>{item.ratingCount} reviews</div>
-                                        </div>
-                                        <div className='marker-ingredients'>Ingredients: {item.meta}</div>
-                                    </Card.Meta>
-                                    <Card.Description>
-                                        <div className='marker-description'>{item.description} </div>
-                                    </Card.Description>
-                                </Card.Content>
-                            </Card>
-                        </a>
-                        <Divider hidden />
+                        Please click on a region to select foods with delivery option...
                     </div>
                 </InfoWindow>
             </Map>

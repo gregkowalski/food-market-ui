@@ -3,8 +3,8 @@
 // import AddTodo from 'containers/AddTodo'
 // import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
-import './MapTest3.css'
-import { MapContainer } from './MapContainer'
+import './MapSearch.css'
+import { MobileMap } from './MobileMap'
 import Food from './Food'
 import Map from './Map'
 import AppHeader from './components/AppHeader'
@@ -16,8 +16,9 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import FoodCarousel from './FoodCarousel';
 import Util from './Util'
+import { makeCancelable } from './Map/lib/cancelablePromise'
 
-class MapTest3 extends Component {
+class MapSearch extends Component {
 
     isDebug = false;
 
@@ -36,18 +37,36 @@ class MapTest3 extends Component {
             pickup: true,
             mapZoom: mapZoom,
             foods: [],
-            fullMap: false
+            fullMap: false,
+            showFilter: false
         };
     }
 
-    componentWillMount() {
-        let geo = {
-            ne_lat: 50,
-            ne_lng: -120,
-            sw_lat: 48,
-            sw_lng: -125
+    componentDidMount() {
+        if (navigator && navigator.geolocation) {
+            this.geoPromise = makeCancelable(
+                new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                })
+            );
+
+            this.geoPromise.promise
+                .then(pos => {
+                    const loc = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    };
+                    const bound = Util.convertMetersToDegrees(2500);
+                    let geo = {
+                        ne_lat: loc.lat + bound,
+                        ne_lng: loc.lng + bound,
+                        sw_lat: loc.lat - bound,
+                        sw_lng: loc.lng - bound
+                    }
+                    this.geoSearchFoods(geo);
+                })
+                .catch(e => console.error(e));
         }
-        this.geoSearchFoods(geo);
     }
 
     geoSearchFoods(geo) {
@@ -77,13 +96,32 @@ class MapTest3 extends Component {
             });
     }
 
-    handleRegionSelected(region) {
-        console.log('search region: ' + region.id);
+    handleGetCurrentLocation = (props, map, loc) => {
+        const bound = Util.convertMetersToDegrees(2500);
+        let geo = {
+            ne_lat: loc.lat + bound,
+            ne_lng: loc.lng + bound,
+            sw_lat: loc.lat - bound,
+            sw_lng: loc.lng - bound
+        }
+        // this.geoSearchFoods(geo);
+    }
+
+    handleRegionSelected(regions) {
         const google = window.google;
-        const polygon = new google.maps.Polygon({ paths: region.paths });
+        const polygons = regions.map(region => {
+            console.log('search region: ' + region.id);
+            return new google.maps.Polygon({ paths: region.paths });
+        })
         let foods = this.foods.filter(food => {
             const point = new window.google.maps.LatLng(food.position.lat, food.position.lng);
-            const contains = window.google.maps.geometry.poly.containsLocation(point, polygon);
+            let contains = false;
+            polygons.forEach(polygon => {
+                if (contains)
+                    return;
+
+                contains = window.google.maps.geometry.poly.containsLocation(point, polygon);
+            })
             console.log(`point=${point} contains: ${contains}`);
             return contains;
         });
@@ -152,16 +190,14 @@ class MapTest3 extends Component {
     }
 
     render() {
-        let { pickup, fullMap } = this.state;
+        let { pickup, fullMap, showFilter } = this.state;
+        const mapHeight = '62vh';
 
         let mapStyle = {
-            height: fullMap ? 'calc(45vh)' : '500px',
-            minHeight: fullMap ? 'calc(45vh)' : '500px',
+            height: fullMap ? (showFilter ? `calc(${mapHeight} - 90px)` : `${mapHeight}`) : '500px',
+            minHeight: fullMap ? (showFilter ? `calc(${mapHeight} - 90px)` : `${mapHeight}`) : '500px',
             width: '100%',
-            // height: fullMap ? 'calc(45vh - 55px)' : '500px',
-            // minHeight: fullMap ? 'calc(45vh - 55px)' : '500px',
-            // width: '100%',
-            // marginTop: '55px',
+            marginTop: showFilter ? '90px' : '0px',
         };
         if (fullMap) {
             mapStyle.position = 'fixed';
@@ -177,9 +213,41 @@ class MapTest3 extends Component {
                     <AppHeader fixed />
                 }
                 <div className='map3-bodywrap'>
+                    {fullMap &&
+                        <div className='mapsearch-filter' style={{ display: showFilter ? 'inherit' : 'none' }}>
+                            <Autocomplete className='app-address' style={{ display: pickup ? 'none' : 'inherit' }}
+                                name='address'
+                                onPlaceSelected={(place) => this.handleAddressChange(place)}
+                                types={['address']}
+                                placeholder='Address'
+                                componentRestrictions={{ country: 'ca' }} />
+
+                            <div>
+                                <SingleDatePicker
+                                    date={this.state.date} // momentPropTypes.momentObj or null
+                                    isOutsideRange={this.isDayOutsideRange}
+                                    onDateChange={this.handleDateChange}
+                                    focused={this.state.focused} // PropTypes.bool
+                                    onFocusChange={({ focused }) => {
+                                        this.setState({ focused });
+                                        // if (!focused) {
+                                        //     this.handleContactInfoBlur({ target: { name: 'date' } });
+                                        // }
+                                    }} // PropTypes.func.isRequired
+                                    numberOfMonths={1}
+                                    placeholder="Date"
+                                    displayFormat={() =>
+                                        //moment.localeData().longDateFormat('LL')
+                                        'MMMM DD, YYYY'
+                                    }
+                                />
+                            </div>
+                        </div>
+                    }
+
                     {this.hasBeenVisible &&
                         <div style={mapStyle}>
-                            <MapContainer foods={this.state.foods}
+                            <MobileMap foods={this.state.foods}
                                 showRegions={!pickup}
                                 selectedItemId={this.state.hoveredFoodItemId}
                                 center={this.state.mapLocation}
@@ -187,16 +255,20 @@ class MapTest3 extends Component {
                                 gestureHandling='auto'
                                 visible={fullMap}
                                 onGeoSearch={(geo) => this.geoSearchFoods(geo)}
-                                onRegionSelected={(region) => this.handleRegionSelected(region)}
-                                onListViewClick={() => this.setState({ fullMap: false })} />
+                                onRegionSelected={(regions) => this.handleRegionSelected(regions)}
+                                onListViewClick={() => this.setState({ fullMap: false })}
+                                onFilterClick={() => this.setState({ showFilter: !this.state.showFilter })}
+                                onGetCurrentLocation={this.handleGetCurrentLocation}
+                                onMarkerClick={(selectedItemId) => this.setState({ selectedFoodId: selectedItemId })}
+                            />
                         </div>
                     }
                     {fullMap && this.state.foods && this.state.foods.length > 0 &&
-                        <div className='map3-food-carousel' style={{ paddingTop: 'calc(45vh + 10px)', marginLeft: '10px' }}>
+                        <div className='map3-food-carousel' style={{ paddingTop: `calc(${mapHeight} + 5px)`, marginLeft: '10px' }}>
                             {/* <div className='map3-food-carousel'> */}
                             {/* <div style={{ height: '50%', backgroundColor: 'rgba(0,0,0,0)' }}>
                             </div> */}
-                            <FoodCarousel foods={this.state.foods}
+                            <FoodCarousel foods={this.state.foods} selectedFoodId={this.state.selectedFoodId}
                                 // onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
                                 // onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
                                 onSelected={(selectedFood) => {
@@ -221,4 +293,4 @@ class MapTest3 extends Component {
     }
 }
 
-export default MapTest3;
+export default MapSearch;
