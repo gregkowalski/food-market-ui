@@ -159,6 +159,10 @@ export class Map extends React.Component {
             });
             maps.event.trigger(this.map, 'ready');
             this.forceUpdate();
+
+            if (this.props.onMapCreated) {
+                this.props.onMapCreated(this.map);
+            }
         }
     }
 
@@ -212,7 +216,9 @@ export class Map extends React.Component {
             return;
 
         return React.Children.map(children, c => {
-            if (!c) return;
+            if (!c)
+                return;
+
             return React.cloneElement(c, {
                 map: this.map,
                 google: this.props.google,
@@ -244,11 +250,7 @@ export class Map extends React.Component {
             display: this.props.visible ? 'inherit' : 'none'
         });
 
-        const containerStyles = Object.assign(
-            {},
-            mapStyles.container,
-            this.props.containerStyle
-        );
+        const containerStyles = Object.assign({}, mapStyles.container, this.props.containerStyle);
 
         return (
             <div style={containerStyles} className={this.props.className}>

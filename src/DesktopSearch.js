@@ -39,6 +39,12 @@ export default class DesktopSearch extends Component {
         this.geoSearchNearCurrentLocation();
     }
 
+    componentWillUnmount() {
+        if (this.geoPromise) {
+            this.geoPromise.cancel();
+        }
+    }
+
     geoSearchNearCurrentLocation() {
         if (!navigator || !navigator.geolocation) {
             return;
@@ -69,11 +75,6 @@ export default class DesktopSearch extends Component {
 
     geoSearchFoods(geo) {
         if (!this.state.pickup) {
-            return;
-        }
-
-        if (!geo) {
-            this.geoSearchNearCurrentLocation();
             return;
         }
 
@@ -118,6 +119,10 @@ export default class DesktopSearch extends Component {
         this.setState({ foods: foods });
     }
 
+    handleMapCreated = (map) => {
+        this.map = map;
+    }
+
     handleFoodItemEnter(itemId) {
         this.setState({ hoveredFoodItemId: itemId });
     }
@@ -126,8 +131,20 @@ export default class DesktopSearch extends Component {
         this.setState({ hoveredFoodItemId: -1 });
     }
 
-    handleFilterClick = () => {
+    handleDateFilterClick = () => {
         this.setState({ dimmed: !this.state.dimmed });
+    }
+
+    handleDateFilterClose = () => {
+        this.handleDateFilterClick();
+    }
+
+    handleDateFilterClear = () => {
+        this.handleDateFilterClick();
+    }
+
+    handleDateFilterApply = (date) => {
+        this.handleDateFilterClick();
     }
 
     handleHide = () => {
@@ -137,14 +154,20 @@ export default class DesktopSearch extends Component {
     }
 
     handlePickupClick = () => {
-        const isPickup = !this.state.pickup;
-        this.setState({ pickup: isPickup });
-        if (!isPickup) {
-            this.handleRegionSelected();
-        }
-        else {
-            this.geoSearchFoods();
-        }
+        if (this.state.pickup)
+            return;
+
+        this.setState({ pickup: true }, () => {
+            const geo = Util.getGeoBounds(this.map);
+            this.geoSearchFoods(geo);
+        });
+    }
+
+    handleDeliveryClick = () => {
+        if (!this.state.pickup)
+            return;
+
+        this.setState({ pickup: false });
     }
 
     render() {
@@ -153,8 +176,13 @@ export default class DesktopSearch extends Component {
         return (
             <div className='dtsearch-wrap' onClick={this.handleHide}>
                 <AppHeader fixed noshadow />
-                <FoodFilter style={{ top: '55px', position: 'fixed' }} showFilter={dimmed} pickup={pickup}
-                    onFilterClick={this.handleFilterClick} onPickupClick={this.handlePickupClick} />
+                <FoodFilter style={{ top: '55px', position: 'fixed' }} showDateFilter={dimmed} pickup={pickup}
+                    onDateFilterClick={this.handleDateFilterClick}
+                    onDateFilterClose={this.handleDateFilterClose}
+                    onDateFilterClear={this.handleDateFilterClear}
+                    onDateFilterApply={this.handleDateFilterApply}
+                    onPickupClick={this.handlePickupClick}
+                    onDeliveryClick={this.handleDeliveryClick} />
                 <div className='dtsearch-bodywrap' >
                     <Dimmer.Dimmable dimmed={dimmed}>
                         <Dimmer active={dimmed} inverted onClickOutside={this.handleHide}
@@ -172,6 +200,7 @@ export default class DesktopSearch extends Component {
                                 zoom={this.state.mapZoom}
                                 onGeoSearch={(geo) => this.geoSearchFoods(geo)}
                                 onRegionSelected={(region) => this.handleRegionSelected(region)}
+                                onMapCreated={this.handleMapCreated}
                             />
                         </div>
                     </Dimmer.Dimmable>

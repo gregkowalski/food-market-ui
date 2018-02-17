@@ -1,9 +1,10 @@
 import React from 'react'
-import { Image, Card, Rating, Divider, Button } from 'semantic-ui-react'
+import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
-import { Map, Marker, InfoWindow, Circle, CustomControl, Polygon } from './Map'
+import { Map, Marker, InfoWindow, Polygon } from './Map'
 import PriceCalc from './PriceCalc'
 import Regions from './Map/Regions'
+import Util from './Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -15,7 +16,9 @@ export class DesktopMap extends React.Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            selectedItemId: props.selectedItemId
+            selectedItemId: props.selectedItemId,
+            selectedRegion: null,
+            showRegions: props.showRegions
         };
     }
 
@@ -63,18 +66,8 @@ export class DesktopMap extends React.Component {
     }
 
     handleGeoSearch(map) {
-        let bounds = map.getBounds();
-        let ne = bounds.getNorthEast();
-        let sw = bounds.getSouthWest();
-        console.log(`ne=(${ne.lat()}, ${ne.lng()})`);
-        console.log(`sw=(${sw.lat()}, ${sw.lng()})`);
-        let geo = {
-            ne_lat: ne.lat(),
-            ne_lng: ne.lng(),
-            sw_lat: sw.lat(),
-            sw_lng: sw.lng(),
-        }
         if (this.props.onGeoSearch) {
+            const geo = Util.getGeoBounds(map);
             this.props.onGeoSearch(geo);
         }
     }
@@ -84,26 +77,14 @@ export class DesktopMap extends React.Component {
             this.props.onRegionSelected(region);
         }
     }
-    
-    handlePickupClick = () => {
-        const newPickup = !this.state.pickup;
-        const newState = { pickup: newPickup };
-        console.log(`pickup: ${newPickup}`);
 
-        if (newPickup) {
-            // initialize pickup option
-            if (this.props.onGeoSearch) {
-                this.props.onGeoSearch();
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.showRegions !== prevProps.showRegions) {
+            this.setState({ showRegions: this.props.showRegions });
+            if (this.props.showRegions) {
+                this.handleRegionSearch(this.state.selectedRegion);
             }
-            newState.showingInfoWindow = false;
         }
-        else {
-            // initialize delivery option
-            newState.selectedPlace = null;
-            newState.showingInfoWindow = true;
-            this.handleRegionSearch(null);
-        }
-        this.setState(newState);
     }
 
     render() {
@@ -118,7 +99,7 @@ export class DesktopMap extends React.Component {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.state.selectedRegionId === region.id) {
+                if (this.state.selectedRegion === region) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -133,48 +114,12 @@ export class DesktopMap extends React.Component {
                         fillColor={fillColor}
                         fillOpacity={0.35}
                         onClick={(props, map, e) => {
-                            const lat = e.latLng.lat();
-                            const lng = e.latLng.lng();
-                            console.log({ lat, lng });
-                            console.log(`clicked ${props.id}`);
-                            this.setState({ selectedRegionId: props.id });
+                            this.setState({ selectedRegion: region });
                             this.handleRegionSearch(region);
                         }}
                     />);
             })
         }
-
-        const radius = 300;
-
-        let circle;
-        if (this.state.hoveredFoodId) {
-            const food = this.props.foods.find(f => f.id === this.state.hoveredFoodId);
-            if (food) {
-                circle = <Circle
-                    key={food.id}
-                    center={food.position}
-                    radius={radius}
-                    strokeColor='#4cb99e'
-                    strokeOpacity={0.8}
-                    strokeWeight={2}
-                    fillColor='#2aad8a'
-                    fillOpacity={0.35}
-                />
-            }
-        }
-
-        // const circles = this.props.foods.map(food =>
-        //     <Circle
-        //         key={food.id}
-        //         center={food.position}
-        //         radius={radius}
-        //         strokeColor='#4cb99e'
-        //         strokeOpacity={0.8}
-        //         strokeWeight={2}
-        //         fillColor='#2aad8a'
-        //         fillOpacity={0.35}
-        //     />
-        // );
 
         const markers = this.props.foods.map(foodItem => {
             return (
@@ -195,27 +140,6 @@ export class DesktopMap extends React.Component {
                 />
             );
         });
-
-        const style1 = {
-            color: 'rgb(25,25,25)',
-            fontFamily: 'Roboto,Arial,sans-serif',
-            fontSize: '16px',
-            lineHeight: '38px',
-            paddingLeft: '5px',
-            paddingRight: '5px',
-        };
-
-        const style2 = {
-            backgroundColor: '#fff',
-            border: '2px solid #fff',
-            borderRadius: '3px',
-            boxShadow: '0 2px 6px rgba(0,0,0,.3)',
-            cursor: 'pointer',
-            marginBottom: '22px',
-            textAlign: 'center'
-        };
-
-        const { pickup } = this.state;
 
         return (
             <Map
@@ -246,11 +170,9 @@ export class DesktopMap extends React.Component {
                     console.log('zoom changed');
                     this.handleGeoSearch(map);
                 }}
+                onMapCreated={this.props.onMapCreated}
             >
-
                 {polygons}
-                {/* {circles} */}
-                {/* {circle} */}
                 {markers}
 
                 <InfoWindow

@@ -10,8 +10,8 @@ export default class FoodFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pickup: false,
-            showFilter: false,
+            pickup: props.pickup,
+            showDateFilter: false,
             date: null
         }
     }
@@ -28,48 +28,57 @@ export default class FoodFilter extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             pickup: nextProps.pickup,
-            showFilter: nextProps.showFilter
+            showDateFilter: nextProps.showDateFilter
         });
     }
 
     handleDateClose = () => {
-        if (this.props.onFilterClick) {
-            this.props.onFilterClick();
+        if (this.props.onDateFilterClose) {
+            this.props.onDateFilterClose();
         }
     }
 
     handleDateClear = () => {
         this.setState({ date: null });
-        this.handleDateClose();
+        if (this.props.onDateFilterClear) {
+            this.props.onDateFilterClear();
+        }
     }
 
     handleDateApply = (date) => {
-        console.dir(date);
         this.setState({ date: date });
-        this.handleDateClose();
+        if (this.props.onDateFilterApply) {
+            this.props.onDateFilterApply(date);
+        }
     }
 
     render() {
         const style = Object.assign({}, this.props.style);
-        const { pickup, showFilter, date } = this.state;
+        const { pickup, showDateFilter, date } = this.state;
 
         const dateLabel = date ? date.format("MMM D, YYYY") : "Date";
-        const dateColor = date ? 'teal' : 'default';
-
+        const dateButtonProps = {}
+        if (date) {
+            dateButtonProps.color = 'teal';
+        }
+        else {
+            dateButtonProps.color = 'grey';
+            dateButtonProps.basic = true;
+        }
 
         return (
             <div className='foodfilter' style={style}>
                 <div className='foodfilter-layout'>
                     <div>
-                        <Button color={dateColor} onClick={this.props.onFilterClick}>{dateLabel}</Button>
+                        <Button {...dateButtonProps} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                     </div>
                     <div>
                         <Button color={pickup ? 'teal' : 'grey'} onClick={this.props.onPickupClick}>Pickup</Button>
-                        <Button color={!pickup ? 'teal' : 'grey'} onClick={this.props.onPickupClick}>Delivery</Button>
+                        <Button color={!pickup ? 'teal' : 'grey'} onClick={this.props.onDeliveryClick}>Delivery</Button>
                     </div>
                 </div>
 
-                <DateModal showFilter={showFilter}
+                <DateModal showDateFilter={showDateFilter}
                     onClose={this.handleDateClose}
                     onClear={this.handleDateClear}
                     onApply={this.handleDateApply}
@@ -87,8 +96,8 @@ class DateModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.open !== nextProps.showFilter) {
-            this.setState({ open: nextProps.showFilter });
+        if (this.state.open !== nextProps.showDateFilter) {
+            this.setState({ open: nextProps.showDateFilter });
         }
     }
 

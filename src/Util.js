@@ -70,4 +70,17 @@ export default class {
         }
         return false;
     }
+
+    static getGeoBounds(map) {
+        const bounds = map.getBounds();
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        const geo = {
+            ne_lat: ne.lat(),
+            ne_lng: ne.lng(),
+            sw_lat: sw.lat(),
+            sw_lng: sw.lng(),
+        }
+        return geo;
+    }
 }
