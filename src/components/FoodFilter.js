@@ -52,29 +52,34 @@ export default class FoodFilter extends React.Component {
         }
     }
 
+    static getButtonProps(active) {
+        const props = {};
+        if (active) {
+            props.color = 'teal';
+        }
+        else
+        {
+            props.color = 'grey';
+            props.basic = true;
+        }
+        return props;
+    }
+
     render() {
         const style = Object.assign({}, this.props.style);
         const { pickup, showDateFilter, date } = this.state;
 
         const dateLabel = date ? date.format("MMM D, YYYY") : "Date";
-        const dateButtonProps = {}
-        if (date) {
-            dateButtonProps.color = 'teal';
-        }
-        else {
-            dateButtonProps.color = 'grey';
-            dateButtonProps.basic = true;
-        }
 
         return (
             <div className='foodfilter' style={style}>
                 <div className='foodfilter-layout'>
                     <div>
-                        <Button {...dateButtonProps} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+                        <Button {...FoodFilter.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                     </div>
                     <div>
-                        <Button color={pickup ? 'teal' : 'grey'} onClick={this.props.onPickupClick}>Pickup</Button>
-                        <Button color={!pickup ? 'teal' : 'grey'} onClick={this.props.onDeliveryClick}>Delivery</Button>
+                        <Button {...FoodFilter.getButtonProps(pickup)} onClick={this.props.onPickupClick}>Pickup</Button>
+                        <Button {...FoodFilter.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>Delivery</Button>
                     </div>
                 </div>
 
