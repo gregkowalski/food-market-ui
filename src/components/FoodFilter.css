@@ -1,0 +1,97 @@
+.foodfilter {
+    height: 55px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fcfcfc;
+    border-bottom: 1px solid rgb(201, 199, 199);
+    box-shadow: 0px 3px 5px rgba(85, 85, 85, 0.603);
+    z-index: 1;
+    transition: top 0.2s ease-in-out;
+}
+
+.foodfilter-layout {
+    display: table;
+    padding: 10px 10px 10px 14px;
+    width: 100%;
+}
+
+.foodfilter-layout div:first-child {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 66%;
+}
+
+.foodfilter-layout div:nth-child(2) {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 34%;
+}
+
+#foodfilter-datepicker-actions {
+    position: fixed;
+    top: 330px;
+    left: 20px;
+    display: table;
+    width: 305px;
+}
+
+#foodfilter-datepicker-actions button {
+    margin: 0;
+}
+
+#foodfilter-datepicker-actions div:first-child {
+    display: table-cell;
+    text-align: left;
+    width: 50%;
+}
+
+#foodfilter-datepicker-actions div:nth-child(2) {
+    display: table-cell;
+    text-align: right;
+    width: 50%;
+}
+
+#foodfilter-datepicker {
+    height: 380px;
+    width: 345px;
+    z-index: 2000;
+    top: 110px;
+    left: 14px;
+    margin: 0 !important;
+    font-size: 18px;
+}
+
+#foodfilter-datepicker .content {
+    padding: 1em !important;
+    height: 380px;
+}
+
+#foodfilter-datepicker .SingleDatePickerInput {
+    display: none;
+}
+
+#foodfilter-datepicker .SingleDatePicker__picker {
+    margin-top: -90px;
+}
+
+#foodfilter-datepicker .DayPicker {
+    box-shadow: none;
+}
+
+#foodfilter-datepicker .DayPickerKeyboardShortcuts__show {
+    display: none;
+}
+
+@media all and (max-width: 767px) {
+    .foodfilter-desktop {
+        display: none;
+    }
+    .foodfilter-content {
+        padding-right: 10px;
+        padding-left: 7px;
+        text-align: left;
+    }
+}

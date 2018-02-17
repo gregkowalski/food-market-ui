@@ -1,46 +1,35 @@
 /* main layout */
 
-.wrap {
+.dtsearch-wrap {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.bodywrap {
-    margin-top: 55px;
+.dtsearch-bodywrap {
+    margin-top: 110px;
 }
 
-.center, .bodywrap {
+.dtsearch-center, .dtsearch-bodywrap {
     height: 100%;
 }
 
-.center {
+.dtsearch-center {
     width: 66%;
     padding-right: 5px;
     padding-left: 5px;
 }
 
-.app-filter {
-    background-color:  blanchedalmond;
+.dtsearch-right {
     width: 34%;
-    height: 150px;
-    top: 55px;
-    bottom: 0px;
-    right: 0px;
-    position: fixed;
-    z-index: 1;
-}
-
-.app-right {
-    width: 34%;
-    height: calc(100vh - 55px - 150px);
-    top: (55px + 150px);
+    height: calc(100vh - 110px);
+    top: 110px;
     bottom: 0px;
     right: 0px;
     position: fixed;
 }
 
-.app-address {
+.dtsearch-address {
     width: 100%;
     line-height: 1.21428571em;
     font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -55,32 +44,15 @@
 }
 
 @media all and (max-width: 767px) {
-    .app-right {
-        /* display: none; */
-    }
-    .app-filter {
-        /* display: none; */
-    }
-    .center {
-        width: 100%;
-    }
-    #content-desktop {
+    .dtsearch-right {
         display: none;
     }
-    .head-content {
-        text-align: center;
+    .dtsearch-center {
+        width: 100%;
     }
 }
 
 /* end main layout */
-
-.GridRowSpacer {
-    height: 150px;
-}
-
-.SearchButton {
-    width: 10em;
-}
 
 /* Google Autocomplete box */
 

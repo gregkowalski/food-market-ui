@@ -1,42 +1,13 @@
 import React from 'react'
 import { Image, Card, Rating, Divider, Button } from 'semantic-ui-react'
-import './MapContainer.css'
-import { Map, Marker, InfoWindow, Circle, CustomControl } from './Map'
+import './DesktopMap.css'
+import { Map, Marker, InfoWindow, Circle, CustomControl, Polygon } from './Map'
 import PriceCalc from './PriceCalc'
-import { Polygon } from './Map/components/Polygon';
+import Regions from './Map/Regions'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
-const google = window.google;
-
-const dt = {
-    id: 'dt',
-    paths: [
-        new google.maps.LatLng(49.28315, -123.09949),
-        new google.maps.LatLng(49.29334, -123.13073),
-        new google.maps.LatLng(49.293, -123.14361),
-        new google.maps.LatLng(49.28449, -123.14361),
-        new google.maps.LatLng(49.27094, -123.12764),
-        new google.maps.LatLng(49.27296, -123.11554),
-    ]
-};
-const kits = {
-    id: 'kits',
-    paths: [
-        new google.maps.LatLng(49.26557, -123.12335),
-        new google.maps.LatLng(49.27895, -123.14155),
-        new google.maps.LatLng(49.2743, -123.17708),
-        new google.maps.LatLng(49.2733, -123.19167),
-        new google.maps.LatLng(49.2631, -123.19013),
-        new google.maps.LatLng(49.24977, -123.19133),
-        new google.maps.LatLng(49.24966, -123.16172),
-        new google.maps.LatLng(49.24871, -123.12468)
-    ]
-};
-
-const regions = [dt, kits];
-
-export class MapContainer extends React.Component {
+export class DesktopMap extends React.Component {
 
     constructor(props) {
         super(props);
@@ -113,6 +84,27 @@ export class MapContainer extends React.Component {
             this.props.onRegionSelected(region);
         }
     }
+    
+    handlePickupClick = () => {
+        const newPickup = !this.state.pickup;
+        const newState = { pickup: newPickup };
+        console.log(`pickup: ${newPickup}`);
+
+        if (newPickup) {
+            // initialize pickup option
+            if (this.props.onGeoSearch) {
+                this.props.onGeoSearch();
+            }
+            newState.showingInfoWindow = false;
+        }
+        else {
+            // initialize delivery option
+            newState.selectedPlace = null;
+            newState.showingInfoWindow = true;
+            this.handleRegionSearch(null);
+        }
+        this.setState(newState);
+    }
 
     render() {
         let item = this.state.selectedPlace;
@@ -123,7 +115,7 @@ export class MapContainer extends React.Component {
 
         let polygons;
         if (this.props.showRegions) {
-            polygons = regions.map(region => {
+            polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
                 if (this.state.selectedRegionId === region.id) {
@@ -187,8 +179,8 @@ export class MapContainer extends React.Component {
         const markers = this.props.foods.map(foodItem => {
             return (
                 <Marker
-                    id={foodItem.id}
-                    key={foodItem.id}
+                    id={foodItem.food_id}
+                    key={foodItem.food_id}
                     onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
                     header={foodItem.header}
                     icon={this.getMarkerImage(foodItem, selectedItemId)}
@@ -200,14 +192,6 @@ export class MapContainer extends React.Component {
                     meta={foodItem.meta}
                     description={foodItem.description}
                     position={foodItem.position}
-                    onMouseover={() => {
-                        console.log('mouse_over: foodItem.id=' + foodItem.id);
-                        this.setState({ hoveredFoodId: foodItem.id });
-                    }}
-                    onMouseout={() => {
-                        console.log('mouse_out: foodItem.id=' + foodItem.id);
-                        this.setState({ hoveredFoodId: null });
-                    }}
                 />
             );
         });
@@ -262,31 +246,7 @@ export class MapContainer extends React.Component {
                     console.log('zoom changed');
                     this.handleGeoSearch(map);
                 }}
-                onGetCurrentPosition={this.props.onGetCurrentPosition}
             >
-
-                <CustomControl>
-                    <div style={style1} onClick={this.props.onListViewClick}>
-                        <div style={style2}>List View</div>
-                    </div>
-                </CustomControl>
-
-                <CustomControl>
-                    <div style={style1} onClick={this.props.onFilterClick}>
-                        <div style={style2}>Filter</div>
-                    </div>
-                </CustomControl>
-
-                <CustomControl>
-                    <Button color='teal' style={{ marginBottom: '22px' }}>Pickup</Button>
-                </CustomControl>
-
-                <Button color={pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                    Pickup
-                </Button>
-                <Button color={!pickup ? 'teal' : 'grey'} onClick={this.handleClick}>
-                    Delivery
-                </Button>
 
                 {polygons}
                 {/* {circles} */}

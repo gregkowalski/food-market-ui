@@ -1,9 +1,7 @@
 import React from 'react'
-import { Image, Card, Rating, Divider, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import './MobileMap.css'
-import { Map, Marker, InfoWindow, Circle, CustomControl } from './Map'
-import PriceCalc from './PriceCalc'
-import { Polygon } from './Map/components/Polygon';
+import { Map, Marker, InfoWindow, CustomControl, Polygon } from './Map'
 import Regions from './Map/Regions'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
@@ -14,8 +12,6 @@ export class MobileMap extends React.Component {
         super(props);
         this.state = {
             showingInfoWindow: false,
-            activeMarker: {},
-            selectedPlace: {},
             selectedItemId: props.selectedItemId,
             pickup: true,
             selectedRegions: []
@@ -23,13 +19,11 @@ export class MobileMap extends React.Component {
     }
 
     onMarkerClick(props, marker, e) {
-        const selectedItemId = props.id;
+        const selectedItemId = props.food_id;
         this.setState({
-            selectedPlace: props,
-            activeMarker: marker,
             // turn off info window for mobile map
             // this should just scroll to the clicked item in the carousel
-            showingInfoWindow: true,
+            showingInfoWindow: false,
             selectedItemId: selectedItemId
         });
         if (this.props.onMarkerClick) {
@@ -42,36 +36,30 @@ export class MobileMap extends React.Component {
         const lng = e.latLng.lng();
         console.log({ lat, lng });
         if (this.state.showingInfoWindow) {
-            this.setState({
-                showingInfoWindow: false,
-                activeMarker: null,
-                selectedPlace: {},
-                selectedItemId: -1
-            });
+            this.setState({ showingInfoWindow: false });
         }
     }
 
     onInfoWindowClose() {
-        this.setState({
-            showingInfoWindow: false,
-            activeMarker: null,
-            selectedPlace: {},
-            selectedItemId: -1
-        })
+        this.setState({ showingInfoWindow: false });
     }
 
     getMarkerImage(foodItem, selectedItemId) {
-        if (foodItem.id === selectedItemId) {
+        if (foodItem.food_id === selectedItemId) {
             return '/assets/images/food-icon-selected1.png';
         }
         return '/assets/images/food-icon1.png';
     }
 
     getZIndex(foodItem, selectedItemId) {
-        return (foodItem.id === selectedItemId) ? 9999 : null;
+        return (foodItem.food_id === selectedItemId) ? 9999 : null;
     }
 
     handleGeoSearch(map) {
+        if (!this.state.pickup) {
+            return;
+        }
+
         let bounds = map.getBounds();
         let ne = bounds.getNorthEast();
         let sw = bounds.getSouthWest();
@@ -89,6 +77,7 @@ export class MobileMap extends React.Component {
     }
 
     handleRegionSearch(selectedRegionIds) {
+        this.setState({ showingInfoWindow: false });
         if (this.props.onRegionSelected) {
             const selectedRegions = Regions.filter(r => selectedRegionIds.includes(r.id));
             this.props.onRegionSelected(selectedRegions);
@@ -96,14 +85,30 @@ export class MobileMap extends React.Component {
     }
 
     handlePickupClick = () => {
-        console.log(`pickup: ${!this.state.pickup}`);
-        this.setState({ pickup: !this.state.pickup });
+        const newPickup = !this.state.pickup;
+        const newState = { pickup: newPickup };
+        console.log(`pickup: ${newPickup}`);
+
+        if (newPickup) {
+            // initialize pickup option
+            if (this.props.onGeoSearch) {
+                this.props.onGeoSearch();
+            }
+            newState.showingInfoWindow = false;
+        }
+        else {
+            // initialize delivery option
+            const newSelectedRegions = [];
+            newState.selectedRegions = newSelectedRegions;
+            newState.showingInfoWindow = true;
+            this.handleRegionSearch(newSelectedRegions);
+        }
+        this.setState(newState);
     }
 
     render() {
-        let item = this.state.selectedPlace;
         let selectedItemId = this.props.selectedItemId;
-        if (selectedItemId < 0) {
+        if (!selectedItemId) {
             selectedItemId = this.state.selectedItemId;
         }
 
@@ -135,12 +140,13 @@ export class MobileMap extends React.Component {
                             console.log(`clicked ${props.id}`);
 
                             const clickedRegionId = props.id;
-                            const includes = this.state.selectedRegions.includes(clickedRegionId);
-                            const newSelectedRegions = this.state.selectedRegions.filter(r => r !== clickedRegionId);
-                            if (!includes) {
-                                newSelectedRegions.push(clickedRegionId);
-                            }
 
+                            // const newSelectedRegions = this.state.selectedRegions.filter(r => r !== clickedRegionId);
+                            // const includes = this.state.selectedRegions.includes(clickedRegionId);
+                            // if (!includes) {
+                            //     newSelectedRegions.push(clickedRegionId);
+                            // }
+                            const newSelectedRegions = [clickedRegionId];
                             this.setState({ selectedRegions: newSelectedRegions });
                             this.handleRegionSearch(newSelectedRegions);
                         }}
@@ -148,44 +154,11 @@ export class MobileMap extends React.Component {
             })
         }
 
-        const radius = 300;
-
-        let circle;
-        if (this.state.hoveredFoodId) {
-            const food = this.props.foods.find(f => f.id === this.state.hoveredFoodId);
-            if (food) {
-                circle = <Circle
-                    key={food.id}
-                    center={food.position}
-                    radius={radius}
-                    strokeColor='#4cb99e'
-                    strokeOpacity={0.8}
-                    strokeWeight={2}
-                    fillColor='#2aad8a'
-                    fillOpacity={0.35}
-                />
-            }
-        }
-
-        // const circles = this.props.foods.map(food =>
-        //     <Circle
-        //         key={food.id}
-        //         center={food.position}
-        //         radius={radius}
-        //         strokeColor='#4cb99e'
-        //         strokeOpacity={0.8}
-        //         strokeWeight={2}
-        //         fillColor='#2aad8a'
-        //         fillOpacity={0.35}
-        //     />
-        // );
-
         const markers = this.props.foods.map(foodItem => {
             return (
                 <Marker
-                    id={foodItem.id}
-                    key={foodItem.id}
-                    onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
+                    food_id={foodItem.food_id}
+                    key={foodItem.food_id}
                     header={foodItem.header}
                     icon={this.getMarkerImage(foodItem, selectedItemId)}
                     zIndex={this.getZIndex(foodItem, selectedItemId)}
@@ -196,14 +169,7 @@ export class MobileMap extends React.Component {
                     meta={foodItem.meta}
                     description={foodItem.description}
                     position={foodItem.position}
-                    onMouseover={() => {
-                        console.log('mouse_over: foodItem.id=' + foodItem.id);
-                        this.setState({ hoveredFoodId: foodItem.id });
-                    }}
-                    onMouseout={() => {
-                        console.log('mouse_out: foodItem.id=' + foodItem.id);
-                        this.setState({ hoveredFoodId: null });
-                    }}
+                    onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
                 />
             );
         });
@@ -256,7 +222,6 @@ export class MobileMap extends React.Component {
                     console.log('zoom changed');
                     this.handleGeoSearch(map);
                 }}
-                onGetCurrentPosition={this.props.onGetCurrentPosition}
             >
 
                 <CustomControl>
@@ -291,13 +256,9 @@ export class MobileMap extends React.Component {
                 {/* {circle} */}
                 {markers}
 
-                <InfoWindow
-                    // marker={this.state.activeMarker}
-                    // position={this.props.center}
-                    visible={this.state.showingInfoWindow}
-                    onClose={() => this.onInfoWindowClose()}>
-                    <div>
-                        Please click on a region to select foods with delivery option...
+                <InfoWindow visible={this.state.showingInfoWindow} onClose={() => this.onInfoWindowClose()}>
+                    <div style={{ maxWidth: '200px', fontSize: '16px' }}>
+                        Please click to select your delivery area
                     </div>
                 </InfoWindow>
             </Map>

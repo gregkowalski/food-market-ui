@@ -3,13 +3,13 @@
 // import AddTodo from 'containers/AddTodo'
 // import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
-import './MapSearch.css'
+import './MobileSearch.css'
 import { MobileMap } from './MobileMap'
 import Food from './Food'
 import Map from './Map'
 import AppHeader from './components/AppHeader'
 import ApiClient from './Api/ApiClient'
-import { Button } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -33,7 +33,6 @@ class MapSearch extends Component {
         }
 
         this.state = {
-            hoveredFoodItemId: -1,
             pickup: true,
             mapZoom: mapZoom,
             foods: [],
@@ -43,34 +42,43 @@ class MapSearch extends Component {
     }
 
     componentDidMount() {
-        if (navigator && navigator.geolocation) {
-            this.geoPromise = makeCancelable(
-                new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
-                })
-            );
+        this.geoSearchNearCurrentLocation();
+    }
 
-            this.geoPromise.promise
-                .then(pos => {
-                    const loc = {
-                        lat: pos.coords.latitude,
-                        lng: pos.coords.longitude
-                    };
-                    const bound = Util.convertMetersToDegrees(2500);
-                    let geo = {
-                        ne_lat: loc.lat + bound,
-                        ne_lng: loc.lng + bound,
-                        sw_lat: loc.lat - bound,
-                        sw_lng: loc.lng - bound
-                    }
-                    this.geoSearchFoods(geo);
-                })
-                .catch(e => console.error(e));
+    geoSearchNearCurrentLocation() {
+        if (!navigator || !navigator.geolocation) {
+            return;
         }
+        this.geoPromise = makeCancelable(
+            new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            })
+        );
+
+        this.geoPromise.promise
+            .then(pos => {
+                const loc = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                };
+                const bound = Util.convertMetersToDegrees(2500);
+                let geo = {
+                    ne_lat: loc.lat + bound,
+                    ne_lng: loc.lng + bound,
+                    sw_lat: loc.lat - bound,
+                    sw_lng: loc.lng - bound
+                }
+                this.geoSearchFoods(geo);
+            })
+            .catch(e => console.error(e));
     }
 
     geoSearchFoods(geo) {
-        console.log('geosearch');
+        if (!geo) {
+            this.geoSearchNearCurrentLocation();
+            return;
+        }
+
         let api = new ApiClient();
         api.geoSearchFoods(geo)
             .then(response => {
@@ -96,17 +104,6 @@ class MapSearch extends Component {
             });
     }
 
-    handleGetCurrentLocation = (props, map, loc) => {
-        const bound = Util.convertMetersToDegrees(2500);
-        let geo = {
-            ne_lat: loc.lat + bound,
-            ne_lng: loc.lng + bound,
-            sw_lat: loc.lat - bound,
-            sw_lng: loc.lng - bound
-        }
-        // this.geoSearchFoods(geo);
-    }
-
     handleRegionSelected(regions) {
         const google = window.google;
         const polygons = regions.map(region => {
@@ -125,7 +122,11 @@ class MapSearch extends Component {
             console.log(`point=${point} contains: ${contains}`);
             return contains;
         });
-        this.setState({ foods: foods });
+        const newState = { foods };
+        if (foods && foods.length > 0) {
+            newState.selectedFoodId = foods[0].food_id;
+        }
+        this.setState(newState);
     }
 
     handleDateChange = (date) => {
@@ -146,27 +147,9 @@ class MapSearch extends Component {
         });
     };
 
-    handleFoodItemEnter(itemId) {
-        if (this.isDebug) {
-            console.log('handleFoodItemEnter id=' + itemId);
-        }
-        this.setState({
-            hoveredFoodItemId: itemId
-        });
-    }
-
-    handleFoodItemLeave(itemId) {
-        if (this.isDebug) {
-            console.log('handleFoodItemLeave id=' + itemId);
-        }
-        this.setState({
-            hoveredFoodItemId: -1
-        });
-    }
-
     handleClick = () => this.setState({ pickup: !this.state.pickup })
 
-    dateCutoff = moment().add(36, 'hours');
+    dateCutoff = moment().add(4, 'hours');
 
     isDayOutsideRange = (date) => {
 
@@ -192,12 +175,16 @@ class MapSearch extends Component {
     render() {
         let { pickup, fullMap, showFilter } = this.state;
         const mapHeight = '62vh';
+        const filterHeight = '150px';
 
         let mapStyle = {
-            height: fullMap ? (showFilter ? `calc(${mapHeight} - 90px)` : `${mapHeight}`) : '500px',
-            minHeight: fullMap ? (showFilter ? `calc(${mapHeight} - 90px)` : `${mapHeight}`) : '500px',
+            height: fullMap ? (showFilter ? `calc(${mapHeight} - ${filterHeight})` : `${mapHeight}`) : '500px',
+            minHeight: fullMap ? (showFilter ? `calc(${mapHeight} - ${filterHeight})` : `${mapHeight}`) : '500px',
             width: '100%',
-            marginTop: showFilter ? '90px' : '0px',
+            marginTop: showFilter ? `${filterHeight}` : '0px',
+            touchAction: 'none',
+            borderBottom: '1px solid #DBDBDB',
+            borderTop: '1px solid #DBDBDB',
         };
         if (fullMap) {
             mapStyle.position = 'fixed';
@@ -215,32 +202,46 @@ class MapSearch extends Component {
                 <div className='map3-bodywrap'>
                     {fullMap &&
                         <div className='mapsearch-filter' style={{ display: showFilter ? 'inherit' : 'none' }}>
-                            <Autocomplete className='app-address' style={{ display: pickup ? 'none' : 'inherit' }}
+                            <Autocomplete className='mapsearch-address' style={{ display: pickup ? 'none' : 'inherit' }}
                                 name='address'
                                 onPlaceSelected={(place) => this.handleAddressChange(place)}
                                 types={['address']}
                                 placeholder='Address'
                                 componentRestrictions={{ country: 'ca' }} />
 
-                            <div>
-                                <SingleDatePicker
-                                    date={this.state.date} // momentPropTypes.momentObj or null
-                                    isOutsideRange={this.isDayOutsideRange}
-                                    onDateChange={this.handleDateChange}
-                                    focused={this.state.focused} // PropTypes.bool
-                                    onFocusChange={({ focused }) => {
-                                        this.setState({ focused });
-                                        // if (!focused) {
-                                        //     this.handleContactInfoBlur({ target: { name: 'date' } });
-                                        // }
-                                    }} // PropTypes.func.isRequired
-                                    numberOfMonths={1}
-                                    placeholder="Date"
-                                    displayFormat={() =>
-                                        //moment.localeData().longDateFormat('LL')
-                                        'MMMM DD, YYYY'
-                                    }
-                                />
+                            <div style={{ display: 'table', padding: '10px 10px 10px 10px', width: '100%', borderBottom: '1px solid #DBDBDB' }}>
+                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'left', width: '30%' }}>
+                                    <Icon name='close' style={{cursor: 'pointer'}} onClick={() => this.setState({ showFilter: false })} />
+                                </div>
+                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'center', width: '40%' }}>Filters</div>
+                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'right', width: '30%' }}>Clear</div>
+                            </div>
+
+                            <div style={{ width: '90%', margin: 'auto', padding: '10px' }}>
+                                <div style={{ width: '80px', paddingTop: '7px', float: 'left' }}>Ready On:</div>
+                                <div style={{ marginLeft: '80px' }}>
+                                    <SingleDatePicker
+                                        date={this.state.date} // momentPropTypes.momentObj or null
+                                        isOutsideRange={this.isDayOutsideRange}
+                                        onDateChange={this.handleDateChange}
+                                        focused={this.state.focused} // PropTypes.bool
+                                        onFocusChange={({ focused }) => {
+                                            this.setState({ focused });
+                                            // if (!focused) {
+                                            //     this.handleContactInfoBlur({ target: { name: 'date' } });
+                                            // }
+                                        }} // PropTypes.func.isRequired
+                                        numberOfMonths={1}
+                                        placeholder="Date"
+                                        displayFormat={() =>
+                                            //moment.localeData().longDateFormat('LL')
+                                            'MMMM DD, YYYY'
+                                        }
+                                    />
+                                </div>
+                            </div>
+                            <div style={{ display: 'table', padding: '10px 10px 10px 10px', width: '100%', borderTop: '1px solid #DBDBDB' }}>
+                                <Button style={{width: '100%'}} color='teal' onClick={() => this.setState({ showFilter: false })}>Search</Button>
                             </div>
                         </div>
                     }
@@ -249,16 +250,15 @@ class MapSearch extends Component {
                         <div style={mapStyle}>
                             <MobileMap foods={this.state.foods}
                                 showRegions={!pickup}
-                                selectedItemId={this.state.hoveredFoodItemId}
                                 center={this.state.mapLocation}
+                                selectedItemId={this.state.selectedFoodId}
                                 zoom={this.state.mapZoom}
-                                gestureHandling='auto'
+                                gestureHandling='greedy'
                                 visible={fullMap}
                                 onGeoSearch={(geo) => this.geoSearchFoods(geo)}
                                 onRegionSelected={(regions) => this.handleRegionSelected(regions)}
                                 onListViewClick={() => this.setState({ fullMap: false })}
                                 onFilterClick={() => this.setState({ showFilter: !this.state.showFilter })}
-                                onGetCurrentLocation={this.handleGetCurrentLocation}
                                 onMarkerClick={(selectedItemId) => this.setState({ selectedFoodId: selectedItemId })}
                             />
                         </div>
@@ -269,21 +269,18 @@ class MapSearch extends Component {
                             {/* <div style={{ height: '50%', backgroundColor: 'rgba(0,0,0,0)' }}>
                             </div> */}
                             <FoodCarousel foods={this.state.foods} selectedFoodId={this.state.selectedFoodId}
-                                // onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
-                                // onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
                                 onSelected={(selectedFood) => {
-                                    this.handleFoodItemEnter(selectedFood.food_id);
-                                    this.setState({ mapLocation: selectedFood.position });
+                                    this.setState({
+                                        mapLocation: selectedFood.position,
+                                        selectedFoodId: selectedFood.food_id
+                                    });
                                 }} />
                         </div>
                     }
 
                     {!fullMap &&
                         <div className='map3-center'>
-                            <Food foods={this.state.foods}
-                                onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
-                                onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)}
-                            />
+                            <Food foods={this.state.foods} />
                             <Button style={{ position: 'fixed', bottom: '10px', right: '20px' }} onClick={() => this.setState({ fullMap: true })}>Map Search</Button>
                         </div>
                     }

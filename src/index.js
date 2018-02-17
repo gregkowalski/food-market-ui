@@ -6,7 +6,6 @@ import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import 'whatwg-fetch'
 import './semantic/semantic.min.css'
-// import App from './App'
 import FoodDetail from './FoodDetail'
 import reducer from './reducers'
 import Order from './Order'
@@ -24,20 +23,21 @@ import Login from './Login'
 import Config from './Config'
 import Pricing from './Pricing'
 // import Map2 from './map2'
-import MapSearch from './MapSearch'
+import MobileSearch from './MobileSearch'
+import Home from './Home'
 
 //import temp from 'temp'
 
 unregister();
 
-const store = createStore(reducer)
+const store = createStore(reducer);
 
 render(
   <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          {/* <Route exact path='/' component={App} /> */}
+          <Route exact path='/' component={Home} />
           {/* <Route path='/temp' component={temp} /> */}
           <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
           <Route path='/foods/:id/orderError' component={OrderError} />
@@ -52,7 +52,7 @@ render(
           <Route path='/login' exact component={Login} />
           <Route path='/pricing' exact component={Pricing} />
           {/* <Route path='/map2' exact component={Map2} /> */}
-          <Route path='/mapsearch' exact component={MapSearch} />
+          <Route path='/mobilesearch' exact component={MobileSearch} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>

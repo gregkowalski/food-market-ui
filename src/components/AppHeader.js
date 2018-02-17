@@ -72,7 +72,7 @@ class AppHeader extends React.Component {
         this.setState({ username: null });
     }
 
-    handleContactSupport (event, data) {
+    handleContactSupport(event, data) {
         window.location.href = `mailto:<${Config.Foodcraft.SupportEmail}>?subject=${encodeURIComponent('Foodcraft Feedback')}`;
     }
 
@@ -98,11 +98,6 @@ class AppHeader extends React.Component {
     }
 
     render() {
-        let pos = 'relative';
-        if (this.props.fixed) {
-            pos = 'fixed';
-        }
-
         let sessionElement;
         if (this.state.username) {
             sessionElement =
@@ -135,9 +130,20 @@ class AppHeader extends React.Component {
                     </div>
             }
         }
+        const headerStyle = {};
+        headerStyle.position = 'relative';
+        if (this.props.fixed) {
+            headerStyle.position = 'fixed';
+        }
+
+        headerStyle.borderBottom = '1px solid rgb(201, 199, 199)';
+        if (!this.props.noshadow) {
+            headerStyle.boxShadow = '0px 3px 5px rgba(85, 85, 85, 0.603)';
+        }
 
         return (
-            <div className='apphead' style={{ position: pos }}>
+
+            <div className='apphead' style={headerStyle}>
                 <div className='apphead-content'>
                     <div className='apphead-logo'>
                         <a href="/">

@@ -69,9 +69,6 @@ export class Map extends React.Component {
                             lng: pos.coords.longitude
                         };
                         this.setState({ currentLocation: loc });
-                        if (this.props.onGetCurrentPosition) {
-                            this.props.onGetCurrentPosition(this.props, this.map, loc);
-                        }
                     })
                     .catch(e => e);
             }
