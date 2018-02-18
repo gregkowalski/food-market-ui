@@ -7,7 +7,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Anmore",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/belcarra-anmore\/?area=Port Moody&amp;sub_area_community=Anmore&amp;market_trend=QmBx-FrD\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -55,7 +54,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Arbutus",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/arbutus\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -99,7 +97,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Barber Street",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/ioco-heritage\/?area=Port Moody&amp;sub_area_community=Barber Street&amp;market_trend=QmBv-qsV\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -140,7 +137,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Belcarra",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/belcarra-anmore\/?area=Port Moody&amp;sub_area_community=Belcarra&amp;market_trend=QmBe-d7x\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -285,7 +281,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Big Bend",
             "area": "Burnaby South",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -344,7 +339,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Birchland Manor",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Birchland Manor&amp;market_trend=QCgt-V3y\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -372,7 +366,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Boyd Park",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Boyd Park&amp;market_trend=d6h8-64G\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -397,7 +390,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Braemar",
             "area": "North Vancouver",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -444,7 +436,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Brentwood Park",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/brentwood-park\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -488,7 +479,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Brighouse",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/city-centre-brighouse\/?area=Richmond&amp;sub_area_community=Brighouse&amp;market_trend=d6hO-4wr\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -518,7 +508,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Brighouse South",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/city-centre-brighouse\/?area=Richmond&amp;sub_area_community=Brighouse South&amp;market_trend=d6hu-m3c\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -543,7 +532,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Broadmoor",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=Broadmoor&amp;market_trend=d6h8-64G\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -568,7 +556,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Brunette",
             "area": "New Westminster",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -623,7 +610,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Buckingham Heights",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/deer-lake-oakland-buckingham-heights\/?area=Burnaby South&amp;sub_area_community=Buckingham Heights&amp;market_trend=QCKc-E6b\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -648,7 +634,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Burke Mountain",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/westwood-burke\/?area=Coquitlam&amp;sub_area_community=Burke Mountain&amp;market_trend=QCa4-CVi\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -751,7 +736,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Burnaby Hospital",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/west-central-burnaby\/?area=Burnaby South&amp;sub_area_community=Burnaby Hospital&amp;market_trend=QCKg-PQB\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -779,7 +763,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Burnaby Lake",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/burnaby-lake-cariboo-crest\/?area=Burnaby South&amp;sub_area_community=Burnaby Lake&amp;market_trend=QCLB-jJ6\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -842,7 +825,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Cambie",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/cambie\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -870,7 +852,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Canyon Heights",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Canyon Heights NV&amp;market_trend=C235-hza\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -926,7 +907,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Canyon Springs",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=Canyon Springs&amp;market_trend=QCae-HfS\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -962,7 +942,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Cape Horn",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mundy-cape-horn\/?area=Coquitlam&amp;sub_area_community=Cape Horn&amp;market_trend=QCak-uIS\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1011,7 +990,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Capilano",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Capilano NV&amp;market_trend=C23I-6gq\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1049,7 +1027,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Capitol Hill",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-west\/?area=Burnaby North&amp;sub_area_community=Capitol Hill BN&amp;market_trend=QCDV-X36\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1086,7 +1063,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Cariboo",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/burnaby-lake-cariboo-crest\/?area=Burnaby North&amp;sub_area_community=Cariboo&amp;market_trend=QCDk-9dH\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1137,7 +1113,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Central",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/west-central-burnaby\/?area=Burnaby North&amp;sub_area_community=Central BN&amp;market_trend=QCDN-oyI\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1193,7 +1168,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Central Coquitlam",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Central Coquitlam&amp;market_trend=QCaW-eS4\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1240,7 +1214,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Central Park",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/west-central-burnaby\/?area=Burnaby South&amp;sub_area_community=Central Park BS&amp;market_trend=QCLC-Y8v\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1271,7 +1244,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Central Pt Coquitlam",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-south\/?area=Port Coquitlam&amp;sub_area_community=Central Pt Coquitlam&amp;market_trend=QmB7-Y3g\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1324,7 +1296,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Champlain Heights",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/champlain-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1372,7 +1343,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Chineside",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Chineside&amp;market_trend=QCa9-zvQ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1402,7 +1372,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Citadel",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-south\/?area=Port Coquitlam&amp;sub_area_community=Citadel PQ&amp;market_trend=QmBT-mpJ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1484,7 +1453,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Coal Harbour",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coal-harbour\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1541,7 +1509,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "College Park",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-moody-south\/?area=Port Moody&amp;sub_area_community=College Park PM&amp;market_trend=QmB0-LzG\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1587,7 +1554,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Collingwood",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/collingwood\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1624,7 +1590,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Connaught Heights",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=Connaught Heights&amp;market_trend=QCLo-WMP\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1651,7 +1616,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Coquitlam East",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mundy-cape-horn\/?area=Coquitlam&amp;sub_area_community=Coquitlam East&amp;market_trend=QCa0-zWU\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1734,7 +1698,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Coquitlam West",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Coquitlam West&amp;market_trend=QCGf-aHq\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1771,7 +1734,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Crescent Bch Ocean Pk.",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/crescent-beach-ocean-park\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1804,7 +1766,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Deer Lake",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/deer-lake-oakland-buckingham-heights\/?area=Burnaby South&amp;sub_area_community=Deer Lake&amp;market_trend=QCLm-spY\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1846,7 +1807,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Deer Lake Place",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/deer-lake-oakland-buckingham-heights\/?area=Burnaby South&amp;sub_area_community=Deer Lake Place&amp;market_trend=QCL2-OBU\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1878,7 +1838,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Delbrook",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Delbrook&amp;market_trend=C23e-sHC\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1926,7 +1885,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Downtown",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-downtown\/?area=New Westminster&amp;sub_area_community=Downtown NW&amp;market_trend=QCLI-IJw\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -1954,7 +1912,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Downtown",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/downtown-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2002,7 +1959,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Downtown",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/downtown-west\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2043,7 +1999,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Dunbar",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/dunbar\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2097,7 +2052,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Eagle Ridge",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=Eagle Ridge CQ&amp;market_trend=QCGE-LVR\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2131,7 +2085,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "East Burnaby",
             "area": "Burnaby East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/highgate-edmunds-east-burnaby\/?area=Burnaby East&amp;sub_area_community=East Burnaby&amp;market_trend=QCLJ-Mhf\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2160,7 +2113,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Edgemont",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Edgemont&amp;market_trend=C23p-pL2\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2218,7 +2170,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Edmonds",
             "area": "Burnaby East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/highgate-edmunds-east-burnaby\/?area=Burnaby East&amp;sub_area_community=Edmonds BE&amp;market_trend=QCL6-RZZ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2248,7 +2199,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Elgin Chantrell",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/elgin-chantrell-sunnyside-park\/?area=South Surrey White Rock&amp;sub_area_community=Elgin Chantrell&amp;market_trend=Ctb6-hWV\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2279,7 +2229,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Fairview",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fairview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2312,7 +2261,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "False Creek",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/false-creek\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2403,7 +2351,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Forest Glen",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/garden-greentree-village-forest-glen\/?area=Burnaby South&amp;sub_area_community=Forest Glen BS&amp;market_trend=QCLT-stq\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2440,7 +2387,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Forest Hills",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Forest Hills BN&amp;market_trend=QCDG-YJ6\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2487,7 +2433,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Forest Hills",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Forest Hills NV&amp;market_trend=C236-eFb\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2529,7 +2474,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Fraser",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fraser\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2563,7 +2507,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Fraserview",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-east\/?area=New Westminster&amp;sub_area_community=Fraserview NW&amp;market_trend=QCLv-Sjt\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2599,7 +2542,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Fraserview",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fraserview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2649,7 +2591,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Garden City",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=Garden City&amp;market_trend=d6hk-sMm\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2675,7 +2616,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Garden Village",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/garden-greentree-village-forest-glen\/?area=Burnaby South&amp;sub_area_community=Garden Village&amp;market_trend=QCLb-Ply\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2700,7 +2640,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Gilmore",
             "area": "Richmond",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2735,7 +2674,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Glenayre",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-moody-south\/?area=Port Moody&amp;sub_area_community=Glenayre&amp;market_trend=QmBG-a2z\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2761,7 +2699,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "GlenBrooke North",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=GlenBrooke North&amp;market_trend=QCL4-zsm\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2788,7 +2725,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Glenwood",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Glenwood PQ&amp;market_trend=QmBb-Lex\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2817,7 +2753,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Government Road",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/government-road\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2893,7 +2828,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Grandview Surrey",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/grandview-pacific-douglas\/?area=South Surrey White Rock&amp;sub_area_community=Grandview Surrey&amp;market_trend=Ctbc-ptN\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2921,7 +2855,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Grandview",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/grandview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2957,7 +2890,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Granville",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Granville&amp;market_trend=d6hg-HYy\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -2984,7 +2916,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Greentree Village",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/garden-greentree-village-forest-glen\/?area=Burnaby South&amp;sub_area_community=Greentree Village&amp;market_trend=QCLj-ZRP\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3019,7 +2950,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Grouse Woods",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Grouse Woods&amp;market_trend=C23J-rMB\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3059,7 +2989,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Harbour Chines",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Harbour Chines&amp;market_trend=QCGR-QTj\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3084,7 +3013,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Harbour Place",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Harbour Place&amp;market_trend=QCG8-p7o\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3113,7 +3041,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Hastings",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/hastings\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3203,7 +3130,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Hastings East",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/hastings-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3246,7 +3172,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Heritage Mountain",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/ioco-heritage\/?area=Port Moody&amp;sub_area_community=Heritage Mountain&amp;market_trend=QmBg-54U\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3298,7 +3223,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Heritage Woods",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/belcarra-anmore\/?area=Port Moody&amp;sub_area_community=Heritage Woods PM&amp;market_trend=QmtB-068\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3331,7 +3255,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Highgate",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/highgate-edmunds-east-burnaby\/?area=Burnaby South&amp;sub_area_community=Highgate&amp;market_trend=QCLf-qOj\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3364,7 +3287,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Hockaday",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/westwood-burke\/?area=Coquitlam&amp;sub_area_community=Hockaday&amp;market_trend=QCGw-RjR\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3439,7 +3361,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Ioco",
             "area": "Port Moody",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3498,7 +3419,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Ironwood",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=Ironwood&amp;market_trend=d62H-jAa\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3523,7 +3443,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Kerrisdale",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/kerrisdale\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3555,7 +3474,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Killarney",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/killarney\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3598,7 +3516,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "King George Corridor",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/elgin-chantrell-sunnyside-park\/?area=South Surrey White Rock&amp;sub_area_community=King George Corridor&amp;market_trend=Ctbx-M0j\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3630,7 +3547,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Kitsilano",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/kitsilano\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3707,7 +3623,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Knight",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/knight\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3759,7 +3674,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Lackner",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Lackner&amp;market_trend=d62D-oZg\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3784,7 +3698,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Lake City Industrial",
             "area": "Burnaby North",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3819,7 +3732,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Lincoln Park",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Lincoln Park PQ&amp;market_trend=QmBu-S3U\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3853,7 +3765,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Lower Mary Hill",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-south\/?area=Port Coquitlam&amp;sub_area_community=Lower Mary Hill&amp;market_trend=QmBX-Da2\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3891,7 +3802,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Lynn Valley",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/lynn-valley-area\/?area=North Vancouver&amp;sub_area_community=Lynn Valley&amp;market_trend=C2yd-i4c\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3961,7 +3871,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "MacKenzie Heights",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mackenzie-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -3993,7 +3902,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Maillardville",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/maillardville-central-west\/?area=Coquitlam&amp;sub_area_community=Maillardville&amp;market_trend=QCGS-9yp\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4042,7 +3950,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Main",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/main\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4069,7 +3976,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Marpole",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/marpole\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4126,7 +4032,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Mary Hill",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-south\/?area=Port Coquitlam&amp;sub_area_community=Mary Hill&amp;market_trend=QmBK-teI\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4179,7 +4084,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "McLennan North",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/city-centre-brighouse\/?area=Richmond&amp;sub_area_community=McLennan North&amp;market_trend=d62o-Xos\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4206,7 +4110,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "McNair",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=McNair&amp;market_trend=d62I-WmZ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4232,7 +4135,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Meadow Brook",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mundy-cape-horn\/?area=Coquitlam&amp;sub_area_community=Meadow Brook&amp;market_trend=QCGO-4T7\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4259,7 +4161,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Metrotown",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/metrotown\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4288,7 +4189,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Montecito",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Montecito&amp;market_trend=QCKQ-Rxc\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4336,7 +4236,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Moody Park",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=Moody Park&amp;market_trend=QCLn-jg5\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4361,7 +4260,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Morgan Creek",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/morgan-creek\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4387,7 +4285,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Mount Pleasant",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mount-pleasant-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4439,7 +4336,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Mount Pleasant",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mount-pleasant-west\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4464,7 +4360,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Mountain Meadows",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/ioco-heritage\/?area=Port Moody&amp;sub_area_community=Mountain Meadows&amp;market_trend=Qmtm-Vdx\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4495,7 +4390,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "New Horizons",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=New Horizons&amp;market_trend=QCGy-9fE\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4532,7 +4426,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "North Arm",
             "area": "New Westminster",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4577,7 +4470,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "North Coquitlam",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=North Coquitlam&amp;market_trend=QCGX-Fn9\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4614,7 +4506,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "North Shore Pt Moody",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/ioco-heritage\/?area=Port Moody&amp;sub_area_community=North Shore Pt Moody&amp;market_trend=Qmth-tq6\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4710,7 +4601,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Oakdale",
             "area": "Burnaby North",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4742,7 +4632,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Oaklands",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/deer-lake-oakland-buckingham-heights\/?area=Burnaby South&amp;sub_area_community=Oaklands&amp;market_trend=QCLE-8VT\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4776,7 +4665,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Oakridge",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/oakridge\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4801,7 +4689,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Oxford Heights",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Oxford Heights&amp;market_trend=QmB1-E5Y\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4834,7 +4721,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Pacific Douglas",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/grandview-pacific-douglas\/?area=South Surrey White Rock&amp;sub_area_community=Pacific Douglas&amp;market_trend=Ctbk-1t7\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4863,7 +4749,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Park Ridge Estates",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/westwood-burke\/?area=Coquitlam&amp;sub_area_community=Park Ridge Estates&amp;market_trend=QCGK-7jA\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4901,7 +4786,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Parkcrest",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-west\/?area=Burnaby North&amp;sub_area_community=Parkcrest&amp;market_trend=QCKH-Lk6\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -4938,7 +4822,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Point Grey",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/point-grey\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5006,7 +4889,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Port Moody Centre",
             "area": "Port Moody",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-moody-south\/?area=Port Moody&amp;sub_area_community=Port Moody Centre&amp;market_trend=Qmt2-RwS\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5096,7 +4978,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Princess Park",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/lynn-valley-area\/?area=North Vancouver&amp;sub_area_community=Princess Park&amp;market_trend=C23N-XOi\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5141,7 +5022,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Quay",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-downtown\/?area=New Westminster&amp;sub_area_community=Quay&amp;market_trend=QCat-scC\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5191,7 +5071,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Queens Park",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=Queens Park&amp;market_trend=QCad-9nC\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5218,7 +5097,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Queensborough",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/queensborough\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5262,7 +5140,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Quilchena",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/quilchena\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5302,7 +5179,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Quilchena",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Quilchena RI&amp;market_trend=d62e-cec\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5330,7 +5206,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Ranch Park",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mundy-cape-horn\/?area=Coquitlam&amp;sub_area_community=Ranch Park&amp;market_trend=QCGM-YWQ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5373,7 +5248,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Renfrew Heights",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/renfrew-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5402,7 +5276,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Renfrew",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/renfrew\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5428,7 +5301,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "River Springs",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=River Springs&amp;market_trend=QCG6-Rpw\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5474,7 +5346,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Riverdale",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Riverdale RI&amp;market_trend=d62k-9ua\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5499,7 +5370,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Riverwood",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Riverwood&amp;market_trend=QmBi-R9W\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5539,7 +5409,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Sapperton",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-east\/?area=New Westminster&amp;sub_area_community=Sapperton&amp;market_trend=QCa7-SZb\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5584,7 +5453,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Saunders",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=Saunders&amp;market_trend=d62N-rse\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5609,7 +5477,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Scott Creek",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=Scott Creek&amp;market_trend=QCGp-AJc\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5646,7 +5513,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Seafair",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Seafair&amp;market_trend=d6Qd-mEW\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5671,7 +5537,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Shaughnessy",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/shaughnessy\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5716,7 +5581,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Simon Fraser Hills",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Simon Fraser Hills&amp;market_trend=QCKR-Ktw\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5750,7 +5614,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Simon Fraser Univer.",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Simon Fraser Univer.&amp;market_trend=QCKS-kCf\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5826,7 +5689,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "South Arm",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/broadmoor-shellmont-gilmore\/?area=Richmond&amp;sub_area_community=South Arm&amp;market_trend=d6QC-ctA\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5851,7 +5713,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "South Cambie",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-cambie\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5877,7 +5738,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "South Granville",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-granville\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5911,7 +5771,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "South Slope",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/suncrest-big-bend-south-slope\/?area=Burnaby South&amp;sub_area_community=South Slope&amp;market_trend=QCLw-XXq\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5953,7 +5812,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "South Vancouver",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-vancouver\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -5995,7 +5853,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Southlands",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/southlands\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6096,7 +5953,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Sperling-Duthie",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-west\/?area=Burnaby North&amp;sub_area_community=Sperling-Duthie&amp;market_trend=QCK3-Wfv\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6137,7 +5993,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Steveston North",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/steveston\/?area=Richmond&amp;sub_area_community=Steveston North&amp;market_trend=d6Q7-o9H\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6163,7 +6018,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Steveston South",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/steveston\/?area=Richmond&amp;sub_area_community=Steveston South&amp;market_trend=d6Ql-kKd\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6193,7 +6047,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Steveston Village",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/steveston\/?area=Richmond&amp;sub_area_community=Steveston Village&amp;market_trend=d6QR-WHv\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6219,7 +6072,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Sullivan Heights",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Sullivan Heights&amp;market_trend=QCKa-yJK\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6249,7 +6101,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Summitt View",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=Summitt View&amp;market_trend=QCGk-PGy\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6277,7 +6128,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Suncrest",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/suncrest-big-bend-south-slope\/?area=Burnaby South&amp;sub_area_community=Suncrest&amp;market_trend=QCLS-GAZ\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6307,7 +6157,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Sunnyside Park Surrey",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/elgin-chantrell-sunnyside-park\/?area=South Surrey White Rock&amp;sub_area_community=Sunnyside Park Surrey&amp;market_trend=Ctbp-pBV\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6335,7 +6184,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "SW Marine",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/s-w-marine\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6381,7 +6229,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Tempe",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/lynn-valley-area\/?area=North Vancouver&amp;sub_area_community=Tempe&amp;market_trend=C2yh-3YR\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6410,7 +6257,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Terra Nova",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Terra Nova&amp;market_trend=d6hl-1Xw\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6438,7 +6284,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "The Crest",
             "area": "Burnaby East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/burnaby-lake-cariboo-crest\/?area=Burnaby East&amp;sub_area_community=The Crest&amp;market_trend=QCLp-5Pa\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6480,7 +6325,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "The Heights",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-east\/?area=New Westminster&amp;sub_area_community=The Heights NW&amp;market_trend=QCaT-ATP\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6518,7 +6362,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "University",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/university\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6653,7 +6496,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Upper Deer Lake",
             "area": "Burnaby South",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/deer-lake-oakland-buckingham-heights\/?area=Burnaby South&amp;sub_area_community=Upper Deer Lake&amp;market_trend=QCLi-oLE\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6703,7 +6545,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Upper Delbrook",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/capilano-valley-area\/?area=North Vancouver&amp;sub_area_community=Upper Delbrook&amp;market_trend=C23k-aPS\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6753,7 +6594,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Upper Eagle Ridge",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coquitlam-city-centre\/?area=Coquitlam&amp;sub_area_community=Upper Eagle Ridge&amp;market_trend=QCGc-oNd\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6796,7 +6636,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Uptown",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=Uptown NW&amp;market_trend=QCab-q9k\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6828,7 +6667,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Vancouver Heights",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-west\/?area=Burnaby North&amp;sub_area_community=Vancouver Heights&amp;market_trend=QCK5-Fvn\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6858,7 +6696,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Victoria",
             "area": "Vancouver East",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/victoria\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6903,7 +6740,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "West End",
             "area": "New Westminster",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/new-westminster-west\/?area=New Westminster&amp;sub_area_community=West End NW&amp;market_trend=QCal-G38\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6930,7 +6766,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "West End",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/west-end\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -6979,7 +6814,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westlynn",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/lynn-valley-area\/?area=North Vancouver&amp;sub_area_community=Westlynn&amp;market_trend=C2ym-eLl\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7025,7 +6859,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westlynn Terrace",
             "area": "North Vancouver",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/lynn-valley-area\/?area=North Vancouver&amp;sub_area_community=Westlynn Terrace&amp;market_trend=C2yC-s3o\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7070,7 +6903,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westridge",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-east\/?area=Burnaby North&amp;sub_area_community=Westridge BN&amp;market_trend=QCKI-ega\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7099,7 +6931,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westwind",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/steveston\/?area=Richmond&amp;sub_area_community=Westwind&amp;market_trend=d6QO-0Pz\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7124,7 +6955,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westwood Plateau",
             "area": "Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/westwood-burke\/?area=Coquitlam&amp;sub_area_community=Westwood Plateau&amp;market_trend=QCGN-Vdi\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7180,7 +7010,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Westwood Summit",
             "area": "Coquitlam",
-            "market_trend": "",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7209,7 +7038,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "White Rock",
             "area": "South Surrey White Rock",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/white-rock\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7237,7 +7065,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Willingdon Heights",
             "area": "Burnaby North",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/north-burnaby-west\/?area=Burnaby North&amp;sub_area_community=Willingdon Heights&amp;market_trend=QCKe-1W6\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7265,7 +7092,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Woodland Acres",
             "area": "Port Coquitlam",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/port-coquitlam-north\/?area=Port Coquitlam&amp;sub_area_community=Woodland Acres PQ&amp;market_trend=QmB5-wNE\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7293,7 +7119,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Woodwards",
             "area": "Richmond",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/thompson-seafair-blundell\/?area=Richmond&amp;sub_area_community=Woodwards&amp;market_trend=d6Qu-VKK\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7319,7 +7144,6 @@ export const all_boundaries = {
         "properties": {
             "hood_name": "Yaletown",
             "area": "Vancouver West",
-            "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/yaletown\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
             "color": "#CCCCCC",
             "stroke_opacity": "1",
             "strokeweight": 3,
@@ -7401,7 +7225,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Arbutus",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/arbutus\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7445,7 +7268,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Cambie",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/cambie\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7473,7 +7295,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Champlain Heights",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/champlain-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7521,7 +7342,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Coal Harbour",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/coal-harbour\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7578,7 +7398,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Collingwood",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/collingwood\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7615,7 +7434,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Downtown",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/downtown-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7663,7 +7481,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Downtown",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/downtown-west\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7704,7 +7521,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Dunbar",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/dunbar\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7758,7 +7574,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Fairview",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fairview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7791,7 +7606,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "False Creek",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/false-creek\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7882,7 +7696,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Fraser",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fraser\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7916,7 +7729,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Fraserview",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/fraserview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -7966,7 +7778,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Grandview",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/grandview\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8002,7 +7813,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Hastings",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/hastings\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8092,7 +7902,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Hastings East",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/hastings-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8135,7 +7944,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Kerrisdale",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/kerrisdale\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8167,7 +7975,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Killarney",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/killarney\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8210,7 +8017,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Kitsilano",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/kitsilano\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8287,7 +8093,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Knight",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/knight\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8339,7 +8144,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "MacKenzie Heights",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mackenzie-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8371,7 +8175,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Main",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/main\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8398,7 +8201,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Marpole",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/marpole\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8455,7 +8257,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Mount Pleasant",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mount-pleasant-east\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8507,7 +8308,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Mount Pleasant",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/mount-pleasant-west\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8532,7 +8332,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Oakridge",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/oakridge\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8557,7 +8356,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Point Grey",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/point-grey\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8625,7 +8423,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Quilchena",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/quilchena\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8665,7 +8462,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Renfrew Heights",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/renfrew-heights\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8694,7 +8490,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Renfrew",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/renfrew\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8720,7 +8515,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Shaughnessy",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/shaughnessy\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8765,7 +8559,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "South Cambie",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-cambie\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8791,7 +8584,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "South Granville",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-granville\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8825,7 +8617,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "South Vancouver",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/south-vancouver\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8867,7 +8658,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Southlands",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/southlands\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -8968,7 +8758,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "SW Marine",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/s-w-marine\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -9014,7 +8803,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "University",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/university\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -9149,7 +8937,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Victoria",
                 "area": "Vancouver East",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/victoria\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -9194,7 +8981,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "West End",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/west-end\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
@@ -9243,7 +9029,6 @@ const current_boundaries =
             "properties": {
                 "hood_name": "Yaletown",
                 "area": "Vancouver West",
-                "market_trend": "<a class=\"small_before_arrow\" href=\"\/neighbourhoods\/yaletown\" target=\"_self\">View the neighbourhood profile for this MLS\u00ae sub-area<\/a>",
                 "color": "#ffffff",
                 "stroke_opacity": "1",
                 "strokeweight": 3,
