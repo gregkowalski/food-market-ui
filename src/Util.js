@@ -1,5 +1,6 @@
 import queryString from 'query-string'
 import { FoodPrepType } from './data/FoodItems'
+import moment from 'moment'
 
 export default class {
 
@@ -82,5 +83,28 @@ export default class {
             sw_lng: sw.lng(),
         }
         return geo;
+    }
+
+    static isDayOutsideRange = (date) => {
+
+        const dateCutoff = moment().add(4, 'hours');
+
+        const year1 = date.year();
+        const month1 = date.month();
+        const day1 = date.date();
+
+        const year2 = dateCutoff.year();
+        const month2 = dateCutoff.month();
+        const day2 = dateCutoff.date();
+
+        //console.log(`dateCutoff=${year2}-${month2}-${day2}, date=${year1}-${month1}-${day1}`);
+
+        if (year1 !== year2)
+            return year1 < year2;
+
+        if (month1 !== month2)
+            return month1 < month2;
+
+        return day1 < day2;
     }
 }

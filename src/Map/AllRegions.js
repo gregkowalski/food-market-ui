@@ -1,5 +1,4 @@
-
-const all_boundaries = {
+export const all_boundaries = {
     "type": "FeatureCollection",
     "id": "all_boundaries",
     "features": [{

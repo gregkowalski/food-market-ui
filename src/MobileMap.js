@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import './MobileMap.css'
-import { Map, Marker, InfoWindow, CustomControl, Polygon } from './Map'
+import { Map, Marker, CustomControl, Polygon } from './Map'
 import Regions from './Map/Regions'
+import Util from './Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -11,37 +12,18 @@ export class MobileMap extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showingInfoWindow: false,
             selectedItemId: props.selectedItemId,
             pickup: true,
-            selectedRegions: []
+            selectedRegionIds: []
         };
     }
 
     onMarkerClick(props, marker, e) {
         const selectedItemId = props.food_id;
-        this.setState({
-            // turn off info window for mobile map
-            // this should just scroll to the clicked item in the carousel
-            showingInfoWindow: false,
-            selectedItemId: selectedItemId
-        });
+        this.setState({ selectedItemId: selectedItemId });
         if (this.props.onMarkerClick) {
             this.props.onMarkerClick(selectedItemId);
         }
-    }
-
-    onMapClick(props, map, e) {
-        const lat = e.latLng.lat();
-        const lng = e.latLng.lng();
-        console.log({ lat, lng });
-        if (this.state.showingInfoWindow) {
-            this.setState({ showingInfoWindow: false });
-        }
-    }
-
-    onInfoWindowClose() {
-        this.setState({ showingInfoWindow: false });
     }
 
     getMarkerImage(foodItem, selectedItemId) {
@@ -60,50 +42,32 @@ export class MobileMap extends React.Component {
             return;
         }
 
-        let bounds = map.getBounds();
-        let ne = bounds.getNorthEast();
-        let sw = bounds.getSouthWest();
-        console.log(`ne=(${ne.lat()}, ${ne.lng()})`);
-        console.log(`sw=(${sw.lat()}, ${sw.lng()})`);
-        let geo = {
-            ne_lat: ne.lat(),
-            ne_lng: ne.lng(),
-            sw_lat: sw.lat(),
-            sw_lng: sw.lng(),
-        }
         if (this.props.onGeoSearch) {
+            const geo = Util.getGeoBounds(map);
             this.props.onGeoSearch(geo);
         }
     }
 
-    handleRegionSearch(selectedRegionIds) {
-        this.setState({ showingInfoWindow: false });
+    handleRegionSearch() {
         if (this.props.onRegionSelected) {
+            const selectedRegionIds = this.state.selectedRegionIds;
             const selectedRegions = Regions.filter(r => selectedRegionIds.includes(r.id));
             this.props.onRegionSelected(selectedRegions);
         }
     }
 
     handlePickupClick = () => {
-        const newPickup = !this.state.pickup;
-        const newState = { pickup: newPickup };
-        console.log(`pickup: ${newPickup}`);
+        if (this.state.pickup)
+            return;
 
-        if (newPickup) {
-            // initialize pickup option
-            if (this.props.onGeoSearch) {
-                this.props.onGeoSearch();
-            }
-            newState.showingInfoWindow = false;
-        }
-        else {
-            // initialize delivery option
-            const newSelectedRegions = [];
-            newState.selectedRegions = newSelectedRegions;
-            newState.showingInfoWindow = true;
-            this.handleRegionSearch(newSelectedRegions);
-        }
-        this.setState(newState);
+        this.setState({ pickup: true }, () => this.handleGeoSearch(this.map));
+    }
+
+    handleDeliveryClick = () => {
+        if (!this.state.pickup)
+            return;
+
+        this.setState({ pickup: false }, () => this.handleRegionSearch([]));
     }
 
     render() {
@@ -114,12 +78,11 @@ export class MobileMap extends React.Component {
 
         let polygons;
         const showRegions = !this.state.pickup;
-        // if (this.props.showRegions) {
         if (showRegions) {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.state.selectedRegions.includes(region.id)) {
+                if (this.state.selectedRegionIds.includes(region.id)) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -140,15 +103,7 @@ export class MobileMap extends React.Component {
                             console.log(`clicked ${props.id}`);
 
                             const clickedRegionId = props.id;
-
-                            // const newSelectedRegions = this.state.selectedRegions.filter(r => r !== clickedRegionId);
-                            // const includes = this.state.selectedRegions.includes(clickedRegionId);
-                            // if (!includes) {
-                            //     newSelectedRegions.push(clickedRegionId);
-                            // }
-                            const newSelectedRegions = [clickedRegionId];
-                            this.setState({ selectedRegions: newSelectedRegions });
-                            this.handleRegionSearch(newSelectedRegions);
+                            this.setState({ selectedRegionIds: [clickedRegionId] }, () => this.handleRegionSearch());
                         }}
                     />);
             })
@@ -193,6 +148,21 @@ export class MobileMap extends React.Component {
             textAlign: 'center'
         };
 
+        const infoStyle = {
+            marginTop: '10px',
+            marginLeft: '20px',
+            backgroundColor: '#fff',
+            lineHeight: '38px',
+            paddingLeft: '5px',
+            paddingRight: '5px',
+            color: 'rgb(25,25,25)',
+            fontFamily: 'Roboto,Arial,sans-serif',
+            fontSize: '16px',
+            border: '2px solid #fff',
+            borderRadius: '3px',
+            boxShadow: '0 2px 6px rgba(0,0,0,.3)',
+        }
+
         return (
             <Map
                 google={window.google}
@@ -210,7 +180,6 @@ export class MobileMap extends React.Component {
                 center={this.props.center}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
-                onClick={(props, map, e) => this.onMapClick(props, map, e)}
                 onDragstart={(props, map, e) => {
                     console.log('drag start');
                 }}
@@ -222,6 +191,7 @@ export class MobileMap extends React.Component {
                     console.log('zoom changed');
                     this.handleGeoSearch(map);
                 }}
+                onMapCreated={map => this.map = map}
             >
 
                 <CustomControl>
@@ -244,23 +214,21 @@ export class MobileMap extends React.Component {
                             </Button>
                         </div>
                         <div>
-                            <Button color={!this.state.pickup ? 'teal' : 'grey'} onClick={this.handlePickupClick}>
+                            <Button color={!this.state.pickup ? 'teal' : 'grey'} onClick={this.handleDeliveryClick}>
                                 Delivery
                             </Button>
                         </div>
                     </div>
                 </CustomControl>
 
-                {polygons}
-                {/* {circles} */}
-                {/* {circle} */}
-                {markers}
-
-                <InfoWindow visible={this.state.showingInfoWindow} onClose={() => this.onInfoWindowClose()}>
-                    <div style={{ maxWidth: '200px', fontSize: '16px' }}>
+                <CustomControl visible={!this.state.pickup} position={window.google.maps.ControlPosition.TOP_CENTER}>
+                    <div style={infoStyle}>
                         Please click to select your delivery area
                     </div>
-                </InfoWindow>
+                </CustomControl>
+
+                {polygons}
+                {markers}
             </Map>
         )
     }

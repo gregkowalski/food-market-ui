@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import { Button, Image, Icon, Message, Dropdown, Checkbox, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
@@ -12,6 +11,7 @@ import ApiClient from './Api/ApiClient'
 import CognitoUtil from './Cognito/CognitoUtil'
 import { Constants } from './Constants'
 import PriceCalc from './PriceCalc'
+import Util from './Util'
 
 const Steps = {
     pickup: 0,
@@ -282,29 +282,6 @@ export default class Order extends React.Component {
         return true;
     }
 
-    dateCutoff = moment().add(36, 'hours');
-
-    isDayOutsideRange = (date) => {
-
-        const year1 = date.year();
-        const month1 = date.month();
-        const day1 = date.date();
-
-        const year2 = this.dateCutoff.year();
-        const month2 = this.dateCutoff.month();
-        const day2 = this.dateCutoff.date();
-
-        //console.log(`dateCutoff=${year2}-${month2}-${day2}, date=${year1}-${month1}-${day1}`);
-
-        if (year1 !== year2)
-            return year1 < year2;
-
-        if (month1 !== month2)
-            return month1 < month2;
-
-        return day1 < day2;
-    }
-
     render() {
         let food = this.food;
         if (!food) {
@@ -382,7 +359,7 @@ export default class Order extends React.Component {
                                         <div>Date</div>
                                         <SingleDatePicker
                                             date={this.state.date} // momentPropTypes.momentObj or null
-                                            isOutsideRange={this.isDayOutsideRange}
+                                            isOutsideRange={Util.isDayOutsideRange}
                                             onDateChange={this.handleDateChange}
                                             focused={this.state.focused} // PropTypes.bool
                                             onFocusChange={({ focused }) => {

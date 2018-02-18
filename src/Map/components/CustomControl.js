@@ -16,6 +16,16 @@ const wrappedPromise = function () {
 
 export class CustomControl extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        let visible = true;
+        if (typeof props.visible !== "undefined") {
+            visible = props.visible;
+        }
+        this.state = { visible };
+    }
+
     componentDidMount() {
         this.customControlPromise = wrappedPromise();
         this.renderCustomControl();
@@ -25,6 +35,10 @@ export class CustomControl extends React.Component {
         if (this.props.map !== prevProps.map) {
             this.map = this.props.map;
             this.renderCustomControl();
+        }
+
+        if (this.props.visible !== prevProps.visible) {
+            this.setState({ visible: this.props.visible }, () => this.renderCustomControl());
         }
 
         if (this.props.children !== prevProps.children) {
@@ -37,7 +51,9 @@ export class CustomControl extends React.Component {
     }
 
     updateContent() {
-        ReactDOM.render(this.props.children, this.customControl);
+        if (this.customControl) {
+            ReactDOM.render(this.props.children, this.customControl);
+        }
     }
 
     renderCustomControl() {
@@ -50,12 +66,19 @@ export class CustomControl extends React.Component {
             position = google.maps.ControlPosition.BOTTOM_CENTER;
         }
 
-        const container = window.document.createElement('div');
-        ReactDOM.render(this.props.children, container);
-        map.controls[position].push(container);
-        this.customControl = container;
+        if (!this.customControl) {
+            this.customControl = window.document.createElement('div');
+            ReactDOM.render(this.props.children, this.customControl);
+            this.customControlPromise.resolve(this.customControl);
+        }
 
-        this.customControlPromise.resolve(this.customControl);
+        const index = map.controls[position].indexOf(this.customControl);
+        if (this.state.visible && index < 0) {
+            map.controls[position].push(this.customControl);
+        }
+        else if (index >= 0) {
+            map.controls[position].removeAt(index);
+        }
     }
 
     getCustomControl() {

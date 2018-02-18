@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
-import { Map, Marker, InfoWindow, Polygon } from './Map'
+import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
 import PriceCalc from './PriceCalc'
 import Regions from './Map/Regions'
 import Util from './Util'
@@ -141,6 +141,24 @@ export class DesktopMap extends React.Component {
             );
         });
 
+        const infoStyle = {
+            marginTop: '10px',
+            marginLeft: '20px',
+            backgroundColor: '#fff',
+            lineHeight: '38px',
+            paddingLeft: '5px',
+            paddingRight: '5px',
+            color: 'rgb(25,25,25)',
+            fontFamily: 'Roboto,Arial,sans-serif',
+            fontSize: '16px',
+            border: '2px solid #fff',
+            borderRadius: '3px',
+            boxShadow: '0 2px 6px rgba(0,0,0,.3)',
+        }
+        // if (!this.props.showRegions) {
+        //     infoStyle.display = 'none';
+        // }
+
         return (
             <Map
                 google={window.google}
@@ -174,6 +192,12 @@ export class DesktopMap extends React.Component {
             >
                 {polygons}
                 {markers}
+
+                <CustomControl visible={this.state.showRegions} position={window.google.maps.ControlPosition.TOP_CENTER}>
+                    <div style={infoStyle}>
+                        Please click to select your delivery area
+                    </div>
+                </CustomControl>
 
                 <InfoWindow
                     marker={this.state.activeMarker}

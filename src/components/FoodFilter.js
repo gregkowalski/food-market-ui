@@ -3,7 +3,7 @@ import { Button, Modal } from 'semantic-ui-react'
 import './FoodFilter.css'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment'
+import Util from '../Util'
 
 export default class FoodFilter extends React.Component {
 
@@ -77,9 +77,12 @@ export default class FoodFilter extends React.Component {
                     <div>
                         <Button {...FoodFilter.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                     </div>
-                    <div>
+                    <div id='foodfilter-map'>
                         <Button {...FoodFilter.getButtonProps(pickup)} onClick={this.props.onPickupClick}>Pickup</Button>
                         <Button {...FoodFilter.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>Delivery</Button>
+                    </div>
+                    <div id='foodfilter-expand'>
+                        Resize to show map &gt;&gt;
                     </div>
                 </div>
 
@@ -106,29 +109,6 @@ class DateModal extends React.Component {
         }
     }
 
-    isDayOutsideRange = (date) => {
-
-        const dateCutoff = moment().add(36, 'hours');
-
-        const year1 = date.year();
-        const month1 = date.month();
-        const day1 = date.date();
-
-        const year2 = dateCutoff.year();
-        const month2 = dateCutoff.month();
-        const day2 = dateCutoff.date();
-
-        //console.log(`dateCutoff=${year2}-${month2}-${day2}, date=${year1}-${month1}-${day1}`);
-
-        if (year1 !== year2)
-            return year1 < year2;
-
-        if (month1 !== month2)
-            return month1 < month2;
-
-        return day1 < day2;
-    }
-
     handleApply = () => {
         if (this.props.onApply) {
             this.props.onApply(this.state.date);
@@ -149,7 +129,7 @@ class DateModal extends React.Component {
                     <Modal.Content>
                         <SingleDatePicker
                             date={this.state.date}
-                            isOutsideRange={this.isDayOutsideRange}
+                            isOutsideRange={Util.isDayOutsideRange}
                             onDateChange={this.handleDateChange}
                             focused={true}
                             onFocusChange={({ focused }) => this.setState({ focused })}

@@ -12,7 +12,7 @@
 
 .foodfilter-layout {
     display: table;
-    padding: 10px 10px 10px 14px;
+    padding: 10px 0px 10px 14px;
     width: 100%;
 }
 
@@ -23,13 +23,43 @@
     width: 66%;
 }
 
-.foodfilter-layout div:nth-child(2) {
+#foodfilter-map {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
     width: 34%;
 }
 
+#foodfilter-map button {
+    width: 50%;
+    margin: 0;
+}
+
+#foodfilter-expand {
+    display: none;
+    vertical-align: middle;
+    text-align: right;
+    width: 34%;
+}
+
+@media all and (max-width: 767px) {
+    .foodfilter-desktop {
+        display: none;
+    }
+    .foodfilter-content {
+        padding-right: 10px;
+        padding-left: 7px;
+        text-align: left;
+    }
+    #foodfilter-map {
+        display: none;
+    }
+    #foodfilter-expand {
+        display: table-cell;
+    }
+}
+
+/* Date picker */
 #foodfilter-datepicker-actions {
     position: fixed;
     top: 330px;
@@ -83,15 +113,4 @@
 
 #foodfilter-datepicker .DayPickerKeyboardShortcuts__show {
     display: none;
-}
-
-@media all and (max-width: 767px) {
-    .foodfilter-desktop {
-        display: none;
-    }
-    .foodfilter-content {
-        padding-right: 10px;
-        padding-left: 7px;
-        text-align: left;
-    }
 }

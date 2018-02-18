@@ -13,7 +13,6 @@ import { Button, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment'
 import FoodCarousel from './FoodCarousel';
 import Util from './Util'
 import { makeCancelable } from './Map/lib/cancelablePromise'
@@ -74,8 +73,7 @@ class MapSearch extends Component {
     }
 
     geoSearchFoods(geo) {
-        if (!geo) {
-            this.geoSearchNearCurrentLocation();
+        if (!this.state.pickup) {
             return;
         }
 
@@ -147,30 +145,9 @@ class MapSearch extends Component {
         });
     };
 
-    handleClick = () => this.setState({ pickup: !this.state.pickup })
+    handleMapCreated = (map) => this.map = map;
 
-    dateCutoff = moment().add(4, 'hours');
-
-    isDayOutsideRange = (date) => {
-
-        const year1 = date.year();
-        const month1 = date.month();
-        const day1 = date.date();
-
-        const year2 = this.dateCutoff.year();
-        const month2 = this.dateCutoff.month();
-        const day2 = this.dateCutoff.date();
-
-        //console.log(`dateCutoff=${year2}-${month2}-${day2}, date=${year1}-${month1}-${day1}`);
-
-        if (year1 !== year2)
-            return year1 < year2;
-
-        if (month1 !== month2)
-            return month1 < month2;
-
-        return day1 < day2;
-    }
+    handleClick = () => this.setState({ pickup: !this.state.pickup });
 
     render() {
         let { pickup, fullMap, showFilter } = this.state;
@@ -221,22 +198,14 @@ class MapSearch extends Component {
                                 <div style={{ width: '80px', paddingTop: '7px', float: 'left' }}>Ready On:</div>
                                 <div style={{ marginLeft: '80px' }}>
                                     <SingleDatePicker
-                                        date={this.state.date} // momentPropTypes.momentObj or null
-                                        isOutsideRange={this.isDayOutsideRange}
+                                        date={this.state.date}
+                                        isOutsideRange={Util.isDayOutsideRange}
                                         onDateChange={this.handleDateChange}
-                                        focused={this.state.focused} // PropTypes.bool
-                                        onFocusChange={({ focused }) => {
-                                            this.setState({ focused });
-                                            // if (!focused) {
-                                            //     this.handleContactInfoBlur({ target: { name: 'date' } });
-                                            // }
-                                        }} // PropTypes.func.isRequired
+                                        focused={this.state.focused}
+                                        onFocusChange={({ focused }) => this.setState({ focused })}
                                         numberOfMonths={1}
                                         placeholder="Date"
-                                        displayFormat={() =>
-                                            //moment.localeData().longDateFormat('LL')
-                                            'MMMM DD, YYYY'
-                                        }
+                                        displayFormat={() => 'MMMM DD, YYYY'}
                                     />
                                 </div>
                             </div>
@@ -260,6 +229,7 @@ class MapSearch extends Component {
                                 onListViewClick={() => this.setState({ fullMap: false })}
                                 onFilterClick={() => this.setState({ showFilter: !this.state.showFilter })}
                                 onMarkerClick={(selectedItemId) => this.setState({ selectedFoodId: selectedItemId })}
+                                onMapCreated={this.handleMapCreated}
                             />
                         </div>
                     }
