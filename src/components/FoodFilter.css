@@ -1,5 +1,5 @@
 .foodfilter {
-    height: 55px;
+    height: 50px;
     top: 0;
     left: 0;
     width: 100%;
@@ -10,29 +10,62 @@
     transition: top 0.2s ease-in-out;
 }
 
-.foodfilter-layout {
+.foodfilter-layout-mobile {
     display: table;
-    padding: 10px 0px 10px 14px;
     width: 100%;
+    padding: 0px 0px 0px 0px;
 }
 
-.foodfilter-layout div:first-child {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left;
-    width: 66%;
-}
-
-#foodfilter-map {
+#foodfilter-pickup {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
     width: 34%;
 }
 
-#foodfilter-map button {
+#foodfilter-pickup-mobile {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+}
+
+#foodfilter-pickup-mobile button {
     width: 50%;
     margin: 0;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 0px;
+}
+
+.foodfilter-layout {
+    display: table;
+    width: 100%;
+    padding: 7px 0px 7px 14px;
+}
+
+#foodfilter-date {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 66%;
+}
+
+#foodfilter-pickup button {
+    width: 49%;
+}
+
+#foodfilter-pickup button:nth-child(2) {
+    margin: 0 0 0 1%;
+}
+
+#foodfilter-pickup button:first-child {
+    margin: 0 1% 0 0;
+}
+
+#foodfilter-pickup button:nth-child(2) {
+    width: 49%;
+    margin: 0 0 0 1%;
 }
 
 #foodfilter-expand {
@@ -40,22 +73,26 @@
     vertical-align: middle;
     text-align: right;
     width: 34%;
+    font-weight: 600;
+    padding-right: 10px;
 }
 
 @media all and (max-width: 767px) {
     .foodfilter-desktop {
         display: none;
     }
-    .foodfilter-content {
-        padding-right: 10px;
-        padding-left: 7px;
-        text-align: left;
+
+    #foodfilter-date {
+        width: 40%;
     }
-    #foodfilter-map {
+
+    #foodfilter-pickup {
         display: none;
     }
+
     #foodfilter-expand {
         display: table-cell;
+        width: 60%;
     }
 }
 

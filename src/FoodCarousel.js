@@ -9,12 +9,17 @@ import { setTimeout } from 'timers';
 
 export default class FoodCarousel extends Component {
 
-    state = {
-        quantity: 1,
-        selectedSlideIndex: 0
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            quantity: 1,
+            selectedSlideIndex: 0
+        };
+    }
 
-    isDebug = false;
+    hasFoods() {
+        return this.props.foods && this.props.foods.length > 0;
+    }
 
     getFoodPrepLabelComponent(food) {
         let foodPrepClassName = 'LabelPrep-' + food.states[0];
@@ -23,8 +28,17 @@ export default class FoodCarousel extends Component {
         return (<Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />);
     }
 
-    componentDidMount() {
+    handleAfterFoodSlide = (index) => {
         if (this.props.onSelected) {
+            setTimeout(() => {
+                this.setState({ selectedSlideIndex: index });
+                this.props.onSelected(this.props.foods[index]);
+            }, 50);
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.onSelected && this.hasFoods()) {
             let selectedFood = this.props.foods[0];
             this.props.onSelected(selectedFood);
         }
@@ -32,6 +46,9 @@ export default class FoodCarousel extends Component {
 
     render() {
 
+        if (!this.hasFoods()) {
+            return <div></div>;
+        }
 
         // this is for a defect in nuka-carousel where if there's only one item
         // it doesn't generate a list element with a margin-left of 7.5px
@@ -39,6 +56,7 @@ export default class FoodCarousel extends Component {
         if (this.props.foods.length === 1) {
             foodCardStyle.marginLeft = '7.5px';
         }
+
         const slides = this.props.foods.map((food, index) => {
 
             let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
@@ -105,19 +123,19 @@ export default class FoodCarousel extends Component {
         }
 
         return (
-            <Carousel dragging={true} cellSpacing={15} edgeEasing='easeInOutQuint' wrapAround={true} slidesToShow={slidesToShow}
-                swiping={true} decorators={null} afterSlide={this.afterFoodSlide} slideIndex={selectedSlideIndex}>
+            <Carousel
+                dragging={true}
+                cellSpacing={15}
+                edgeEasing='easeInOutQuint'
+                wrapAround={true}
+                slidesToShow={slidesToShow}
+                swiping={true}
+                decorators={null}
+                afterSlide={this.handleAfterFoodSlide}
+                slideIndex={selectedSlideIndex}
+            >
                 {slides}
             </Carousel>
         )
-    }
-
-    afterFoodSlide = (index) => {
-        if (this.props.onSelected) {
-            setTimeout(() => {
-                this.setState({ selectedSlideIndex: index });
-                this.props.onSelected(this.props.foods[index]);
-            }, 50);
-        }
     }
 }

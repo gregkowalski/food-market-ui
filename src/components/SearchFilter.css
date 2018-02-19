@@ -1,0 +1,117 @@
+.searchfilter {
+    font-size: 18px;
+}
+
+.searchfilter-header {
+    display: table;
+    padding: 20px 20px 20px 20px;
+    width: 100%;
+    border-bottom: 1px solid #DBDBDB;
+    font-weight: 500;
+}
+
+.searchfilter-header-left {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 30%;
+}
+
+.searchfilter-header-left div {
+    cursor: pointer;
+    font-size: 45px;
+    font-weight: 300;
+}
+
+.searchfilter-header-center {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 40%
+}
+
+.searchfilter-header-right {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    width: 30%
+}
+
+.searchfilter-header-right span {
+    color:#4cb99e;
+    cursor: pointer;
+}
+
+.searchfilter-header-right span:hover {
+    text-decoration: underline;
+}
+
+.searchfilter-footer {
+    height: 80px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 16px 24px 16px 24px;
+    background: whitesmoke;
+    border-top: 1px solid lightgray;
+}
+
+.searchfilter-footer-button {
+    width: 100%;
+    background-color: #4cb99e !important;
+    color: white !important;
+    font-family: 'Athiti' !important;
+    font-size: 1em !important;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 5px !important;
+}
+
+.searchfilter-date {
+    width: 80%;
+    margin: auto;
+    padding-top: 25px;
+}
+
+.searchfilter-date .DateInput {
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 500 !important;
+}
+
+.searchfilter-date .SingleDatePicker {
+    width: 100%;
+}
+
+.searchfilter-date .SingleDatePickerInput {
+    border-radius: 5px;
+    border-color: #a1d4c8;    
+}
+
+.searchfilter-date .SingleDatePicker__picker {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput--with-caret::before {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput--with-caret::after {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput__display-text {
+    color: rgb(15, 15, 15);
+    font-weight: 500;
+}
+
+.searchfilter-date #CalendarMonth__caption {
+    margin-bottom: 15px;
+}
+
+.searchfilter-date .DayPickerKeyboardShortcuts__show_span {
+    bottom: -4px !important;
+    right: -30px !important;
+}

@@ -42,8 +42,7 @@ class Food extends Component {
         let imageElement;
         if (food.imageUrls && food.imageUrls.length > 1) {
             const imageUrls = food.imageUrls.map((current, index) =>
-                <Image
-                    key={index} className='FoodImage' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
+                <Image key={index} className='FoodImage' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             );
             imageElement =
                 <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}

@@ -53,13 +53,8 @@ export default class FoodFilter extends React.Component {
     }
 
     static getButtonProps(active) {
-        const props = {};
-        if (active) {
-            props.color = 'teal';
-        }
-        else
-        {
-            props.color = 'grey';
+        const props = { color: 'teal' };
+        if (!active) {
             props.basic = true;
         }
         return props;
@@ -71,26 +66,40 @@ export default class FoodFilter extends React.Component {
 
         const dateLabel = date ? date.format("MMM D, YYYY") : "Date";
 
+        const { mobile } = this.props;
+
         return (
             <div className='foodfilter' style={style}>
-                <div className='foodfilter-layout'>
-                    <div>
-                        <Button {...FoodFilter.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+
+                <div className={mobile ? 'foodfilter-layout-mobile' : 'foodfilter-layout'}>
+
+                    {!mobile &&
+                        <div id='foodfilter-date'>
+                            <Button {...FoodFilter.getButtonProps(date) } onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+                        </div>
+                    }
+
+                    <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
+                        <Button {...FoodFilter.getButtonProps(pickup) } onClick={this.props.onPickupClick}>PICKUP</Button>
+                        <Button {...FoodFilter.getButtonProps(!pickup) } onClick={this.props.onDeliveryClick}>DELIVER</Button>
                     </div>
-                    <div id='foodfilter-map'>
-                        <Button {...FoodFilter.getButtonProps(pickup)} onClick={this.props.onPickupClick}>Pickup</Button>
-                        <Button {...FoodFilter.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>Delivery</Button>
-                    </div>
-                    <div id='foodfilter-expand'>
-                        Resize to show map &gt;&gt;
-                    </div>
+
+                    {!mobile &&
+                        <div id='foodfilter-expand'>
+                            Resize to show map &gt;&gt;
+                        </div>
+                    }
+
                 </div>
 
-                <DateModal showDateFilter={showDateFilter}
-                    onClose={this.handleDateClose}
-                    onClear={this.handleDateClear}
-                    onApply={this.handleDateApply}
-                />
+                {!mobile &&
+                    <DateModal showDateFilter={showDateFilter}
+                        onClose={this.handleDateClose}
+                        onClear={this.handleDateClear}
+                        onApply={this.handleDateApply}
+                    />
+                }
+
             </div>
         );
     }

@@ -2,13 +2,12 @@ import React from 'react'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
 import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
-import PriceCalc from './PriceCalc'
 import Regions from './Map/Regions'
-import Util from './Util'
+import PriceCalc from './PriceCalc'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
-export class DesktopMap extends React.Component {
+export default class DesktopMap extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,11 +17,11 @@ export class DesktopMap extends React.Component {
             selectedPlace: {},
             selectedItemId: props.selectedItemId,
             selectedRegion: null,
-            showRegions: props.showRegions
+            showDeliveryInstructions: !props.pickup
         };
     }
 
-    onMarkerClick(props, marker, e) {
+    handleMarkerClick = (props, marker, e) => {
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
@@ -31,7 +30,7 @@ export class DesktopMap extends React.Component {
         });
     }
 
-    onMapClick(props, map, e) {
+    handleMapClick = (props, map, e) => {
         const lat = e.latLng.lat();
         const lng = e.latLng.lng();
         console.log({ lat, lng });
@@ -45,7 +44,7 @@ export class DesktopMap extends React.Component {
         }
     }
 
-    onInfoWindowClose() {
+    handleInfoWindowClose = () => {
         this.setState({
             showingInfoWindow: false,
             activeMarker: null,
@@ -65,37 +64,44 @@ export class DesktopMap extends React.Component {
         return (foodItem.id === selectedItemId) ? 9999 : null;
     }
 
-    handleGeoSearch(map) {
-        if (this.props.onGeoSearch) {
-            const geo = Util.getGeoBounds(map);
-            this.props.onGeoSearch(geo);
-        }
-    }
-
     handleRegionSearch(region) {
         if (this.props.onRegionSelected) {
             this.props.onRegionSelected(region);
         }
     }
 
+    handleGeoSearch = (props, map, e) => {
+        if (this.props.onGeoSearch) {
+            this.props.onGeoSearch(map);
+        }
+    }
+
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.showRegions !== prevProps.showRegions) {
-            this.setState({ showRegions: this.props.showRegions });
-            if (this.props.showRegions) {
+        if (this.props.pickup !== prevProps.pickup) {
+            this.setState({ showDeliveryInstructions: !this.props.pickup });
+            if (!this.props.pickup) {
                 this.handleRegionSearch(this.state.selectedRegion);
             }
         }
     }
 
+    handleDeliveryInstructionsClick = () => {
+        this.setState({ showDeliveryInstructions: false });
+    }
+
     render() {
-        let item = this.state.selectedPlace;
+        let selectedItem = this.state.selectedPlace;
+
         let selectedItemId = this.props.selectedItemId;
-        if (selectedItemId < 0) {
+        if (selectedItemId < 0 || !selectedItemId) {
             selectedItemId = this.state.selectedItemId;
         }
 
+        const { pickup } = this.props;
+        const { showDeliveryInstructions } = this.state;
+
         let polygons;
-        if (this.props.showRegions) {
+        if (!pickup) {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
@@ -114,8 +120,10 @@ export class DesktopMap extends React.Component {
                         fillColor={fillColor}
                         fillOpacity={0.35}
                         onClick={(props, map, e) => {
-                            this.setState({ selectedRegion: region });
-                            this.handleRegionSearch(region);
+                            this.setState({
+                                selectedRegion: region,
+                                showDeliveryInstructions: false
+                            }, () => this.handleRegionSearch(region));
                         }}
                     />);
             })
@@ -126,7 +134,7 @@ export class DesktopMap extends React.Component {
                 <Marker
                     id={foodItem.food_id}
                     key={foodItem.food_id}
-                    onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
+                    onClick={this.handleMarkerClick}
                     header={foodItem.header}
                     icon={this.getMarkerImage(foodItem, selectedItemId)}
                     zIndex={this.getZIndex(foodItem, selectedItemId)}
@@ -145,19 +153,16 @@ export class DesktopMap extends React.Component {
             marginTop: '10px',
             marginLeft: '20px',
             backgroundColor: '#fff',
-            lineHeight: '38px',
-            paddingLeft: '5px',
-            paddingRight: '5px',
+            padding: '5px 5px 5px 5px',
             color: 'rgb(25,25,25)',
             fontFamily: 'Roboto,Arial,sans-serif',
             fontSize: '16px',
             border: '2px solid #fff',
             borderRadius: '3px',
             boxShadow: '0 2px 6px rgba(0,0,0,.3)',
+            textAlign: 'center',
+            cursor: 'pointer'
         }
-        // if (!this.props.showRegions) {
-        //     infoStyle.display = 'none';
-        // }
 
         return (
             <Map
@@ -176,53 +181,44 @@ export class DesktopMap extends React.Component {
                 center={this.props.center}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
-                onClick={(props, map, e) => this.onMapClick(props, map, e)}
-                onDragstart={(props, map, e) => {
-                    console.log('drag start');
-                }}
-                onDragend={(props, map, e) => {
-                    console.log('drag end');
-                    this.handleGeoSearch(map);
-                }}
-                onZoom_changed={(props, map, e) => {
-                    console.log('zoom changed');
-                    this.handleGeoSearch(map);
-                }}
+                onClick={this.handleMapClick}
+                onDragend={this.handleGeoSearch}
+                onZoom_changed={this.handleGeoSearch}
                 onMapCreated={this.props.onMapCreated}
             >
                 {polygons}
                 {markers}
 
-                <CustomControl visible={this.state.showRegions} position={window.google.maps.ControlPosition.TOP_CENTER}>
-                    <div style={infoStyle}>
-                        Please click to select your delivery area
+                <CustomControl visible={showDeliveryInstructions} position={window.google.maps.ControlPosition.TOP_CENTER}>
+                    <div style={infoStyle} onClick={this.handleDeliveryInstructionsClick}>
+                        Click region to select your delivery area
                     </div>
                 </CustomControl>
 
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
-                    onClose={() => this.onInfoWindowClose()}>
+                    onClose={this.handleInfoWindowClose}>
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={'/foods/' + item.id}>
+                            href={'/foods/' + selectedItem.id}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
-                                    <Image width='100%' shape='rounded' src={item.image} />
+                                    <Image width='100%' shape='rounded' src={selectedItem.image} />
                                     <Card.Header className='mapcontainer-foodcard-header'>
-                                        <div className='marker-header'>${PriceCalc.getPrice(item.price)} · {item.header}</div>
+                                        <div className='marker-header'>${PriceCalc.getPrice(selectedItem.price)} · {selectedItem.header}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Card.Header>
                                     <Card.Meta>
                                         <div style={{ display: 'inline-flex' }}>
-                                            <Rating disabled={true} maxRating={5} rating={item.rating} size='mini' className='marker-rating-stars' />
-                                            <div className='marker-rating-label'>{item.ratingCount} reviews</div>
+                                            <Rating disabled={true} maxRating={5} rating={selectedItem.rating} size='mini' className='marker-rating-stars' />
+                                            <div className='marker-rating-label'>{selectedItem.ratingCount} reviews</div>
                                         </div>
-                                        <div className='marker-ingredients'>Ingredients: {item.meta}</div>
+                                        <div className='marker-ingredients'>Ingredients: {selectedItem.meta}</div>
                                     </Card.Meta>
                                     <Card.Description>
-                                        <div className='marker-description'>{item.description} </div>
+                                        <div className='marker-description'>{selectedItem.description} </div>
                                     </Card.Description>
                                 </Card.Content>
                             </Card>

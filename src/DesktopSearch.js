@@ -1,18 +1,14 @@
-//import React from 'react'
-// import Footer from 'components/Footer'
-// import AddTodo from 'containers/AddTodo'
-// import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
+import { Dimmer } from 'semantic-ui-react'
 import './DesktopSearch.css'
-import { DesktopMap } from './DesktopMap'
+import DesktopMap from './DesktopMap'
 import Food from './Food'
 import Map from './Map'
+import { makeCancelable } from './Map/lib/cancelablePromise'
 import AppHeader from './components/AppHeader'
 import FoodFilter from './components/FoodFilter'
 import ApiClient from './Api/ApiClient'
-import { Dimmer } from 'semantic-ui-react'
 import Util from './Util'
-import { makeCancelable } from './Map/lib/cancelablePromise'
 
 export default class DesktopSearch extends Component {
 
@@ -73,6 +69,11 @@ export default class DesktopSearch extends Component {
             .catch(e => console.error(e));
     }
 
+    handleGeoSearch = (map) => {
+        const geo = Util.getGeoBounds(map);
+        this.geoSearchFoods(geo);
+    }
+
     geoSearchFoods(geo) {
         if (!this.state.pickup) {
             return;
@@ -103,7 +104,7 @@ export default class DesktopSearch extends Component {
             });
     }
 
-    handleRegionSelected(region) {
+    handleRegionSelected = (region) => {
         const google = window.google;
         let foods = [];
         if (region) {
@@ -186,7 +187,7 @@ export default class DesktopSearch extends Component {
                 <div className='dtsearch-bodywrap' >
                     <Dimmer.Dimmable dimmed={dimmed}>
                         <Dimmer active={dimmed} inverted onClickOutside={this.handleHide}
-                            style={{ position: 'fixed', marginTop: '110px' }} />
+                            style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
                             <Food foods={this.state.foods}
                                 onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
@@ -194,12 +195,12 @@ export default class DesktopSearch extends Component {
                         </div>
                         <div className='dtsearch-right'>
                             <DesktopMap foods={this.state.foods}
-                                showRegions={!pickup}
+                                pickup={pickup}
                                 selectedItemId={this.state.hoveredFoodItemId}
                                 center={this.state.mapLocation}
                                 zoom={this.state.mapZoom}
-                                onGeoSearch={(geo) => this.geoSearchFoods(geo)}
-                                onRegionSelected={(region) => this.handleRegionSelected(region)}
+                                onGeoSearch={this.handleGeoSearch}
+                                onRegionSelected={this.handleRegionSelected}
                                 onMapCreated={this.handleMapCreated}
                             />
                         </div>

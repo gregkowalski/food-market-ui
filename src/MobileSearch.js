@@ -1,25 +1,19 @@
-//import React from 'react'
-// import Footer from 'components/Footer'
-// import AddTodo from 'containers/AddTodo'
-// import VisibleTodoList from 'containers/VisibleTodoList'
 import React, { Component } from 'react'
 import './MobileSearch.css'
-import { MobileMap } from './MobileMap'
+import MobileMap from './MobileMap'
 import Food from './Food'
 import Map from './Map'
-import AppHeader from './components/AppHeader'
 import ApiClient from './Api/ApiClient'
-import { Button, Icon } from 'semantic-ui-react'
-import Autocomplete from 'react-google-autocomplete';
-import { SingleDatePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+import { Dimmer, Icon } from 'semantic-ui-react'
 import FoodCarousel from './FoodCarousel';
 import Util from './Util'
 import { makeCancelable } from './Map/lib/cancelablePromise'
+import AppHeader from './components/AppHeader'
+import FoodFilter from './components/FoodFilter'
+import SearchFilter from './components/SearchFilter'
+import FilterBar from './components/FilterBar'
 
 class MapSearch extends Component {
-
-    isDebug = false;
 
     foods;
 
@@ -32,12 +26,26 @@ class MapSearch extends Component {
         }
 
         this.state = {
-            pickup: true,
             mapZoom: mapZoom,
             foods: [],
-            fullMap: false,
+            pickup: true,
+            mapSearch: false,
             showFilter: false
         };
+    }
+
+    showMapSearch = () => {
+        this.setState({ mapSearch: true });
+    }
+
+    showListView = () => {
+        if (this.state.mapSearch) {
+            // The resize event on the window is used as a workaround for a defect with nuka carousel
+            // on the Food.js page where the images don't render.  This happens because we show/hide
+            // the list view vs. map search using CSS display: none instead of rendering vs. non-rendering
+            // using React.  That's done because it's faster to switch views than to re-render the DOM.
+            this.setState({ mapSearch: false }, () => Util.triggerEvent(window, 'resize'));
+        }
     }
 
     componentDidMount() {
@@ -70,6 +78,11 @@ class MapSearch extends Component {
                 this.geoSearchFoods(geo);
             })
             .catch(e => console.error(e));
+    }
+
+    handleGeoSearch = (map) => {
+        const geo = Util.getGeoBounds(map);
+        this.geoSearchFoods(geo);
     }
 
     geoSearchFoods(geo) {
@@ -109,13 +122,13 @@ class MapSearch extends Component {
             return new google.maps.Polygon({ paths: region.paths });
         })
         let foods = this.foods.filter(food => {
-            const point = new window.google.maps.LatLng(food.position.lat, food.position.lng);
+            const point = new google.maps.LatLng(food.position.lat, food.position.lng);
             let contains = false;
             polygons.forEach(polygon => {
                 if (contains)
                     return;
 
-                contains = window.google.maps.geometry.poly.containsLocation(point, polygon);
+                contains = google.maps.geometry.poly.containsLocation(point, polygon);
             })
             console.log(`point=${point} contains: ${contains}`);
             return contains;
@@ -127,117 +140,176 @@ class MapSearch extends Component {
         this.setState(newState);
     }
 
-    handleDateChange = (date) => {
-        console.dir(date);
-        this.setState({ date: date });
-    };
-
-    handleTimeChange = (event, data) => {
-        this.setState({ time: data.value });
-    };
-
-    handleAddressChange(place) {
-        console.log(place);
-        this.setState({
-            address: place,
-            mapLocation: place.geometry.location,
-            mapZoom: this.state.mapZoom
-        });
-    };
-
     handleMapCreated = (map) => this.map = map;
 
-    handleClick = () => this.setState({ pickup: !this.state.pickup });
+    handleDateFilterClick = () => {
+        this.setState({ dimmed: !this.state.dimmed });
+    }
 
-    render() {
-        let { pickup, fullMap, showFilter } = this.state;
-        const mapHeight = '62vh';
-        const filterHeight = '150px';
+    handleDateFilterClose = () => {
+        this.handleDateFilterClick();
+    }
 
+    handleDateFilterClear = () => {
+        this.handleDateFilterClick();
+    }
+
+    handleDateFilterApply = (date) => {
+        this.handleDateFilterClick();
+    }
+
+    hideDimmer = () => {
+        if (this.state.dimmed) {
+            this.setState({ dimmed: false });
+        }
+    }
+
+    handlePickupClick = () => {
+        if (this.state.pickup)
+            return;
+
+        this.setState({ pickup: true }, () => {
+            const geo = Util.getGeoBounds(this.map);
+            this.geoSearchFoods(geo);
+        });
+    }
+
+    handleDeliveryClick = () => {
+        if (!this.state.pickup)
+            return;
+
+        this.setState({ pickup: false });
+    }
+
+    showFilter = () => {
+        this.setState({ showFilter: true });
+    }
+
+    hideFilter = () => {
+        this.setState({ showFilter: false });
+    }
+
+    getFilterStyle() {
+        if (this.state.showFilter) {
+            return {
+                height: '100%',
+                top: 0
+            };
+        }
+        return {
+            height: 0,
+            top: '100%'
+        };
+    }
+
+    mapHeight = '62vh';
+    filterBarHeight = '50px';
+
+    getMapStyle(mapSearch) {
         let mapStyle = {
-            height: fullMap ? (showFilter ? `calc(${mapHeight} - ${filterHeight})` : `${mapHeight}`) : '500px',
-            minHeight: fullMap ? (showFilter ? `calc(${mapHeight} - ${filterHeight})` : `${mapHeight}`) : '500px',
+            height: mapSearch ? `calc(${this.mapHeight} - ${this.filterBarHeight})` : '500px',
+            minHeight: mapSearch ? `calc(${this.mapHeight} - ${this.filterBarHeight})` : '500px',
+            marginTop: `${this.filterBarHeight}`,
             width: '100%',
-            marginTop: showFilter ? `${filterHeight}` : '0px',
             touchAction: 'none',
             borderBottom: '1px solid #DBDBDB',
             borderTop: '1px solid #DBDBDB',
         };
-        if (fullMap) {
+
+        if (mapSearch) {
             mapStyle.position = 'fixed';
-            this.hasBeenVisible = true;
         }
         else {
             mapStyle.display = 'none';
         }
+        return mapStyle;
+    }
+
+    getFoodCarouselStyle(mapSearch) {
+        const style = {
+            paddingTop: `calc(${this.mapHeight} + 5px)`,
+            marginLeft: '10px'
+        };
+        if (!mapSearch) {
+            style.display = 'none';
+        }
+        return style;
+    }
+
+    getDimmerStyle() {
+        return {
+            position: 'fixed',
+            marginTop: `${this.filterBarHeight}`
+        };
+    }
+
+    getListViewStyle(mapSearch) {
+        const style = {};
+        if (mapSearch) {
+            style.display = 'none';
+        }
+        return style;
+    }
+
+    handleSearchFilterChange = (filter) => {
+        this.setState({ filter });
+    }
+
+    render() {
+        let { pickup, mapSearch, dimmed, showFilter, filter } = this.state;
+
+        if (mapSearch) {
+            this.mapSearchHasBeenVisible = true;
+        }
 
         return (
-            <div className='map3-wrap'>
-                {!fullMap &&
-                    <AppHeader fixed />
+            <div className='mobilesearch-wrap' onClick={this.hideDimmer}>
+                {!mapSearch &&
+                    <AppHeader fixed noshadow />
                 }
-                <div className='map3-bodywrap'>
-                    {fullMap &&
-                        <div className='mapsearch-filter' style={{ display: showFilter ? 'inherit' : 'none' }}>
-                            <Autocomplete className='mapsearch-address' style={{ display: pickup ? 'none' : 'inherit' }}
-                                name='address'
-                                onPlaceSelected={(place) => this.handleAddressChange(place)}
-                                types={['address']}
-                                placeholder='Address'
-                                componentRestrictions={{ country: 'ca' }} />
 
-                            <div style={{ display: 'table', padding: '10px 10px 10px 10px', width: '100%', borderBottom: '1px solid #DBDBDB' }}>
-                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'left', width: '30%' }}>
-                                    <Icon name='close' style={{cursor: 'pointer'}} onClick={() => this.setState({ showFilter: false })} />
-                                </div>
-                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'center', width: '40%' }}>Filters</div>
-                                <div style={{ display: 'table-cell', verticalAlign: 'middle', textAlign: 'right', width: '30%' }}>Clear</div>
-                            </div>
+                {!mapSearch &&
+                    <FilterBar style={{ top: '55px', position: 'fixed' }} filter={filter} onFilterClick={this.showFilter} />
+                }
 
-                            <div style={{ width: '90%', margin: 'auto', padding: '10px' }}>
-                                <div style={{ width: '80px', paddingTop: '7px', float: 'left' }}>Ready On:</div>
-                                <div style={{ marginLeft: '80px' }}>
-                                    <SingleDatePicker
-                                        date={this.state.date}
-                                        isOutsideRange={Util.isDayOutsideRange}
-                                        onDateChange={this.handleDateChange}
-                                        focused={this.state.focused}
-                                        onFocusChange={({ focused }) => this.setState({ focused })}
-                                        numberOfMonths={1}
-                                        placeholder="Date"
-                                        displayFormat={() => 'MMMM DD, YYYY'}
-                                    />
-                                </div>
-                            </div>
-                            <div style={{ display: 'table', padding: '10px 10px 10px 10px', width: '100%', borderTop: '1px solid #DBDBDB' }}>
-                                <Button style={{width: '100%'}} color='teal' onClick={() => this.setState({ showFilter: false })}>Search</Button>
-                            </div>
-                        </div>
-                    }
+                <div className='mobilesearch-filter' style={this.getFilterStyle(showFilter)}>
+                    <SearchFilter visible={showFilter} onFilterHide={this.hideFilter} onFilterChange={this.handleSearchFilterChange} />
+                </div>
 
-                    {this.hasBeenVisible &&
-                        <div style={mapStyle}>
-                            <MobileMap foods={this.state.foods}
-                                showRegions={!pickup}
-                                center={this.state.mapLocation}
-                                selectedItemId={this.state.selectedFoodId}
-                                zoom={this.state.mapZoom}
-                                gestureHandling='greedy'
-                                visible={fullMap}
-                                onGeoSearch={(geo) => this.geoSearchFoods(geo)}
-                                onRegionSelected={(regions) => this.handleRegionSelected(regions)}
-                                onListViewClick={() => this.setState({ fullMap: false })}
-                                onFilterClick={() => this.setState({ showFilter: !this.state.showFilter })}
-                                onMarkerClick={(selectedItemId) => this.setState({ selectedFoodId: selectedItemId })}
-                                onMapCreated={this.handleMapCreated}
-                            />
-                        </div>
-                    }
-                    {fullMap && this.state.foods && this.state.foods.length > 0 &&
-                        <div className='map3-food-carousel' style={{ paddingTop: `calc(${mapHeight} + 5px)`, marginLeft: '10px' }}>
-                            {/* <div className='map3-food-carousel'> */}
-                            {/* <div style={{ height: '50%', backgroundColor: 'rgba(0,0,0,0)' }}>
-                            </div> */}
+                <div className='mobilesearch-bodywrap'>
+                    <Dimmer.Dimmable dimmed={dimmed}>
+
+                        <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer} style={this.getDimmerStyle()} />
+
+                        {mapSearch &&
+                            <FoodFilter style={{ top: '0px', position: 'fixed' }} showDateFilter={dimmed} pickup={pickup} mobile={true}
+                                onDateFilterClick={this.handleDateFilterClick}
+                                onDateFilterClose={this.handleDateFilterClose}
+                                onDateFilterClear={this.handleDateFilterClear}
+                                onDateFilterApply={this.handleDateFilterApply}
+                                onPickupClick={this.handlePickupClick}
+                                onDeliveryClick={this.handleDeliveryClick} />
+                        }
+
+                        {this.mapSearchHasBeenVisible &&
+                            <div style={this.getMapStyle(mapSearch)}>
+                                <MobileMap foods={this.state.foods}
+                                    pickup={pickup}
+                                    center={this.state.mapLocation}
+                                    selectedItemId={this.state.selectedFoodId}
+                                    zoom={this.state.mapZoom}
+                                    gestureHandling='greedy'
+                                    visible={mapSearch}
+                                    onGeoSearch={this.handleGeoSearch}
+                                    onRegionSelected={(regions) => this.handleRegionSelected(regions)}
+                                    onListViewClick={this.showListView}
+                                    onFilterClick={this.showFilter}
+                                    onMarkerClick={(selectedItemId) => this.setState({ selectedFoodId: selectedItemId })}
+                                    onMapCreated={this.handleMapCreated}
+                                />
+                            </div>
+                        }
+                        <div className='mobilesearch-foodcarousel' style={this.getFoodCarouselStyle(mapSearch)}>
                             <FoodCarousel foods={this.state.foods} selectedFoodId={this.state.selectedFoodId}
                                 onSelected={(selectedFood) => {
                                     this.setState({
@@ -246,16 +318,15 @@ class MapSearch extends Component {
                                     });
                                 }} />
                         </div>
-                    }
 
-                    {!fullMap &&
-                        <div className='map3-center'>
+                        <div className='mobilesearch-foodgrid' style={this.getListViewStyle(mapSearch)}>
                             <Food foods={this.state.foods} />
-                            <Button style={{ position: 'fixed', bottom: '10px', right: '20px' }} onClick={() => this.setState({ fullMap: true })}>Map Search</Button>
+                            <Icon className='mobilesearch-foodgrid-icon' name='marker' color='teal' size='big' onClick={this.showMapSearch} />
                         </div>
-                    }
+
+                    </Dimmer.Dimmable>
                 </div>
-            </div>
+            </div >
         )
     }
 }

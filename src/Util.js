@@ -32,7 +32,8 @@ export default class {
             const event = doc.createEvent('HTMLEvents');
             event.initEvent(type, true, true);
             target.dispatchEvent(event);
-        } else {
+        }
+        else {
             const event = doc.createEventObject();
             target.fireEvent(`on${type}`, event);
         }

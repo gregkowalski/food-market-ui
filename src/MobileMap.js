@@ -1,29 +1,18 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
 import './MobileMap.css'
 import { Map, Marker, CustomControl, Polygon } from './Map'
 import Regions from './Map/Regions'
-import Util from './Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
-export class MobileMap extends React.Component {
+export default class MobileMap extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedItemId: props.selectedItemId,
-            pickup: true,
-            selectedRegionIds: []
+            selectedRegionIds: [],
+            showDeliveryInstructions: !props.pickup
         };
-    }
-
-    onMarkerClick(props, marker, e) {
-        const selectedItemId = props.food_id;
-        this.setState({ selectedItemId: selectedItemId });
-        if (this.props.onMarkerClick) {
-            this.props.onMarkerClick(selectedItemId);
-        }
     }
 
     getMarkerImage(foodItem, selectedItemId) {
@@ -37,48 +26,52 @@ export class MobileMap extends React.Component {
         return (foodItem.food_id === selectedItemId) ? 9999 : null;
     }
 
-    handleGeoSearch(map) {
-        if (!this.state.pickup) {
-            return;
-        }
-
-        if (this.props.onGeoSearch) {
-            const geo = Util.getGeoBounds(map);
-            this.props.onGeoSearch(geo);
+    handleMarkerClick = (props, marker, e) => {
+        if (this.props.onMarkerClick) {
+            this.props.onMarkerClick(props.food_id);
         }
     }
 
     handleRegionSearch() {
         if (this.props.onRegionSelected) {
-            const selectedRegionIds = this.state.selectedRegionIds;
-            const selectedRegions = Regions.filter(r => selectedRegionIds.includes(r.id));
+            const selectedRegions = Regions.filter(r => this.state.selectedRegionIds.includes(r.id));
             this.props.onRegionSelected(selectedRegions);
         }
     }
 
-    handlePickupClick = () => {
-        if (this.state.pickup)
-            return;
-
-        this.setState({ pickup: true }, () => this.handleGeoSearch(this.map));
+    handleRegionClick = (props, map, e) => {
+        const newState = {
+            selectedRegionIds: [props.id],
+            showDeliveryInstructions: false
+        }
+        this.setState(newState, () => this.handleRegionSearch());
     }
 
-    handleDeliveryClick = () => {
-        if (!this.state.pickup)
-            return;
+    handleGeoSearch = (props, map, e) => {
+        if (this.props.onGeoSearch) {
+            this.props.onGeoSearch(map);
+        }
+    }
 
-        this.setState({ pickup: false }, () => this.handleRegionSearch([]));
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.pickup !== prevProps.pickup) {
+            this.setState({ showDeliveryInstructions: !this.props.pickup });
+            if (!this.props.pickup) {
+                this.handleRegionSearch();
+            }
+        }
+    }
+
+    handleDeliveryInstructionsClick = () => {
+        this.setState({ showDeliveryInstructions: false });
     }
 
     render() {
-        let selectedItemId = this.props.selectedItemId;
-        if (!selectedItemId) {
-            selectedItemId = this.state.selectedItemId;
-        }
+        const { selectedItemId, pickup, foods } = this.props;
+        const { showDeliveryInstructions } = this.state;
 
         let polygons;
-        const showRegions = !this.state.pickup;
-        if (showRegions) {
+        if (!pickup) {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
@@ -96,20 +89,12 @@ export class MobileMap extends React.Component {
                         strokeWeight={2}
                         fillColor={fillColor}
                         fillOpacity={0.35}
-                        onClick={(props, map, e) => {
-                            const lat = e.latLng.lat();
-                            const lng = e.latLng.lng();
-                            console.log({ lat, lng });
-                            console.log(`clicked ${props.id}`);
-
-                            const clickedRegionId = props.id;
-                            this.setState({ selectedRegionIds: [clickedRegionId] }, () => this.handleRegionSearch());
-                        }}
+                        onClick={this.handleRegionClick}
                     />);
             })
         }
 
-        const markers = this.props.foods.map(foodItem => {
+        const markers = foods.map(foodItem => {
             return (
                 <Marker
                     food_id={foodItem.food_id}
@@ -124,29 +109,42 @@ export class MobileMap extends React.Component {
                     meta={foodItem.meta}
                     description={foodItem.description}
                     position={foodItem.position}
-                    onClick={(props, marker, e) => this.onMarkerClick(props, marker, e)}
+                    onClick={this.handleMarkerClick}
                 />
             );
         });
 
         const style1 = {
             color: 'rgb(25,25,25)',
-            fontFamily: 'Roboto,Arial,sans-serif',
             fontSize: '16px',
-            lineHeight: '38px',
+            lineHeight: '24px',
             paddingLeft: '5px',
             paddingRight: '5px',
+            display: 'flex'
         };
 
-        const style2 = {
+        const styleBase = {
             backgroundColor: '#fff',
             border: '2px solid #fff',
-            borderRadius: '3px',
+            paddingLeft: '15px',
+            paddingRight: '15px',
+            paddingTop: '3px',
+            paddingBottom: '3px',
             boxShadow: '0 2px 6px rgba(0,0,0,.3)',
             cursor: 'pointer',
             marginBottom: '22px',
-            textAlign: 'center'
+            textAlign: 'center',
         };
+
+        const styleListView = Object.assign({
+            borderTopLeftRadius: '12px',
+            borderBottomLeftRadius: '12px',
+        }, styleBase);
+
+        const styleFilter = Object.assign({
+            borderTopRightRadius: '12px',
+            borderBottomRightRadius: '12px',
+        }, styleBase);
 
         const infoStyle = {
             marginTop: '10px',
@@ -156,11 +154,11 @@ export class MobileMap extends React.Component {
             paddingLeft: '5px',
             paddingRight: '5px',
             color: 'rgb(25,25,25)',
-            fontFamily: 'Roboto,Arial,sans-serif',
             fontSize: '16px',
             border: '2px solid #fff',
             borderRadius: '3px',
             boxShadow: '0 2px 6px rgba(0,0,0,.3)',
+            cursor: 'pointer'
         }
 
         return (
@@ -180,50 +178,20 @@ export class MobileMap extends React.Component {
                 center={this.props.center}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
-                onDragstart={(props, map, e) => {
-                    console.log('drag start');
-                }}
-                onDragend={(props, map, e) => {
-                    console.log('drag end');
-                    this.handleGeoSearch(map);
-                }}
-                onZoom_changed={(props, map, e) => {
-                    console.log('zoom changed');
-                    this.handleGeoSearch(map);
-                }}
-                onMapCreated={map => this.map = map}
-            >
+                onDragend={this.handleGeoSearch}
+                onZoom_changed={this.handleGetSearch}
+                onMapCreated={this.props.onMapCreated}>
 
-                <CustomControl>
-                    <div style={style1} onClick={this.props.onListViewClick}>
-                        <div style={style2}>List View</div>
+                <CustomControl position={window.google.maps.ControlPosition.BOTTOM}>
+                    <div style={style1}>
+                        <div style={styleListView} onClick={this.props.onListViewClick}>List</div>
+                        <div style={styleFilter} onClick={this.props.onFilterClick}>Filter</div>
                     </div>
                 </CustomControl>
 
-                <CustomControl>
-                    <div style={style1} onClick={this.props.onFilterClick}>
-                        <div style={style2}>Filter</div>
-                    </div>
-                </CustomControl>
-
-                <CustomControl position={window.google.maps.ControlPosition.LEFT_TOP}>
-                    <div>
-                        <div>
-                            <Button style={{ marginBottom: '5px' }} color={this.state.pickup ? 'teal' : 'grey'} onClick={this.handlePickupClick}>
-                                Pickup
-                            </Button>
-                        </div>
-                        <div>
-                            <Button color={!this.state.pickup ? 'teal' : 'grey'} onClick={this.handleDeliveryClick}>
-                                Delivery
-                            </Button>
-                        </div>
-                    </div>
-                </CustomControl>
-
-                <CustomControl visible={!this.state.pickup} position={window.google.maps.ControlPosition.TOP_CENTER}>
-                    <div style={infoStyle}>
-                        Please click to select your delivery area
+                <CustomControl visible={showDeliveryInstructions} position={window.google.maps.ControlPosition.TOP_CENTER}>
+                    <div style={infoStyle} onClick={this.handleDeliveryInstructionsClick}>
+                        Click neighbourhood to deliver to
                     </div>
                 </CustomControl>
 
