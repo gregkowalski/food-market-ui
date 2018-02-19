@@ -574,30 +574,7 @@ export default class FoodDetail extends Component {
                                                 ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
                                             </div>
                                         </div>
-                                        <Divider />
-
-                                        <div className='detail-card-summary-row'>
-                                            <div className='detail-card-align-left'>
-                                                <Accordion>
-                                                    <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
-                                                        Service Fee
-                                                    <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
-                                                    </Accordion.Title>
-                                                    <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
-                                                        This helps run our platform and keep the lights on.
-                                                     </Accordion.Content>
-                                                </Accordion>
-
-                                                {/* Service fee <Popup
-                                                    trigger={<Icon size='small' name='question circle outline' />}
-                                                    content='This helps run our platform and keep the lights on.'
-                                                    on={['click']}
-                                                    hideOnScroll /> */}
-                                            </div>
-                                            <div className='detail-card-summary-align-service-fee'>
-                                                ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
-                                            </div>
-                                        </div>
+                                       
 
                                         <Divider />
 
