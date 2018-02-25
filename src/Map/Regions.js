@@ -5,7 +5,7 @@ const google = window.google;
 
 const Regions = all_boundaries.features.map(x => {
     const id = `${x.properties.area}-${x.properties.hood_name}`;
-    console.log(id);
+    //console.log(id);
     return {
         id: id,
         paths: x.geometry.coordinates[0].map(c => {

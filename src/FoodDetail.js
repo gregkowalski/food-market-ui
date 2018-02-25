@@ -188,7 +188,6 @@ export default class FoodDetail extends Component {
     }
 
     getOrderPageUrl(food) {
-        //return '/foods/' + food.id + '/order';
         return `/foods/${food.food_id}/order`;
     }
 
@@ -237,7 +236,6 @@ export default class FoodDetail extends Component {
                             <Button
                                 className='order-confirm-user-signup-button'
                                 content="Sign Up"
-
                                 onClick={() => this.handleOrderConfirmUserSignup(food)} />
                             <Button
                                 className='order-confirm-user-login-button'
@@ -285,7 +283,6 @@ export default class FoodDetail extends Component {
                             <Button
                                 className='order-confirm-user-signup-button'
                                 content="Sign Up"
-
                                 onClick={() => this.handleOrderConfirmUserSignup(food)} />
                             <Button
                                 className='order-confirm-user-login-button'

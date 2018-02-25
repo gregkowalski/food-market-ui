@@ -1,42 +1,25 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Image, Dropdown } from 'semantic-ui-react'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import './AppHeader.css'
 import { Constants } from '../Constants'
 import Config from '../Config'
+import Util from '../Util'
 import CognitoUtil from '../Cognito/CognitoUtil'
-import ApiClient from '../Api/ApiClient'
 import LoadingIcon from './LoadingIcon'
+
+import { Actions } from './AppHeader.redux'
 
 class AppHeader extends React.Component {
 
-    state = {
-        loadingUser: false
-    };
     tagline;
 
     componentWillMount() {
         CognitoUtil.setLastPathname(window.location.pathname);
-        if (CognitoUtil.isLoggedIn()) {
-            let api = new ApiClient();
-            this.setState({ loadingUser: true });
-            api.getCurrentUser()
-                .then(response => {
-                    const user = response.data;
-                    this.setState({
-                        username: user.username,
-                        userId: user.user_id,
-                        loadingUser: false
-                    });
-
-                })
-                .catch(err => {
-                    this.setState({ loadingUser: false });
-                    console.error(err);
-                });
-        }
-
+        this.props.getCurrentUser();
         this.tagline = this.getRandomTagline();
     }
 
@@ -50,18 +33,6 @@ class AppHeader extends React.Component {
         CognitoUtil.redirectToSignupIfNoSession();
     }
 
-    handleSignOut(e) {
-        e.preventDefault();
-
-        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        let session = auth.getCachedSession();
-        if (session && session.isValid()) {
-            auth.signOut();
-        }
-
-        this.setState({ username: null });
-    }
-
     handleLogOut(event, data) {
         let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         let session = auth.getCachedSession();
@@ -69,15 +40,11 @@ class AppHeader extends React.Component {
             auth.signOut();
         }
 
-        this.setState({ username: null });
+        this.props.logOut();
     }
 
     handleContactSupport(event, data) {
         window.location.href = `mailto:<${Config.Foodcraft.SupportEmail}>?subject=${encodeURIComponent('Foodcraft Feedback')}`;
-    }
-
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     getRandomTagline() {
@@ -93,19 +60,23 @@ class AppHeader extends React.Component {
             'making good food taste better.',
             'moo.'
         ];
-        let index = this.getRandomInt(0, taglines.length - 1);
+
+        let index = Util.getRandomInt(0, taglines.length - 1);
         return taglines[index];
     }
 
     render() {
+        const { user, isLoading } = this.props;
+
         let sessionElement;
-        if (this.state.username) {
+
+        if (user) {
             sessionElement =
                 <div className='apphead-sign-in'>
                     <span>Hi, </span>
-                    <Dropdown text={this.state.username}>
+                    <Dropdown text={user.username}>
                         <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${this.state.userId}`)} />
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${user.userId}`)} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={(event, data) => this.handleContactSupport(event, data)} />
                             <Dropdown.Divider />
@@ -115,7 +86,7 @@ class AppHeader extends React.Component {
                 </div>
         }
         else {
-            if (this.state.loadingUser) {
+            if (isLoading) {
                 sessionElement =
                     <div className='apphead-sign-in'>
                         <LoadingIcon />
@@ -167,4 +138,24 @@ class AppHeader extends React.Component {
     }
 }
 
-export default withRouter(AppHeader);
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+        isLoading: state.isLoading,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCurrentUser: () => dispatch(Actions.getCurrentUser()),
+        logOut: () => dispatch(Actions.logOut()),
+    };
+};
+
+AppHeader.propTypes = {
+    user: PropTypes.object,
+    isLoading: PropTypes.bool.isRequired,
+    getCurrentUser: PropTypes.func.isRequired,
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppHeader));
