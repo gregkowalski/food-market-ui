@@ -68,9 +68,17 @@ export default class CognitoUtil {
     }
 
     static isLoggedIn() {
-        let auth = new CognitoAuth(this.getCognitoAuthData());
-        let session = auth.getCachedSession();
+        const auth = new CognitoAuth(this.getCognitoAuthData());
+        const session = auth.getCachedSession();
         return (session && session.isValid());
+    }
+
+    static logOut() {
+        const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        const session = auth.getCachedSession();
+        if (session && session.isValid()) {
+            auth.signOut();
+        }
     }
 
     static redirectToLoginIfNoSession() {

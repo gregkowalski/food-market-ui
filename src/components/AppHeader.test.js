@@ -1,28 +1,47 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
-import AppHeader from './AppHeader'
 import { Constants } from '../Constants'
+import { AppHeader } from './AppHeader'
+import LoadingIcon from './LoadingIcon'
 
 describe('AppHeader', () => {
-    it('renders without crashing', () => {
-        shallow(<AppHeader.WrappedComponent />);
+    let props;
+
+    beforeEach(() => {
+        props = {
+            loadCurrentUser: jest.fn(),
+            logOut: jest.fn(),
+            isLoading: false,
+        };
+    })
+
+    it('renders and loads current user', () => {
+        const appHeader = shallow(<AppHeader {...props} />);
+        expect(props.loadCurrentUser.mock.calls.length).toEqual(1);
+    });
+
+    it('shows loading indicator', () => {
+        props.isLoading = true;
+        const appHeader = shallow(<AppHeader {...props} />);
+        const loadingIcon = appHeader.find(LoadingIcon);
+        expect(loadingIcon.length).toEqual(1);
     });
 
     it('renders content', () => {
-        const appHeader = shallow(<AppHeader.WrappedComponent />);
+        const appHeader = shallow(<AppHeader {...props} />);
         expect(appHeader.text()).toContain(Constants.AppName);
         expect(appHeader.text()).toContain('Sign Up');
         expect(appHeader.text()).toContain('Log In');
     });
 
     it('mounts renders app name', () => {
-        const appHeader = mount(<MemoryRouter><AppHeader /></MemoryRouter>);
+        const appHeader = mount(<MemoryRouter><AppHeader {...props} /></MemoryRouter>);
         const appNameDiv = <div>{Constants.AppName}</div>
         expect(appHeader.contains(appNameDiv)).toEqual(true);
     });
 
     it('mounts without crashing', () => {
-        mount(<MemoryRouter><AppHeader /></MemoryRouter>);
+        mount(<MemoryRouter><AppHeader {...props} /></MemoryRouter>);
     });
 })

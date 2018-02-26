@@ -34,78 +34,85 @@ function logOutCurrentUser() {
     };
 }
 
-function getCurrentUser() {
-    return (dispatch) => {
+export const Actions = {
 
-        if (!CognitoUtil.isLoggedIn()) {
-            return;
+    logOut: () => {
+        return (dispatch) => {
+            dispatch(logOutCurrentUser())
         }
+    },
 
-        dispatch(requestCurrentUser());
+    loadCurrentUser: () => {
+        return (dispatch) => {
 
-        let api = new ApiClient();
-        return api.getCurrentUser()
-            .then(
-                response => {
-                    const user = {
-                        userId: response.data.user_id,
-                        username: response.data.username,
-                    };
-                    dispatch(receiveCurrentUserSuccess(user));
-                },
-                error => {
-                    dispatch(receiveCurrentUseError(error));
-                }
-            );
+            if (!CognitoUtil.isLoggedIn()) {
+                return;
+            }
 
-    };
-}
+            dispatch(requestCurrentUser());
 
-function logOut() {
-    return (dispatch) => {
-        dispatch(logOutCurrentUser())
+            let api = new ApiClient();
+            return api.getCurrentUser()
+                .then(
+                    response => {
+                        const user = {
+                            userId: response.data.user_id,
+                            username: response.data.username,
+                        };
+                        dispatch(receiveCurrentUserSuccess(user));
+                    },
+                    error => {
+                        dispatch(receiveCurrentUseError(error));
+                    }
+                );
+
+        };
     }
 }
 
-export const Actions = {
-    getCurrentUser, logOut
+export const Selectors = {
+    getCurrentUser: (state) => {
+        return state.currentUser.user;
+    },
+    getIsLoading: (state) => {
+        return state.currentUser.isLoading;
+    }
 }
 
-function currentUserReducer(state = {
+const defaultState = {
     isLoading: false,
     user: null
-}, action) {
-    switch (action.type) {
-        case REQUEST_CURRENT_USER:
-            return Object.assign({}, state, {
-                isLoading: true
-            });
+};
 
-        case RECEIVE_CURRENT_USER_SUCCESS:
-            return Object.assign({}, state, {
-                isLoading: false,
-                user: action.user
-            });
+export const Reducers = combineReducers({
 
-        case RECEIVE_CURRENT_USER_ERROR:
-            return Object.assign({}, state, {
-                isLoading: false,
-                error: action.error
-            });
+    currentUser: (state = defaultState, action) => {
+        switch (action.type) {
+            case REQUEST_CURRENT_USER:
+                return Object.assign({}, state, {
+                    isLoading: true
+                });
 
-        case CURRENT_USER_LOGOUT:
-            return Object.assign({}, state, {
-                isLoading: false,
-                user: null
-            });
+            case RECEIVE_CURRENT_USER_SUCCESS:
+                return Object.assign({}, state, {
+                    isLoading: false,
+                    user: action.user
+                });
 
-        default:
-            return state;
+            case RECEIVE_CURRENT_USER_ERROR:
+                return Object.assign({}, state, {
+                    isLoading: false,
+                    error: action.error
+                });
+
+            case CURRENT_USER_LOGOUT:
+                return Object.assign({}, state, {
+                    isLoading: false,
+                    user: null
+                });
+
+            default:
+                return state;
+        }
     }
-}
-
-// export default combineReducers({
-//     currentUser,
-// });
-
-export default currentUserReducer;
+});

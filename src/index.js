@@ -1,8 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
 import { Provider } from 'react-redux'
 import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
@@ -26,18 +23,13 @@ import Pricing from './Pricing'
 // import Map2 from './map2'
 import MobileSearch from './MobileSearch'
 import Home from './Home'
-
-import AppHeaderReducers from './components/AppHeader.redux'
+import configureStore from './configureStore'
 
 //import temp from 'temp'
 
 unregister();
 
-const loggerMiddleware = createLogger();
-const store = createStore(AppHeaderReducers,
-    applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware));
+const store = configureStore();
 
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>

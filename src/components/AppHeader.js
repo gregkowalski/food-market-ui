@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Dropdown } from 'semantic-ui-react'
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './AppHeader.css'
@@ -11,15 +10,15 @@ import Util from '../Util'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import LoadingIcon from './LoadingIcon'
 
-import { Actions } from './AppHeader.redux'
+import { Actions, Selectors } from './AppHeader.redux'
 
-class AppHeader extends React.Component {
+export class AppHeader extends React.Component {
 
     tagline;
 
     componentWillMount() {
         CognitoUtil.setLastPathname(window.location.pathname);
-        this.props.getCurrentUser();
+        this.props.loadCurrentUser();
         this.tagline = this.getRandomTagline();
     }
 
@@ -34,12 +33,7 @@ class AppHeader extends React.Component {
     }
 
     handleLogOut(event, data) {
-        let auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        let session = auth.getCachedSession();
-        if (session && session.isValid()) {
-            auth.signOut();
-        }
-
+        CognitoUtil.logOut();
         this.props.logOut();
     }
 
@@ -140,22 +134,25 @@ class AppHeader extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user,
-        isLoading: state.isLoading,
+        user: Selectors.getCurrentUser(state),
+        isLoading: Selectors.getIsLoading(state)
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCurrentUser: () => dispatch(Actions.getCurrentUser()),
+        loadCurrentUser: () => dispatch(Actions.loadCurrentUser()),
         logOut: () => dispatch(Actions.logOut()),
     };
 };
 
 AppHeader.propTypes = {
-    user: PropTypes.object,
+    user: PropTypes.shape({
+        userId: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+    }),
     isLoading: PropTypes.bool.isRequired,
-    getCurrentUser: PropTypes.func.isRequired,
+    loadCurrentUser: PropTypes.func.isRequired,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppHeader));
