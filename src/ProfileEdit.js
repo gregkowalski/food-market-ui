@@ -75,8 +75,7 @@ export default class ProfileEdit extends React.Component {
             return;
         }
 
-        let api = new ApiClient();
-        api.loadUserProfile(jwt.sub)
+        ApiClient.loadUserProfile(jwt.sub)
             .then(response => {
                 //console.log(response);
                 let user = response.data;
@@ -265,8 +264,7 @@ export default class ProfileEdit extends React.Component {
         this.setState({ saving: true });
         console.log('saving...');
 
-        let api = new ApiClient();
-        api.saveUserProfile(this.user)
+        ApiClient.saveUserProfile(this.user)
             .then(response => {
                 this.setState({
                     hasChanges: false,
@@ -496,7 +494,6 @@ export default class ProfileEdit extends React.Component {
                         </Grid.Column>
                     </Grid>
                     <Divider hidden />
-                    <Divider hi dden />
                 </div>
         }
 

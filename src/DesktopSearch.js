@@ -79,8 +79,7 @@ export default class DesktopSearch extends Component {
             return;
         }
 
-        let api = new ApiClient();
-        api.geoSearchFoods(geo)
+        ApiClient.geoSearchFoods(geo)
             .then(response => {
                 let newState = {
                     foods: response.data

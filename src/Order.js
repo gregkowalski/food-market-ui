@@ -51,15 +51,13 @@ export default class Order extends React.Component {
         CognitoUtil.setLastPathname(window.location.pathname);
         CognitoUtil.redirectToLoginIfNoSession();
 
-        let apiClient = new ApiClient();
-        apiClient.getFood(this.props.match.params.id)
+        ApiClient.getFood(this.props.match.params.id)
             .then(response => {                
                 this.food = response.data;
 
                 document.title = this.food.title;
 
-                let apiClient = new ApiClient();
-                apiClient.getUser(this.food.user_id)
+                ApiClient.getUser(this.food.user_id)
                     .then(response => {
                         this.cook = response.data;
                         this.forceUpdate();
@@ -767,8 +765,7 @@ export default class Order extends React.Component {
         console.log('Confirmation processing');
         this.setState({ orderProcessing: true });
 
-        let apiClient = new ApiClient();
-        apiClient.confirmFoodOrder(null, this.state.order_id)
+        ApiClient.confirmFoodOrder(null, this.state.order_id)
             .then(response => {
                 console.log('Confirmation finished');
                 console.log(response);
@@ -827,9 +824,8 @@ export default class Order extends React.Component {
                     ex.error = result.error;
                     throw ex;
                 }
-                let apiClient = new ApiClient();
                 order.source = result.source;
-                return apiClient.submitFoodOrder(jwtToken, order);
+                return ApiClient.submitFoodOrder(jwtToken, order);
             })
             .then(response => {
                 console.log('Order finished');

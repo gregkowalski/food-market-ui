@@ -14,8 +14,7 @@ export default class OrderSuccess extends React.Component {
     food;
 
     componentWillMount() {
-        let apiClient = new ApiClient();
-        apiClient.getFood(this.props.match.params.id)
+        ApiClient.getFood(this.props.match.params.id)
             .then(response => {                
                 this.food = response.data;
 

@@ -4,9 +4,9 @@ import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../Config'
 
-export default class CognitoUtil {
+class CognitoUtil {
 
-    static getCognitoAuthData() {
+    getCognitoAuthData() {
         var authData = {
             ClientId: Config.Cognito.ClientAppId,
             AppWebDomain: Config.Cognito.AppWebDomain,
@@ -18,11 +18,11 @@ export default class CognitoUtil {
         return authData;
     }
 
-    static getTokenScopesQueryParam() {
+    getTokenScopesQueryParam() {
         return this.getCognitoAuthData().TokenScopesArray.join('+');
     }
 
-    static getLoggedInUserId() {
+    getLoggedInUserId() {
         const jwt = this.getLoggedInUserJwt();
         if (!jwt) {
             return null;
@@ -30,7 +30,7 @@ export default class CognitoUtil {
         return jwt.sub;
     }
 
-    static getLoggedInUserJwtToken() {
+    getLoggedInUserJwtToken() {
         let auth = new CognitoAuth(this.getCognitoAuthData());
         let session = auth.getCachedSession();
         if (session && session.isValid()) {
@@ -39,7 +39,7 @@ export default class CognitoUtil {
         return null;
     }
 
-    static isExternalIdp(jwt) {
+    isExternalIdp(jwt) {
         if (!jwt.identities) {
             return false;
         }
@@ -52,14 +52,14 @@ export default class CognitoUtil {
         return false;
     }
 
-    static isEmailVerified(jwt) {
+    isEmailVerified(jwt) {
         if (jwt.email_verified) {
             return true;
         }
         return this.isExternalIdp(jwt);
     }
 
-    static getLoggedInUserJwt() {
+    getLoggedInUserJwt() {
         const jwtToken = this.getLoggedInUserJwtToken();
         if (jwtToken) {
             return jwtDecode(jwtToken);
@@ -67,65 +67,65 @@ export default class CognitoUtil {
         return null;
     }
 
-    static isLoggedIn() {
+    isLoggedIn() {
         const auth = new CognitoAuth(this.getCognitoAuthData());
         const session = auth.getCachedSession();
         return (session && session.isValid());
     }
 
-    static logOut() {
-        const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+    logOut() {
+        const auth = new CognitoAuth(this.getCognitoAuthData());
         const session = auth.getCachedSession();
         if (session && session.isValid()) {
             auth.signOut();
         }
     }
 
-    static redirectToLoginIfNoSession() {
+    redirectToLoginIfNoSession() {
         this.redirectIfNoSession(state => this.getCognitoLoginUrl(state));
     }
 
-    static redirectToSignupIfNoSession() {
+    redirectToSignupIfNoSession() {
         this.redirectIfNoSession(state => this.getCognitoSignUpUrl(state));
     }
 
-    static redirectIfNoSession(getUrl) {
+    redirectIfNoSession(getUrl) {
         if (!this.isLoggedIn()) {
             this.redirectToHostedUI(getUrl);
         }
     }
 
-    static redirectToLogin() {
+    redirectToLogin() {
         this.redirectToHostedUI(state => this.getCognitoLoginUrl(state));
     }
 
-    static redirectToSignup() {
+    redirectToSignup() {
         this.redirectToHostedUI(state => this.getCognitoSignUpUrl(state));
     }
 
-    static redirectToHostedUI(getUrl) {
+    redirectToHostedUI(getUrl) {
         const state = crypto.randomBytes(64).toString('hex');
         this.setCsrfState(state);
         let authUrl = getUrl(state);
         window.open(authUrl, '_self');
     }
 
-    static getUserPoolData() {
+    getUserPoolData() {
         return {
             UserPoolId: Config.Cognito.UserPoolId,
             ClientId: Config.Cognito.ClientAppId
         };
     }
 
-    static getCognitoLoginUrl(state) {
+    getCognitoLoginUrl(state) {
         return this.getCognitoUrl('login', state);
     }
 
-    static getCognitoSignUpUrl(state) {
+    getCognitoSignUpUrl(state) {
         return this.getCognitoUrl('signup', state);
     }
 
-    static getCognitoUrl(path, state) {
+    getCognitoUrl(path, state) {
         const scope = this.getTokenScopesQueryParam();
         let url = `https://${Config.Cognito.AppWebDomain}/${path}?response_type=token&client_id=${Config.Cognito.ClientAppId}&redirect_uri=${Config.Cognito.RedirectUriSignIn}&scope=${scope}`;
         if (state) {
@@ -134,27 +134,28 @@ export default class CognitoUtil {
         return url;
     }
 
-    static getStorageKey(keyName) {
+    getStorageKey(keyName) {
         return `${Constants.FoodMarketStorageKeyRoot}.${Config.Cognito.ClientAppId}.${keyName}`;
     }
 
-    static setLastPathname(pathname) {
+    setLastPathname(pathname) {
         let key = this.getStorageKey('lastPathname')
         window.sessionStorage.setItem(key, pathname);
     }
 
-    static getLastPathname() {
+    getLastPathname() {
         let key = this.getStorageKey('lastPathname')
         return window.sessionStorage.getItem(key);
     }
 
-    static setCsrfState(state) {
+    setCsrfState(state) {
         let key = this.getStorageKey('cognito-csrf-state')
         window.sessionStorage.setItem(key, state);
     }
 
-    static getCsrfState() {
+    getCsrfState() {
         let key = this.getStorageKey('cognito-csrf-state')
         return window.sessionStorage.getItem(key);
     }
 }
+ export default new CognitoUtil();

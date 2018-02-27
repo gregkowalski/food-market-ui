@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Button, Image, Icon, Rating, Segment, Accordion } from 'semantic-ui-react'
+import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-react'
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
@@ -37,8 +37,7 @@ export default class FoodDetail extends Component {
         let foodItemId = this.props.match.params.id;
         
         var self = this;
-        let apiClient = new ApiClient();
-        apiClient.getFood(foodItemId)
+        ApiClient.getFood(foodItemId)
             .then(response => {
                 // todo: rating and ratingCount
                 var foodDAO = response.data;
@@ -61,8 +60,7 @@ export default class FoodDetail extends Component {
                 this.isLoggedIn = CognitoUtil.isLoggedIn();
 
                 // todo: once the API ready use this call by food_id
-                let apiClient = new ApiClient();
-                apiClient.getReviews()
+                ApiClient.getReviews()
                     .then(response => {
                         this.reviews = response.data.filter(r => r.food_id === food.food_id);
                         this.forceUpdate();
@@ -71,7 +69,7 @@ export default class FoodDetail extends Component {
                         console.error(err);
                     });
 
-                apiClient.getUser(this.food.user_id)
+                ApiClient.getUser(this.food.user_id)
                     .then(response => {
                         this.cook = response.data;
                         this.forceUpdate();
@@ -298,7 +296,7 @@ export default class FoodDetail extends Component {
 
     render() {
 
-        const { showServiceFee } = this.state;
+        // const { showServiceFee } = this.state;
 
         let food = this.food;
         if (!food) {

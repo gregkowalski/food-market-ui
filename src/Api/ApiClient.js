@@ -2,7 +2,7 @@ import apigClientFactory from 'aws-api-gateway-client'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import Config from '../Config'
 
-export default class ApiClient {
+class ApiClient {
 
     apiGatewayClient;
 
@@ -108,3 +108,5 @@ export default class ApiClient {
             'GET', { headers: this.jsonHttpHeader() });
     }
 }
+
+export default new ApiClient();

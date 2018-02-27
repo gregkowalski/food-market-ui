@@ -23,13 +23,13 @@ import Pricing from './Pricing'
 // import Map2 from './map2'
 import MobileSearch from './MobileSearch'
 import Home from './Home'
-import configureStore from './configureStore'
+import configureStore from './store/configureStore'
 
 //import temp from 'temp'
 
 unregister();
 
-const store = configureStore();
+const store = configureStore({ includeLogger: true });
 
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>

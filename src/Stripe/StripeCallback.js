@@ -25,8 +25,7 @@ export default class StripeCallback extends React.Component {
             throw new Error('Not working, code not found: ' + query.error);
         }
 
-        let apiClient = new ApiClient();
-        apiClient.connectStripeAccount(query.code)
+        ApiClient.connectStripeAccount(query.code)
             .then(response => {
                 console.log('Stripe account connected');
                 const lastPathname = CognitoUtil.getLastPathname();

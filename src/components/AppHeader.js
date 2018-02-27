@@ -10,7 +10,7 @@ import Util from '../Util'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import LoadingIcon from './LoadingIcon'
 
-import { Actions, Selectors } from './AppHeader.redux'
+import { Actions, Selectors } from '../store/currentUser'
 
 export class AppHeader extends React.Component {
 
@@ -70,7 +70,7 @@ export class AppHeader extends React.Component {
                     <span>Hi, </span>
                     <Dropdown text={user.username}>
                         <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${user.userId}`)} />
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${user.user_id}`)} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={(event, data) => this.handleContactSupport(event, data)} />
                             <Dropdown.Divider />
@@ -148,7 +148,7 @@ const mapDispatchToProps = (dispatch) => {
 
 AppHeader.propTypes = {
     user: PropTypes.shape({
-        userId: PropTypes.string.isRequired,
+        user_id: PropTypes.string.isRequired,
         username: PropTypes.string.isRequired,
     }),
     isLoading: PropTypes.bool.isRequired,

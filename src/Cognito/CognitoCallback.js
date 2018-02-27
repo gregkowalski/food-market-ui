@@ -23,8 +23,7 @@ export default class CognitoCallback extends React.Component {
                     email: jwt.email,
                     email_verified: CognitoUtil.isEmailVerified(jwt)
                 };
-                let apiClient = new ApiClient();
-                apiClient.updateUser(jwtToken, user)
+                ApiClient.updateUser(jwtToken, user)
                     .then(x => {
                         let lastPathname = CognitoUtil.getLastPathname();
                         if (!lastPathname) {

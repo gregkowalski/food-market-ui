@@ -27,8 +27,7 @@ export default class ProfileView extends React.Component {
             }
         }
 
-        let api = new ApiClient();
-        api.getPublicUser(userId)
+        ApiClient.getPublicUser(userId)
             .then(response => {
                 if (!response.data) {
                     return;

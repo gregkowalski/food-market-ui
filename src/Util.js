@@ -2,9 +2,9 @@ import queryString from 'query-string'
 import { FoodPrepType } from './data/FoodItems'
 import moment from 'moment'
 
-export default class {
+class Util {
 
-    static getFoodPrepTypeIcon(food) {
+    getFoodPrepTypeIcon(food) {
         let foodPrepIcon = 'shopping basket';
         if (food.states[0] === FoodPrepType.frozen) {
             foodPrepIcon = 'snowflake outline';
@@ -15,7 +15,7 @@ export default class {
         return foodPrepIcon;
     }
 
-    static parseQueryString(location) {
+    parseQueryString(location) {
         let query = location.search
         if (!query) {
             query = location.hash;
@@ -26,7 +26,7 @@ export default class {
         return queryString.parse(query);
     }
 
-    static triggerEvent(target, type) {
+    triggerEvent(target, type) {
         const doc = window.document;
         if (doc.createEvent) {
             const event = doc.createEvent('HTMLEvents');
@@ -39,29 +39,29 @@ export default class {
         }
     }
 
-    static busySleep(seconds) {
+    busySleep(seconds) {
         var e = new Date().getTime() + (seconds * 1000);
         while (new Date().getTime() <= e) { }
     }
 
-    static getRandomInt(min, max) {
+    getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    static getRandomSign() {
+    getRandomSign() {
         if (Math.random() > 0.5) {
             return 1;
         }
         return -1;
     }
 
-    static convertMetersToDegrees(meters) {
+    convertMetersToDegrees(meters) {
         const earthCircumference = 40075000;
         const metersToDegrees = 360 / earthCircumference;
         return meters * metersToDegrees;
     }
 
-    static isMobile(userAgent) {
+    isMobile(userAgent) {
         if (!userAgent) {
             userAgent = window.navigator.userAgent;
         }
@@ -73,7 +73,7 @@ export default class {
         return false;
     }
 
-    static getGeoBounds(map) {
+    getGeoBounds(map) {
         const bounds = map.getBounds();
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
@@ -86,7 +86,7 @@ export default class {
         return geo;
     }
 
-    static isDayOutsideRange = (date) => {
+    isDayOutsideRange = (date) => {
 
         const dateCutoff = moment().add(4, 'hours');
 
@@ -109,3 +109,5 @@ export default class {
         return day1 < day2;
     }
 }
+
+export default new Util();

@@ -1,12 +1,12 @@
 import { FeatureToggles } from './FeatureToggles'
 import { Constants } from './Constants'
 
-export default class PriceCalc {
+const StripePercentageFee = 0.029;
+const StripeTransactionFee = 30;
 
-    static stripePercentageFee = 0.029;
-    static stripeTransactionFee = 30;
+class PriceCalc {
 
-    static getOrderPayment(unitPrice, quantity) {
+    getOrderPayment(unitPrice, quantity) {
 
         // All calculations are done in cents
         const cookBase = 100 * quantity * unitPrice;
@@ -14,7 +14,7 @@ export default class PriceCalc {
         const total = cookBase + foodcraftBase;
 
         // Based on stripe pricing of 2.9% + $0.30 per transaction
-        const stripeFee = total * this.stripePercentageFee + this.stripeTransactionFee;
+        const stripeFee = total * StripePercentageFee + StripeTransactionFee;
 
         // cooks and foodcraft pay the portion of the stripe fee
         // relative to their earnings in the transaction
@@ -32,31 +32,33 @@ export default class PriceCalc {
         return payment;
     }
 
-    static getTotal(unitPrice, quantity) {
+    getTotal(unitPrice, quantity) {
         let total = (quantity * unitPrice * (1 + Constants.ServiceFeeRate));
         return total.toFixed(0);
     }
 
-    static getBaseTotal(unitPrice, quantity) {
+    getBaseTotal(unitPrice, quantity) {
         let baseTotal = quantity * unitPrice;
         return baseTotal.toFixed(0);
     }
 
-    static getServiceFee(unitPrice, quantity) {
+    getServiceFee(unitPrice, quantity) {
         let fee = quantity * unitPrice * Constants.ServiceFeeRate;
         return fee.toFixed(0);
     }
 
-    static getPrice(unitPrice, quantity) {
+    getPrice(unitPrice, quantity) {
         if (!quantity) {
             quantity = 1;
         }
 
         if (FeatureToggles.AllinPrice) {
-            return this.getTotal(unitPrice, quantity); 
+            return this.getTotal(unitPrice, quantity);
         }
         else {
             return this.getBaseTotal(unitPrice, quantity);
         }
     }
 }
+
+export default new PriceCalc();

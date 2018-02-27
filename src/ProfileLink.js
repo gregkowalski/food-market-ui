@@ -105,8 +105,7 @@ export default class ProfileLink extends React.Component {
 
         this.setState({ saving: true });
 
-        let api = new ApiClient();
-        api.linkUser(this.jwt, user)
+        ApiClient.linkUser(this.jwt, user)
             .then(x => {
                 this.setState({ saving: false, message: 'Success!' });
                 console.log(x);

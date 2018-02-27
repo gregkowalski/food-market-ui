@@ -49,6 +49,7 @@
     "jest-enzyme": "^4.0.2",
     "react-scripts": "1.1.0",
     "react-test-renderer": "^15.6.2",
+    "redux-testkit": "^1.0.6",
     "semantic-ui": "^2.2.13",
     "source-map-explorer": "^1.5.0"
   },
