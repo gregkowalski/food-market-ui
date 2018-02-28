@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
-import { Constants } from '../Constants'
+import Constants from '../Constants'
 import { AppHeader } from './AppHeader'
 import LoadingIcon from './LoadingIcon'
 
