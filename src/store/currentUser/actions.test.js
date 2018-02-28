@@ -1,10 +1,10 @@
 import { Thunk } from 'redux-testkit'
 import { Actions } from './index'
 import * as ActionTypes from './actionTypes'
-import CognitoUtil from '../../Cognito/CognitoUtil'
-import ApiClient from '../../Api/ApiClient'
-jest.mock('../../Cognito/CognitoUtil')
-jest.mock('../../Api/ApiClient')
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import ApiClient from '../../services/ApiClient'
+jest.mock('../../services/Cognito/CognitoUtil')
+jest.mock('../../services/ApiClient')
 
 describe('store/currentUser/Actions', () => {
 

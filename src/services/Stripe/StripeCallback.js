@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import CognitoUtil from '../Cognito/CognitoUtil'
 import Util from '../Util'
 import StripeUtil from './StripeUtil'
-import ApiClient from '../Api/ApiClient'
+import ApiClient from '../ApiClient'
 
 export default class StripeCallback extends React.Component {
 

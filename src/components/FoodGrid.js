@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
 import { Grid, Item, Image, Rating, Icon } from 'semantic-ui-react'
-import './Food.css'
-import Util from './Util'
-import CarouselDecorators from './components/ImageDecorator'
-import PriceCalc from './PriceCalc'
+import './FoodGrid.css'
+import Util from '../services/Util'
+import CarouselDecorators from '../components/ImageDecorator'
+import PriceCalc from '../services/PriceCalc'
 
-class Food extends Component {
+class FoodGrid extends Component {
 
     state = {
         quantity: 1,
@@ -119,6 +119,4 @@ class Food extends Component {
     }
 }
 
-export default Food;
-
-
+export default FoodGrid;

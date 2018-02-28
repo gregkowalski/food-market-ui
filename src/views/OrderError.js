@@ -1,8 +1,8 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
-import AppHeader from './components/AppHeader'
-import { Constants } from './Constants'
-import ApiClient from './Api/ApiClient'
+import AppHeader from '../components/AppHeader'
+import Constants from '../Constants'
+import ApiClient from '../services/ApiClient'
 
 export default class OrderError extends React.Component {
 

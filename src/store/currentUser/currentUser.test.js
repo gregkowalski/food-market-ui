@@ -1,11 +1,11 @@
 import * as ActionTypes from './actionTypes'
-import CognitoUtil from '../../Cognito/CognitoUtil'
-import ApiClient from '../../Api/ApiClient'
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import ApiClient from '../../services/ApiClient'
 import configureStore from '../configureStore'
 import { Selectors, Actions } from './index'
 
-jest.mock('../../Cognito/CognitoUtil')
-jest.mock('../../Api/ApiClient')
+jest.mock('../../services/Cognito/CognitoUtil')
+jest.mock('../../services/ApiClient')
 
 describe('store/currentUser integration', () => {
 

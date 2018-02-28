@@ -1,6 +1,6 @@
 import queryString from 'query-string'
-import { FoodPrepType } from './data/FoodItems'
 import moment from 'moment'
+import { FoodPrepType } from '../data/FoodItems'
 
 class Util {
 

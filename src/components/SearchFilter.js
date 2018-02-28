@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './SearchFilter.css'
-import Util from '../Util'
+import Util from '../services/Util'
 
 export default class SearchFilter extends React.Component {
 

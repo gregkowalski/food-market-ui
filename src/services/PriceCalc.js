@@ -1,5 +1,5 @@
-import { FeatureToggles } from './FeatureToggles'
-import { Constants } from './Constants'
+import { FeatureToggles } from '../FeatureToggles'
+import { Constants } from '../Constants'
 
 const StripePercentageFee = 0.029;
 const StripeTransactionFee = 30;

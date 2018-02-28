@@ -5,3 +5,5 @@ export const Constants = {
     ServiceFeeRate: 0.15,
     MaxFoodQuantity: 99
 }
+
+export default Constants;

@@ -5,15 +5,15 @@ import { Grid, Header, Divider, Feed, Form, Input, Modal } from 'semantic-ui-rea
 import Scroll from 'react-scroll'; // Imports all Mixins
 import ShowMore from 'react-show-more'
 import './FoodDetail.css'
-import AppHeader from './components/AppHeader'
-import FoodLightbox from './components/FoodLightbox'
-import Util from './Util'
-import { Constants } from './Constants'
-import FlagListing from './components/FlagListing'
-import FlagListingMobile from './components/FlagListingMobile'
-import CognitoUtil from './Cognito/CognitoUtil'
-import ApiClient from './Api/ApiClient'
-import PriceCalc from './PriceCalc'
+import Constants from '../Constants'
+import AppHeader from '../components/AppHeader'
+import FoodLightbox from '../components/FoodLightbox'
+import FlagListing from '../components/FlagListing'
+import FlagListingMobile from '../components/FlagListingMobile'
+import CognitoUtil from '../services/Cognito/CognitoUtil'
+import ApiClient from '../services/ApiClient'
+import PriceCalc from '../services/PriceCalc'
+import Util from '../services/Util'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;

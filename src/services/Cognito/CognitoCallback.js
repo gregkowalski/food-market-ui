@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import CognitoUtil from './CognitoUtil'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import jwtDecode from 'jwt-decode'
+import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
-import ApiClient from '../Api/ApiClient'
+import ApiClient from '../ApiClient'
 
 export default class CognitoCallback extends React.Component {
 

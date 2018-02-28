@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Grid } from 'semantic-ui-react'
-import AppHeader from './components/AppHeader'
-import { Constants } from './Constants'
+import AppHeader from '../components/AppHeader'
+import Constants from '../Constants'
 
 export default class Pricing extends React.Component {
 

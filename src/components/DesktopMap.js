@@ -3,7 +3,7 @@ import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
 import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
 import Regions from './Map/Regions'
-import PriceCalc from './PriceCalc'
+import PriceCalc from '../services/PriceCalc'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 

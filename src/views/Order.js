@@ -5,13 +5,13 @@ import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'se
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './Order.css'
-import OrderHeader from './components/OrderHeader'
-import Checkout from './Stripe/Checkout'
-import ApiClient from './Api/ApiClient'
-import CognitoUtil from './Cognito/CognitoUtil'
-import { Constants } from './Constants'
-import PriceCalc from './PriceCalc'
-import Util from './Util'
+import OrderHeader from '../components/OrderHeader'
+import Checkout from '../components/Stripe/Checkout'
+import ApiClient from '../services/ApiClient'
+import CognitoUtil from '../services/Cognito/CognitoUtil'
+import PriceCalc from '../services/PriceCalc'
+import Util from '../services/Util'
+import Constants from '../Constants'
 
 const Steps = {
     pickup: 0,

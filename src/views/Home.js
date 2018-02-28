@@ -1,5 +1,5 @@
 import React from 'react'
-import Util from './Util'
+import Util from '../services/Util'
 import MobileSearch from './MobileSearch'
 import DesktopSearch from './DesktopSearch'
 

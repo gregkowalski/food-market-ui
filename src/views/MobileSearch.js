@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import './MobileSearch.css'
-import MobileMap from './MobileMap'
-import Food from './Food'
-import Map from './Map'
-import ApiClient from './Api/ApiClient'
 import { Dimmer, Icon } from 'semantic-ui-react'
-import FoodCarousel from './FoodCarousel';
-import Util from './Util'
-import { makeCancelable } from './Map/lib/cancelablePromise'
-import AppHeader from './components/AppHeader'
-import FoodFilter from './components/FoodFilter'
-import SearchFilter from './components/SearchFilter'
-import FilterBar from './components/FilterBar'
+import './MobileSearch.css'
+import MobileMap from '../components/MobileMap'
+import FoodGrid from '../components/FoodGrid'
+import ApiClient from '../services/ApiClient'
+import FoodCarousel from '../components/FoodCarousel';
+import Util from '../services/Util'
+import { makeCancelable } from '../components/Map/lib/cancelablePromise'
+import AppHeader from '../components/AppHeader'
+import FoodFilter from '../components/FoodFilter'
+import SearchFilter from '../components/SearchFilter'
+import FilterBar from '../components/FilterBar'
 
 class MapSearch extends Component {
 
@@ -20,13 +19,7 @@ class MapSearch extends Component {
     constructor(props) {
         super(props);
 
-        let mapZoom = Map.defaultProps.zoom;
-        if (!mapZoom) {
-            mapZoom = 13;
-        }
-
         this.state = {
-            mapZoom: mapZoom,
             foods: [],
             pickup: true,
             mapSearch: false,
@@ -319,7 +312,7 @@ class MapSearch extends Component {
                         </div>
 
                         <div className='mobilesearch-foodgrid' style={this.getListViewStyle(mapSearch)}>
-                            <Food foods={this.state.foods} />
+                            <FoodGrid foods={this.state.foods} />
                             <Icon className='mobilesearch-foodgrid-icon' name='marker' color='teal' size='big' onClick={this.showMapSearch} />
                         </div>
 

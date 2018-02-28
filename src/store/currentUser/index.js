@@ -1,5 +1,5 @@
-import ApiClient from '../../Api/ApiClient'
-import CognitoUtil from '../../Cognito/CognitoUtil'
+import ApiClient from '../../services/ApiClient'
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import * as ActionTypes from './actionTypes'
 
 function requestCurrentUser() {

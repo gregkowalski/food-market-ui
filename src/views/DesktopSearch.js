@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Dimmer } from 'semantic-ui-react'
 import './DesktopSearch.css'
-import DesktopMap from './DesktopMap'
-import Food from './Food'
-import Map from './Map'
-import { makeCancelable } from './Map/lib/cancelablePromise'
-import AppHeader from './components/AppHeader'
-import FoodFilter from './components/FoodFilter'
-import ApiClient from './Api/ApiClient'
-import Util from './Util'
+import DesktopMap from '../components/DesktopMap'
+import FoodGrid from '../components/FoodGrid'
+import { makeCancelable } from '../components/Map/lib/cancelablePromise'
+import AppHeader from '../components/AppHeader'
+import FoodFilter from '../components/FoodFilter'
+import ApiClient from '../services/ApiClient'
+import Util from '../services/Util'
+import { Actions, Selectors } from '../store/currentUser'
 
 export default class DesktopSearch extends Component {
 
@@ -17,14 +17,8 @@ export default class DesktopSearch extends Component {
     constructor(props) {
         super(props);
 
-        let mapZoom = Map.defaultProps.zoom;
-        if (!mapZoom) {
-            mapZoom = 13;
-        }
-
         this.state = {
             hoveredFoodItemId: -1,
-            mapZoom: mapZoom,
             foods: [],
             pickup: true,
             dimmed: false
@@ -188,7 +182,7 @@ export default class DesktopSearch extends Component {
                         <Dimmer active={dimmed} inverted onClickOutside={this.handleHide}
                             style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
-                            <Food foods={this.state.foods}
+                            <FoodGrid foods={this.state.foods}
                                 onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
                                 onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)} />
                         </div>
@@ -209,3 +203,26 @@ export default class DesktopSearch extends Component {
         )
     }
 }
+
+// const mapStateToProps = (state) => {
+//     return {
+//         user: Selectors.getCurrentUser(state),
+//         isLoading: Selectors.getIsLoading(state)
+//     };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         loadCurrentUser: () => dispatch(Actions.loadCurrentUser()),
+//         logOut: () => dispatch(Actions.logOut()),
+//     };
+// };
+
+// AppHeader.propTypes = {
+//     user: PropTypes.shape({
+//         user_id: PropTypes.string.isRequired,
+//         username: PropTypes.string.isRequired,
+//     }),
+//     isLoading: PropTypes.bool.isRequired,
+//     loadCurrentUser: PropTypes.func.isRequired,
+// }

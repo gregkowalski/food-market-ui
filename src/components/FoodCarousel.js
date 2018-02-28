@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
-import './components/ImageDecorator.css'
-import { Item, Image, Rating, Icon } from 'semantic-ui-react'
-import './Food.css'
-import Util from './Util'
-import PriceCalc from './PriceCalc'
 import { setTimeout } from 'timers';
+import { Item, Image, Rating, Icon } from 'semantic-ui-react'
+import './ImageDecorator.css'
+import Util from '../services/Util'
+import PriceCalc from '../services/PriceCalc'
 
 export default class FoodCarousel extends Component {
 

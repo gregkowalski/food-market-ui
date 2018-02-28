@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import CognitoUtil from './Cognito/CognitoUtil'
+import CognitoUtil from '../services/Cognito/CognitoUtil'
 
 export default class Login extends React.Component {
 

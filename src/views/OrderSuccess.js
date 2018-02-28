@@ -1,7 +1,7 @@
 import React from 'react'
 import queryString from 'query-string'
-import AppHeader from './components/AppHeader'
-import ApiClient from './Api/ApiClient'
+import AppHeader from '../components/AppHeader'
+import ApiClient from '../services/ApiClient'
 
 export default class OrderSuccess extends React.Component {
 
