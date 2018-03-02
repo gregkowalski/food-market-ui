@@ -61,6 +61,11 @@ class Util {
         return meters * metersToDegrees;
     }
 
+    getGeoSearchBoundDegrees() {
+        const geoSearchBoundMeters = 4000;
+        return this.convertMetersToDegrees(geoSearchBoundMeters);
+    }
+
     isMobile(userAgent) {
         if (!userAgent) {
             userAgent = window.navigator.userAgent;
@@ -107,6 +112,35 @@ class Util {
             return month1 < month2;
 
         return day1 < day2;
+    }
+
+    areEqualFoods(foods1, foods2) {
+        if (foods1 === foods2)
+            return true;
+
+        if (!foods1 || !foods2)
+            return false;
+
+        if (foods1.length !== foods2.length)
+            return false;
+
+        const copy_foods1 = foods1.slice().sort();
+        const copy_foods2 = foods2.slice().sort();
+        for (let i = 0; i < copy_foods1.length; i++) {
+            if (!this.isEqualFood(copy_foods1[i], copy_foods2[i]))
+                return false;
+        }
+        return true;
+    }
+
+    isEqualFood(food1, food2) {
+        if (food1 === food2)
+            return true;
+
+        if (!food1 || !food2)
+            return false;
+
+        return food1.food_id === food2.food_id;
     }
 }
 

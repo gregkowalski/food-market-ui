@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { camelize } from './lib/String';
-import { makeCancelable } from './lib/cancelablePromise';
 import invariant from 'invariant';
 
 const evtNames = [
@@ -54,25 +53,6 @@ export class Map extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.centerAroundCurrentLocation) {
-            if (navigator && navigator.geolocation) {
-                this.geoPromise = makeCancelable(
-                    new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject);
-                    })
-                );
-
-                this.geoPromise.promise
-                    .then(pos => {
-                        const loc = {
-                            lat: pos.coords.latitude,
-                            lng: pos.coords.longitude
-                        };
-                        this.setState({ currentLocation: loc });
-                    })
-                    .catch(e => e);
-            }
-        }
         this.loadMap();
     }
 
@@ -96,9 +76,6 @@ export class Map extends React.Component {
 
     componentWillUnmount() {
         const { google } = this.props;
-        if (this.geoPromise) {
-            this.geoPromise.cancel();
-        }
         Object.keys(this.listeners).forEach(e => {
             google.maps.event.removeListener(this.listeners[e]);
         });
@@ -159,10 +136,6 @@ export class Map extends React.Component {
             });
             maps.event.trigger(this.map, 'ready');
             this.forceUpdate();
-
-            if (this.props.onMapCreated) {
-                this.props.onMapCreated(this.map);
-            }
         }
     }
 

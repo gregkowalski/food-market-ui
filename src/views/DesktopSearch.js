@@ -1,201 +1,96 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Dimmer } from 'semantic-ui-react'
 import './DesktopSearch.css'
 import DesktopMap from '../components/DesktopMap'
 import FoodGrid from '../components/FoodGrid'
-import { makeCancelable } from '../components/Map/lib/cancelablePromise'
 import AppHeader from '../components/AppHeader'
 import FoodFilter from '../components/FoodFilter'
-import ApiClient from '../services/ApiClient'
-import Util from '../services/Util'
-import { Actions, Selectors } from '../store/currentUser'
+import LoadingIcon from '../components/LoadingIcon'
 
-export default class DesktopSearch extends Component {
-
-    foods;
+export default class DesktopSearch extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            hoveredFoodItemId: -1,
-            foods: [],
-            pickup: true,
+            hoveredFoodItemId: null,
             dimmed: false
         };
     }
 
-    componentWillMount() {
-        this.geoSearchNearCurrentLocation();
-    }
-
-    componentWillUnmount() {
-        if (this.geoPromise) {
-            this.geoPromise.cancel();
-        }
-    }
-
-    geoSearchNearCurrentLocation() {
-        if (!navigator || !navigator.geolocation) {
-            return;
-        }
-        this.geoPromise = makeCancelable(
-            new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject);
-            })
-        );
-
-        this.geoPromise.promise
-            .then(pos => {
-                const loc = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude
-                };
-                const bound = Util.convertMetersToDegrees(2500);
-                let geo = {
-                    ne_lat: loc.lat + bound,
-                    ne_lng: loc.lng + bound,
-                    sw_lat: loc.lat - bound,
-                    sw_lng: loc.lng - bound
-                }
-                this.geoSearchFoods(geo);
-            })
-            .catch(e => console.error(e));
-    }
-
-    handleGeoSearch = (map) => {
-        const geo = Util.getGeoBounds(map);
-        this.geoSearchFoods(geo);
-    }
-
-    geoSearchFoods(geo) {
-        if (!this.state.pickup) {
-            return;
-        }
-
-        ApiClient.geoSearchFoods(geo)
-            .then(response => {
-                let newState = {
-                    foods: response.data
-                };
-                newState.foods.forEach(f => {
-                    f.id = f.food_id;
-                    f.images = f.imageUrls;
-                    f.image = f.imageUrls[0];
-                    f.header = f.title;
-                    f.meta = f.short_description;
-                    f.description = f.long_desciption;
-                    f.rating = 5;
-                    f.ratingCount = 3;
-                    //console.log(`food_id=${f.food_id}, pos.lat=${f.position.lat}, pos.lng=${f.position.lng}`);
-                });
-                this.setState(newState);
-                this.foods = newState.foods;
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }
-
-    handleRegionSelected = (region) => {
-        const google = window.google;
-        let foods = [];
-        if (region) {
-            console.log('search region: ' + region.id);
-            const polygon = new google.maps.Polygon({ paths: region.paths });
-            foods = this.foods.filter(food => {
-                const point = new window.google.maps.LatLng(food.position.lat, food.position.lng);
-                const contains = window.google.maps.geometry.poly.containsLocation(point, polygon);
-                console.log(`point=${point} contains: ${contains}`);
-                return contains;
-            });
-        }
-        this.setState({ foods: foods });
-    }
-
-    handleMapCreated = (map) => {
-        this.map = map;
-    }
-
-    handleFoodItemEnter(itemId) {
+    handleFoodItemEnter = (itemId) => {
         this.setState({ hoveredFoodItemId: itemId });
     }
 
-    handleFoodItemLeave(itemId) {
-        this.setState({ hoveredFoodItemId: -1 });
+    handleFoodItemLeave = (itemId) => {
+        this.setState({ hoveredFoodItemId: null });
+    }
+
+    handleDateFilterClose = () => {
+        this.hideDimmer();
+    }
+
+    handleDateFilterClear = () => {
+        this.props.onDateChanged(null);
+        this.hideDimmer();
+    }
+
+    handleDateFilterApply = (date) => {
+        this.props.onDateChanged(date);
+        this.hideDimmer();
     }
 
     handleDateFilterClick = () => {
         this.setState({ dimmed: !this.state.dimmed });
     }
 
-    handleDateFilterClose = () => {
-        this.handleDateFilterClick();
-    }
-
-    handleDateFilterClear = () => {
-        this.handleDateFilterClick();
-    }
-
-    handleDateFilterApply = (date) => {
-        this.handleDateFilterClick();
-    }
-
-    handleHide = () => {
+    hideDimmer = () => {
         if (this.state.dimmed) {
             this.setState({ dimmed: false });
         }
     }
 
-    handlePickupClick = () => {
-        if (this.state.pickup)
-            return;
-
-        this.setState({ pickup: true }, () => {
-            const geo = Util.getGeoBounds(this.map);
-            this.geoSearchFoods(geo);
-        });
-    }
-
-    handleDeliveryClick = () => {
-        if (!this.state.pickup)
-            return;
-
-        this.setState({ pickup: false });
-    }
-
     render() {
-        const { pickup, dimmed } = this.state;
+        const { dimmed } = this.state;
+        const { pickup, isLoading, foods, region, date } = this.props;
 
         return (
-            <div className='dtsearch-wrap' onClick={this.handleHide}>
+            <div className='dtsearch-wrap' onClick={this.hideDimmer}>
                 <AppHeader fixed noshadow />
-                <FoodFilter style={{ top: '55px', position: 'fixed' }} showDateFilter={dimmed} pickup={pickup}
+                <FoodFilter style={{ top: '55px', position: 'fixed' }}
+                    showDateFilter={dimmed}
+                    pickup={pickup}
+                    date={date}
+                    onPickupClick={this.props.onPickupClick}
+                    onDeliveryClick={this.props.onDeliveryClick}
                     onDateFilterClick={this.handleDateFilterClick}
                     onDateFilterClose={this.handleDateFilterClose}
                     onDateFilterClear={this.handleDateFilterClear}
-                    onDateFilterApply={this.handleDateFilterApply}
-                    onPickupClick={this.handlePickupClick}
-                    onDeliveryClick={this.handleDeliveryClick} />
-                <div className='dtsearch-bodywrap' >
+                    onDateFilterApply={this.handleDateFilterApply} />
+                <div className='dtsearch-bodywrap'>
                     <Dimmer.Dimmable dimmed={dimmed}>
-                        <Dimmer active={dimmed} inverted onClickOutside={this.handleHide}
+                        <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer}
                             style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
-                            <FoodGrid foods={this.state.foods}
-                                onFoodItemEnter={(itemId) => this.handleFoodItemEnter(itemId)}
-                                onFoodItemLeave={(itemId) => this.handleFoodItemLeave(itemId)} />
+                            {!isLoading &&
+                                <FoodGrid foods={foods}
+                                    onFoodItemEnter={this.handleFoodItemEnter}
+                                    onFoodItemLeave={this.handleFoodItemLeave} />
+                            }
+                            {isLoading &&
+                                <div className='dtsearch-loading-icon'>
+                                    <LoadingIcon size='big' />
+                                </div>
+                            }
                         </div>
                         <div className='dtsearch-right'>
-                            <DesktopMap foods={this.state.foods}
+                            <DesktopMap
+                                foods={foods}
                                 pickup={pickup}
-                                selectedItemId={this.state.hoveredFoodItemId}
-                                center={this.state.mapLocation}
-                                zoom={this.state.mapZoom}
-                                onGeoSearch={this.handleGeoSearch}
-                                onRegionSelected={this.handleRegionSelected}
-                                onMapCreated={this.handleMapCreated}
-                            />
+                                selectedRegion={region}
+                                selectedFoodItemId={this.state.hoveredFoodItemId}
+                                onGeoLocationChanged={this.props.onGeoLocationChanged}
+                                onRegionSelected={this.props.onRegionSelected} />
                         </div>
                     </Dimmer.Dimmable>
                 </div>
@@ -203,26 +98,3 @@ export default class DesktopSearch extends Component {
         )
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         user: Selectors.getCurrentUser(state),
-//         isLoading: Selectors.getIsLoading(state)
-//     };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         loadCurrentUser: () => dispatch(Actions.loadCurrentUser()),
-//         logOut: () => dispatch(Actions.logOut()),
-//     };
-// };
-
-// AppHeader.propTypes = {
-//     user: PropTypes.shape({
-//         user_id: PropTypes.string.isRequired,
-//         username: PropTypes.string.isRequired,
-//     }),
-//     isLoading: PropTypes.bool.isRequired,
-//     loadCurrentUser: PropTypes.func.isRequired,
-// }

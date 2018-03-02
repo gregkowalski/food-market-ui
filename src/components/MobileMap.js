@@ -179,7 +179,7 @@ export default class MobileMap extends React.Component {
                 zoom={this.props.zoom}
                 visible={this.props.visible}
                 onDragend={this.handleGeoSearch}
-                onZoom_changed={this.handleGetSearch}
+                onZoom_changed={this.handleGeoSearch}
                 onMapCreated={this.props.onMapCreated}>
 
                 <CustomControl position={window.google.maps.ControlPosition.BOTTOM}>

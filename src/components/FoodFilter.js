@@ -7,31 +7,6 @@ import Util from '../services/Util'
 
 export default class FoodFilter extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            pickup: props.pickup,
-            showDateFilter: false,
-            date: null
-        }
-    }
-
-    handleAddressChange = (place) => {
-        console.log(place);
-        this.setState({
-            address: place,
-            mapLocation: place.geometry.location,
-            mapZoom: this.state.mapZoom
-        });
-    };
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            pickup: nextProps.pickup,
-            showDateFilter: nextProps.showDateFilter
-        });
-    }
-
     handleDateClose = () => {
         if (this.props.onDateFilterClose) {
             this.props.onDateFilterClose();
@@ -39,14 +14,12 @@ export default class FoodFilter extends React.Component {
     }
 
     handleDateClear = () => {
-        this.setState({ date: null });
         if (this.props.onDateFilterClear) {
             this.props.onDateFilterClear();
         }
     }
 
     handleDateApply = (date) => {
-        this.setState({ date: date });
         if (this.props.onDateFilterApply) {
             this.props.onDateFilterApply(date);
         }
@@ -61,12 +34,9 @@ export default class FoodFilter extends React.Component {
     }
 
     render() {
+        const { pickup, mobile, date, showDateFilter } = this.props;
         const style = Object.assign({}, this.props.style);
-        const { pickup, showDateFilter, date } = this.state;
-
         const dateLabel = date ? date.format("MMM D, YYYY") : "Date";
-
-        const { mobile } = this.props;
 
         return (
             <div className='foodfilter' style={style}>
@@ -75,13 +45,13 @@ export default class FoodFilter extends React.Component {
 
                     {!mobile &&
                         <div id='foodfilter-date'>
-                            <Button {...FoodFilter.getButtonProps(date) } onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+                            <Button {...FoodFilter.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                         </div>
                     }
 
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
-                        <Button {...FoodFilter.getButtonProps(pickup) } onClick={this.props.onPickupClick}>PICKUP</Button>
-                        <Button {...FoodFilter.getButtonProps(!pickup) } onClick={this.props.onDeliveryClick}>DELIVER</Button>
+                        <Button {...FoodFilter.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
+                        <Button {...FoodFilter.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
                     </div>
 
                     {!mobile &&
@@ -93,7 +63,7 @@ export default class FoodFilter extends React.Component {
                 </div>
 
                 {!mobile &&
-                    <DateModal showDateFilter={showDateFilter}
+                    <DateModal showDateFilter={showDateFilter} date={date}
                         onClose={this.handleDateClose}
                         onClear={this.handleDateClear}
                         onApply={this.handleDateApply}
@@ -116,6 +86,10 @@ class DateModal extends React.Component {
         if (this.state.open !== nextProps.showDateFilter) {
             this.setState({ open: nextProps.showDateFilter });
         }
+
+        if (this.state.date !== nextProps.date) {
+            this.setState({ date: nextProps.date });
+        }
     }
 
     handleApply = () => {
@@ -125,19 +99,18 @@ class DateModal extends React.Component {
     }
 
     handleDateChange = (date) => {
-        console.dir(date);
         this.setState({ date: date });
     };
 
     render() {
-        const { open } = this.state;
+        const { open, date } = this.state;
 
         return (
             <div>
                 <Modal id='foodfilter-datepicker' dimmer={false} open={open} onClose={this.props.onClose}>
                     <Modal.Content>
                         <SingleDatePicker
-                            date={this.state.date}
+                            date={date}
                             isOutsideRange={Util.isDayOutsideRange}
                             onDateChange={this.handleDateChange}
                             focused={true}

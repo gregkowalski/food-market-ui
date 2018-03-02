@@ -1,10 +1,10 @@
 import React from 'react'
 import Util from '../services/Util'
 import MobileSearch from './MobileSearch'
-import DesktopSearch from './DesktopSearch'
+import DesktopSearchContainer from './DesktopSearchContainer'
 
 export default class Home extends React.Component {
     render() {
-        return Util.isMobile() ? <MobileSearch /> : <DesktopSearch />
+        return Util.isMobile() ? <MobileSearch /> : <DesktopSearchContainer />
     }
 }

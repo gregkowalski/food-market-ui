@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import { Reducers as currentUserReducers } from './currentUser'
+import { Reducers as currentUser } from './currentUser'
+import { Reducers as search } from './search'
 
 const configureStore = (options = {}) => {
 
@@ -11,8 +12,8 @@ const configureStore = (options = {}) => {
         middlewares.push(loggerMiddleware);
     }
 
-    const reducers = combineReducers(currentUserReducers);
-    const store = createStore(reducers, applyMiddleware(...middlewares));
+    const reducers = Object.assign({}, currentUser, search);
+    const store = createStore(combineReducers(reducers), applyMiddleware(...middlewares));
 
     return store;
 }

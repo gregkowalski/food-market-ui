@@ -6,11 +6,7 @@ import Util from '../services/Util'
 import CarouselDecorators from '../components/ImageDecorator'
 import PriceCalc from '../services/PriceCalc'
 
-class FoodGrid extends Component {
-
-    state = {
-        quantity: 1,
-    };
+export default class FoodGrid extends Component {
 
     isDebug = false;
 
@@ -32,12 +28,6 @@ class FoodGrid extends Component {
         }
     }
 
-    handleClick(a, b, id) {
-        if (this.isDebug) {
-            console.log(`Clicked item id=${id}`);
-        }
-    }
-
     getFoodImageComponent(food) {
         let imageElement;
         if (food.imageUrls && food.imageUrls.length > 1) {
@@ -45,14 +35,12 @@ class FoodGrid extends Component {
                 <Image key={index} className='FoodImage' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             );
             imageElement =
-                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}
-                    decorators={CarouselDecorators}>
+                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true} decorators={CarouselDecorators}>
                     {imageUrls}
                 </Carousel>
         }
         else {
-            imageElement = <Image
-                className='FoodImage' src={food.imageUrls[0]} />
+            imageElement = <Image className='FoodImage' src={food.imageUrls[0]} />
         }
         return imageElement;
     }
@@ -118,5 +106,3 @@ class FoodGrid extends Component {
 
     }
 }
-
-export default FoodGrid;

@@ -10,6 +10,11 @@
     margin-top: 110px;
 }
 
+.dtsearch-loading-icon {
+    padding-top: 35vh;
+    padding-left: 30vw;
+}
+
 .dtsearch-center, .dtsearch-bodywrap {
     height: 100%;
 }

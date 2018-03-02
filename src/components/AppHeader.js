@@ -153,6 +153,7 @@ AppHeader.propTypes = {
     }),
     isLoading: PropTypes.bool.isRequired,
     loadCurrentUser: PropTypes.func.isRequired,
+    logOut: PropTypes.func.isRequired,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppHeader));

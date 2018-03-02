@@ -1,9 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
 import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
 import Regions from './Map/Regions'
 import PriceCalc from '../services/PriceCalc'
+import Util from '../services/Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -14,32 +16,28 @@ export default class DesktopMap extends React.Component {
         this.state = {
             showingInfoWindow: false,
             activeMarker: {},
-            selectedPlace: {},
-            selectedItemId: props.selectedItemId,
-            selectedRegion: null,
+            selectedFoodItem: {},
+            selectedFoodItemId: props.selectedFoodItemId,
             showDeliveryInstructions: !props.pickup
         };
     }
 
     handleMarkerClick = (props, marker, e) => {
         this.setState({
-            selectedPlace: props,
+            selectedFoodItem: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            selectedItemId: props.id
+            selectedFoodItemId: props.id
         });
     }
 
     handleMapClick = (props, map, e) => {
-        const lat = e.latLng.lat();
-        const lng = e.latLng.lng();
-        console.log({ lat, lng });
         if (this.state.showingInfoWindow) {
             this.setState({
                 showingInfoWindow: false,
                 activeMarker: null,
-                selectedPlace: {},
-                selectedItemId: -1
+                selectedFoodItem: {},
+                selectedFoodItemId: null
             });
         }
     }
@@ -48,40 +46,40 @@ export default class DesktopMap extends React.Component {
         this.setState({
             showingInfoWindow: false,
             activeMarker: null,
-            selectedPlace: {},
-            selectedItemId: -1
+            selectedFoodItem: {},
+            selectedFoodItemId: null
         })
     }
 
-    getMarkerImage(foodItem, selectedItemId) {
-        if (foodItem.id === selectedItemId) {
+    getMarkerImage(foodItem, selectedFoodItemId) {
+        if (foodItem.id === selectedFoodItemId) {
             return '/assets/images/food-icon-selected1.png';
         }
         return '/assets/images/food-icon1.png';
     }
 
-    getZIndex(foodItem, selectedItemId) {
-        return (foodItem.id === selectedItemId) ? 9999 : null;
+    getZIndex(foodItem, selectedFoodItemId) {
+        return (foodItem.id === selectedFoodItemId) ? 9999 : null;
     }
 
-    handleRegionSearch(region) {
-        if (this.props.onRegionSelected) {
-            this.props.onRegionSelected(region);
+    handleGeoSearch = (props, map) => {
+        if (this.props.onGeoLocationChanged) {
+            const geo = Util.getGeoBounds(map);
+            this.props.onGeoLocationChanged(geo);
         }
     }
 
-    handleGeoSearch = (props, map, e) => {
-        if (this.props.onGeoSearch) {
-            this.props.onGeoSearch(map);
-        }
+    handleBoundsChanged = (props, map) => {
+        if (this.boundsLoaded)
+            return;
+
+        this.boundsLoaded = true;
+        this.handleGeoSearch(props, map);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.pickup !== prevProps.pickup) {
             this.setState({ showDeliveryInstructions: !this.props.pickup });
-            if (!this.props.pickup) {
-                this.handleRegionSearch(this.state.selectedRegion);
-            }
         }
     }
 
@@ -90,11 +88,11 @@ export default class DesktopMap extends React.Component {
     }
 
     render() {
-        let selectedItem = this.state.selectedPlace;
+        const { selectedFoodItem } = this.state;
 
-        let selectedItemId = this.props.selectedItemId;
-        if (selectedItemId < 0 || !selectedItemId) {
-            selectedItemId = this.state.selectedItemId;
+        let selectedFoodItemId = this.props.selectedFoodItemId;
+        if (!selectedFoodItemId) {
+            selectedFoodItemId = this.state.selectedFoodItemId;
         }
 
         const { pickup } = this.props;
@@ -105,7 +103,7 @@ export default class DesktopMap extends React.Component {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.state.selectedRegion === region) {
+                if (this.props.selectedRegion === region) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -120,10 +118,10 @@ export default class DesktopMap extends React.Component {
                         fillColor={fillColor}
                         fillOpacity={0.35}
                         onClick={(props, map, e) => {
-                            this.setState({
-                                selectedRegion: region,
-                                showDeliveryInstructions: false
-                            }, () => this.handleRegionSearch(region));
+                            if (this.props.onRegionSelected) {
+                                this.props.onRegionSelected(region);
+                            }
+                            this.setState({ showDeliveryInstructions: false });
                         }}
                     />);
             })
@@ -136,8 +134,8 @@ export default class DesktopMap extends React.Component {
                     key={foodItem.food_id}
                     onClick={this.handleMarkerClick}
                     header={foodItem.header}
-                    icon={this.getMarkerImage(foodItem, selectedItemId)}
-                    zIndex={this.getZIndex(foodItem, selectedItemId)}
+                    icon={this.getMarkerImage(foodItem, selectedFoodItemId)}
+                    zIndex={this.getZIndex(foodItem, selectedFoodItemId)}
                     image={foodItem.image}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
@@ -184,8 +182,8 @@ export default class DesktopMap extends React.Component {
                 onClick={this.handleMapClick}
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleGeoSearch}
-                onMapCreated={this.props.onMapCreated}
-            >
+                onBounds_changed={this.handleBoundsChanged}
+                >
                 {polygons}
                 {markers}
 
@@ -202,23 +200,23 @@ export default class DesktopMap extends React.Component {
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={'/foods/' + selectedItem.id}>
+                            href={'/foods/' + selectedFoodItem.id}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
-                                    <Image width='100%' shape='rounded' src={selectedItem.image} />
+                                    <Image width='100%' shape='rounded' src={selectedFoodItem.image} />
                                     <Card.Header className='mapcontainer-foodcard-header'>
-                                        <div className='marker-header'>${PriceCalc.getPrice(selectedItem.price)} · {selectedItem.header}</div>
+                                        <div className='marker-header'>${PriceCalc.getPrice(selectedFoodItem.price)} · {selectedFoodItem.header}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Card.Header>
                                     <Card.Meta>
                                         <div style={{ display: 'inline-flex' }}>
-                                            <Rating disabled={true} maxRating={5} rating={selectedItem.rating} size='mini' className='marker-rating-stars' />
-                                            <div className='marker-rating-label'>{selectedItem.ratingCount} reviews</div>
+                                            <Rating disabled={true} maxRating={5} rating={selectedFoodItem.rating} size='mini' className='marker-rating-stars' />
+                                            <div className='marker-rating-label'>{selectedFoodItem.ratingCount} reviews</div>
                                         </div>
-                                        <div className='marker-ingredients'>Ingredients: {selectedItem.meta}</div>
+                                        <div className='marker-ingredients'>Ingredients: {selectedFoodItem.meta}</div>
                                     </Card.Meta>
                                     <Card.Description>
-                                        <div className='marker-description'>{selectedItem.description} </div>
+                                        <div className='marker-description'>{selectedFoodItem.description} </div>
                                     </Card.Description>
                                 </Card.Content>
                             </Card>
@@ -229,6 +227,16 @@ export default class DesktopMap extends React.Component {
             </Map>
         )
     }
+}
+
+DesktopMap.propTypes = {
+    foods: PropTypes.arrayOf(PropTypes.shape({
+        food_id: PropTypes.string.isRequired,
+    })),
+    pickup: PropTypes.bool.isRequired,
+    selectedRegion: PropTypes.object,
+    onGeoLocationChanged: PropTypes.func.isRequired,
+    onRegionSelected: PropTypes.func.isRequired,
 }
 
 // <Map google={this.props.google} />
