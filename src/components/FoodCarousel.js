@@ -42,14 +42,16 @@ export default class FoodCarousel extends Component {
             return <div></div>;
         }
 
+        const { foods, pickup, date } = this.props;
+
         // this is for a defect in nuka-carousel where if there's only one item
         // it doesn't generate a list element with a margin-left of 7.5px
         let foodCardStyle = {};
-        if (this.props.foods.length === 1) {
+        if (foods.length === 1) {
             foodCardStyle.marginLeft = '7.5px';
         }
 
-        const slides = this.props.foods.map((food, index) => {
+        const slides = foods.map((food, index) => {
 
             let imageStyle = { height: '100px' };
             const isSelected = index === this.state.selectedSlideIndex;
@@ -61,7 +63,7 @@ export default class FoodCarousel extends Component {
                 <div className='FoodCard2' key={food.food_id} style={foodCardStyle}>
                     <a style={{ color: 'inherit' }}
                         target='_blank'
-                        href={'/foods/' + food.food_id}>
+                        href={Util.foodDetailUrl(food.food_id, pickup, date)}>
 
                         <Item style={{ marginBottom: '1px' }}>
                             <Item.Content>
@@ -102,12 +104,12 @@ export default class FoodCarousel extends Component {
             );
         });
 
-        let selectedSlideIndex = this.props.foods.findIndex(food => food.food_id === this.props.selectedFoodId);
+        let selectedSlideIndex = foods.findIndex(food => food.food_id === this.props.selectedFoodId);
         if (selectedSlideIndex < 0) {
             selectedSlideIndex = 0;
         }
 
-        let slidesToShow = 2.5;
+        let slidesToShow = 2.1;
         if (window.innerHeight < window.innerWidth) {
             slidesToShow = 4;
         }

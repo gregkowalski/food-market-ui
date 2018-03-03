@@ -9,7 +9,6 @@ import AppHeader from '../components/AppHeader'
 import FoodFilter from '../components/FoodFilter'
 import SearchFilter from '../components/SearchFilter'
 import FilterBar from '../components/FilterBar'
-import LoadingIcon from '../components/LoadingIcon'
 
 export default class MobileSearch extends Component {
 
@@ -108,10 +107,24 @@ export default class MobileSearch extends Component {
         return style;
     }
 
+    getFoodFilterStyle() {
+        return {
+            top: '0px',
+            position: 'fixed'
+        };
+    }
+
+    getFilterBarStyle() {
+        return {
+            top: '55px',
+            position: 'fixed'
+        }
+    }
+
     getDimmerStyle() {
         return {
             position: 'fixed',
-            marginTop: `${this.filterBarHeight}`
+            marginTop: `${this.filterBarHeight}`,
         };
     }
 
@@ -125,7 +138,7 @@ export default class MobileSearch extends Component {
 
     render() {
         let { mapSearch, dimmed, showFilter, filter, selectedFoodId, mapLocation } = this.state;
-        let { pickup, isLoading, foods, region, date } = this.props;
+        let { pickup, foods, region, date } = this.props;
 
         if (mapSearch) {
             this.mapSearchHasBeenVisible = true;
@@ -138,7 +151,7 @@ export default class MobileSearch extends Component {
                 }
 
                 {!mapSearch &&
-                    <FilterBar style={{ top: '55px', position: 'fixed' }} filter={filter} onFilterClick={this.showFilter} />
+                    <FilterBar style={this.getFilterBarStyle()} filter={filter} onFilterClick={this.showFilter} />
                 }
 
                 <div className='mobilesearch-filter' style={this.getFilterStyle(showFilter)}>
@@ -148,10 +161,14 @@ export default class MobileSearch extends Component {
                 <div className='mobilesearch-bodywrap'>
                     <Dimmer.Dimmable dimmed={dimmed}>
 
-                        <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer} style={this.getDimmerStyle()} />
+                        <Dimmer style={this.getDimmerStyle()} active={dimmed} inverted onClickOutside={this.hideDimmer} />
 
                         {mapSearch &&
-                            <FoodFilter style={{ top: '0px', position: 'fixed' }} showDateFilter={dimmed} pickup={pickup} mobile={true}
+                            <FoodFilter style={this.getFoodFilterStyle()}
+                                mobile={true}
+                                showDateFilter={dimmed}
+                                pickup={pickup}
+                                date={date}
                                 onDateFilterClick={this.handleDateFilterClick}
                                 onDateFilterClose={this.handleDateFilterClose}
                                 onDateFilterClear={this.handleDateFilterClear}
@@ -183,7 +200,7 @@ export default class MobileSearch extends Component {
                                 <LoadingIcon size='big' />
                             } */}
                             {/* {!isLoading && */}
-                            <FoodCarousel foods={foods} selectedFoodId={selectedFoodId}
+                            <FoodCarousel foods={foods} pickup={pickup} date={date} selectedFoodId={selectedFoodId}
                                 onSelected={(selectedFood) => {
                                     this.setState({
                                         mapLocation: selectedFood.position,

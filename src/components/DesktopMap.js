@@ -95,7 +95,7 @@ export default class DesktopMap extends React.Component {
             selectedFoodId = this.state.selectedFoodId;
         }
 
-        const { pickup } = this.props;
+        const { pickup, date, selectedRegion, foods } = this.props;
         const { showDeliveryInstructions } = this.state;
 
         let polygons;
@@ -103,7 +103,7 @@ export default class DesktopMap extends React.Component {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.props.selectedRegion === region) {
+                if (selectedRegion === region) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -127,7 +127,7 @@ export default class DesktopMap extends React.Component {
             })
         }
 
-        const markers = this.props.foods.map(foodItem => {
+        const markers = foods.map(foodItem => {
             return (
                 <Marker
                     id={foodItem.food_id}
@@ -199,7 +199,7 @@ export default class DesktopMap extends React.Component {
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={'/foods/' + selectedFood.id}>
+                            href={Util.foodDetailUrl(selectedFood.id, pickup, date)}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
                                     <Image width='100%' shape='rounded' src={selectedFood.image} />

@@ -56,7 +56,9 @@ export default class FoodGrid extends Component {
     }
 
     render() {
-        const cards = this.props.foods.map((food) => {
+        const { foods, date, pickup } = this.props;
+
+        const cards = foods.map((food) => {
             let foodImageComponent = this.getFoodImageComponent(food);
             let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
@@ -65,7 +67,7 @@ export default class FoodGrid extends Component {
                     <div className='FoodCard'>
                         <a
                             target='_blank'
-                            href={'/foods/' + food.food_id}
+                            href={Util.foodDetailUrl(food.food_id, pickup, date)}
                             onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.food_id)}
                             onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.food_id)}>
                             <Item style={{ marginBottom: '1px' }}>
