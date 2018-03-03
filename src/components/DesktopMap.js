@@ -16,18 +16,18 @@ export default class DesktopMap extends React.Component {
         this.state = {
             showingInfoWindow: false,
             activeMarker: {},
-            selectedFoodItem: {},
-            selectedFoodItemId: props.selectedFoodItemId,
+            selectedFood: {},
+            selectedFoodId: props.selectedFoodId,
             showDeliveryInstructions: !props.pickup
         };
     }
 
     handleMarkerClick = (props, marker, e) => {
         this.setState({
-            selectedFoodItem: props,
+            selectedFood: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            selectedFoodItemId: props.id
+            selectedFoodId: props.id
         });
     }
 
@@ -36,8 +36,8 @@ export default class DesktopMap extends React.Component {
             this.setState({
                 showingInfoWindow: false,
                 activeMarker: null,
-                selectedFoodItem: {},
-                selectedFoodItemId: null
+                selectedFood: {},
+                selectedFoodId: null
             });
         }
     }
@@ -46,20 +46,20 @@ export default class DesktopMap extends React.Component {
         this.setState({
             showingInfoWindow: false,
             activeMarker: null,
-            selectedFoodItem: {},
-            selectedFoodItemId: null
+            selectedFood: {},
+            selectedFoodId: null
         })
     }
 
-    getMarkerImage(foodItem, selectedFoodItemId) {
-        if (foodItem.id === selectedFoodItemId) {
+    getMarkerImage(foodItem, selectedFoodId) {
+        if (foodItem.id === selectedFoodId) {
             return '/assets/images/food-icon-selected1.png';
         }
         return '/assets/images/food-icon1.png';
     }
 
-    getZIndex(foodItem, selectedFoodItemId) {
-        return (foodItem.id === selectedFoodItemId) ? 9999 : null;
+    getZIndex(foodItem, selectedFoodId) {
+        return (foodItem.id === selectedFoodId) ? 9999 : null;
     }
 
     handleGeoSearch = (props, map) => {
@@ -88,11 +88,11 @@ export default class DesktopMap extends React.Component {
     }
 
     render() {
-        const { selectedFoodItem } = this.state;
+        const { selectedFood } = this.state;
 
-        let selectedFoodItemId = this.props.selectedFoodItemId;
-        if (!selectedFoodItemId) {
-            selectedFoodItemId = this.state.selectedFoodItemId;
+        let selectedFoodId = this.props.selectedFoodId;
+        if (!selectedFoodId) {
+            selectedFoodId = this.state.selectedFoodId;
         }
 
         const { pickup } = this.props;
@@ -134,8 +134,8 @@ export default class DesktopMap extends React.Component {
                     key={foodItem.food_id}
                     onClick={this.handleMarkerClick}
                     header={foodItem.header}
-                    icon={this.getMarkerImage(foodItem, selectedFoodItemId)}
-                    zIndex={this.getZIndex(foodItem, selectedFoodItemId)}
+                    icon={this.getMarkerImage(foodItem, selectedFoodId)}
+                    zIndex={this.getZIndex(foodItem, selectedFoodId)}
                     image={foodItem.image}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
@@ -174,7 +174,6 @@ export default class DesktopMap extends React.Component {
                 fullscreenControl={false}
                 clickableIcons={false}
                 scrollwheel={true}
-                centerAroundCurrentLocation={false}
                 gestureHandling={this.props.gestureHandling}
                 center={this.props.center}
                 zoom={this.props.zoom}
@@ -200,23 +199,23 @@ export default class DesktopMap extends React.Component {
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={'/foods/' + selectedFoodItem.id}>
+                            href={'/foods/' + selectedFood.id}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
-                                    <Image width='100%' shape='rounded' src={selectedFoodItem.image} />
+                                    <Image width='100%' shape='rounded' src={selectedFood.image} />
                                     <Card.Header className='mapcontainer-foodcard-header'>
-                                        <div className='marker-header'>${PriceCalc.getPrice(selectedFoodItem.price)} · {selectedFoodItem.header}</div>
+                                        <div className='marker-header'>${PriceCalc.getPrice(selectedFood.price)} · {selectedFood.header}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Card.Header>
                                     <Card.Meta>
                                         <div style={{ display: 'inline-flex' }}>
-                                            <Rating disabled={true} maxRating={5} rating={selectedFoodItem.rating} size='mini' className='marker-rating-stars' />
-                                            <div className='marker-rating-label'>{selectedFoodItem.ratingCount} reviews</div>
+                                            <Rating disabled={true} maxRating={5} rating={selectedFood.rating} size='mini' className='marker-rating-stars' />
+                                            <div className='marker-rating-label'>{selectedFood.ratingCount} reviews</div>
                                         </div>
-                                        <div className='marker-ingredients'>Ingredients: {selectedFoodItem.meta}</div>
+                                        <div className='marker-ingredients'>Ingredients: {selectedFood.meta}</div>
                                     </Card.Meta>
                                     <Card.Description>
-                                        <div className='marker-description'>{selectedFoodItem.description} </div>
+                                        <div className='marker-description'>{selectedFood.description} </div>
                                     </Card.Description>
                                 </Card.Content>
                             </Card>

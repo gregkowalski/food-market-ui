@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../store/search'
+import Util from '../services/Util'
 import DesktopSearch from './DesktopSearch'
+import MobileSearch from './MobileSearch'
 
-class DesktopSearchContainer extends React.Component {
+class SearchContainer extends React.Component {
 
     componentWillMount() {
         if (!this.props.geo) {
@@ -13,11 +15,26 @@ class DesktopSearchContainer extends React.Component {
         }
     }
 
-    handleGeoLocationChanged = (geo) => this.props.actions.geoLocationChanged(geo);
-    handleRegionSelected = (region) => this.props.actions.regionChanged(region);
-    handleDateChanged = (date) => this.props.actions.dateChanged(date);
     handlePickupClick = () => this.props.actions.selectPickup();
     handleDeliveryClick = () => this.props.actions.selectDelivery();
+
+    handleGeoLocationChanged = (geo) => {
+        if (!Util.isEqualGeo(this.props.geo, geo)) {
+            this.props.actions.geoLocationChanged(geo);
+        }
+    }
+
+    handleDateChanged = (date) => {
+        if (this.props.date !== date) {
+            this.props.actions.dateChanged(date);
+        }
+    }
+
+    handleRegionSelected = (region) => {
+        if (!Util.isEqualRegion(this.props.region, region)) {
+            this.props.actions.regionChanged(region);
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.pickup !== nextProps.pickup) {
@@ -38,12 +55,19 @@ class DesktopSearchContainer extends React.Component {
 
     render() {
         const { pickup, isLoading, foods, region, date, geo } = this.props;
-        return <DesktopSearch pickup={pickup} isLoading={isLoading} foods={foods} region={region} date={date} geo={geo}
-            onGeoLocationChanged={this.handleGeoLocationChanged}
-            onRegionSelected={this.handleRegionSelected}
-            onDateChanged={this.handleDateChanged}
-            onPickupClick={this.handlePickupClick}
-            onDeliveryClick={this.handleDeliveryClick} />
+        const query = Util.parseQueryString(this.props.location);
+        const isMobile = query.mobile || Util.isMobile();
+
+        const searchProps = {
+            pickup, isLoading, foods, region, date, geo,
+            onGeoLocationChanged: this.handleGeoLocationChanged,
+            onRegionSelected: this.handleRegionSelected,
+            onDateChanged: this.handleDateChanged,
+            onPickupClick: this.handlePickupClick,
+            onDeliveryClick: this.handleDeliveryClick
+        }
+
+        return isMobile ? <MobileSearch {...searchProps} /> : <DesktopSearch {...searchProps} />;
     }
 }
 
@@ -62,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
     return { actions: bindActionCreators(Actions, dispatch) };
 };
 
-DesktopSearchContainer.propTypes = {
+SearchContainer.propTypes = {
     foods: PropTypes.arrayOf(PropTypes.shape({
         food_id: PropTypes.string.isRequired,
     })),
@@ -71,6 +95,7 @@ DesktopSearchContainer.propTypes = {
     date: PropTypes.object,
     isLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
+
     actions: PropTypes.shape({
         selectPickup: PropTypes.func.isRequired,
         selectDelivery: PropTypes.func.isRequired,
@@ -83,4 +108,4 @@ DesktopSearchContainer.propTypes = {
     }).isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesktopSearchContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);

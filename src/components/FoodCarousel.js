@@ -20,13 +20,6 @@ export default class FoodCarousel extends Component {
         return this.props.foods && this.props.foods.length > 0;
     }
 
-    getFoodPrepLabelComponent(food) {
-        let foodPrepClassName = 'LabelPrep-' + food.states[0];
-        let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
-
-        return (<Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />);
-    }
-
     handleAfterFoodSlide = (index) => {
         if (this.props.onSelected) {
             setTimeout(() => {
@@ -57,8 +50,6 @@ export default class FoodCarousel extends Component {
         }
 
         const slides = this.props.foods.map((food, index) => {
-
-            let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);
 
             let imageStyle = { height: '100px' };
             const isSelected = index === this.state.selectedSlideIndex;
@@ -93,7 +84,7 @@ export default class FoodCarousel extends Component {
 
                                 <Item.Meta>
                                     <div style={{ display: 'flex' }}>
-                                        {foodPrepLabelComponent}
+                                        <FoodPrepLabel food={food} />
                                         <span className='food-label'>
                                             {food.states}
                                             <span style={{ fontWeight: '900' }}>·</span>
@@ -137,4 +128,11 @@ export default class FoodCarousel extends Component {
             </Carousel>
         )
     }
+}
+
+const FoodPrepLabel = ({ food }) => {
+    let foodPrepClassName = 'LabelPrep-' + food.states[0];
+    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
+
+    return (<Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />);
 }

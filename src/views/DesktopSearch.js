@@ -13,17 +13,17 @@ export default class DesktopSearch extends React.Component {
         super(props);
 
         this.state = {
-            hoveredFoodItemId: null,
+            hoveredFoodId: null,
             dimmed: false
         };
     }
 
     handleFoodItemEnter = (itemId) => {
-        this.setState({ hoveredFoodItemId: itemId });
+        this.setState({ hoveredFoodId: itemId });
     }
 
     handleFoodItemLeave = (itemId) => {
-        this.setState({ hoveredFoodItemId: null });
+        this.setState({ hoveredFoodId: null });
     }
 
     handleDateFilterClose = () => {
@@ -88,7 +88,7 @@ export default class DesktopSearch extends React.Component {
                                 foods={foods}
                                 pickup={pickup}
                                 selectedRegion={region}
-                                selectedFoodItemId={this.state.hoveredFoodItemId}
+                                selectedFoodId={this.state.hoveredFoodId}
                                 onGeoLocationChanged={this.props.onGeoLocationChanged}
                                 onRegionSelected={this.props.onRegionSelected} />
                         </div>

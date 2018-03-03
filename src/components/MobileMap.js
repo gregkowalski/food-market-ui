@@ -2,6 +2,7 @@ import React from 'react'
 import './MobileMap.css'
 import { Map, Marker, CustomControl, Polygon } from './Map'
 import Regions from './Map/Regions'
+import Util from '../services/Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -9,56 +10,51 @@ export default class MobileMap extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            selectedRegionIds: [],
-            showDeliveryInstructions: !props.pickup
-        };
+        this.state = { showDeliveryInstructions: !props.pickup };
     }
 
-    getMarkerImage(foodItem, selectedItemId) {
-        if (foodItem.food_id === selectedItemId) {
+    getMarkerImage(foodItem, selectedFoodId) {
+        if (foodItem.food_id === selectedFoodId) {
             return '/assets/images/food-icon-selected1.png';
         }
         return '/assets/images/food-icon1.png';
     }
 
-    getZIndex(foodItem, selectedItemId) {
-        return (foodItem.food_id === selectedItemId) ? 9999 : null;
+    getZIndex(foodItem, selectedFoodId) {
+        return (foodItem.food_id === selectedFoodId) ? 9999 : null;
     }
 
-    handleMarkerClick = (props, marker, e) => {
+    handleMarkerClick = (props, marker) => {
         if (this.props.onMarkerClick) {
             this.props.onMarkerClick(props.food_id);
         }
     }
 
-    handleRegionSearch() {
+    handleRegionClick = (region) => {
         if (this.props.onRegionSelected) {
-            const selectedRegions = Regions.filter(r => this.state.selectedRegionIds.includes(r.id));
-            this.props.onRegionSelected(selectedRegions);
+            this.props.onRegionSelected(region);
+        }
+        this.setState({ showDeliveryInstructions: false });
+    }
+
+    handleGeoSearch = (props, map) => {
+        if (this.props.onGeoLocationChanged) {
+            const geo = Util.getGeoBounds(map);
+            this.props.onGeoLocationChanged(geo);
         }
     }
 
-    handleRegionClick = (props, map, e) => {
-        const newState = {
-            selectedRegionIds: [props.id],
-            showDeliveryInstructions: false
-        }
-        this.setState(newState, () => this.handleRegionSearch());
-    }
+    handleBoundsChanged = (props, map) => {
+        if (this.boundsLoaded)
+            return;
 
-    handleGeoSearch = (props, map, e) => {
-        if (this.props.onGeoSearch) {
-            this.props.onGeoSearch(map);
-        }
+        this.boundsLoaded = true;
+        this.handleGeoSearch(props, map);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.pickup !== prevProps.pickup) {
             this.setState({ showDeliveryInstructions: !this.props.pickup });
-            if (!this.props.pickup) {
-                this.handleRegionSearch();
-            }
         }
     }
 
@@ -67,7 +63,7 @@ export default class MobileMap extends React.Component {
     }
 
     render() {
-        const { selectedItemId, pickup, foods } = this.props;
+        const { selectedFoodId, pickup, foods, selectedRegion } = this.props;
         const { showDeliveryInstructions } = this.state;
 
         let polygons;
@@ -75,7 +71,7 @@ export default class MobileMap extends React.Component {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (this.state.selectedRegionIds.includes(region.id)) {
+                if (selectedRegion && selectedRegion.id === region.id) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }
@@ -89,7 +85,7 @@ export default class MobileMap extends React.Component {
                         strokeWeight={2}
                         fillColor={fillColor}
                         fillOpacity={0.35}
-                        onClick={this.handleRegionClick}
+                        onClick={(region) => this.handleRegionClick(region)}
                     />);
             })
         }
@@ -100,8 +96,8 @@ export default class MobileMap extends React.Component {
                     food_id={foodItem.food_id}
                     key={foodItem.food_id}
                     header={foodItem.header}
-                    icon={this.getMarkerImage(foodItem, selectedItemId)}
-                    zIndex={this.getZIndex(foodItem, selectedItemId)}
+                    icon={this.getMarkerImage(foodItem, selectedFoodId)}
+                    zIndex={this.getZIndex(foodItem, selectedFoodId)}
                     image={foodItem.image}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
@@ -173,14 +169,14 @@ export default class MobileMap extends React.Component {
                 fullscreenControl={false}
                 clickableIcons={false}
                 scrollwheel={true}
-                centerAroundCurrentLocation={false}
                 gestureHandling={this.props.gestureHandling}
                 center={this.props.center}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleGeoSearch}
-                onMapCreated={this.props.onMapCreated}>
+                onBounds_changed={this.handleBoundsChanged}
+            >
 
                 <CustomControl position={window.google.maps.ControlPosition.BOTTOM}>
                     <div style={style1}>

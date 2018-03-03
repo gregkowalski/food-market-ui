@@ -239,7 +239,6 @@ export class Map extends React.Component {
 Map.propTypes = {
     google: PropTypes.object,
     zoom: PropTypes.number,
-    centerAroundCurrentLocation: PropTypes.bool,
     center: PropTypes.object,
     initialCenter: PropTypes.object,
     className: PropTypes.string,
@@ -275,7 +274,6 @@ Map.defaultProps = {
         lng: -123.1207
     },
     center: {},
-    centerAroundCurrentLocation: false,
     style: {},
     containerStyle: {},
     visible: true

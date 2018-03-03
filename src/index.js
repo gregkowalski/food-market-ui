@@ -20,8 +20,7 @@ import NotFoundPage from './views/NotFoundPage'
 import Login from './views/Login'
 import Pricing from './views/Pricing'
 // import Map2 from './views/map2'
-import MobileSearch from './views/MobileSearch'
-import Home from './views/Home'
+import SearchContainer from './views/SearchContainer'
 
 import configureStore from './store/configureStore'
 import Config from './Config'
@@ -37,7 +36,7 @@ render(
         <Provider store={store}>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path='/' component={Home} />
+                    <Route exact path='/' component={SearchContainer} />
                     {/* <Route path='/temp' component={temp} /> */}
                     <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
                     <Route path='/foods/:id/orderError' component={OrderError} />
@@ -52,7 +51,6 @@ render(
                     <Route path='/login' exact component={Login} />
                     <Route path='/pricing' exact component={Pricing} />
                     {/* <Route path='/map2' exact component={Map2} /> */}
-                    <Route path='/mobilesearch' exact component={MobileSearch} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </BrowserRouter>
