@@ -1,15 +1,172 @@
 import React from 'react'
 import Autocomplete from 'react-google-autocomplete';
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import { Divider, Button, Rating, Input, Message, Dropdown, Radio } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import './OrderRequest.css'
+import './OrderDetail.css'
 import '../views/FoodDetail.css'
 import Util from '../services/Util'
 import PriceCalc from '../services/PriceCalc'
+import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Constants from '../Constants'
+import { Actions, Selectors } from '../store/order'
 
-export default class OrderRequest extends React.Component {
+class OrderDetail extends React.Component {
+
+    state = {
+        hasErrors: {}
+    }
+
+    componentWillMount() {
+        if (!CognitoUtil.isLoggedIn()) {
+            CognitoUtil.setLastPath(window.location.pathname);
+            CognitoUtil.redirectToLoginIfNoSession();
+            return;
+        }
+
+        if (!this.props.food) {
+            let food_id = this.props.match.params.id;
+            this.props.actions.loadFood(food_id);
+        }
+    }
+
+    handleQuantityChange = (newValue) => {
+        const min = 1;
+        const max = Constants.MaxFoodQuantity;
+
+        if (newValue.length === 0) {
+            this.props.actions.quantityChanged(newValue);
+            return;
+        }
+
+        let newQuantity = parseInt(newValue, 10);
+        if (!newQuantity || isNaN(newQuantity) || newQuantity < min || newQuantity > max)
+            return;
+
+        if (this.validateField('quantity', newQuantity)) {
+            this.props.actions.quantityChanged(newQuantity);
+        }
+    };
+
+    handleQuantityInputBlur = (e) => {
+        if (e.target.value === '') {
+            this.props.actions.quantityChanged(1);
+        }
+    }
+
+    validateField(fieldName, fieldValue) {
+        if (!fieldValue) {
+            fieldValue = this.state[fieldName];
+        }
+
+        // let hasBlurred = this.state.hasBlurred;
+        let hasErrors = {};
+
+        switch (fieldName) {
+            case 'quantity':
+                const quantity = fieldValue;
+                hasErrors.quantity = false;
+                if (!quantity || quantity < 1 || quantity > Constants.MaxFoodQuantity) {
+                    hasErrors.quantity = true;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        hasErrors = Object.assign({}, this.state.hasErrors, hasErrors);
+        this.setState({ hasErrors });
+
+        for (const key in hasErrors) {
+            if (hasErrors[key])
+                return false;
+        }
+        return true;
+    }
+
+    getOrderPageUrl(food) {
+        return `/foods/${food.food_id}/order`;
+    }
+
+    handleOrderButtonClick = () => {
+        this.props.history.push(this.getOrderPageUrl(this.props.food));
+    }
+
+    handleHide = () => {
+        this.props.history.goBack();
+    }
+
+
+    render() {
+        const { food, quantity, date } = this.props;
+        if (!food)
+            return null;
+
+        return (
+            <OrderDetailPresentation
+                food={food}
+                quantity={quantity}
+                date={date}
+                onHide={this.handleHide}
+                onDateChange={(date) => this.props.actions.dateChanged(date)}
+                onQuantityChange={this.handleQuantityChange}
+                onQuantityInputBlur={this.handleQuantityInputBlur}
+                onOrderButtonClick={() => this.handleOrderButtonClick(food)} />
+        )
+    }
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+        food: Selectors.food(state),
+        isFoodLoading: Selectors.isFoodLoading(state),
+        pickup: Selectors.pickup(state),
+        date: Selectors.date(state),
+        time: Selectors.time(state),
+        quantity: Selectors.quantity(state),
+        buyerEmail: Selectors.buyerEmail(state),
+        buyerPhone: Selectors.buyerPhone(state),
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+OrderDetail.propTypes = {
+    food: PropTypes.shape({
+        food_id: PropTypes.string.isRequired,
+    }),
+    isFoodLoading: PropTypes.bool.isRequired,
+    pickup: PropTypes.bool.isRequired,
+    date: PropTypes.object,
+    time: PropTypes.object,
+    quantity: PropTypes.number.isRequired,
+    buyerEmail: PropTypes.string,
+    buyerPhone: PropTypes.string,
+
+    actions: PropTypes.shape({
+        selectPickup: PropTypes.func.isRequired,
+        selectDelivery: PropTypes.func.isRequired,
+        addressChanged: PropTypes.func.isRequired,
+        dateChanged: PropTypes.func.isRequired,
+        timeChanged: PropTypes.func.isRequired,
+        quantityChanged: PropTypes.func.isRequired,
+        buyerEmailChanged: PropTypes.func.isRequired,
+        buyerPhoneChanged: PropTypes.func.isRequired,
+        loadFood: PropTypes.func.isRequired,
+    }).isRequired
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderDetail));
+
+class OrderDetailPresentation extends React.Component {
 
     constructor(props) {
         super(props);
