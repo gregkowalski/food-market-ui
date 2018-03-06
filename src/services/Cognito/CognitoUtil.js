@@ -138,13 +138,13 @@ class CognitoUtil {
         return `${Constants.FoodMarketStorageKeyRoot}.${Config.Cognito.ClientAppId}.${keyName}`;
     }
 
-    setLastPathname(pathname) {
-        let key = this.getStorageKey('lastPathname')
+    setLastPath(pathname) {
+        let key = this.getStorageKey('last-path')
         window.sessionStorage.setItem(key, pathname);
     }
 
-    getLastPathname() {
-        let key = this.getStorageKey('lastPathname')
+    getLastPath() {
+        let key = this.getStorageKey('last-path')
         return window.sessionStorage.getItem(key);
     }
 

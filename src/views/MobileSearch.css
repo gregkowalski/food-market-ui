@@ -35,17 +35,6 @@
     height: 2em!important;
 }
 
-.mobilesearch-filter {
-    height: 0;
-    width: 100%;
-    top: 100%;
-    overflow: hidden;
-    position: fixed;
-    z-index: 2000;
-    background-color: white;
-    transition: 0.5s;
-}
-
 .mobilesearch-foodcarousel {
     width: 100%;
     height: 100%;
@@ -53,68 +42,3 @@
 }
 
 /* end main layout */
-
-/* Google Autocomplete box */
-
-.AutocompleteBox>div {
-    width: 100%;
-    border: none;
-}
-
-.AutocompleteBox {
-    width: 100%;
-    -webkit-box-flex: inherit;
-    flex: inherit;
-    transition: none;
-}
-
-.pac-container {
-    font-family: inherit;
-}
-
-.pac-logo:after {
-    background-image: none;
-}
-
-/* End Google Autocomplete box */
-
-.DateInput {
-    border-radius: 5px;
-    width: 100%;
-    font-size: 16px;
-    padding: 0;
-    font-weight: 500 !important;
-}
-
-.SingleDatePicker {
-    width: 100%;
-}
-
-.SingleDatePickerInput {
-    border-radius: 5px;
-}
-
-.SingleDatePicker__picker {
-    margin-top: -20px;
-}
-
-.DateInput--with-caret::before {
-    margin-top: -20px;
-}
-
-.DateInput--with-caret::after {
-    margin-top: -20px;
-}
-
-.DateInput__display-text {
-    /* color: rgba(191, 191, 191, .87); */
-}
-
-#CalendarMonth__caption {
-    margin-bottom: 15px;
-}
-
-.DayPickerKeyboardShortcuts__show_span {
-    bottom: -4px !important;
-    right: -30px !important;
-}

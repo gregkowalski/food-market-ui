@@ -56,7 +56,7 @@ class SearchContainer extends React.Component {
     render() {
         const { pickup, isLoading, foods, region, date, geo } = this.props;
         const query = Util.parseQueryString(this.props.location);
-        const isMobile = query.mobile || Util.isMobile();
+        const isMobile = query.mobile || query.m || Util.isMobile();
 
         const searchProps = {
             pickup, isLoading, foods, region, date, geo,

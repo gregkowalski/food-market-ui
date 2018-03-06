@@ -1,4 +1,3 @@
-import FeatureToggles from '../FeatureToggles'
 import Constants from '../Constants'
 
 const StripePercentageFee = 0.029;
@@ -33,18 +32,8 @@ class PriceCalc {
     }
 
     getTotal(unitPrice, quantity) {
-        let total = (quantity * unitPrice * (1 + Constants.ServiceFeeRate));
-        return total.toFixed(0);
-    }
-
-    getBaseTotal(unitPrice, quantity) {
-        let baseTotal = quantity * unitPrice;
-        return baseTotal.toFixed(0);
-    }
-
-    getServiceFee(unitPrice, quantity) {
-        let fee = quantity * unitPrice * Constants.ServiceFeeRate;
-        return fee.toFixed(0);
+        let total = quantity * unitPrice;
+        return parseInt(total.toFixed(0), 10);
     }
 
     getPrice(unitPrice, quantity) {
@@ -52,12 +41,7 @@ class PriceCalc {
             quantity = 1;
         }
 
-        if (FeatureToggles.AllinPrice) {
-            return this.getTotal(unitPrice, quantity);
-        }
-        else {
-            return this.getBaseTotal(unitPrice, quantity);
-        }
+        return this.getTotal(unitPrice, quantity);
     }
 }
 

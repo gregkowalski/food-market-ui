@@ -48,11 +48,14 @@ export default class Order extends React.Component {
     food;
 
     componentWillMount() {
-        CognitoUtil.setLastPathname(window.location.pathname);
-        CognitoUtil.redirectToLoginIfNoSession();
+        if (!CognitoUtil.isLoggedIn()) {
+            CognitoUtil.setLastPath(window.location.pathname);
+            CognitoUtil.redirectToLoginIfNoSession();
+            return;
+        }
 
         ApiClient.getFood(this.props.match.params.id)
-            .then(response => {                
+            .then(response => {
                 this.food = response.data;
 
                 document.title = this.food.title;
@@ -304,10 +307,10 @@ export default class Order extends React.Component {
                             <div style={{ padding: '0px 10px 10px 10px' }}>
                                 <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
                                     <div className='order-summary-align-left'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
                                         </div>
                                     <div className='order-summary-align-right'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <Divider />
@@ -315,9 +318,9 @@ export default class Order extends React.Component {
                                     <div className='order-summary-align-left'>
                                         <Accordion>
                                             <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
-                                            Service Fee
-                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />  
-                                             </Accordion.Title>
+                                                Service Fee
+                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
+                                            </Accordion.Title>
                                             <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
                                                 This helps run our platform and keep the lights on.
                                             </Accordion.Content>
@@ -331,7 +334,7 @@ export default class Order extends React.Component {
                                     </div>
                                     <Divider />
                                     <div className='order-summary-align-service-fee'>
-                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
                                     </div>
                                 </div>
                                 <Divider />
@@ -471,20 +474,20 @@ export default class Order extends React.Component {
                             <div style={{ padding: '0px 10px 10px 10px' }}>
                                 <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
                                     <div className='order-summary-align-left'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
                                 </div>
                                     <div className='order-summary-align-right'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <Divider />
                                 <div className='detail-card-summary-row'>
                                     <div className='order-summary-align-left'>
-                                    <Accordion>
+                                        <Accordion>
                                             <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
-                                            Service Fee
-                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />  
-                                             </Accordion.Title>
+                                                Service Fee
+                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
+                                            </Accordion.Title>
                                             <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
                                                 This helps run our platform and keep the lights on.
                                             </Accordion.Content>
@@ -492,7 +495,7 @@ export default class Order extends React.Component {
                                     </div>
                                     <Divider />
                                     <div className='order-summary-align-service-fee'>
-                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
                                     </div>
                                 </div>
                                 <Divider />
@@ -586,7 +589,7 @@ export default class Order extends React.Component {
                                         {this.state.quantity} x ${food.price} {food.title}
                                     </div>
                                     <div className='align-right'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <div className='order-summary-row'>
@@ -594,7 +597,7 @@ export default class Order extends React.Component {
                                         Service fee
                                             </div>
                                     <div className='align-right'>
-                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
                                     </div>
                                 </div>
                                 <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
@@ -646,7 +649,7 @@ export default class Order extends React.Component {
                                         {this.state.quantity} x ${food.price} {food.title}
                                     </div>
                                     <div className='align-right'>
-                                        ${PriceCalc.getBaseTotal(food.price, this.state.quantity)}
+                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
                                     </div>
                                 </div>
                                 <div className='order-summary-row'>
@@ -654,7 +657,7 @@ export default class Order extends React.Component {
                                         Service fee
                                             </div>
                                     <div className='align-right'>
-                                        ${PriceCalc.getServiceFee(food.price, this.state.quantity)}
+                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
                                     </div>
                                 </div>
                                 <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>

@@ -25,11 +25,11 @@ export default class CognitoCallback extends React.Component {
                 };
                 ApiClient.updateUser(jwtToken, user)
                     .then(x => {
-                        let lastPathname = CognitoUtil.getLastPathname();
-                        if (!lastPathname) {
-                            lastPathname = '/';
+                        let lastPath = CognitoUtil.getLastPath();
+                        if (!lastPath) {
+                            lastPath = '/';
                         }
-                        this.setState({ redirectTo: lastPathname });
+                        this.setState({ redirectTo: lastPath });
                     })
                     .catch(err => {
                         console.error(err);

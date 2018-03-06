@@ -126,7 +126,7 @@ export default class ProfileEdit extends React.Component {
         this.setState(newState, () => this.validateField(name, value));
     }
 
-    handleAddressChange(place) {
+    handleAddressChange = (place) => {
         const value = place.formatted_address;
         this.setState({ address: value, hasChanges: true }, () => this.validateField('address', value))
     }
@@ -445,7 +445,7 @@ export default class ProfileEdit extends React.Component {
                                         <Grid.Column computer={10}>
                                             <Autocomplete className='profileedit-address'
                                                 name='address'
-                                                onPlaceSelected={(place) => this.handleAddressChange(place)}
+                                                onPlaceSelected={this.handleAddressChange}
                                                 onChange={this.handleChange}
                                                 onBlur={this.handleBlur}
                                                 types={['address']}

@@ -63,6 +63,7 @@ export default class FoodLightbox extends React.Component {
                     onClickThumbnail={(index) => this.gotoImage(index)}
                     currentImage={this.state.currentImage}
                     isOpen={this.state.lightboxIsOpen}
+                    backdropClosesModal={true}
                     showThumbnails={true}
                 />
                 <div className='foodlightbox-position'>

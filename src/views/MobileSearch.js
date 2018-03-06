@@ -9,6 +9,7 @@ import AppHeader from '../components/AppHeader'
 import FoodFilter from '../components/FoodFilter'
 import SearchFilter from '../components/SearchFilter'
 import FilterBar from '../components/FilterBar'
+import Drawer from '../components/Drawer'
 
 export default class MobileSearch extends Component {
 
@@ -154,9 +155,9 @@ export default class MobileSearch extends Component {
                     <FilterBar style={this.getFilterBarStyle()} filter={filter} onFilterClick={this.showFilter} />
                 }
 
-                <div className='mobilesearch-filter' style={this.getFilterStyle(showFilter)}>
+                <Drawer visible={showFilter}>
                     <SearchFilter visible={showFilter} onFilterHide={this.hideFilter} onFilterChange={this.handleSearchFilterChange} />
-                </div>
+                </Drawer>
 
                 <div className='mobilesearch-bodywrap'>
                     <Dimmer.Dimmable dimmed={dimmed}>

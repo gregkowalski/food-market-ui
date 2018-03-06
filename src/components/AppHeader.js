@@ -17,7 +17,7 @@ export class AppHeader extends React.Component {
     tagline;
 
     componentWillMount() {
-        CognitoUtil.setLastPathname(window.location.pathname);
+        CognitoUtil.setLastPath(window.location.pathname);
         this.props.loadCurrentUser();
         this.tagline = this.getRandomTagline();
     }

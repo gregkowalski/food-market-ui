@@ -93,6 +93,9 @@
     width: 100%;
 }
 
+
+/* Google Autocomplete box */
+
 .profileedit-address, textarea {
     width: 100%;
     line-height: 1.21428571em;
@@ -105,4 +108,23 @@
     color: rgba(0,0,0,.87);
     -webkit-tap-highlight-color: rgba(255,255,255,0);
     outline: 0;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+    transition: none;
 }
+
+.profileedit-address > div {
+    width: 100%;
+    border: none;
+}
+
+.pac-container {
+    font-family: inherit;
+}
+
+.pac-logo:after {
+    background-image: none;
+}
+
+/* End Google Autocomplete box */
+

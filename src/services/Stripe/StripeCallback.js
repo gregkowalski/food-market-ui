@@ -28,9 +28,9 @@ export default class StripeCallback extends React.Component {
         ApiClient.connectStripeAccount(query.code)
             .then(response => {
                 console.log('Stripe account connected');
-                const lastPathname = CognitoUtil.getLastPathname();
-                console.log(`lastPathname=${lastPathname}`);
-                this.setState({ redirectTo: lastPathname });
+                const lastPath = CognitoUtil.getLastPath();
+                console.log(`lastPathname=${lastPath}`);
+                this.setState({ redirectTo: lastPath });
             })
             .catch(result => {
                 //This is where you would put an error callback

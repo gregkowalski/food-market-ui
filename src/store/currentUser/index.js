@@ -16,7 +16,7 @@ function receiveCurrentUserSuccess(user) {
     };
 }
 
-function receiveCurrentUseError(error) {
+function receiveCurrentUserError(error) {
     return {
         type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
         error,
@@ -53,7 +53,7 @@ export const Actions = {
                         dispatch(receiveCurrentUserSuccess(user));
                     },
                     error => {
-                        dispatch(receiveCurrentUseError(error));
+                        dispatch(receiveCurrentUserError(error));
                     }
                 );
         };
