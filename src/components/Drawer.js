@@ -1,7 +1,10 @@
 import React from 'react'
 
-const Drawer = ({ children, visible }) => {
+const Drawer = ({ children, visible, zIndex, scrolling }) => {
 
+    if (!zIndex) {
+        zIndex = 2000;
+    }
     const style = {
         height: 0,
         width: '100%',
@@ -9,7 +12,7 @@ const Drawer = ({ children, visible }) => {
         bottom: 0,
         overflow: 'hidden',
         position: 'fixed',
-        zIndex: 2000,
+        zIndex: zIndex,
         backgroundColor: 'white',
         transition: '0.3s',
     }
@@ -17,6 +20,11 @@ const Drawer = ({ children, visible }) => {
     if (visible) {
         style.height = '100%';
         style.top = 0;
+    }
+
+    if (scrolling) {
+        style.position = 'absolute';
+        style.height = 'auto';
     }
 
     return (
