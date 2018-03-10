@@ -124,6 +124,18 @@
     margin-right: 10px;
 }
 
+ /* BEGIN hide spinners on number input in firefox */
+.mobileorder-quantity input[type=number]::-webkit-outer-spin-button,
+.mobileorder-quantity input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.mobileorder-quantity input[type=number] {
+    -moz-appearance:textfield;
+}
+/* END hide spinners on number input in firefox */
+
 .mobileorder-footer {
     width: 100%;
     padding: 16px 0 16px 0;
@@ -281,6 +293,9 @@
 
 .pac-container {
     z-index: 3000;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
 }
 
 .pac-item {
@@ -296,8 +311,8 @@
     margin-top: 5px;
 }
 
-.pac-logo:after {
+/* .pac-logo:after {
     display: none;
-}
+} */
 
 /* End Google Autocomplete box */
