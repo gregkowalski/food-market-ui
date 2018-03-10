@@ -21,6 +21,7 @@ import Login from './views/Login'
 import Pricing from './views/Pricing'
 // import Map2 from './views/map2'
 import SearchContainer from './views/SearchContainer'
+import OrderDetail from './components/OrderDetail'
 
 import configureStore from './store/configureStore'
 import Config from './Config'
@@ -42,6 +43,7 @@ render(
                     <Route path='/foods/:id/orderError' component={OrderError} />
                     <Route path='/foods/:id/order' component={Order} />
                     <Route path='/foods/:id' exact component={FoodDetail} />
+                    <Route path='/foods/:id/orderDetail' exact component={OrderDetail} />
                     <Route path='/cognitoCallback' exact component={CognitoCallback} />
                     <Route path='/cognitoSignout' exact component={CognitoSignout} />
                     <Route path='/stripeCallback' exact component={StripeCallback} />
