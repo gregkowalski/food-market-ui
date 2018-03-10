@@ -140,6 +140,20 @@ export default class OrderRequest extends React.Component {
         return total;
     }
 
+    handleAutocompleteFocus = (a, b, c) => {
+        if (this.pacInitialized)
+            return;
+
+        const autocomplete = window.document.getElementById('autocomplete');
+        const pacList = window.document.getElementsByClassName('pac-container');
+
+        if (autocomplete && pacList && pacList.length > 0) {
+            const pac = pacList[0];
+            autocomplete.parentNode.insertBefore(pac, autocomplete.nextSibling)
+            this.pacInitialized = true;
+        }
+    }
+
     render() {
         const { food, quantity, onOrderButtonClick, onQuantityInputBlur, onHide } = this.props;
         const { pickup } = this.state;
@@ -169,9 +183,11 @@ export default class OrderRequest extends React.Component {
 
                     <div className='mobileorder-address' style={this.hideForPickup(pickup)}>
                         <Autocomplete
+                            id='autocomplete'
                             name='address'
                             onPlaceSelected={this.handleAddressChange}
                             onChange={this.handleChange}
+                            onFocus={this.handleAutocompleteFocus}
                             onBlur={this.handleBlur}
                             types={['address']}
                             placeholder='Delivery Address'

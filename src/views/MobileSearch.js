@@ -147,6 +147,7 @@ export default class MobileSearch extends Component {
 
         return (
             <div className='mobilesearch-wrap' onClick={this.hideDimmer}>
+
                 {!mapSearch &&
                     <AppHeader fixed noshadow />
                 }
