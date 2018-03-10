@@ -14,7 +14,7 @@ import FoodLightbox from '../components/FoodLightbox'
 import FlagListing from '../components/FlagListing'
 import FlagListingMobile from '../components/FlagListingMobile'
 import Drawer from '../components/Drawer'
-import OrderDetail from '../components/OrderDetail'
+import OrderRequest from '../components/OrderRequest'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import PriceCalc from '../services/PriceCalc'
 import Util from '../services/Util'
@@ -30,12 +30,13 @@ class FoodDetail extends React.Component {
 
         this.state = {
             hasErrors: {},
-            showOrderDrawer: false
+            showOrderDrawer: true
         };
+        this.isLoggedIn = CognitoUtil.isLoggedIn();
     }
 
     componentWillMount() {
-        if (!CognitoUtil.isLoggedIn()) {
+        if (!this.isLoggedIn) {
             CognitoUtil.setLastPath(window.location.pathname);
             CognitoUtil.redirectToLoginIfNoSession();
             return;
@@ -111,10 +112,6 @@ class FoodDetail extends React.Component {
         return `/foods/${food.food_id}/order`;
     }
 
-    getOrderDetailPageUrl(food) {
-        return `/foods/${food.food_id}/orderDetail`;
-    }
-
     handleOrderButtonClick = () => {
         this.props.history.push(this.getOrderPageUrl(this.props.food));
     }
@@ -128,7 +125,7 @@ class FoodDetail extends React.Component {
         if (this.state.showOrderDrawer) {
             window.document.body.style.overflowY = 'scroll';
         }
-
+        
 
         return (
             <div>
@@ -190,18 +187,13 @@ class FoodDetail extends React.Component {
                             </div>
                         </div>
                         <div style={{ float: 'right', marginRight: '12px' }}>
-                            <Button className='detail-footer-button'
-                                // onClick={() => this.setState({ showOrderDrawer: true })}
-                                onClick={() => this.props.history.push(this.getOrderDetailPageUrl(food))}
-                            >
-                                Request an Order
-                            </Button>
+                            <Button className='detail-footer-button' onClick={() => this.setState({ showOrderDrawer: true })}>Request an Order</Button>
                             <div className='detail-footer-text'>You won't be charged yet</div>
                         </div>
                     </div>
                 </div>
 
-                {/* <Drawer visible={this.state.showOrderDrawer} scrolling>
+                <Drawer visible={this.state.showOrderDrawer} scrolling>
                     <OrderRequest
                         food={food}
                         quantity={quantity}
@@ -212,7 +204,7 @@ class FoodDetail extends React.Component {
                         onQuantityInputBlur={this.handleQuantityInputBlur}
                         onOrderButtonClick={() => this.handleOrderButtonClick(food)}
                     />
-                </Drawer> */}
+                </Drawer>
 
             </div>
         )

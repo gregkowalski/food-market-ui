@@ -6,7 +6,7 @@ import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
 
-class CognitoCallback extends React.Component {
+export default class CognitoCallback extends React.Component {
 
     state = {};
 
@@ -54,11 +54,10 @@ class CognitoCallback extends React.Component {
     }
 
     render() {
-        const { redirectTo } = this.state;
-        if (redirectTo) {
+        if (this.state.redirectTo) {
             // verify redirect link starts with a / to ensure we're not redirecting to another site
-            if (redirectTo.length > 0 && redirectTo[0] === '/') {
-                return <Redirect to={redirectTo} />
+            if (this.state.redirectTo.length > 0 && this.state.redirectTo[0] === '/') {
+                return <Redirect to={this.state.redirectTo} />
             }
             console.error('Invalid redirect path');
             return <div></div>;
@@ -66,5 +65,3 @@ class CognitoCallback extends React.Component {
         return <div>Logging in...</div>;
     }
 }
-
-export default CognitoCallback;
