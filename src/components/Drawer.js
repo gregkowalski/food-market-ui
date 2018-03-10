@@ -1,27 +1,35 @@
 import React from 'react'
-import './Drawer.css'
 
-const Drawer = ({ children, visible }) => {
+const Drawer = ({ children, visible, zIndex, scrolling }) => {
 
-    const inner = {
-        zIndex: 1001,
+    if (!zIndex) {
+        zIndex = 2000;
     }
-    if (!visible) {
-        inner.transform = 'translate3d(0, 100%, 0)';
-        inner.transition = 'all .5s ease .1s';
+    const style = {
+        height: 0,
+        width: '100%',
+        top: '100%',
+        bottom: 0,
+        overflow: 'hidden',
+        position: 'fixed',
+        zIndex: zIndex,
+        backgroundColor: 'white',
+        transition: '0.3s',
     }
-    else {
-        inner.transform = 'translate3d(0, 0, 0)';
-        inner.transition = 'all .5s ease .1s';
+
+    if (visible) {
+        style.height = '100%';
+        style.top = 0;
+    }
+
+    if (scrolling) {
+        style.position = 'absolute';
+        style.height = 'auto';
     }
 
     return (
-        <div className='drawer-outer' style={{ zIndex: 1000 }}>
-            <div className='drawer-inner' style={inner}>
-                <div className='drawer-main'>
-                    {children}
-                </div>
-            </div>
+        <div style={style}>
+            {children}
         </div>
     );
 }

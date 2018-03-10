@@ -30,7 +30,7 @@ class FoodDetail extends React.Component {
 
         this.state = {
             hasErrors: {},
-            showOrderDrawer: false
+            showOrderDrawer: true
         };
         this.isLoggedIn = CognitoUtil.isLoggedIn();
     }
@@ -122,11 +122,16 @@ class FoodDetail extends React.Component {
             return null;
         }
 
+        if (this.state.showOrderDrawer) {
+            window.document.body.style.overflowY = 'scroll';
+        }
+        
+
         return (
             <div>
                 <AppHeader />
                 <FoodLightbox food={food} />
-                <div>
+                <div style={{ display: this.state.showOrderDrawer ? 'none' : 'inherit' }}>
                     <div className='detail-head-main'>
                         <div className='flex-container'>
                             <div className='flex-item-main'>
@@ -188,7 +193,7 @@ class FoodDetail extends React.Component {
                     </div>
                 </div>
 
-                <Drawer visible={this.state.showOrderDrawer}>
+                <Drawer visible={this.state.showOrderDrawer} scrolling>
                     <OrderRequest
                         food={food}
                         quantity={quantity}

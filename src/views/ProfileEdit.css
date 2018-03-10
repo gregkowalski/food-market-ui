@@ -123,7 +123,7 @@
 }
 
 .pac-logo:after {
-    /* background-image: none; */
+    background-image: none;
 }
 
 /* End Google Autocomplete box */
