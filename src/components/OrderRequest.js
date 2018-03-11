@@ -1,6 +1,5 @@
 import React from 'react'
-import Autocomplete from 'react-google-autocomplete';
-import { Divider, Button, Rating, Input, Message, Dropdown, Radio } from 'semantic-ui-react'
+import { Divider, Button, Rating, Dropdown, Radio } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './OrderRequest.css'
@@ -13,20 +12,8 @@ export default class OrderRequest extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            hasErrors: {},
-            address: '',
-            pickup: true
-        };
+        this.state = { pickup: true };
     }
-
-    handleDateChange = (date) => {
-        this.setState({ date: date }, () => this.triggerFilterChange());
-    };
-
-    handleTimeChange = (event, data) => {
-        this.setState({ time: data.value });
-    };
 
     triggerFilterChange() {
         if (this.props.onFilterChange) {
@@ -34,94 +21,10 @@ export default class OrderRequest extends React.Component {
         }
     }
 
+    handleDateChange = (date) => this.setState({ date: date }, () => this.triggerFilterChange());
+    handleTimeChange = (event, data) => this.setState({ time: data.value });
     handleQuantityIncrement = () => this.props.onQuantityChange(this.props.quantity + 1);
     handleQuantityDecrement = () => this.props.onQuantityChange(this.props.quantity - 1);
-    handleQuantityUpdate = (e, { value }) => this.props.onQuantityChange(value);
-
-    handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        let newHasBlurred = Object.assign({}, this.state.hasBlurred);
-        newHasBlurred[name] = true;
-        let newState = {
-            [name]: value,
-            hasBlurred: newHasBlurred,
-            hasChanges: true
-        };
-
-        console.log(name + ': ' + value);
-        this.setState(newState, () => this.validateField(name, value));
-    }
-
-    handleAddressChange = (place) => {
-        const value = place.formatted_address;
-        this.setState({ address: value, hasChanges: true }, () => this.validateField('address', value))
-    }
-
-    handleBlur = (e) => {
-        const name = e.target.name;
-        console.log('Blur: ' + name);
-
-        let hasBlurred = Object.assign({}, this.state.hasBlurred);
-        hasBlurred[name] = true;
-        this.setState({ hasBlurred: hasBlurred }, () => { this.validateField(name) });
-    }
-
-    isValid(hasErrors) {
-        for (let v in hasErrors) {
-            if (hasErrors[v] === true) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    validateField(fieldName, fieldValue) {
-        if (!fieldValue) {
-            fieldValue = this.state[fieldName];
-        }
-
-        let hasBlurred = this.state.hasBlurred;
-        let state = this.state;
-        let hasErrors = {};
-
-        switch (fieldName) {
-
-            case 'phone':
-                hasErrors.phone = false;
-                if (hasBlurred.phone && !this.validatePhoneNumber(state.phone)) {
-                    hasErrors.phone = true;
-                }
-                break;
-
-            case 'email':
-                hasErrors.email = false;
-                if (hasBlurred.email && !this.validateEmail(state.email)) {
-                    hasErrors.email = true;
-                }
-                break;
-
-            case 'address':
-            case 'name':
-            case 'city':
-            case 'username':
-            case 'info':
-            case 'lang':
-                hasErrors[fieldName] = false;
-                if (hasBlurred[fieldName] && !state[fieldName]) {
-                    hasErrors[fieldName] = true;
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        hasErrors = Object.assign(this.state.hasErrors, hasErrors);
-        this.setState({ hasErrors });
-    }
-
     handleRadioChange = (e, { value }) => this.setState({ value });
 
     hideForPickup = (pickup) => {
@@ -140,22 +43,8 @@ export default class OrderRequest extends React.Component {
         return total;
     }
 
-    handleAutocompleteFocus = (a, b, c) => {
-        if (this.pacInitialized)
-            return;
-
-        const autocomplete = window.document.getElementById('autocomplete');
-        const pacList = window.document.getElementsByClassName('pac-container');
-
-        if (autocomplete && pacList && pacList.length > 0) {
-            const pac = pacList[0];
-            autocomplete.parentNode.insertBefore(pac, autocomplete.nextSibling)
-            this.pacInitialized = true;
-        }
-    }
-
     render() {
-        const { food, quantity, onOrderButtonClick, onQuantityInputBlur, onHide } = this.props;
+        const { food, quantity, onOrderButtonClick, onHide } = this.props;
         const { pickup } = this.state;
 
         const OrderTimes = [
@@ -181,26 +70,9 @@ export default class OrderRequest extends React.Component {
                         </div>
                     </div>
 
-                    <div className='mobileorder-address' style={this.hideForPickup(pickup)}>
-                        <Autocomplete
-                            id='autocomplete'
-                            name='address'
-                            onPlaceSelected={this.handleAddressChange}
-                            onChange={this.handleChange}
-                            onFocus={this.handleAutocompleteFocus}
-                            onBlur={this.handleBlur}
-                            types={['address']}
-                            placeholder='Delivery Address'
-                            componentRestrictions={{ country: 'ca' }}
-                            value={this.state.address} />
-                        <Message
-                            error={this.state.hasErrors.address}
-                            hidden={!this.state.hasErrors.address}
-                            visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
-                        <div className='mobileorder-input-descriptions'>
-                            We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                    <div className='mobileorder-input-descriptions'>
+                        We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
                         </div>
-                    </div>
 
                     <div className='mobileorder-row'>
                         <div className='mobileorder-date'>
@@ -228,12 +100,11 @@ export default class OrderRequest extends React.Component {
                     </div>
                     <div className='mobileorder-quantity'>
                         <div>Quantity ({food.unit} per order)</div>
-                        <Button icon='minus' onClick={this.handleQuantityDecrement} />
-                        <Input type='number' min={1} max={99} value={quantity}
-                            onChange={this.handleQuantityUpdate}
-                            onBlur={onQuantityInputBlur}
-                        />
-                        <Button icon='plus' onClick={this.handleQuantityIncrement} />
+                        <div>
+                            <Button circular basic color='teal' size='huge' icon='minus' onClick={this.handleQuantityDecrement} />
+                            <div>{quantity}</div>
+                            <Button circular basic color='teal' size='huge' icon='plus' onClick={this.handleQuantityIncrement} />
+                        </div>
                     </div>
 
                     <div className='mobileorder-summary'>

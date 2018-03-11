@@ -71,12 +71,6 @@ class FoodDetail extends React.Component {
         }
     };
 
-    handleQuantityInputBlur = (e) => {
-        if (e.target.value === '') {
-            this.props.actions.quantityChanged(1);
-        }
-    }
-
     validateField(fieldName, fieldValue) {
         if (!fieldValue) {
             fieldValue = this.state[fieldName];
@@ -196,7 +190,6 @@ class FoodDetail extends React.Component {
                         onHide={() => this.setState({ showOrderDrawer: false })}
                         onDateChange={(date) => this.props.actions.dateChanged(date)}
                         onQuantityChange={this.handleQuantityChange}
-                        onQuantityInputBlur={this.handleQuantityInputBlur}
                         onOrderButtonClick={() => this.handleOrderButtonClick(food)}
                     />
                 </Drawer>

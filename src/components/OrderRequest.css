@@ -111,30 +111,29 @@
     font-size: 1.05em;
 }
 
-.mobileorder-quantity > .ui.icon.button {
-    background-color: rgb(233, 233, 233);
+.mobileorder-quantity div:nth-child(2) {
+    display: table;
+    width: 40%;
+}
+
+.mobileorder-quantity > div:nth-child(2) > .ui.icon.button {
+    display: table-cell;
+    /* background-color: rgb(233, 233, 233); */
+    /* background-color: #4cb99e;
+    color: #4cb99e;
     box-shadow: 0 2px 4px 0 rgba(68, 68, 68, 0.2), 0 3px 10px 0 #8080801a;
-    padding: 20px 20px 16px 20px;
+    padding: 20px 20px 16px 20px; */
 }
 
-.mobileorder-quantity .input {
-    font-size: 1.1em;
-    width: 3.5em;
-    margin-left: 5px;
-    margin-right: 10px;
-}
 
- /* BEGIN hide spinners on number input in firefox */
-.mobileorder-quantity input[type=number]::-webkit-outer-spin-button,
-.mobileorder-quantity input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+.mobileorder-quantity > div:nth-child(2) > div {
+    display: table-cell;
+    text-align: center;
+    padding-right: 6px;
+    font-size: 1.6em;
+    font-weight: 500;
 
-.mobileorder-quantity input[type=number] {
-    -moz-appearance:textfield;
 }
-/* END hide spinners on number input in firefox */
 
 .mobileorder-footer {
     width: 100%;
@@ -202,6 +201,7 @@
     display: table-cell;
     text-align: left;
     width: 48%;
+    min-width: 48%;
     font-weight: 400;
     padding-left: 4%;
 }
@@ -225,6 +225,7 @@
     display: table-cell;
     text-align: left;
     width: 48%;
+    min-width: 48%;
     font-weight: 400;
 }
 
@@ -270,49 +271,3 @@
 .mobileorder-date .DayPickerKeyboardShortcuts__show {
     display: none;
 }
-
-/* Google Autocomplete box */
-
-.mobileorder-address {
-    padding: 10px 0px 0px 20px;
-}
-
-.mobileorder-address input {
-    width: 100%;
-    line-height: 1.21428571em;
-    font-family: 'Athiti', 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: 1em;
-    padding: 9.5px 14px;
-    border-radius: .28571429rem;
-    border: 1px solid rgba(34, 36, 38, .15);
-    color: rgba(0, 0, 0, .87);
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    outline: 0;
-}
-
-.pac-container {
-    z-index: 3000;
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-}
-
-.pac-item {
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.pac-item-query {
-    font-size: 16px;
-}
-
-.pac-icon {
-    margin-top: 5px;
-}
-
-/* .pac-logo:after {
-    display: none;
-} */
-
-/* End Google Autocomplete box */
