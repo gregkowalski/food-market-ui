@@ -150,14 +150,14 @@ class FoodDetail extends React.Component {
                     </div>
 
                     <div className='detail-footer'>
-                        <div className='detail-footer-header' style={{ float: 'left' }}>
+                        <div className='detail-footer-header'>
                             ${PriceCalc.getTotal(food.price, quantity)} CAD
-                        <div style={{ display: 'flex' }}>
-                            <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' style={{ marginTop: '10px' }} />
-                                <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
+                            <div>
+                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' />
+                                <div className='detail-footer-rating-count'>{food.ratingCount}</div>
                             </div>
                         </div>
-                        <div style={{ float: 'right', marginRight: '12px' }}>
+                        <div>
                             <Button className='detail-footer-button' onClick={() => this.setState({ showOrderDrawer: true })}>Request an Order</Button>
                             <div className='detail-footer-text'>You won't be charged yet</div>
                         </div>
@@ -364,9 +364,7 @@ const OrderSection = ({ food, pickup, date, time, quantity,
         <Segment>
             <OrderRequestHeader food={food} />
             <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
-            <DateTimeSelector date={date} time={time}
-                onDateChange={onDateChange}
-                onTimeChange={onTimeChange} />
+            <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
             <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
 
             {/* <div className='mobileorder-input-descriptions'>
