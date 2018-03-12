@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Rating } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import './OrderRequest.css'
 import '../views/FoodDetail.css'
 import DeliverySelector from './DeliverySelector'
@@ -10,36 +10,18 @@ import OrderRequestHeader from './OrderRequestHeader'
 
 export default class OrderRequest extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { pickup: true };
-    }
-
-    triggerFilterChange() {
-        if (this.props.onFilterChange) {
-            this.props.onFilterChange({ date: this.state.date });
-        }
-    }
-
-    handleDateChange = (date) => this.setState({ date: date }, () => this.triggerFilterChange());
-    handleTimeChange = (event, data) => this.setState({ time: data.value });
-    handleQuantityChange = (delta) => this.props.onQuantityChange(this.props.quantity + delta);
-    handleDeliveryOptionChange = (pickup) => this.setState({ pickup });
-   
     render() {
-        const { food, quantity, onOrderButtonClick, onHide } = this.props;
-        const { pickup, date, time } = this.state;
+        const { onOrderButtonClick, onHide, onDateChange, onTimeChange, onQuantityChange, onDeliveryOptionChange } = this.props;
+        const { food, quantity, pickup, date, time } = this.props;
 
         return (
             <div>
                 <div className='mobileorder'>
 
                     <OrderRequestHeader food={food} onClose={onHide} />
-                    <DeliverySelector pickup={pickup} onChange={this.handleDeliveryOptionChange} />
-                    <DateTimeSelector date={date} time={time}
-                        onDateChange={this.handleDateChange}
-                        onTimeChange={this.handleTimeChange} />
-                    <QuantitySelector food={food} quantity={quantity} onChange={this.handleQuantityChange} />
+                    <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
+                    <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
+                    <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
 
                     {/* <div className='mobileorder-input-descriptions'>
                         We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.

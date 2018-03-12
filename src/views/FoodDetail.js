@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
-import { Grid, Header, Divider, Feed, Form, Input } from 'semantic-ui-react'
+import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import Scroll from 'react-scroll' // Imports all Mixins
 import ShowMore from 'react-show-more'
 import './FoodDetail.css'
@@ -83,48 +83,12 @@ class FoodDetail extends React.Component {
         if (!newQuantity || isNaN(newQuantity) || newQuantity < min || newQuantity > max)
             return;
 
-        if (this.validateField('quantity', newQuantity)) {
-            this.props.actions.quantityChanged(newQuantity);
-        }
+        this.props.actions.quantityChanged(newQuantity);
     };
 
-    validateField(fieldName, fieldValue) {
-        if (!fieldValue) {
-            fieldValue = this.state[fieldName];
-        }
-
-        // let hasBlurred = this.state.hasBlurred;
-        let hasErrors = {};
-
-        switch (fieldName) {
-            case 'quantity':
-                const quantity = fieldValue;
-                hasErrors.quantity = false;
-                if (!quantity || quantity < 1 || quantity > Constants.MaxFoodQuantity) {
-                    hasErrors.quantity = true;
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        hasErrors = Object.assign({}, this.state.hasErrors, hasErrors);
-        this.setState({ hasErrors });
-
-        for (const key in hasErrors) {
-            if (hasErrors[key])
-                return false;
-        }
-        return true;
-    }
-
-    getOrderPageUrl(food) {
-        return `/foods/${food.food_id}/order`;
-    }
-
     handleOrderButtonClick = () => {
-        this.props.history.push(this.getOrderPageUrl(this.props.food));
+        const url = `/foods/${this.props.food.food_id}/order`;
+        this.props.history.push(url);
     }
 
     render() {
@@ -189,8 +153,7 @@ class FoodDetail extends React.Component {
                         <div className='detail-footer-header' style={{ float: 'left' }}>
                             ${PriceCalc.getTotal(food.price, quantity)} CAD
                         <div style={{ display: 'flex' }}>
-                                <Rating disabled={true} maxRating={5} rating={food.rating} size='mini'
-                                    style={{ marginTop: '10px' }} />
+                            <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' style={{ marginTop: '10px' }} />
                                 <div style={{ marginTop: '6px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
                             </div>
                         </div>
@@ -202,14 +165,13 @@ class FoodDetail extends React.Component {
                 </div>
 
                 <Drawer visible={this.state.showOrderDrawer}>
-                    <OrderRequest
-                        food={food}
-                        quantity={quantity}
-                        date={date}
-                        onHide={() => this.setState({ showOrderDrawer: false })}
-                        onDateChange={(date) => this.props.actions.dateChanged(date)}
+                    <OrderRequest food={food} quantity={quantity} date={date} time={time} pickup={pickup}
+                        onDateChange={this.handleDateChange}
+                        onTimeChange={this.handleTimeChange}
+                        onDeliveryOptionChange={this.handleDeliveryOptionChange}
                         onQuantityChange={this.handleQuantityChange}
-                        onOrderButtonClick={() => this.handleOrderButtonClick(food)}
+                        onOrderButtonClick={this.handleOrderButtonClick}
+                        onHide={() => this.setState({ showOrderDrawer: false })}
                     />
                 </Drawer>
 
@@ -254,7 +216,7 @@ FoodDetail.propTypes = {
     isReviewsLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
-    time: PropTypes.object,
+    time: PropTypes.number,
     quantity: PropTypes.number.isRequired,
     buyerEmail: PropTypes.string,
     buyerPhone: PropTypes.string,

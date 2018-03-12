@@ -6,14 +6,18 @@ import Util from '../services/Util'
 import './DateTimeSelector.css'
 
 class DateTimeSelector extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {};
     }
 
+    handleTimeChange = (e, { value }) => {
+        this.props.onTimeChange(value);
+    }
+
     render() {
-        const { date, time, onDateChange, onTimeChange } = this.props;
+        const { date, time, onDateChange } = this.props;
 
         const OrderTimes = [
             { key: 0, text: '7 AM - 11 AM', value: 0 },
@@ -41,7 +45,7 @@ class DateTimeSelector extends React.Component {
                     <Dropdown selection
                         placeholder='What Time?'
                         options={OrderTimes}
-                        onChange={onTimeChange}
+                        onChange={this.handleTimeChange}
                         value={time}
                     />
                 </div>
