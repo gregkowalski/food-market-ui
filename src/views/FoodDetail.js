@@ -92,7 +92,7 @@ class FoodDetail extends React.Component {
     }
 
     render() {
-        const { food, cook, reviews, pickup, quantity, date, time, buyerEmail, buyerPhone } = this.props;
+        const { food, cook, reviews, pickup, quantity, date, time } = this.props;
         if (!food) {
             return null;
         }
@@ -192,8 +192,6 @@ const mapStateToProps = (state) => {
         date: Selectors.date(state),
         time: Selectors.time(state),
         quantity: Selectors.quantity(state),
-        buyerEmail: Selectors.buyerEmail(state),
-        buyerPhone: Selectors.buyerPhone(state),
     };
 };
 
@@ -218,18 +216,14 @@ FoodDetail.propTypes = {
     date: PropTypes.object,
     time: PropTypes.number,
     quantity: PropTypes.number.isRequired,
-    buyerEmail: PropTypes.string,
     buyerPhone: PropTypes.string,
 
     actions: PropTypes.shape({
         selectPickup: PropTypes.func.isRequired,
         selectDelivery: PropTypes.func.isRequired,
-        addressChanged: PropTypes.func.isRequired,
         dateChanged: PropTypes.func.isRequired,
         timeChanged: PropTypes.func.isRequired,
         quantityChanged: PropTypes.func.isRequired,
-        buyerEmailChanged: PropTypes.func.isRequired,
-        buyerPhoneChanged: PropTypes.func.isRequired,
         loadFood: PropTypes.func.isRequired,
         loadCook: PropTypes.func.isRequired,
         loadReviews: PropTypes.func.isRequired,
