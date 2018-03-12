@@ -1,0 +1,27 @@
+.orderpricesummary {
+    margin-top: 20px;
+}
+
+.orderpricesummary .ui.divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.orderpricesummary-row {
+    display: table;
+    width: 100%;
+}
+
+.orderpricesummary-left {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 70%;
+}
+
+.orderpricesummary-right {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    width: 30%;
+}

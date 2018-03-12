@@ -1,0 +1,60 @@
+.orderrequestheader-row {
+    display: table;
+    padding: 15px 0 15px 0;
+    font-weight: 500;
+    width: 100%;
+}
+
+.orderrequestheader-border {
+    border-bottom: 1px solid #DBDBDB;
+}
+
+.orderrequestheader-left {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 40%;
+}
+
+.orderrequestheader-right {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 60%
+}
+
+.orderrequestheader-right span {
+    font-size: 1.15em;
+}
+
+.orderrequestheader-close {
+    cursor: pointer;
+    font-size: 45px;
+    font-weight: 300;
+    width: 40px;
+    height: 40px;
+}
+
+.orderrequestheader-rating {
+    display: inline-flex;
+}
+
+.orderrequestheader-rating .rating {
+    margin-top: 4px;
+}
+
+.orderrequestheader-price span:first-child {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.orderrequestheader-price span:last-child {
+    font-size: 14px;
+}
+
+.orderrequestheader-rating div:last-child {
+    margin-top: 0px;
+    margin-left: 2px;
+    font-size: 14px;
+    color: #494949;
+}

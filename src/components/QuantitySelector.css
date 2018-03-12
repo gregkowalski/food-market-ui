@@ -1,0 +1,33 @@
+.quantityselector-quantity {
+    margin-top: 15px;
+}
+
+.quantityselector-quantity div:first-child {
+    text-align: left;
+    margin-bottom: 8px;
+    font-family: 'Athiti';
+    font-size: 1.05em;
+}
+
+.quantityselector-quantity div:nth-child(2) {
+    display: table;
+    width: 50%;
+    max-width: 200px;
+}
+
+.quantityselector-quantity>div:nth-child(2)>.ui.icon.button {
+    display: table-cell;
+    border: 1px solid;
+}
+
+.quantityselector-quantity>div:nth-child(2)>.ui.icon.button:active {
+    box-shadow: 0px 0px 8px 4px rgba(76, 185, 158, 0.75) !important;
+}
+
+.quantityselector-quantity>div:nth-child(2)>div {
+    display: table-cell;
+    text-align: center;
+    padding-right: 6px;
+    font-size: 1.6em;
+    font-weight: 500;
+}

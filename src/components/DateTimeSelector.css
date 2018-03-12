@@ -1,0 +1,81 @@
+.datetimeselector-datetime {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0 15px 0;
+    font-weight: 500;
+    width: 100%;
+}
+/* Time Picker */
+
+.datetimeselector-time {
+    width: 46%;
+    font-weight: 400;
+    margin-left: 2%;
+}
+
+.datetimeselector-time .ui.dropdown {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 100%;
+    width: 100%;
+}
+
+/* .ui.default.dropdown:not(.button)>.text, */
+.datetimeselector-time .ui.dropdown > .default.text {
+    color: inherit;
+}
+
+/* End Time Picker */
+
+/* Date Picker */
+
+.datetimeselector-date {
+    width: 46%;
+    margin-right: 2%;
+    font-weight: 400;
+}
+
+.datetimeselector-date .DateInput {
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 500;
+}
+
+.datetimeselector-date .SingleDatePicker {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.datetimeselector-date .SingleDatePickerInput {
+    border-radius: 5px;
+    border-color: #a1d4c8;
+}
+
+.datetimeselector-date .SingleDatePicker__picker {
+    margin-top: -15px;
+    z-index: 2;
+}
+
+.datetimeselector-date .DateInput--with-caret::before {
+    margin-top: -15px;
+}
+
+.datetimeselector-date .DateInput--with-caret::after {
+    margin-top: -15px;
+}
+
+.datetimeselector-date .DateInput__display-text {
+    color: rgba(0, 0, 0, .87);
+    /* font-weight: 500; */
+}
+
+.datetimeselector-date #CalendarMonth__caption {
+    margin-bottom: 15px;
+}
+
+.datetimeselector-date .DayPickerKeyboardShortcuts__show {
+    display: none;
+}

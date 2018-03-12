@@ -19,6 +19,11 @@ import CognitoUtil from '../services/Cognito/CognitoUtil'
 import PriceCalc from '../services/PriceCalc'
 import Util from '../services/Util'
 import { Actions, Selectors } from '../store/order'
+import DeliverySelector from '../components/DeliverySelector'
+import DateTimeSelector from '../components/DateTimeSelector'
+import QuantitySelector from '../components/QuantitySelector'
+import OrderPriceSummary from '../components/OrderPriceSummary'
+import OrderRequestHeader from '../components/OrderRequestHeader'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -32,11 +37,10 @@ class FoodDetail extends React.Component {
             hasErrors: {},
             showOrderDrawer: false
         };
-        this.isLoggedIn = CognitoUtil.isLoggedIn();
     }
 
     componentWillMount() {
-        if (!this.isLoggedIn) {
+        if (!CognitoUtil.isLoggedIn()) {
             CognitoUtil.setLastPath(window.location.pathname);
             CognitoUtil.redirectToLoginIfNoSession();
             return;
@@ -53,14 +57,27 @@ class FoodDetail extends React.Component {
             });
     }
 
-    handleQuantityChange = (newValue) => {
+    handleDateChange = (date) => {
+        this.props.actions.dateChanged(date);
+    }
+
+    handleTimeChange = (time) => {
+        this.props.actions.timeChanged(time);
+    }
+
+    handleDeliveryOptionChange = (pickup) => {
+        if (pickup) {
+            this.props.actions.selectPickup();
+        }
+        else {
+            this.props.actions.selectDelivery();
+        }
+    }
+
+    handleQuantityChange = (delta) => {
+        const newValue = this.props.quantity + delta;
         const min = 1;
         const max = Constants.MaxFoodQuantity;
-
-        if (newValue.length === 0) {
-            this.props.actions.quantityChanged(newValue);
-            return;
-        }
 
         let newQuantity = parseInt(newValue, 10);
         if (!newQuantity || isNaN(newQuantity) || newQuantity < min || newQuantity > max)
@@ -157,10 +174,12 @@ class FoodDetail extends React.Component {
                         </div>
                         <div className='flex-item-right'>
                             <div className='detail-head-right'>
-                                <OrderSection food={food} quantity={quantity}
+                                <OrderSection food={food} quantity={quantity} date={date} time={time} pickup={pickup}
                                     onQuantityChange={this.handleQuantityChange}
-                                    onQuantityInputBlur={this.handleQuantityInputBlur}
-                                    onOrderButtonClick={() => this.handleOrderButtonClick(food)}
+                                    onOrderButtonClick={this.handleOrderButtonClick}
+                                    onDateChange={this.handleDateChange}
+                                    onTimeChange={this.handleTimeChange}
+                                    onDeliveryOptionChange={this.handleDeliveryOptionChange}
                                 />
                             </div>
                         </div>
@@ -382,70 +401,30 @@ const CookSection = ({ cook, scrollElement }) => {
     );
 }
 
-const OrderSection = ({ food, quantity, onOrderButtonClick, onQuantityChange, onQuantityInputBlur }) => {
-
-    const onQuantityIncrement = () => onQuantityChange(quantity + 1);
-    const onQuantityDecrement = () => onQuantityChange(quantity - 1);
-    const onQuantityUpdate = (e, { value }) => onQuantityChange(value);
+const OrderSection = ({ food, pickup, date, time, quantity,
+    onOrderButtonClick, onQuantityChange, onDateChange, onTimeChange, onDeliveryOptionChange }) => {
 
     return (
         <Segment>
-            <div className='detail-card-header'>
-                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
-                <div className='detail-card-header-overflow'>{food.title}</div>
-                <div style={{ display: 'inline-flex' }}>
-                    <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' style={{ marginTop: '4px' }} />
-                    <div style={{ marginTop: '0px', fontSize: 'small', color: '#494949' }}>{food.ratingCount}</div>
-                </div>
-                <div style={{ clear: 'both' }}></div>
-            </div>
-            <Divider />
-            <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
-                <Form.Field>
-                    <div style={{ textAlign: 'left', marginBottom: '8px', fontFamily: 'Athiti', fontSize: '1.05em' }}>
-                        Quantity ({food.unit} per order)</div>
-                    <div>
-                        <Button className='detail-quantity-button' icon='minus' size='large' onClick={onQuantityDecrement} />
-                        <Input
-                            type='number'
-                            onChange={onQuantityUpdate}
-                            onBlur={onQuantityInputBlur}
-                            value={quantity} min={1} max={99}
-                            style={{ fontSize: '1.1em', width: '3.5em', marginLeft: '0.3em', marginRight: '0.5em' }} />
-                        <Button className='detail-quantity-button' icon='plus' size='large' onClick={onQuantityIncrement} />
-                    </div>
+            <OrderRequestHeader food={food} />
+            <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
+            <DateTimeSelector date={date} time={time}
+                onDateChange={onDateChange}
+                onTimeChange={onTimeChange} />
+            <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
 
-                </Form.Field>
-            </Form.Group>
-            <Form.Group inline style={{ padding: '0px 10px 10px 10px' }}>
-                <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
-                    <div className='detail-card-align-left'>
-                        ${PriceCalc.getTotal(food.price, quantity)} x {quantity} order size
-                    </div>
-                    <div className='detail-card-align-right'>
-                        ${PriceCalc.getTotal(food.price, quantity)}
-                    </div>
-                </div>
+            {/* <div className='mobileorder-input-descriptions'>
+                    We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                </div> */}
 
-                <Divider />
-
-                <div className='detail-card-summary-row-total'>
-                    <div className='detail-card-align-left'>
-                        <strong>Total</strong>
-                    </div>
-                    <div className='detail-card-align-right'>
-                        <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, quantity)}</span>
-                    </div>
-                </div>
-            </Form.Group>
+            <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
             <RequestOrderButton food={food} quantity={quantity} onClick={onOrderButtonClick} />
             <div className='detail-card-charged-footnote'>You won't be charged yet</div>
 
             <FlagListing />
-
         </Segment>
-    );
+    )
 }
 
 const RequestOrderButton = ({ food, quantity, onClick }) => {
