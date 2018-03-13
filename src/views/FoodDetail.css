@@ -258,6 +258,6 @@
 .detail-rating.ui.grid>.row>.column>div {
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    max-width: 220px;
     min-width: 180px;
 }
