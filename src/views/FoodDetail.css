@@ -234,7 +234,8 @@
     font-size: 1.2em;
 }
 
-@media all and (max-width: 767px) {
+/* @media all and (max-width: 767px) { */
+@media all and (max-width: 900px) {
     .detail-footer {
         display: flex;
     }
@@ -253,3 +254,10 @@
 }
 
 /* end main layout */
+
+.detail-rating.ui.grid>.row>.column>div {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    min-width: 180px;
+}

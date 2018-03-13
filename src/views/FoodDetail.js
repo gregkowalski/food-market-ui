@@ -468,35 +468,47 @@ const ReviewList = ({ reviews }) => {
 
 const FoodRatingSection = ({ food }) => {
     return (
-        <Grid stackable columns={2}>
+        <Grid stackable columns={2} className='detail-rating'>
             <Grid.Row>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Accuracy</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Accuracy</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Quality</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Quality</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Communication</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Communication</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Taste</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Taste</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Freshness</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Freshness</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
-                <Grid.Column className='detail-rating'>
-                    <span className='detail-rating-label'>Value</span>
-                    <Rating className='detail-rating-stars' disabled={true} maxRating={5} rating={food.rating} />
+                <Grid.Column>
+                    <div>
+                        <div>Value</div>
+                        <Rating disabled={true} maxRating={5} rating={food.rating} />
+                    </div>
                 </Grid.Column>
             </Grid.Row>
         </Grid>
