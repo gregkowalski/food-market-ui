@@ -13,7 +13,7 @@ describe('store/currentUser integration', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        store = configureStore();
+        store = configureStore().store;
     });
 
     it('should load current user', () => {

@@ -27,33 +27,37 @@ import Config from './Config'
 import { unregister } from './registerServiceWorker'
 //import temp from 'temp'
 
+import { PersistGate } from 'redux-persist/integration/react'
+
 unregister();
 
-const store = configureStore({ includeLogger: true });
+const { store, persistor } = configureStore({ includeLogger: true });
 
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
         <Provider store={store}>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path='/' component={SearchContainer} />
-                    {/* <Route path='/temp' component={temp} /> */}
-                    <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
-                    <Route path='/foods/:id/orderError' component={OrderError} />
-                    <Route path='/foods/:id/order' component={Order} />
-                    <Route path='/foods/:id' exact component={FoodDetail} />
-                    <Route path='/cognitoCallback' exact component={CognitoCallback} />
-                    <Route path='/cognitoSignout' exact component={CognitoSignout} />
-                    <Route path='/stripeCallback' exact component={StripeCallback} />
-                    <Route path='/profile/view/:userId' exact component={ProfileView} />
-                    <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
-                    <Route path='/profilelink' exact component={ProfileLink} />
-                    <Route path='/login' exact component={Login} />
-                    <Route path='/pricing' exact component={Pricing} />
-                    {/* <Route path='/map2' exact component={Map2} /> */}
-                    <Route component={NotFoundPage} />
-                </Switch>
-            </BrowserRouter>
+            <PersistGate loading={null} persistor={persistor}>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path='/' component={SearchContainer} />
+                        {/* <Route path='/temp' component={temp} /> */}
+                        <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
+                        <Route path='/foods/:id/orderError' component={OrderError} />
+                        <Route path='/foods/:id/order' component={Order} />
+                        <Route path='/foods/:id' exact component={FoodDetail} />
+                        <Route path='/cognitoCallback' exact component={CognitoCallback} />
+                        <Route path='/cognitoSignout' exact component={CognitoSignout} />
+                        <Route path='/stripeCallback' exact component={StripeCallback} />
+                        <Route path='/profile/view/:userId' exact component={ProfileView} />
+                        <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
+                        <Route path='/profilelink' exact component={ProfileLink} />
+                        <Route path='/login' exact component={Login} />
+                        <Route path='/pricing' exact component={Pricing} />
+                        {/* <Route path='/map2' exact component={Map2} /> */}
+                        <Route component={NotFoundPage} />
+                    </Switch>
+                </BrowserRouter>
+            </PersistGate>
         </Provider>
     </StripeProvider>,
     document.getElementById('root')

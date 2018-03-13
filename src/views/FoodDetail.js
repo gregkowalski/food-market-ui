@@ -7,6 +7,7 @@ import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import Scroll from 'react-scroll' // Imports all Mixins
 import ShowMore from 'react-show-more'
+import moment from 'moment'
 import './FoodDetail.css'
 import Constants from '../Constants'
 import AppHeader from '../components/AppHeader'
@@ -213,7 +214,7 @@ FoodDetail.propTypes = {
     isCookLoading: PropTypes.bool.isRequired,
     isReviewsLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
-    date: PropTypes.object,
+    date: PropTypes.instanceOf(moment),
     time: PropTypes.number,
     quantity: PropTypes.number.isRequired,
     buyerPhone: PropTypes.string,

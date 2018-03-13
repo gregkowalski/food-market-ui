@@ -71,7 +71,7 @@ export default class MobileMap extends React.Component {
             polygons = Regions.map(region => {
                 let borderColor = '#2aad8a';
                 let fillColor = '#4cb99e';
-                if (selectedRegion && selectedRegion.id === region.id) {
+                if (Util.isEqualRegion(selectedRegion, region)) {
                     borderColor = '#4286f4';
                     fillColor = '#115dd8';
                 }

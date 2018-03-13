@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import { Actions, Selectors } from '../store/search'
 import Util from '../services/Util'
 import DesktopSearch from './DesktopSearch'
@@ -92,7 +93,7 @@ SearchContainer.propTypes = {
     })),
     geo: PropTypes.object,
     region: PropTypes.object,
-    date: PropTypes.object,
+    date: PropTypes.instanceOf(moment),
     isLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
 

@@ -37,6 +37,8 @@
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^5.9.1",
+    "redux-persist-transform-filter": "0.0.16",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.77.2",
     "universal-cookie": "^2.1.2",
