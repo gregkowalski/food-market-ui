@@ -214,7 +214,7 @@ FoodDetail.propTypes = {
     isCookLoading: PropTypes.bool.isRequired,
     isReviewsLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
-    date: PropTypes.instanceOf(moment),
+    date: PropTypes.object,
     time: PropTypes.number,
     quantity: PropTypes.number.isRequired,
     buyerPhone: PropTypes.string,

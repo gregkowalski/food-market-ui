@@ -93,7 +93,7 @@ SearchContainer.propTypes = {
     })),
     geo: PropTypes.object,
     region: PropTypes.object,
-    date: PropTypes.instanceOf(moment),
+    date: PropTypes.object,
     isLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
 

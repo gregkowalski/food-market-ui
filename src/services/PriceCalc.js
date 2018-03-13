@@ -43,6 +43,14 @@ class PriceCalc {
 
         return this.getTotal(unitPrice, quantity);
     }
+
+    getTotalPrice(food, quantity, pickup) {
+        let total = this.getTotal(food.price, quantity);
+        if (!pickup) {
+            total += Constants.DeliveryFee;
+        }
+        return total;
+    }
 }
 
 export default new PriceCalc();

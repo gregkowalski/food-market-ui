@@ -14,14 +14,6 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
         return style;
     }
 
-    const getTotalPrice = (food, quantity, pickup) => {
-        let total = PriceCalc.getTotal(food.price, quantity);
-        if (!pickup) {
-            total += Constants.DeliveryFee;
-        }
-        return total;
-    }
-
     return (
         <div className='orderpricesummary'>
 
@@ -44,7 +36,7 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
                     <span style={{ fontWeight: 700 }}>Total</span>
                 </div>
                 <div className='orderpricesummary-right'>
-                    <span style={{ fontWeight: 700 }}> ${getTotalPrice(food, quantity, pickup)}</span>
+                    <span style={{ fontWeight: 700 }}> ${PriceCalc.getTotalPrice(food, quantity, pickup)}</span>
                 </div>
             </div>
         </div>

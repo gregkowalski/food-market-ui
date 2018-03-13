@@ -1,9 +1,11 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import { Button, Image, Icon, Message, Dropdown, Checkbox, Radio } from 'semantic-ui-react'
 import { Accordion, Header, Divider, Form, Segment, Input, Step, Grid } from 'semantic-ui-react'
-import { SingleDatePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
 import './Order.css'
 import OrderHeader from '../components/OrderHeader'
 import Checkout from '../components/Stripe/Checkout'
@@ -12,6 +14,8 @@ import CognitoUtil from '../services/Cognito/CognitoUtil'
 import PriceCalc from '../services/PriceCalc'
 import Util from '../services/Util'
 import Constants from '../Constants'
+import { Actions, Selectors } from '../store/order'
+import OrderTimes from '../data/OrderTimes'
 
 const Steps = {
     pickup: 0,
@@ -24,18 +28,10 @@ const ContactMethods = {
     phone: 1
 }
 
-const OrderTimes = [
-    { key: 0, text: 'Breakfast (7 AM - 11 AM)', value: 0 },
-    { key: 1, text: 'Lunch (11 AM - 3 PM)', value: 1 },
-    { key: 2, text: 'Dinner (3 PM - 7 PM)', value: 2 },
-];
-
-export default class Order extends React.Component {
+class Order extends React.Component {
 
     state = {
         quantity: 1,
-        showServiceFee: false,
-        showPricingDetails: false,
         acceptedTerms: false,
         hasBlurred: {},
         hasErrors: {},
@@ -44,9 +40,6 @@ export default class Order extends React.Component {
         time: 0
     };
 
-    cook;
-    food;
-
     componentWillMount() {
         if (!CognitoUtil.isLoggedIn()) {
             CognitoUtil.setLastPath(window.location.pathname);
@@ -54,23 +47,13 @@ export default class Order extends React.Component {
             return;
         }
 
-        ApiClient.getFood(this.props.match.params.id)
-            .then(response => {
-                this.food = response.data;
+        // Validate the order here.  If no date, time, quantity has been selected then bail.
 
-                document.title = this.food.title;
-
-                ApiClient.getUser(this.food.user_id)
-                    .then(response => {
-                        this.cook = response.data;
-                        this.forceUpdate();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
-            })
-            .catch(err => {
-                console.error(err);
+        let food_id = this.props.match.params.id;
+        this.props.actions.loadFood(food_id)
+            .then(() => {
+                document.title = this.props.food.title;
+                return this.props.actions.loadCook(this.props.food.user_id);
             });
     }
 
@@ -81,51 +64,6 @@ export default class Order extends React.Component {
     handleAddressChange(place) {
         const value = place.formatted_address;
         this.setState({ address: value }, () => this.validateField('address', value))
-    };
-
-    handleQuantityChange(min, max, newValue) {
-        if (newValue.length === 0) {
-            this.setState({ quantity: newValue }, () => this.validateField('quantity', newValue));
-            return;
-        }
-        let newQuantity = parseInt(newValue, 10);
-        if (!newQuantity || isNaN(newQuantity) || newQuantity < min || newQuantity > max)
-            return;
-
-        this.setState({ quantity: newQuantity }, () => this.validateField('quantity', newQuantity));
-    };
-
-    handleClickQuantityChange(min, max, delta) {
-        var quantity = this.state.quantity;
-        if (quantity.length === 0) {
-            quantity = 0;
-        }
-        let change = (delta > 0) ? 1 : -1;
-        let newQuantity = quantity + change;
-        if (newQuantity < min || newQuantity > max)
-            return;
-
-        let newState = { quantity: newQuantity };
-        this.setState(newState, () => this.validateField('quantity', newQuantity));
-    }
-
-    handleServiceFeeClick = (e, titleProps) => {
-        const showServiceFee = !this.state.showServiceFee;
-        this.setState({ showServiceFee: showServiceFee });
-    };
-
-    handlePricingDetailsClick = (e, titleProps) => {
-        const showPricingDetails = !this.state.showPricingDetails;
-        this.setState({ showPricingDetails: showPricingDetails });
-    };
-
-    handleDateChange = (date) => {
-        console.dir(date);
-        this.setState({ date: date }, () => this.validateField('date', date.toDate()));
-    };
-
-    handleTimeChange = (event, data) => {
-        this.setState({ time: data.value });
     };
 
     handlePhoneNumberChange = (e) => {
@@ -241,11 +179,6 @@ export default class Order extends React.Component {
             hasErrors.phone = true;
         }
 
-        hasErrors.date = false;
-        if (!state.date) {
-            hasErrors.date = true;
-        }
-
         hasErrors = Object.assign(this.state.hasErrors, hasErrors);
         this.setState({ hasErrors });
         return this.isValid(hasErrors);
@@ -283,467 +216,7 @@ export default class Order extends React.Component {
         return true;
     }
 
-    render() {
-        let food = this.food;
-        if (!food) {
-            return null;
-        }
-        const { showServiceFee, showPricingDetails } = this.state;
-
-        let currentStepComponent;
-        if (this.state.currentStep === Steps.pickup) {
-            currentStepComponent =
-                <div className='order-detail-summary-container'>
-                    <div className='order-detail-summary-left'>
-                        <Segment padded raised>
-                            <Header className='order-detail-summary-left-header'>
-                                <Icon name='shopping basket' /> My Order</Header>
-                            <Divider />
-                            <div className='order-card-header'>
-                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
-                                <div className='order-card-header-overflow'>{food.title} </div>
-                            </div>
-                            <Divider />
-                            <div style={{ padding: '0px 10px 10px 10px' }}>
-                                <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
-                                    <div className='order-summary-align-left'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
-                                        </div>
-                                    <div className='order-summary-align-right'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
-                                    </div>
-                                </div>
-                                <Divider />
-                                <div className='detail-card-summary-row'>
-                                    <div className='order-summary-align-left'>
-                                        <Accordion>
-                                            <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
-                                                Service Fee
-                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
-                                            </Accordion.Title>
-                                            <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
-                                                This helps run our platform and keep the lights on.
-                                            </Accordion.Content>
-                                        </Accordion>
-                                        {/* Service fee <Popup
-                                            trigger={<Icon size='small' name='question circle outline' />}
-                                            content='This helps run our platform and keep the lights on.'
-                                            on={['click']}
-                                            position='bottom center'
-                                            hideOnScroll /> */}
-                                    </div>
-                                    <Divider />
-                                    <div className='order-summary-align-service-fee'>
-                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
-                                    </div>
-                                </div>
-                                <Divider />
-                                <div className='detail-card-summary-row-total'>
-                                    <div className='order-summary-align-left'>
-                                        <strong>Total </strong>
-                                    </div>
-                                    <div className='order-summary-align-right'>
-                                        <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Segment>
-                    </div>
-                    <div className='order-detail-summary-right'>
-                        <Segment padded>
-                            <Header className='order-detail-summary-left-header'>
-                                <Icon name='calendar' />Date &amp; Time</Header>
-                            <Divider />
-                            <Grid className='order-segment-content' stackable columns='equal'>
-                                <Grid.Row>
-                                    <Grid.Column>
-                                        <div>Date</div>
-                                        <SingleDatePicker
-                                            date={this.state.date} // momentPropTypes.momentObj or null
-                                            isOutsideRange={Util.isDayOutsideRange}
-                                            onDateChange={this.handleDateChange}
-                                            focused={this.state.focused} // PropTypes.bool
-                                            onFocusChange={({ focused }) => {
-                                                this.setState({ focused });
-                                                if (!focused) {
-                                                    this.handleContactInfoBlur({ target: { name: 'date' } });
-                                                }
-                                            }} // PropTypes.func.isRequired
-                                            numberOfMonths={1}
-                                            placeholder="Date"
-                                            displayFormat={() =>
-                                                //moment.localeData().longDateFormat('LL')
-                                                'MMMM DD, YYYY'
-                                            }
-                                        />
-                                        <Message header='Invalid date' content='Please select a date' icon='exclamation circle'
-                                            error={this.state.hasErrors.date}
-                                            hidden={!this.state.hasErrors.date}
-                                            visible={this.state.hasErrors.date} />
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        <div>Time</div>
-                                        <Dropdown id='order-time-dropdown'
-                                            selection
-                                            placeholder='Time'
-                                            options={OrderTimes}
-                                            onChange={this.handleTimeChange}
-                                            value={this.state.time} />
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-                        </Segment>
-                        <Segment padded>
-                            <Header className='order-detail-summary-left-header'>
-                                <Icon name='phone' />Contact Info
-                            </Header>
-                            <Divider hidden />
-                            <div className='order-segment-content-header'>
-                                This will only be used for communication related to this order and will be kept private.
-                            </div>
-                            <Divider />
-                            <Grid stackable columns='equal'>
-                                <Grid.Row>
-                                    <Grid.Column>
-                                        <Form className='order-segment-content'>
-                                            <Form.Field>
-                                                Preferred contact:
-                                            </Form.Field>
-                                            <Form.Field className='order-segment-contact-option'>
-                                                <Radio
-                                                    label='Email'
-                                                    name='contactMethodRadioGroup'
-                                                    value={ContactMethods.email}
-                                                    checked={this.state.contactMethod === ContactMethods.email}
-                                                    onChange={this.handleContactMethodChange}
-                                                />
-                                            </Form.Field>
-                                            <Form.Field className='order-segment-contact-option'>
-                                                <Radio
-                                                    label='Phone (optional)'
-                                                    name='contactMethodRadioGroup'
-                                                    value={ContactMethods.phone}
-                                                    checked={this.state.contactMethod === ContactMethods.phone}
-                                                    onChange={this.handleContactMethodChange}
-                                                />
-                                            </Form.Field>
-                                        </Form>
-                                        <div className='order-contact-phone-input'>
-                                            <Input name='phone' type='tel' placeholder='604 456 7890' value={this.state.phone}
-                                                disabled={this.state.contactMethod !== ContactMethods.phone}
-                                                onChange={this.handlePhoneNumberChange} onBlur={this.handleContactInfoBlur} />
-                                            <Message header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle'
-                                                error={this.state.hasErrors.phone}
-                                                hidden={this.state.contactMethod !== ContactMethods.phone || !this.state.hasErrors.phone}
-                                                visible={this.state.contactMethod === ContactMethods.phone && this.state.hasErrors.phone} />
-                                        </div>
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-                        </Segment>
-                        <Segment padded='very'>
-                            <Checkbox className='order-segment-user-agree-text'
-                                label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
-                                onChange={() => this.setState({ acceptedTerms: !this.state.acceptedTerms })}
-                                checked={this.state.acceptedTerms} />
-                        </Segment>
-                        <div>
-                            <Button className='order-confirm-continue-button' floated='left' size='huge' icon
-                                disabled={!this.state.acceptedTerms}
-                                onClick={this.handlePickupStepContinueClick}>
-                                <Icon name='lock' /> Continue
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-        }
-        else if (this.state.currentStep === Steps.billing) {
-            currentStepComponent =
-                <div className='order-detail-summary-container'>
-                    <div className='order-detail-summary-left-step-2'>
-                        <Segment padded raised>
-                            <Header className='order-detail-summary-left-header'>My Order</Header>
-                            <Divider />
-                            <div className='order-card-header'>
-                                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
-                                <div className='order-card-header-overflow'>{food.title} </div>
-                            </div>
-                            <Divider />
-                            <div style={{ padding: '0px 10px 10px 10px' }}>
-                                <div className='detail-card-summary-row' style={{ marginTop: '12px' }} >
-                                    <div className='order-summary-align-left'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)} x {this.state.quantity} order size
-                                </div>
-                                    <div className='order-summary-align-right'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
-                                    </div>
-                                </div>
-                                <Divider />
-                                <div className='detail-card-summary-row'>
-                                    <div className='order-summary-align-left'>
-                                        <Accordion>
-                                            <Accordion.Title active={showServiceFee} onClick={this.handleServiceFeeClick}>
-                                                Service Fee
-                                            <Icon className='order-service-fee-icon' size='small' name='question circle outline' />
-                                            </Accordion.Title>
-                                            <Accordion.Content active={showServiceFee} className='order-service-fee-message'>
-                                                This helps run our platform and keep the lights on.
-                                            </Accordion.Content>
-                                        </Accordion>
-                                    </div>
-                                    <Divider />
-                                    <div className='order-summary-align-service-fee'>
-                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
-                                    </div>
-                                </div>
-                                <Divider />
-                                <div className='detail-card-summary-row-total'>
-                                    <div className='order-summary-align-left'>
-                                        <strong>Total </strong>
-                                    </div>
-                                    <div className='order-summary-align-right'>
-                                        <span style={{ fontWeight: '500' }}> ${PriceCalc.getTotal(food.price, this.state.quantity)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Segment>
-                    </div>
-                    <div className='order-detail-summary-right'>
-                        <Segment padded>
-                            <div style={{ display: 'flex' }}>
-                                <Image className='order-padlock-icon' height='44px' src='/assets/images/padlock.png' />
-                                {/* <Icon floated='left' name='protect' color='#36af75' /> */}
-                                <Header className='order-billing-header'>
-                                    <div>Billing Information
-                                <div className='order-powered-by-stripe'>POWERED BY
-                                <Image className='order-powered-by-stripe-image' height='28px' width='75px' src='/assets/images/stripe-logo-blue.png' />
-                                        </div>
-                                    </div>
-                                </Header>
-                            </div>
-                            <Divider />
-                            <Checkout onRef={ref => (this.checkout = ref)} onBlur={() => {
-                                if (this.state.hasErrors.payment) {
-                                    this.setState({ hasErrors: { payment: false } });
-                                }
-                            }} />
-                            <Message header={this.state.paymentError} icon='exclamation circle'
-                                error={this.state.hasErrors.payment}
-                                hidden={!this.state.hasErrors.payment}
-                                visible={this.state.hasErrors.payment} />
-                        </Segment>
-                        <div>
-                            <Button floated='left' className='order-back-button' size='huge' icon
-                                onClick={() => {
-                                    if (this.state.currentStep > Steps.pickup) {
-                                        this.setState({ currentStep: this.state.currentStep - 1 });
-                                    }
-                                }}>
-                                <Icon name='left arrow' />
-                            </Button>
-                        </div>
-                        <div>
-                            <div style={{ marginTop: '20px' }}>
-                                <Button
-                                    className='order-confirm-continue-button'
-                                    fluid
-                                    loading={this.state.orderProcessing}
-                                    disabled={!this.state.acceptedTerms}
-                                    onClick={() => this.handleOrderButtonClick()}>
-                                    <Icon name='lock' /> Confirm and Pay
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        }
-        else if (this.state.currentStep === Steps.confirm) {
-            currentStepComponent =
-                <div>
-                    This is how we do confirm
-                    <Divider />
-
-                    <Header>My Order Summary</Header>
-
-                    <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                        {this.state.quantity} {food.title}
-                        <Form.Field>
-                            <div style={{ marginTop: '3px' }}> Order type: <strong>{this.state.contactMethod}</strong> </div>
-                        </Form.Field>
-                        <Divider />
-                        <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong></div>
-                    </Segment>
-
-                    <Accordion>
-                        <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
-                            <Icon name='dropdown' />
-                            See pricing details
-                        </Accordion.Title>
-                        <Accordion.Content active={showPricingDetails}>
-                            <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                                <Header as='h5'>Payment Breakdown</Header>
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        {this.state.quantity} x ${food.price} {food.title}
-                                    </div>
-                                    <div className='align-right'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
-                                    </div>
-                                </div>
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        Service fee
-                                            </div>
-                                    <div className='align-right'>
-                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
-                                    </div>
-                                </div>
-                                <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
-                                    this helps run our platform and keep the lights on
-                                </div>
-
-                                <Divider />
-
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        <strong>Total</strong>
-                                    </div>
-                                    <div className='align-right'>
-                                        <strong> ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong>
-                                    </div>
-                                </div>
-                            </Segment>
-                        </Accordion.Content>
-                    </Accordion>
-
-                    <Divider />
-
-
-                    {this.state.order_id &&
-                        <Button
-                            className='order-confirm-continue-button'
-                            fluid
-                            loading={this.state.orderProcessing}
-                            onClick={() => this.handleConfirmButtonClick()}>
-                            <Icon name='lock' /> Submit Payment
-                        </Button>
-                    }
-
-                </div>
-        }
-        else {
-            currentStepComponent =
-                <div>
-                    <Accordion>
-                        <Accordion.Title active={showPricingDetails} onClick={this.handlePricingDetailsClick}>
-                            <Icon name='dropdown' />
-                            See pricing details
-                        </Accordion.Title>
-                        <Accordion.Content active={showPricingDetails}>
-                            <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
-                                <Header as='h5'>Payment Breakdown</Header>
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        {this.state.quantity} x ${food.price} {food.title}
-                                    </div>
-                                    <div className='align-right'>
-                                        ${PriceCalc.getTotal(food.price, this.state.quantity)}
-                                    </div>
-                                </div>
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        Service fee
-                                            </div>
-                                    <div className='align-right'>
-                                        {/* ${PriceCalc.getServiceFee(food.price, this.state.quantity)} */}
-                                    </div>
-                                </div>
-                                <div style={{ fontSize: '0.8em', marginLeft: '10px', color: 'gray', maxWidth: '250px' }}>
-                                    this helps run our platform and keep the lights on
-                                </div>
-
-                                <Divider />
-
-                                <div className='order-summary-row'>
-                                    <div className='align-left'>
-                                        <strong>Total</strong>
-                                    </div>
-                                    <div className='align-right'>
-                                        <strong> ${PriceCalc.getTotal(food.price, this.state.quantity)}</strong>
-                                    </div>
-                                </div>
-                            </Segment>
-                        </Accordion.Content>
-                    </Accordion>
-                </div>;
-        }
-
-        return (
-            <div>
-                <OrderHeader fixed />
-                <div className='order-body'>
-                    {/* <div className='order-navigation-header'>
-                        <div><Button className='order-button' size='huge' icon onClick={() => {
-                            if (this.state.currentStep > Steps.pickup) {
-                                this.setState({ currentStep: this.state.currentStep - 1 });
-                            }
-                        }}>
-                            <Icon name='left arrow' />
-                        </Button>
-                        </div>
-                        <div className='order-navigation-middle-content'>{Constants.AppName}</div>
-                        <div><Button className='order-button' size='huge' icon onClick={() => {
-                            if (this.state.currentStep < Steps.confirm + 1) {
-                                this.setState({ currentStep: this.state.currentStep + 1 });
-                            }
-                        }}>
-                            <Icon name='right arrow' />
-                        </Button>
-                        </div>
-                        
-                    </div> */}
-                    <div className='order-step-header'>
-                        <Step.Group unstackable widths={3}>
-                            <Step active={this.state.currentStep === Steps.pickup}
-                                completed={this.state.currentStep > Steps.pickup}
-                                disabled={this.state.currentStep < Steps.pickup}
-                                className='order-step-boxes'>
-                                {/* <Icon name='shopping basket' /> */}
-                                <Step.Content>
-                                    <Step.Title>Review</Step.Title>
-                                </Step.Content>
-                            </Step>
-                            <Step active={this.state.currentStep === Steps.billing}
-                                completed={this.state.currentStep > Steps.billing}
-                                disabled={this.state.currentStep < Steps.billing}
-                                className='order-step-boxes'>
-                                {/* <Icon name='credit card' /> */}
-                                <Step.Content>
-                                    <Step.Title>Payment</Step.Title>
-                                </Step.Content>
-                            </Step>
-                            <Step active={this.state.currentStep === Steps.confirm}
-                                completed={this.state.currentStep > Steps.confirm}
-                                disabled={this.state.currentStep < Steps.confirm}
-                                className='order-step-boxes'>
-                                {/* <Icon name='info' /> */}
-                                <Step.Content>
-                                    <Step.Title>Done</Step.Title>
-                                </Step.Content>
-                            </Step>
-                        </Step.Group>
-                    </div>
-                    <div>
-                        {currentStepComponent}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    handleError(ex) {
+    handleError = (ex) => {
         console.error(ex);
         let paymentError = 'Payment failed.'
         if (ex.error && ex.error.message) {
@@ -759,7 +232,7 @@ export default class Order extends React.Component {
         });
     }
 
-    handleConfirmButtonClick() {
+    handleConfirmButtonClick = () => {
         if (this.state.orderProcessing) {
             console.log('Confirmation is already processing...');
             return;
@@ -779,7 +252,7 @@ export default class Order extends React.Component {
             });
     }
 
-    handleOrderButtonClick() {
+    handleOrderButtonClick = () => {
         if (this.state.orderProcessing) {
             console.log('Order is already processing...');
             return;
@@ -845,4 +318,438 @@ export default class Order extends React.Component {
                 this.handleError(ex);
             });
     }
+
+    render() {
+        const { food, cook, pickup, quantity, date, time, buyerPhone } = this.props;
+        if (!food) {
+            return null;
+        }
+
+        const { contactMethod, acceptedTerms, currentStep, orderProcessing } = this.state;
+
+        let currentStepComponent;
+        if (currentStep === Steps.pickup) {
+            currentStepComponent = (
+                <ReviewStep
+                    food={food}
+                    pickup={pickup}
+                    quantity={quantity}
+                    date={date}
+                    time={time}
+                    contactMethod={contactMethod}
+                    buyerPhone={buyerPhone}
+                    acceptedTerms={acceptedTerms}
+                    hasErrors={this.state.hasErrors}
+                    onContactMethodChange={this.handleContactMethodChange}
+                    onPhoneNumberChange={this.handlePhoneNumberChange}
+                    onPhoneNumberBlur={this.handleContactInfoBlur}
+                    onNextStepClick={this.handlePickupStepContinueClick}
+                    onAcceptTermsChange={() => this.setState({ acceptedTerms: !acceptedTerms })}
+
+                    paymentError={this.state.paymentError}
+                    onBackButtonClick={() => {
+                        if (currentStep > Steps.pickup) {
+                            this.setState({ currentStep: currentStep - 1 });
+                        }
+                    }}
+                    onCheckoutBlur={() => {
+                        if (this.state.hasErrors.payment) {
+                            this.setState({ hasErrors: { payment: false } });
+                        }
+                    }}
+                    onOrderButtonClick={this.handleConfirmButtonClick}
+                    onCheckoutRef={(ref) => (this.checkout = ref)}
+                />
+            );
+        }
+        else if (currentStep === Steps.billing) {
+            currentStepComponent = (
+                <BillingStep
+                    food={food}
+                    pickup={pickup}
+                    quantity={quantity}
+                    date={date}
+                    time={time}
+                    hasErrors={this.state.hasErrors}
+                    paymentError={this.state.paymentError}
+                    onBackButtonClick={() => {
+                        if (currentStep > Steps.pickup) {
+                            this.setState({ currentStep: currentStep - 1 });
+                        }
+                    }}
+                    onCheckoutBlur={() => {
+                        if (this.state.hasErrors.payment) {
+                            this.setState({ hasErrors: { payment: false } });
+                        }
+                    }}
+                    onOrderButtonClick={this.handleConfirmButtonClick}
+                    onCheckoutRef={(ref) => (this.checkout = ref)}
+                />
+            );
+        }
+        else if (currentStep === Steps.confirm) {
+            const { order_id } = this.state;
+            currentStepComponent = (
+                <ConfirmStep
+                    food={food}
+                    quantity={quantity}
+                    orderProcessing={orderProcessing}
+                    contactMethod={contactMethod}
+                    order_id={order_id}
+                    onConfirmOrderButtonClick={this.handleConfirmButtonClick}
+                />
+            )
+        }
+
+        return (
+            <div>
+                <OrderHeader fixed />
+                <div className='order-body'>
+                    <div className='order-step-header'>
+                        <Step.Group unstackable widths={3}>
+                            <Step active={currentStep === Steps.pickup}
+                                completed={currentStep > Steps.pickup}
+                                disabled={currentStep < Steps.pickup}
+                                className='order-step-boxes'>
+                                {/* <Icon name='shopping basket' /> */}
+                                <Step.Content>
+                                    <Step.Title>Review</Step.Title>
+                                </Step.Content>
+                            </Step>
+                            <Step active={currentStep === Steps.billing}
+                                completed={currentStep > Steps.billing}
+                                disabled={currentStep < Steps.billing}
+                                className='order-step-boxes'>
+                                {/* <Icon name='credit card' /> */}
+                                <Step.Content>
+                                    <Step.Title>Payment</Step.Title>
+                                </Step.Content>
+                            </Step>
+                            <Step active={currentStep === Steps.confirm}
+                                completed={currentStep > Steps.confirm}
+                                disabled={currentStep < Steps.confirm}
+                                className='order-step-boxes'>
+                                {/* <Icon name='info' /> */}
+                                <Step.Content>
+                                    <Step.Title>Done</Step.Title>
+                                </Step.Content>
+                            </Step>
+                        </Step.Group>
+                    </div>
+                    <div>
+                        {currentStepComponent}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+        food: Selectors.food(state),
+        cook: Selectors.cook(state),
+        isFoodLoading: Selectors.isFoodLoading(state),
+        isCookLoading: Selectors.isCookLoading(state),
+        pickup: Selectors.pickup(state),
+        date: Selectors.date(state),
+        time: Selectors.time(state),
+        quantity: Selectors.quantity(state),
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+Order.propTypes = {
+    food: PropTypes.shape({
+        food_id: PropTypes.string.isRequired,
+    }),
+    cook: PropTypes.shape({
+        user_id: PropTypes.string.isRequired,
+    }),
+    isFoodLoading: PropTypes.bool.isRequired,
+    isCookLoading: PropTypes.bool.isRequired,
+    pickup: PropTypes.bool.isRequired,
+    date: PropTypes.object,
+    time: PropTypes.number,
+    quantity: PropTypes.number.isRequired,
+    buyerPhone: PropTypes.string,
+
+    actions: PropTypes.shape({
+        loadFood: PropTypes.func.isRequired,
+        loadCook: PropTypes.func.isRequired,
+        loadReviews: PropTypes.func.isRequired,
+    }).isRequired
+
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Order));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const OrderSummary = ({ food, pickup, quantity, date, time }) => {
+    return (
+        <Segment padded raised>
+            <Header className='order-detail-summary-left-header'>
+                <Icon name='shopping basket' /> My Order</Header>
+            <Divider />
+            <div className='order-card-header'>
+                <Image floated='right' style={{ marginTop: '5px 0px 0px 15px' }} src={food.imageUrls[0]} height='auto' width='26%' />
+                <div className='order-card-header-overflow'>{food.title} </div>
+            </div>
+            <Divider />
+
+            <div className='detail-card-summary-row'>
+                <div>Delivery Option:</div>
+                <div>{pickup ? 'Pickup' : 'Delivery'}</div>
+            </div>
+
+            <div className='detail-card-summary-row'>
+                <div>Date:</div>
+                <div>{date.format('MMMM D, YYYY')}</div>
+            </div>
+            <div className='detail-card-summary-row'>
+                <div>Time:</div>
+                <div>{OrderTimes[time].text}</div>
+            </div>
+
+            <div className='detail-card-summary-row'>
+                <div>${food.price} x {quantity} order size</div>
+                <div>${PriceCalc.getTotal(food.price, quantity)}</div>
+            </div>
+            <Divider />
+            {!pickup &&
+                <div className='detail-card-summary-row'>
+                    <div>Delivery</div>
+                    <div>${Constants.DeliveryFee}</div>
+                </div>
+            }
+            {!pickup &&
+                <Divider />
+            }
+            <div className='detail-card-summary-row large-font'>
+                <div>Total</div>
+                <div>${PriceCalc.getTotalPrice(food, quantity, pickup)}</div>
+            </div>
+
+        </Segment>
+    );
+}
+
+const ReviewStep = ({ food, pickup, quantity, date, time, contactMethod, acceptedTerms, buyerPhone, hasErrors,
+    onContactMethodChange, onPhoneNumberChange, onPhoneNumberBlur, onNextStepClick, onAcceptTermsChange,
+    orderProcessing, onOrderButtonClick, onBackButtonClick, onCheckoutBlur, onCheckoutRef, paymentError }) => {
+    return (
+        <div className='order-detail-summary-container'>
+            <div className='order-detail-summary-left'>
+                <OrderSummary food={food} pickup={pickup} quantity={quantity} date={date} time={time} />
+            </div>
+            <div className='order-detail-summary-right'>
+                <Segment padded>
+                    <Header className='order-detail-summary-left-header'>
+                        <Icon name='phone' />Contact Info
+                    </Header>
+                    <Divider hidden />
+                    <div className='order-segment-content-header'>
+                        This will only be used for communication related to this order and will be kept private.
+                    </div>
+                    <Divider />
+                    <Grid stackable columns='equal'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Form className='order-segment-content'>
+                                    <Form.Field>
+                                        Preferred contact:
+                                    </Form.Field>
+                                    <Form.Field className='order-segment-contact-option'>
+                                        <Radio
+                                            label='Email'
+                                            name='contactMethodRadioGroup'
+                                            value={ContactMethods.email}
+                                            checked={contactMethod === ContactMethods.email}
+                                            onChange={onContactMethodChange}
+                                        />
+                                    </Form.Field>
+                                    <Form.Field className='order-segment-contact-option'>
+                                        <Radio
+                                            label='Phone (optional)'
+                                            name='contactMethodRadioGroup'
+                                            value={ContactMethods.phone}
+                                            checked={contactMethod === ContactMethods.phone}
+                                            onChange={onContactMethodChange}
+                                        />
+                                    </Form.Field>
+                                </Form>
+                                <div className='order-contact-phone-input'>
+                                    <Input name='phone' type='tel' placeholder='604 456 7890' value={buyerPhone}
+                                        disabled={contactMethod !== ContactMethods.phone}
+                                        onChange={onPhoneNumberChange} onBlur={onPhoneNumberBlur} />
+                                    <Message header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle'
+                                        error={hasErrors.phone}
+                                        hidden={contactMethod !== ContactMethods.phone || !hasErrors.phone}
+                                        visible={contactMethod === ContactMethods.phone && hasErrors.phone} />
+                                </div>
+                            </Grid.Column>
+                            <Grid.Column>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Segment>
+                <Segment padded>
+                    <div style={{ display: 'flex' }}>
+                        <Image className='order-padlock-icon' height='44px' src='/assets/images/padlock.png' />
+                        <Header className='order-billing-header'>
+                            <div>Billing Information
+                                <div className='order-powered-by-stripe'>POWERED BY
+                                    <Image className='order-powered-by-stripe-image' height='28px' width='75px' src='/assets/images/stripe-logo-blue.png' />
+                                </div>
+                            </div>
+                        </Header>
+                    </div>
+                    <Divider />
+                    <Checkout onRef={onCheckoutRef} onBlur={onCheckoutBlur} />
+                    <Message header={paymentError} icon='exclamation circle'
+                        error={hasErrors.payment}
+                        hidden={!hasErrors.payment}
+                        visible={hasErrors.payment} />
+                </Segment>
+                <div>
+                    <Button floated='left' className='order-back-button' size='huge' icon onClick={onBackButtonClick}>
+                        <Icon name='left arrow' />
+                    </Button>
+                </div>
+                <Segment padded='very'>
+                    <Checkbox className='order-segment-user-agree-text'
+                        label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
+                        onChange={onAcceptTermsChange}
+                        checked={acceptedTerms} />
+                </Segment>
+
+                <div>
+                    <div style={{ marginTop: '20px' }}>
+                        <Button
+                            className='order-confirm-continue-button'
+                            fluid
+                            loading={orderProcessing}
+                            disabled={!acceptedTerms}
+                            onClick={onOrderButtonClick}>
+                            <Icon name='lock' /> Confirm and Pay
+                        </Button>
+                    </div>
+                </div>
+                {/* <div>
+                    <Button className='order-confirm-continue-button' floated='left' size='huge' icon
+                        disabled={!acceptedTerms}
+                        onClick={onNextStepClick}>
+                        <Icon name='lock' /> Continue
+                    </Button>
+                </div> */}
+            </div>
+        </div>
+    );
+}
+
+const BillingStep = ({ food, pickup, quantity, date, time, orderProcessing, acceptedTerms,
+    onOrderButtonClick, onBackButtonClick, onCheckoutBlur, onCheckoutRef, hasErrors, paymentError }) => {
+    return (
+        <div className='order-detail-summary-container'>
+            <div className='order-detail-summary-left-step-2'>
+                <OrderSummary food={food} pickup={pickup} quantity={quantity} date={date} time={time} />
+            </div>
+            <div className='order-detail-summary-right'>
+                <Segment padded>
+                    <div style={{ display: 'flex' }}>
+                        <Image className='order-padlock-icon' height='44px' src='/assets/images/padlock.png' />
+                        <Header className='order-billing-header'>
+                            <div>Billing Information
+                                <div className='order-powered-by-stripe'>POWERED BY
+                                    <Image className='order-powered-by-stripe-image' height='28px' width='75px' src='/assets/images/stripe-logo-blue.png' />
+                                </div>
+                            </div>
+                        </Header>
+                    </div>
+                    <Divider />
+                    <Checkout onRef={onCheckoutRef} onBlur={onCheckoutBlur} />
+                    <Message header={paymentError} icon='exclamation circle'
+                        error={hasErrors.payment}
+                        hidden={!hasErrors.payment}
+                        visible={hasErrors.payment} />
+                </Segment>
+                <div>
+                    <Button floated='left' className='order-back-button' size='huge' icon onClick={onBackButtonClick}>
+                        <Icon name='left arrow' />
+                    </Button>
+                </div>
+                <div>
+                    <div style={{ marginTop: '20px' }}>
+                        <Button
+                            className='order-confirm-continue-button'
+                            fluid
+                            loading={orderProcessing}
+                            disabled={!acceptedTerms}
+                            onClick={onOrderButtonClick}>
+                            <Icon name='lock' /> Confirm and Pay
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const ConfirmStep = ({ food, quantity, contactMethod, orderProcessing, order_id, onConfirmOrderButtonClick }) => {
+    return (
+        <div>
+            This is how we do confirm
+            <Divider />
+
+            <Header>My Order Summary</Header>
+
+            <Segment style={{ maxWidth: '400px', minWidth: '250px' }}>
+                {quantity} {food.title}
+                <Form.Field>
+                    <div style={{ marginTop: '3px' }}> Order type: <strong>{contactMethod}</strong> </div>
+                </Form.Field>
+                <Divider />
+                <div style={{ marginTop: '3px' }}> <strong>Total (CAD): ${PriceCalc.getTotal(food.price, quantity)}</strong></div>
+            </Segment>
+
+            <Divider />
+
+            {order_id &&
+                <Button
+                    className='order-confirm-continue-button'
+                    fluid
+                    loading={orderProcessing}
+                    onClick={onConfirmOrderButtonClick}>
+                    <Icon name='lock' /> Submit Payment
+                </Button>
+            }
+        </div>
+    );
 }
