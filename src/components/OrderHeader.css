@@ -50,7 +50,6 @@
 
 .orderhead-sign-in {
     color: #3a3a3a;
-    font-family: 'Athiti';
     font-weight: 400;
     font-size: 1.2em;
     margin-top: 10px;
@@ -63,14 +62,12 @@
 
 .orderhead-dropdown-profile-link {
     color: black !important;
-    font-family: 'Athiti';
     font-weight: 300 !important;
     font-size: .95em !important;
     margin-top: 8px;
 }
 
 .orderhead-dropdown-item {
-    font-family: 'Athiti';
     font-weight: 300 !important;
     font-size: .95em !important;
     margin-bottom: 8px;
@@ -78,7 +75,6 @@
 
 .orderhead-contact-support {
     color: #3a3a3a;
-    font-family: 'Athiti';
     font-weight: 400;
     font-size: 1.15em;
     margin-top: 7px;
@@ -101,7 +97,6 @@
 
 .orderhead-ssl-text {
     color: #3a3a3a;
-    font-family: 'Athiti';
     font-weight: 400;
     font-size: .95em;
     margin-top: 3px;
@@ -117,7 +112,6 @@
     color: #2b2b2b;
     margin-left: 3px;
     margin-top: 13.75px;
-    font-family: 'Athiti';
     font-weight: 400;
     text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);
 }
