@@ -4,7 +4,8 @@
 
 @importGoogleFonts : true;
 @googleProtocol: 'https://';
-@googleFontRequest: 'Comfortaa:300,400,700|Lato:300,400|Roboto:300,300i,400';
+@googleFontRequest: 'Comfortaa:300,400,700|Roboto:300,300i,400,400i';
 
-@fontName : 'Roboto';
+@pageFont : 'Roboto';
+@pageFontWeight : 300;
 

@@ -241,7 +241,7 @@ const OverviewSection = ({ food, cook, scrollElement }) => {
             <Header className='detail-main-header' as='h2'>
                 ${food.price} · {food.title}
             </Header>
-            <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em', fontFamily: 'Athiti' }}>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em' }}>
                 locally handcrafted by
                 <ScrollLink className='author-link' to='cook'
                     spy={true} smooth={true} container={document}
@@ -441,7 +441,7 @@ const ReviewList = ({ reviews }) => {
                         <div style={{ float: 'right', color: '#5e5d5d' }}>
                             <a href='url' style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                         <Feed.Summary className='detail-body-text'>{review.summary} </Feed.Summary>
-                        <Feed.Date content={review.date} style={{ fontFamily: 'Athiti', fontSize: '1.1em', fontWeight: '600', marginTop: '-1px' }} />
+                        <Feed.Date content={review.date} style={{ fontSize: '1.1em', fontWeight: '600', marginTop: '-1px' }} />
                         <Feed.Extra style={{ marginTop: '0.8em', maxWidth: '100%' }} >
                             <div className='detail-body-text'>
                                 <ShowMore

@@ -29,7 +29,6 @@
 .profileedit-view-button {
     margin: 20px 0px 0px 0px !important;
     background-color: #4cb99e !important;
-    font-family: 'Athiti' !important;
     font-size: 1em !important;
     font-weight: 500 !important;
     color: #ffffff !important;
@@ -44,7 +43,6 @@
 .profileedit-save-button {
     margin: 20px 0px 0px 0px !important;
     background-color: #4cb99e !important;
-    font-family: 'Athiti' !important;
     font-size: 1.2em !important;
     font-weight: 500 !important;
     color: #ffffff !important;
@@ -86,7 +84,6 @@
 .profileedit-main .header {
     font-size: 1.65em !important;
     font-weight: 500 !important;
-    font-family: 'Athiti' !important;
 }
 
 .profileedit-main .input {
