@@ -1,6 +1,6 @@
 const Constants = {
     AppName: 'foodcraft',
-    AppLogo: '/assets/images/space.png',
+    AppLogo: '/assets/images/fclogo.png',
     FoodMarketStorageKeyRoot: 'food-market',
     ServiceFeeRate: 0.15,
     MaxFoodQuantity: 99,
