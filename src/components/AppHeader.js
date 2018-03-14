@@ -92,7 +92,7 @@ export class AppHeader extends React.Component {
                 sessionElement =
                     <div>
                         <a href='/signup' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
-                        <span style={{ color: '#888888', fontSize: '1.5em', marginTop: '2px' }}>|</span>
+                        <span style={{ color: '#2da388', fontSize: '1.5em', marginTop: '2px' }}>|</span>
                         <a href='/login' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
                     </div>
             }
@@ -124,7 +124,7 @@ export class AppHeader extends React.Component {
                         </div>
                     </div>
                     <div className='apphead-right'>
-                        <div style={{ marginTop: '8px' }}>
+                        <div style={{ marginTop: '12px' }}>
                             {sessionElement}
                         </div>
                     </div>
