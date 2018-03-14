@@ -52,6 +52,11 @@
 .datetimeselector-date .SingleDatePickerInput {
     border-radius: 5px;
     border-color: #a1d4c8;
+    
+}
+
+.datetimeselector-date .SingleDatePickerInput input {
+    cursor: pointer;
 }
 
 .datetimeselector-date .SingleDatePicker__picker {

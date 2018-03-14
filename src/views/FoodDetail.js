@@ -7,7 +7,6 @@ import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import Scroll from 'react-scroll' // Imports all Mixins
 import ShowMore from 'react-show-more'
-import moment from 'moment'
 import './FoodDetail.css'
 import Constants from '../Constants'
 import AppHeader from '../components/AppHeader'
@@ -367,16 +366,9 @@ const OrderSection = ({ food, pickup, date, time, quantity,
             <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
             <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
             <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
-
-            {/* <div className='mobileorder-input-descriptions'>
-                    We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
-                </div> */}
-
             <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
-
             <RequestOrderButton food={food} quantity={quantity} onClick={onOrderButtonClick} />
             <div className='detail-card-charged-footnote'>You won't be charged yet</div>
-
             <FlagListing />
         </Segment>
     )

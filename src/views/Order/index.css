@@ -1,0 +1,64 @@
+.order-body {
+    position: relative;
+    width: 90%;
+    margin: 80px auto 20px auto;
+}
+
+.order-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.order-right {
+    width: 350px;
+    min-width: 350px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.order-right>div {
+    position: fixed;
+    padding-right: 50px;
+}
+
+@media all and (max-width: 850px) {
+    .order-container {
+        flex-flow: row wrap;
+        flex-direction: row;
+    }
+    .order-right {
+        width: 100%;
+        min-width: 100%;
+        margin: 0px 0px 20px 0px !important;
+    }
+    .order-right>div {
+        position: inherit !important;
+        padding-right: 0 !important;
+    }
+}
+
+.order-confirm-continue-button {
+    margin-top: 20px;
+    background-color: #4cb99e !important;
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    height: 3em;
+    width: 205px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.order-confirm-continue-button:hover {
+    background-color: #2aad8a !important;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
+}
+
+.order-segment-user-agree-text {
+    font-size: 1.2em !important;
+    line-height: 1.3 !important;
+}
+
+.order-right .input {
+    width: 100%;
+}

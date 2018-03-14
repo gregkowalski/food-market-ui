@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { persistStore, persistReducer, createTransform } from 'redux-persist'
 import sessionStorage from 'redux-persist/lib/storage/session'
-// import { createFilter } from 'redux-persist-transform-filter'
+import { createBlacklistFilter } from 'redux-persist-transform-filter'
 import moment from 'moment'
 import { Reducers as currentUser } from './currentUser'
 import { Reducers as search } from './search'
@@ -18,7 +18,7 @@ const configureStore = (options = {}) => {
     }
 
     // const searchFilter = createFilter('search', ['pickup', 'date']);
-    // const orderFilter = createFilter('order', ['pickup', 'date', 'time', 'quantity']);
+    const orderFilter = createBlacklistFilter('order', ['isOrderProcessing']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
         (inboundState, key) => {
@@ -37,10 +37,10 @@ const configureStore = (options = {}) => {
     );
 
     const persistConfig = {
-        key: 'root',
+        key: 'food-market:root',
         storage: sessionStorage,
         // transforms: [searchFilter, orderFilter, myTransform],
-        transforms: [myTransform],
+        transforms: [myTransform, orderFilter],
         whitelist: ['order', 'search']
     }
 

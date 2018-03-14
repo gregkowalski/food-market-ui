@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import moment from 'moment'
 import { FoodPrepType } from '../data/FoodItems'
+import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 
 class Util {
 
@@ -177,6 +178,33 @@ class Util {
             url += `${sep}date=${date.format('YYYY-MM-DD')}`;
         }
         return url;
+    }
+
+    getAsYouTypePhone(value) {
+        if (!value) {
+            return '';
+        }
+        if (!value.startsWith('+1')) {
+            if (value.startsWith('1')) {
+                value = '+' + value;
+            }
+            else {
+                value = '+1' + value;
+            }
+        }
+
+        let trimmed = value.replace(/\s/g, '');
+        if (value && trimmed.length > 12) {
+            value = trimmed.substring(0, 12);
+        }
+        value = new asYouTypePhone('US').input(value);
+        return value;
+    }
+
+    validatePhoneNumber(phone) {
+        const result = parsePhone(phone);
+        // console.log('parsePhone: ' + JSON.stringify(result));
+        return result.phone ? true : false;
     }
 }
 

@@ -1,0 +1,93 @@
+.contactinfo {
+    font-size: 1.3em;
+    font-weight: 400;
+}
+
+.contactinfo-header {
+    font-size: 1.1em;
+    margin-left: 43px;
+}
+
+.contactinfo-contact {
+    font-size: 1.3em;
+}
+
+.contactinfo-contact>div:first-child {
+    margin-bottom: 10px;
+}
+
+.contactinfo-option {
+    margin-left: 20px;
+}
+
+.contactinfo-phone {
+    margin: 5px 0px 0px 45px;
+}
+
+/* Google Autocomplete box */
+
+.contactinfo-address {
+    width: 100%;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+    transition: none;
+    padding: 0px 0px 0px 20px;
+    margin-top: 20px;
+}
+
+.contactinfo-address>div {
+    width: 100%;
+    border: none;
+}
+
+.contactinfo-address>div:first-child {
+    margin: 0px 0px 10px -20px;
+}
+
+.contactinfo-address>div:first-child {
+    font-size: 1.3em;
+}
+
+.contactinfo-address input {
+    width: 100%;
+    line-height: 1.21428571em;
+    font-weight: 400;
+    font-size: 1em;
+    font-family: 'Roboto';
+    padding: 9.5px 14px;
+    border-radius: .28571429rem;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    color: rgba(0, 0, 0, .87);
+}
+
+.contactinfo-address input::placeholder {
+    color: rgba(34, 36, 38, .3);
+}
+
+.contactinfo-address input:focus::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.pac-container {
+    z-index: 2000;
+}
+
+.pac-item {
+    font-size: 16px;
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.pac-item-query {
+    font-size: 16px;
+}
+
+.pac-icon {
+    margin-top: 5px;
+}
+
+.pac-logo:after {
+    display: none;
+}
+
+/* End Google Autocomplete box */

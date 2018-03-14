@@ -22,11 +22,6 @@ export default class OrderRequest extends React.Component {
                     <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
                     <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
                     <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
-
-                    {/* <div className='mobileorder-input-descriptions'>
-                        We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
-                    </div> */}
-
                     <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
                     <div className='mobileorder-footer'>

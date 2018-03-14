@@ -1,5 +1,7 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
+import ContactMethods from '../../data/ContactMethods';
+import Util from '../../services/Util'
 
 function selectPickup() {
     return {
@@ -48,10 +50,26 @@ function buyerEmailChanged(buyerEmail) {
     };
 }
 
-function buyerPhoneChanged(buyerPhone) {
+function buyerPhoneChanged(buyerPhone, isBuyerPhoneValid) {
     return {
         type: ActionTypes.BUYER_PHONE_CHANGED,
-        buyerPhone
+        buyerPhone,
+        isBuyerPhoneValid
+    };
+}
+
+function buyerAddressChanged(buyerAddress, isBuyerAddressValid) {
+    return {
+        type: ActionTypes.BUYER_ADDRESS_CHANGED,
+        buyerAddress,
+        isBuyerAddressValid
+    };
+}
+
+function contactMethodChanged(contactMethod) {
+    return {
+        type: ActionTypes.CONTACT_METHOD_CHANGED,
+        contactMethod
     };
 }
 
@@ -179,7 +197,23 @@ export const Actions = {
 
     buyerPhoneChanged: (buyerPhone) => {
         return (dispatch) => {
-            dispatch(buyerPhoneChanged(buyerPhone));
+
+            const parsedPhone = Util.getAsYouTypePhone(buyerPhone);
+            const isValid = Util.validatePhoneNumber(parsedPhone);
+            dispatch(buyerPhoneChanged(parsedPhone, isValid));
+        }
+    },
+
+    buyerAddressChanged: (buyerAddress) => {
+        return (dispatch) => {
+            const isValid = buyerAddress ? true : false;
+            dispatch(buyerAddressChanged(buyerAddress, isValid));
+        }
+    },
+
+    contactMethodChanged: (contactMethod) => {
+        return (dispatch) => {
+            dispatch(contactMethodChanged(contactMethod));
         }
     },
 
@@ -204,7 +238,7 @@ export const Actions = {
     loadCook: (user_id) => {
         return (dispatch) => {
 
-            dispatch(requestCook(user_id));
+            dispatch(requestCook());
 
             return ApiClient.getPublicUser(user_id)
                 .then(
@@ -222,7 +256,7 @@ export const Actions = {
     loadReviews: (food_id) => {
         return (dispatch) => {
 
-            dispatch(requestReviews(food_id));
+            dispatch(requestReviews());
 
             return ApiClient.getReviews(food_id)
                 .then(
@@ -236,6 +270,14 @@ export const Actions = {
                     }
                 );
         };
+    },
+
+    submitOrder: (checkout) => {
+        return (dispatch) => {
+
+            dispatch({ type: ActionTypes.SUBMIT_ORDER });
+
+        }
     }
 }
 
@@ -279,6 +321,21 @@ export const Selectors = {
     buyerPhone: (state) => {
         return state.order.buyerPhone;
     },
+    isBuyerPhoneValid: (state) => {
+        return state.order.isBuyerPhoneValid;
+    },
+    buyerAddress: (state) => {
+        return state.order.buyerAddress;
+    },
+    isBuyerAddressValid: (state) => {
+        return state.order.isBuyerAddressValid;
+    },
+    contactMethod: (state) => {
+        return state.order.contactMethod;
+    },
+    isOrderProcessing: (state) => {
+        return state.order.isOrderProcessing;
+    },
 }
 
 const initialState = {
@@ -289,7 +346,13 @@ const initialState = {
     cook: null,
     reviews: [],
     pickup: true,
-    quantity: 1
+    quantity: 1,
+    contactMethod: ContactMethods.email,
+    buyerPhone: '',
+    buyerAddress: '',
+    isBuyerPhoneValid: true,
+    isBuyerAddressValid: true,
+    isOrderProcessing: false,
 };
 
 export const Reducers = {
@@ -385,7 +448,28 @@ export const Reducers = {
 
             case ActionTypes.BUYER_PHONE_CHANGED:
                 return Object.assign({}, state, {
-                    buyerPhone: action.buyerPhone
+                    buyerPhone: action.buyerPhone,
+                    isBuyerPhoneValid: action.isBuyerPhoneValid
+                });
+
+            case ActionTypes.BUYER_ADDRESS_CHANGED:
+                return Object.assign({}, state, {
+                    buyerAddress: action.buyerAddress,
+                    isBuyerAddressValid: action.isBuyerAddressValid
+                });
+
+            case ActionTypes.CONTACT_METHOD_CHANGED:
+                const newState = Object.assign({}, state, {
+                    contactMethod: action.contactMethod
+                });
+                if (action.contactMethod === ContactMethods.email) {
+                    newState.isBuyerPhoneValid = true;
+                }
+                return newState;
+
+            case ActionTypes.SUBMIT_ORDER:
+                return Object.assign({}, state, {
+                    isOrderProcessing: true
                 });
 
             default:

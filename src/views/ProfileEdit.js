@@ -4,15 +4,14 @@ import { Redirect, Link } from 'react-router-dom'
 import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown } from 'semantic-ui-react'
 import { Divider, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
-import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import crypto from 'crypto'
 import './ProfileEdit.css'
+import Util from '../services/Util'
 import AppHeader from '../components/AppHeader'
 import LoadingIcon from '../components/LoadingIcon'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import StripeUtil from '../services/Stripe/StripeUtil'
 import ApiClient from '../services/ApiClient'
-
 
 const languageOptions = [
     { key: 'en-CA', value: 'en-CA', text: 'English' },
@@ -139,39 +138,9 @@ export default class ProfileEdit extends React.Component {
         return pattern.test(email);
     }
 
-    validatePhoneNumber(phone) {
-        if (!phone) {
-            return true;
-        }
-        const result = parsePhone(phone);
-        console.log('parsePhone: ' + JSON.stringify(result));
-        return result.phone ? true : false;
-    }
-
-    getAsYouTypePhone(value) {
-        if (!value) {
-            return '';
-        }
-        if (!value.startsWith('+1')) {
-            if (value.startsWith('1')) {
-                value = '+' + value;
-            }
-            else {
-                value = '+1' + value;
-            }
-        }
-
-        let trimmed = value.replace(/\s/g, '');
-        if (value && trimmed.length > 12) {
-            value = trimmed.substring(0, 12);
-        }
-        value = new asYouTypePhone('US').input(value);
-        return value;
-    }
-
     handlePhoneNumberChange = (e) => {
         const name = e.target.name;
-        let value = this.getAsYouTypePhone(e.target.value);
+        let value = Util.getAsYouTypePhone(e.target.value);
         e.target.value = value;
 
         let newHasBlurred = Object.assign({}, this.state.hasBlurred);
@@ -256,7 +225,7 @@ export default class ProfileEdit extends React.Component {
         }
 
         let { city, name, username, info, lang, phone, address, apt } = this.state;
-        phone = parsePhone(phone);
+        phone = Util.parsePhone(phone);
         let newUser = { city, name, username, info, lang, phone, address, apt };
         Object.assign(this.user, newUser);
         console.log(this.user);
@@ -436,8 +405,7 @@ export default class ProfileEdit extends React.Component {
                                             <Message error={this.state.hasErrors.phone}
                                                 hidden={!this.state.hasErrors.phone}
                                                 visible={this.state.hasErrors.phone} header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle' />
-                                            <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.
-                                                </div>
+                                            <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.</div>
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>

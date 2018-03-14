@@ -21,6 +21,7 @@ import Login from './views/Login'
 import Pricing from './views/Pricing'
 // import Map2 from './views/map2'
 import SearchContainer from './views/SearchContainer'
+import ScrollToTop from './components/ScrollToTop'
 
 import configureStore from './store/configureStore'
 import Config from './Config'
@@ -38,24 +39,26 @@ render(
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <BrowserRouter>
-                    <Switch>
-                        <Route exact path='/' component={SearchContainer} />
-                        {/* <Route path='/temp' component={temp} /> */}
-                        <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
-                        <Route path='/foods/:id/orderError' component={OrderError} />
-                        <Route path='/foods/:id/order' component={Order} />
-                        <Route path='/foods/:id' exact component={FoodDetail} />
-                        <Route path='/cognitoCallback' exact component={CognitoCallback} />
-                        <Route path='/cognitoSignout' exact component={CognitoSignout} />
-                        <Route path='/stripeCallback' exact component={StripeCallback} />
-                        <Route path='/profile/view/:userId' exact component={ProfileView} />
-                        <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
-                        <Route path='/profilelink' exact component={ProfileLink} />
-                        <Route path='/login' exact component={Login} />
-                        <Route path='/pricing' exact component={Pricing} />
-                        {/* <Route path='/map2' exact component={Map2} /> */}
-                        <Route component={NotFoundPage} />
-                    </Switch>
+                    <ScrollToTop>
+                        <Switch>
+                            <Route exact path='/' component={SearchContainer} />
+                            {/* <Route path='/temp' component={temp} /> */}
+                            <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
+                            <Route path='/foods/:id/orderError' component={OrderError} />
+                            <Route path='/foods/:id/order' component={Order} />
+                            <Route path='/foods/:id' exact component={FoodDetail} />
+                            <Route path='/cognitoCallback' exact component={CognitoCallback} />
+                            <Route path='/cognitoSignout' exact component={CognitoSignout} />
+                            <Route path='/stripeCallback' exact component={StripeCallback} />
+                            <Route path='/profile/view/:userId' exact component={ProfileView} />
+                            <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
+                            <Route path='/profilelink' exact component={ProfileLink} />
+                            <Route path='/login' exact component={Login} />
+                            <Route path='/pricing' exact component={Pricing} />
+                            {/* <Route path='/map2' exact component={Map2} /> */}
+                            <Route component={NotFoundPage} />
+                        </Switch>
+                    </ScrollToTop>
                 </BrowserRouter>
             </PersistGate>
         </Provider>
