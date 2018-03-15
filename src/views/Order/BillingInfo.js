@@ -18,7 +18,7 @@ class BillingInfo extends React.Component {
     };
 
     render() {
-        const { paymentError, onCheckoutRef } = this.props;
+        const { paymentError } = this.props;
         const { hasErrors } = this.state;
 
         return (
@@ -34,11 +34,9 @@ class BillingInfo extends React.Component {
                     </div>
                 </div>
                 <Divider />
-                <div className="billing-checkout">
-                    <Elements>
-                        <CheckoutForm onRef={this.props.onRef} onBlur={this.handleCheckoutBlur} />
-                    </Elements>
-                </div>
+                <Elements>
+                    <CheckoutForm onRef={this.props.onRef} onBlur={this.handleCheckoutBlur} />
+                </Elements>
                 <Message header={paymentError} icon='exclamation circle'
                     error={hasErrors.payment}
                     hidden={!hasErrors.payment}

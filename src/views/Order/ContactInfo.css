@@ -3,9 +3,18 @@
     font-weight: 400;
 }
 
+.contactinfo > .ui.header {
+    color: #494949;
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-left: 5px;
+    line-height: 1.1;
+}
+
 .contactinfo-header {
     font-size: 1.1em;
-    margin-left: 43px;
+    margin-left: 61px;
+    margin-top: -15px;
 }
 
 .contactinfo-contact {

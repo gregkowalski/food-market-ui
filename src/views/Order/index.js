@@ -245,7 +245,7 @@ class Order extends React.Component {
                             <BillingInfo paymentError={paymentError}
                                 onCheckoutRef={ref => this.checkout = ref} />
 
-                            <Segment padded='very'>
+                            <Segment>
                                 <Checkbox className='order-segment-user-agree-text'
                                     label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
                                     onChange={() => this.setState({ acceptedTerms: !acceptedTerms })}
@@ -263,7 +263,7 @@ class Order extends React.Component {
                                 loading={isOrderProcessing}
                                 onClick={this.handleOrderButtonClick}
                             >
-                                <Icon name='lock' /> Confirm and Pay
+                                <Icon name='lock' />Confirm and Pay
                             </Button>
                         </div>
                     </div>

@@ -1,4 +1,94 @@
-.checkoutform-label {
-    font-weight: 500 !important;
-    font-size: 1.45em !important;
+.checkout {
+    max-width: 800px;
+    padding: 0 5px;
+}
+
+.checkout label {
+    font-weight: 400;
+    font-size: 1.3em;
+}
+
+.checkout-detail {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.checkout-detail > div:not(:last-child) {
+    margin-right: 20px;
+}
+
+@media all and (max-width: 1100px) {
+    .checkout-detail {
+        display: block;
+    }
+
+    .checkout-detail > div:not(:last-child) {
+        margin-right: 0px !important;
+    }
+
+    #checkout-name {
+        width: 100% !important;
+    }
+}
+
+#checkout-card-number .StripeElement {
+    min-width: 180px;
+}
+
+#checkout-name {
+    width: 320px;
+}
+
+#checkout-name > div {
+    margin: 10px 0 20px 0;
+}
+
+#checkout-name .ui.input {
+    width: 100%;
+}
+
+#checkout-name .ui.input input {
+    padding: 10px 14px;
+    font-size: 1em;
+    font-family: sans-serif;
+    letter-spacing: 0.025em;
+    /* color: #424770; */
+    color: rgba(0,0,0,.87);
+}
+
+#checkout-name .ui.input input::placeholder {
+    color: #aab7c4;
+}
+
+
+#checkout-expiry-date .StripeElement {
+    width: 100%;
+}
+
+#checkout-cvc .StripeElement {
+    width: 100%;
+}
+
+#checkout-postal-code .StripeElement {
+    width: 100%;
+    min-width: 110px;
+}
+
+.StripeElement {
+    margin: 10px 0 20px 0;
+    padding: 10px 14px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: 5px;
+}
+
+.StripeElement::placeholder {
+    color: #aab7c4;
+}
+
+.StripeElement--focus {
+    border-color: #85B7D9;
+}
+
+.StripeElement--invalid {
+    border: 1px solid #e0b4b4;
 }

@@ -7,15 +7,17 @@ import {
     PostalCodeElement,
     injectStripe,
 } from 'react-stripe-elements'
+import { Input } from 'semantic-ui-react'
 
 const createOptions = (fontSize) => {
     return {
         style: {
             base: {
                 fontSize,
-                color: '#424770',
+                // color: '#424770',
+                color: 'rgba(0,0,0,.87)',
                 letterSpacing: '0.025em',
-                fontFamily: 'Source Code Pro, monospace',
+                // fontFamily: 'Roboto',
                 '::placeholder': {
                     color: '#aab7c4',
                 },
@@ -28,25 +30,6 @@ const createOptions = (fontSize) => {
 };
 
 class CheckoutForm extends React.Component {
-
-    // stripeTokenHandler(token) {
-    //     console.log('token=' + token);
-    // }
-
-    // handleSubmit(e) {
-    //     //e.preventDefault();
-
-    //     this.props.stripe.createToken()
-    //         .then(payload => {
-    //             if (payload.error) {
-    //                 // Inform the customer that there was an error
-    //                 console.error(payload.error.message);
-    //             } else {
-    //                 // Send the token to your server
-    //                 this.stripeTokenHandler(payload.token);
-    //             }
-    //         });
-    // };
 
     componentDidMount() {
         if (this.props.onRef) {
@@ -61,73 +44,85 @@ class CheckoutForm extends React.Component {
     }
 
     handleBlur = () => {
-        console.log('[blur]');
         if (this.props.onBlur) {
             this.props.onBlur();
         }
     }
 
     handleChange = change => {
-        console.log('[change]', change);
+        // console.log('[change]', change);
     }
 
-    // const handleClick = () => {
-    //     console.log('[click]');
-    // };
-
     handleFocus = () => {
-        console.log('[focus]');
+        // console.log('[focus]');
     }
 
     handleReady = () => {
-        console.log('[ready]');
+        // console.log('[ready]');
     }
 
     render() {
+        const fontSize = '1em';
+
         return (
-            <div>
-                <label className='checkoutform-label'>
-                    Card number
-                    <CardNumberElement
-                        onBlur={this.handleBlur}
-                        onChange={this.handleChange}
-                        onFocus={this.handleFocus}
-                        onReady={this.handleReady}
-                        {...createOptions(this.props.fontSize) }
-                    />
-                </label>
-                <label className='checkoutform-label'>
-                    Expiration date
-                    <CardExpiryElement
-                        onBlur={this.handleBlur}
-                        onChange={this.handleChange}
-                        onFocus={this.handleFocus}
-                        onReady={this.handleReady}
-                        {...createOptions(this.props.fontSize) }
-                    />
-                </label>
-                <label className='checkoutform-label'>
-                    CVC
-                    <CardCVCElement
-                        onBlur={this.handleBlur}
-                        onChange={this.handleChange}
-                        onFocus={this.handleFocus}
-                        onReady={this.handleReady}
-                        {...createOptions(this.props.fontSize) }
-                    />
-                </label>
-                <label className='checkoutform-label'>
-                    Postal code
-                    <PostalCodeElement
-                        onBlur={this.handleBlur}
-                        onChange={this.handleChange}
-                        onFocus={this.handleFocus}
-                        onReady={this.handleReady}
-                        placeholder='Postal code'
-                        {...createOptions(this.props.fontSize) }
-                    />
-                </label>
-                {/* <button onClick={(e) => this.handleSubmit(e)}>Pay NOW!</button> */}
+            <div className="checkout">
+                <div className='checkout-detail'>
+                    <div id='checkout-card-number'>
+                        <label>Card number</label>
+                        <CardNumberElement
+                            onBlur={this.handleBlur}
+                            onChange={this.handleChange}
+                            onFocus={this.handleFocus}
+                            onReady={this.handleReady}
+                            {...createOptions(fontSize)}
+                        />
+                    </div>
+                    <div id='checkout-expiry-date'>
+                        <label>Expiration date</label>
+                        <CardExpiryElement
+                            onBlur={this.handleBlur}
+                            onChange={this.handleChange}
+                            onFocus={this.handleFocus}
+                            onReady={this.handleReady}
+                            {...createOptions(fontSize)}
+                        />
+                    </div>
+
+                    <div id='checkout-cvc'>
+                        <label>Security code</label>
+
+                        <CardCVCElement
+                            onBlur={this.handleBlur}
+                            onChange={this.handleChange}
+                            onFocus={this.handleFocus}
+                            onReady={this.handleReady}
+                            {...createOptions(fontSize)}
+                        />
+                    </div>
+                </div>
+
+                <div className='checkout-detail'>
+
+                    <div id='checkout-name'>
+                        <label>Name on card</label>
+                        <div>
+                            <Input placeholder='John Smith' />
+                        </div>
+                    </div>
+
+                    <div id='checkout-postal-code'>
+                        <label>Postal code</label>
+                        <PostalCodeElement
+                            onBlur={this.handleBlur}
+                            onChange={this.handleChange}
+                            onFocus={this.handleFocus}
+                            onReady={this.handleReady}
+                            placeholder='Postal code'
+                            {...createOptions(fontSize)}
+                        />
+                    </div>
+
+                </div>
             </div>
         );
     }

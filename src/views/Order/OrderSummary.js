@@ -10,9 +10,11 @@ const OrderSummary = ({ food, pickup, quantity, date, time }) => {
 
     const timeText = OrderTimes[time] ? OrderTimes[time].text : '?';
     return (
-        <Segment padded raised>
+        <Segment padded raised className='order-summary'>
             <Header>
-                <Icon name='shopping basket' /> My Order</Header>
+                <Icon name='shopping basket' />
+                My Order
+            </Header>
             <Divider />
             <div className='order-summary-header'>
                 <div>{food.title}</div>

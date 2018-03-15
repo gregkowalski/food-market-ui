@@ -1,3 +1,11 @@
+.order-summary > .ui.header {
+    color: #494949;
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-left: 5px;
+    line-height: 1.1;
+}
+
 .order-summary-header {
     display: flex;
     justify-content: space-between;
