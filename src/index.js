@@ -18,7 +18,6 @@ import ProfileView from './views/ProfileView'
 import ProfileLink from './views/ProfileLink'
 import NotFoundPage from './views/NotFoundPage'
 import Login from './views/Login'
-import Pricing from './views/Pricing'
 // import Map2 from './views/map2'
 import SearchContainer from './views/SearchContainer'
 import ScrollToTop from './components/ScrollToTop'
@@ -54,7 +53,6 @@ render(
                             <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
                             <Route path='/profilelink' exact component={ProfileLink} />
                             <Route path='/login' exact component={Login} />
-                            <Route path='/pricing' exact component={Pricing} />
                             {/* <Route path='/map2' exact component={Map2} /> */}
                             <Route component={NotFoundPage} />
                         </Switch>

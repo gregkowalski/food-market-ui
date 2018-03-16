@@ -83,7 +83,7 @@ export default class ProfileEdit extends React.Component {
 
                 let phone;
                 if (user.phone) {
-                    phone = this.getAsYouTypePhone(user.phone.phone);
+                    phone = Util.getAsYouTypePhone(user.phone.phone);
                 }
 
                 let newState = {

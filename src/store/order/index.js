@@ -272,70 +272,76 @@ export const Actions = {
         };
     },
 
-    submitOrder: (checkout) => {
+    submitOrder: (stripe, nameOnCard, order) => {
         return (dispatch) => {
 
             dispatch({ type: ActionTypes.SUBMIT_ORDER });
 
+            console.log(order);
+            stripe.createSource(
+                {
+                    amount: order.amount,
+                    currency: 'cad',
+                    usage: 'single_use',
+                    metadata: { user_id: order.buyer_user_id },
+                    owner: { name: nameOnCard }
+                })
+                .then(result => {
+                    if (result.error) {
+                        const ex = new Error('Payment failed!');
+                        ex.error = result.error;
+                        throw ex;
+                    }
+                    order.source = result.source;
+                    return ApiClient.submitFoodOrder(null, order)
+                        .then(response => {
+                            const order_id = response.data.order_id;
+                            return ApiClient.confirmFoodOrder(null, order_id);
+                        });
+                })
+                .then(
+                    response => {
+                        dispatch({ type: ActionTypes.SUBMIT_ORDER_SUCCESS });
+                    },
+                    ex => {
+                        console.error(ex);
+                        let paymentError = 'Payment failed.'
+                        if (ex.error && ex.error.message) {
+                            paymentError = ex.error.message;
+                        }
+                        else if (ex.response && ex.response.data && ex.response.data.error) {
+                            paymentError = ex.response.data.error;
+                        }
+                        dispatch({
+                            type: ActionTypes.SUBMIT_ORDER_ERROR,
+                            paymentError
+                        });
+                    });
         }
     }
 }
 
 export const Selectors = {
-    food: (state) => {
-        return state.order.food;
-    },
-    cook: (state) => {
-        return state.order.cook;
-    },
-    reviews: (state) => {
-        return state.order.reviews;
-    },
-    isFoodLoading: (state) => {
-        return state.order.isFoodLoading;
-    },
-    isCookLoading: (state) => {
-        return state.order.isCookLoading;
-    },
-    isReviewsLoading: (state) => {
-        return state.order.isReviewsLoading;
-    },
-    pickup: (state) => {
-        return state.order.pickup;
-    },
-    address: (state) => {
-        return state.order.address;
-    },
-    date: (state) => {
-        return state.order.date;
-    },
-    time: (state) => {
-        return state.order.time;
-    },
-    quantity: (state) => {
-        return state.order.quantity;
-    },
-    buyerEmail: (state) => {
-        return state.order.buyerEmail;
-    },
-    buyerPhone: (state) => {
-        return state.order.buyerPhone;
-    },
-    isBuyerPhoneValid: (state) => {
-        return state.order.isBuyerPhoneValid;
-    },
-    buyerAddress: (state) => {
-        return state.order.buyerAddress;
-    },
-    isBuyerAddressValid: (state) => {
-        return state.order.isBuyerAddressValid;
-    },
-    contactMethod: (state) => {
-        return state.order.contactMethod;
-    },
-    isOrderProcessing: (state) => {
-        return state.order.isOrderProcessing;
-    },
+    food: (state) => { return state.order.food; },
+    cook: (state) => { return state.order.cook; },
+    reviews: (state) => { return state.order.reviews; },
+    isFoodLoading: (state) => { return state.order.isFoodLoading; },
+    isCookLoading: (state) => { return state.order.isCookLoading; },
+    isReviewsLoading: (state) => { return state.order.isReviewsLoading; },
+    pickup: (state) => { return state.order.pickup; },
+    address: (state) => { return state.order.address; },
+    date: (state) => { return state.order.date; },
+    time: (state) => { return state.order.time; },
+    quantity: (state) => { return state.order.quantity; },
+    buyerEmail: (state) => { return state.order.buyerEmail; },
+    buyerPhone: (state) => { return state.order.buyerPhone; },
+    isBuyerPhoneValid: (state) => { return state.order.isBuyerPhoneValid; },
+    buyerAddress: (state) => { return state.order.buyerAddress; },
+    isBuyerAddressValid: (state) => { return state.order.isBuyerAddressValid; },
+    contactMethod: (state) => { return state.order.contactMethod; },
+    isOrderProcessing: (state) => { return state.order.isOrderProcessing; },
+    isOrderCompleted: (state) => { return state.order.isOrderCompleted; },
+    paymentError: state => { return state.order.paymentError; }
 }
 
 const initialState = {
@@ -470,6 +476,18 @@ export const Reducers = {
             case ActionTypes.SUBMIT_ORDER:
                 return Object.assign({}, state, {
                     isOrderProcessing: true
+                });
+
+            case ActionTypes.SUBMIT_ORDER_SUCCESS:
+                return Object.assign({}, initialState, {
+                    isOrderProcessing: false,
+                    isOrderCompleted: true
+                });
+
+            case ActionTypes.SUBMIT_ORDER_ERROR:
+                return Object.assign({}, state, {
+                    isOrderProcessing: false,
+                    paymentError: action.paymentError
                 });
 
             default:

@@ -7,6 +7,7 @@ import './AppHeader.css'
 import Constants from '../Constants'
 import Config from '../Config'
 import Util from '../services/Util'
+import Url from '../services/Url'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import LoadingIcon from './LoadingIcon'
 
@@ -72,7 +73,7 @@ export class AppHeader extends React.Component {
                     <span>Hi, </span>
                     <Dropdown text={user.username}>
                         <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(`/profile/edit/${user.user_id}`)} />
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(Url.profileEdit(user.user_id))} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={(event, data) => this.handleContactSupport(event, data)} />
                             <Dropdown.Divider />

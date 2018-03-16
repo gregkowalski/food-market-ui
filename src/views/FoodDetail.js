@@ -18,6 +18,7 @@ import OrderRequest from '../components/OrderRequest'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import PriceCalc from '../services/PriceCalc'
 import Util from '../services/Util'
+import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
 import DeliverySelector from '../components/DeliverySelector'
 import DateTimeSelector from '../components/DateTimeSelector'
@@ -87,8 +88,7 @@ class FoodDetail extends React.Component {
     };
 
     handleOrderButtonClick = () => {
-        const url = `/foods/${this.props.food.food_id}/order`;
-        this.props.history.push(url);
+        this.props.history.push(Url.foodOrder(this.props.food.food_id));
     }
 
     render() {

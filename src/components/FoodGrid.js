@@ -5,6 +5,7 @@ import './FoodGrid.css'
 import Util from '../services/Util'
 import CarouselDecorators from '../components/ImageDecorator'
 import PriceCalc from '../services/PriceCalc'
+import Url from '../services/Url'
 
 export default class FoodGrid extends Component {
 
@@ -67,7 +68,7 @@ export default class FoodGrid extends Component {
                     <div className='FoodCard'>
                         <a
                             target='_blank'
-                            href={Util.foodDetailUrl(food.food_id, pickup, date)}
+                            href={Url.foodDetail(food.food_id, pickup, date)}
                             onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.food_id)}
                             onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.food_id)}>
                             <Item style={{ marginBottom: '1px' }}>

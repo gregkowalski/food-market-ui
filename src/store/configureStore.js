@@ -18,7 +18,7 @@ const configureStore = (options = {}) => {
     }
 
     // const searchFilter = createFilter('search', ['pickup', 'date']);
-    const orderFilter = createBlacklistFilter('order', ['isOrderProcessing']);
+    const orderFilter = createBlacklistFilter('order', ['isOrderProcessing', 'paymentError']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
         (inboundState, key) => {

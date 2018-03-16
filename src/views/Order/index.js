@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
 import OrderHeader from '../../components/OrderHeader'
-import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
+import Url from '../../services/Url'
 import { Actions, Selectors } from '../../store/order'
 import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
@@ -31,8 +31,7 @@ class Order extends React.Component {
         // Validate the order here.  If no date, time, quantity has been selected then bail.
         const { date, time, quantity } = this.props;
         if (date == null || time == null || quantity == null) {
-            const url = `/foods/${food_id}`;
-            this.props.history.push(url);
+            this.props.history.push(Url.foodDetail(food_id));
             return;
         }
 
@@ -47,117 +46,80 @@ class Order extends React.Component {
         }
     }
 
-    isValid(hasErrors) {
-        for (let v in hasErrors) {
-            if (hasErrors[v] === true) {
-                return false;
-            }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isOrderCompleted) {
+            let food_id = this.props.match.params.id;
+            this.props.history.push(Url.foodOrderSuccess(food_id));
         }
-        return true;
     }
-
-    handleError = (ex) => {
-        console.error(ex);
-        let paymentError = 'Payment failed.'
-        if (ex.error && ex.error.message) {
-            paymentError = ex.error.message;
-        }
-        else if (ex.response && ex.response.data && ex.response.data.error) {
-            paymentError = ex.response.data.error;
-        }
-        this.setState({
-            orderProcessing: false,
-            hasErrors: { payment: true },
-            paymentError
-        });
-    }
-
-    // handleConfirmButtonClick = () => {
-    //     if (this.state.orderProcessing) {paymentError
-    //         console.log('Confirmation is already processing...');
-    //         return;
-    //     }
-
-    //     console.log('Confirmation processing');
-    //     this.setState({ orderProcessing: true });
-
-    //     ApiClient.confirmFoodOrder(null, this.state.order_id)
-    //         .then(response => {
-    //             console.log('Confirmation finished');
-    //             console.log(response);
-    //             this.setState({ orderProcessing: false });
-    //         })
-    //         .catch(ex => {
-    //             this.handleError(ex);
-    //         });
-    // }
 
     handleOrderButtonClick = () => {
+        const { isOrderProcessing } = this.props;
 
-        this.props.actions.submitOrder(this.checkout);
-        return;
-
-        if (this.state.orderProcessing) {
+        if (isOrderProcessing) {
             console.log('Order is already processing...');
             return;
         }
 
-        if (!this.validatePaymentStep()) {
+        if (!this.validateSubmitOrder()) {
             console.log('Order form validation failed.  Please correct your information and try again.');
             return;
         }
 
         const jwtToken = CognitoUtil.getLoggedInUserJwtToken();
         if (!jwtToken) {
-            console.error('Cannot submit order without a logged-in user.  Please log in and try again.');
+            console.log('Cannot submit order without a logged-in user.  Please log in and try again.');
             return;
         }
 
-        console.log('Order processing');
-        this.setState({ orderProcessing: true });
+        const { nameOnCard } = this.state;
+        this.props.actions.submitOrder(this.checkout.props.stripe, nameOnCard, this.createOrderPayload());
+    }
 
-        const food = this.food;
-        const payment = PriceCalc.getOrderPayment(food.price, this.state.quantity);
+    validateSubmitOrder() {
+        return this.canSubmitOrder(true);
+    }
+
+    canSubmitOrder(isValidating = false) {
+        const { acceptedTerms, nameOnCard } = this.state;
+        const { isOrderProcessing, buyerAddress, isBuyerAddressValid, isBuyerPhoneValid, pickup, contactMethod } = this.props;
+
+        if (!acceptedTerms || (!isValidating && isOrderProcessing))
+            return false;
+
+        if (!pickup && (!isBuyerAddressValid || !buyerAddress))
+            return false;
+
+        if (contactMethod === ContactMethods.phone && !isBuyerPhoneValid)
+            return false;
+
+        if (!nameOnCard) {
+            return false;
+        }
+
+        return true;
+    }
+
+    createOrderPayload() {
+        const { food, quantity, date, time, pickup, contactMethod, buyerPhone, buyerEmail, buyerAddress } = this.props;
+
+        const buyerUserId = CognitoUtil.getLoggedInUserId();
+        const paymentAmount = PriceCalc.getPaymentAmount(food, quantity, pickup);
         const order = {
             food_id: food.food_id,
-            cook_js_user_id: food.user_id,
-            quantity: this.state.quantity,
-            handoff_date: this.state.date,
-            handoff_time: this.state.time,
-            phone: this.state.phone,
-            totalAmount: payment.totalAmount,
-            cookAmount: payment.cookAmount
+            cook_user_id: food.user_id,
+            buyer_user_id: buyerUserId,
+            buyer_phone: buyerPhone,
+            buyer_email: buyerEmail,
+            buyer_address: buyerAddress,
+            pickup: pickup,
+            quantity: quantity,
+            handoff_date: date.toISOString(),
+            handoff_time: time,
+            contact_method: contactMethod,
+            amount: paymentAmount
         };
-        console.log(order);
-        this.checkout.props.stripe.createSource(
-            {
-                amount: order.amount,
-                currency: 'cad',
-                usage: 'single_use',
-                metadata: {
-                    user_id: CognitoUtil.getLoggedInUserId()
-                }
-            })
-            .then(result => {
-                if (result.error) {
-                    let ex = new Error('Payment failed!');
-                    ex.error = result.error;
-                    throw ex;
-                }
-                order.source = result.source;
-                return ApiClient.submitFoodOrder(jwtToken, order);
-            })
-            .then(response => {
-                console.log('Order finished');
-                console.log(response);
-                this.setState({
-                    orderProcessing: false,
-                    order_id: response.data.order_id
-                });
-            })
-            .catch(ex => {
-                this.handleError(ex);
-            });
+        return order;
     }
 
     handleContactMethodChange = (contactMethod) => {
@@ -185,33 +147,21 @@ class Order extends React.Component {
         this.props.actions.buyerAddressChanged(this.props.buyerAddress);
     }
 
-    canSubmitOrder() {
-        const { acceptedTerms } = this.state;
-        const { isOrderProcessing, buyerAddress, isBuyerAddressValid, isBuyerPhoneValid, pickup, contactMethod } = this.props;
-
-        if (!acceptedTerms || isOrderProcessing)
-            return false;
-
-        if (!pickup && (!isBuyerAddressValid || !buyerAddress))
-            return false;
-
-        if (contactMethod === ContactMethods.phone && !isBuyerPhoneValid)
-            return false;
-
-        return true;
-    }
+    handleCheckoutRef = ref => this.checkout = ref;
+    handleCardNameChange = e => this.setState({ nameOnCard: e.target.value });
 
     render() {
         const { food, pickup, quantity, date, time, contactMethod,
             buyerPhone, isBuyerPhoneValid,
             buyerAddress, isBuyerAddressValid,
-            isOrderProcessing
+            isOrderProcessing, paymentError
         } = this.props;
 
         if (!food) {
             return null;
         }
-        const { acceptedTerms, paymentError } = this.state;
+        const { acceptedTerms } = this.state;
+        const hasPaymentError = paymentError ? true : false;
 
         return (
             <div>
@@ -243,7 +193,8 @@ class Order extends React.Component {
                             />
 
                             <BillingInfo paymentError={paymentError}
-                                onCheckoutRef={ref => this.checkout = ref} />
+                                onCheckoutRef={this.handleCheckoutRef}
+                                onCardNameChange={this.handleCardNameChange} />
 
                             <Segment>
                                 <Checkbox className='order-segment-user-agree-text'
@@ -254,15 +205,14 @@ class Order extends React.Component {
 
                             <Message header='Order Processing Error' icon='exclamation circle'
                                 content={paymentError}
-                                error={paymentError}
-                                hidden={!paymentError}
-                                visible={paymentError} />
+                                error={hasPaymentError}
+                                hidden={!hasPaymentError}
+                                visible={hasPaymentError} />
 
                             <Button fluid className='order-confirm-continue-button'
                                 disabled={!this.canSubmitOrder()}
                                 loading={isOrderProcessing}
-                                onClick={this.handleOrderButtonClick}
-                            >
+                                onClick={this.handleOrderButtonClick}>
                                 <Icon name='lock' />Confirm and Pay
                             </Button>
                         </div>
@@ -289,6 +239,8 @@ const mapStateToProps = (state) => {
         isBuyerAddressValid: Selectors.isBuyerAddressValid(state),
         contactMethod: Selectors.contactMethod(state),
         isOrderProcessing: Selectors.isOrderProcessing(state),
+        isOrderCompleted: Selectors.isOrderCompleted(state),
+        paymentError: Selectors.paymentError(state),
     };
 };
 
@@ -314,7 +266,9 @@ Order.propTypes = {
     isBuyerPhoneValid: PropTypes.bool.isRequired,
     buyerAddress: PropTypes.string,
     isBuyerAddressValid: PropTypes.bool.isRequired,
+    paymentError: PropTypes.string,
     isOrderProcessing: PropTypes.bool,
+    isOrderCompleted: PropTypes.bool,
 
     actions: PropTypes.shape({
         loadFood: PropTypes.func.isRequired,

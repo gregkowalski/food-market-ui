@@ -4,6 +4,7 @@ import { setTimeout } from 'timers';
 import { Item, Image, Rating, Icon } from 'semantic-ui-react'
 import './ImageDecorator.css'
 import Util from '../services/Util'
+import Url from '../services/Url'
 import PriceCalc from '../services/PriceCalc'
 
 export default class FoodCarousel extends Component {
@@ -63,7 +64,7 @@ export default class FoodCarousel extends Component {
                 <div className='FoodCard2' key={food.food_id} style={foodCardStyle}>
                     <a style={{ color: 'inherit' }}
                         target='_blank'
-                        href={Util.foodDetailUrl(food.food_id, pickup, date)}>
+                        href={Url.foodDetail(food.food_id, pickup, date)}>
 
                         <Item style={{ marginBottom: '1px' }}>
                             <Item.Content>

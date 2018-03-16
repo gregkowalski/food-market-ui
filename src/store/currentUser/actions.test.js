@@ -25,7 +25,6 @@ describe('store/currentUser/Actions', () => {
     it('should get current user from API', () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
         ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
-        //mockGetCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
         Thunk(Actions.loadCurrentUser).execute()
             .then(dispatches => {
                 expect(dispatches.length).toEqual(2);

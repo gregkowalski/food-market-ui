@@ -62,7 +62,8 @@ class CheckoutForm extends React.Component {
     }
 
     render() {
-        const fontSize = '1em';
+        const fontSize = '14px';
+        const { onCardNameChange } = this.props;
 
         return (
             <div className="checkout">
@@ -106,7 +107,7 @@ class CheckoutForm extends React.Component {
                     <div id='checkout-name'>
                         <label>Name on card</label>
                         <div>
-                            <Input placeholder='John Smith' />
+                            <Input placeholder='John Smith' onChange={onCardNameChange} />
                         </div>
                     </div>
 

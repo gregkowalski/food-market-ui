@@ -8,8 +8,6 @@ export default class OrderError extends React.Component {
 
     state = {
         quantity: 1,
-        showPricingDetails: false,
-        serviceFeeRate: 0.03
     };
 
     food;

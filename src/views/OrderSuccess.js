@@ -7,8 +7,6 @@ export default class OrderSuccess extends React.Component {
 
     state = {
         quantity: 1,
-        showPricingDetails: false,
-        serviceFeeRate: 0.03
     };
 
     food;

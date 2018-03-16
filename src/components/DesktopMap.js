@@ -6,6 +6,7 @@ import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
 import Regions from './Map/Regions'
 import PriceCalc from '../services/PriceCalc'
 import Util from '../services/Util'
+import Url from '../services/Url'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -199,7 +200,7 @@ export default class DesktopMap extends React.Component {
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={Util.foodDetailUrl(selectedFood.id, pickup, date)}>
+                            href={Url.foodDetail(selectedFood.id, pickup, date)}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
                                     <Image width='100%' shape='rounded' src={selectedFood.image} />
