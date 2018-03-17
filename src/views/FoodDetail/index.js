@@ -3,31 +3,28 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
-import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
-import Scroll from 'react-scroll' // Imports all Mixins
-import ShowMore from 'react-show-more'
+import { Button, Rating } from 'semantic-ui-react'
+import { Divider } from 'semantic-ui-react'
+import Scroll from 'react-scroll'
 import './index.css'
 import Constants from '../../Constants'
 import AppHeader from '../../components/AppHeader'
 import FoodLightbox from '../../components/FoodLightbox'
-import FlagListing from '../../components/FlagListing'
 import FlagListingMobile from '../../components/FlagListingMobile'
 import Drawer from '../../components/Drawer'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
-import Util from '../../services/Util'
 import Url from '../../services/Url'
 import { Actions, Selectors } from '../../store/order'
-import OrderRequest from './OrderRequest'
-import DeliverySelector from './DeliverySelector'
-import DateTimeSelector from './DateTimeSelector'
-import QuantitySelector from './QuantitySelector'
-import OrderPriceSummary from './OrderPriceSummary'
-import OrderRequestHeader from './OrderRequestHeader'
 
-var ScrollLink = Scroll.Link;
-var ScrollElement = Scroll.Element;
+import OverviewSection from './OverviewSection'
+import ReviewsSection from './ReviewsSection'
+import CookSection from './CookSection'
+import OrderSection from './OrderSection'
+import OrderRequest from './OrderRequest'
+
+const ScrollLink = Scroll.Link;
+const ScrollElement = Scroll.Element;
 
 class FoodDetail extends React.Component {
 
@@ -134,11 +131,17 @@ class FoodDetail extends React.Component {
                     <div className='flex-container'>
                         <div className='flex-item-main'>
                             <div className='detail-content'>
-                                <OverviewSection food={food} cook={cook} scrollElement='overview' />
+                                <ScrollElement name='overview'>
+                                    <OverviewSection food={food} cook={cook} />
+                                </ScrollElement>
                                 <FlagListingMobile />
                                 <Divider section hidden />
-                                <ReviewsSection food={food} reviews={reviews} scrollElement='reviews' />
-                                <CookSection cook={cook} scrollElement='cook' />
+                                <ScrollElement name='reviews'>
+                                    <ReviewsSection food={food} reviews={reviews} />
+                                </ScrollElement>
+                                <ScrollElement name='cook'>
+                                    <CookSection cook={cook} />
+                                </ScrollElement>
                                 <Divider section />
                             </div>
                         </div>
@@ -237,282 +240,6 @@ FoodDetail.propTypes = {
         loadReviews: PropTypes.func.isRequired,
         clearOrder: PropTypes.func.isRequired,
     }).isRequired
-
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FoodDetail));
-
-const OverviewSection = ({ food, cook, scrollElement }) => {
-    return (
-        <ScrollElement name={scrollElement}>
-
-            <Header className='detail-main-header' as='h2'>
-                ${food.price} · {food.title}
-            </Header>
-            <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em' }}>
-                locally handcrafted by
-                <ScrollLink className='author-link' to='cook'
-                    spy={true} smooth={true} container={document}
-                    offset={-85} duration={500}>
-                    {cook ? cook.name : '...'}
-                </ScrollLink>
-            </div>
-            <div style={{ clear: 'both' }}></div>
-            <div style={{ color: '#5e5d5d', marginTop: '20px' }}>
-                <FoodOptions food={food} />
-            </div>
-
-            <Header as='h3' className='food-detail-header'>The Food</Header>
-            <div className='detail-body-text'>
-                <ShowMore
-                    lines={3}
-                    more={<div style={{ color: '#189da7' }}>Read more about this food <Icon name='angle down' /></div>}
-                    less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
-                    anchorClass='showmore-text'>
-
-                    <div className='user-text'>{food.short_description} </div>
-                    <div>{food.long_desciption}</div>
-                </ShowMore>  </div>
-            <Divider section />
-
-            <Header as='h3' className='food-detail-header'>Ingredients</Header>
-            <div className='detail-body-text'>{food.title}.</div>
-
-            <Divider section />
-
-            <Header as='h3' className='food-detail-header'>Allergy Information</Header>
-            <div className='detail-body-text'>
-                <div className='user-text'>
-                    <div style={{ fontWeight: '600' }} >
-                        May contain one or more of the following allergens:
-                    </div>
-                </div>
-                <div style={{ marginLeft: '15px', marginTop: '15px' }}>{food.allergies.join(',')}.</div>
-                <div style={{ marginTop: '15px' }}>
-                    <Icon color='teal' name='angle double right' />
-                    For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly.
-                </div>
-            </div>
-
-            <Divider section />
-
-            <Header as='h3' className='food-detail-header'>Prep + Storage</Header>
-            <div className='detail-body-text'>
-                <ShowMore
-                    more={<div style={{ color: '#189da7' }}>Get more details <Icon name='angle down' /></div>}
-                    less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
-                    anchorClass='showmore-text'>
-                    <div className='user-text'>
-                        {food.instruction}
-                    </div>
-                </ShowMore>
-                <div style={{ marginTop: '15px' }}>
-                    <FoodPrepSafetyMessage food={food} />
-                </div>
-            </div>
-            <Divider section />
-
-            <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
-            <div className='detail-body-text'><span style={{ fontWeight: '600' }}>{food.unit} </span> per order.  Feeds approximately {food.feed} people. </div>
-            <Divider section />
-
-            <Header as='h3' className='food-detail-header'>Special Features</Header>
-            <div className='detail-body-text'>{food.features.join(', ')}</div>
-
-            <Divider section hidden />
-
-        </ScrollElement>
-    );
-}
-
-const ReviewsSection = ({ food, reviews, scrollElement }) => {
-    return (
-        <ScrollElement name={scrollElement}>
-            <Header className='detail-sub-header' as='h2'>
-                <div style={{ display: 'flex', marginTop: '2px', marginBottom: '10px' }}>
-                    {food.ratingCount} Reviews
-                    <Rating disabled={true} maxRating={5} rating={food.rating} size='huge' style={{ marginTop: '10px', marginLeft: '14px' }} />
-                </div>
-            </Header>
-            <Divider section />
-            <FoodRatingSection food={food} />
-            <Divider section />
-            <ReviewList reviews={reviews} />
-        </ScrollElement>
-    );
-}
-
-const CookSection = ({ cook, scrollElement }) => {
-    if (!cook)
-        return null;
-
-    return (
-        <ScrollElement name={scrollElement}>
-            <Header className='detail-sub-header' as='h2'>Meet {cook.name}</Header>
-            <div className='detail-cook-sub-header'>
-                {cook.city} · <span style={{ color: '#0fb5c3' }}> Joined in {cook.join_date}</span>
-            </div>
-            <div style={{ clear: 'both' }}></div>
-            <div className='detail-cook-text'>{cook.info}
-                <div style={{ marginTop: '15px' }}>
-                    Languages:
-                <span style={{ fontWeight: '600' }}>{cook.lang}</span>
-                </div>
-            </div>
-            <div style={{ marginTop: '25px' }}>
-                <Image size='small' circular src={cook.image} />
-            </div>
-        </ScrollElement>
-    );
-}
-
-
-const OrderSection = ({ food, pickup, date, time, quantity,
-    onOrderButtonClick, onQuantityChange, onDateChange, onTimeChange, onDeliveryOptionChange }) => {
-
-    return (
-        <Segment>
-            <OrderRequestHeader food={food} />
-            <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
-            <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
-            <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
-            <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
-            <RequestOrderButton food={food} quantity={quantity} onClick={onOrderButtonClick} />
-            <div className='detail-card-charged-footnote'>You won't be charged yet</div>
-            <FlagListing />
-        </Segment>
-    )
-}
-
-const RequestOrderButton = ({ food, quantity, onClick }) => {
-    return (
-        <Button animated='fade' fluid className='detail-desktop-button' onClick={onClick}>
-            <Button.Content visible>
-                Request an Order
-            </Button.Content>
-            <Button.Content hidden>
-                ${PriceCalc.getTotal(food.price, quantity)} CAD
-            </Button.Content>
-        </Button>
-    );
-}
-
-const FoodPrepSafetyMessage = ({ food }) => {
-    if (food.states[0] === 'frozen') {
-        return (<span><Icon color='teal' name='angle double right' />
-            Frozen products must be fully cooked for food safety and quality.</span>)
-    }
-    else if (food.states[0] === 'cooked') {
-        return (<span><Icon color='teal' name='angle double right' />
-            Store your food properly: keep cold food cold and hot food hot!</span>)
-    }
-    return null;
-}
-
-const FoodOptions = ({ food }) => {
-
-    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
-    return (
-        <Grid doubling columns={5}>
-            <Grid.Row>
-                <Grid.Column>
-                    <span className='food-detail-icon-tags'><Icon name={foodPrepIcon} /> {food.states[0]}</span>
-                </Grid.Column>
-                <Grid.Column>
-                    {food.delivery && <span className='food-detail-icon-tags'><Icon name='shipping' /> delivery</span>}
-                </Grid.Column>
-                <Grid.Column>
-                    {food.pickup && <span className='food-detail-icon-tags'><Icon name='hand rock' />pick-up</span>}
-                </Grid.Column>
-            </Grid.Row>
-        </Grid>
-    );
-}
-
-const ReviewList = ({ reviews }) => {
-
-    if (!reviews || reviews.length === 0)
-        return null;
-
-    const reviewComponentList = reviews.map(review => (
-        <div key={review.review_id}>
-            <Feed>
-                <Feed.Event>
-                    <Feed.Content>
-                        <Image src={review.imageUrl} size='mini' floated='left' circular />
-                        <div style={{ float: 'right', color: '#5e5d5d' }}>
-                            <a href='url' style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
-                        <Feed.Summary className='detail-body-text'>{review.summary} </Feed.Summary>
-                        <Feed.Date content={review.date} style={{ fontSize: '1.1em', fontWeight: '600', marginTop: '-1px' }} />
-                        <Feed.Extra style={{ marginTop: '0.8em', maxWidth: '100%' }} >
-                            <div className='detail-body-text'>
-                                <ShowMore
-                                    lines={4}
-                                    more={<div style={{ color: '#189da7' }}>Read more</div>}
-                                    less=''>
-                                    {review.comment}
-                                </ShowMore>
-                            </div>
-                        </Feed.Extra>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
-            <Divider section />
-        </div>
-    ));
-
-    return (
-        <div>
-            {reviewComponentList}
-        </div>
-    );
-}
-
-const FoodRatingSection = ({ food }) => {
-    return (
-        <Grid stackable columns={2} className='detail-rating'>
-            <Grid.Row>
-                <Grid.Column>
-                    <div>
-                        <div>Accuracy</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-                <Grid.Column>
-                    <div>
-                        <div>Quality</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
-                    <div>
-                        <div>Communication</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-                <Grid.Column>
-                    <div>
-                        <div>Taste</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
-                    <div>
-                        <div>Freshness</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-                <Grid.Column>
-                    <div>
-                        <div>Value</div>
-                        <Rating disabled={true} maxRating={5} rating={food.rating} />
-                    </div>
-                </Grid.Column>
-            </Grid.Row>
-        </Grid>
-    );
-}
