@@ -1,5 +1,5 @@
 import React from 'react'
-import Constants from '../Constants.js'
+import Constants from '../../Constants.js'
 import './DeliverySelector.css'
 
 const DeliverySelector = ({ pickup, onChange }) => {

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import './OrderRequest.css'
-import '../views/FoodDetail.css'
 import DeliverySelector from './DeliverySelector'
 import DateTimeSelector from './DateTimeSelector'
 import QuantitySelector from './QuantitySelector'

@@ -2,8 +2,8 @@ import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import Util from '../services/Util'
-import OrderTimes from '../data/OrderTimes'
+import Util from '../../services/Util'
+import OrderTimes from '../../data/OrderTimes'
 import './DateTimeSelector.css'
 
 class DateTimeSelector extends React.Component {

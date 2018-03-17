@@ -204,6 +204,12 @@ export const Actions = {
         }
     },
 
+    clearOrder: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.CLEAR_ORDER });
+        }
+    },
+
     loadFood: (food_id) => {
         return (dispatch) => {
 
@@ -474,6 +480,9 @@ export const Reducers = {
                     isOrderProcessing: false,
                     paymentError: action.paymentError
                 });
+
+            case ActionTypes.CLEAR_ORDER:
+                return Object.assign({}, initialState);
 
             default:
                 return state;

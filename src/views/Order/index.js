@@ -28,10 +28,20 @@ class Order extends React.Component {
 
         let food_id = this.props.match.params.id;
 
+        // If an order has already been submitted in the current session,
+        // the user needs to start over by making a food request
+        if (this.props.order_id) {
+            this.props.history.push(Url.foodDetail(food_id));
+            this.redirecting = true;
+            return;
+        }
+
         // Validate the order here.  If no date, time, quantity has been selected then bail.
+        // The user most likely navigated directly to this order page.
         const { date, time, quantity } = this.props;
         if (date == null || time == null || quantity == null) {
             this.props.history.push(Url.foodDetail(food_id));
+            this.redirecting = true;
             return;
         }
 
@@ -50,6 +60,7 @@ class Order extends React.Component {
         if (nextProps.isOrderCompleted) {
             let food_id = this.props.match.params.id;
             this.props.history.push(Url.foodOrderSuccess(food_id));
+            this.redirecting = true;
         }
     }
 
@@ -149,6 +160,10 @@ class Order extends React.Component {
     handleCardNameChange = e => this.setState({ nameOnCard: e.target.value });
 
     render() {
+        if (this.redirecting) {
+            return null;
+        }
+
         const { food, pickup, quantity, date, time, contactMethod,
             buyerPhone, isBuyerPhoneValid,
             buyerAddress, isBuyerAddressValid,
@@ -239,6 +254,7 @@ const mapStateToProps = (state) => {
         isOrderProcessing: Selectors.isOrderProcessing(state),
         isOrderCompleted: Selectors.isOrderCompleted(state),
         paymentError: Selectors.paymentError(state),
+        order_id: Selectors.order_id(state),
     };
 };
 
@@ -267,6 +283,7 @@ Order.propTypes = {
     paymentError: PropTypes.string,
     isOrderProcessing: PropTypes.bool,
     isOrderCompleted: PropTypes.bool,
+    order_id: PropTypes.string,
 
     actions: PropTypes.shape({
         loadFood: PropTypes.func.isRequired,

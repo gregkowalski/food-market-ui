@@ -1,8 +1,8 @@
 import React from 'react'
 import { Divider } from 'semantic-ui-react'
-import Constants from '../Constants.js'
+import Constants from '../../Constants.js'
 import './OrderPriceSummary.css'
-import PriceCalc from '../services/PriceCalc'
+import PriceCalc from '../../services/PriceCalc'
 
 const OrderPriceSummary = ({ food, quantity, pickup }) => {
 

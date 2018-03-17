@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { Segment } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Url from '../services/Url'
@@ -45,11 +46,13 @@ class OrderSuccess extends React.Component {
         return (
             <div>
                 <AppHeader />
-                <div style={{ marginLeft: '1em', marginTop: '2em' }}>
-                    <h1 style={{ color: '#4cb9a0' }}>Success!!!</h1>
-                    <span>Your delicious order of <strong>{food.title}</strong> has been placed!</span>
-                </div>
-            </div>
+                <Segment raised padded='very' style={{ width: '80%', margin: '40px auto' }}>
+                    < h1 style={{ color: '#4cb9a0' }}>Success!!!</h1>
+                    <span>Your delicious order of <strong>{food.title}</strong> has been placed!
+                        The cook will review your order and let you know shortly if it's accepted
+                    </span>
+                </Segment >
+            </div >
         );
     }
 }

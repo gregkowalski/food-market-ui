@@ -7,24 +7,24 @@ import { Button, Image, Icon, Rating, Segment } from 'semantic-ui-react'
 import { Grid, Header, Divider, Feed } from 'semantic-ui-react'
 import Scroll from 'react-scroll' // Imports all Mixins
 import ShowMore from 'react-show-more'
-import './FoodDetail.css'
-import Constants from '../Constants'
-import AppHeader from '../components/AppHeader'
-import FoodLightbox from '../components/FoodLightbox'
-import FlagListing from '../components/FlagListing'
-import FlagListingMobile from '../components/FlagListingMobile'
-import Drawer from '../components/Drawer'
-import OrderRequest from '../components/OrderRequest'
-import CognitoUtil from '../services/Cognito/CognitoUtil'
-import PriceCalc from '../services/PriceCalc'
-import Util from '../services/Util'
-import Url from '../services/Url'
-import { Actions, Selectors } from '../store/order'
-import DeliverySelector from '../components/DeliverySelector'
-import DateTimeSelector from '../components/DateTimeSelector'
-import QuantitySelector from '../components/QuantitySelector'
-import OrderPriceSummary from '../components/OrderPriceSummary'
-import OrderRequestHeader from '../components/OrderRequestHeader'
+import './index.css'
+import Constants from '../../Constants'
+import AppHeader from '../../components/AppHeader'
+import FoodLightbox from '../../components/FoodLightbox'
+import FlagListing from '../../components/FlagListing'
+import FlagListingMobile from '../../components/FlagListingMobile'
+import Drawer from '../../components/Drawer'
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import PriceCalc from '../../services/PriceCalc'
+import Util from '../../services/Util'
+import Url from '../../services/Url'
+import { Actions, Selectors } from '../../store/order'
+import OrderRequest from './OrderRequest'
+import DeliverySelector from './DeliverySelector'
+import DateTimeSelector from './DateTimeSelector'
+import QuantitySelector from './QuantitySelector'
+import OrderPriceSummary from './OrderPriceSummary'
+import OrderRequestHeader from './OrderRequestHeader'
 
 var ScrollLink = Scroll.Link;
 var ScrollElement = Scroll.Element;
@@ -35,7 +35,6 @@ class FoodDetail extends React.Component {
         super(props);
 
         this.state = {
-            hasErrors: {},
             showOrderDrawer: false
         };
     }
@@ -45,6 +44,13 @@ class FoodDetail extends React.Component {
             CognitoUtil.setLastPath(window.location.pathname);
             CognitoUtil.redirectToLoginIfNoSession();
             return;
+        }
+
+        // If there already is a submitted order in the current session
+        // and the user is on the food detail page then let's clear the
+        // previous order before we start.
+        if (this.props.order_id) {
+            this.props.actions.clearOrder();
         }
 
         let food_id = this.props.match.params.id;
@@ -192,6 +198,7 @@ const mapStateToProps = (state) => {
         date: Selectors.date(state),
         time: Selectors.time(state),
         quantity: Selectors.quantity(state),
+        order_id: Selectors.order_id(state),
     };
 };
 
@@ -217,6 +224,7 @@ FoodDetail.propTypes = {
     time: PropTypes.number,
     quantity: PropTypes.number.isRequired,
     buyerPhone: PropTypes.string,
+    order_id: PropTypes.string,
 
     actions: PropTypes.shape({
         selectPickup: PropTypes.func.isRequired,
@@ -227,6 +235,7 @@ FoodDetail.propTypes = {
         loadFood: PropTypes.func.isRequired,
         loadCook: PropTypes.func.isRequired,
         loadReviews: PropTypes.func.isRequired,
+        clearOrder: PropTypes.func.isRequired,
     }).isRequired
 
 }
@@ -356,6 +365,7 @@ const CookSection = ({ cook, scrollElement }) => {
         </ScrollElement>
     );
 }
+
 
 const OrderSection = ({ food, pickup, date, time, quantity,
     onOrderButtonClick, onQuantityChange, onDateChange, onTimeChange, onDeliveryOptionChange }) => {

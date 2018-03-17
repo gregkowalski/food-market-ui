@@ -66,10 +66,12 @@
 
 .datetimeselector-date .DateInput--with-caret::before {
     margin-top: -15px;
+    z-index: 3;
 }
 
 .datetimeselector-date .DateInput--with-caret::after {
     margin-top: -15px;
+    z-index: 3;
 }
 
 .datetimeselector-date .DateInput__display-text {
