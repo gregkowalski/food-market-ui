@@ -9,7 +9,6 @@ import './semantic/semantic.min.css'
 import FoodDetail from './views/FoodDetail'
 import Order from './views/Order'
 import OrderSuccess from './views/OrderSuccess'
-import OrderError from './views/OrderError'
 import CognitoCallback from './services/Cognito/CognitoCallback'
 import CognitoSignout from './services/Cognito/CognitoSignout'
 import StripeCallback from './services/Stripe/StripeCallback'
@@ -43,7 +42,6 @@ render(
                             <Route exact path='/' component={SearchContainer} />
                             {/* <Route path='/temp' component={temp} /> */}
                             <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
-                            <Route path='/foods/:id/orderError' component={OrderError} />
                             <Route path='/foods/:id/order' component={Order} />
                             <Route path='/foods/:id' exact component={FoodDetail} />
                             <Route path='/cognitoCallback' exact component={CognitoCallback} />

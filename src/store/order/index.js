@@ -15,13 +15,6 @@ function selectDelivery() {
     };
 }
 
-function addressChanged(address) {
-    return {
-        type: ActionTypes.ADDRESS_CHANGED,
-        address
-    };
-}
-
 function dateChanged(date) {
     return {
         type: ActionTypes.DATE_CHANGED,
@@ -165,12 +158,6 @@ export const Actions = {
         }
     },
 
-    addressChanged: (address) => {
-        return (dispatch) => {
-            dispatch(addressChanged(address));
-        }
-    },
-
     dateChanged: (date) => {
         return (dispatch) => {
             dispatch(dateChanged(date));
@@ -235,12 +222,12 @@ export const Actions = {
         };
     },
 
-    loadCook: (user_id) => {
+    loadCook: (cook_user_id) => {
         return (dispatch) => {
 
             dispatch(requestCook());
 
-            return ApiClient.getPublicUser(user_id)
+            return ApiClient.getPublicUser(cook_user_id)
                 .then(
                     response => {
                         const user = response.data;
@@ -292,16 +279,18 @@ export const Actions = {
                         ex.error = result.error;
                         throw ex;
                     }
-                    order.source = result.source;
-                    return ApiClient.submitFoodOrder(null, order)
-                        .then(response => {
-                            const order_id = response.data.order_id;
-                            return ApiClient.confirmFoodOrder(null, order_id);
-                        });
+                    order.source = {
+                        id: result.source.id,
+                        amount: result.source.amount
+                    };
+                    return ApiClient.createFoodOrder(null, order);
                 })
                 .then(
                     response => {
-                        dispatch({ type: ActionTypes.SUBMIT_ORDER_SUCCESS });
+                        dispatch({
+                            type: ActionTypes.SUBMIT_ORDER_SUCCESS,
+                            order_id: response.data.order_id
+                        });
                     },
                     ex => {
                         console.error(ex);
@@ -329,7 +318,6 @@ export const Selectors = {
     isCookLoading: (state) => { return state.order.isCookLoading; },
     isReviewsLoading: (state) => { return state.order.isReviewsLoading; },
     pickup: (state) => { return state.order.pickup; },
-    address: (state) => { return state.order.address; },
     date: (state) => { return state.order.date; },
     time: (state) => { return state.order.time; },
     quantity: (state) => { return state.order.quantity; },
@@ -341,7 +329,8 @@ export const Selectors = {
     contactMethod: (state) => { return state.order.contactMethod; },
     isOrderProcessing: (state) => { return state.order.isOrderProcessing; },
     isOrderCompleted: (state) => { return state.order.isOrderCompleted; },
-    paymentError: state => { return state.order.paymentError; }
+    paymentError: state => { return state.order.paymentError; },
+    order_id: state => { return state.order.order_id; }
 }
 
 const initialState = {
@@ -437,11 +426,6 @@ export const Reducers = {
                     time: action.time
                 });
 
-            case ActionTypes.ADDRESS_CHANGED:
-                return Object.assign({}, state, {
-                    address: action.address
-                });
-
             case ActionTypes.QUANTITY_CHANGED:
                 return Object.assign({}, state, {
                     quantity: action.quantity
@@ -479,9 +463,10 @@ export const Reducers = {
                 });
 
             case ActionTypes.SUBMIT_ORDER_SUCCESS:
-                return Object.assign({}, initialState, {
+                return Object.assign({}, state, {
                     isOrderProcessing: false,
-                    isOrderCompleted: true
+                    isOrderCompleted: true,
+                    order_id: action.order_id
                 });
 
             case ActionTypes.SUBMIT_ORDER_ERROR:

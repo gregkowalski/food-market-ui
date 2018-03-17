@@ -27,7 +27,7 @@ class ApiClient {
         return headers;
     }
 
-    submitFoodOrder(jwt, order) {
+    createFoodOrder(jwt, order) {
         return this.apiGatewayClient.invokeApi(null, '/orders', 'POST',
             { headers: this.jsonHttpHeader(jwt) }, order);
     }

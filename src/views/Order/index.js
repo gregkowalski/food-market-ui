@@ -103,12 +103,10 @@ class Order extends React.Component {
     createOrderPayload() {
         const { food, quantity, date, time, pickup, contactMethod, buyerPhone, buyerEmail, buyerAddress } = this.props;
 
-        const buyerUserId = CognitoUtil.getLoggedInUserId();
         const paymentAmount = PriceCalc.getPaymentAmount(food, quantity, pickup);
         const order = {
             food_id: food.food_id,
             cook_user_id: food.user_id,
-            buyer_user_id: buyerUserId,
             buyer_phone: buyerPhone,
             buyer_email: buyerEmail,
             buyer_address: buyerAddress,
