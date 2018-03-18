@@ -5,19 +5,12 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Segment } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
-import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
 
 class OrderSuccess extends React.Component {
 
     componentWillMount() {
-        if (!CognitoUtil.isLoggedIn()) {
-            CognitoUtil.setLastPath(window.location.pathname);
-            CognitoUtil.redirectToLoginIfNoSession();
-            return;
-        }
-
         let food_id = this.props.match.params.id;
 
         if (!this.props.order_id) {

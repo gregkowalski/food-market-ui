@@ -12,7 +12,6 @@ import AppHeader from '../../components/AppHeader'
 import FoodLightbox from '../../components/FoodLightbox'
 import FlagListingMobile from '../../components/FlagListingMobile'
 import Drawer from '../../components/Drawer'
-import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 import { Actions, Selectors } from '../../store/order'
@@ -37,12 +36,6 @@ class FoodDetail extends React.Component {
     }
 
     componentWillMount() {
-        if (!CognitoUtil.isLoggedIn()) {
-            CognitoUtil.setLastPath(window.location.pathname);
-            CognitoUtil.redirectToLoginIfNoSession();
-            return;
-        }
-
         // If there already is a submitted order in the current session
         // and the user is on the food detail page then let's clear the
         // previous order before we start.

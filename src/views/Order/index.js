@@ -20,12 +20,6 @@ class Order extends React.Component {
     state = { acceptedTerms: false };
 
     componentWillMount() {
-        if (!CognitoUtil.isLoggedIn()) {
-            CognitoUtil.setLastPath(window.location.pathname);
-            CognitoUtil.redirectToLoginIfNoSession();
-            return;
-        }
-
         let food_id = this.props.match.params.id;
 
         // If an order has already been submitted in the current session,

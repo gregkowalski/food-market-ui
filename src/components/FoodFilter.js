@@ -25,7 +25,7 @@ export default class FoodFilter extends React.Component {
         }
     }
 
-    static getButtonProps(active) {
+    getButtonProps(active) {
         const props = { color: 'teal' };
         if (!active) {
             props.basic = true;
@@ -45,13 +45,13 @@ export default class FoodFilter extends React.Component {
 
                     {!mobile &&
                         <div id='foodfilter-date'>
-                            <Button {...FoodFilter.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+                            <Button {...this.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                         </div>
                     }
 
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
-                        <Button {...FoodFilter.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
-                        <Button {...FoodFilter.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
+                        <Button {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
+                        <Button {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
                     </div>
 
                     {!mobile &&

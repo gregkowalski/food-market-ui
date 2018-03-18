@@ -14,7 +14,6 @@ import CognitoSignout from './services/Cognito/CognitoSignout'
 import StripeCallback from './services/Stripe/StripeCallback'
 import ProfileEdit from './views/ProfileEdit'
 import ProfileView from './views/ProfileView'
-import ProfileLink from './views/ProfileLink'
 import NotFoundPage from './views/NotFoundPage'
 import Login from './views/Login'
 // import Map2 from './views/map2'
@@ -27,6 +26,8 @@ import { unregister } from './registerServiceWorker'
 //import temp from 'temp'
 
 import { PersistGate } from 'redux-persist/integration/react'
+
+import isAuth from './AuthCheckHoc'
 
 unregister();
 
@@ -41,15 +42,14 @@ render(
                         <Switch>
                             <Route exact path='/' component={SearchContainer} />
                             {/* <Route path='/temp' component={temp} /> */}
-                            <Route path='/foods/:id/orderSuccess' component={OrderSuccess} />
-                            <Route path='/foods/:id/order' component={Order} />
-                            <Route path='/foods/:id' exact component={FoodDetail} />
+                            <Route path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
+                            <Route path='/foods/:id/order' component={isAuth(Order)} />
+                            <Route path='/foods/:id' exact component={isAuth(FoodDetail)} />
                             <Route path='/cognitoCallback' exact component={CognitoCallback} />
                             <Route path='/cognitoSignout' exact component={CognitoSignout} />
                             <Route path='/stripeCallback' exact component={StripeCallback} />
-                            <Route path='/profile/view/:userId' exact component={ProfileView} />
-                            <Route path='/profile/edit/:userId' exact component={ProfileEdit} />
-                            <Route path='/profilelink' exact component={ProfileLink} />
+                            <Route path='/profile/view/:userId' exact component={isAuth(ProfileView)} />
+                            <Route path='/profile/edit/:userId' exact component={isAuth(ProfileEdit)} />
                             <Route path='/login' exact component={Login} />
                             {/* <Route path='/map2' exact component={Map2} /> */}
                             <Route component={NotFoundPage} />
