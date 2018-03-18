@@ -9,6 +9,7 @@ import { Reducers as currentUser } from './currentUser'
 import { Reducers as search } from './search'
 import { Reducers as order } from './order'
 import { Reducers as buyerOrders } from './buyerOrders'
+import { Reducers as cookOrders } from './cookOrders'
 
 const configureStore = (options = {}) => {
 
@@ -49,7 +50,7 @@ const configureStore = (options = {}) => {
         ],
     }
 
-    const reducers = Object.assign({}, currentUser, search, order, buyerOrders);
+    const reducers = Object.assign({}, currentUser, search, order, buyerOrders, cookOrders);
     const rootReducer = combineReducers(reducers);
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(persistedReducer, applyMiddleware(...middlewares));

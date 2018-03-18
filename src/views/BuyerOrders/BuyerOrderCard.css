@@ -1,4 +1,4 @@
-.ordercard-header {
+.buyerordercard-header {
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
@@ -8,14 +8,14 @@
     padding: 10px 10px 0px 10px;
 }
 
-.ordercard-header>div:first-child {
+.buyerordercard-header>div:first-child {
     line-height: 1.1em;
     font-size: 1.6em;
     margin: 0 10px;
     cursor: pointer;
 }
 
-.ordercard-header>img {
+.buyerordercard-header>img {
     margin-top: 5px 0px 0px 15px;
     border-radius: 5px;
     min-width: 70px;
@@ -26,7 +26,7 @@
     cursor: pointer;
 }
 
-.ordercard-section {
+.buyerordercard-section {
     margin-top: 10px;
     width: 100%;
     font-size: 1.3em;
@@ -34,7 +34,7 @@
     line-height: 1.6em;
 }
 
-.ordercard-cook {
+.buyerordercard-cook {
     display: inline;
 }
 

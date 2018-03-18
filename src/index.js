@@ -9,6 +9,7 @@ import './semantic/semantic.min.css'
 import FoodDetail from './views/FoodDetail'
 import Order from './views/Order'
 import BuyerOrders from './views/BuyerOrders'
+import CookOrders from './views/CookOrders'
 import OrderSuccess from './views/OrderSuccess'
 import CognitoCallback from './services/Cognito/CognitoCallback'
 import CognitoSignout from './services/Cognito/CognitoSignout'
@@ -52,6 +53,7 @@ render(
                             <Route exact path='/profile/view/:userId' component={isAuth(ProfileView)} />
                             <Route exact path='/profile/edit/:userId' component={isAuth(ProfileEdit)} />
                             <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
+                            <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
                             <Route exact path='/login' component={Login} />
 
                             {/* <Route exact path='/map2' component={Map2} /> */}

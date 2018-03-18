@@ -119,6 +119,17 @@ class ApiClient {
             }, 1000);
         })
     }
+
+    getOrdersByCookId(cook_user_id) {
+        // return this.apiGatewayClient.invokeApi(null, `/cooks/${cook_user_id}/orders`,
+        //     'GET', { headers: this.jsonHttpHeader() });
+
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve({ data: buyerOrders });
+            }, 1000);
+        })
+    }
 }
 
 const buyerOrders = [{

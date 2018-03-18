@@ -52,7 +52,11 @@ export class AppHeader extends React.Component {
     }
 
     handleMyOrders = () => {
-        this.props.history.push(Url.orders());
+        this.props.history.push(Url.buyerOrders());
+    }
+
+    handleMyCookingRequests = () => {
+        this.props.history.push(Url.cookOrders());
     }
 
     getRandomTagline() {
@@ -88,6 +92,12 @@ export class AppHeader extends React.Component {
                         <Dropdown.Menu className='left'>
                             <Dropdown.Item className='apphead-dropdown-profile-link' text='My Orders' onClick={this.handleMyOrders} />
                             <Dropdown.Divider />
+                            {user.stripe_user_id &&
+                                <Dropdown.Item className='apphead-dropdown-profile-link' text='My Cooking Requests' onClick={this.handleMyCookingRequests} />
+                            }
+                            {user.stripe_user_id &&
+                                <Dropdown.Divider />
+                            }
                             <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={this.handleEditProfile} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />

@@ -29,8 +29,12 @@ class Url {
         return '/';
     }
 
-    orders() {
+    buyerOrders() {
         return '/buyerOrders';
+    }
+
+    cookOrders() {
+        return '/cookOrders';
     }
 
     mailTo(email, subject) {

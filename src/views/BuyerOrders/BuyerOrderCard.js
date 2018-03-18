@@ -2,12 +2,12 @@ import React from 'react'
 import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 import { Segment, Divider, Image, Label, Icon, Accordion } from 'semantic-ui-react'
-import './OrderCard.css'
+import './BuyerOrderCard.css'
 import Constants from '../../Constants'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 
-class OrderCard extends React.Component {
+class BuyerOrderCard extends React.Component {
 
     state = { showDetails: false }
 
@@ -29,23 +29,23 @@ class OrderCard extends React.Component {
             statusColor = 'red';
 
         return (
-            <Segment raised className='ordercard'>
+            <Segment raised className='buyerordercard'>
                 <Label color={statusColor} ribbon>{order.status}</Label>
-                <div className='ordercard-header' onClick={this.navigateToFoodDetail}>
+                <div className='buyerordercard-header' onClick={this.navigateToFoodDetail}>
                     <div>{food.title}</div>
                     <Image src={food.imageUrls[0]} width='20%' height='80px' />
                 </div>
                 <Divider />
-                <div className='ordercard-section large-font'>
+                <div className='buyerordercard-section large-font'>
                     <div>{date.format('dddd, MMMM D')}</div>
                     <div>{order.time}</div>
                 </div>
-                <div className='ordercard-section'>
+                <div className='buyerordercard-section'>
                     <div>{order.pickup ? 'Pickup' : 'Delivery'} address: {order.address}</div>
                     <div><Image src={cook.image} circular size='mini' floated='left' />Your cook, {cook.name} </div>
                 </div>
                 <Divider />
-                <div className='ordercard-section'>
+                <div className='buyerordercard-section'>
                     <Accordion>
                         <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
                             Additional details
@@ -59,13 +59,13 @@ class OrderCard extends React.Component {
                     </Accordion>
                 </div>
                 <Divider />
-                <div className='ordercard-section normal-font'>
-                    <div className='ordercard-cook'>
+                <div className='buyerordercard-section normal-font'>
+                    <div className='buyerordercard-cook'>
                         <Image src={cook.image} circular size='mini' floated='left' />
                         <a href={Url.mailTo(cook.email, food.title)}>Massage {cook.name}</a>
                     </div>
                     <div style={{ marginTop: '25px' }}>
-                        <Icon name='calendar' size='big' /><a href='./'>Cancel</a>
+                        <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
                     </div>
                 </div>
 
@@ -74,4 +74,4 @@ class OrderCard extends React.Component {
     }
 }
 
-export default withRouter(OrderCard);
+export default withRouter(BuyerOrderCard);

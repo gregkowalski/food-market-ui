@@ -1,0 +1,9 @@
+.cookorders {
+    padding: 20px 20px;
+}
+
+.cookorders-loading-icon {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}

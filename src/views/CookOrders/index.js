@@ -7,10 +7,10 @@ import { Header } from 'semantic-ui-react'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import { Actions, Selectors } from '../../store/buyerOrders'
-import BuyerOrderCard from './BuyerOrderCard'
+import { Actions, Selectors } from '../../store/cookOrders'
+import CookOrderCard from './CookOrderCard'
 
-class BuyerOrders extends React.Component {
+class CookOrders extends React.Component {
 
     componentWillMount() {
         this.props.actions.loadOrders();
@@ -22,22 +22,22 @@ class BuyerOrders extends React.Component {
         let content;
         if (!orders || isOrdersLoading) {
             content = (
-                <div className='buyerorders-loading-icon'>
+                <div className='cookorders-loading-icon'>
                     <LoadingIcon size='big' />
                 </div>
             );
         }
         else {
             content = orders.map(order => {
-                return (<BuyerOrderCard order={order} key={order.order_id} />);
+                return (<CookOrderCard order={order} key={order.order_id} />);
             })
         }
 
         return (
             <div>
                 <AppHeader />
-                <div className='buyerorders'>
-                    <Header as='h1'>My Orders</Header>
+                <div className='cookorders'>
+                    <Header as='h1'>My Cooking Requests</Header>
                     {content}
                 </div>
             </div>
@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => {
     return { actions: bindActionCreators(Actions, dispatch) };
 };
 
-BuyerOrders.propTypes = {
+CookOrders.propTypes = {
     orders: PropTypes.arrayOf(PropTypes.shape({
         order_id: PropTypes.string.isRequired,
     })),
@@ -67,5 +67,4 @@ BuyerOrders.propTypes = {
     }).isRequired
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BuyerOrders));
-
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CookOrders));
