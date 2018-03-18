@@ -26,7 +26,7 @@
     border-bottom: 3px solid #4cb99e;
 }
 
-.flex-container {
+.detail-container {
     /* background-color: red; */
     display: -webkit-flex;
     display: flex;
@@ -36,7 +36,7 @@
     padding: 0px 6px 0px 16px;
 }
 
-.flex-item-main {
+.detail-item-main {
     /* background-color: cornflowerblue; */
     height: auto;
     width: 55%;
@@ -44,7 +44,7 @@
     margin-right: auto;
 }
 
-.flex-item-right {
+.detail-item-right {
     /* background-color: blue; */
     width: 425px;
     height: auto;
@@ -219,13 +219,13 @@
     .detail-footer {
         display: flex;
     }
-    .flex-item-main {
+    .detail-item-main {
         margin-bottom: 100px;
         width: 100%;
         margin-left: auto;
         margin-right: 10px;
     }
-    .flex-item-right {
+    .detail-item-right {
         display: none;
     }
     .detail-head-main {

@@ -216,12 +216,18 @@ class Order extends React.Component {
                                 hidden={!hasPaymentError}
                                 visible={hasPaymentError} />
 
-                            <Button fluid className='order-confirm-continue-button'
+                            <Button animated='fade' fluid className='order-confirm-continue-button'
                                 disabled={!this.canSubmitOrder()}
                                 loading={isOrderProcessing}
                                 onClick={this.handleOrderButtonClick}>
-                                <Icon name='lock' />Confirm and Pay
+                                <Button.Content visible>
+                                    <Icon name='lock' />Confirm and Pay
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name='lock' />${PriceCalc.getTotal(food.price, quantity)} CAD
+                                </Button.Content>
                             </Button>
+
                         </div>
                     </div>
                 </div>

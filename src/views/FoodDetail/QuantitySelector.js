@@ -1,19 +1,33 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import './QuantitySelector.css'
+import Constants from '../../Constants'
 
 const QuantitySelector = ({ food, quantity, onChange }) => {
 
+    const min = 1;
+    const max = Constants.MaxFoodQuantity;
     const handleQuantityIncrement = () => onChange(1);
     const handleQuantityDecrement = () => onChange(-1);
+
+    const buttonProps = (disabled) => {
+        const props = {
+            color: 'teal'
+        };
+        if (disabled) {
+            props.color = 'grey';
+            props.disabled = true;
+        }
+        return props;
+    }
 
     return (
         <div className='quantityselector-quantity'>
             <div>How many? ({food.unit} per order)</div>
             <div>
-                <Button circular basic color='teal' size='huge' icon='minus' onClick={handleQuantityDecrement} />
+                <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
                 <div>{quantity}</div>
-                <Button circular basic color='teal' size='huge' icon='plus' onClick={handleQuantityIncrement} />
+                <Button circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
             </div>
         </div>
     );

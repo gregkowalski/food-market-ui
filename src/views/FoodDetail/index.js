@@ -20,7 +20,7 @@ import OverviewSection from './OverviewSection'
 import ReviewsSection from './ReviewsSection'
 import CookSection from './CookSection'
 import OrderSection from './OrderSection'
-import OrderRequest from './OrderRequest'
+import MobileOrderRequest from './MobileOrderRequest'
 
 const ScrollLink = Scroll.Link;
 const ScrollElement = Scroll.Element;
@@ -93,14 +93,16 @@ class FoodDetail extends React.Component {
             return null;
         }
 
+        const canRequestOrder = (quantity > 0 && date && time >= 0);
+
         return (
             <div>
                 <AppHeader />
                 <FoodLightbox food={food} />
                 <div>
                     <div className='detail-head-main'>
-                        <div className='flex-container'>
-                            <div className='flex-item-main'>
+                        <div className='detail-container'>
+                            <div className='detail-item-main'>
                                 <ScrollLink activeClass='content-link-active' className='content-link' to='overview'
                                     spy={true} smooth={true} container={document}
                                     offset={-65} duration={500}>
@@ -121,8 +123,8 @@ class FoodDetail extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='flex-container'>
-                        <div className='flex-item-main'>
+                    <div className='detail-container'>
+                        <div className='detail-item-main'>
                             <div className='detail-content'>
                                 <ScrollElement name='overview'>
                                     <OverviewSection food={food} cook={cook} />
@@ -138,9 +140,9 @@ class FoodDetail extends React.Component {
                                 <Divider section />
                             </div>
                         </div>
-                        <div className='flex-item-right'>
+                        <div className='detail-item-right'>
                             <div className='detail-head-right'>
-                                <OrderSection food={food} quantity={quantity} date={date} time={time} pickup={pickup}
+                                <OrderSection food={food} quantity={quantity} date={date} time={time} pickup={pickup} canRequestOrder={canRequestOrder}
                                     onQuantityChange={this.handleQuantityChange}
                                     onOrderButtonClick={this.handleOrderButtonClick}
                                     onDateChange={this.handleDateChange}
@@ -167,7 +169,8 @@ class FoodDetail extends React.Component {
                 </div>
 
                 <Drawer visible={this.state.showOrderDrawer}>
-                    <OrderRequest food={food} quantity={quantity} date={date} time={time} pickup={pickup}
+                    <MobileOrderRequest food={food} quantity={quantity} date={date} time={time} pickup={pickup}
+                        canRequestOrder={canRequestOrder}
                         onDateChange={this.handleDateChange}
                         onTimeChange={this.handleTimeChange}
                         onDeliveryOptionChange={this.handleDeliveryOptionChange}

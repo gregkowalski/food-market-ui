@@ -9,7 +9,7 @@ import QuantitySelector from './QuantitySelector'
 import OrderPriceSummary from './OrderPriceSummary'
 import OrderRequestHeader from './OrderRequestHeader'
 
-const OrderSection = ({ food, pickup, date, time, quantity,
+const OrderSection = ({ food, pickup, date, time, quantity, canRequestOrder,
     onOrderButtonClick, onQuantityChange, onDateChange, onTimeChange, onDeliveryOptionChange }) => {
 
     return (
@@ -20,7 +20,7 @@ const OrderSection = ({ food, pickup, date, time, quantity,
             <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
             <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
-            <Button animated='fade' fluid className='detail-desktop-button' onClick={onOrderButtonClick}>
+            <Button animated='fade' disabled={!canRequestOrder} fluid className='detail-desktop-button' onClick={onOrderButtonClick}>
                 <Button.Content visible>
                     Request an Order
                 </Button.Content>
