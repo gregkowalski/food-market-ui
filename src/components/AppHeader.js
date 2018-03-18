@@ -23,23 +23,36 @@ export class AppHeader extends React.Component {
         this.tagline = this.getRandomTagline();
     }
 
-    handleSignIn(e) {
+    handleSignIn = (e) => {
         e.preventDefault();
         CognitoUtil.redirectToLoginIfNoSession();
     }
 
-    handleSignUp(e) {
+    handleSignUp = (e) => {
         e.preventDefault();
         CognitoUtil.redirectToSignupIfNoSession();
     }
 
-    handleLogOut(event, data) {
+    handleLogOut = (event, data) => {
         CognitoUtil.logOut();
         this.props.logOut();
     }
 
-    handleContactSupport(event, data) {
-        window.location.href = `mailto:<${Config.Foodcraft.SupportEmail}>?subject=${encodeURIComponent('Foodcraft Feedback')}`;
+    handleContactSupport = (event, data) => {
+        window.location.href = Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
+    }
+
+    handleEditProfile = () => {
+        const { user } = this.props;
+        this.props.history.push(Url.profileEdit(user.user_id));
+    }
+
+    handleLogoClick = () => {
+        this.props.history.push(Url.home());
+    }
+
+    handleMyOrders = () => {
+        this.props.history.push(Url.orders());
     }
 
     getRandomTagline() {
@@ -72,12 +85,14 @@ export class AppHeader extends React.Component {
                 <div className='apphead-sign-in'>
                     <span>Hi, </span>
                     <Dropdown text={user.username}>
-                        <Dropdown.Menu className='left' style={{ width: '250px' }}>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={() => this.props.history.push(Url.profileEdit(user.user_id))} />
+                        <Dropdown.Menu className='left'>
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='My Orders' onClick={this.handleMyOrders} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={(event, data) => this.handleContactSupport(event, data)} />
+                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={this.handleEditProfile} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={(event, data) => this.handleLogOut(event, data)} />
+                            <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />
+                            <Dropdown.Divider />
+                            <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={this.handleLogOut} />
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -92,9 +107,9 @@ export class AppHeader extends React.Component {
             else {
                 sessionElement =
                     <div>
-                        <a href='/signup' onClick={(e) => this.handleSignUp(e)} className='apphead-sign-in'> Sign Up </a>
+                        <a href='/signup' onClick={this.handleSignUp} className='apphead-sign-in'> Sign Up </a>
                         <span style={{ color: '#2da388', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='/login' onClick={(e) => this.handleSignIn(e)} className='apphead-sign-in'> Log In</a>
+                        <a href='/login' onClick={this.handleSignIn} className='apphead-sign-in'> Log In</a>
                     </div>
             }
         }
@@ -114,12 +129,10 @@ export class AppHeader extends React.Component {
             <div className='apphead' style={headerStyle}>
                 <div className='apphead-content'>
                     <div className='apphead-logo'>
-                        <a href="/">
+                        <div onClick={this.handleLogoClick}>
                             <Image height='38px' src={Constants.AppLogo} />
-                        </a>
-                        <a href="/" className='apphead-link'>
-                            <div>{Constants.AppName}</div>
-                        </a>
+                            <div className='apphead-link'>{Constants.AppName}</div>
+                        </div>
                         <div className="content-desktop">
                             {this.tagline}
                         </div>

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
+import Constants from '../../Constants'
 import OrderHeader from '../../components/OrderHeader'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
@@ -224,7 +225,7 @@ class Order extends React.Component {
                                     <Icon name='lock' />Confirm and Pay
                                 </Button.Content>
                                 <Button.Content hidden>
-                                    <Icon name='lock' />${PriceCalc.getTotal(food.price, quantity)} CAD
+                                    <Icon name='lock' />${PriceCalc.getTotal(food.price, quantity)} {Constants.Currency}
                                 </Button.Content>
                             </Button>
 

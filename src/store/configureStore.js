@@ -8,6 +8,7 @@ import moment from 'moment'
 import { Reducers as currentUser } from './currentUser'
 import { Reducers as search } from './search'
 import { Reducers as order } from './order'
+import { Reducers as buyerOrders } from './buyerOrders'
 
 const configureStore = (options = {}) => {
 
@@ -41,10 +42,14 @@ const configureStore = (options = {}) => {
         storage: sessionStorage,
         // transforms: [searchFilter, orderFilter, myTransform],
         transforms: [myTransform, orderFilter],
-        whitelist: ['order', 'search']
+        whitelist: [
+            'order',
+            'search',
+            // 'buyerOrders'
+        ],
     }
 
-    const reducers = Object.assign({}, currentUser, search, order);
+    const reducers = Object.assign({}, currentUser, search, order, buyerOrders);
     const rootReducer = combineReducers(reducers);
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(persistedReducer, applyMiddleware(...middlewares));

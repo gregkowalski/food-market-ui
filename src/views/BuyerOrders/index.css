@@ -1,0 +1,9 @@
+.buyerorders {
+    padding: 20px 20px;
+}
+
+.buyerorders-loading-icon {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}

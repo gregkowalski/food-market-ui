@@ -155,7 +155,7 @@ class FoodDetail extends React.Component {
 
                     <div className='detail-footer'>
                         <div className='detail-footer-header'>
-                            ${PriceCalc.getTotal(food.price, quantity)} CAD
+                            ${PriceCalc.getTotal(food.price, quantity)} {Constants.Currency}
                             <div>
                                 <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' />
                                 <div className='detail-footer-rating-count'>{food.ratingCount}</div>

@@ -13,6 +13,11 @@
     margin-left: 4px;
 }
 
+.apphead-logo > div:first-child {
+    display: flex;
+    cursor: pointer;
+}
+
 .apphead-link {
     color: #b61095;
     text-decoration: none;
@@ -63,17 +68,30 @@
     color: #66c3cb;
 }
 
-.apphead-dropdown-profile-link {
-    color: black !important;
-    font-weight: 300 !important;
-    font-size: .95em !important;
-    margin-top: 8px;
+.apphead-sign-in .ui.dropdown .menu > .divider {
+    margin: 0;
 }
 
-.apphead-dropdown-item {
-    font-weight: 300 !important;
-    font-size: .95em !important;
-    margin-bottom: 8px;
+.apphead-sign-in .ui.dropdown .menu {
+    margin-top: 13px;
+    width: 200px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.ui.dropdown .menu > .apphead-dropdown-profile-link.item {
+    color: black;
+    font-weight: 300;
+    font-size: .95em;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.ui.dropdown .menu > .apphead-dropdown-item.item {
+    font-weight: 300;
+    font-size: .95em;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
 }
 
 @media all and (max-width: 767px) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Rating } from 'semantic-ui-react'
 import './OrderRequestHeader.css'
+import Constants from '../../Constants'
 
 const OrderRequestHeader = ({ food, onClose }) => {
     return (
@@ -12,7 +13,7 @@ const OrderRequestHeader = ({ food, onClose }) => {
                     </div>
                 }
                 <div className='orderrequestheader-price'>
-                    <span>${food.price} CAD</span>
+                    <span>${food.price} {Constants.Currency}</span>
                     <span> / order</span>
                 </div>
                 <div className='orderrequestheader-rating'>
@@ -21,7 +22,7 @@ const OrderRequestHeader = ({ food, onClose }) => {
                 </div>
             </div>
             <div className='orderrequestheader-right'>
-                <span>{food.title}</span>
+                {food.title}
             </div>
         </div>
     );

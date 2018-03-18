@@ -1,0 +1,48 @@
+.ordercard-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    color: #494949;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 10px 10px 0px 10px;
+}
+
+.ordercard-header>div:first-child {
+    line-height: 1.1em;
+    font-size: 1.6em;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.ordercard-header>img {
+    margin-top: 5px 0px 0px 15px;
+    border-radius: 5px;
+    min-width: 70px;
+    overflow: hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.ordercard-section {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: 400;
+    line-height: 1.6em;
+}
+
+.ordercard-cook {
+    display: inline;
+}
+
+.large-font {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.normal-font {
+    font-size: 1.1em !important;
+}

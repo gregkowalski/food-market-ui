@@ -8,6 +8,7 @@ import 'whatwg-fetch'
 import './semantic/semantic.min.css'
 import FoodDetail from './views/FoodDetail'
 import Order from './views/Order'
+import BuyerOrders from './views/BuyerOrders'
 import OrderSuccess from './views/OrderSuccess'
 import CognitoCallback from './services/Cognito/CognitoCallback'
 import CognitoSignout from './services/Cognito/CognitoSignout'
@@ -42,16 +43,18 @@ render(
                         <Switch>
                             <Route exact path='/' component={SearchContainer} />
                             {/* <Route path='/temp' component={temp} /> */}
-                            <Route path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
-                            <Route path='/foods/:id/order' component={isAuth(Order)} />
-                            <Route path='/foods/:id' exact component={isAuth(FoodDetail)} />
-                            <Route path='/cognitoCallback' exact component={CognitoCallback} />
-                            <Route path='/cognitoSignout' exact component={CognitoSignout} />
-                            <Route path='/stripeCallback' exact component={StripeCallback} />
-                            <Route path='/profile/view/:userId' exact component={isAuth(ProfileView)} />
-                            <Route path='/profile/edit/:userId' exact component={isAuth(ProfileEdit)} />
-                            <Route path='/login' exact component={Login} />
-                            {/* <Route path='/map2' exact component={Map2} /> */}
+                            <Route exact path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
+                            <Route exact path='/foods/:id/order' component={isAuth(Order)} />
+                            <Route exact path='/foods/:id' component={isAuth(FoodDetail)} />
+                            <Route exact path='/cognitoCallback' component={CognitoCallback} />
+                            <Route exact path='/cognitoSignout' component={CognitoSignout} />
+                            <Route exact path='/stripeCallback' component={StripeCallback} />
+                            <Route exact path='/profile/view/:userId' component={isAuth(ProfileView)} />
+                            <Route exact path='/profile/edit/:userId' component={isAuth(ProfileEdit)} />
+                            <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
+                            <Route exact path='/login' component={Login} />
+
+                            {/* <Route exact path='/map2' component={Map2} /> */}
                             <Route component={NotFoundPage} />
                         </Switch>
                     </ScrollToTop>

@@ -24,6 +24,22 @@ class Url {
     profileEdit(user_id) {
         return `/profile/edit/${user_id}`;
     }
+
+    home() {
+        return '/';
+    }
+
+    orders() {
+        return '/buyerOrders';
+    }
+
+    mailTo(email, subject) {
+        let uri = `mailto:<${email}>`;
+        if (subject) {
+            uri += `?subject=${encodeURIComponent(subject)}`;
+        }
+        return uri;
+    }
 }
 
 export default new Url();

@@ -1,5 +1,6 @@
 .orderrequestheader-row {
-    display: table;
+    display: flex;
+    justify-content: space-between;
     padding: 15px 0 15px 0;
     font-weight: 500;
     width: 100%;
@@ -10,20 +11,12 @@
 }
 
 .orderrequestheader-left {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left;
     width: 40%;
 }
 
 .orderrequestheader-right {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left;
-    width: 60%
-}
-
-.orderrequestheader-right span {
+    margin-left: 10%;
+    width: 50%;
     font-size: 1.15em;
 }
 
