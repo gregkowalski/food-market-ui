@@ -103,13 +103,13 @@ class FoodDetail extends React.Component {
                             <div className='flex-item-main'>
                                 <ScrollLink activeClass='content-link-active' className='content-link' to='overview'
                                     spy={true} smooth={true} container={document}
-                                    offset={-85} duration={500}>
+                                    offset={-65} duration={500}>
                                     Overview
                                 </ScrollLink>
 
                                 <ScrollLink activeClass='content-link-active' className='content-link' to='reviews'
                                     spy={true} smooth={true} container={document}
-                                    offset={-85} duration={500}>
+                                    offset={-70} duration={500}>
                                     Reviews
                                 </ScrollLink>
 
