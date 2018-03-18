@@ -26,7 +26,8 @@
     cursor: pointer;
 }
 
-.buyerordercard-section {
+.buyerordercard-section,
+.cookordercard-title {
     margin-top: 10px;
     width: 100%;
     font-size: 1.3em;

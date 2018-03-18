@@ -62,7 +62,7 @@ class BuyerOrderCard extends React.Component {
                 <div className='buyerordercard-section normal-font'>
                     <div className='buyerordercard-cook'>
                         <Image src={cook.image} circular size='mini' floated='left' />
-                        <a href={Url.mailTo(cook.email, food.title)}>Massage {cook.name}</a>
+                        <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                     </div>
                     <div style={{ marginTop: '25px' }}>
                         <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
