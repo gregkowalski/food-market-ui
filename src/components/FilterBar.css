@@ -11,14 +11,10 @@
 }
 
 .filterbar-layout {
-    display: table;
     width: 100%;
     padding: 7px 0px 7px 14px;
 }
 
-.filterbar-date {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left;
-    width: 66%;
+.filterbar-layout > .ui.button:first-child {
+    margin-right: 30px;
 }

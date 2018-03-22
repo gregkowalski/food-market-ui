@@ -42,7 +42,8 @@ class ContactInfo extends React.Component {
                 </div>
                 <Divider />
                 <div className='contactinfo-contact'>
-                    <div>Preferred contact:</div>
+                    {/* <div>Preferred contact:</div> */}
+                    <div>The cook can contact me by:</div>
                     <div className='contactinfo-option'>
                         <Radio
                             label='Email'
@@ -73,7 +74,7 @@ class ContactInfo extends React.Component {
 
                 {!pickup &&
                     <div className='contactinfo-address'>
-                        <div>Delivery address:</div>
+                        <div>Where do you want your food delivered?</div>
                         <Autocomplete
                             style={this.autocompleteStyle(isBuyerAddressValid)}
                             name='address'
@@ -81,7 +82,7 @@ class ContactInfo extends React.Component {
                             onChange={onAddressChange}
                             onBlur={onAddressBlur}
                             types={['address']}
-                            placeholder='Address'
+                            placeholder='Your delivery address'
                             componentRestrictions={{ country: 'ca' }}
                             value={buyerAddress} />
                         <Message
@@ -89,8 +90,7 @@ class ContactInfo extends React.Component {
                             hidden={isBuyerAddressValid}
                             visible={!isBuyerAddressValid}
                             header='Invalid address'
-                            content='Please enter your address'
-                            icon='exclamation circle' />
+                            content='Please enter your delivery address' />
                     </div>
                 }
 

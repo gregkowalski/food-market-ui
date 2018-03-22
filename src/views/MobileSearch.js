@@ -51,6 +51,11 @@ export default class MobileSearch extends Component {
     handleSearchFilterChange = (filter) => this.setState({ filter });
     handleMarkerClick = (selectedFoodId) => this.setState({ selectedFoodId: selectedFoodId });
 
+    handleFilterBarDeliveryClick = () => {
+        this.props.onDeliveryClick();
+        this.showMapSearch();
+    }
+
     showListView = () => {
         if (this.state.mapSearch) {
             // The resize event on the window is used as a workaround for a defect with nuka carousel
@@ -153,7 +158,10 @@ export default class MobileSearch extends Component {
                 }
 
                 {!mapSearch &&
-                    <FilterBar style={this.getFilterBarStyle()} filter={filter} onFilterClick={this.showFilter} />
+                    <FilterBar style={this.getFilterBarStyle()} filter={filter} pickup={pickup}
+                        onFilterClick={this.showFilter}
+                        onPickupClick={this.props.onPickupClick}
+                        onDeliveryClick={this.handleFilterBarDeliveryClick} />
                 }
 
                 <Drawer visible={showFilter}>

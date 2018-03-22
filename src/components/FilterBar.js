@@ -4,22 +4,32 @@ import './FilterBar.css'
 
 export default class FilterBar extends React.Component {
 
+    buttonProps(active) {
+        const props = {
+            color: 'teal'
+        };
+        if (!active) {
+            props.basic = true;
+        }
+        return props;
+    }
+
     render() {
-        const { filter, style, onFilterClick } = this.props;
+        const { filter, style, pickup, onFilterClick, onPickupClick, onDeliveryClick } = this.props;
 
         return (
             <div className='filterbar' style={style}>
                 <div className='filterbar-layout'>
-                    <div id='filterbar-date'>
-                        <SearchBarFilterButton filter={filter} onFilterClick={onFilterClick} />
-                    </div>
+                    <SearchBarFilterButton label='Filters' filter={filter} onFilterClick={onFilterClick} />
+                    <Button {...this.buttonProps(pickup)} onClick={onPickupClick}>PICKUP</Button>
+                    <Button {...this.buttonProps(!pickup)} onClick={onDeliveryClick}>DELIVER</Button>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-const SearchBarFilterButton = ({ filter, onFilterClick }) => {
+const SearchBarFilterButton = ({ filter, label, onFilterClick }) => {
 
     const props = { color: 'teal', basic: true };
     let filterCount = 0;
@@ -30,7 +40,7 @@ const SearchBarFilterButton = ({ filter, onFilterClick }) => {
         }
     }
 
-    let text = 'Filters';
+    let text = label;
     if (filterCount > 0) {
         const middot = '\u00B7';
         text += ` ${middot} ${filterCount}`;
