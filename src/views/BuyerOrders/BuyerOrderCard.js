@@ -29,43 +29,52 @@ class BuyerOrderCard extends React.Component {
             statusColor = 'red';
 
         return (
-            <Segment raised className='buyerordercard'>
-                <Label color={statusColor} ribbon>{order.status}</Label>
-                <div className='buyerordercard-header' onClick={this.navigateToFoodDetail}>
-                    <div>{food.title}</div>
-                    <Image src={food.imageUrls[0]} width='20%' height='80px' />
-                </div>
-                <Divider />
-                <div className='buyerordercard-section large-font'>
-                    <div>{date.format('dddd, MMMM D')}</div>
-                    <div>{order.time}</div>
-                </div>
-                <div className='buyerordercard-section'>
-                    <div>{order.pickup ? 'Pickup' : 'Delivery'} address: {order.address}</div>
-                    <div><Image src={cook.image} circular size='mini' floated='left' />Your cook, {cook.name} </div>
-                </div>
-                <Divider />
-                <div className='buyerordercard-section'>
-                    <Accordion>
-                        <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                            Additional details
-                            <Icon name='dropdown' />
-                        </Accordion.Title>
-                        <Accordion.Content active={showDetails}>
-                            <div>Reservation code: {order.order_id}</div>
-                            <div>Quantity: {order.quantity}</div>
-                            <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
-                        </Accordion.Content>
-                    </Accordion>
-                </div>
-                <Divider />
-                <div className='buyerordercard-section normal-font'>
-                    <div className='buyerordercard-cook'>
-                        <Image src={cook.image} circular size='mini' floated='left' />
-                        <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+            <Segment raised>
+                <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
+                <div className='buyerordercard'>
+                    <div className='buyerordercard-header'>
+                        <Image src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
+                        <div>
+                            <Label size='large' color={statusColor}>{order.status}</Label>
+                            <div className='large-font'>{food.title}</div>
+                            <div className='buyerordercard-section'>
+                                <div>{date.format('dddd, MMMM D')}</div>
+                                <div>{order.time}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ marginTop: '25px' }}>
-                        <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
+                    <Divider />
+                    <div className='buyerordercard-section buyerordercard-main large-font'>
+                        <div>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
+                        <div>{order.address}</div>
+
+
+                    </div>
+                    <Divider />
+                    <div className='buyerordercard-section'>
+                        <Accordion>
+                            <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
+                                Additional details
+                            <Icon name='dropdown' />
+                            </Accordion.Title>
+                            <Accordion.Content active={showDetails}>
+                                <div>Reservation code: {order.order_id}</div>
+                                <div>Quantity: {order.quantity}</div>
+                                <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
+                            </Accordion.Content>
+                        </Accordion>
+                    </div>
+                    <Divider />
+                    <div className='buyerordercard-contact normal-font'>
+                        <div className='buyerordercard-cook'>
+                            <Image src={cook.image} circular size='mini' />
+                            <div>
+                                <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+                            </div>
+                        </div>
+                        <div>
+                            <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
+                        </div>
                     </div>
                 </div>
 

@@ -1,29 +1,45 @@
-.buyerordercard-header {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-    color: #494949;
-    font-size: 1.1em;
-    font-weight: 500;
-    padding: 10px 10px 0px 10px;
+.buyerordercard.ui.segment {
+    margin-top: 2rem;
 }
 
-.buyerordercard-header>div:first-child {
-    line-height: 1.1em;
-    font-size: 1.6em;
-    margin: 0 10px;
-    cursor: pointer;
+.buyerordercard-header {
+    display: flex;
+    justify-content: left;
+    /* margin-top: 5px; */
+    /* color: #494949; */
+    padding: 0px 10px 0px 10px;
+}
+
+.buyerordercard-header>div {
+    margin-left: 20px;
+}
+
+.buyerordercard-header .ui.label {
+    margin-bottom: 20px;
+}
+
+#buyerordercard-header-cook {
+    position: absolute;
+    top: 148px;
+    left: 130px;
+    z-index: 1;
+    border: 3px solid whitesmoke;
 }
 
 .buyerordercard-header>img {
     margin-top: 5px 0px 0px 15px;
     border-radius: 5px;
-    min-width: 70px;
+    width: 300px;
+    height: 200px;
     overflow: hidden;
     background-position: center center;
     background-repeat: no-repeat;
     object-fit: cover;
     cursor: pointer;
+}
+
+.buyerordercard-main {
+    padding-bottom: 50px;
 }
 
 .buyerordercard-section {
@@ -34,13 +50,23 @@
     line-height: 1.6em;
 }
 
-.cookordercard-title {
+.buyerordercard-contact {
     display: flex;
-    justify-content: space-between;
 }
 
 .buyerordercard-cook {
     display: inline;
+    margin-right: 20px;
+}
+
+.buyerordercard-cook>img {
+    float: left;
+    margin-right: 8px;
+}
+
+.buyerordercard-cook>div {
+    margin-top: 5px;
+    width: 160px;
 }
 
 .large-font {
@@ -50,4 +76,24 @@
 
 .normal-font {
     font-size: 1.1em !important;
+}
+
+@media all and (max-width: 767px) {
+    .buyerordercard-header {
+        display: block;
+    }
+    .buyerordercard-header>div {
+        margin-left: 0px;
+    }
+    .buyerordercard-header>img {
+        width: 170px;
+        height: 132px;
+        min-width: 170px;
+        min-height: 132px;
+    }
+    #buyerordercard-header-cook {
+        position: absolute;
+        top: 80px;
+        left: 70px;
+    }
 }

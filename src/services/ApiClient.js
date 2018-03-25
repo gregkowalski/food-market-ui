@@ -43,16 +43,6 @@ class ApiClient {
             { headers: this.jsonHttpHeader(jwt) }, user);
     }
 
-    linkUser(jwt, user) {
-        return this.apiGatewayClient.invokeApi(null, '/users', 'PATCH',
-            { headers: this.jsonHttpHeader(jwt) }, user);
-    }
-
-    getUserByJsUserId(jsUserId) {
-        return this.apiGatewayClient.invokeApi(null, `/users?js_user_id=${jsUserId}`, 'GET',
-            { headers: this.jsonHttpHeader() });
-    }
-
     getCurrentUser() {
         const userId = CognitoUtil.getLoggedInUserId();
         if (!userId) {

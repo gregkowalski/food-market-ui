@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode'
 import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
+import Config from '../../Config'
+import ErrorCodes from '../ErrorCodes'
 
 export default class CognitoCallback extends React.Component {
 
@@ -33,6 +35,10 @@ export default class CognitoCallback extends React.Component {
                     })
                     .catch(err => {
                         console.error(err);
+                        CognitoUtil.logOut();
+                        if (err.response && err.response.data) {
+                            this.setState({ errorCode: err.response.data.code });
+                        }
                     });
             },
             onFailure: err => {
@@ -54,13 +60,17 @@ export default class CognitoCallback extends React.Component {
     }
 
     render() {
-        if (this.state.redirectTo) {
+        const { errorCode, redirectTo } = this.state;
+        if (redirectTo) {
             // verify redirect link starts with a / to ensure we're not redirecting to another site
-            if (this.state.redirectTo.length > 0 && this.state.redirectTo[0] === '/') {
-                return <Redirect to={this.state.redirectTo} />
+            if (redirectTo.length > 0 && redirectTo[0] === '/') {
+                return <Redirect to={redirectTo} />
             }
             console.error('Invalid redirect path');
             return <div></div>;
+        }
+        else if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
+            return <div>Foodcraft is a private, invite-only network at this time.  Please contact {Config.Foodcraft.SupportEmail} for more information</div>
         }
         return <div>Logging in...</div>;
     }

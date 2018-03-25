@@ -1,6 +1,7 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import * as ActionTypes from './actionTypes'
+import ErrorCodes from '../../services/ErrorCodes'
 
 function requestCurrentUser() {
     return {
@@ -29,6 +30,24 @@ function logOutCurrentUser() {
     };
 }
 
+function shouldLoadCurrentUser(state) {
+    if (!CognitoUtil.isLoggedIn()) {
+        return false;
+    }
+
+    const isLoading = Selectors.getIsLoading(state);
+    if (isLoading) {
+        return false;
+    }
+
+    const currentUser = Selectors.getCurrentUser(state);
+    if (currentUser) {
+        return false;
+    }
+
+    return true;
+}
+
 export const Actions = {
 
     logOut: () => {
@@ -38,9 +57,9 @@ export const Actions = {
     },
 
     loadCurrentUser: () => {
-        return (dispatch) => {
+        return (dispatch, getState) => {
 
-            if (!CognitoUtil.isLoggedIn()) {
+            if (!shouldLoadCurrentUser(getState())) {
                 return Promise.resolve();
             }
 
@@ -66,6 +85,9 @@ export const Selectors = {
     },
     getIsLoading: (state) => {
         return state.currentUser.isLoading;
+    },
+    errorCode: (state) => {
+        return state.currentUser.errorCode;
     }
 }
 
@@ -92,7 +114,8 @@ export const Reducers = {
             case ActionTypes.RECEIVE_CURRENT_USER_ERROR:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    error: action.error
+                    error: action.error,
+                    errorCode: ErrorCodes.USER_DOES_NOT_EXIST
                 });
 
             case ActionTypes.CURRENT_USER_LOGOUT:

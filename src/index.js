@@ -42,7 +42,7 @@ render(
                 <BrowserRouter>
                     <ScrollToTop>
                         <Switch>
-                            <Route exact path='/' component={SearchContainer} />
+                            <Route exact path='/' component={isAuth(SearchContainer)} />
                             {/* <Route path='/temp' component={temp} /> */}
                             <Route exact path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
                             <Route exact path='/foods/:id/order' component={isAuth(Order)} />
