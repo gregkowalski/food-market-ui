@@ -77,7 +77,7 @@
     "build:prod": "npm run config:prod; react-scripts build",
     "deploy": "npm run deploy:test",
     "deploy:test": "aws s3 sync build/ s3://cosmo-cleaners",
-    "deploy:prod": "aws s3 sync build/ s3://food-market-prod",
+    "deploy:prod": "scripts/deploy_prod",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
     "analyze": "source-map-explorer build/static/js/main.*",
