@@ -37,8 +37,7 @@ describe('AppHeader', () => {
 
     it('mounts renders app name', () => {
         const appHeader = mount(<MemoryRouter><AppHeader {...props} /></MemoryRouter>);
-        const appNameDiv = <div>{Constants.AppName}</div>
-        expect(appHeader.contains(appNameDiv)).toEqual(true);
+        expect(appHeader.contains(Constants.AppName)).toEqual(true);
     });
 
     it('mounts without crashing', () => {

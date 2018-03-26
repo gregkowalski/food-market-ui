@@ -1,6 +1,7 @@
 import { Reducer } from 'redux-testkit'
 import { Reducers } from './index'
 import * as ActionTypes from './actionTypes'
+import ErrorCodes from '../../services/ErrorCodes'
 
 describe('store/currentUser/Reducers', () => {
 
@@ -53,7 +54,7 @@ describe('store/currentUser/Reducers', () => {
         const error = {};
         Reducer(Reducers.currentUser)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, error })
-            .toChangeInState({ isLoading: false, error });
+            .toChangeInState({ isLoading: false, error, errorCode: ErrorCodes.USER_DOES_NOT_EXIST });
     });
 
     it('should not modify state when receiveing current user with error', () => {
@@ -62,7 +63,7 @@ describe('store/currentUser/Reducers', () => {
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, error })
-            .toChangeInState({ isLoading: false, error });
+            .toChangeInState({ isLoading: false, error, errorCode: ErrorCodes.USER_DOES_NOT_EXIST  });
         expect(state.isLoading).toEqual(true);
     });
 
