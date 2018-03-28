@@ -6,6 +6,7 @@ import ApiClient from '../../services/ApiClient'
 jest.mock('../../services/Cognito/CognitoUtil')
 jest.mock('../../services/ApiClient')
 
+
 describe('store/currentUser/Actions', () => {
 
     beforeEach(() => {
@@ -25,7 +26,12 @@ describe('store/currentUser/Actions', () => {
     it('should get current user from API', () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
         ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
-        Thunk(Actions.loadCurrentUser).execute()
+        const state = {
+            currentUser: {
+                isLoading: false
+            }
+        }
+        Thunk(Actions.loadCurrentUser).withState(state).execute()
             .then(dispatches => {
                 expect(dispatches.length).toEqual(2);
                 expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
@@ -39,7 +45,12 @@ describe('store/currentUser/Actions', () => {
     it('should return error when get current user from API fails', () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
         ApiClient.getCurrentUser.mockImplementation(() => Promise.reject('crapped out'));
-        Thunk(Actions.loadCurrentUser).execute()
+        const state = {
+            currentUser: {
+                isLoading: false
+            }
+        }
+        Thunk(Actions.loadCurrentUser).withState(state).execute()
             .then(dispatches => {
                 expect(dispatches.length).toEqual(2);
                 expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
