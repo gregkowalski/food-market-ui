@@ -69,42 +69,47 @@
         "MaxTTL": 31536000,
         "Compress": true,
         "LambdaFunctionAssociations": {
-            "Quantity": 0
-        }
-    },
-    "CustomErrorResponses": {
-        "Quantity": 1,
-        "Items": [
-            {
-                "ErrorCode": 404,
-                "ResponsePagePath": "/index.html",
-                "ResponseCode": "200",
-                "ErrorCachingMinTTL": 0
+            "Quantity": 1,
+            "Items": [
+                {
+                    "LambdaFunctionARN": "lambda-arn",
+                    "EventType": "origin-response"
+                }
+            ]
+        },
+        "CustomErrorResponses": {
+            "Quantity": 1,
+            "Items": [
+                {
+                    "ErrorCode": 404,
+                    "ResponsePagePath": "/index.html",
+                    "ResponseCode": "200",
+                    "ErrorCachingMinTTL": 0
+                }
+            ]
+        },
+        "Comment": "",
+        "Logging": {
+            "Enabled": false,
+            "IncludeCookies": false,
+            "Bucket": "",
+            "Prefix": ""
+        },
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+            "CloudFrontDefaultCertificate": false,
+            "ACMCertificateArn": "arn:aws:acm:us-east-1:774117383394:certificate/e1dcdcd7-32ec-4808-ab6b-289d78a09135",
+            "SSLSupportMethod": "sni-only",
+            "MinimumProtocolVersion": "TLSv1.1_2016"
+        },
+        "Restrictions": {
+            "GeoRestriction": {
+                "RestrictionType": "none",
+                "Quantity": 0
             }
-        ]
-    },
-    "Comment": "",
-    "Logging": {
-        "Enabled": false,
-        "IncludeCookies": false,
-        "Bucket": "",
-        "Prefix": ""
-    },
-    "PriceClass": "PriceClass_100",
-    "Enabled": true,
-    "ViewerCertificate": {
-        "CloudFrontDefaultCertificate": false,
-        "ACMCertificateArn": "arn:aws:acm:us-east-1:774117383394:certificate/e1dcdcd7-32ec-4808-ab6b-289d78a09135",
-        "SSLSupportMethod": "sni-only",
-        "MinimumProtocolVersion": "TLSv1.1_2016"
-    },
-    "Restrictions": {
-        "GeoRestriction": {
-            "RestrictionType": "none",
-            "Quantity": 0
-        }
-    },
-    "WebACLId": "",
-    "HttpVersion": "http2",
-    "IsIPV6Enabled": true
-}
+        },
+        "WebACLId": "",
+        "HttpVersion": "http2",
+        "IsIPV6Enabled": true
+    }
