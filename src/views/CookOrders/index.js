@@ -16,6 +16,18 @@ class CookOrders extends React.Component {
         this.props.actions.loadOrders();
     }
 
+    handleAcceptOrder = (order) => {
+        this.props.actions.acceptOrder(order);
+    }
+
+    handleDeclineOrder = (order) => {
+        this.props.actions.declineOrder(order);
+    }
+
+    handleCancelOrder = (order) => {
+        this.props.actions.cancelOrder(order);
+    }
+
     render() {
         const { orders, isOrdersLoading } = this.props;
 
@@ -29,7 +41,13 @@ class CookOrders extends React.Component {
         }
         else {
             content = orders.map(order => {
-                return (<CookOrderCard order={order} key={order.order_id} />);
+                return (<CookOrderCard
+                    key={order.order_id}
+                    order={order}
+                    onAccept={this.handleAcceptOrder}
+                    onDecline={this.handleDeclineOrder}
+                    onCancel={this.handleCancelOrder}
+                />);
             })
         }
 

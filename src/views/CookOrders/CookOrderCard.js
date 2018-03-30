@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Segment, Divider, Image, Label, Icon, Accordion, Button } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import Constants from '../../Constants'
+import OrderStatus from '../../data/OrderStatus'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 
@@ -15,18 +16,32 @@ class CookOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
+    handleAccept = () => {
+        this.props.onAccept(this.props.order);
+    }
+
+    handleDecline = () => {
+        this.props.onDecline(this.props.order);
+    }
+
+    handleCancel = () => {
+        this.props.onCancel(this.props.order);
+    }
+
     render() {
         const { order } = this.props;
-        const { food, cook } = order;
+        const { food, cook, isAccepting, isDeclining, isCancelling } = order;
         const date = moment(order.date);
 
         const { showDetails } = this.state;
 
         let statusColor = 'grey';
-        if (order.status === 'Accepted')
+        if (order.status === OrderStatus.Accepted)
             statusColor = 'green';
-        else if (order.status === 'Rejected')
+        else if (order.status === OrderStatus.Declined)
             statusColor = 'red';
+        else if (order.status === OrderStatus.Cancelled)
+            statusColor = 'orange';
 
         return (
             <Segment raised className='cookordercard'>
@@ -75,15 +90,15 @@ class CookOrderCard extends React.Component {
                         </div>
                     </Accordion.Content>
                 </Accordion>
-                {order.status === 'Pending' &&
+                {order.status === OrderStatus.Pending &&
                     <div>
-                        <Button color='green'>Accept</Button>
-                        <Button color='red'>Reject</Button>
+                        <Button color='green' loading={isAccepting} onClick={this.handleAccept}>Accept</Button>
+                        <Button color='red' loading={isDeclining} onClick={this.handleDecline}>Decline</Button>
                     </div>
                 }
-                {order.status === 'Accepted' &&
+                {order.status === OrderStatus.Accepted &&
                     <div>
-                        <Button color='orange'>Cancel</Button>
+                        <Button color='orange' loading={isCancelling} onClick={this.handleCancel}>Cancel</Button>
                     </div>
                 }
             </Segment>

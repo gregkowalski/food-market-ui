@@ -2,6 +2,7 @@ import apigClientFactory from 'aws-api-gateway-client'
 import moment from 'moment'
 import CognitoUtil from './Cognito/CognitoUtil'
 import Config from '../Config'
+import OrderStatus from '../data/OrderStatus'
 
 class ApiClient {
 
@@ -140,6 +141,30 @@ class ApiClient {
             }, 1000);
         })
     }
+
+    acceptOrder(order) {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        })
+    }
+
+    declineOrder(order) {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        })
+    }
+
+    cancelOrder(order) {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        })
+    }
 }
 
 const buyerOrders = [{
@@ -149,7 +174,7 @@ const buyerOrders = [{
     date: moment('2018-03-20'),
     time: '3 - 5 PM',
     quantity: 3,
-    status: 'Pending',
+    status: OrderStatus.Pending,
     address: '1265 Burnaby Street, Vancouver, BC',
     food: {
         title: 'Pork + Chive Dumplings',
@@ -169,7 +194,7 @@ const buyerOrders = [{
     date: moment('2018-03-15'),
     time: '6 - 8 PM',
     quantity: 1,
-    status: 'Accepted',
+    status: OrderStatus.Accepted,
     address: '459 Ailsa Avenue, Port Moody, BC',
     food: {
         title: 'Casserole',
@@ -189,7 +214,7 @@ const buyerOrders = [{
     date: moment('2018-04-20'),
     time: '6 - 8 PM',
     quantity: 5,
-    status: 'Rejected',
+    status: OrderStatus.Declined,
     address: '123 Davie St., Vancouver, BC',
     food: {
         title: 'Smoked Beer Can Chicken',
