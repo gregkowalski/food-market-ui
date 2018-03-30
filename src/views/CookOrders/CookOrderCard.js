@@ -30,7 +30,7 @@ class CookOrderCard extends React.Component {
 
         return (
             <Segment raised className='cookordercard'>
-                <Label color={statusColor} ribbon>{order.status}</Label>
+                <Label color={statusColor} attached='top'>{order.status}</Label>
 
                 <Accordion>
                     <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>

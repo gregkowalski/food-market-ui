@@ -37,7 +37,7 @@ class CookOrders extends React.Component {
             <div>
                 <AppHeader />
                 <div className='cookorders'>
-                    <Header as='h1'>My Cooking Requests</Header>
+                    <div className='cookorders-header'>Cooking Requests</div>
                     {content}
                 </div>
             </div>

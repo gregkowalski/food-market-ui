@@ -24,19 +24,18 @@ class BuyerOrderCard extends React.Component {
 
         let statusColor = 'grey';
         if (order.status === 'Accepted')
-            statusColor = 'green';
+            statusColor = 'purple';
         else if (order.status === 'Rejected')
-            statusColor = 'red';
+            statusColor = 'lightgrey';
 
         return (
             <Segment raised>
                 <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
                 <div className='buyerordercard'>
-                <Label size='large' attached='top' color={statusColor}>{order.status}</Label>                
+                <Label size='large' attached='top' color={statusColor}>{order.status}</Label>
                     <div className='buyerordercard-header'>
-                        <Image src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
+                        <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
-                            <Label tag size='large' color={statusColor}>{order.status}</Label>
                             <div className='large-font'>{food.title}</div>
                             <div className='buyerordercard-section'>
                                 <div>{date.format('dddd, MMMM D')}</div>
@@ -45,7 +44,7 @@ class BuyerOrderCard extends React.Component {
                         </div>
                     </div>
                     <Divider />
-                    <div className='spacing normal-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
+                    <div className='top-spacing normal-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
                     <div className='buyerordercard-section buyerordercard-main large-font'>
                         <div>{order.address}</div>
                     </div>

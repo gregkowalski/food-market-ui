@@ -37,7 +37,7 @@ class BuyerOrders extends React.Component {
             <div>
                 <AppHeader />
                 <div className='buyerorders'>
-                    <Header as='h1'>My Orders</Header>
+                    <div className='buyerorders-header'>My Orders</div>
                     {content}
                 </div>
             </div>

@@ -10,6 +10,13 @@
     justify-content: center;
 }
 
+.buyerorders-header {
+    color: #535353;
+    font-size: 1.8em;
+    font-weight: 400;
+    padding: 10px 0px;
+}
+
 @media all and (max-width: 767px) {
     .buyerorders {
         width: 90%;
