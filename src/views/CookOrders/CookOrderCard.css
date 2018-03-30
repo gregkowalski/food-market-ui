@@ -26,6 +26,16 @@
     cursor: pointer;
 }
 
+.cookordercard>div:first-child {
+    background-color: lightgray;
+    height: 43px;
+    width: 50%;
+    padding: 13px 20px;
+    /* color: #ec7781; */
+    font-weight: 400;
+    font-size: 1.12em;
+}
+
 .cookordercard-section {
     margin-top: 10px;
     width: 100%;
@@ -45,4 +55,16 @@
 
 .normal-font {
     font-size: 1.1em !important;
+}
+
+.box-dropshadow {
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.box-dropshadow:hover {
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
+}
+
+.label-dropshadow {
+    box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 0px 2px 7px 0px rgba(0, 0, 0, 0.1) !important;
 }

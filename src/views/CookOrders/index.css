@@ -1,5 +1,7 @@
 .cookorders {
     padding: 20px 20px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .cookorders-header {
@@ -13,4 +15,10 @@
     margin-top: 50px;
     display: flex;
     justify-content: center;
+}
+
+@media all and (max-width: 767px) {
+    .cookorders {
+        width: 90%;
+    }
 }

@@ -26,20 +26,21 @@ class BuyerOrderCard extends React.Component {
         if (order.status === 'Accepted')
             statusColor = 'purple';
         else if (order.status === 'Rejected')
-            statusColor = 'lightgrey';
+            statusColor = 'lightgray';
 
         return (
             <Segment raised>
                 <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
                 <div className='buyerordercard'>
-                <Label size='large' attached='top' color={statusColor}>{order.status}</Label>
+                <Label className='label-dropshadow' size='large' attached='top' color={statusColor}>{order.status}</Label>
                     <div className='buyerordercard-header'>
                         <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
-                            <div className='large-font'>{food.title}</div>
+                            <div className='large-font top-spacing mobile-spacing'>{food.title}</div>
                             <div className='buyerordercard-section'>
                                 <div>{date.format('dddd, MMMM D')}</div>
-                                <div>{order.time}</div>
+                                <div className='bottom-spacing'>{order.time}</div>
+                                <div className='top-spacing'>Your cook, {cook.name}</div>
                             </div>
                         </div>
                     </div>

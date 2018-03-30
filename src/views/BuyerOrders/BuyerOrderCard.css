@@ -21,7 +21,7 @@
 
 #buyerordercard-header-cook {
     position: absolute;
-    top: 185px;
+    top: 200px;
     left: 130px;
     z-index: 1;
     border: 3px solid whitesmoke;
@@ -59,7 +59,8 @@
 
 .buyerordercard-link {
     color: #555555;
-    font-weight: 500;    
+    font-weight: 500;
+    margin-left: 5px;    
 }
 
 .buyerordercard-link:hover {
@@ -84,8 +85,24 @@
     margin-top: 20px;
 }
 
+.mobile-spacing {
+    margin-top: none;
+}
+
 .bottom-spacing {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+.box-dropshadow {
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.box-dropshadow:hover {
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
+}
+
+.label-dropshadow {
+    box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 0px 2px 7px 0px rgba(0, 0, 0, 0.1) !important;
 }
 
 @media all and (max-width: 767px) {
@@ -104,7 +121,15 @@
     }
     #buyerordercard-header-cook {
         position: absolute;
-        top: 110px;
+        top: 128px;
         left: 70px;
+    }
+
+    .bottom-spacing {
+        margin-bottom: 0px;
+    }
+
+    .mobile-spacing {
+        margin-top: 30px;
     }
 }

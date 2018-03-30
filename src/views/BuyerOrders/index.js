@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Header } from 'semantic-ui-react'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
@@ -39,6 +38,8 @@ class BuyerOrders extends React.Component {
                 <div className='buyerorders'>
                     <div className='buyerorders-header'>My Orders</div>
                     {content}
+                    {/* <div className='buyerorders-header'>Past Orders</div> */}
+                    
                 </div>
             </div>
         )
