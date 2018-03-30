@@ -99,7 +99,7 @@
 /* Date picker */
 #foodfilter-datepicker-actions {
     position: fixed;
-    top: 330px;
+    top: 355px;
     left: 20px;
     display: table;
     width: 305px;
@@ -122,7 +122,7 @@
 }
 
 #foodfilter-datepicker {
-    height: 380px;
+    height: 410px;
     width: 345px;
     z-index: 2000;
     top: 110px;
@@ -133,7 +133,7 @@
 
 #foodfilter-datepicker .content {
     padding: 1em !important;
-    height: 380px;
+    height: 410px;
 }
 
 #foodfilter-datepicker .SingleDatePickerInput {
@@ -148,6 +148,16 @@
     box-shadow: none;
 }
 
+#foodfilter-datepicker .DayPicker__week-header {
+    top: 55px;
+}
+
 #foodfilter-datepicker .DayPickerKeyboardShortcuts__show {
     display: none;
 }
+
+#foodfilter-datepicker .CalendarDay--selected {
+    background-color: #b61095;
+    border-color: #b61095;
+}
+

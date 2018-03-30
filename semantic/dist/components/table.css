@@ -683,10 +683,10 @@
 
 /* Teal */
 .ui.teal.table {
-  border-top: 0.2em solid #00B5AD;
+  border-top: 0.2em solid #2b65ec;
 }
 .ui.inverted.teal.table {
-  background-color: #00B5AD !important;
+  background-color: #2b65ec !important;
   color: #FFFFFF !important;
 }
 
@@ -710,10 +710,10 @@
 
 /* Purple */
 .ui.purple.table {
-  border-top: 0.2em solid #A333C8;
+  border-top: 0.2em solid #b61095;
 }
 .ui.inverted.purple.table {
-  background-color: #A333C8 !important;
+  background-color: #b61095 !important;
   color: #FFFFFF !important;
 }
 

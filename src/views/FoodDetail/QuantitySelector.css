@@ -2,31 +2,36 @@
     margin-top: 15px;
 }
 
-.quantityselector-quantity div:first-child {
+.quantityselector-quantity > div:first-child {
     text-align: left;
     margin-bottom: 8px;
     font-size: 1.05em;
 }
 
-.quantityselector-quantity div:nth-child(2) {
-    display: table;
+.quantityselector-quantity > div:first-child > div:first-child {
+    font-size: 1.4em;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.quantityselector-quantity > div:nth-child(2) {
+    display: flex;
+    justify-content: space-between;
     width: 50%;
-    max-width: 200px;
+    margin: 0 auto;
 }
 
 .quantityselector-quantity>div:nth-child(2)>.ui.icon.button {
-    display: table-cell;
     border: 1px solid;
 }
 
 .quantityselector-quantity>div:nth-child(2)>.ui.icon.button:active {
-    box-shadow: 0px 0px 8px 4px rgba(76, 185, 158, 0.75) !important;
-    -webkit-box-shadow: 0px 0px 8px 4px rgba(76, 185, 158, 0.75) !important;
+    box-shadow: 0px 0px 8px 4px #b60f95bf !important;
+    -webkit-box-shadow: 0px 0px 8px 4px rgba(182, 15, 149, 0.75) !important;
 }
 
 .quantityselector-quantity>div:nth-child(2)>div {
-    display: table-cell;
-    text-align: center;
+    margin: auto 0;
     padding-right: 6px;
     font-size: 1.6em;
     font-weight: 500;

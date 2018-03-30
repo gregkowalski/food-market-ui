@@ -12,7 +12,7 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
 
     const buttonProps = (disabled) => {
         const props = {
-            color: 'teal'
+            color: 'purple'
         };
         if (disabled) {
             props.color = 'grey';
@@ -23,7 +23,10 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
 
     return (
         <div className='quantityselector-quantity'>
-            <div>How many? ({food.unit} per order)</div>
+            <div>
+                <div>How many?</div>
+                <div>({food.unit} per order)</div>
+            </div>
             <div>
                 <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
                 <div>{quantity}</div>

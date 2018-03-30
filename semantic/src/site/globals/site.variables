@@ -9,3 +9,5 @@
 @pageFont : 'Roboto';
 @pageFontWeight : 300;
 
+@teal             : #2b65ec;
+@purple           : #b61095;

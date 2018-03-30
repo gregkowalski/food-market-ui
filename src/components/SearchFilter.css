@@ -38,7 +38,7 @@
 }
 
 .searchfilter-header-right span {
-    color:#4cb99e;
+    color:#b61095;
     cursor: pointer;
 }
 
@@ -59,7 +59,7 @@
 
 .searchfilter-footer-button {
     width: 100%;
-    background-color: #4cb99e !important;
+    background-color: #b61095 !important;
     color: white !important;
     font-size: 1em !important;
     box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
@@ -86,7 +86,7 @@
 
 .searchfilter-date .SingleDatePickerInput {
     border-radius: 5px;
-    border-color: #a1d4c8;    
+    border-color: #d3d3d3;    
 }
 
 .searchfilter-date .SingleDatePicker__picker {
@@ -111,6 +111,20 @@
 }
 
 .searchfilter-date .DayPickerKeyboardShortcuts__show_span {
-    bottom: -4px !important;
+    bottom: -2px !important;
     right: -30px !important;
+}
+
+.searchfilter-date .DateInput__display-text--focused {
+    background-color: #d3d3d3;
+    border-color: #bebebe;
+}
+
+.searchfilter-date .DayPickerKeyboardShortcuts__show {
+    display: none;
+}
+
+.searchfilter-date .CalendarDay--selected {
+    background-color: #b61095;
+    border-color: #b61095;
 }

@@ -6,7 +6,7 @@ export default class FilterBar extends React.Component {
 
     buttonProps(active) {
         const props = {
-            color: 'teal'
+            color: 'purple'
         };
         if (!active) {
             props.basic = true;
@@ -31,7 +31,7 @@ export default class FilterBar extends React.Component {
 
 const SearchBarFilterButton = ({ filter, label, onFilterClick }) => {
 
-    const props = { color: 'teal', basic: true };
+    const props = { color: 'grey', basic: true };
     let filterCount = 0;
     if (filter) {
         if (filter.date) {

@@ -407,7 +407,7 @@
 
 /* Teal */
 .ui.teal.progress .bar {
-  background-color: #00B5AD;
+  background-color: #2b65ec;
 }
 .ui.teal.inverted.progress .bar {
   background-color: #6DFFFF;
@@ -431,7 +431,7 @@
 
 /* Purple */
 .ui.purple.progress .bar {
-  background-color: #A333C8;
+  background-color: #b61095;
 }
 .ui.purple.inverted.progress .bar {
   background-color: #DC73FF;

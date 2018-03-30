@@ -32,10 +32,11 @@ class BuyerOrderCard extends React.Component {
             <Segment raised>
                 <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
                 <div className='buyerordercard'>
+                <Label size='large' attached='top' color={statusColor}>{order.status}</Label>                
                     <div className='buyerordercard-header'>
                         <Image src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
-                            <Label size='large' color={statusColor}>{order.status}</Label>
+                            <Label tag size='large' color={statusColor}>{order.status}</Label>
                             <div className='large-font'>{food.title}</div>
                             <div className='buyerordercard-section'>
                                 <div>{date.format('dddd, MMMM D')}</div>
@@ -44,11 +45,9 @@ class BuyerOrderCard extends React.Component {
                         </div>
                     </div>
                     <Divider />
+                    <div className='spacing normal-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
                     <div className='buyerordercard-section buyerordercard-main large-font'>
-                        <div>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
                         <div>{order.address}</div>
-
-
                     </div>
                     <Divider />
                     <div className='buyerordercard-section'>
@@ -67,13 +66,12 @@ class BuyerOrderCard extends React.Component {
                     <Divider />
                     <div className='buyerordercard-contact normal-font'>
                         <div className='buyerordercard-cook'>
-                            <Image src={cook.image} circular size='mini' />
-                            <div>
-                                <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+                            <div><Icon name='mail outline' size='large' />
+                                <a className='buyerordercard-link' href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                             </div>
                         </div>
                         <div>
-                            <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
+                            <Icon name='calendar' size='large' /><a className='buyerordercard-link' href='./'>Cancel order</a>
                         </div>
                     </div>
                 </div>

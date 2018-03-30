@@ -23,7 +23,7 @@
 }
 
 .content-link-active {
-    border-bottom: 3px solid #4cb99e;
+    border-bottom: 3px solid #b61095;
 }
 
 .detail-container {
@@ -58,7 +58,7 @@
     border-bottom: 1px solid lightgray;
     position: -webkit-sticky;
     position: sticky;
-    height: 50px;
+    height: 49px;
     line-height: 50px;
     top: 0px;
     z-index: 1;
@@ -66,19 +66,18 @@
 }
 
 .detail-head-right {
-    /* background: pink; */
     position: -webkit-sticky;
     position: sticky;
-    margin-top: 18px;
-    top: 88px;
+    margin-top: 20px;
+    top: 67px;
     z-index: 1;
     box-shadow: 0 2px 6px 0 rgba(117, 117, 117, 0.2), 0 6px 20px 0 rgba(114, 114, 114, 0.19) !important;
 }
 
 .food-detail-header {
-    color: #189da7 !important;
+    color: #b61095 !important;
     font-size: 1.8em !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .detail-main-header {
@@ -117,22 +116,22 @@
     margin-top: 10px;
     color: gray;
     font-size: 1.1em !important;
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 15px;
 }
 
 .detail-desktop-button {
-    background-color: #4cb99e !important;
+    background-color: #2b65ec !important;
     color: white !important;
     margin-top: 15px !important;
     font-size: 1.4em !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px !important;
 }
 
 .detail-desktop-button:hover {
-    background-color: #2aad8a !important;
+    background-color: #2554c7 !important;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
 }
 
@@ -156,7 +155,7 @@
     margin-left: 18px;
     color: #494949;
     font-size: 1.65em;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .detail-footer-header > div {
@@ -176,29 +175,29 @@
 .detail-footer-button {
     width: 100%;
     height: 3em;
-    margin-top: 6px !important;
-    background-color: #4cb99e !important;
+    margin-top: 5px !important;
+    background-color: #2b65ec !important;
     color: white !important;
     font-size: 1.4em !important;
     font-weight: 500 !important;
-    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px !important;
 }
 
 .detail-footer-button:hover {
-    background-color: #2aad8a !important;
+    background-color: #2554c7 !important;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
 }
 
 .detail-footer-text {
-    margin-top: 3px;
+    margin-top: 4px;
     color: gray;
     font-size: 1em;
     text-align: center;
 }
 
 .ui.rating .active.icon {
-    color: #52c5d5 !important;
+    color: #2b65ec !important;
 }
 
 .showmore-text::before {

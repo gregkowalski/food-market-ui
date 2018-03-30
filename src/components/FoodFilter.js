@@ -26,7 +26,7 @@ export default class FoodFilter extends React.Component {
     }
 
     getButtonProps(active) {
-        const props = { color: 'teal' };
+        const props = {};
         if (!active) {
             props.basic = true;
         }
@@ -45,13 +45,13 @@ export default class FoodFilter extends React.Component {
 
                     {!mobile &&
                         <div id='foodfilter-date'>
-                            <Button {...this.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
+                            <Button color='grey' {...this.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                         </div>
                     }
 
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
-                        <Button {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
-                        <Button {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
+                        <Button color='purple' {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
+                        <Button color='purple' {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
                     </div>
 
                     {!mobile &&
@@ -119,7 +119,7 @@ class DateModal extends React.Component {
                         />
                         <div id='foodfilter-datepicker-actions'>
                             <div><Button onClick={this.props.onClear}>Clear</Button></div>
-                            <div><Button color='teal' onClick={this.handleApply}>Apply</Button></div>
+                            <div><Button color='purple' onClick={this.handleApply}>Apply</Button></div>
                         </div>
                     </Modal.Content>
                 </Modal>

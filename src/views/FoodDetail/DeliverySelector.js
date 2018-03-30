@@ -7,10 +7,8 @@ const DeliverySelector = ({ pickup, onChange }) => {
     const deliveryProps = (active) => {
         const props = {};
         if (active) {
-            props.backgroundColor = 'rgba(228, 228, 228, 1)';
-            // props.color = 'white';
-            // props.border = '4px solid #99ede6';
-            // props.boxShadow = '0px 0px 20px 8px rgba(76, 185, 158,0.75)';
+            props.backgroundColor = '#b61095';
+            props.color = '#ffffff';
         }
         return props;
     }
