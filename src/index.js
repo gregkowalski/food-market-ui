@@ -54,7 +54,7 @@ render(
                             <Route exact path='/profile/edit/:userId' component={isAuth(ProfileEdit)} />
                             <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
                             <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
-                            <Route exact path='/login' component={Login} />
+                            <Route exact path='/login' component={isAuth(Login)} />
 
                             {/* <Route exact path='/map2' component={Map2} /> */}
                             <Route component={NotFoundPage} />
