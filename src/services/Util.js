@@ -79,6 +79,15 @@ class Util {
         return false;
     }
 
+    isAndroid(userAgent) {
+        if (!userAgent) {
+            userAgent = window.navigator.userAgent;
+        }
+
+        userAgent = userAgent.toLowerCase();
+        return userAgent.indexOf("android") >= 0;
+    }
+
     getGeoBounds(map) {
         const bounds = map.getBounds();
         const ne = bounds.getNorthEast();

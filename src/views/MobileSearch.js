@@ -21,6 +21,12 @@ export default class MobileSearch extends Component {
             showFilter: false,
             dimmed: false
         };
+
+        this.mapHeight = '62vh';
+        if (!Util.isAndroid()) {
+            this.mapHeight = '64vh';
+        }
+        this.filterBarHeight = '50px';
     }
 
     componentWillReceiveProps(nextProps) {
@@ -65,9 +71,6 @@ export default class MobileSearch extends Component {
             this.setState({ mapSearch: false }, () => Util.triggerEvent(window, 'resize'));
         }
     }
-
-    mapHeight = '62vh';
-    filterBarHeight = '50px';
 
     getFilterStyle(showFilter) {
         if (showFilter) {

@@ -6,6 +6,7 @@ import './ImageDecorator.css'
 import Util from '../services/Util'
 import Url from '../services/Url'
 import PriceCalc from '../services/PriceCalc'
+import Colors from '../data/Colors'
 
 export default class FoodCarousel extends Component {
 
@@ -57,7 +58,8 @@ export default class FoodCarousel extends Component {
             let imageStyle = { height: '100px' };
             const isSelected = index === this.state.selectedSlideIndex;
             if (isSelected) {
-                imageStyle.border = '2px solid teal';
+                imageStyle.border = '2px solid';
+                imageStyle.borderColor = Colors.purple;
             }
 
             return (
@@ -110,7 +112,7 @@ export default class FoodCarousel extends Component {
             selectedSlideIndex = 0;
         }
 
-        let slidesToShow = 2.1;
+        let slidesToShow = 2;
         if (window.innerHeight < window.innerWidth) {
             slidesToShow = 4;
         }
