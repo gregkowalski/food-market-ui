@@ -1,20 +1,20 @@
 .quantityselector-quantity {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-.quantityselector-quantity > div:first-child {
+.quantityselector-quantity>div:first-child {
     text-align: left;
     margin-bottom: 8px;
-    font-size: 1.05em;
+    font-size: 1.15em;
 }
 
-.quantityselector-quantity > div:first-child > div:first-child {
-    font-size: 1.4em;
+.quantityselector-quantity>div:first-child>div:first-child {
+    font-size: 1.3em;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
-.quantityselector-quantity > div:nth-child(2) {
+.quantityselector-quantity>div:nth-child(2) {
     display: flex;
     justify-content: space-between;
     width: 50%;
@@ -35,4 +35,23 @@
     padding-right: 6px;
     font-size: 1.6em;
     font-weight: 500;
+}
+
+.quantityselector-bottomspacing {
+    margin-bottom: 18px;
+}
+
+@media all and (max-width: 767px) {
+    .quantityselector-quantity>div:first-child {
+        font-size: 1em;
+    }
+
+    .quantityselector-quantity>div:first-child>div:first-child {
+        font-size: 1.25em;
+    }
+
+    .quantityselector-quantity>div:nth-child(2) {
+        width: 59%;
+        font-size: .9em;
+    }
 }

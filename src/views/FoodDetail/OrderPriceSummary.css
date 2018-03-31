@@ -1,5 +1,6 @@
 .orderpricesummary {
-    margin-top: 20px;
+    margin-top: 25px;
+    font-size: 1.25em;
 }
 
 .orderpricesummary .ui.divider {
@@ -24,4 +25,18 @@
     vertical-align: middle;
     text-align: right;
     width: 30%;
+}
+
+.orderpricesummary-total {
+    font-weight: 600;
+}
+
+@media all and (max-width: 767px) {
+    .orderpricesummary {
+        margin-top: 35px;
+        font-size: 1.05em;
+    }
+    .orderpricesummary-total {
+        font-weight: 500;
+    }
 }

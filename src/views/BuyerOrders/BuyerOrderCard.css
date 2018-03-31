@@ -93,16 +93,12 @@
     margin-bottom: 50px;
 }
 
-.box-dropshadow {
-    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
-}
-
-.box-dropshadow:hover {
-    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
-}
-
-.label-dropshadow {
-    box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 0px 2px 7px 0px rgba(0, 0, 0, 0.1) !important;
+#buyerordercard-status {
+    margin: -15px -15px 0 -15px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 @media all and (max-width: 767px) {

@@ -25,7 +25,7 @@ class DateTimeSelector extends React.Component {
         return (
             <div className='datetimeselector-datetime'>
                 <div className='datetimeselector-date'>
-                    <div>Date</div>
+                    <div className='datetime-topspacing datetime-bottomspacing'>Date</div>
                     <SingleDatePicker
                         date={date}
                         isOutsideRange={Util.isDayOutsideRange}
@@ -38,7 +38,7 @@ class DateTimeSelector extends React.Component {
                     />
                 </div>
                 <div className='datetimeselector-time'>
-                    <div>Time</div>
+                    <div className='datetime-topspacing datetime-bottomspacing'>Time</div>
                     <Dropdown selection
                         placeholder='What Time?'
                         options={OrderTimes}

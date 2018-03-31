@@ -24,8 +24,8 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
     return (
         <div className='quantityselector-quantity'>
             <div>
-                <div>How many?</div>
-                <div>({food.unit} per order)</div>
+                <div>How many orders?</div>
+                <div className='quantityselector-bottomspacing'>({food.unit} per order)</div>
             </div>
             <div>
                 <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />

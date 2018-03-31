@@ -5,10 +5,11 @@
     width: 100%;
 }
 
-.deliveryselector > div {
+.deliveryselector > button {
+    outline: none;
     text-align: center;
-    padding: 16px 1px 16px 1px;
-    border: 1px solid #d3d3d3;
+    padding: 16px 0px 16px 0px;
+    border: 2px solid #d3d3d3;
     box-shadow: 0 3px 7px 0 #a7a7a733, 1px 6px 20px 1px rgba(175, 175, 175, 0.1);
     box-sizing: border-box;
     border-radius: 24px;
@@ -17,12 +18,16 @@
     font-weight: 400;
     color: #444444;
     cursor: pointer;
+    background-color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.deliveryselector > div:hover {
+.deliveryselector > button:hover {
     padding: 15px 0px 15px 0px;
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     color: #b61095;
     border: 2px solid #b61095;
     box-shadow: 1px 6px 6px 1px rgba(157, 160, 159, 0.24), 1px 8px 12px 1px rgba(167, 167, 167, 0.144);
 }
+

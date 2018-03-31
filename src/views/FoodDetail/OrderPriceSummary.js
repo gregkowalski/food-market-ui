@@ -14,11 +14,13 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
         return style;
     }
 
+    const quantityLabel = (quantity > 1) ? 'orders': 'order';
+
     return (
         <div className='orderpricesummary'>
 
             <div className='orderpricesummary-row'>
-                <div className='orderpricesummary-left'>${PriceCalc.getTotal(food.price, quantity)} x {quantity} order size</div>
+                <div className='orderpricesummary-left'>${food.price} x {quantity} {quantityLabel}</div>
                 <div className='orderpricesummary-right'>${PriceCalc.getTotal(food.price, quantity)}</div>
             </div>
 
@@ -31,12 +33,12 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
 
             <Divider />
 
-            <div className='orderpricesummary-row'>
+            <div className='orderpricesummary-row orderpricesummary-total'>
                 <div className='orderpricesummary-left'>
-                    <span style={{ fontWeight: 700 }}>Total</span>
+                    Total
                 </div>
                 <div className='orderpricesummary-right'>
-                    <span style={{ fontWeight: 700 }}> ${PriceCalc.getTotalPrice(food, quantity, pickup)}</span>
+                    ${PriceCalc.getTotalPrice(food, quantity, pickup)}
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Constants from '../../Constants.js'
+import Colors from '../../data/Colors'
 import './DeliverySelector.css'
 
 const DeliverySelector = ({ pickup, onChange }) => {
@@ -7,8 +8,9 @@ const DeliverySelector = ({ pickup, onChange }) => {
     const deliveryProps = (active) => {
         const props = {};
         if (active) {
-            props.backgroundColor = '#b61095';
-            props.color = '#ffffff';
+            props.backgroundColor = Colors.purple;
+            props.color = 'white';
+            props.borderColor = Colors.purple;
         }
         return props;
     }
@@ -18,12 +20,12 @@ const DeliverySelector = ({ pickup, onChange }) => {
 
     return (
         <div className='deliveryselector'>
-            <div style={deliveryProps(pickup)} onClick={selectPickup}>
+            <button style={deliveryProps(pickup)} onClick={selectPickup}>
                 Pickup
-            </div>
-            <div style={deliveryProps(!pickup)} onClick={selectDelivery}>
+            </button>
+            <button style={deliveryProps(!pickup)} onClick={selectDelivery}>
                 Delivery +${Constants.DeliveryFee}
-            </div>
+            </button>
         </div>
     );
 }

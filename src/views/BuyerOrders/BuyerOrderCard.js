@@ -1,9 +1,11 @@
 import React from 'react'
 import moment from 'moment'
 import { withRouter } from 'react-router-dom'
-import { Segment, Divider, Image, Label, Icon, Accordion } from 'semantic-ui-react'
+import { Segment, Divider, Image, Icon, Accordion } from 'semantic-ui-react'
 import './BuyerOrderCard.css'
 import Constants from '../../Constants'
+import OrderStatus from '../../data/OrderStatus'
+import Colors from '../../data/Colors'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 
@@ -15,6 +17,21 @@ class BuyerOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
+    statusStyle(status) {
+        let color = Colors.purple;
+        if (status === OrderStatus.Accepted)
+            color = Colors.purple;
+        else if (status === OrderStatus.Declined)
+            color = Colors.red;
+        else if (status === OrderStatus.Cancelled)
+            color = Colors.grey;
+        
+        return {
+            backgroundColor: color,
+            // color: 'white'
+        }
+    }
+
     render() {
         const { order } = this.props;
         const { food, cook } = order;
@@ -22,17 +39,12 @@ class BuyerOrderCard extends React.Component {
 
         const { showDetails } = this.state;
 
-        let statusColor = 'grey';
-        if (order.status === 'Accepted')
-            statusColor = 'purple';
-        else if (order.status === 'Rejected')
-            statusColor = 'lightgray';
-
         return (
             <Segment raised>
+                <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{order.status}</div>
                 <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
                 <div className='buyerordercard'>
-                <Label className='label-dropshadow' size='large' attached='top' color={statusColor}>{order.status}</Label>
+                    {/* <Label className='label-dropshadow' size='large' attached='top' color={statusColor}>{order.status}</Label> */}
                     <div className='buyerordercard-header'>
                         <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
