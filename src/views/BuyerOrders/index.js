@@ -38,8 +38,6 @@ class BuyerOrders extends React.Component {
                 <div className='buyerorders'>
                     <div className='buyerorders-header'>My Orders</div>
                     {content}
-                    {/* <div className='buyerorders-header'>Past Orders</div> */}
-                    
                 </div>
             </div>
         )

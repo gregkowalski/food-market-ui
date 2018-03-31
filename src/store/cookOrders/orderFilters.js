@@ -1,6 +1,6 @@
 const OrderFilters = {
     UPCOMING: 'UPCOMING',
-    PAST: 'PAST',
+    INACTIVE: 'INACTIVE',
 }
 
 export default OrderFilters;

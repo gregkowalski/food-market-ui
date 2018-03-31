@@ -36,8 +36,8 @@ class CookOrders extends React.Component {
         this.props.actions.setOrderFilter(OrderFilters.UPCOMING);
     }
 
-    handlePastOrderClick = () => {
-        this.props.actions.setOrderFilter(OrderFilters.PAST);
+    handleInactiveOrderClick = () => {
+        this.props.actions.setOrderFilter(OrderFilters.INACTIVE);
     }
 
     render() {
@@ -83,7 +83,7 @@ class CookOrders extends React.Component {
                 <div className='cookorders'>
                     <div className='cookorders-header'>
                         <Link active={orderFilter === OrderFilters.UPCOMING} onClick={this.handleUpcomingOrderClick}>Upcoming Requests</Link>
-                        <Link active={orderFilter === OrderFilters.PAST} onClick={this.handlePastOrderClick}>Past Orders</Link>
+                        <Link active={orderFilter === OrderFilters.INACTIVE} onClick={this.handleInactiveOrderClick}>Inactive Orders</Link>
                     </div>
                     {content}
                 </div>
@@ -94,7 +94,7 @@ class CookOrders extends React.Component {
 
 const getVisibleOrders = (orders, filter) => {
     switch (filter) {
-        case OrderFilters.PAST:
+        case OrderFilters.INACTIVE:
             return orders.filter(o => o.status === OrderStatus.Declined || o.status === OrderStatus.Cancelled);
 
         case OrderFilters.UPCOMING:
