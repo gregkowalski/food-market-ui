@@ -5,6 +5,7 @@ import ShowMore from 'react-show-more'
 import './index.css'
 import FoodOptions from './FoodOptions'
 import FoodPrepSafetyMessage from './FoodPrepSafetyMessage'
+import './OverviewSection.css'
 
 const OverviewSection = ({ food, cook }) => {
     return (
@@ -47,7 +48,7 @@ const OverviewSection = ({ food, cook }) => {
             <Header as='h3' className='food-detail-header'>Allergy Information</Header>
             <div className='detail-body-text'>
                 <div className='user-text'>
-                    <div style={{ fontWeight: '600' }} >
+                    <div className='user-text-weight'>
                         May contain one or more of the following allergens:
                     </div>
                 </div>
@@ -77,7 +78,7 @@ const OverviewSection = ({ food, cook }) => {
             <Divider section />
 
             <Header as='h3' className='food-detail-header'>Bite Sizes</Header>
-            <div className='detail-body-text'><span style={{ fontWeight: '600' }}>{food.unit} </span> per order.  Feeds approximately {food.feed} people. </div>
+            <div className='detail-body-text'><span className='user-text-weight'>{food.unit} </span> per order.  Feeds approximately {food.feed} people. </div>
             <Divider section />
 
             <Header as='h3' className='food-detail-header'>Special Features</Header>

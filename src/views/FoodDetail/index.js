@@ -15,7 +15,6 @@ import Drawer from '../../components/Drawer'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 import { Actions, Selectors } from '../../store/order'
-
 import OverviewSection from './OverviewSection'
 import ReviewsSection from './ReviewsSection'
 import CookSection from './CookSection'
