@@ -20,6 +20,10 @@ class PriceCalc {
         return price * 100;
     }
 
+    getTotalOrderPrice(order) {
+        return this.getTotalPrice(order.food, order.quantity, order.pickup);
+    }
+
     getTotalPrice(food, quantity, pickup) {
         let total = this.getTotal(food.price, quantity);
         if (!pickup) {

@@ -9,6 +9,12 @@
     font-size: 1.8em;
     font-weight: 400;
     padding: 10px 0px;
+    line-height: 1.2em;
+    display: flex;
+}
+
+.cookorders-header > div:first-child {
+    margin-right: 20px;
 }
 
 .cookorders-loading-icon {

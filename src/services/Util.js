@@ -147,20 +147,20 @@ class Util {
     isEqualRegion(region1, region2) {
         if (region1 === region2)
             return true;
-        
+
         if (!region1 || !region2)
             return false;
-        
+
         return region1.id === region2.id;
     }
 
     isEqualGeo(geo1, geo2) {
         if (geo1 === geo2)
             return true;
-        
+
         if (!geo1 || !geo2)
             return false;
-        
+
         return geo1.ne_lat === geo2.ne_lat &&
             geo1.ne_lng === geo2.ne_lng &&
             geo1.sw_lat === geo2.sw_lat &&
@@ -192,6 +192,20 @@ class Util {
         const result = parsePhone(phone);
         // console.log('parsePhone: ' + JSON.stringify(result));
         return result.phone ? true : false;
+    }
+
+    groupBy(array, keyGetter) {
+        const map = new Map();
+        array.forEach((item) => {
+            const key = keyGetter(item);
+            const collection = map.get(key);
+            if (!collection) {
+                map.set(key, [item]);
+            } else {
+                collection.push(item);
+            }
+        });
+        return map;
     }
 }
 

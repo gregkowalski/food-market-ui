@@ -1,0 +1,6 @@
+.link:hover, .link-active {
+    border-bottom: 2px solid purple;
+    padding-bottom: 5px;
+    color: purple;
+    cursor: pointer;
+}

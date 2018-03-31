@@ -2,6 +2,7 @@ import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import OrderStatus from '../../data/OrderStatus'
+import OrderFilters from './orderFilters';
 
 function requestOrders() {
     return {
@@ -164,16 +165,27 @@ export const Actions = {
                 )
         }
     },
+
+    setOrderFilter: (orderFilter) => {
+        return (dispatch) => {
+            dispatch({
+                type: ActionTypes.COOK_ORDERS_SET_FILTER,
+                orderFilter
+            });
+        }
+    }
 }
 
 export const Selectors = {
     orders: (state) => { return state.cookOrders.orders; },
+    orderFilter: (state) => { return state.cookOrders.orderFilter },
     isOrdersLoading: (state) => { return state.cookOrders.isOrdersLoading; },
 }
 
 const initialState = {
     orders: [],
     isOrdersLoading: false,
+    orderFilter: OrderFilters.UPCOMING
 };
 
 function updateOrderInMap(orders, order_id, updateCallback) {
@@ -201,6 +213,11 @@ export const Reducers = {
     cookOrders: (state = initialState, action = {}) => {
 
         switch (action.type) {
+
+            case ActionTypes.COOK_ORDERS_SET_FILTER:
+                return Object.assign({}, state, {
+                    orderFilter: action.orderFilter
+                });
 
             case ActionTypes.COOK_ORDERS_REQUEST_ORDERS:
                 return Object.assign({}, state, {

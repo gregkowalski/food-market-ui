@@ -29,7 +29,7 @@ class CookOrderCard extends React.Component {
         this.props.onCancel(this.props.order);
     }
 
-    style(status) {
+    statusStyle(status) {
         let color = Colors.purple;
         if (status === OrderStatus.Accepted)
             color = Colors.purple;
@@ -37,7 +37,7 @@ class CookOrderCard extends React.Component {
             color = Colors.red;
         else if (status === OrderStatus.Cancelled)
             color = Colors.grey;
-        
+
         return {
             backgroundColor: color,
             // color: 'white'
@@ -47,47 +47,37 @@ class CookOrderCard extends React.Component {
     render() {
         const { order } = this.props;
         const { food, cook, isAccepting, isDeclining, isCancelling } = order;
-        const date = moment(order.date);
-
         const { showDetails } = this.state;
-
-        let statusColor = 'grey';
-        if (order.status === OrderStatus.Accepted)
-            statusColor = 'purple';
-        else if (order.status === OrderStatus.Declined)
-            statusColor = 'red';
-        else if (order.status === OrderStatus.Cancelled)
-            statusColor = 'lightgray';
 
         return (
             <Segment className='cookordercard'>
-                <div style={this.style(order.status)}>{order.status}</div>
+                <div style={this.statusStyle(order.status)}>{order.status}</div>
 
                 <Accordion>
                     <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
                         <div className='cookordercard-section large-font'>
                             <div>
                                 <Icon name='dropdown' />
-                                {date.format('dddd, MMMM D')}
+                                {food.title}
                                 &nbsp; @ {order.time}
                                 &nbsp; (${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency})
                                 &nbsp; {order.pickup ? 'Pickup' : 'Delivery'}
                             </div>
                         </div>
-                        <div className='cookordercard-header' onClick={this.navigateToFoodDetail}>
-                            <div>{food.title}</div>
-                            {/* <Image src={food.imageUrls[0]} width='20%' height='80px' /> */}
-                        </div>
                     </Accordion.Title>
+
+                    {order.status === OrderStatus.Pending &&
+                        <div>
+                            <Button className='box-dropshadow' color='green' loading={isAccepting} onClick={this.handleAccept}>Accept</Button>
+                            <Button className='box-dropshadow' color='red' loading={isDeclining} onClick={this.handleDecline}>Decline</Button>
+                        </div>
+                    }
+                    {order.status === OrderStatus.Accepted &&
+                        <div>
+                            <Button className='box-dropshadow' color='orange' loading={isCancelling} onClick={this.handleCancel}>Cancel</Button>
+                        </div>
+                    }
                     <Accordion.Content active={showDetails}>
-                        <Divider />
-                        <div className='cookordercard-section large-font'>
-                            <div>{date.format('dddd, MMMM D')}</div>
-                            <div>{order.time}</div>
-                        </div>
-                        <div className='cookordercard-section'>
-                            <div>{order.pickup ? 'Pickup' : 'Delivery'} address: {order.address}</div>
-                        </div>
                         <Divider />
                         <div className='cookordercard-section'>
                             <div>Reservation code: {order.order_id}</div>
@@ -106,17 +96,6 @@ class CookOrderCard extends React.Component {
                         </div>
                     </Accordion.Content>
                 </Accordion>
-                {order.status === OrderStatus.Pending &&
-                    <div>
-                        <Button className='box-dropshadow' color='green' loading={isAccepting} onClick={this.handleAccept}>Accept</Button>
-                        <Button className='box-dropshadow' color='red' loading={isDeclining} onClick={this.handleDecline}>Decline</Button>
-                    </div>
-                }
-                {order.status === OrderStatus.Accepted &&
-                    <div>
-                        <Button className='box-dropshadow' color='orange' loading={isCancelling} onClick={this.handleCancel}>Cancel</Button>
-                    </div>
-                }
             </Segment>
         )
     }

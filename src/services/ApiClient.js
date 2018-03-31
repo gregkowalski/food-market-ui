@@ -188,6 +188,46 @@ const buyerOrders = [{
     }
 },
 {
+    order_id: 'adsjhfklh23',
+    food_id: '80283950-07cd-11e8-a3a6-cd45bd5ea586',
+    pickup: true,
+    date: moment('2018-03-20'),
+    time: '3 - 5 PM',
+    quantity: 3,
+    status: OrderStatus.Pending,
+    address: '1265 Burnaby Street, Vancouver, BC',
+    food: {
+        title: 'Smoked Beer Can Chicken',
+        imageUrls: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg'],
+        price: 25,
+    },
+    cook: {
+        name: 'Steve',
+        image: '/assets/images/users/steve.jpg',
+        email: 'steve@work.com'
+    }
+},
+{
+    order_id: '2k3l4jlk289sf',
+    food_id: '802b1f80-07cd-11e8-8562-b5cca42ec0d7',
+    pickup: true,
+    date: moment('2018-03-20'),
+    time: '3 - 5 PM',
+    quantity: 3,
+    status: OrderStatus.Pending,
+    address: '1265 Burnaby Street, Vancouver, BC',
+    food: {
+        title: 'Casserole',
+        imageUrls: ['/assets/images/HollyC_baconcasserole.jpg'],
+        price: 15,
+    },
+    cook: {
+        name: 'Molly',
+        image: '/assets/images/users/molly.png',
+        email: 'molly@work.com'
+    }
+},
+{
     order_id: 'AABXOSKSJK2',
     food_id: '802b1f80-07cd-11e8-8562-b5cca42ec0d7',
     pickup: true,
