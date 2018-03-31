@@ -24,12 +24,12 @@ class CookOrders extends React.Component {
         this.props.actions.acceptOrder(order);
     }
 
-    handleDeclineOrder = (order) => {
-        this.props.actions.declineOrder(order);
+    handleDeclineOrder = (order, reason) => {
+        this.props.actions.declineOrder(order, reason);
     }
 
-    handleCancelOrder = (order) => {
-        this.props.actions.cancelOrder(order);
+    handleCancelOrder = (order, reason) => {
+        this.props.actions.cancelOrder(order, reason);
     }
 
     handleUpcomingOrderClick = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Segment, Icon, Accordion } from 'semantic-ui-react'
+import { Segment, Divider, Icon, Accordion } from 'semantic-ui-react'
 import './CookOrderByDateCard.css'
 import PriceCalc from '../../services/PriceCalc'
 import CookOrderCard from './CookOrderCard'
@@ -10,12 +10,20 @@ class CookOrderByDateCard extends React.Component {
     state = { showDetails: false }
 
     updateDayTotal(orders) {
-        const daySummary = orders.reduce(({ total, count }, order) => {
-            return {
-                total: total + PriceCalc.getTotalOrderPrice(order),
-                count: count + 1
+        const daySummary = orders.reduce((summary, order) => {
+            let statusSummary = summary[order.status];
+            if (!statusSummary) {
+                summary[order.status] = {
+                    total: 0,
+                    count: 0
+                };
+                statusSummary = summary[order.status];
             };
-        }, { total: 0, count: 0 });
+
+            statusSummary.total += PriceCalc.getTotalOrderPrice(order);
+            statusSummary.count++;
+            return summary;
+        }, {});
         this.setState({ daySummary });
     }
 
@@ -36,13 +44,30 @@ class CookOrderByDateCard extends React.Component {
         const { showDetails, daySummary } = this.state;
 
         const orderCards = orders.map(order => {
-            return (<CookOrderCard
-                key={order.order_id}
-                order={order}
-                onAccept={onAccept}
-                onDecline={onDecline}
-                onCancel={onCancel}
-            />);
+            return (
+                <div key={order.order_id}>
+                    <Divider />
+                    <CookOrderCard
+                        order={order}
+                        onAccept={onAccept}
+                        onDecline={onDecline}
+                        onCancel={onCancel}
+                    />
+                </div>
+            );
+        });
+
+        let summaries = [];
+        for (const key in daySummary) {
+            summaries.push([key, daySummary[key]]);
+        }
+
+        const summaryContent = summaries.map(([status, summary]) => {
+            return (
+                <div key={status} className='cookorderbydatecard-summary-order'>
+                    <div>{status}: {summary.count} order{summary.count > 1 ? 's' : ''}</div>
+                    <div>Total ${summary.total}</div>
+                </div>);
         });
 
         return (
@@ -54,10 +79,7 @@ class CookOrderByDateCard extends React.Component {
                                 <Icon name='dropdown' />
                                 <div>{date.format('dddd, MMMM D')}</div>
                             </div>
-                            <div className='cookorderbydatecard-summary-order'>
-                                <div>{daySummary.count} order{daySummary.count > 1 ? 's' : ''}</div>
-                                <div>Total ${daySummary.total}</div>
-                            </div>
+                            {summaryContent}
                         </div>
                     </Accordion.Title>
                     <Accordion.Content active={showDetails}>

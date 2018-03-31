@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { withRouter } from 'react-router-dom'
-import { Segment, Divider, Image, Icon, Accordion, Button } from 'semantic-ui-react'
+import { Header, Segment, Divider, Image, Icon, Accordion, Button, Modal, TextArea } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import Constants from '../../Constants'
 import OrderStatus from '../../data/OrderStatus'
@@ -17,22 +17,49 @@ class CookOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
-    handleAccept = () => {
-        this.props.onAccept(this.props.order);
+    acceptOrder = () => {
+        if (!this.props.isAccepting) {
+            this.props.onAccept(this.props.order);
+        }
     }
 
-    handleDecline = () => {
-        this.props.onDecline(this.props.order);
+    declineOrder = (reason) => {
+        //this.setState({ showConfirmDecline: false });
+        if (!this.props.isDeclining) {
+            this.props.onDecline(this.props.order, reason);
+        }
     }
 
-    handleCancel = () => {
-        this.props.onCancel(this.props.order);
+    closeDeclineConfirmation = () => {
+        this.setState({ showConfirmDecline: false });
+    }
+
+    showDeclineConfirmation = (e) => {
+        this.setState({ showConfirmDecline: true });
+    }
+
+
+    closeCancelConfirmation = () => {
+        this.setState({ showConfirmCancel: false });
+    }
+
+    showCancelConfirmation = (e) => {
+        e.preventDefault();
+        this.setState({ showConfirmCancel: true });
+    }
+
+    cancelOrder = (reason) => {
+        //this.setState({ showConfirmCancel: false });
+        console.log(reason);
+        if (!this.props.isCancelling) {
+            this.props.onCancel(this.props.order, reason);
+        }
     }
 
     statusStyle(status) {
         let color = Colors.purple;
         if (status === OrderStatus.Accepted)
-            color = Colors.purple;
+            color = Colors.green;
         else if (status === OrderStatus.Declined)
             color = Colors.red;
         else if (status === OrderStatus.Cancelled)
@@ -47,10 +74,10 @@ class CookOrderCard extends React.Component {
     render() {
         const { order } = this.props;
         const { food, cook, isAccepting, isDeclining, isCancelling } = order;
-        const { showDetails } = this.state;
+        const { showDetails, showConfirmCancel, showConfirmDecline } = this.state;
 
         return (
-            <Segment className='cookordercard'>
+            <div className='cookordercard'>
                 <div style={this.statusStyle(order.status)}>{order.status}</div>
 
                 <Accordion>
@@ -65,16 +92,10 @@ class CookOrderCard extends React.Component {
                             </div>
                         </div>
                     </Accordion.Title>
-
                     {order.status === OrderStatus.Pending &&
                         <div>
-                            <Button className='box-dropshadow' color='green' loading={isAccepting} onClick={this.handleAccept}>Accept</Button>
-                            <Button className='box-dropshadow' color='red' loading={isDeclining} onClick={this.handleDecline}>Decline</Button>
-                        </div>
-                    }
-                    {order.status === OrderStatus.Accepted &&
-                        <div>
-                            <Button className='box-dropshadow' color='orange' loading={isCancelling} onClick={this.handleCancel}>Cancel</Button>
+                            <Button className='box-dropshadow' color='green' loading={isAccepting} onClick={this.acceptOrder}>Accept</Button>
+                            <Button className='box-dropshadow' color='red' loading={isDeclining} onClick={this.showDeclineConfirmation}>Decline</Button>
                         </div>
                     }
                     <Accordion.Content active={showDetails}>
@@ -90,15 +111,78 @@ class CookOrderCard extends React.Component {
                                 <Image src={cook.image} circular size='mini' floated='left' />
                                 <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                             </div>
-                            <div style={{ marginTop: '25px' }}>
-                                <Icon name='calendar' size='big' /><a href='./'>Cancel order</a>
-                            </div>
+                            {order.status === OrderStatus.Accepted &&
+                                <div style={{ marginTop: '25px' }}>
+                                    <Icon name='calendar' size='big' />
+                                    <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
+                                </div>
+                            }
+
                         </div>
                     </Accordion.Content>
                 </Accordion>
-            </Segment>
+
+                <ConfirmModal
+                    header='Confirm Cancellation'
+                    message="Let the buyer know why you're cancelling"
+                    open={showConfirmCancel}
+                    isProcessing={isCancelling}
+                    onConfirm={this.cancelOrder}
+                    onClose={this.closeCancelConfirmation}
+                />
+
+                <ConfirmModal
+                    header='Confirm Decline'
+                    message="Let the buyer know why you're declining"
+                    open={showConfirmDecline}
+                    isProcessing={isDeclining}
+                    onConfirm={this.declineOrder}
+                    onClose={this.closeDeclineConfirmation}
+                />
+
+            </div>
         )
     }
 }
 
 export default withRouter(CookOrderCard);
+
+class ConfirmModal extends React.Component {
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.isProcessing && !nextProps.isProcessing) {
+            this.props.onClose();
+        }
+    }
+
+    render() {
+
+        const { header, message, open, isProcessing, onConfirm, onClose } = this.props;
+
+        let reason;
+        const handleReasonChange = (event, data) => {
+            reason = data.value;
+        };
+
+        const handleConfirm = () => {
+            onConfirm(reason);
+        };
+
+        return (
+            <Modal open={open} dimmer='inverted' onClose={onClose}>
+                <Modal.Header>{header}</Modal.Header>
+                <Modal.Content>
+                    <Modal.Description>
+                        <Header>Add a message</Header>
+                        <p>{message}</p>
+                    </Modal.Description>
+                    <TextArea autoHeight onChange={handleReasonChange} />
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button loading={isProcessing} onClick={handleConfirm}>Confirm</Button>
+                    <Button onClick={onClose}>Back</Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
+}
