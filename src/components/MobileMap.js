@@ -15,9 +15,9 @@ export default class MobileMap extends React.Component {
 
     getMarkerImage(foodItem, selectedFoodId) {
         if (foodItem.food_id === selectedFoodId) {
-            return '/assets/images/food-icon-selected1.png';
+            return '/assets/images/food-icon-selected.png';
         }
-        return '/assets/images/food-icon1.png';
+        return '/assets/images/food-icon.png';
     }
 
     getZIndex(foodItem, selectedFoodId) {

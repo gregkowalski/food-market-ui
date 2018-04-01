@@ -225,7 +225,7 @@ export default class MobileSearch extends Component {
 
                         <div className='mobilesearch-foodgrid' style={this.getListViewStyle(mapSearch)}>
                             <FoodGrid foods={foods} />
-                            <Icon className='mobilesearch-foodgrid-icon' name='marker' color='teal' size='big' onClick={this.showMapSearch} />
+                            <Icon className='mobilesearch-foodgrid-icon' name='marker' color='purple' size='big' onClick={this.showMapSearch} />
                         </div>
 
                     </Dimmer.Dimmable>

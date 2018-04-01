@@ -33,6 +33,7 @@
     padding: .5em .5em!important;
     width: 2em!important;
     height: 2em!important;
+    background-image: url('/assets/images/map.png')
 }
 
 .mobilesearch-foodcarousel {
