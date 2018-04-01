@@ -79,7 +79,7 @@
     border-top-right-radius: 0;
 }
 
-.ui.dropdown .menu > .apphead-dropdown-profile-link.item {
+.ui.dropdown .menu > .apphead-dropdown-link.item {
     color: black;
     font-weight: 300;
     font-size: .95em;

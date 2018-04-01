@@ -42,21 +42,21 @@ export class AppHeader extends React.Component {
         window.location.href = Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
     }
 
-    handleEditProfile = () => {
+    navigateToEditProfile = () => {
         const { user } = this.props;
         this.props.history.push(Url.profileEdit(user.user_id));
     }
 
-    handleLogoClick = () => {
-        this.props.history.push(Url.home());
-    }
-
-    handleMyOrders = () => {
+    navigateToMyOrders = () => {
         this.props.history.push(Url.buyerOrders());
     }
 
-    handleMyCookingRequests = () => {
+    navigateToMyCookingRequests = () => {
         this.props.history.push(Url.cookOrders());
+    }
+
+    navigateToHome = () => {
+        this.props.history.push(Url.home());
     }
 
     getRandomTagline() {
@@ -85,20 +85,22 @@ export class AppHeader extends React.Component {
         let sessionElement;
 
         if (user) {
-            sessionElement =
+            sessionElement = (
                 <div className='apphead-sign-in'>
                     <span>Hi, </span>
                     <Dropdown text={user.username}>
                         <Dropdown.Menu className='left'>
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='My Orders' onClick={this.handleMyOrders} />
+                            <Dropdown.Item className='apphead-dropdown-link' text='Home' onClick={this.navigateToHome} />
+                            <Dropdown.Divider />
+                            <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
                             <Dropdown.Divider />
                             {user.stripe_user_id &&
-                                <Dropdown.Item className='apphead-dropdown-profile-link' text='My Cooking Requests' onClick={this.handleMyCookingRequests} />
+                                <Dropdown.Item className='apphead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
                             }
                             {user.stripe_user_id &&
                                 <Dropdown.Divider />
                             }
-                            <Dropdown.Item className='apphead-dropdown-profile-link' text='Edit Profile' onClick={this.handleEditProfile} />
+                            <Dropdown.Item className='apphead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />
                             <Dropdown.Divider />
@@ -106,21 +108,24 @@ export class AppHeader extends React.Component {
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
+            );
         }
         else {
             if (isLoading) {
-                sessionElement =
+                sessionElement = (
                     <div className='apphead-sign-in'>
                         <LoadingIcon />
                     </div>
+                );
             }
             else {
-                sessionElement =
+                sessionElement = (
                     <div>
                         <a href='/signup' onClick={this.handleSignUp} className='apphead-sign-in'> Sign Up </a>
                         <span style={{ color: '#2da388', fontSize: '1.5em', marginTop: '2px' }}>|</span>
                         <a href='/login' onClick={this.handleSignIn} className='apphead-sign-in'> Log In</a>
                     </div>
+                );
             }
         }
         const headerStyle = {};
@@ -135,11 +140,10 @@ export class AppHeader extends React.Component {
         }
 
         return (
-
             <div className='apphead' style={headerStyle}>
                 <div className='apphead-content'>
                     <div className='apphead-logo'>
-                        <div onClick={this.handleLogoClick}>
+                        <div onClick={this.navigateToHome}>
                             <Image height='38px' src={Constants.AppLogo} />
                             <div className='apphead-link'>{Constants.AppName}</div>
                         </div>
