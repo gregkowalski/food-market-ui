@@ -10,7 +10,10 @@ export default class MobileMap extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { showDeliveryInstructions: !props.pickup };
+        this.state = {
+            showDeliveryInstructions: !props.pickup,
+            selectedFoodId: props.selectedFoodId
+        };
     }
 
     getMarkerImage(foodItem, selectedFoodId) {
@@ -58,13 +61,19 @@ export default class MobileMap extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.selectedFoodId !== nextProps.selectedFoodId) {
+            this.setState({ selectedFoodId: nextProps.selectedFoodId });
+        }
+    }
+
     handleDeliveryInstructionsClick = () => {
         this.setState({ showDeliveryInstructions: false });
     }
 
     render() {
-        const { selectedFoodId, pickup, foods, selectedRegion } = this.props;
-        const { showDeliveryInstructions } = this.state;
+        const { pickup, foods, selectedRegion } = this.props;
+        const { showDeliveryInstructions, selectedFoodId } = this.state;
 
         let polygons;
         if (!pickup) {

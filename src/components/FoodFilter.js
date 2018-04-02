@@ -38,6 +38,19 @@ export default class FoodFilter extends React.Component {
         const style = Object.assign({}, this.props.style);
         const dateLabel = date ? date.format("MMM D, YYYY") : "Date";
 
+        const mobileButtonStyle = {};
+        if (!style.height) {
+            style.height = '50px';
+            if (mobile) {
+                mobileButtonStyle.height = '50px';
+            }
+        }
+        else {
+            if (mobile) {
+                mobileButtonStyle.height = style.height;
+            }
+        }
+
         return (
             <div className='foodfilter' style={style}>
 
@@ -50,8 +63,8 @@ export default class FoodFilter extends React.Component {
                     }
 
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
-                        <Button color='purple' {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
-                        <Button color='purple' {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
+                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
+                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
                     </div>
 
                     {!mobile &&

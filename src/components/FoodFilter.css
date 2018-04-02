@@ -1,5 +1,4 @@
 .foodfilter {
-    height: 50px;
     top: 0;
     left: 0;
     width: 100%;
@@ -33,7 +32,6 @@
 #foodfilter-pickup-mobile button {
     width: 50%;
     margin: 0;
-    height: 50px;
     font-size: 18px;
     border-radius: 0px;
 }

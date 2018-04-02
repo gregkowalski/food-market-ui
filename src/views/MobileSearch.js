@@ -18,11 +18,8 @@ class MobileSearch extends Component {
     constructor(props) {
         super(props);
 
-        this.mapHeight = '62vh';
-        if (!Util.isAndroid()) {
-            this.mapHeight = '64vh';
-        }
-        this.filterBarHeight = '50px';
+        this.mapHeight = '64vh';
+        this.filterBarHeight = '8vh';
         this.state = {
             mapSearch: this.isMapSearch(this.props.location),
             showFilter: false,
@@ -48,8 +45,18 @@ class MobileSearch extends Component {
         }
 
         if (this.props.foods !== nextProps.foods) {
-            if (nextProps.foods && nextProps.foods.length > 0) {
-                this.setState({ selectedFoodId: nextProps.foods[0].food_id });
+            const { foods } = nextProps;
+            if (foods && foods.length > 0) {
+                this.setState({ selectedFoodId: foods[0].food_id });
+            }
+        }
+    }
+
+    componentDidMount() {
+        if (!this.state.selectedFoodId) {
+            const { foods } = this.props;
+            if (foods && foods.length > 0) {                
+                this.setState({ selectedFoodId: foods[0].food_id });
             }
         }
     }
@@ -73,7 +80,15 @@ class MobileSearch extends Component {
     showMapSearch = () => this.props.history.push(Url.home() + '?m=1&view=map');
     showListView = () => this.props.history.push(Url.home() + '?m=1&view=list');
     handleSearchFilterChange = (filter) => this.setState({ filter });
-    handleMarkerClick = (selectedFoodId) => this.setState({ selectedFoodId: selectedFoodId });
+    handleMarkerClick = (selectedFoodId) => this.setState({ mapSelectedFoodId: selectedFoodId });
+    handleSelectedFood = (selectedFood) => {
+        setTimeout(() => {
+            this.setState({
+                mapLocation: selectedFood.position,
+                selectedFoodId: selectedFood.food_id
+            });
+        }, 250);
+    }
 
     handleFilterBarDeliveryClick = () => {
         this.props.onDeliveryClick();
@@ -127,7 +142,8 @@ class MobileSearch extends Component {
     getFoodFilterStyle() {
         return {
             top: '0px',
-            position: 'fixed'
+            position: 'fixed',
+            height: this.filterBarHeight
         };
     }
 
@@ -154,7 +170,7 @@ class MobileSearch extends Component {
     }
 
     render() {
-        let { mapSearch, dimmed, showFilter, filter, selectedFoodId, mapLocation } = this.state;
+        let { mapSearch, dimmed, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
         let { pickup, foods, region, date } = this.props;
 
         if (mapSearch) {
@@ -221,13 +237,14 @@ class MobileSearch extends Component {
                                 <LoadingIcon size='big' />
                             } */}
                             {/* {!isLoading && */}
-                            <FoodCarousel foods={foods} pickup={pickup} date={date} selectedFoodId={selectedFoodId}
-                                onSelected={(selectedFood) => {
-                                    this.setState({
-                                        mapLocation: selectedFood.position,
-                                        selectedFoodId: selectedFood.food_id
-                                    });
-                                }} />
+                            <FoodCarousel
+                                foods={foods}
+                                pickup={pickup}
+                                date={date}
+                                selectedFoodId={selectedFoodId}
+                                mapSelectedFoodId={mapSelectedFoodId}
+                                onSelected={this.handleSelectedFood}
+                            />
                             {/* } */}
                         </div>
 

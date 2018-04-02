@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
-import { setTimeout } from 'timers';
 import { Item, Image, Rating, Icon } from 'semantic-ui-react'
-import './ImageDecorator.css'
+import './FoodCarousel.css'
 import Util from '../services/Util'
 import Url from '../services/Url'
 import PriceCalc from '../services/PriceCalc'
@@ -10,41 +9,50 @@ import Colors from '../data/Colors'
 
 export default class FoodCarousel extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            quantity: 1,
-            selectedSlideIndex: 0
-        };
-    }
-
+    state = {};
+    
     hasFoods() {
         return this.props.foods && this.props.foods.length > 0;
     }
 
     handleAfterFoodSlide = (index) => {
         if (this.props.onSelected) {
-            setTimeout(() => {
-                this.setState({ selectedSlideIndex: index });
-                this.props.onSelected(this.props.foods[index]);
-            }, 50);
+            this.props.onSelected(this.props.foods[index]);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.foods !== nextProps.foods) {
+            const { foods } = nextProps;
+            if (foods && foods.length > 0) {
+                this.setState({ selectedSlideIndex: 0 });
+            }
+        }
+
+        if (this.props.mapSelectedFoodId !== nextProps.mapSelectedFoodId) {
+            const { foods } = this.props;
+            let selectedSlideIndex = foods.findIndex(food => food.food_id === nextProps.mapSelectedFoodId);
+            if (selectedSlideIndex < 0) {
+                selectedSlideIndex = 0;
+            }
+            this.setState({ selectedSlideIndex });
         }
     }
 
     componentDidMount() {
-        if (this.props.onSelected && this.hasFoods()) {
-            let selectedFood = this.props.foods[0];
-            this.props.onSelected(selectedFood);
+        const { foods } = this.props;
+        if (foods && foods.length > 0) {
+            this.setState({ selectedSlideIndex: 0 });
         }
     }
 
     render() {
-
-        if (!this.hasFoods()) {
-            return <div></div>;
+        const { foods, pickup, date, selectedFoodId } = this.props;
+        if (!foods || foods.length <= 0) {
+            return null;
         }
 
-        const { foods, pickup, date } = this.props;
+        const { selectedSlideIndex } = this.state;
 
         // this is for a defect in nuka-carousel where if there's only one item
         // it doesn't generate a list element with a margin-left of 7.5px
@@ -53,50 +61,41 @@ export default class FoodCarousel extends Component {
             foodCardStyle.marginLeft = '7.5px';
         }
 
+        const ratio = window.innerWidth / window.innerHeight;
+        const slidesToShow = 2.4;
+
         const slides = foods.map((food, index) => {
 
-            let imageStyle = { height: '100px' };
-            const isSelected = index === this.state.selectedSlideIndex;
-            if (isSelected) {
-                imageStyle.border = '2px solid';
-                imageStyle.borderColor = Colors.purple;
+            let borderColor = 'transparent';
+            if (food.food_id === selectedFoodId) {
+                borderColor = Colors.purple;
             }
 
+            const imageStyle = { borderTop: `5px solid ${borderColor}` };
+
             return (
-                <div className='FoodCard2' key={food.food_id} style={foodCardStyle}>
+                <div key={food.food_id} style={foodCardStyle}>
                     <a style={{ color: 'inherit' }}
                         target='_blank'
                         href={Url.foodDetail(food.food_id, pickup, date)}>
 
-                        <Item style={{ marginBottom: '1px' }}>
+                        <Item>
                             <Item.Content>
-                                <div>
-                                    <Image src={food.imageUrls[0]} style={imageStyle}
-                                        onLoad={() => Util.triggerEvent(window, 'resize')} />
-                                </div>
+                                <Image className='foodcarousel-card-image' style={imageStyle} src={food.imageUrls[0]}
+                                    onLoad={() => Util.triggerEvent(window, 'resize')} />
 
                                 <Item.Header>
-                                    <div className='FoodCardHeader2' style={
-                                        {
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                        }
-                                    }>
-                                        ${PriceCalc.getPrice(food.price)} · {food.title}</div>
-                                    <div style={{ clear: 'both' }}></div>
+                                    <div className='foodcarousel-card-header'>
+                                        ${PriceCalc.getPrice(food.price)} · {food.title}
+                                    </div>
                                 </Item.Header>
 
                                 <Item.Meta>
-                                    <div style={{ display: 'flex' }}>
+                                    <div className='foodcarousel-card-info'>
                                         <FoodPrepLabel food={food} />
-                                        <span className='food-label'>
-                                            {food.states}
-                                            <span style={{ fontWeight: '900' }}>·</span>
-                                            <Rating style={{ marginTop: '5px', marginLeft: '2px' }}
-                                                disabled={true} maxRating={5} rating={food.rating} size='mini' />
-                                            {food.ratingCount}
-                                        </span>
+                                        <span>{food.states}</span>
+                                        <Rating size='mini' disabled={true} maxRating={5} rating={food.rating} />
+                                        <span>{food.ratingCount}</span>
                                     </div>
                                 </Item.Meta>
 
@@ -106,16 +105,6 @@ export default class FoodCarousel extends Component {
                 </div>
             );
         });
-
-        let selectedSlideIndex = foods.findIndex(food => food.food_id === this.props.selectedFoodId);
-        if (selectedSlideIndex < 0) {
-            selectedSlideIndex = 0;
-        }
-
-        let slidesToShow = 2;
-        if (window.innerHeight < window.innerWidth) {
-            slidesToShow = 4;
-        }
 
         return (
             <Carousel
@@ -139,5 +128,5 @@ const FoodPrepLabel = ({ food }) => {
     let foodPrepClassName = 'LabelPrep-' + food.states[0];
     let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
-    return (<Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />);
+    return (<Icon name={foodPrepIcon} className={foodPrepClassName} size='mini' />);
 }
