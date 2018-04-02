@@ -1,35 +1,52 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { Dimmer, Icon } from 'semantic-ui-react'
 import './MobileSearch.css'
 import MobileMap from '../components/MobileMap'
 import FoodGrid from '../components/FoodGrid'
 import FoodCarousel from '../components/FoodCarousel';
 import Util from '../services/Util'
+import Url from '../services/Url'
 import AppHeader from '../components/AppHeader'
 import FoodFilter from '../components/FoodFilter'
 import SearchFilter from '../components/SearchFilter'
 import FilterBar from '../components/FilterBar'
 import Drawer from '../components/Drawer'
 
-export default class MobileSearch extends Component {
+class MobileSearch extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            mapSearch: false,
-            showFilter: false,
-            dimmed: false
-        };
 
         this.mapHeight = '62vh';
         if (!Util.isAndroid()) {
             this.mapHeight = '64vh';
         }
         this.filterBarHeight = '50px';
+        this.state = {
+            mapSearch: this.isMapSearch(this.props.location),
+            showFilter: false,
+            dimmed: false
+        };
+    }
+
+    isMapSearch(location) {
+        const query = Util.parseQueryString(location);
+        if (query.view && query.view === 'map') {
+            return true;
+        }
+        return false;
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.location !== nextProps.location) {
+            // The resize event on the window is used as a workaround for a defect with nuka carousel
+            // on the Food.js page where the images don't render.  This happens because we show/hide
+            // the list view vs. map search using CSS display: none instead of rendering vs. non-rendering
+            // using React.  That's done because it's faster to switch views than to re-render the DOM.
+            this.setState({ mapSearch: this.isMapSearch(nextProps.location) }, () => Util.triggerEvent(window, 'resize'));
+        }
+
         if (this.props.foods !== nextProps.foods) {
             if (nextProps.foods && nextProps.foods.length > 0) {
                 this.setState({ selectedFoodId: nextProps.foods[0].food_id });
@@ -53,23 +70,14 @@ export default class MobileSearch extends Component {
     hideDimmer = () => this.setState({ dimmed: false });
     showFilter = () => this.setState({ showFilter: true });
     hideFilter = () => this.setState({ showFilter: false });
-    showMapSearch = () => this.setState({ mapSearch: true });
+    showMapSearch = () => this.props.history.push(Url.home() + '?m=1&view=map');
+    showListView = () => this.props.history.push(Url.home() + '?m=1&view=list');
     handleSearchFilterChange = (filter) => this.setState({ filter });
     handleMarkerClick = (selectedFoodId) => this.setState({ selectedFoodId: selectedFoodId });
 
     handleFilterBarDeliveryClick = () => {
         this.props.onDeliveryClick();
         this.showMapSearch();
-    }
-
-    showListView = () => {
-        if (this.state.mapSearch) {
-            // The resize event on the window is used as a workaround for a defect with nuka carousel
-            // on the Food.js page where the images don't render.  This happens because we show/hide
-            // the list view vs. map search using CSS display: none instead of rendering vs. non-rendering
-            // using React.  That's done because it's faster to switch views than to re-render the DOM.
-            this.setState({ mapSearch: false }, () => Util.triggerEvent(window, 'resize'));
-        }
     }
 
     getFilterStyle(showFilter) {
@@ -234,3 +242,5 @@ export default class MobileSearch extends Component {
         )
     }
 }
+
+export default withRouter(MobileSearch);
