@@ -50,11 +50,11 @@
 }
 
 #foodfilter-pickup button {
-    width: 49%;
+    width: 46%;
 }
 
 #foodfilter-pickup button:nth-child(2) {
-    margin: 0 0 0 1%;
+    margin: 0px 5px 0px 0px;
 }
 
 #foodfilter-pickup button:first-child {
@@ -62,7 +62,7 @@
 }
 
 #foodfilter-pickup button:nth-child(2) {
-    width: 49%;
+    width: 46%;
     margin: 0 0 0 1%;
 }
 
@@ -71,7 +71,7 @@
     vertical-align: middle;
     text-align: right;
     width: 34%;
-    font-weight: 600;
+    font-weight: 500;
     padding-right: 10px;
 }
 

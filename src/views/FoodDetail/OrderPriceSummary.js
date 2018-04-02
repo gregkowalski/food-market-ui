@@ -27,7 +27,7 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
             <Divider style={hideForPickup(pickup)} />
 
             <div className='orderpricesummary-row' style={hideForPickup(pickup)}>
-                <div className='orderpricesummary-left'>Delivery Fee</div>
+                <div className='orderpricesummary-left'>Delivery fee</div>
                 <div className='orderpricesummary-right'>${Constants.DeliveryFee}</div>
             </div>
 

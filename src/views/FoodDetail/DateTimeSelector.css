@@ -1,27 +1,27 @@
 .datetimeselector-datetime {
     display: flex;
     justify-content: space-between;
-    padding: 15px 0 15px 0;
+    padding: 0px 0 15px 0;
     font-weight: 500;
     width: 100%;
 }
 /* Time Picker */
 
 .datetimeselector-time {
-    width: 48%;
+    width: 53%;
     font-weight: 400;
     margin-left: 2%;
-    font-size: 1.4em;
+    font-size: 1.1em;
 }
 
 .datetimeselector-time .ui.dropdown {
     margin-top: 5px;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 400;
     min-width: 100%;
     width: 100%;
     border-color: #d3d3d3;
-    padding-left: .78571429em;
+    padding: .95571429em 2.1em .78571429em .78571429em;
 }
 
 
@@ -35,17 +35,17 @@
 /* Date Picker */
 
 .datetimeselector-date {
-    width: 46%;
+    width: 43%;
     margin-right: 2%;
     font-weight: 400;
-    font-size: 1.4em;
+    font-size: 1.1em;
 }
 
 .datetimeselector-date .DateInput {
     border-radius: 5px;
     width: 100%;
-    font-size: 16px;
-    padding: 5px 5px 4px 5px;
+    font-size: 17px;
+    padding: 8px 5px 7px 5px;
     font-weight: 400;
 }
 
@@ -60,6 +60,10 @@
     
 }
 
+/* .datetimeselector-date .transition-container {
+    height: 292px !important;
+} */
+
 .datetimeselector-date .SingleDatePickerInput input {
     cursor: pointer;
 }
@@ -69,13 +73,23 @@
     z-index: 2;
 }
 
+.datetimeselector-date .DateInput__display-text--focused {
+    background: #d3d3d3;
+    border-color: #d3d3d3;
+}
+
+.datetimeselector-date .CalendarDay--selected {
+    background-color: #b61095;
+    border-color: #b61095;
+}
+
 .datetimeselector-date .DateInput--with-caret::before {
-    margin-top: -15px;
+    margin-top: -13px;
     z-index: 3;
 }
 
 .datetimeselector-date .DateInput--with-caret::after {
-    margin-top: -15px;
+    margin-top: -13px;
     z-index: 3;
 }
 
@@ -93,21 +107,25 @@
 }
 
 .datetime-topspacing {
-    margin-top: 7px;
+    margin-top: 5px;
 }
 
 .datetime-bottomspacing {
-    margin-bottom: 7px;
+    margin-bottom: 2px;
 }
 
 @media all and (max-width: 767px) {
     .datetimeselector-date {
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 500;
     }
 
     .datetimeselector-time{
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 500; 
+    }
+
+    .datetime-topspacing {
+        margin-top: 13px;
     }
 }

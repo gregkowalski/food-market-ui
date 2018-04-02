@@ -1,5 +1,5 @@
 .orderpricesummary {
-    margin-top: 25px;
+    margin-top: 10px;
     font-size: 1.25em;
 }
 
@@ -29,6 +29,7 @@
 
 .orderpricesummary-total {
     font-weight: 600;
+    margin-bottom: 26px;
 }
 
 @media all and (max-width: 767px) {
@@ -38,5 +39,6 @@
     }
     .orderpricesummary-total {
         font-weight: 500;
+        margin-bottom: 12px;
     }
 }

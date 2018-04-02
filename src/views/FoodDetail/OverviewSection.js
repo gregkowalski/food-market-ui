@@ -12,7 +12,7 @@ const OverviewSection = ({ food, cook }) => {
         <div>
 
             <Header className='detail-main-header' as='h2'>
-                ${food.price} · {food.title}
+                {food.title}
             </Header>
             <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em' }}>
                 locally handcrafted by

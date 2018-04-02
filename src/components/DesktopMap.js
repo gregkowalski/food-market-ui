@@ -149,7 +149,7 @@ export default class DesktopMap extends React.Component {
         });
 
         const infoStyle = {
-            marginTop: '10px',
+            marginTop: '20px',
             marginLeft: '20px',
             backgroundColor: '#fff',
             padding: '5px 5px 5px 5px',
@@ -189,7 +189,7 @@ export default class DesktopMap extends React.Component {
 
                 <CustomControl visible={showDeliveryInstructions} position={window.google.maps.ControlPosition.TOP_CENTER}>
                     <div style={infoStyle} onClick={this.handleDeliveryInstructionsClick}>
-                        Click region to select your delivery area
+                        Select a neighbourhood for delivery
                     </div>
                 </CustomControl>
 

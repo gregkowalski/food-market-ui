@@ -61,7 +61,6 @@ export default class FoodFilter extends React.Component {
                             <Button color='grey' {...this.getButtonProps(date)} onClick={this.props.onDateFilterClick}>{dateLabel}</Button>
                         </div>
                     }
-
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
                         <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
                         <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
@@ -69,7 +68,7 @@ export default class FoodFilter extends React.Component {
 
                     {!mobile &&
                         <div id='foodfilter-expand'>
-                            Resize to show map &gt;&gt;
+                            Resize window to show map &gt;&gt;
                         </div>
                     }
 

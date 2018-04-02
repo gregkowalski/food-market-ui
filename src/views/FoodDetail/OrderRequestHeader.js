@@ -12,17 +12,15 @@ const OrderRequestHeader = ({ food, onClose }) => {
                         &times;
                     </div>
                 }
+                <div className='orderrequestheader-serving'>{food.unit} · for {food.feed} people</div>
                 <div className='orderrequestheader-price'>
                     <span>${food.price} {Constants.Currency}</span>
-                    <span> / order</span>
+                    <span> per order</span>
                 </div>
                 <div className='orderrequestheader-rating'>
                     <Rating disabled={true} maxRating={5} rating={food.rating} size='mini' />
                     <div>{food.ratingCount}</div>
                 </div>
-            </div>
-            <div className='orderrequestheader-right'>
-                {food.title}
             </div>
         </div>
     );

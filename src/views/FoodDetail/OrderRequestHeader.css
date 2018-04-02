@@ -1,7 +1,7 @@
 .orderrequestheader-row {
     display: flex;
     justify-content: space-between;
-    padding: 15px 0 15px 0;
+    padding: 6px 0 13px 0;
     font-weight: 500;
     width: 100%;
 }
@@ -11,13 +11,16 @@
 }
 
 .orderrequestheader-left {
-    width: 40%;
+    width: 100%;
+    margin-left: 2%;
 }
 
-.orderrequestheader-right {
-    margin-left: 10%;
-    width: 50%;
-    font-size: 1.15em;
+.orderrequestheader-serving {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #b61095;
+    text-transform: uppercase;
 }
 
 .orderrequestheader-close {
@@ -36,8 +39,12 @@
     margin-top: 4px;
 }
 
+.orderrequestheader-price {
+    margin-bottom: 3px;
+}
+
 .orderrequestheader-price span:first-child {
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 600;
 }
 
@@ -50,4 +57,20 @@
     margin-left: 2px;
     font-size: 14px;
     color: #494949;
+}
+
+@media all and (max-width: 767px) {
+    .orderrequestheader-row {
+        font-weight: 400;
+    }
+
+    .orderrequestheader-price span:first-child {
+        font-size: 23px;
+        font-weight: 500;
+    }
+
+    .orderrequestheader-serving {
+        font-weight: 600;
+        font-size: 15px;
+    }
 }

@@ -40,7 +40,7 @@ class DateTimeSelector extends React.Component {
                 <div className='datetimeselector-time'>
                     <div className='datetime-topspacing datetime-bottomspacing'>Time</div>
                     <Dropdown selection
-                        placeholder='What Time?'
+                        placeholder='What time?'
                         options={OrderTimes}
                         onChange={this.handleTimeChange}
                         value={time}

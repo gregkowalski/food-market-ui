@@ -22,15 +22,14 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
     }
 
     return (
-        <div className='quantityselector-quantity'>
-            <div>
+        <div className='quantityselector'>
+            <div className='quantityselector-quantity'>
                 <div>How many orders?</div>
-                <div className='quantityselector-bottomspacing'>({food.unit} per order)</div>
-            </div>
-            <div>
-                <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
-                <div>{quantity}</div>
-                <Button circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
+                <div>
+                    <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
+                    <div>{quantity}</div>
+                    <Button circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
+                </div>
             </div>
         </div>
     );
