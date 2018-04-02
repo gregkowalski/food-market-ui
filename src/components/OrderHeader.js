@@ -88,7 +88,7 @@ class OrderHeader extends React.Component {
                 <div className='orderhead-content'>
                     <div className='orderhead-logo'>
                         <a href="/">
-                            <Image style={{ marginTop: '4px' }} height='30px' src={Constants.AppLogo} />
+                            <Image height='38px' src={Constants.AppLogo} />
                         </a>
                         <a href="/" className='orderhead-link'>
                             <div>{Constants.AppName}</div>

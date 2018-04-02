@@ -172,7 +172,7 @@ class Order extends React.Component {
         const hasPaymentError = paymentError ? true : false;
 
         return (
-            <div>
+            <div className='order-all'>
                 <OrderHeader fixed />
                 <div className='order-body'>
                     <div className='order-container'>
