@@ -1,7 +1,6 @@
 import React from 'react'
-import moment from 'moment'
 import { withRouter } from 'react-router-dom'
-import { Header, Segment, Divider, Image, Icon, Accordion, Button, Modal, TextArea } from 'semantic-ui-react'
+import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import Constants from '../../Constants'
 import OrderStatus from '../../data/OrderStatus'

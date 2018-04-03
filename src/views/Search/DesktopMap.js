@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
-import { Map, Marker, InfoWindow, Polygon, CustomControl } from './Map'
-import Regions from './Map/Regions'
-import PriceCalc from '../services/PriceCalc'
-import Util from '../services/Util'
-import Url from '../services/Url'
+import { Map, Marker, InfoWindow, Polygon, CustomControl } from '../../components/Map'
+import Regions from '../../components/Map/Regions'
+import PriceCalc from '../../services/PriceCalc'
+import Util from '../../services/Util'
+import Url from '../../services/Url'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 

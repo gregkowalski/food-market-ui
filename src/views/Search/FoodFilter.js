@@ -3,7 +3,7 @@ import { Button, Modal } from 'semantic-ui-react'
 import './FoodFilter.css'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import Util from '../services/Util'
+import Util from '../../services/Util'
 
 export default class FoodFilter extends React.Component {
 

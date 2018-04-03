@@ -19,7 +19,7 @@ import ProfileView from './views/ProfileView'
 import NotFoundPage from './views/NotFoundPage'
 import Login from './views/Login'
 // import Map2 from './views/map2'
-import SearchContainer from './views/SearchContainer'
+import Search from './views/Search'
 import ScrollToTop from './components/ScrollToTop'
 
 import configureStore from './store/configureStore'
@@ -42,7 +42,7 @@ render(
                 <BrowserRouter>
                     <ScrollToTop>
                         <Switch>
-                            <Route exact path='/' component={isAuth(SearchContainer)} />
+                            <Route exact path='/' component={isAuth(Search)} />
                             {/* <Route path='/temp' component={temp} /> */}
                             <Route exact path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
                             <Route exact path='/foods/:id/order' component={isAuth(Order)} />

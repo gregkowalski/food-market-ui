@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
 import { Item, Image, Rating, Icon } from 'semantic-ui-react'
 import './FoodCarousel.css'
-import Util from '../services/Util'
-import Url from '../services/Url'
-import PriceCalc from '../services/PriceCalc'
-import Colors from '../data/Colors'
+import Util from '../../services/Util'
+import Url from '../../services/Url'
+import PriceCalc from '../../services/PriceCalc'
+import Colors from '../../data/Colors'
 
 export default class FoodCarousel extends Component {
 

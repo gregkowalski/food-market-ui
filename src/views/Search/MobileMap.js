@@ -1,8 +1,8 @@
 import React from 'react'
 import './MobileMap.css'
-import { Map, Marker, CustomControl, Polygon } from './Map'
-import Regions from './Map/Regions'
-import Util from '../services/Util'
+import { Map, Marker, CustomControl, Polygon } from '../../components/Map'
+import Regions from '../../components/Map/Regions'
+import Util from '../../services/Util'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 

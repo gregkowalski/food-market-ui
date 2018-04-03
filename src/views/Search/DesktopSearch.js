@@ -1,11 +1,11 @@
 import React from 'react'
 import { Dimmer } from 'semantic-ui-react'
 import './DesktopSearch.css'
-import DesktopMap from '../components/DesktopMap'
-import FoodGrid from '../components/FoodGrid'
-import AppHeader from '../components/AppHeader'
-import FoodFilter from '../components/FoodFilter'
-import LoadingIcon from '../components/LoadingIcon'
+import DesktopMap from './DesktopMap'
+import LoadingIcon from '../../components/LoadingIcon'
+import AppHeader from '../../components/AppHeader'
+import FoodGrid from './FoodGrid'
+import FoodFilter from './FoodFilter'
 
 export default class DesktopSearch extends React.Component {
 
