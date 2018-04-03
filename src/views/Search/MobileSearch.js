@@ -44,8 +44,11 @@ class MobileSearch extends Component {
 
         if (this.props.foods !== nextProps.foods) {
             const { foods } = nextProps;
+            const { selectedFoodId } = this.state;
             if (foods && foods.length > 0) {
-                this.setState({ selectedFoodId: foods[0].food_id });
+                if (!foods.some(food => food.food_id === selectedFoodId)) {
+                    this.setState({ selectedFoodId: foods[0].food_id });
+                }
             }
         }
     }

@@ -22,6 +22,7 @@ const configureStore = (options = {}) => {
     // const searchFilter = createFilter('search', ['pickup', 'date']);
     const orderFilter = createBlacklistFilter('order', ['isOrderProcessing', 'paymentError']);
     const currentUserFilter = createBlacklistFilter('currentUser', ['errorCode']);
+    const searchFilter = createBlacklistFilter('search', ['region']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
         (inboundState, key) => {
@@ -43,7 +44,7 @@ const configureStore = (options = {}) => {
         key: 'food-market:root',
         storage: sessionStorage,
         // transforms: [searchFilter, orderFilter, myTransform],
-        transforms: [myTransform, orderFilter, currentUserFilter],
+        transforms: [myTransform, orderFilter, currentUserFilter, searchFilter],
         whitelist: [
             'order',
             'search',

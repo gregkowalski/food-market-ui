@@ -12,16 +12,25 @@ export default class FoodCarousel extends Component {
     state = { selectedSlideIndex: 0 };
 
     componentWillReceiveProps(nextProps) {
+        let foods, selectedFoodId;
+
         if (this.props.foods !== nextProps.foods) {
-            const { foods } = nextProps;
-            if (foods && foods.length > 0) {
-                this.setState({ selectedSlideIndex: 0 });
-            }
+            foods = nextProps.foods;
+            selectedFoodId = nextProps.selectedFoodId;
         }
 
         if (this.props.mapSelectedFoodId !== nextProps.mapSelectedFoodId) {
-            const { foods } = this.props;
-            let selectedSlideIndex = foods.findIndex(food => food.food_id === nextProps.mapSelectedFoodId);
+            foods = this.props.foods;
+            selectedFoodId = nextProps.mapSelectedFoodId;
+        }
+
+        if (this.props.pickup !== nextProps.pickup) {
+            foods = this.props.foods;
+            selectedFoodId = this.props.selectedFoodId;
+        }
+
+        if (foods && foods.length > 0) {
+            let selectedSlideIndex = foods.findIndex(food => food.food_id === selectedFoodId);
             if (selectedSlideIndex < 0) {
                 selectedSlideIndex = 0;
             }
