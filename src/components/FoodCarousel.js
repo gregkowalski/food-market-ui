@@ -9,17 +9,7 @@ import Colors from '../data/Colors'
 
 export default class FoodCarousel extends Component {
 
-    state = {};
-    
-    hasFoods() {
-        return this.props.foods && this.props.foods.length > 0;
-    }
-
-    handleAfterFoodSlide = (index) => {
-        if (this.props.onSelected) {
-            this.props.onSelected(this.props.foods[index]);
-        }
-    }
+    state = { selectedSlideIndex: 0 };
 
     componentWillReceiveProps(nextProps) {
         if (this.props.foods !== nextProps.foods) {
@@ -39,10 +29,17 @@ export default class FoodCarousel extends Component {
         }
     }
 
-    componentDidMount() {
-        const { foods } = this.props;
-        if (foods && foods.length > 0) {
-            this.setState({ selectedSlideIndex: 0 });
+    handleAfterFoodSlide = (index) => {
+        const { onSelected, foods } = this.props;
+        if (onSelected) {
+            // nuka-carousel can return a decimal is some cases (perhaps this is a bug)
+            // so let's round it
+            index = Math.min(Math.round(index), foods.length - 1);
+            const selectedFood = foods[index];
+            if (!selectedFood) {
+                throw new Error(`selectedFood at index=${index} is null in foods.length=${foods.length}`);
+            }
+            onSelected(selectedFood);
         }
     }
 
@@ -60,9 +57,6 @@ export default class FoodCarousel extends Component {
         if (foods.length === 1) {
             foodCardStyle.marginLeft = '7.5px';
         }
-
-        const ratio = window.innerWidth / window.innerHeight;
-        const slidesToShow = 2.4;
 
         const slides = foods.map((food, index) => {
 
@@ -92,7 +86,7 @@ export default class FoodCarousel extends Component {
 
                                 <Item.Meta>
                                     <div className='foodcarousel-card-info'>
-                                        <FoodPrepLabel food={food} />
+                                        <Icon className='foodcarousel-card-foodprep' name={Util.getFoodPrepTypeIcon(food)} />
                                         <span>{food.states}</span>
                                         <Rating size='mini' disabled={true} maxRating={5} rating={food.rating} />
                                         <span>{food.ratingCount}</span>
@@ -112,7 +106,7 @@ export default class FoodCarousel extends Component {
                 cellSpacing={15}
                 edgeEasing='easeInOutQuint'
                 wrapAround={true}
-                slidesToShow={slidesToShow}
+                slidesToShow={2.4}
                 swiping={true}
                 decorators={null}
                 afterSlide={this.handleAfterFoodSlide}
@@ -122,11 +116,4 @@ export default class FoodCarousel extends Component {
             </Carousel>
         )
     }
-}
-
-const FoodPrepLabel = ({ food }) => {
-    let foodPrepClassName = 'LabelPrep-' + food.states[0];
-    let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
-
-    return (<Icon name={foodPrepIcon} className={foodPrepClassName} size='mini' />);
 }

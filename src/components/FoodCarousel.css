@@ -4,6 +4,7 @@
     background-repeat: no-repeat;
     object-fit: cover;
     height: 15vh;
+    width: 38vw;
 }
 
 .foodcarousel-card-header {
@@ -32,22 +33,7 @@
     margin-top: 3px;
 }
 
-.LabelPrep-ingredient {
-    font-weight: 600 !important;
-    font-size: .95em !important;
-}
-
-.LabelPrep-uncooked {
-    font-weight: 600 !important;
-    font-size: .95em !important;
-}
-
-.LabelPrep-cooked {
-    font-weight: 600 !important;
-    font-size: .95em !important;
-}
-
-.LabelPrep-frozen {
-    font-weight: 600 !important;
-    font-size: .95em !important;
+.icon.foodcarousel-card-foodprep {
+    font-weight: 600;
+    line-height: 1;
 }

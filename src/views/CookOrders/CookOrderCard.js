@@ -24,7 +24,6 @@ class CookOrderCard extends React.Component {
     }
 
     declineOrder = (reason) => {
-        //this.setState({ showConfirmDecline: false });
         if (!this.props.isDeclining) {
             this.props.onDecline(this.props.order, reason);
         }
@@ -38,7 +37,6 @@ class CookOrderCard extends React.Component {
         this.setState({ showConfirmDecline: true });
     }
 
-
     closeCancelConfirmation = () => {
         this.setState({ showConfirmCancel: false });
     }
@@ -49,8 +47,6 @@ class CookOrderCard extends React.Component {
     }
 
     cancelOrder = (reason) => {
-        //this.setState({ showConfirmCancel: false });
-        console.log(reason);
         if (!this.props.isCancelling) {
             this.props.onCancel(this.props.order, reason);
         }
@@ -67,7 +63,6 @@ class CookOrderCard extends React.Component {
 
         return {
             backgroundColor: color,
-            // color: 'white'
         }
     }
 

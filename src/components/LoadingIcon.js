@@ -14,15 +14,18 @@ export default class LoadingIcon extends React.Component {
 
     render() {
 
+        const { size, text } = this.props;
+
         return (
             <div style={this.getStyle()}>
-                <Icon className='loading-icon' loading name='circle notched' size={this.props.size} />
-                Loading...
+                <Icon className='loading-icon' loading name='circle notched' size={size} />
+                {text}
             </div>
         );
     }
 }
 
 LoadingIcon.defaultProps = {
-    size: 'small'
+    size: 'small',
+    text: 'Loading...'
 }

@@ -8,7 +8,7 @@ import FoodCarousel from '../components/FoodCarousel';
 import Util from '../services/Util'
 import Url from '../services/Url'
 import AppHeader from '../components/AppHeader'
-import FoodFilter from '../components/FoodFilter'
+import DeliveryOptionFilter from '../components/DeliveryOptionFilter'
 import SearchFilter from '../components/SearchFilter'
 import FilterBar from '../components/FilterBar'
 import Drawer from '../components/Drawer'
@@ -18,7 +18,7 @@ class MobileSearch extends Component {
     constructor(props) {
         super(props);
 
-        this.mapHeight = '64vh';
+        this.mapHeight = '63vh';
         this.filterBarHeight = '8vh';
         this.state = {
             mapSearch: this.isMapSearch(this.props.location),
@@ -55,7 +55,7 @@ class MobileSearch extends Component {
     componentDidMount() {
         if (!this.state.selectedFoodId) {
             const { foods } = this.props;
-            if (foods && foods.length > 0) {                
+            if (foods && foods.length > 0) {
                 this.setState({ selectedFoodId: foods[0].food_id });
             }
         }
@@ -87,7 +87,7 @@ class MobileSearch extends Component {
                 mapLocation: selectedFood.position,
                 selectedFoodId: selectedFood.food_id
             });
-        }, 250);
+        }, 200);
     }
 
     handleFilterBarDeliveryClick = () => {
@@ -110,8 +110,8 @@ class MobileSearch extends Component {
 
     getMapStyle(mapSearch) {
         let mapStyle = {
-            height: mapSearch ? `calc(${this.mapHeight} - ${this.filterBarHeight})` : '500px',
-            minHeight: mapSearch ? `calc(${this.mapHeight} - ${this.filterBarHeight})` : '500px',
+            height: `calc(${this.mapHeight} - ${this.filterBarHeight})`,
+            minHeight: `calc(${this.mapHeight} - ${this.filterBarHeight})`,
             marginTop: `${this.filterBarHeight}`,
             width: '100%',
             touchAction: 'none',
@@ -139,7 +139,7 @@ class MobileSearch extends Component {
         return style;
     }
 
-    getFoodFilterStyle() {
+    deliveryOptionFilterStyle() {
         return {
             top: '0px',
             position: 'fixed',
@@ -173,10 +173,6 @@ class MobileSearch extends Component {
         let { mapSearch, dimmed, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
         let { pickup, foods, region, date } = this.props;
 
-        if (mapSearch) {
-            this.mapSearchHasBeenVisible = true;
-        }
-
         return (
             <div className='mobilesearch-wrap' onClick={this.hideDimmer}>
 
@@ -200,43 +196,35 @@ class MobileSearch extends Component {
 
                         <Dimmer style={this.getDimmerStyle()} active={dimmed} inverted onClickOutside={this.hideDimmer} />
 
-                        {mapSearch &&
-                            <FoodFilter style={this.getFoodFilterStyle()}
-                                mobile={true}
-                                showDateFilter={dimmed}
-                                pickup={pickup}
-                                date={date}
-                                onDateFilterClick={this.handleDateFilterClick}
-                                onDateFilterClose={this.handleDateFilterClose}
-                                onDateFilterClear={this.handleDateFilterClear}
-                                onDateFilterApply={this.handleDateFilterApply}
-                                onPickupClick={this.props.onPickupClick}
-                                onDeliveryClick={this.props.onDeliveryClick}
-                            />
-                        }
+                        <DeliveryOptionFilter style={this.deliveryOptionFilterStyle()}
+                            mobile={true}
+                            showDateFilter={dimmed}
+                            pickup={pickup}
+                            date={date}
+                            onDateFilterClick={this.handleDateFilterClick}
+                            onDateFilterClose={this.handleDateFilterClose}
+                            onDateFilterClear={this.handleDateFilterClear}
+                            onDateFilterApply={this.handleDateFilterApply}
+                            onPickupClick={this.props.onPickupClick}
+                            onDeliveryClick={this.props.onDeliveryClick}
+                        />
 
-                        {this.mapSearchHasBeenVisible &&
-                            <div style={this.getMapStyle(mapSearch)}>
-                                <MobileMap foods={foods}
-                                    pickup={pickup}
-                                    center={mapLocation}
-                                    selectedRegion={region}
-                                    selectedFoodId={selectedFoodId}
-                                    gestureHandling='greedy'
-                                    visible={mapSearch}
-                                    onGeoLocationChanged={this.props.onGeoLocationChanged}
-                                    onRegionSelected={this.props.onRegionSelected}
-                                    onListViewClick={this.showListView}
-                                    onFilterClick={this.showFilter}
-                                    onMarkerClick={this.handleMarkerClick}
-                                />
-                            </div>
-                        }
+                        <div style={this.getMapStyle(mapSearch)}>
+                            <MobileMap foods={foods}
+                                pickup={pickup}
+                                center={mapLocation}
+                                selectedRegion={region}
+                                selectedFoodId={selectedFoodId}
+                                gestureHandling='greedy'
+                                visible={mapSearch}
+                                onGeoLocationChanged={this.props.onGeoLocationChanged}
+                                onRegionSelected={this.props.onRegionSelected}
+                                onListViewClick={this.showListView}
+                                onFilterClick={this.showFilter}
+                                onMarkerClick={this.handleMarkerClick}
+                            />
+                        </div>
                         <div className='mobilesearch-foodcarousel' style={this.getFoodCarouselStyle(mapSearch)}>
-                            {/* {isLoading &&
-                                <LoadingIcon size='big' />
-                            } */}
-                            {/* {!isLoading && */}
                             <FoodCarousel
                                 foods={foods}
                                 pickup={pickup}
@@ -245,12 +233,11 @@ class MobileSearch extends Component {
                                 mapSelectedFoodId={mapSelectedFoodId}
                                 onSelected={this.handleSelectedFood}
                             />
-                            {/* } */}
                         </div>
 
                         <div className='mobilesearch-foodgrid' style={this.getListViewStyle(mapSearch)}>
                             <FoodGrid foods={foods} />
-                            <Icon className='mobilesearch-foodgrid-icon' name='marker' color='purple' size='big' onClick={this.showMapSearch} />
+                            <Icon className='mobilesearch-foodgrid-icon' name='marker' color='purple' onClick={this.showMapSearch} />
                         </div>
 
                     </Dimmer.Dimmable>

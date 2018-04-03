@@ -40,8 +40,8 @@ class Util {
         }
     }
 
-    busySleep(seconds) {
-        var e = new Date().getTime() + (seconds * 1000);
+    busySleepMs(ms) {
+        var e = new Date().getTime() + ms;
         while (new Date().getTime() <= e) { }
     }
 

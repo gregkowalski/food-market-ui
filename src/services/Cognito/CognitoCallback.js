@@ -2,11 +2,15 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import jwtDecode from 'jwt-decode'
+import { Image } from 'semantic-ui-react'
+import './CognitoCallback.css'
 import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
 import Config from '../../Config'
+import Constants from '../../Constants'
 import ErrorCodes from '../ErrorCodes'
+import LoadingIcon from '../../components/LoadingIcon'
 
 export default class CognitoCallback extends React.Component {
 
@@ -72,6 +76,17 @@ export default class CognitoCallback extends React.Component {
         else if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
             return <div>Foodcraft is a private, invite-only network at this time.  Please contact {Config.Foodcraft.SupportEmail} for more information</div>
         }
-        return <div>Logging in...</div>;
+
+        return (
+            <div>
+                <div className='cognitocallback-logo'>
+                    <Image src={Constants.AppLogo} />
+                    <div>{Constants.AppName}</div>
+                </div>
+                <div className='cognitocallback-loadingicon'>
+                    <LoadingIcon size='large' text='Logging in...' />
+                </div>
+            </div>
+        );
     }
 }

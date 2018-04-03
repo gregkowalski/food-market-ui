@@ -47,6 +47,17 @@ export default class MobileMap extends React.Component {
         }
     }
 
+    handleZoomChanged = (props, map) => {
+        const maxZoom = 16;
+        const zoom = map.getZoom();
+        if (zoom > maxZoom) {
+            map.setZoom(maxZoom);
+        }
+        else if (zoom < maxZoom) {
+            this.handleGeoSearch(props, map);
+        }
+    }
+
     handleBoundsChanged = (props, map) => {
         if (this.boundsLoaded)
             return;
@@ -183,7 +194,7 @@ export default class MobileMap extends React.Component {
                 zoom={this.props.zoom}
                 visible={this.props.visible}
                 onDragend={this.handleGeoSearch}
-                onZoom_changed={this.handleGeoSearch}
+                onZoom_changed={this.handleZoomChanged}
                 onBounds_changed={this.handleBoundsChanged}
             >
 
