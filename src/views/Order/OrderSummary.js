@@ -5,16 +5,21 @@ import './OrderSummary.css'
 import OrderTimes from '../../data/OrderTimes'
 import PriceCalc from '../../services/PriceCalc'
 import Constants from '../../Constants'
+import OrderPriceSummary from '../FoodDetail/OrderPriceSummary'
+
 
 const OrderSummary = ({ food, pickup, quantity, date, time }) => {
 
     const timeText = OrderTimes[time] ? OrderTimes[time].text : '?';
     return (
-        <Segment padded raised className='order-summary'>
+        <Segment padded className='order-summary'>
             <Header>
                 <Icon name='shopping basket' />
                 My Order
             </Header>
+            <div className='order-summary-blurb'>
+                Review the details of your order request.
+                </div>
             <Divider />
             <div className='order-summary-header'>
                 <div>{food.title}</div>
@@ -28,24 +33,9 @@ const OrderSummary = ({ food, pickup, quantity, date, time }) => {
                 <div>{pickup ? 'Pickup' : 'Delivery'} from {timeText}</div>
             </div>
             <Divider />
-            <div className='order-summary-row'>
-                <div>${food.price} x {quantity} order size</div>
-                <div>${PriceCalc.getTotal(food.price, quantity)}</div>
-            </div>
-            <Divider />
-            {!pickup &&
-                <div className='order-summary-row'>
-                    <div>Delivery</div>
-                    <div>${Constants.DeliveryFee}</div>
-                </div>
-            }
-            {!pickup &&
-                <Divider />
-            }
-            <div className='order-summary-row large-font'>
-                <div>Total</div>
-                <div>${PriceCalc.getTotalPrice(food, quantity, pickup)}</div>
-            </div>
+
+        <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
+            
         </Segment>
     );
 }

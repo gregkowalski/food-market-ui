@@ -1,4 +1,4 @@
-.order-summary > .ui.header {
+.order-summary>.ui.header {
     color: #494949;
     font-size: 1.8em;
     font-weight: 700;
@@ -6,23 +6,30 @@
     line-height: 1.1;
 }
 
+.order-summary-blurb {
+    font-size: 1em;
+    margin-left: 61px;
+    margin-top: -15px;
+    width: 75%;
+}
+
 .order-summary-header {
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
     color: #494949;
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-weight: 600;
     padding: 10px 10px 0px 10px;
 }
 
-.order-summary-header > div:first-child {
+.order-summary-header>div:first-child {
     line-height: 1.4em;
-    width: 60%;
-    margin-right: 40px;
+    width: 250px;
+    margin-right: 10px;
 }
 
-.order-summary-header > img {
+.order-summary-header>img {
     margin-top: 5px 0px 0px 15px;
     border-radius: 5px;
 }
@@ -33,11 +40,21 @@
     margin-top: 10px;
     width: 100%;
     font-size: 1.3em;
-    font-weight: 400;
-    line-height: 22px;
+    line-height: 15px;
 }
 
 .large-font {
     font-size: 1.5em;
     font-weight: 700;
+}
+
+@media all and (max-width: 767px) {
+    .order-summary-header {
+        font-weight: 500;
+    }
+
+    .order-summary-blurb {
+        width: 75%;
+        font-size: 1.15em;
+    }
 }

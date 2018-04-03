@@ -3,22 +3,25 @@
     font-weight: 400;
 }
 
-.contactinfo > .ui.header {
+.contactinfo>.ui.header {
     color: #494949;
     font-size: 1.8em;
     font-weight: 700;
     margin-left: 5px;
     line-height: 1.1;
+    padding-top: 10px;
 }
 
 .contactinfo-header {
-    font-size: 1.1em;
+    font-size: 1em;
     margin-left: 61px;
     margin-top: -15px;
+    width: 79%;
 }
 
 .contactinfo-contact {
     font-size: 1.3em;
+    color: #444444;
 }
 
 .contactinfo-contact>div:first-child {
@@ -26,7 +29,7 @@
 }
 
 .contactinfo-option {
-    margin-left: 20px;
+    margin: 10px 0px 15px 20px;
 }
 
 .contactinfo-phone {
@@ -40,25 +43,35 @@
     -webkit-box-flex: inherit;
     flex: inherit;
     transition: none;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 10px 20px;
     margin-top: 20px;
+    color: #444444;
 }
 
 .contactinfo-address>div {
-    width: 100%;
+    width: 95%;
     border: none;
 }
 
 .contactinfo-address>div:first-child {
-    margin: 0px 0px 10px -20px;
+    margin: 23px 0px 15px -20px;
+    font-size: 1.3em;
+} 
+
+.contactinfo-address>div:first-child>span {
+    color: #b61095;
+    text-transform: uppercase;
+    font-size: .95em;
+    font-weight: 700;
 }
 
-.contactinfo-address>div:first-child {
-    font-size: 1.3em;
+.contactinfo-address>div:nth-child(2) {
+    margin: 0px 0px 6px -15px;
+    font-size: 1.1em;
 }
 
 .contactinfo-address input {
-    width: 100%;
+    width: 75%;
     line-height: 1.21428571em;
     font-weight: 400;
     font-size: 1em;
@@ -68,6 +81,7 @@
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     outline: 0;
     color: rgba(0, 0, 0, .87);
+    margin-left: -15px;
 }
 
 .contactinfo-address input::placeholder {
@@ -100,3 +114,20 @@
 }
 
 /* End Google Autocomplete box */
+
+@media all and (max-width: 767px) {
+    .contactinfo-header {
+        width: 80%;
+        font-size: 1.15em;
+    }
+    .contactinfo-address input {
+        width: 100%;
+    }
+    .contactinfo-address>div:first-child>span {
+        font-weight: 500;
+    }
+
+    .contactinfo-option {
+        margin: 15px 0px 22px 20px;
+    }
+}

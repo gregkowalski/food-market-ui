@@ -24,7 +24,7 @@ class BillingInfo extends React.Component {
         return (
             <Segment padded>
                 <div className='billing'>
-                    <Image height='40px' src='/assets/images/padlock.png' />
+                    <Image height='42px' src='/assets/images/padlock.png' />
                     <div className='billing-header'>
                         <Header>Billing Information</Header>
                         <div className='billing-powered-by-stripe'>

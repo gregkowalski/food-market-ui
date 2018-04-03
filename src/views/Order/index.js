@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
+import { Button, Icon, Checkbox, Segment, Message, Divider } from 'semantic-ui-react'
 import './index.css'
 import Constants from '../../Constants'
 import OrderHeader from '../../components/OrderHeader'
@@ -206,7 +206,7 @@ class Order extends React.Component {
 
                             <Segment>
                                 <Checkbox className='order-segment-user-agree-text'
-                                    label="I agree to this site's user and customer refund policy and that I am over the age of 18. I also agree to pay the total amount shown, which includes service fees."
+                                    label="I am over the age of 18 and I agree to this site's user and customer refund policies."
                                     onChange={() => this.setState({ acceptedTerms: !acceptedTerms })}
                                     checked={acceptedTerms} />
                             </Segment>

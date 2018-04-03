@@ -1,13 +1,14 @@
 .order-body {
     position: relative;
-    width: 90%;
-    margin: 80px auto 20px auto;
+    width: 80%;
+    margin: 58px auto 0px auto;
     font-weight: 400;
-   
 }
 
 .order-all {
     background-color: #f5fcff;
+    padding-top: 12px;
+    padding-bottom: 20px;    
 }
 
 .order-container {
@@ -20,7 +21,7 @@
     width: 350px;
     min-width: 350px;
     margin-left: 50px;
-    margin-right: 50px;
+    margin-right: 130px;
 }
 
 .order-right>div {
@@ -46,7 +47,7 @@
 
 .order-confirm-continue-button.ui.fluid.button {
     margin-top: 20px;
-    background-color: #4cb99e;
+    background-color: #2b65ec;
     font-size: 1.4em;
     font-weight: 600;
     color: #ffffff;
@@ -55,15 +56,26 @@
 }
 
 .order-confirm-continue-button.ui.fluid.button:hover {
-    background-color: #2aad8a;
+    background-color: #2554c7;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
 
 .order-segment-user-agree-text.ui.checkbox > label {
     font-size: 1.1em;
-    margin: 5px;
+    margin: 10px;
+    width: 80%;    
 }
 
 .order-right .input {
     width: 100%;
+}
+
+
+@media all and (max-width: 767px) {
+.order-body {
+    width: 92%;
+}
+.order-segment-user-agree-text.ui.checkbox > label {
+    width: 96%;    
+}
 }

@@ -32,18 +32,17 @@ class ContactInfo extends React.Component {
         const showPhoneError = contactMethod === ContactMethods.phone && !isBuyerPhoneValid;
 
         return (
-            <Segment padded className='contactinfo'>
+            <Segment className='contactinfo'>
                 <Header>
                     <Icon name='phone' />
-                    Contact Info
+                    Contact Information
                 </Header>
                 <div className='contactinfo-header'>
-                    This will only be used for communication related to this order and will be kept private.
+                    This will be kept private and will only be used for communication related to this order.
                 </div>
                 <Divider />
                 <div className='contactinfo-contact'>
-                    {/* <div>Preferred contact:</div> */}
-                    <div>The cook can contact me by:</div>
+                    <div>I prefer to be contacted by:</div>
                     <div className='contactinfo-option'>
                         <Radio
                             label='Email'
@@ -55,7 +54,7 @@ class ContactInfo extends React.Component {
                     </div>
                     <div className='contactinfo-option'>
                         <Radio
-                            label='Phone (optional)'
+                            label='Phone'
                             name='contactMethodRadioGroup'
                             value={ContactMethods.phone}
                             checked={contactMethod === ContactMethods.phone}
@@ -74,7 +73,8 @@ class ContactInfo extends React.Component {
 
                 {!pickup &&
                     <div className='contactinfo-address'>
-                        <div>Where do you want your food delivered?</div>
+                        <div>I chose <span>delivery</span> for my order: </div>
+                        <div>Where will the food delivered to?</div>
                         <Autocomplete
                             style={this.autocompleteStyle(isBuyerAddressValid)}
                             name='address'

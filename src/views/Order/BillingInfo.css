@@ -13,10 +13,10 @@
 .billing-powered-by-stripe {
     font-size: .7em;
     margin-left: 5px;
-    margin-top: -15px;
+    margin-top: -13px;
     display: flex;
 }
 
 .billing-powered-by-stripe > div:first-child {
-    padding-top: 7px;
+    padding-top: 5px;
 }
