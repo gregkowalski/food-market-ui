@@ -74,9 +74,17 @@ class MobileSearch extends Component {
         }, 200);
     }
 
-    handleFilterBarDeliveryClick = () => {
+    selectDeliveryFromFilterBar = () => {
         this.props.onDeliveryClick();
         this.showMapSearch();
+    }
+
+    selectPickup = () => {
+        this.props.onPickupClick();
+    }
+
+    selectDelivery = () => {
+        this.props.onDeliveryClick();
     }
 
     getFilterStyle(showFilter) {
@@ -130,8 +138,8 @@ class MobileSearch extends Component {
     }
 
     render() {
-        let { mapSearch, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        let { pickup, foods, region, date, onPickupClick, onDeliveryClick } = this.props;
+        const { mapSearch, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
+        const { pickup, foods, region, date } = this.props;
 
         return (
             <div className='mobilesearch'>
@@ -144,8 +152,8 @@ class MobileSearch extends Component {
                         filter={filter}
                         pickup={pickup}
                         onFilterClick={this.showFilter}
-                        onPickupClick={onPickupClick}
-                        onDeliveryClick={this.handleFilterBarDeliveryClick} />
+                        onPickupClick={this.selectedPickup}
+                        onDeliveryClick={this.selectDeliveryFromFilterBar} />
 
                     <div className='mobilesearch-foodgrid'>
                         <FoodGrid foods={foods} />
@@ -157,8 +165,8 @@ class MobileSearch extends Component {
                 <div style={this.visible(mapSearch)}>
 
                     <div className='mobilesearch-deliveryoptionfilter' style={this.deliveryOptionFilterStyle()}>
-                        <Button {...this.deliveryOptionButtonProps(pickup)} onClick={onPickupClick}>PICKUP</Button>
-                        <Button {...this.deliveryOptionButtonProps(!pickup)} onClick={onDeliveryClick}>DELIVER</Button>
+                        <Button {...this.deliveryOptionButtonProps(pickup)} onClick={this.selectPickup}>PICKUP</Button>
+                        <Button {...this.deliveryOptionButtonProps(!pickup)} onClick={this.selectDelivery}>DELIVER</Button>
                     </div>
 
                     <div className='mobilesearch-map' style={this.mapStyle()}>
