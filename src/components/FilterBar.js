@@ -15,10 +15,15 @@ export default class FilterBar extends React.Component {
     }
 
     render() {
-        const { filter, style, pickup, onFilterClick, onPickupClick, onDeliveryClick } = this.props;
+        const { filter, className, style, pickup, onFilterClick, onPickupClick, onDeliveryClick } = this.props;
+
+        let classNames = 'filterbar';
+        if (className) {
+            classNames += ' ' + className;
+        }
 
         return (
-            <div className='filterbar' style={style}>
+            <div className={classNames} style={style}>
                 <div className='filterbar-layout'>
                     <SearchBarFilterButton label='Filters' filter={filter} onFilterClick={onFilterClick} />
                     <Button {...this.buttonProps(pickup)} onClick={onPickupClick}>PICKUP</Button>

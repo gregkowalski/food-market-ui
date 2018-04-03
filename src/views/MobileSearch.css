@@ -1,13 +1,40 @@
-/* main layout */
-
-.mobilesearch-wrap {
+.mobilesearch {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.mobilesearch-bodywrap {
-    height: 100%;
+.mobilesearch-filterbar {
+    top: 55px;
+    position: fixed;
+}
+
+.mobilesearch-map {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    border-bottom: 1px solid #DBDBDB;
+    border-top: 1px solid #DBDBDB;
+}
+
+.mobilesearch-deliveryoptionfilter {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #fcfcfc;
+    display: table;
+    width: 100%;
+}
+
+.mobilesearch-deliveryoptionfilter .ui.button {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 50%;
+    margin: 0;
+    font-size: 18px;
+    border-radius: 0px;
+    border: 1px solid #b61095;
 }
 
 .mobilesearch-foodgrid {
@@ -18,7 +45,7 @@
     margin-top: 105px;
 }
 
-.mobilesearch-foodgrid-icon.icon {
+.mobilesearch-foodgrid>.icon {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -39,6 +66,7 @@
 }
 
 .mobilesearch-foodcarousel {
+    position: fixed;
     width: 100%;
     height: 100%;
     touch-action: none;
