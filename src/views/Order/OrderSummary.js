@@ -3,8 +3,6 @@ import { Image, Icon } from 'semantic-ui-react'
 import { Header, Divider, Segment } from 'semantic-ui-react'
 import './OrderSummary.css'
 import OrderTimes from '../../data/OrderTimes'
-import PriceCalc from '../../services/PriceCalc'
-import Constants from '../../Constants'
 import OrderPriceSummary from '../FoodDetail/OrderPriceSummary'
 
 

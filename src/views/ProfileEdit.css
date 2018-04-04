@@ -1,12 +1,36 @@
 .profileedit-main {
-    margin-top: 100px;
     width: 75%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 75px auto 0px auto;
+}
+
+.profileedit-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profileedit-title > div:first-child {
+    font-size: 1.85em;
+    font-weight: 500;
+    margin: 15px 10px 20px 0px;
+    color: #414141;
+}
+
+.profileedit-title > .ui.button {
+    background-color: #b61095;
+    margin: 0px 0px 20px 10px;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #ffffff;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+}
+
+.profileedit-title > .ui.button:hover {
+    background-color: #a01e88;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
 
 .profileedit-header {
-    background-color: #b3dbce60 !important;
+    background-color: #a5a5a560 !important;
     color: #494949 !important;
 }
 
@@ -26,23 +50,9 @@
     color: #494949 !important;
 }
 
-.profileedit-view-button {
-    margin: 20px 0px 0px 0px !important;
-    background-color: #4cb99e !important;
-    font-size: 1em !important;
-    font-weight: 500 !important;
-    color: #ffffff !important;
-    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
-}
-
-.profileedit-view-button:hover {
-    background-color: #2aad8a !important;
-    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;    
-}
-
 .profileedit-save-button {
     margin: 20px 0px 0px 0px !important;
-    background-color: #4cb99e !important;
+    background-color: #b61095 !important;
     font-size: 1.2em !important;
     font-weight: 500 !important;
     color: #ffffff !important;
@@ -50,7 +60,7 @@
 }
 
 .profileedit-save-button:hover {
-    background-color: #2aad8a !important;
+    background-color: #a01e88 !important;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;  
     
 }
@@ -69,12 +79,15 @@
 }
 
 .profileedit-secured-input {
-    color: #4cb99e !important; 
+    color: #b61095 !important; 
 }
 
 
 
 @media all and (max-width: 767px) {
+    .profileedit-main {
+        width: 90%;
+    }
     #profileedit-grid-label {
         text-align: left;
         padding-bottom: 0 !important;

@@ -1,12 +1,13 @@
 import React from 'react'
 import jwtDecode from 'jwt-decode'
-import { Redirect, Link } from 'react-router-dom'
-import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Menu, Dropdown } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
+import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Dropdown } from 'semantic-ui-react'
 import { Divider, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import crypto from 'crypto'
 import './ProfileEdit.css'
 import Util from '../services/Util'
+import Url from '../services/Url'
 import AppHeader from '../components/AppHeader'
 import LoadingIcon from '../components/LoadingIcon'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
@@ -34,7 +35,7 @@ const languageOptions = [
     { key: 'el-GR', value: 'el-GR', text: 'Greek' }
 ]
 
-export default class ProfileEdit extends React.Component {
+class ProfileEdit extends React.Component {
 
     state = {
         activeItem: 'editProfile',
@@ -266,9 +267,14 @@ export default class ProfileEdit extends React.Component {
         window.open(stripeConnectUrl, '_self');
     }
 
+    navigateToProfileView = () => {
+        this.props.history.push(Url.profileView(this.user.user_id));
+    }
+
     render() {
         if (!this.isOwnProfile) {
-            return <Redirect to='/' />
+            this.props.history.push(Url.home());
+            return;
         }
 
         let stripeComponent;
@@ -302,25 +308,17 @@ export default class ProfileEdit extends React.Component {
                 </div>
         }
         else {
-            const { activeItem } = this.state
+            // const { activeItem } = this.state
             content =
                 <div className='profileedit-main'>
+                    <div className='profileedit-title'>
+                        <div>Edit Profile</div>
+                        {this.isOwnProfile &&
+                            <Button onClick={this.navigateToProfileView}>View Profile</Button>
+                        }
+                    </div>
                     <Grid>
-                        <Grid.Column width={4}>
-                            <Menu fluid vertical tabular className='profileedit-menu'>
-                                <Menu.Item name='Edit Profile' active={activeItem === 'editProfile'} onClick={this.handleEditProfile} />
-                                <Menu.Item name='References' active={activeItem === 'references'} onClick={this.handleReferences} />
-
-                                {this.isOwnProfile &&
-                                    <div style={{ display: 'inline-flex' }}>
-                                        <Link to={`/profile/view/${this.user.user_id}`}>
-                                            <Button fluid className='profileedit-view-button' >View Profile</Button>
-                                        </Link>
-                                    </div>
-                                }
-                            </Menu>
-                        </Grid.Column>
-                        <Grid.Column stretched width={12}>
+                        <Grid.Column>
                             <Header className='profileedit-header' block attached='top'>Required</Header>
                             <Segment attached>
                                 <Grid stackable className='profileedit-grid-body'>
@@ -354,7 +352,7 @@ export default class ProfileEdit extends React.Component {
                                             <Message error={this.state.hasErrors.email}
                                                 hidden={!this.state.hasErrors.email}
                                                 visible={this.state.hasErrors.email} header='Invalid email address' content='Please enter your valid email address' icon='exclamation circle' />
-                                            <div className='profileedit-input-descriptions'>Your email is never displayed publicly. It is only shared once you have a confirmed order request with another Foodcraft user.
+                                            <div className='profileedit-input-descriptions'>Your email is never displayed publicly. It is only shared when you have a confirmed order request with another Foodcraft user.
                                                 </div>
                                         </Grid.Column>
                                     </Grid.Row>
@@ -473,3 +471,5 @@ export default class ProfileEdit extends React.Component {
         )
     }
 }
+
+export default withRouter(ProfileEdit);

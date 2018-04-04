@@ -25,6 +25,10 @@ class Url {
         return `/profile/edit/${user_id}`;
     }
 
+    profileView(user_id) {
+        return `/profile/view/${user_id}`;
+    }
+
     home() {
         return '/';
     }
