@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
@@ -16,20 +17,17 @@ import CognitoSignout from './services/Cognito/CognitoSignout'
 import StripeCallback from './services/Stripe/StripeCallback'
 import ProfileEdit from './views/ProfileEdit'
 import ProfileView from './views/ProfileView'
+import Home from './views/Home'
 import NotFoundPage from './views/NotFoundPage'
 import Login from './views/Login'
-// import Map2 from './views/map2'
 import Search from './views/Search'
 import ScrollToTop from './components/ScrollToTop'
-
 import configureStore from './store/configureStore'
 import Config from './Config'
 import { unregister } from './registerServiceWorker'
-//import temp from 'temp'
-
-import { PersistGate } from 'redux-persist/integration/react'
-
 import isAuth from './AuthCheckHoc'
+// import Map2 from './views/map2'
+//import temp from 'temp'
 
 unregister();
 
@@ -42,8 +40,8 @@ render(
                 <BrowserRouter>
                     <ScrollToTop>
                         <Switch>
-                            <Route exact path='/' component={isAuth(Search)} />
-                            {/* <Route path='/temp' component={temp} /> */}
+                            <Route exact path='/' component={isAuth(Home)} />
+                            <Route exact path='/search' component={isAuth(Search)} />
                             <Route exact path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
                             <Route exact path='/foods/:id/order' component={isAuth(Order)} />
                             <Route exact path='/foods/:id' component={isAuth(FoodDetail)} />
@@ -55,9 +53,10 @@ render(
                             <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
                             <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
                             <Route exact path='/login' component={isAuth(Login)} />
-
-                            {/* <Route exact path='/map2' component={Map2} /> */}
                             <Route component={NotFoundPage} />
+
+                            {/* <Route path='/temp' component={temp} /> */}
+                            {/* <Route exact path='/map2' component={Map2} /> */}
                         </Switch>
                     </ScrollToTop>
                 </BrowserRouter>

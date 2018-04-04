@@ -1,0 +1,52 @@
+.home {
+    width: 80%;
+    margin: 20px auto;
+    font-weight: 400;
+    font-size: 2.5rem;
+}
+
+.home-explore, .home-hoods {
+    margin-top: 60px;
+}
+
+.home-explore .ui.grid, .home-hoods .ui.grid {
+    margin-top: 10px;
+}
+
+.home-explore .column {
+    min-width: 300px;
+}
+
+.home-explore-item {
+    display: flex;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.home-explore-item>div {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: auto 20px;
+}
+
+.home img {
+    overflow: hidden; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.home-explore img {
+    height: 100px;
+    width: 134px;
+}
+
+.home-hoods img {
+    max-height: 250px;
+}
+
+.home-hoods .card {
+    font-size: 1.8rem;
+    cursor: pointer;
+}

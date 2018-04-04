@@ -33,6 +33,10 @@ class Url {
         return '/';
     }
 
+    search() {
+        return '/search';
+    }
+
     buyerOrders() {
         return '/buyerOrders';
     }

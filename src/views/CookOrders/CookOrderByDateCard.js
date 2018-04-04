@@ -31,7 +31,7 @@ class CookOrderByDateCard extends React.Component {
         this.updateDayTotal(this.props.orders);
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentWillReceiveProps(nextProps) {
         if (this.props.orders !== nextProps.orders) {
             this.updateDayTotal(nextProps.orders);
         }
