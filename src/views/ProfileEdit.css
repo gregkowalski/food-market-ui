@@ -1,5 +1,5 @@
 .profileedit-main {
-    width: 75%;
+    width: 70%;
     margin: 75px auto 0px auto;
 }
 
@@ -8,14 +8,14 @@
     justify-content: space-between;
 }
 
-.profileedit-title > div:first-child {
-    font-size: 1.85em;
+.profileedit-title>div:first-child {
+    font-size: 1.95em;
     font-weight: 500;
-    margin: 15px 10px 20px 0px;
+    margin: 18px 10px 29px 0px;
     color: #414141;
 }
 
-.profileedit-title > .ui.button {
+.profileedit-title>.ui.button {
     background-color: #b61095;
     margin: 0px 0px 20px 10px;
     font-size: 1.2em;
@@ -24,7 +24,7 @@
     box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
 }
 
-.profileedit-title > .ui.button:hover {
+.profileedit-title>.ui.button:hover {
     background-color: #a01e88;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
@@ -45,9 +45,10 @@
 }
 
 .profileedit-grid-body {
-    margin: 10px 10px 10px 25px !important;
+    margin: 0px 10px 10px 25px !important;
     font-size: 1.15em !important;
     color: #494949 !important;
+    width: 85%;
 }
 
 .profileedit-save-button {
@@ -61,8 +62,7 @@
 
 .profileedit-save-button:hover {
     background-color: #a01e88 !important;
-    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;  
-    
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
 }
 
 .profileedit-save-confirm {
@@ -79,10 +79,28 @@
 }
 
 .profileedit-secured-input {
-    color: #b61095 !important; 
+    color: #b61095 !important;
 }
 
+.profileedit-stripe-component-logo {
+    display: flex;
+    margin-bottom: 15px;
+}
 
+.profileedit-stripe-component-logo>div:first-child {
+    margin: 8px -5px 0px 0px;
+}
+
+/* .profileedit-stripe-component-logo>div:last-child {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 10px 0px 0px 5px;
+} */
+
+.profileedit-stripe-box {
+    margin: 0px 10px 0px 55px;
+    width: 80%;
+}
 
 @media all and (max-width: 767px) {
     .profileedit-main {
@@ -91,6 +109,14 @@
     #profileedit-grid-label {
         text-align: left;
         padding-bottom: 0 !important;
+    }
+    .profileedit-title>div:first-child {
+        font-size: 1.85em;
+        margin: 15px 10px 20px 0px;
+    }
+    .profileedit-stripe-box {
+        margin: 0px 10px 0px 10px;
+        width: 98%;
     }
 }
 
@@ -103,7 +129,6 @@
     width: 100%;
 }
 
-
 /* Google Autocomplete box */
 
 .profileedit-address, textarea {
@@ -114,16 +139,16 @@
     font-size: 1em;
     padding: 9.5px 14px;
     border-radius: .28571429rem;
-    border: 1px solid rgba(34,36,38,.15);
-    color: rgba(0,0,0,.87);
-    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    border: 1px solid rgba(34, 36, 38, .15);
+    color: rgba(0, 0, 0, .87);
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     outline: 0;
     -webkit-box-flex: inherit;
     flex: inherit;
     transition: none;
 }
 
-.profileedit-address > div {
+.profileedit-address>div {
     width: 100%;
     border: none;
 }
@@ -137,4 +162,3 @@
 }
 
 /* End Google Autocomplete box */
-

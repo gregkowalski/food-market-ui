@@ -280,15 +280,25 @@ class ProfileEdit extends React.Component {
         let stripeComponent;
         if (this.state.stripe_user_id) {
             stripeComponent =
-                <div>
-                    <div style={{ marginBottom: '10px' }}>You are ready to be a foodcraft cook!!!</div>
-                    <Image height='100px' src='/assets/images/stripe-logo-blue.png' />
+                <div classname='profileedit-stripe-component-body'>
+                    <div>Sharing your food just got a whole lot easier.</div>                
+                    <div> Your Stripe account is successfully connected to Foodcraft.</div>
+                    <div className='profileedit-stripe-component-logo'>
+                        <Icon color='green' size='big' name='checkmark' />
+                        <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
+                    </div>
+                    <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
+                    <div> Ready to get started? </div>
+                    <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank'>
+                        <Button color='purple' >Add a new food</Button>
+                    </a>
                 </div>
+
         }
         else {
             stripeComponent =
                 <div>
-                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in becoming a cook and making money with Foodcraft?
+                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in sharing your food and making money with Foodcraft?
                     <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account!
                         </div>
                     </div>
@@ -441,7 +451,7 @@ class ProfileEdit extends React.Component {
                             </Segment>
                             <Header className='profileedit-header' block attached='top'>Stripe</Header>
                             <Segment attached >
-                                <div style={{ margin: '10px 10px 10px 60px' }}>{stripeComponent}</div>
+                                <div className='profileedit-stripe-box'>{stripeComponent}</div>
                             </Segment>
                             <div style={{ display: 'flex', marginTop: '20px' }}>
                                 <div><Button disabled={!this.state.hasChanges} loading={this.state.saving}

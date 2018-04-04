@@ -62,16 +62,16 @@ export class AppHeader extends React.Component {
     getRandomTagline() {
 
         const taglines = [
-            'handcrafted to taste like home',
+            'handcrafted to taste like home.',
             'homemade + local',
             'this is...awesomesauce!',
             'because being hangry was so 2017.',
             'easy peasy, lemon squeezy!',
             'so hot right now.',
             'home of the best kebab.',
-            'making good food taste better',
+            'making good food taste better.',
             'moo.',
-            'eat like family',
+            'eat like family.',
             'good food starts here.'
         ];
 
