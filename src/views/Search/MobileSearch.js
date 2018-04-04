@@ -64,8 +64,8 @@ class MobileSearch extends Component {
 
     showFilter = () => this.setState({ showFilter: true });
     hideFilter = () => this.setState({ showFilter: false });
-    showMapSearch = () => this.props.history.push(Url.home() + '?m=1&view=map');
-    showListView = () => this.props.history.push(Url.home() + '?m=1&view=list');
+    showMapSearch = () => this.props.history.push(Url.search() + '?m=1&view=map');
+    showListView = () => this.props.history.push(Url.search() + '?m=1&view=list');
     handleSearchFilterChange = (filter) => this.setState({ filter });
     handleMarkerClick = (selectedFoodId) => this.setState({ mapSelectedFoodId: selectedFoodId });
     handleSelectedFood = (selectedFood) => {
