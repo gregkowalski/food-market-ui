@@ -6,6 +6,7 @@ import { Image, Icon } from 'semantic-ui-react'
 import './OrderHeader.css'
 import Constants from '../Constants'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
+import Url from '../services/Url'
 
 class OrderHeader extends React.Component {
 
@@ -87,10 +88,10 @@ class OrderHeader extends React.Component {
             <div className='orderhead' style={{ position: pos }}>
                 <div className='orderhead-content'>
                     <div className='orderhead-logo'>
-                        <a href="/">
+                        <a href={Url.home()}>
                             <Image height='38px' src={Constants.AppLogo} />
                         </a>
-                        <a href="/" className='orderhead-link'>
+                        <a href={Url.home()} className='orderhead-link'>
                             <div>{Constants.AppName}</div>
                         </a>
                         <div className="order-tagline-desktop">
@@ -101,7 +102,7 @@ class OrderHeader extends React.Component {
                         <div style={{ display: 'inline-flex' }}>
                             <div className="order-content-desktop">
                                 <div className='orderhead-contact-support'>
-                                    <a href="/" className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
+                                    <a href={Url.home()} className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
                                         Support
                                     </a>
                                 </div>

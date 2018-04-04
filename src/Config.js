@@ -7,8 +7,8 @@ const Config = {
         AppWebDomain: 'food-market-dev.auth.us-west-2.amazoncognito.com',
         ClientAppId: '6n197h69pgu60msn8a8rvvj1u5',
         UserPoolId: 'us-west-2_lZLhlTHmt',
-        RedirectUriSignIn: 'http://localhost:3000/cognitoCallback',
-        RedirectUriSignOut: 'http://localhost:3000/cognitoSignout',
+        RedirectUriSignIn: 'https://www.cosmo-test.com/cognitoCallback',
+        RedirectUriSignOut: 'https://www.cosmo-test.com/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
     },
     Stripe: {

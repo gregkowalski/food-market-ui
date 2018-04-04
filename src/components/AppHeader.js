@@ -120,9 +120,9 @@ export class AppHeader extends React.Component {
             else {
                 sessionElement = (
                     <div>
-                        <a href='/signup' onClick={this.handleSignUp} className='apphead-sign-in'> Sign Up </a>
+                        <a href={Url.signup()} onClick={this.handleSignUp} className='apphead-sign-in'> Sign Up </a>
                         <span style={{ color: '#2da388', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href='/login' onClick={this.handleSignIn} className='apphead-sign-in'> Log In</a>
+                        <a href={Url.login()} onClick={this.handleSignIn} className='apphead-sign-in'> Log In</a>
                     </div>
                 );
             }

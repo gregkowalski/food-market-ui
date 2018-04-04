@@ -13,7 +13,7 @@ export default class FlagListing extends React.Component {
             </Button>} closeIcon>
                 <Header icon='lock' content='Do you want to anonymously report this user?' />
                 <Modal.Content>
-                    Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more </a>
+                    Please choose one of the following reasons. This won't be shared with the cook. <a href='./'>Learn more </a>
                 </Modal.Content>
                 <Modal.Actions>
                     <div className='flag-user-item'>

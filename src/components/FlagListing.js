@@ -9,7 +9,7 @@ const FlagListing = () => {
             <Modal dimmer='inverted' size='mini' trigger={<Button basic><Icon name='flag outline' />Report this listing</Button>} closeIcon>
                 <Header icon='lock' content='Do you want to anonymously report this listing?' />
                 <Modal.Content>
-                    <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='url'>Learn more</a></p>
+                    <p>Please choose one of the following reasons. This won't be shared with the cook. <a href='./'>Learn more</a></p>
                 </Modal.Content>
 
                 <Modal.Actions>

@@ -289,7 +289,7 @@ class ProfileEdit extends React.Component {
                     </div>
                     <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
                     <div> Ready to get started? </div>
-                    <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank'>
+                    <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank' rel="noreferrer noopener" >
                         <Button color='purple' >Add a new food</Button>
                     </a>
                 </div>
@@ -302,7 +302,7 @@ class ProfileEdit extends React.Component {
                     <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account!
                         </div>
                     </div>
-                    <a href='stripe' onClick={(e) => this.handleConnectStripeClick(e)}>
+                    <a href='./' onClick={(e) => this.handleConnectStripeClick(e)}>
                         <Image src='/assets/images/stripe-blue-on-light.png' />
                     </a>
                 </div>

@@ -52,6 +52,14 @@ class Url {
         }
         return uri;
     }
+
+    signup() {
+        return '/signup';
+    }
+
+    login() {
+        return '/login';
+    }
 }
 
 export default new Url();
