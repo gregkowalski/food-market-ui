@@ -53,8 +53,8 @@
 }
 
 .home-explore img {
-    height: 100px;
-    width: 134px;
+    height: 85px;
+    width: 114px;
 }
 
 .home-hoods>div:first-child {
@@ -87,4 +87,11 @@
 
 .home-hoods img:hover {
     transform: scale(1.05);
+}
+
+@media all and (max-width: 767px) {
+    .home-explore img {
+        height: 73px;
+        width: 88px;
+    }
 }
