@@ -26,7 +26,7 @@ class Home extends React.Component {
                 <AppHeader />
                 <div className='home'>
                     <div className='home-explore'>
-                        <div>Explore Foodcraft</div>
+                        <div>Explore the marketplace</div>
                         <Grid stackable>
                             <Grid.Column width={6}>
                                 <div className='home-explore-item' onClick={this.navigateToSearch}>

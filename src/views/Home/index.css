@@ -1,13 +1,19 @@
 .home {
-    width: 80%;
+    width: 88%;
     margin: 20px auto;
     font-weight: 400;
     font-size: 2.5rem;
     line-height: 1.2;
+    color: #444444;
+}
+
+.home-explore>div:first-child {
+    font-size: .7em;
+    font-weight: 400;
 }
 
 .home-explore, .home-hoods {
-    margin-top: 60px;
+    margin-top: 35px;
 }
 
 .home-explore .ui.grid, .home-hoods .ui.grid {
@@ -23,16 +29,22 @@
     border: 1px solid lightgrey;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.home-explore-item:hover {
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
 
 .home-explore-item>div {
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 400;
     margin: auto 20px;
 }
 
 .home img {
-    overflow: hidden; 
+    overflow: hidden;
     background-position: center center;
     background-repeat: no-repeat;
     object-fit: cover;
@@ -43,11 +55,43 @@
     width: 134px;
 }
 
+.home-hoods>div:first-child {
+    font-size: .7em;
+    font-weight: 400;
+    margin-top: 40px;
+}
+
+.home-hoods .ui fluid card {
+    margin-left: -12px;
+}
+
 .home-hoods img {
     max-height: 250px;
 }
 
 .home-hoods .card {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     cursor: pointer;
+}
+
+.home-hoods .ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+    font-weight: 400;
+    color: #444444;
+}
+
+
+@media all and (max-width: 767px) {
+    .home-explore-item {
+        margin-left: -12px;
+        width: 108%;
+    }
+
+    .home {
+        width: 88%;
+    }
+
+    .home-explore, .home-hoods {
+        margin-top: 15px;
+    }
+    
 }
