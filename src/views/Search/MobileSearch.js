@@ -17,12 +17,44 @@ class MobileSearch extends Component {
     constructor(props) {
         super(props);
 
-        this.mapHeight = '55vh';
+        this.mapHeight = this.calcMapHeight();
         this.deliveryOptionHeight = '50px';
         this.state = {
             mapSearch: this.isMapSearch(this.props.location),
             showFilter: false,
         };
+    }
+
+    componentWillMount() {
+        const self = this;
+        window.addEventListener('orientationchange', () => {
+            self.updateMapHeightAndForceUpdate();
+        });
+
+        window.addEventListener('resize', () => {
+            self.updateMapHeightAndForceUpdate();
+        });
+    }
+
+    mapHeightPortraitVH = 0.60;
+    mapHeightLandscapeVH = 0.84;
+
+    calcMapHeight() {
+        let mapHeightVH = this.mapHeightPortraitVH;
+        if (window.innerWidth >= window.innerHeight) {
+            mapHeightVH = this.mapHeightLandscapeVH;
+        }
+        return (window.innerHeight * mapHeightVH).toFixed(0) + 'px';
+    }
+
+    updateMapHeightAndForceUpdate() {
+        const prevMapHeight = this.mapHeight;
+        this.mapHeight = this.calcMapHeight();
+        if (prevMapHeight !== this.mapHeight) {
+            setTimeout(() => {
+                this.forceUpdate();
+            }, 0);
+        }
     }
 
     isMapSearch(location) {
@@ -130,6 +162,9 @@ class MobileSearch extends Component {
             top: `calc(${this.mapHeight} + ${this.deliveryOptionHeight} + 5px)`,
             marginLeft: '10px'
         };
+        if (window.innerWidth >= window.innerHeight) {
+            style.display = 'none';
+        }
         return style;
     }
 
@@ -143,6 +178,8 @@ class MobileSearch extends Component {
     render() {
         const { mapSearch, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
         const { pickup, foods, region, date } = this.props;
+
+        this.mapHeight = this.calcMapHeight();
 
         return (
             <div className='mobilesearch'>

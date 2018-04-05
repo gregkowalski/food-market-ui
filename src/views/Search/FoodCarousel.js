@@ -38,6 +38,21 @@ export default class FoodCarousel extends Component {
         }
     }
 
+    componentWillMount() {
+        const self = this;
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                self.forceUpdate();
+            }, 0);
+        });
+
+        window.addEventListener('resize', () => {
+            setTimeout(() => {
+                self.forceUpdate();
+            }, 0);
+        });
+    }
+
     handleAfterFoodSlide = (index) => {
         const { onSelected, foods } = this.props;
         if (onSelected) {
@@ -74,7 +89,11 @@ export default class FoodCarousel extends Component {
                 borderColor = Colors.purple;
             }
 
-            const imageStyle = { borderTop: `5px solid ${borderColor}` };
+            const imageStyle = {
+                borderTop: `5px solid ${borderColor}`,
+                height: (window.innerHeight * 0.19).toFixed(0) + 'px',
+                width: (window.innerWidth * 0.40).toFixed(0) + 'px',
+            };
 
             return (
                 <div key={food.food_id} style={foodCardStyle}>
