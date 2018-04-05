@@ -66,10 +66,17 @@
 .home-hoods .card {
     font-size: 1.2rem;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
-.home-hoods-image {
-    overflow: hidden;
+.home-hoods .card > div {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    color: whitesmoke;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .home-hoods img {
@@ -80,9 +87,4 @@
 
 .home-hoods img:hover {
     transform: scale(1.05);
-}
-
-.home-hoods .ui.card>.content>.header {
-    font-weight: 400;
-    color: #444444;
 }

@@ -59,24 +59,16 @@ class Home extends React.Component {
                             <Grid.Column width={8}>
                                 <div onClick={this.navigateToSearch}>
                                     <Card fluid>
-                                        <div className='home-hoods-image'>
-                                            <Image src={westendImg} />
-                                        </div>
-                                        <Card.Content>
-                                            <Card.Header textAlign='center'>Westend</Card.Header>
-                                        </Card.Content>
+                                        <Image src={westendImg} />
+                                        <div>Westend</div>
                                     </Card>
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={8}>
                                 <div onClick={this.navigateToSearch}>
                                     <Card fluid>
-                                        <div className='home-hoods-image'>
-                                            <Image src={yaletownImg} />
-                                        </div>
-                                        <Card.Content>
-                                            <Card.Header textAlign='center'>Yaletown</Card.Header>
-                                        </Card.Content>
+                                        <Image src={yaletownImg} />
+                                        <div>Yaletown</div>
                                     </Card>
                                 </div>
                             </Grid.Column>
