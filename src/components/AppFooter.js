@@ -14,14 +14,13 @@ class AppFooter extends React.Component {
             <div className='appfooter'>
                 <Divider />
                 <Grid verticalAlign='top'>
-                    <Grid.Column width={1} />
                     <Grid.Column width={8}>
                         <Link to={Url.about()}>About</Link>
                         <Link to={Url.policies()}>Policies</Link>
                         <Link to={Url.terms()}>Terms and conditions</Link>
                         <Link to={Url.help()}>Help</Link>
                     </Grid.Column>
-                    <Grid.Column width={6}>
+                    <Grid.Column width={7}>
                         <Link to={Url.safety()}>Trust &amp; Safety</Link>
                         <Link to={Url.cookies()}>Cookies</Link>
                         <Link to={Url.privacy()}>Privacy</Link>

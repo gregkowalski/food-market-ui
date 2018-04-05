@@ -19,6 +19,7 @@
 .home-explore .ui.grid, .home-hoods .ui.grid {
     margin-top: 10px;
     margin-left: -1rem !important;
+    margin-right: -1rem !important;
 }
 
 .home-explore .column {
