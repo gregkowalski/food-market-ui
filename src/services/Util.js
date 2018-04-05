@@ -51,6 +51,10 @@ class Util {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    getRandomItem(array) {
+        return array[this.getRandomInt(0, array.length - 1)];
+    }
+
     getRandomSign() {
         if (Math.random() > 0.5) {
             return 1;

@@ -10,8 +10,13 @@ import './index.css'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import Url from '../../services/Url'
-import foodImg from './home-food.jpg'
-import cookImg from './home-cook.jpg'
+import Util from '../../services/Util'
+import foodImg1 from './home-food1.jpg'
+import foodImg2 from './home-food2.jpg'
+import foodImg3 from './home-food3.jpg'
+import cookImg1 from './home-cook1.jpg'
+import cookImg2 from './home-cook2.jpg'
+import cookImg3 from './home-cook3.jpg'
 import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
 
@@ -19,6 +24,11 @@ class Home extends React.Component {
 
     navigateToSearch = () => {
         this.props.history.push(Url.search());
+    }
+
+    componentWillMount() {
+        this.homefood = Util.getRandomItem([foodImg1, foodImg2, foodImg3]);
+        this.homecook = Util.getRandomItem([cookImg1, cookImg2, cookImg3]);
     }
 
     render() {
@@ -31,13 +41,13 @@ class Home extends React.Component {
                         <Grid stackable>
                             <Grid.Column width={6}>
                                 <div className='home-explore-item' onClick={this.navigateToSearch}>
-                                    <Image src={foodImg} />
+                                    <Image src={this.homefood} />
                                     <div>Find Food</div>
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={6}>
                                 <div className='home-explore-item' onClick={this.navigateToSearch}>
-                                    <Image src={cookImg} />
+                                    <Image src={this.homecook} />
                                     <div>Meet Cooks</div>
                                 </div>
                             </Grid.Column>
