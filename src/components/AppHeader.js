@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './AppHeader.css'
 import Constants from '../Constants'
-import Config from '../Config'
 import Util from '../services/Util'
 import Url from '../services/Url'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
@@ -38,8 +37,8 @@ export class AppHeader extends React.Component {
         this.props.logOut();
     }
 
-    handleContactSupport = (event, data) => {
-        window.location.href = Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
+    handleContactSupport = () => {
+        Util.contactSupport();
     }
 
     navigateToEditProfile = () => {

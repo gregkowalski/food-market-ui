@@ -1,0 +1,35 @@
+.appfooter {
+    font-size: 1.3rem;
+    line-height: 1.3;
+    background-color: whitesmoke;
+}
+
+.appfooter .ui.grid {
+    width: 80%;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.appfooter a {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.appfooter a:hover {
+    color: #b61095;
+}
+
+.appfooter-logo {
+    display: flex;
+    padding: 10px 0px 20px 80px;
+}
+
+.appfooter-logo img {
+    height: 30px;
+    filter: grayscale(100%);
+}
+
+.appfooter-logo div {
+    margin-top: 5px;
+}

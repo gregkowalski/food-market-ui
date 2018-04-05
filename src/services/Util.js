@@ -1,7 +1,9 @@
 import queryString from 'query-string'
 import moment from 'moment'
-import { FoodPrepType } from '../data/FoodItems'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
+import { FoodPrepType } from '../data/FoodItems'
+import Url from '../services/Url'
+import Config from '../Config'
 
 class Util {
 
@@ -215,6 +217,18 @@ class Util {
             }
         });
         return map;
+    }
+
+    titleCase(text) {
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    contactSupport() {
+        window.location.href = this.contactSupportUrl();
+    }
+
+    contactSupportUrl() {
+        return Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
     }
 }
 

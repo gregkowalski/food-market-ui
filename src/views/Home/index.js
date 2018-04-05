@@ -8,6 +8,7 @@ import './index.css'
 // import Constants from '../../Constants'
 // import { Actions, Selectors } from '../../store/order'
 import AppHeader from '../../components/AppHeader'
+import AppFooter from '../../components/AppFooter'
 import Url from '../../services/Url'
 import foodImg from './home-food.jpg'
 import cookImg from './home-cook.jpg'
@@ -48,7 +49,9 @@ class Home extends React.Component {
                             <Grid.Column width={8}>
                                 <div onClick={this.navigateToSearch}>
                                     <Card fluid>
-                                        <Image src={westendImg} />
+                                        <div className='home-hoods-image'>
+                                            <Image src={westendImg} />
+                                        </div>
                                         <Card.Content>
                                             <Card.Header textAlign='center'>Westend</Card.Header>
                                         </Card.Content>
@@ -58,7 +61,9 @@ class Home extends React.Component {
                             <Grid.Column width={8}>
                                 <div onClick={this.navigateToSearch}>
                                     <Card fluid>
-                                        <Image src={yaletownImg} />
+                                        <div className='home-hoods-image'>
+                                            <Image src={yaletownImg} />
+                                        </div>
                                         <Card.Content>
                                             <Card.Header textAlign='center'>Yaletown</Card.Header>
                                         </Card.Content>
@@ -68,6 +73,7 @@ class Home extends React.Component {
                         </Grid>
                     </div>
                 </div>
+                <AppFooter />
             </div>
         );
     }

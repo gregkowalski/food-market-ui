@@ -60,6 +60,34 @@ class Url {
     login() {
         return '/login';
     }
+
+    about() {
+        return '/about';
+    }
+
+    policies() {
+        return '/policies';
+    }
+
+    help() {
+        return '/help';
+    }
+
+    safety() {
+        return '/safety';
+    }
+
+    terms() {
+        return '/terms';
+    }
+
+    cookies() {
+        return '/cookies';
+    }
+
+    privacy() {
+        return '/privacy';
+    }
 }
 
 export default new Url();

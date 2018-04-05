@@ -15,7 +15,7 @@ const ReviewList = ({ reviews }) => {
                     <Feed.Content>
                         <Image src={review.imageUrl} size='mini' floated='left' circular />
                         <div style={{ float: 'right', color: '#5e5d5d' }}>
-                            <a href='url' style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
+                            <a href='./' style={{ color: '#5e5d5d' }}> <Icon name='flag outline' /></a></div>
                         <Feed.Summary className='detail-body-text'>{review.summary} </Feed.Summary>
                         <Feed.Date content={review.date} style={{ fontSize: '1.1em', fontWeight: '600', marginTop: '-1px' }} />
                         <Feed.Extra style={{ marginTop: '0.8em', maxWidth: '100%' }} >

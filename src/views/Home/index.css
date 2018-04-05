@@ -1,6 +1,6 @@
 .home {
     width: 88%;
-    margin: 20px auto;
+    margin: 60px auto 120px auto;
     font-weight: 400;
     font-size: 2.5rem;
     line-height: 1.2;
@@ -61,25 +61,31 @@
     margin-top: 40px;
 }
 
-.home-hoods .ui fluid card {
-    margin-left: -12px;
-}
-
-.home-hoods img {
-    max-height: 250px;
-}
-
 .home-hoods .card {
     font-size: 1.2rem;
     cursor: pointer;
 }
 
-.home-hoods .ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+.home-hoods-image {
+    overflow: hidden;
+}
+
+.home-hoods img {
+    max-height: 250px;
+    width: 100%;
+    transition: all 0.4s;
+}
+
+.home-hoods img:hover {
+    transform: scale(1.05);
+}
+
+.home-hoods .ui.card>.content>.header {
     font-weight: 400;
     color: #444444;
 }
 
-
+/*
 @media all and (max-width: 767px) {
     .home-explore-item {
         margin-left: -12px;
@@ -95,3 +101,4 @@
     }
     
 }
+*/
