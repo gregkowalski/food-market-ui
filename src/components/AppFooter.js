@@ -14,7 +14,7 @@ class AppFooter extends React.Component {
             <div className='appfooter'>
                 <Divider />
                 <Grid verticalAlign='top'>
-                    <Grid.Column width={2} />
+                    <Grid.Column width={1} />
                     <Grid.Column width={8}>
                         <Link to={Url.about()}>About</Link>
                         <Link to={Url.policies()}>Policies</Link>
@@ -25,7 +25,7 @@ class AppFooter extends React.Component {
                         <Link to={Url.safety()}>Trust &amp; Safety</Link>
                         <Link to={Url.cookies()}>Cookies</Link>
                         <Link to={Url.privacy()}>Privacy</Link>
-                        <a href={Util.contactSupportUrl()}>Contact Support</a>
+                        <a href={Util.contactSupportUrl()}>Support</a>
                     </Grid.Column>
                 </Grid>
                 <Divider />

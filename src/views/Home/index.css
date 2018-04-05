@@ -18,6 +18,7 @@
 
 .home-explore .ui.grid, .home-hoods .ui.grid {
     margin-top: 10px;
+    margin-left: -1rem !important;
 }
 
 .home-explore .column {
@@ -84,21 +85,3 @@
     font-weight: 400;
     color: #444444;
 }
-
-/*
-@media all and (max-width: 767px) {
-    .home-explore-item {
-        margin-left: -12px;
-        width: 108%;
-    }
-
-    .home {
-        width: 88%;
-    }
-
-    .home-explore, .home-hoods {
-        margin-top: 15px;
-    }
-    
-}
-*/
