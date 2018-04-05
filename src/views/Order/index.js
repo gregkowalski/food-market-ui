@@ -181,7 +181,7 @@ class Order extends React.Component {
                                 <OrderSummary food={food} pickup={pickup} quantity={quantity} date={date} time={time} />
                             </div>
                         </div>
-                        <div>
+                        <div className='order-container-width'>
                             <ContactInfo
                                 pickup={pickup}
 

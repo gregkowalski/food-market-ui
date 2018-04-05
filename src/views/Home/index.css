@@ -1,6 +1,6 @@
 .home {
     width: 88%;
-    margin: 60px auto 120px auto;
+    margin: 30px auto 120px auto;
     font-weight: 400;
     font-size: 2.5rem;
     line-height: 1.2;
@@ -8,12 +8,12 @@
 }
 
 .home-explore>div:first-child {
-    font-size: .7em;
-    font-weight: 400;
+    font-size: .71em;
+    font-weight: 300;
 }
 
-.home-explore, .home-hoods {
-    margin-top: 35px;
+.home-hoods {
+    margin-top: 30px;
 }
 
 .home-explore .ui.grid, .home-hoods .ui.grid {
@@ -31,17 +31,17 @@
     border: 1px solid lightgrey;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 1px 5px 8px 1px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
 
 .home-explore-item:hover {
-    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
+    box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.24), 1px 6px 20px 1px rgba(0, 0, 0, 0.144);
 }
 
 .home-explore-item>div {
     font-size: 1.3rem;
-    font-weight: 400;
+    font-weight: 500;
     margin: auto 20px;
 }
 
@@ -58,8 +58,8 @@
 }
 
 .home-hoods>div:first-child {
-    font-size: .7em;
-    font-weight: 400;
+    font-size: .71em;
+    font-weight: 300;
     margin-top: 40px;
 }
 

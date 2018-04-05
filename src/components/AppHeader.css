@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: #fcfcfc;
+    background: #ffffff;
     z-index: 2;
     transition: top 0.2s ease-in-out;
 }
@@ -21,7 +21,7 @@
 .apphead-link {
     color: #b61095;
     text-decoration: none;
-    padding: 2px 5px 0px 14px;
+    padding: 2px 5px 0px 9px;
     margin-top: 9px;
     font-family: 'Comfortaa', cursive;
     font-weight: 700;

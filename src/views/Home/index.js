@@ -17,6 +17,7 @@ import foodImg3 from './home-food3.jpg'
 import cookImg1 from './home-cook1.jpg'
 import cookImg2 from './home-cook2.jpg'
 import cookImg3 from './home-cook3.jpg'
+import joinImg1 from './home-join1.jpg'
 import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
 
@@ -39,16 +40,22 @@ class Home extends React.Component {
                     <div className='home-explore'>
                         <div>Explore the marketplace</div>
                         <Grid stackable>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={5}>
                                 <div className='home-explore-item' onClick={this.navigateToSearch}>
                                     <Image src={this.homefood} />
-                                    <div>Find Food</div>
+                                    <div>Find food</div>
                                 </div>
                             </Grid.Column>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={5}>
                                 <div className='home-explore-item' onClick={this.navigateToSearch}>
                                     <Image src={this.homecook} />
-                                    <div>Meet Cooks</div>
+                                    <div>Meet cooks</div>
+                                </div>
+                            </Grid.Column>
+                            <Grid.Column width={5}>
+                                <div className='home-explore-item' onClick={this.navigateToSearch}>
+                                    <Image src={joinImg1} />
+                                    <div>Become a cook!</div>
                                 </div>
                             </Grid.Column>
                         </Grid>
@@ -60,7 +67,7 @@ class Home extends React.Component {
                                 <div onClick={this.navigateToSearch}>
                                     <Card fluid>
                                         <Image src={westendImg} />
-                                        <div>Westend</div>
+                                        <div>West End</div>
                                     </Card>
                                 </div>
                             </Grid.Column>

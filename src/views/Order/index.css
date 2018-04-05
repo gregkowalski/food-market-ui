@@ -19,7 +19,7 @@
 
 .order-right {
     width: 350px;
-    min-width: 350px;
+    min-width: 300px;
     margin-left: 50px;
     margin-right: 130px;
 }
@@ -29,10 +29,13 @@
     padding-right: 50px;
 }
 
-@media all and (max-width: 850px) {
+@media all and (max-width: 1075px) {
     .order-container {
         flex-flow: row wrap;
         flex-direction: row;
+    }
+    .order-container-width {
+        min-width: 100%;
     }
     .order-right {
         width: 100%;
