@@ -71,7 +71,8 @@ export class AppHeader extends React.Component {
             'making good food taste better.',
             'moo.',
             'eat like family.',
-            'good food starts here.'
+            'good food starts here.',
+            'cooking is love you can taste.'
         ];
 
         let index = Util.getRandomInt(0, taglines.length - 1);
