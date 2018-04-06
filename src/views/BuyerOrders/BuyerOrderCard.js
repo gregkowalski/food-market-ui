@@ -59,7 +59,7 @@ class BuyerOrderCard extends React.Component {
                         </div>
                     </div>
                     <Divider />
-                    <div className='top-spacing normal-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
+                    <div className='top-spacing pickup-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
                     <div className='buyerordercard-address buyerordercard-main large-font'>
                         <div>{order.address}</div>
                     </div>

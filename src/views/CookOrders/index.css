@@ -5,8 +5,8 @@
 }
 
 .cookorders-header {
-    color: #535353;
-    font-size: 1.8em;
+    color: #424242;
+    font-size: 1.55em;
     font-weight: 400;
     padding: 10px 0px;
     line-height: 1.2em;
@@ -25,6 +25,11 @@
 
 @media all and (max-width: 767px) {
     .cookorders {
-        width: 90%;
+        width: 100%;
+    }
+
+    .cookorders-header {
+        font-size: 1.4em;
+        font-weight: 500;
     }
 }

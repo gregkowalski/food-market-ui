@@ -59,7 +59,7 @@
 }
 
 .buyerordercard-section>div:last-child {
-    font-size: .9em;
+    font-size: .98em;
 }
 
 .buyerordercard-section i.icon {
@@ -87,7 +87,7 @@
 .buyerordercard-additional {
     margin-top: 10px;
     width: 100%;
-    font-size: 1.3em;
+    font-size: 1.32em;
     font-weight: 400;
     line-height: 1.6em;
 }
@@ -121,6 +121,11 @@
 
 .normal-font {
     font-size: 1.1em !important;
+}
+
+.pickup-font {
+    font-size: 1.3em !important;
+    font-weight: 400;
 }
 
 .top-spacing {
@@ -159,7 +164,7 @@
     }
     #buyerordercard-header-cook {
         position: absolute;
-        top: 188px;
+        top: 183px;
         left: 89px;
         width: 45px;
     }

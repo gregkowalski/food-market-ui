@@ -69,6 +69,7 @@ class CookOrders extends React.Component {
                     <CookOrderByDateCard key={day}
                         day={day}
                         orders={dayOrders}
+                        orderFilter={orderFilter}
                         onAccept={this.handleAcceptOrder}
                         onDecline={this.handleDeclineOrder}
                         onCancel={this.handleCancelOrder}
@@ -83,7 +84,7 @@ class CookOrders extends React.Component {
                 <div className='cookorders'>
                     <div className='cookorders-header'>
                         <Link active={orderFilter === OrderFilters.UPCOMING} onClick={this.handleUpcomingOrderClick}>Upcoming Requests</Link>
-                        <Link active={orderFilter === OrderFilters.INACTIVE} onClick={this.handleInactiveOrderClick}>Inactive Orders</Link>
+                        <Link active={orderFilter === OrderFilters.INACTIVE} onClick={this.handleInactiveOrderClick}>Order History</Link>
                     </div>
                     {content}
                 </div>

@@ -1,8 +1,9 @@
 import React from 'react'
 import moment from 'moment'
-import { Segment, Divider, Icon, Accordion } from 'semantic-ui-react'
+import { Segment, Divider, Icon, Accordion, Grid } from 'semantic-ui-react'
 import './CookOrderByDateCard.css'
 import PriceCalc from '../../services/PriceCalc'
+import OrderFilters from '../../store/cookOrders/orderFilters'
 import CookOrderCard from './CookOrderCard'
 
 class CookOrderByDateCard extends React.Component {
@@ -38,7 +39,7 @@ class CookOrderByDateCard extends React.Component {
     }
 
     render() {
-        const { orders, day, onAccept, onDecline, onCancel } = this.props;
+        const { orders, day, orderFilter, onAccept, onDecline, onCancel } = this.props;
         const date = moment(day);
 
         const { showDetails, daySummary } = this.state;
@@ -73,14 +74,32 @@ class CookOrderByDateCard extends React.Component {
         return (
             <Segment className='cookorderbydatecard'>
                 <Accordion>
-                    <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                        <div className='cookorderbydatecard-summary'>
-                            <div className='cookorderbydatecard-summary-day'>
-                                <Icon name='dropdown' />
-                                <div>{date.format('dddd, MMMM D')}</div>
-                            </div>
-                            {summaryContent}
-                        </div>
+                    <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>                        
+                        <Grid stackable>
+                            <Grid.Column width={6}>
+                                <div className='cookorderbydatecard-summary'>
+                                    <div className='cookorderbydatecard-summary-day'>
+                                        <Icon color='purple' size='large' name='angle down' />
+                                        <div>{date.format('dddd, MMMM D')}</div>
+                                    </div>
+                                    {/* {summaryContent} */}
+                                </div>
+                            </Grid.Column>
+                            <Grid.Column width={5}>
+                                <div className='cookorderbydatecard-summary-order'>
+                                    {Math.random() > 0.5 &&
+                                        <div>Pending: $150</div>
+                                    }
+                                </div>
+                            </Grid.Column>
+                            <Grid.Column width={5}>
+                                <div className='cookorderbydatecard-summary-order'>
+                                    {Math.random() > 0.5 &&
+                                        <div>Accepted: $100</div>
+                                    }
+                                </div>
+                            </Grid.Column>
+                        </Grid>
                     </Accordion.Title>
                     <Accordion.Content active={showDetails}>
                         {orderCards}

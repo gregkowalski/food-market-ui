@@ -52,13 +52,13 @@ class CookOrderCard extends React.Component {
     }
 
     statusStyle(status) {
-        let color = Colors.purple;
+        let color = Colors.grey;
         if (status === OrderStatus.Accepted)
             color = Colors.green;
         else if (status === OrderStatus.Declined)
             color = Colors.red;
         else if (status === OrderStatus.Cancelled)
-            color = Colors.grey;
+            color = Colors.red;
 
         return {
             backgroundColor: color,
@@ -78,18 +78,19 @@ class CookOrderCard extends React.Component {
                     <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
                         <div className='cookordercard-section large-font'>
                             <div>
-                                <Icon name='dropdown' />
                                 {food.title}
                                 &nbsp; @ {order.time}
                                 &nbsp; (${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency})
                                 &nbsp; {order.pickup ? 'Pickup' : 'Delivery'}
                             </div>
+                            <span>See more details</span>                            
+                            <Icon name='angle double down' />                                                            
                         </div>
                     </Accordion.Title>
                     {order.status === OrderStatus.Pending &&
                         <div>
-                            <Button className='box-dropshadow' color='green' loading={isAccepting} onClick={this.acceptOrder}>Accept</Button>
-                            <Button className='box-dropshadow' color='red' loading={isDeclining} onClick={this.showDeclineConfirmation}>Decline</Button>
+                            <Button className='box-dropshadow fc-green' loading={isAccepting} onClick={this.acceptOrder}>Accept</Button>
+                            <Button className='box-dropshadow fc-red' loading={isDeclining} onClick={this.showDeclineConfirmation}>Decline</Button>
                         </div>
                     }
                     <Accordion.Content active={showDetails}>
@@ -173,8 +174,8 @@ class ConfirmModal extends React.Component {
                     <TextArea autoHeight onChange={handleReasonChange} />
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button loading={isProcessing} onClick={handleConfirm}>Confirm</Button>
                     <Button onClick={onClose}>Back</Button>
+                    <Button loading={isProcessing} onClick={handleConfirm}>Confirm</Button>
                 </Modal.Actions>
             </Modal>
         );

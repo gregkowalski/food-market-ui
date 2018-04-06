@@ -44,6 +44,11 @@
     line-height: 1.6em;
 }
 
+.cookordercard-section>span {
+    font-size: .8em;
+    color: #2b65ec;
+}
+
 .cookordercard-cook {
     display: inline;
 }
@@ -67,4 +72,32 @@
 
 .label-dropshadow {
     box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 0px 2px 7px 0px rgba(0, 0, 0, 0.1) !important;
+}
+
+.fc-green.ui.button {
+    background-color: #b61095;
+    border: 2px solid #b61095;
+    color: #ffffff;
+    margin-left: 12%;
+    margin-right: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.fc-red.ui.button {
+    background-color: #ffffff;
+    border: 2px solid #b61095;
+    color: #b61095;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+@media all and (max-width: 767px) {
+    .fc-green.ui.button {
+        margin-left: 1%;
+        font-weight: 500;
+    }
+    .fc-red.ui.button {
+        font-weight: 500;    
+    }
 }
