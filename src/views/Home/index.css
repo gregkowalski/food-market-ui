@@ -1,5 +1,5 @@
 .home {
-    width: 88%;
+    width: 89%;
     margin: 30px auto 120px auto;
     font-weight: 400;
     font-size: 2.5rem;
@@ -16,7 +16,7 @@
     margin-top: 30px;
 }
 
-.home-explore .ui.grid, .home-hoods .ui.grid {
+.home-explore .ui.grid, .home-hoods .ui.grid, .home-join .ui.grid {
     margin-top: 10px;
     margin-left: -1rem !important;
     margin-right: -1rem !important;
@@ -56,6 +56,36 @@
     height: 85px;
     width: 114px;
 }
+
+.home-join .column {
+    min-width: 300px;
+}
+
+.home-join-item {
+    display: flex;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 1px 5px 8px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.home-join-item:hover {
+    box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.24), 1px 6px 20px 1px rgba(0, 0, 0, 0.144);
+}
+
+.home-join>div:first-child {
+    font-size: .71em;
+    font-weight: 300;
+    margin-top: 40px;
+}
+
+.home-join img {
+    height: 85px;
+    width: 114px;
+    flex-flow: row-reverse;
+}
+
 
 .home-hoods>div:first-child {
     font-size: .71em;

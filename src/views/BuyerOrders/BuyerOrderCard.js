@@ -18,14 +18,14 @@ class BuyerOrderCard extends React.Component {
     }
 
     statusStyle(status) {
-        let color = Colors.purple;
+        let color = Colors.grey;
         if (status === OrderStatus.Accepted)
-            color = Colors.purple;
+            color = Colors.green;
         else if (status === OrderStatus.Declined)
             color = Colors.red;
         else if (status === OrderStatus.Cancelled)
-            color = Colors.grey;
-        
+            color = Colors.red;
+
         return {
             backgroundColor: color,
             // color: 'white'
@@ -42,31 +42,33 @@ class BuyerOrderCard extends React.Component {
         return (
             <Segment raised>
                 <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{order.status}</div>
-                <Image id='buyerordercard-header-cook' src={cook.image} circular size='tiny' />
+                <Image id='buyerordercard-header-cook' src={cook.image} circular />
                 <div className='buyerordercard'>
                     {/* <Label className='label-dropshadow' size='large' attached='top' color={statusColor}>{order.status}</Label> */}
                     <div className='buyerordercard-header'>
                         <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
-                            <div className='large-font top-spacing mobile-spacing'>{food.title}</div>
+                            <div className='larger-font top-spacing mobile-spacing'>{food.title}</div>
                             <div className='buyerordercard-section'>
                                 <div>{date.format('dddd, MMMM D')}</div>
-                                <div className='bottom-spacing'>{order.time}</div>
+                                <div>{order.time}</div>
+                                <div className='bottom-spacing top-spacing'>
+                                </div>
                                 <div className='top-spacing'>Your cook, {cook.name}</div>
                             </div>
                         </div>
                     </div>
                     <Divider />
                     <div className='top-spacing normal-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
-                    <div className='buyerordercard-section buyerordercard-main large-font'>
+                    <div className='buyerordercard-address buyerordercard-main large-font'>
                         <div>{order.address}</div>
                     </div>
                     <Divider />
-                    <div className='buyerordercard-section'>
+                    <div className='buyerordercard-additional'>
                         <Accordion>
                             <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                                Additional details
-                            <Icon name='dropdown' />
+                                <span>Additional details</span>
+                                <Icon size='large' name='angle down' />
                             </Accordion.Title>
                             <Accordion.Content active={showDetails}>
                                 <div>Reservation code: {order.order_id}</div>
@@ -77,13 +79,13 @@ class BuyerOrderCard extends React.Component {
                     </div>
                     <Divider />
                     <div className='buyerordercard-contact normal-font'>
-                        <div className='buyerordercard-cook'>
-                            <div><Icon name='mail outline' size='large' />
-                                <a className='buyerordercard-link' href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
-                            </div>
+                        <div className='buyerordercard-footer'>
+                            <Icon name='mail outline' size='large' />
+                            <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
-                        <div>
-                            <Icon name='calendar' size='large' /><a className='buyerordercard-link' href='./'>Cancel order</a>
+                        <div className='buyerordercard-footer'>
+                            <Icon name='calendar' size='large' />
+                            <a href='./'>Cancel order</a>
                         </div>
                     </div>
                 </div>

@@ -87,7 +87,7 @@ export class AppHeader extends React.Component {
         if (user) {
             sessionElement = (
                 <div className='apphead-sign-in'>
-                    <Dropdown text={'Hi, ' + user.username}>
+                    <Dropdown icon='angle down' text={'Hi, ' + user.username}>
                         <Dropdown.Menu className='left'>
                             <Dropdown.Item className='apphead-dropdown-link' text='Home' onClick={this.navigateToHome} />
                             <Dropdown.Divider />

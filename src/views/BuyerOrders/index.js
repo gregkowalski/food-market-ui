@@ -13,7 +13,7 @@ class BuyerOrders extends React.Component {
 
     componentWillMount() {
         this.props.actions.loadOrders();
-    }
+    } 
 
     render() {
         const { orders, isOrdersLoading } = this.props;

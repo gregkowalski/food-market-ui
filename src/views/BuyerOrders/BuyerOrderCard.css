@@ -1,3 +1,11 @@
+.buyerorders {
+    color: #424242;
+}
+
+.buyerordercard {
+    padding-left: 3px;
+}
+
 .buyerordercard.ui.segment {
     margin-top: 2rem;
 }
@@ -5,14 +13,12 @@
 .buyerordercard-header {
     display: flex;
     justify-content: left;
-    /* margin-top: 5px; */
-    /* color: #494949; */
-    padding: 3px 10px 20px 10px;
+    padding: 3px 10px 20px 0px;
 }
 
 .buyerordercard-header>div {
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .buyerordercard-header .ui.label {
@@ -21,10 +27,11 @@
 
 #buyerordercard-header-cook {
     position: absolute;
-    top: 200px;
-    left: 130px;
+    top: 220px;
+    left: 129px;
     z-index: 1;
     border: 3px solid whitesmoke;
+    width: 80px;
 }
 
 .buyerordercard-header>img {
@@ -44,6 +51,22 @@
 }
 
 .buyerordercard-section {
+    margin-top: 3px;
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: 400;
+    line-height: 1.6em;
+}
+
+.buyerordercard-section>div:last-child {
+    font-size: .9em;
+}
+
+.buyerordercard-section i.icon {
+    margin: -0.1em .25rem 0 0;
+}
+
+.buyerordercard-address {
     margin-top: 10px;
     width: 100%;
     font-size: 1.3em;
@@ -53,28 +76,47 @@
 
 .buyerordercard-contact {
     display: flex;
-    margin-top: 20px;
+    margin-top: 22px;
     margin-bottom: 10px;
 }
 
-.buyerordercard-link {
+.buyerordercard-contact>div:first-child {
+    margin-right: 55px;
+}
+
+.buyerordercard-additional {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: 400;
+    line-height: 1.6em;
+}
+
+.buyerordercard-footer a {
     color: #555555;
     font-weight: 500;
-    margin-left: 5px;    
+    margin: 2px 0px 0px 1px;
 }
 
-.buyerordercard-link:hover {
+.buyerordercard-footer {
+    display: inline-flex;
+}
+
+
+.buyerordercard-footer  a:hover {
     color: #a01e88;
     font-weight: 500;
-}
-
-.buyerordercard-cook {
-    margin-right: 20px;
 }
 
 .large-font {
     font-size: 1.5em;
     font-weight: 500 !important;
+}
+
+.larger-font {
+    font-size: 1.7em;
+    font-weight: 500 !important;
+    line-height: 1.1em;
 }
 
 .normal-font {
@@ -90,7 +132,7 @@
 }
 
 .bottom-spacing {
-    margin-bottom: 50px;
+    margin-bottom: 65px;
 }
 
 #buyerordercard-status {
@@ -117,15 +159,20 @@
     }
     #buyerordercard-header-cook {
         position: absolute;
-        top: 128px;
-        left: 70px;
+        top: 188px;
+        left: 89px;
+        width: 45px;
     }
-
     .bottom-spacing {
         margin-bottom: 0px;
     }
-
     .mobile-spacing {
         margin-top: 30px;
+    }
+    .buyerordercard-footer a {
+        margin-left: 1px;
+    }
+    .buyerordercard-contact>div:first-child {
+        margin-right: 12px;
     }
 }
