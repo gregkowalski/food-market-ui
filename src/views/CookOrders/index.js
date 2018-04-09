@@ -94,12 +94,16 @@ class CookOrders extends React.Component {
 }
 
 const getVisibleOrders = (orders, filter) => {
+    const isUpcoming = (order) => {
+        return (order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending);
+    };
+
     switch (filter) {
         case OrderFilters.INACTIVE:
-            return orders.filter(o => o.status === OrderStatus.Declined || o.status === OrderStatus.Cancelled);
+            return orders.filter(order => !isUpcoming(order));
 
         case OrderFilters.UPCOMING:
-            return orders.filter(o => o.status === OrderStatus.Accepted || o.status === OrderStatus.Pending);
+            return orders.filter(order => isUpcoming(order));
 
         default:
             return orders;

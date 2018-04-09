@@ -1,8 +1,10 @@
 const OrderStatus = {
     Pending: 'pending',
-    Accepted: 'accepted',
+    Accepted: 'charged',
     Declined: 'declined',
-    Cancelled: 'cancelled'
+    Cancelled: 'cancelled',
+    Transferred: 'transferred',
+    Failed: 'failed',
 }
 
 export default OrderStatus;
