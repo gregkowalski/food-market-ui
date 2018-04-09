@@ -1,12 +1,14 @@
 import React from 'react'
+import pluralize from 'pluralize'
 import { withRouter } from 'react-router-dom'
-import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea } from 'semantic-ui-react'
+import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea, Segment, Grid } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import Constants from '../../Constants'
 import OrderStatus from '../../data/OrderStatus'
 import Colors from '../../data/Colors'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
+import OrderExchangeMessage from './OrderExchangeMessage'
 
 class CookOrderCard extends React.Component {
 
@@ -16,9 +18,9 @@ class CookOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
-    acceptOrder = () => {
+    acceptOrder = (reason) => {
         if (!this.props.isAccepting) {
-            this.props.onAccept(this.props.order);
+            this.props.onAccept(this.props.order, reason);
         }
     }
 
@@ -26,6 +28,14 @@ class CookOrderCard extends React.Component {
         if (!this.props.isDeclining) {
             this.props.onDecline(this.props.order, reason);
         }
+    }
+
+    closeAcceptConfirmation = () => {
+        this.setState({ showConfirmAccept: false });
+    }
+
+    showAcceptConfirmation = (e) => {
+        this.setState({ showConfirmAccept: true });
     }
 
     closeDeclineConfirmation = () => {
@@ -52,7 +62,7 @@ class CookOrderCard extends React.Component {
     }
 
     statusStyle(status) {
-        let color = Colors.grey;
+        let color = Colors.lightgrey;
         if (status === OrderStatus.Accepted)
             color = Colors.green;
         else if (status === OrderStatus.Declined)
@@ -68,74 +78,102 @@ class CookOrderCard extends React.Component {
     render() {
         const { order } = this.props;
         const { food, cook, isAccepting, isDeclining, isCancelling } = order;
-        const { showDetails, showConfirmCancel, showConfirmDecline } = this.state;
+        const { showDetails, showConfirmAccept, showConfirmCancel, showConfirmDecline } = this.state;
+        const quantityLabel = pluralize('order', order.quantity);
+
 
         return (
-            <div className='cookordercard'>
-                <div style={this.statusStyle(order.status)}>{order.status}</div>
+            <Segment>
+                <div className='cookordercard'>
+                    <div className='cookordercard-header'>
+                        <div style={this.statusStyle(order.status)}>{order.status}</div>
+                        {order.status === OrderStatus.Pending &&
+                            <div className='cookordercard-accept'>
+                                <Button fluid className='box-dropshadow cookordercard-accept' loading={isAccepting} onClick={this.showAcceptConfirmation}>Accept order</Button>
+                                <Button fluid className='box-dropshadow cookordercard-decline' loading={isDeclining} onClick={this.showDeclineConfirmation}>Decline order</Button>
+                            </div>
+                        }
+                    </div>
 
-                <Accordion>
-                    <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                        <div className='cookordercard-section large-font'>
-                            <div>
-                                {food.title}
-                                &nbsp; @ {order.time}
-                                &nbsp; (${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency})
-                                &nbsp; {order.pickup ? 'Pickup' : 'Delivery'}
-                            </div>
-                            <span>See more details</span>                            
-                            <Icon name='angle double down' />                                                            
-                        </div>
-                    </Accordion.Title>
-                    {order.status === OrderStatus.Pending &&
-                        <div>
-                            <Button className='box-dropshadow fc-green' loading={isAccepting} onClick={this.acceptOrder}>Accept</Button>
-                            <Button className='box-dropshadow fc-red' loading={isDeclining} onClick={this.showDeclineConfirmation}>Decline</Button>
-                        </div>
-                    }
-                    <Accordion.Content active={showDetails}>
-                        <Divider />
-                        <div className='cookordercard-section'>
-                            <div>Reservation code: {order.order_id}</div>
-                            <div>Quantity: {order.quantity}</div>
-                            <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
-                        </div>
-                        <Divider />
-                        <div className='cookordercard-section normal-font'>
-                            <div className='cookordercard-cook'>
-                                <Image src={cook.image} circular size='mini' floated='left' />
-                                <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
-                            </div>
-                            {order.status === OrderStatus.Accepted &&
-                                <div style={{ marginTop: '25px' }}>
-                                    <Icon name='calendar' size='big' />
-                                    <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
+                    <Accordion>
+                        <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
+                            <div className='cookordercard-section cookordercard-details large-font'>
+                                <div> {food.title} </div>
+                                <div className='cookordercard-order-quantity'>
+                                    <div>{order.quantity} {quantityLabel}</div>
+                                    <div>{food.unit} <span>per order</span> </div>
                                 </div>
-                            }
+                                <Divider />
+                                <div className='cookordercard-order-exchange'>
+                                    <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} />
+                                    &nbsp; {order.time}
+                                </div>
+                                <div>
+                                    {/* &nbsp; ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency} */}
+                                </div>
+                                <span>Additional details</span>
+                                <Icon name='angle double down' />
+                            </div>
+                        </Accordion.Title>
+                        <Accordion.Content active={showDetails}>
+                            <div className='cookordercard-section'>
+                                <div>{order.address}</div>
+                                <Divider hidden />
+                                <div>Reservation code: {order.order_id}</div>
+                                <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
+                            </div>
+                            <Divider />
+                            <div className='cookordercard-section normal-font'>
+                                <div className='cookordercard-cook'>
+                                    <Image src={cook.image} circular size='mini' floated='left' />
+                                    <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+                                </div>
+                                {order.status === OrderStatus.Accepted &&
+                                    <div style={{ marginTop: '25px' }}>
+                                        <Icon name='calendar' size='big' />
+                                        <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
+                                    </div>
+                                }
 
-                        </div>
-                    </Accordion.Content>
-                </Accordion>
+                            </div>
+                        </Accordion.Content>
+                    </Accordion>
 
-                <ConfirmModal
-                    header='Confirm Cancellation'
-                    message="Let the buyer know why you're cancelling"
-                    open={showConfirmCancel}
-                    isProcessing={isCancelling}
-                    onConfirm={this.cancelOrder}
-                    onClose={this.closeCancelConfirmation}
-                />
+                    <ConfirmModal
+                        header="Accept order - your buyer's card will be charged"
+                        message="Sweet! Say hello to your buyer."
+                        open={showConfirmAccept}
+                        isProcessing={isAccepting}
+                        onConfirm={this.acceptOrder}
+                        onClose={this.closeAcceptConfirmation}
+                        confirmButtonLabel='Accept order'
 
-                <ConfirmModal
-                    header='Confirm Decline'
-                    message="Let the buyer know why you're declining"
-                    open={showConfirmDecline}
-                    isProcessing={isDeclining}
-                    onConfirm={this.declineOrder}
-                    onClose={this.closeDeclineConfirmation}
-                />
+                    />
 
-            </div>
+                    <ConfirmModal
+                        header='Cancel this order'
+                        message="Got it. Let your buyer know why you're cancelling."
+                        open={showConfirmCancel}
+                        isProcessing={isCancelling}
+                        onConfirm={this.cancelOrder}
+                        onClose={this.closeCancelConfirmation}
+                        confirmButtonLabel='Cancel order'
+
+                    />
+
+                    <ConfirmModal
+                        // header="Decline this order"
+                        header="Roger that. Let your buyer know why you're declining."
+
+                        open={showConfirmDecline}
+                        isProcessing={isDeclining}
+                        onConfirm={this.declineOrder}
+                        onClose={this.closeDeclineConfirmation}
+                        confirmButtonLabel='Decline order'
+                    />
+
+                </div>
+            </Segment>
         )
     }
 }
@@ -152,7 +190,7 @@ class ConfirmModal extends React.Component {
 
     render() {
 
-        const { header, message, open, isProcessing, onConfirm, onClose } = this.props;
+        const { header, message, open, isProcessing, onConfirm, onClose, confirmButtonLabel } = this.props;
 
         let reason;
         const handleReasonChange = (event, data) => {
@@ -168,14 +206,14 @@ class ConfirmModal extends React.Component {
                 <Modal.Header>{header}</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Header>Add a message</Header>
-                        <p>{message}</p>
+                        <Header>{message}</Header>
+                        <p>Write your message here</p>
                     </Modal.Description>
                     <TextArea autoHeight onChange={handleReasonChange} />
                 </Modal.Content>
                 <Modal.Actions>
                     <Button onClick={onClose}>Back</Button>
-                    <Button loading={isProcessing} onClick={handleConfirm}>Confirm</Button>
+                    <Button loading={isProcessing} onClick={handleConfirm}>{confirmButtonLabel}</Button>
                 </Modal.Actions>
             </Modal>
         );

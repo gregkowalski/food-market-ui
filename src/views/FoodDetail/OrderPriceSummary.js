@@ -1,4 +1,5 @@
 import React from 'react'
+import pluralize from 'pluralize'
 import { Divider } from 'semantic-ui-react'
 import Constants from '../../Constants.js'
 import './OrderPriceSummary.css'
@@ -14,7 +15,7 @@ const OrderPriceSummary = ({ food, quantity, pickup }) => {
         return style;
     }
 
-    const quantityLabel = (quantity > 1) ? 'orders': 'order';
+    const quantityLabel = pluralize('order', quantity);
 
     return (
         <div className='orderpricesummary'>

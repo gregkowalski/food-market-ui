@@ -47,7 +47,7 @@ class CookOrderByDateCard extends React.Component {
         const orderCards = orders.map(order => {
             return (
                 <div key={order.order_id}>
-                    <Divider />
+                    <Divider hidden />
                     <CookOrderCard
                         order={order}
                         onAccept={onAccept}

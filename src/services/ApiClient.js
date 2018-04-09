@@ -180,17 +180,22 @@ const buyerOrders = [{
         title: 'Pork + Chive Dumplings',
         imageUrls: ['/assets/images/Johanndumplings.jpg'],
         price: 8,
+        unit: '20 dumplings lasflkjsf laskfjal klj',
     },
     cook: {
         name: 'Johann',
         image: '/assets/images/users/johannk.jpg',
         email: 'johann@kao.com'
+    },
+    buyer: {
+        name: 'Elliot',
+        image: '/assets/images/users/elliot.jpg',   
     }
 },
 {
     order_id: 'adsjhfklh23',
     food_id: '80283950-07cd-11e8-a3a6-cd45bd5ea586',
-    pickup: true,
+    pickup: false,
     date: moment('2018-03-20'),
     time: '3 - 5 PM',
     quantity: 3,
@@ -200,11 +205,16 @@ const buyerOrders = [{
         title: 'Smoked Beer Can Chicken',
         imageUrls: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg'],
         price: 25,
+        unit: '1 whole chicken',
     },
     cook: {
         name: 'Steve',
         image: '/assets/images/users/steve.jpg',
         email: 'steve@work.com'
+    },
+    buyer: {
+        name: 'Jenny',
+        image: '/assets/images/users/jenny.jpg',   
     }
 },
 {
@@ -220,11 +230,16 @@ const buyerOrders = [{
         title: 'Casserole',
         imageUrls: ['/assets/images/HollyC_baconcasserole.jpg'],
         price: 15,
+        unit: '9X13 casserole dish',
     },
     cook: {
         name: 'Molly',
         image: '/assets/images/users/molly.png',
         email: 'molly@work.com'
+    },
+    buyer: {
+        name: 'Matthew',
+        image: '/assets/images/users/matthew.png',   
     }
 },
 {
@@ -240,11 +255,16 @@ const buyerOrders = [{
         title: 'Casserole',
         imageUrls: ['/assets/images/HollyC_baconcasserole.jpg'],
         price: 15,
+        unit: '9X13 casserole dish',
     },
     cook: {
         name: 'Molly',
         image: '/assets/images/users/molly.png',
         email: 'molly@work.com'
+    },
+    buyer: {
+        name: 'Matthew',
+        image: '/assets/images/users/matthew.png',   
     }
 },
 {
@@ -260,11 +280,16 @@ const buyerOrders = [{
         title: 'Smoked Beer Can Chicken',
         imageUrls: ['/assets/images/GabeC_SmokedChicken_BeerCan_600x410.jpg'],
         price: 25,
+        unit: '1 whole chicken',
     },
     cook: {
         name: 'Steve',
         image: '/assets/images/users/steve.jpg',
         email: 'steve@work.com'
+    },
+    buyer: {
+        name: 'Jenny',
+        image: '/assets/images/users/jenny.jpg',   
     }
 }
 ]

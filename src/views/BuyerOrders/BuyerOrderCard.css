@@ -30,7 +30,7 @@
     top: 220px;
     left: 129px;
     z-index: 1;
-    border: 3px solid whitesmoke;
+    border: 3px solid #b61095;
     width: 80px;
 }
 
@@ -43,7 +43,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     object-fit: cover;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 .buyerordercard-main {
@@ -56,6 +56,10 @@
     font-size: 1.3em;
     font-weight: 400;
     line-height: 1.6em;
+}
+.buyerordercard-section>div:first-child {
+    color: #b61095;
+    font-weight: 600;
 }
 
 .buyerordercard-section>div:last-child {
@@ -90,6 +94,9 @@
     font-size: 1.32em;
     font-weight: 400;
     line-height: 1.6em;
+}
+.buyerordercard-additional>div:first-child>div:first-child>span {
+    color: #2b65ec;    
 }
 
 .buyerordercard-footer a {

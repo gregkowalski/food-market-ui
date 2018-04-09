@@ -1,0 +1,10 @@
+.orderexchangemessage-label {
+    display: flex;
+}
+
+.orderexchangemessage-label>div:first-child {
+    color: #b61095;
+    font-size: .7em;
+    font-weight: 900;
+    text-transform: uppercase;         
+}

@@ -18,17 +18,27 @@ class BuyerOrderCard extends React.Component {
     }
 
     statusStyle(status) {
-        let color = Colors.grey;
-        if (status === OrderStatus.Accepted)
-            color = Colors.green;
-        else if (status === OrderStatus.Declined)
-            color = Colors.red;
-        else if (status === OrderStatus.Cancelled)
-            color = Colors.red;
+        let backgroundColor = Colors.lightgrey;
+        let color = Colors.purple;
+        if (status === OrderStatus.Accepted) {
+            backgroundColor = Colors.green;
+            color = Colors.grey;
+        }
+        
+        else if (status === OrderStatus.Declined) {
+            backgroundColor = Colors.red;
+            color = Colors.grey;  
+        }
+      
+        else if (status === OrderStatus.Cancelled) {
+            backgroundColor = Colors.red;
+            color = Colors.grey;
+        }
+        
 
         return {
-            backgroundColor: color,
-            // color: 'white'
+            backgroundColor: backgroundColor,
+            color: color,
         }
     }
 
@@ -59,7 +69,7 @@ class BuyerOrderCard extends React.Component {
                         </div>
                     </div>
                     <Divider />
-                    <div className='top-spacing pickup-font'>{order.pickup ? 'Pickup' : 'Delivery'} address</div>
+                    <div className='top-spacing pickup-font'>{order.pickup ? "You will pick up this order at" : 'Order will be delivered to'}</div>
                     <div className='buyerordercard-address buyerordercard-main large-font'>
                         <div>{order.address}</div>
                     </div>
@@ -68,7 +78,7 @@ class BuyerOrderCard extends React.Component {
                         <Accordion>
                             <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
                                 <span>Additional details</span>
-                                <Icon size='large' name='angle down' />
+                                <Icon size='large' name='angle double down' />
                             </Accordion.Title>
                             <Accordion.Content active={showDetails}>
                                 <div>Reservation code: {order.order_id}</div>

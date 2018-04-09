@@ -1,32 +1,10 @@
 .cookordercard-header {
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
-    color: #494949;
-    font-size: 1.1em;
-    font-weight: 500;
-    padding: 10px 10px 0px 10px;
+    flex-flow: row wrap;
 }
 
 .cookordercard-header>div:first-child {
-    line-height: 1.1em;
-    font-size: 1.6em;
-    margin: 0 10px;
-    cursor: pointer;
-}
-
-.cookordercard-header>img {
-    margin-top: 5px 0px 0px 15px;
-    border-radius: 5px;
-    min-width: 70px;
-    overflow: hidden;
-    background-position: center center;
-    background-repeat: no-repeat;
-    object-fit: cover;
-    cursor: pointer;
-}
-
-.cookordercard>div:first-child {
     background-color: lightgray;
     height: 43px;
     width: 50%;
@@ -34,12 +12,20 @@
     /* color: #ec7781; */
     font-weight: 400;
     font-size: 1.12em;
+    margin-bottom: 15px;
+}
+
+.cookordercard-accept {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    width: 45%;
 }
 
 .cookordercard-section {
-    margin-top: 10px;
+    margin-top: 0px;
     width: 100%;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: 400;
     line-height: 1.6em;
 }
@@ -47,6 +33,44 @@
 .cookordercard-section>span {
     font-size: .8em;
     color: #2b65ec;
+}
+
+.cookordercard-details>div:first-child {
+    align-content: center;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.cookordercard-order-quantity {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    align-items: baseline;
+    font-size: .75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #757575;
+}
+
+.cookordercard-order-quantity>div:first-child {
+    border: 3px solid #b61095;
+    color: #3b3b3b;
+    font-size: 1.28em;
+    font-weight: 700;
+    padding: 2px 11px 3px 11px;
+    margin-right: 5px;
+    border-radius: 12px;
+    text-transform: lowercase;
+}
+
+.cookordercard-order-quantity>div:last-child>span {
+    font-size: .83em;
+    font-weight: 400;
+    text-transform: lowercase;
+}
+
+.cookordercard-order-exchange {
+    display: flex;
 }
 
 .cookordercard-cook {
@@ -74,30 +98,47 @@
     box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 0px 2px 7px 0px rgba(0, 0, 0, 0.1) !important;
 }
 
-.fc-green.ui.button {
+.cookordercard-accept.ui.button {
     background-color: #b61095;
     border: 2px solid #b61095;
     color: #ffffff;
-    margin-left: 12%;
-    margin-right: 20px;
     font-size: 1.1em;
     font-weight: 600;
+    margin-right: 8%;
+    line-height: 1.35em;
 }
 
-.fc-red.ui.button {
+.cookordercard-decline.ui.button {
     background-color: #ffffff;
     border: 2px solid #b61095;
     color: #b61095;
     font-size: 1.1em;
     font-weight: 600;
+    line-height: 1.35em;
 }
 
 @media all and (max-width: 767px) {
-    .fc-green.ui.button {
-        margin-left: 1%;
+    .cookordercard-accept.ui.button {
         font-weight: 500;
+        margin-top: 15px;
+        margin-right: 2%;
     }
-    .fc-red.ui.button {
-        font-weight: 500;    
+    .cookordercard-decline.ui.button {
+        font-weight: 500;
+        margin: auto auto;
+        margin-top: 15px;
+    }
+    .cookordercard-order-quantity>div:first-child {
+        font-size: 1.15em;
+    }
+    .cookordercard-accept {
+        width: 100%;
+    }
+    .cookordercard-header {
+        display: block;
+    }
+    .cookordercard-header>div:first-child {
+        width: 100%;
+        margin-bottom: 0px;
     }
 }
