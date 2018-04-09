@@ -54,12 +54,12 @@
 
 .cookordercard-order-quantity>div:first-child {
     border: 3px solid #b61095;
+    border-radius: 12px;    
     color: #3b3b3b;
     font-size: 1.28em;
     font-weight: 700;
     padding: 2px 11px 3px 11px;
     margin-right: 5px;
-    border-radius: 12px;
     text-transform: lowercase;
 }
 
@@ -71,10 +71,23 @@
 
 .cookordercard-order-exchange {
     display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    align-items: flex-start;
 }
 
-.cookordercard-cook {
+.cookordercard-order-exchange img {
+    border: 2px solid #b61095;    
+}
+
+.cookordercard-buyer {
     display: inline;
+}
+
+.cookordercard-buyer a {
+    color: #555555;
+    font-weight: 500;
+    margin: 2px 0px 0px 1px;
 }
 
 .large-font {
@@ -130,6 +143,11 @@
     }
     .cookordercard-order-quantity>div:first-child {
         font-size: 1.15em;
+    }
+    .cookordercard-order-quantity>div:last-child {
+        margin-top: 11px;
+        padding-left: 1%;
+        line-height: 1.2em;
     }
     .cookordercard-accept {
         width: 100%;

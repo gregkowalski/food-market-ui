@@ -174,7 +174,7 @@ const buyerOrders = [{
         title: 'Pork + Chive Dumplings',
         imageUrls: ['/assets/images/Johanndumplings.jpg'],
         price: 8,
-        unit: '20 dumplings lasflkjsf laskfjal klj',
+        unit: '20 dumplings',
     },
     cook: {
         name: 'Johann',
@@ -183,7 +183,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Elliot',
-        image: '/assets/images/users/elliot.jpg',   
+        image: '/assets/images/users/elliot.jpg',  
+        email: 'elliot@work.com'
+         
     }
 },
 {
@@ -208,7 +210,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Jenny',
-        image: '/assets/images/users/jenny.jpg',   
+        image: '/assets/images/users/jenny.jpg',  
+        email: 'jenny@work.com'
+         
     }
 },
 {
@@ -233,7 +237,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Matthew',
-        image: '/assets/images/users/matthew.png',   
+        image: '/assets/images/users/matthew.png',
+        email: 'matthew@work.com'
+           
     }
 },
 {
@@ -258,7 +264,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Matthew',
-        image: '/assets/images/users/matthew.png',   
+        image: '/assets/images/users/matthew.png',
+        email: 'matthew@work.com'
+           
     }
 },
 {
@@ -283,7 +291,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Jenny',
-        image: '/assets/images/users/jenny.jpg',   
+        image: '/assets/images/users/jenny.jpg', 
+        email: 'jenny@work.com'
+          
     }
 }
 ]

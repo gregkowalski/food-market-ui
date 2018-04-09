@@ -4,13 +4,12 @@ import './OrderExchangeMessage.css'
 
 
 
-const OrderExchangeMethod = ({ pickup, buyer }) => {
+const OrderExchangeMethod = ({ pickup, buyer, time }) => {
     if (pickup === true) {
         return (
             <div className='orderexchangemessage-label'>
-               <div>order pickup : </div>
-               <div>{buyer.name} will meet you at <Image size='mini' circular src={buyer.image} />
-               </div>
+               <div>order pickup &nbsp; · </div>
+               <div> {buyer.name} will meet you at {time} </div>
             </div>
         )
     }

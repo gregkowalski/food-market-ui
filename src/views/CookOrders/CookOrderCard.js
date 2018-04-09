@@ -1,7 +1,7 @@
 import React from 'react'
 import pluralize from 'pluralize'
 import { withRouter } from 'react-router-dom'
-import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea, Segment, Grid } from 'semantic-ui-react'
+import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea, Segment } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import Constants from '../../Constants'
 import OrderStatus from '../../data/OrderStatus'
@@ -77,7 +77,7 @@ class CookOrderCard extends React.Component {
 
     render() {
         const { order } = this.props;
-        const { food, cook, isAccepting, isDeclining, isCancelling } = order;
+        const { food, buyer, isAccepting, isDeclining, isCancelling } = order;
         const { showDetails, showConfirmAccept, showConfirmCancel, showConfirmDecline } = this.state;
         const quantityLabel = pluralize('order', order.quantity);
 
@@ -94,6 +94,7 @@ class CookOrderCard extends React.Component {
                             </div>
                         }
                     </div>
+                    <Divider />
 
                     <Accordion>
                         <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
@@ -103,14 +104,15 @@ class CookOrderCard extends React.Component {
                                     <div>{order.quantity} {quantityLabel}</div>
                                     <div>{food.unit} <span>per order</span> </div>
                                 </div>
-                                <Divider />
                                 <div className='cookordercard-order-exchange'>
-                                    <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} />
-                                    &nbsp; {order.time}
+                                    <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} time={order.time} />
+                                    {/* &nbsp; {order.time} */}
+                                    <Image size='mini' circular src={buyer.image} />
                                 </div>
                                 <div>
                                     {/* &nbsp; ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency} */}
                                 </div>
+                                <Divider />
                                 <span>Additional details</span>
                                 <Icon name='angle double down' />
                             </div>
@@ -118,15 +120,17 @@ class CookOrderCard extends React.Component {
                         <Accordion.Content active={showDetails}>
                             <div className='cookordercard-section'>
                                 <div>{order.address}</div>
+                                &nbsp; {order.time}
                                 <Divider hidden />
                                 <div>Reservation code: {order.order_id}</div>
                                 <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
                             </div>
                             <Divider />
                             <div className='cookordercard-section normal-font'>
-                                <div className='cookordercard-cook'>
-                                    <Image src={cook.image} circular size='mini' floated='left' />
-                                    <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+                                <div className='cookordercard-buyer'>
+                                    {/* <Image src={buyer.image} circular size='mini' floated='left' /> */}
+                                    <Icon name='mail outline' size='large' />
+                                    <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
                                 </div>
                                 {order.status === OrderStatus.Accepted &&
                                     <div style={{ marginTop: '25px' }}>

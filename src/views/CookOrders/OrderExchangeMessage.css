@@ -1,10 +1,19 @@
 .orderexchangemessage-label {
     display: flex;
+    align-items: center;
 }
 
 .orderexchangemessage-label>div:first-child {
     color: #b61095;
     font-size: .7em;
     font-weight: 900;
-    text-transform: uppercase;         
+    text-transform: uppercase;  
+    margin: 5px 10px 0px 0px;       
+}
+
+.orderexchangemessage-label>div:last-child {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    margin-right: 10px;
 }
