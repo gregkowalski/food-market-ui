@@ -3,6 +3,7 @@ import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import OrderStatus from '../../data/OrderStatus'
 import OrderFilters from './orderFilters';
+import Util from '../../services/Util'
 
 function requestOrders() {
     return {
@@ -109,7 +110,8 @@ export const Actions = {
             return ApiClient.getOrdersByCookId(user_id)
                 .then(
                     response => {
-                        dispatch(receiveOrdersSuccess(response.data));
+                        const orders = Util.toArray(response.data);
+                        dispatch(receiveOrdersSuccess(orders));
                     },
                     error => {
                         dispatch(receiveOrdersError(error));

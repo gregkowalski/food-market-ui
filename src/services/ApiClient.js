@@ -3,6 +3,7 @@ import moment from 'moment'
 import CognitoUtil from './Cognito/CognitoUtil'
 import Config from '../Config'
 import OrderStatus from '../data/OrderStatus'
+import FeatureToggles from '../FeatureToggles'
 
 class ApiClient {
 
@@ -36,20 +37,14 @@ class ApiClient {
 
     createFoodOrder(jwt, order) {
         return this.invokeApi('/orders', 'POST', order);
-        // return this.apiGatewayClient.invokeApi(null, '/orders', 'POST',
-        //     { headers: this.jsonHttpHeader(jwt) }, order);
     }
 
     confirmFoodOrder(jwt, order_id) {
         return this.invokeApi(`/orders/${order_id}/confirm`, 'POST');
-        // return this.apiGatewayClient.invokeApi(null, `/orders/${order_id}/confirm`, 'POST',
-        //     { headers: this.jsonHttpHeader(jwt) });
     }
 
     updateUser(jwt, user) {
         return this.invokeApi('/users', 'PUT', user);
-        // return this.apiGatewayClient.invokeApi(null, '/users', 'PUT',
-        //     { headers: this.jsonHttpHeader(jwt) }, user);
     }
 
     getCurrentUser() {
@@ -58,50 +53,38 @@ class ApiClient {
             throw new Error('No user is currently logged in');
         }
         return this.getUser(userId);
-        // return this.apiGatewayClient.invokeApi(null, `/users/${userId}`, 'GET',
-        //     { headers: this.jsonHttpHeader() });
     }
 
     getUser(userId) {
         return this.invokeApi(`/users/${userId}`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/users/${userId}`, 'GET',
-        //     { headers: this.jsonHttpHeader() });
     }
 
     getPublicUser(userId) {
         return this.invokeApi(`/users/${userId}/public`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/users/${userId}/public`, 'GET',
-        //     { headers: this.jsonHttpHeader(jwt) });
     }
 
     getFoods() {
         return this.invokeApi(`/foods`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/foods`, 'GET');
     }
 
     getFood(foodId) {
         return this.invokeApi(`/foods/${foodId}`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/foods/${foodId}`, 'GET');
     }
 
     getReviews() {
         return this.invokeApi(`/reviews`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/reviews`, 'GET');
     }
 
     getReview(reviewId) {
         return this.invokeApi(`/foods/${reviewId}`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/foods/${reviewId}`, 'GET');
     }
 
     loadUserProfile(userId) {
         return this.invokeApi(`/users/${userId}/private`, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, `/users/${userId}/private`, 'GET', { headers: this.jsonHttpHeader() });
     }
 
     saveUserProfile(user) {
         return this.invokeApi(`/users/${user.user_id}/private`, 'PATCH', user);
-        // return this.apiGatewayClient.invokeApi(null, `/users/${user.user_id}/private`, 'PATCH', { headers: this.jsonHttpHeader() }, user);
     }
 
     connectStripeAccount(code) {
@@ -110,19 +93,17 @@ class ApiClient {
             throw new Error('No user is currently logged in');
         }
         return this.invokeApi(`/users/${userId}/connectstripe`, 'POST', { code });
-        // return this.apiGatewayClient.invokeApi(null, `/users/${userId}/connectstripe`, 'POST',
-        //     { headers: this.jsonHttpHeader() }, { code });
     }
 
     geoSearchFoods(geo) {
         const requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`;
         return this.invokeApi(requestUrl, 'GET');
-        // return this.apiGatewayClient.invokeApi(null, requestUrl, 'GET', { headers: this.jsonHttpHeader() });
     }
 
     getOrdersByBuyerId(buyer_user_id) {
-        // return this.apiGatewayClient.invokeApi(null, `/buyers/${buyer_user_id}/orders`,
-        //     'GET', { headers: this.jsonHttpHeader() });
+        if (FeatureToggles.UseOrderBackend) {
+            return this.invokeApi(`/orders?buyer_user_id=${buyer_user_id}`, 'GET');
+        }
 
         return new Promise((resolve, reject) => {
             setTimeout(function () {
@@ -132,17 +113,22 @@ class ApiClient {
     }
 
     getOrdersByCookId(cook_user_id) {
-        // return this.apiGatewayClient.invokeApi(null, `/cooks/${cook_user_id}/orders`,
-        //     'GET', { headers: this.jsonHttpHeader() });
+        if (FeatureToggles.UseOrderBackend) {
+            return this.invokeApi(`/orders?cook_user_id=${cook_user_id}`, 'GET');
+        }
 
         return new Promise((resolve, reject) => {
             setTimeout(function () {
                 resolve({ data: buyerOrders });
             }, 1000);
-        })
+        });
     }
 
     acceptOrder(order) {
+        if (FeatureToggles.UseOrderBackend) {
+            return this.invokeApi(`/orders/${order.order_id}/accept`, 'POST');
+        }
+
         return new Promise((resolve, reject) => {
             setTimeout(function () {
                 resolve();
@@ -151,6 +137,10 @@ class ApiClient {
     }
 
     declineOrder(order) {
+        if (FeatureToggles.UseOrderBackend) {
+            return this.invokeApi(`/orders/${order.order_id}/decline`, 'POST');
+        }
+
         return new Promise((resolve, reject) => {
             setTimeout(function () {
                 resolve();
@@ -159,6 +149,10 @@ class ApiClient {
     }
 
     cancelOrder(order) {
+        if (FeatureToggles.UseOrderBackend) {
+            return this.invokeApi(`/orders/${order.order_id}/cancel`, 'POST');
+        }
+
         return new Promise((resolve, reject) => {
             setTimeout(function () {
                 resolve();

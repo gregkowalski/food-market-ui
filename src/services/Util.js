@@ -234,6 +234,12 @@ class Util {
     contactSupportUrl() {
         return Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
     }
+
+    toArray(obj) {
+        return Object.keys(obj).map(key => {
+            return obj[key];
+        });
+    }
 }
 
 export default new Util();

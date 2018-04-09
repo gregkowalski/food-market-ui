@@ -1,6 +1,7 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import Util from '../../services/Util'
 
 function requestOrders() {
     return {
@@ -35,7 +36,8 @@ export const Actions = {
             return ApiClient.getOrdersByBuyerId(user_id)
                 .then(
                     response => {
-                        dispatch(receiveOrdersSuccess(response.data));
+                        const orders = Util.toArray(response.data);
+                        dispatch(receiveOrdersSuccess(orders));
                     },
                     error => {
                         dispatch(receiveOrdersError(error));
