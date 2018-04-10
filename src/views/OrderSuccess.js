@@ -3,13 +3,18 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Segment, Divider } from 'semantic-ui-react'
+import { Segment, Divider, Icon } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
 import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
+import Constants from '../Constants'
 import './OrderSuccess.css'
 
 class OrderSuccess extends React.Component {
+
+    navigateToHome = () => {
+        this.props.history.push(Url.home());
+    }
 
     componentWillMount() {
         let food_id = this.props.match.params.id;
@@ -40,12 +45,17 @@ class OrderSuccess extends React.Component {
         return (
             <div>
                 <AppHeader />
-                <Segment padded='very' style={{ width: '80%', margin: '40px auto' }}>
-                    <h1 style={{ color: '#b61095' }}>Success!!!</h1>
-                    <Divider hidden />                    
+                <Segment padded style={{ width: '80%', margin: '40px auto' }}>
+                    <h1 style={{ color: '#b61095' }}><Icon name='food' /> Success</h1>
+                    <Divider hidden />
                     <div>A delicious order request for <span style={{ color: '#b61095' }}> <strong>{food.title}</strong> </span>has been sent.</div>
                     <Divider hidden />
-                    <div>Your cook will respond to your request within 24 hours or sooner.
+                    <div>You will get a response from your cook within 24 hours or sooner.
+                    </div>
+                    <Divider hidden />                    
+                    <div onClick={this.navigateToHome}>
+                        <div className='ordersuccess-border'>Go to<span className='ordersuccess-home-link'>{Constants.AppName}</span>
+                        </div>
                     </div>
                 </Segment >
             </div >

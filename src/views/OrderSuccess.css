@@ -1,0 +1,33 @@
+/* .ordersuccess-body .ui .segment {
+    width: 80%; 
+    margin: 40px 10%;
+} */
+
+.ordersuccess-border {
+    /* color: #b61095;     */
+    border: 2px solid #b61095;
+    padding: 10px 5px;
+    font-weight: 500;
+    text-align: center;
+    margin: auto 15%;
+}
+
+.ordersuccess-home-link {
+    color: #b61095;
+    text-decoration: none;
+    padding: 5px 5px 0px 5px;
+    font-family: 'Comfortaa', cursive;
+    font-weight: 700;
+    font-size: 1.3em;
+    /* text-shadow: 0 2px 4px rgba(104, 104, 104, 0.479); */
+}
+
+.ordersuccess-home-link:hover {
+    color: #a01e88;
+}
+
+@media all and (max-width: 767px) {
+    .ordersuccess-border {
+        margin: auto auto;
+    }
+}
