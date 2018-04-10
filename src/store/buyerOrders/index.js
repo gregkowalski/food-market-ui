@@ -92,13 +92,11 @@ export const Actions = {
 export const Selectors = {
     orders: (state) => { return state.buyerOrders.orders; },
     isOrdersLoading: (state) => { return state.buyerOrders.isOrdersLoading; },
-    isCancelling: (state) => { return state.buyerOrders.isCancelling; },
 }
 
 const initialState = {
     orders: [],
     isOrdersLoading: false,
-    isCancelling: false
 };
 
 export const Reducers = {

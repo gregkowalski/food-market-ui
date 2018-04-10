@@ -19,7 +19,7 @@ class BuyerOrderCard extends React.Component {
 
     cancelOrder = (e) => {
         e.preventDefault();
-        if (!this.props.isCancelling) {
+        if (!this.props.order.isCancelling) {
             this.props.onCancel(this.props.order);
         }
     }
@@ -49,8 +49,8 @@ class BuyerOrderCard extends React.Component {
     }
 
     render() {
-        const { order, isCancelling } = this.props;
-        const { food, cook } = order;
+        const { order } = this.props;
+        const { food, cook, isCancelling } = order;
         const date = moment(order.date);
 
         const { showDetails } = this.state;

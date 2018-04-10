@@ -52,7 +52,6 @@ const mapStateToProps = (state) => {
     return {
         orders: Selectors.orders(state),
         isOrdersLoading: Selectors.isOrdersLoading(state),
-        isCancelling: Selectors.isCancelling(state)
     };
 };
 
