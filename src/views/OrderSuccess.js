@@ -3,10 +3,11 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Divider } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
 import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
+import './OrderSuccess.css'
 
 class OrderSuccess extends React.Component {
 
@@ -40,10 +41,12 @@ class OrderSuccess extends React.Component {
             <div>
                 <AppHeader />
                 <Segment padded='very' style={{ width: '80%', margin: '40px auto' }}>
-                    <h1 style={{ color: '#4cb9a0' }}>Success!!!</h1>
-                    <span>Your delicious order of <strong>{food.title}</strong> has been placed!
-                        The cook will review your order and let you know shortly if it's accepted
-                    </span>
+                    <h1 style={{ color: '#b61095' }}>Success!!!</h1>
+                    <Divider hidden />                    
+                    <div>A delicious order request for <span style={{ color: '#b61095' }}> <strong>{food.title}</strong> </span>has been sent.</div>
+                    <Divider hidden />
+                    <div>Your cook will respond to your request within 24 hours or sooner.
+                    </div>
                 </Segment >
             </div >
         );
