@@ -4,6 +4,7 @@ import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import OrderStatus from '../../data/OrderStatus'
 import OrderFilters from './orderFilters';
 import Util from '../../services/Util'
+import { updateOrder } from '../orderHelper'
 
 function requestOrders() {
     return {
@@ -189,26 +190,6 @@ const initialState = {
     isOrdersLoading: false,
     orderFilter: OrderFilters.UPCOMING
 };
-
-function updateOrderInMap(orders, order_id, updateCallback) {
-    const updatedOrders = orders.map(order => {
-        if (order.order_id === order_id) {
-            return Object.assign({}, order, updateCallback({}));
-        }
-        return order;
-    });
-
-    return updatedOrders;
-}
-
-function updateOrder(state, action, updateProps) {
-    const newState = Object.assign({}, state, {
-        orders: updateOrderInMap(state.orders, action.order.order_id, (o) => {
-            return Object.assign({}, o, updateProps);
-        })
-    });
-    return newState;
-}
 
 export const Reducers = {
 

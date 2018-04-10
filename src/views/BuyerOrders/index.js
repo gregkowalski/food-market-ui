@@ -15,8 +15,12 @@ class BuyerOrders extends React.Component {
         this.props.actions.loadOrders();
     } 
 
+    handleCancelOrder = (order) => {
+        this.props.actions.cancelOrder(order);
+    }
+
     render() {
-        const { orders, isOrdersLoading } = this.props;
+        const { orders, isOrdersLoading, isCancelling } = this.props;
 
         let content;
         if (!orders || isOrdersLoading) {
@@ -28,8 +32,8 @@ class BuyerOrders extends React.Component {
         }
         else {
             content = orders.map(order => {
-                return (<BuyerOrderCard order={order} key={order.order_id} />);
-            })
+                return (<BuyerOrderCard order={order} isCancelling={isCancelling} onCancel={this.handleCancelOrder} key={order.order_id} />);
+            });
         }
 
         return (
@@ -48,6 +52,7 @@ const mapStateToProps = (state) => {
     return {
         orders: Selectors.orders(state),
         isOrdersLoading: Selectors.isOrdersLoading(state),
+        isCancelling: Selectors.isCancelling(state)
     };
 };
 
@@ -63,6 +68,7 @@ BuyerOrders.propTypes = {
 
     actions: PropTypes.shape({
         loadOrders: PropTypes.func.isRequired,
+        cancelOrder: PropTypes.func.isRequired,
     }).isRequired
 }
 

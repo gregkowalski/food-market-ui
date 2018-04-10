@@ -17,6 +17,13 @@ class BuyerOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
+    cancelOrder = (e) => {
+        e.preventDefault();
+        if (!this.props.isCancelling) {
+            this.props.onCancel(this.props.order);
+        }
+    }
+
     statusStyle(status) {
         let backgroundColor = Colors.lightgrey;
         let color = Colors.purple;
@@ -24,17 +31,16 @@ class BuyerOrderCard extends React.Component {
             backgroundColor = Colors.green;
             color = Colors.grey;
         }
-        
+
         else if (status === OrderStatus.Declined) {
             backgroundColor = Colors.red;
-            color = Colors.grey;  
+            color = Colors.grey;
         }
-      
+
         else if (status === OrderStatus.Cancelled) {
             backgroundColor = Colors.red;
             color = Colors.grey;
         }
-        
 
         return {
             backgroundColor: backgroundColor,
@@ -43,7 +49,7 @@ class BuyerOrderCard extends React.Component {
     }
 
     render() {
-        const { order } = this.props;
+        const { order, isCancelling } = this.props;
         const { food, cook } = order;
         const date = moment(order.date);
 
@@ -94,8 +100,8 @@ class BuyerOrderCard extends React.Component {
                             <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
                         <div className='buyerordercard-footer'>
-                            <Icon name='calendar' size='large' />
-                            <a href='./'>Cancel order</a>
+                            <Icon name={isCancelling ? 'circle notched' : 'calendar'} loading={isCancelling} size='large' />
+                            <a href='./' onClick={this.cancelOrder}>Cancel order</a>
                         </div>
                     </div>
                 </div>
