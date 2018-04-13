@@ -6,4 +6,5 @@
     },
     "editor.detectIndentation": false,
     "jest.enableCodeLens": false,
+    "telemetry.enableTelemetry": false
 }

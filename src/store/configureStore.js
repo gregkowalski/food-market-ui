@@ -34,6 +34,14 @@ const configureStore = (options = {}) => {
             if (outState.date) {
                 outState.date = moment(outState.date, moment.ISO_8601);
             }
+            if (outState.time) {
+                if (outState.time.handoff_start_date) {
+                    outState.time.handoff_start_date = moment(outState.time.handoff_start_date, moment.ISO_8601);
+                }
+                if (outState.time.handoff_end_date) {
+                    outState.time.handoff_end_date = moment(outState.time.handoff_end_date, moment.ISO_8601);
+                }
+            }
             return outState;
         },
         // define which reducers this transform gets called for.

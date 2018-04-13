@@ -18,7 +18,7 @@ const OrderSection = ({ food, pickup, date, time, quantity, canRequestOrder,
             <OrderRequestHeader food={food} />
             <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
             <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />            
-            <DateTimeSelector date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
+            <DateTimeSelector food={food} date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
             <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
             <Button animated='fade' disabled={!canRequestOrder} fluid className='detail-desktop-button' onClick={onOrderButtonClick}>

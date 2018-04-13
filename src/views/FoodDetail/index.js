@@ -92,7 +92,7 @@ class FoodDetail extends React.Component {
             return null;
         }
 
-        const canRequestOrder = (quantity > 0 && date && time >= 0);
+        const canRequestOrder = (quantity > 0 && date && time);
 
         return (
             <div>
@@ -219,7 +219,10 @@ FoodDetail.propTypes = {
     isReviewsLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
-    time: PropTypes.number,
+    time: PropTypes.shape({
+        handoff_start_date: PropTypes.object,
+        handoff_end_date: PropTypes.object
+    }),
     quantity: PropTypes.number.isRequired,
     buyerPhone: PropTypes.string,
     order_id: PropTypes.string,

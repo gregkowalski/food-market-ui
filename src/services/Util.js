@@ -240,6 +240,12 @@ class Util {
             return obj[key];
         });
     }
+
+    orderTimeToString(orderTime) {
+        const startTime = orderTime.handoff_start_date.format('h A');
+        const endTime = orderTime.handoff_end_date.format('h A');
+        return `${startTime} - ${endTime}`;
+    }
 }
 
 export default new Util();

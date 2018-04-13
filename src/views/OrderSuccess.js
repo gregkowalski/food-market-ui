@@ -94,7 +94,10 @@ OrderSuccess.propTypes = {
     isCookLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
-    time: PropTypes.number,
+    time: PropTypes.shape({
+        handoff_start_date: PropTypes.object,
+        handoff_end_date: PropTypes.object
+    }),
     quantity: PropTypes.number.isRequired,
     buyerAddress: PropTypes.string,
     order_id: PropTypes.string,

@@ -107,7 +107,7 @@ class Order extends React.Component {
     }
 
     createOrderPayload() {
-        const { food, quantity, date, time, pickup, contactMethod, buyerPhone, buyerEmail, buyerAddress } = this.props;
+        const { food, quantity, time, pickup, contactMethod, buyerPhone, buyerEmail, buyerAddress } = this.props;
 
         const paymentAmount = PriceCalc.getPaymentAmount(food, quantity, pickup);
         const order = {
@@ -118,8 +118,8 @@ class Order extends React.Component {
             buyer_address: buyerAddress,
             pickup: pickup,
             quantity: quantity,
-            handoff_date: date.toISOString(),
-            handoff_time: time,
+            handoff_start_date: time.handoff_start_date.toISOString(),
+            handoff_end_date: time.handoff_end_date.toISOString(),
             contact_method: contactMethod,
             amount: paymentAmount
         };
@@ -274,7 +274,10 @@ Order.propTypes = {
     isCookLoading: PropTypes.bool.isRequired,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
-    time: PropTypes.number,
+    time: PropTypes.shape({
+        handoff_start_date: PropTypes.object,
+        handoff_end_date: PropTypes.object
+    }),
     quantity: PropTypes.number.isRequired,
     contactMethod: PropTypes.number,
     buyerPhone: PropTypes.string,

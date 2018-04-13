@@ -2,13 +2,13 @@ import React from 'react'
 import { Image, Icon } from 'semantic-ui-react'
 import { Header, Divider, Segment } from 'semantic-ui-react'
 import './OrderSummary.css'
-import OrderTimes from '../../data/OrderTimes'
+import Util from '../../services/Util'
 import OrderPriceSummary from '../FoodDetail/OrderPriceSummary'
 
 
 const OrderSummary = ({ food, pickup, quantity, date, time }) => {
 
-    const timeText = OrderTimes[time] ? OrderTimes[time].text : '?';
+    const timeText = time ? Util.orderTimeToString(time) : '?';
     return (
         <Segment padded className='order-summary'>
             <Header>
