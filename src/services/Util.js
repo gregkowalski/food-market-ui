@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import moment from 'moment'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
-import { FoodPrepType } from '../data/FoodItems'
+import { FoodPrepType } from '../Enums'
 import Url from '../services/Url'
 import Config from '../Config'
 

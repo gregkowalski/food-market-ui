@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 import OrderHeader from '../../components/OrderHeader'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
@@ -14,7 +14,7 @@ import { Actions, Selectors } from '../../store/order'
 import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
 import BillingInfo from './BillingInfo'
-import ContactMethods from '../../data/ContactMethods';
+import { ContactMethods } from '../../Enums';
 
 class Order extends React.Component {
 
@@ -116,7 +116,7 @@ class Order extends React.Component {
             buyer_phone: buyerPhone,
             buyer_email: buyerEmail,
             buyer_address: buyerAddress,
-            pickup: pickup,
+            delivery_option: pickup ? 'pickup' : 'delivery',
             quantity: quantity,
             handoff_start_date: time.handoff_start_date.toISOString(),
             handoff_end_date: time.handoff_end_date.toISOString(),
@@ -279,7 +279,7 @@ Order.propTypes = {
         handoff_end_date: PropTypes.object
     }),
     quantity: PropTypes.number.isRequired,
-    contactMethod: PropTypes.number,
+    contactMethod: PropTypes.string,
     buyerPhone: PropTypes.string,
     isBuyerPhoneValid: PropTypes.bool.isRequired,
     buyerAddress: PropTypes.string,

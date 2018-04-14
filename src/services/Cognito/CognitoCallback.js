@@ -8,7 +8,7 @@ import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
 import Config from '../../Config'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 import ErrorCodes from '../ErrorCodes'
 import LoadingIcon from '../../components/LoadingIcon'
 

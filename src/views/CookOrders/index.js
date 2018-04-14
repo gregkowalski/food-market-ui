@@ -12,7 +12,7 @@ import Util from '../../services/Util'
 import { Actions, Selectors } from '../../store/cookOrders'
 import OrderFilters from '../../store/cookOrders/orderFilters'
 import CookOrderByDateCard from './CookOrderByDateCard'
-import OrderStatus from '../../data/OrderStatus';
+import { OrderStatus } from '../../Enums'
 
 class CookOrders extends React.Component {
 

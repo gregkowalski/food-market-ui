@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import './QuantitySelector.css'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 
 const QuantitySelector = ({ food, quantity, onChange }) => {
 

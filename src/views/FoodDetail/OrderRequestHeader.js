@@ -1,7 +1,7 @@
 import React from 'react'
 import { Rating } from 'semantic-ui-react'
 import './OrderRequestHeader.css'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 
 const OrderRequestHeader = ({ food, onClose }) => {
     return (

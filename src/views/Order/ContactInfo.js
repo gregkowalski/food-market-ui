@@ -2,7 +2,7 @@ import React from 'react'
 import Autocomplete from 'react-google-autocomplete';
 import { Icon, Message, Radio } from 'semantic-ui-react'
 import { Header, Divider, Segment, Input } from 'semantic-ui-react'
-import ContactMethods from '../../data/ContactMethods'
+import { ContactMethods } from '../../Enums';
 import './ContactInfo.css'
 
 class ContactInfo extends React.Component {

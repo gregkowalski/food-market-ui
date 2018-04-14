@@ -1,7 +1,7 @@
 import React from 'react'
 import pluralize from 'pluralize'
 import { Divider } from 'semantic-ui-react'
-import Constants from '../../Constants.js'
+import { Constants } from '../../Constants'
 import './OrderPriceSummary.css'
 import PriceCalc from '../../services/PriceCalc'
 

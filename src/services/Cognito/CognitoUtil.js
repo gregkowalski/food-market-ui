@@ -2,7 +2,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../../Config'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 
 class CognitoUtil {
 

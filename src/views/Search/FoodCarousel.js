@@ -5,7 +5,7 @@ import './FoodCarousel.css'
 import Util from '../../services/Util'
 import Url from '../../services/Url'
 import PriceCalc from '../../services/PriceCalc'
-import Colors from '../../data/Colors'
+import { Colors } from '../../Constants'
 
 export default class FoodCarousel extends Component {
 

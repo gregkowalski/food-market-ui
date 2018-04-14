@@ -1,6 +1,5 @@
 import React from 'react'
-import Constants from '../../Constants.js'
-import Colors from '../../data/Colors'
+import { Constants, Colors } from '../../Constants'
 import './DeliverySelector.css'
 
 const DeliverySelector = ({ pickup, onChange }) => {

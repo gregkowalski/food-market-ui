@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { Divider, Grid, Image } from 'semantic-ui-react'
 import './AppFooter.css'
-import Constants from '../Constants'
+import { Constants } from '../Constants'
 import Url from '../services/Url'
 import Util from '../services/Util'
 

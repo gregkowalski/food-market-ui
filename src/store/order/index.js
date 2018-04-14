@@ -1,6 +1,6 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
-import ContactMethods from '../../data/ContactMethods';
+import { ContactMethods } from '../../Enums';
 import Util from '../../services/Util'
 
 function selectPickup() {

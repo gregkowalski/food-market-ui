@@ -1,8 +1,9 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
+import ApiObjectMapper from '../../services/ApiObjectMapper'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import Util from '../../services/Util'
-import OrderStatus from '../../data/OrderStatus'
+import { OrderStatus } from '../../Enums'
 import { updateOrder } from '../orderHelper'
 
 function requestOrders() {
@@ -63,6 +64,7 @@ export const Actions = {
                 .then(
                     response => {
                         const orders = Util.toArray(response.data);
+                        ApiObjectMapper.mapOrders(orders);
                         dispatch(receiveOrdersSuccess(orders));
                     },
                     error => {

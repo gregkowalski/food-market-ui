@@ -1,7 +1,7 @@
 import React from 'react'
 import { Segment, Button } from 'semantic-ui-react'
 import './index.css'
-import Constants from '../../Constants'
+import { Constants } from '../../Constants'
 // import FlagListing from '../../components/FlagListing'
 import PriceCalc from '../../services/PriceCalc'
 import DeliverySelector from './DeliverySelector'

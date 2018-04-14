@@ -4,7 +4,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { Image, Icon } from 'semantic-ui-react'
 import './OrderHeader.css'
-import Constants from '../Constants'
+import { Constants } from '../Constants'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Url from '../services/Url'
 

@@ -1,9 +1,4 @@
-export const FoodPrepType = {
-    frozen: 'frozen',
-    ready: 'cooked',
-    ingredient: 'ingredient',
-    uncooked: 'uncooked'
-}; 
+import { FoodPrepType } from '../Enums'
 
 const FoodItems = [
     {
@@ -209,4 +204,3 @@ const FoodItems = [
         pickup: true
     }
 ];
-export default FoodItems;
