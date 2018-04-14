@@ -112,8 +112,7 @@ export const Actions = {
             return ApiClient.getOrdersByCookId(user_id)
                 .then(
                     response => {
-                        const orders = Util.toArray(response.data);
-                        ApiObjectMapper.mapOrders(orders);
+                        const orders = ApiObjectMapper.mapOrders(Util.toArray(response.data));
                         dispatch(receiveOrdersSuccess(orders));
                     },
                     error => {

@@ -2,6 +2,7 @@ import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
 import { ContactMethods } from '../../Enums';
 import Util from '../../services/Util'
+import ApiObjectMapper from '../../services/ApiObjectMapper';
 
 function selectPickup() {
     return {
@@ -132,18 +133,6 @@ function receiveReviewsError(error) {
     };
 }
 
-function initFood(food) {
-    food.id = food.food_id;
-    food.images = food.imageUrls;
-    food.image = food.imageUrls[0];
-    food.header = food.title;
-    food.meta = food.short_description;
-    food.description = food.long_desciption;
-    food.rating = 5;
-    food.ratingCount = 3;
-    return food;
-}
-
 export const Actions = {
 
     selectPickup: () => {
@@ -218,7 +207,7 @@ export const Actions = {
             return ApiClient.getFood(food_id)
                 .then(
                     response => {
-                        const food = initFood(response.data);
+                        const food = ApiObjectMapper.mapFood(response.data);
                         dispatch(receiveFoodSuccess(food));
                     },
                     error => {

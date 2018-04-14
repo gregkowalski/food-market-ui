@@ -1,4 +1,5 @@
 import ApiClient from '../../services/ApiClient'
+import ApiObjectMapper from '../../services/ApiObjectMapper'
 import * as ActionTypes from './actionTypes'
 import Util from '../../services/Util'
 
@@ -56,20 +57,6 @@ function dateChanged(date) {
     };
 }
 
-function initFoods(foods) {
-    foods.forEach(f => {
-        f.id = f.food_id;
-        f.images = f.imageUrls;
-        f.image = f.imageUrls[0];
-        f.header = f.title;
-        f.meta = f.short_description;
-        f.description = f.long_desciption;
-        f.rating = 5;
-        f.ratingCount = 3;
-    });
-    return foods;
-}
-
 export const Actions = {
 
     selectPickup: () => {
@@ -94,7 +81,7 @@ export const Actions = {
             return ApiClient.geoSearchFoods(geo)
                 .then(
                     response => {
-                        let foods = initFoods(response.data);
+                        let foods = ApiObjectMapper.mapFoods(response.data);
                         if (Util.areEqualFoods(prevFoods, foods)) {
                             foods = prevFoods;
                         }
@@ -116,7 +103,7 @@ export const Actions = {
             return ApiClient.geoSearchFoods(geo)
                 .then(
                     response => {
-                        const foods = initFoods(response.data);
+                        const foods = ApiObjectMapper.mapFoods(response.data);
 
                         let regionFoods = [];
                         if (region) {
