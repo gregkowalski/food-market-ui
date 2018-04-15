@@ -7,11 +7,30 @@
 }
 
 .orderexchangemessage-label>div:first-child {
-    color: #b61095;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     font-size: .7em;
-    font-weight: 900;
+    font-weight: 500;
     text-transform: uppercase;
-    min-width: 116px;
+    min-width: 130px;
+    max-width: 130px;
+}
+
+.orderexchangemessage-pickup {
+    color: #b61095;
+    font-weight: 600;
+    /* font-size: .97em; */
+    letter-spacing: .15px;
+    margin-left: 3px;
+}
+
+.orderexchangemessage-delivery {
+    color: #b61095;
+    font-weight: 600;
+    /* font-size: .97em; */
+    letter-spacing: .15px;
+    margin-right: 3px;
 }
 
 .orderexchangemessage-pickup-spacing>div:first-child {
@@ -22,7 +41,7 @@
     margin: 5px 18px 0px 0px;
 }
 
-.orderexchangemessage-label>div:first-child>div:first-child{
+.orderexchangemessage-label>div:first-child>div:nth-child(2) {
     /* color: #3b3b3b; */
     font-weight: 300;
     font-size: 1.2em;
@@ -50,5 +69,12 @@
         width: 50px;
         border: 2px solid #b61095;
         padding: 2px;
+    }
+    .orderexchangemessage-label>div:first-child {
+        justify-content: center;
+        /* font-weight: 500; */
+    }
+    .orderexchangemessage-label>div:last-child {
+        font-size: .85em;
     }
 }

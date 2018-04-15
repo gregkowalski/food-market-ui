@@ -2,7 +2,7 @@ import apigClientFactory from 'aws-api-gateway-client'
 import moment from 'moment'
 import CognitoUtil from './Cognito/CognitoUtil'
 import Config from '../Config'
-import { OrderStatus } from '../Enums'
+import { OrderStatus, DeliveryOptions } from '../Enums'
 import FeatureToggles from '../FeatureToggles'
 
 class ApiClient {
@@ -164,7 +164,7 @@ class ApiClient {
 const buyerOrders = [{
     order_id: 'XSJFSQOEO',
     food_id: '80257a30-07cd-11e8-93ae-7d25d44321f0',
-    pickup: true,
+    delivery_option: DeliveryOptions.pickup,
     date: moment('2018-03-20'),
     time: '10 AM - 11 AM',
     quantity: 3,
@@ -191,7 +191,7 @@ const buyerOrders = [{
 {
     order_id: 'adsjhfklh23',
     food_id: '80283950-07cd-11e8-a3a6-cd45bd5ea586',
-    pickup: false,
+    delivery_option: DeliveryOptions.delivery,
     date: moment('2018-03-20'),
     time: '10 AM - 11 AM',
     quantity: 3,
@@ -218,10 +218,10 @@ const buyerOrders = [{
 {
     order_id: '2k3l4jlk289sf',
     food_id: '802b1f80-07cd-11e8-8562-b5cca42ec0d7',
-    pickup: true,
+    delivery_option: DeliveryOptions.pickup,
     date: moment('2018-03-20'),
     time: '10 AM - 11 AM',
-    quantity: 3,
+    quantity: 22,
     status: OrderStatus.Pending,
     address: '1265 Burnaby Street, Vancouver, BC',
     food: {
@@ -245,7 +245,7 @@ const buyerOrders = [{
 {
     order_id: 'AABXOSKSJK2',
     food_id: '802b1f80-07cd-11e8-8562-b5cca42ec0d7',
-    pickup: true,
+    delivery_option: DeliveryOptions.pickup,
     date: moment('2018-03-15'),
     time: '10 AM - 11 AM',
     quantity: 1,
@@ -272,7 +272,7 @@ const buyerOrders = [{
 {
     order_id: 'LKJWEN4KLOJ',
     food_id: '80283950-07cd-11e8-a3a6-cd45bd5ea586',
-    pickup: false,
+    delivery_option: DeliveryOptions.delivery,
     date: moment('2018-04-20'),
     time: '10 AM - 11 AM',
     quantity: 5,

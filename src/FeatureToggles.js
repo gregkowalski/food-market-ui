@@ -1,5 +1,5 @@
 const FeatureToggles = {
-    UseOrderBackend: true
+    UseOrderBackend: false
 };
 
 export default FeatureToggles;

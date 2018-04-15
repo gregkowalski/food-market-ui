@@ -95,29 +95,34 @@ class CookOrderCard extends React.Component {
                     </div>
                     <Divider />
 
+                    <div className='cookordercard-section cookordercard-details large-font'>
+                        <div> {food.title} </div>
+                        <div className='cookordercard-order-quantity'>
+                            <div className='cookordercard-order-size'>
+                                <div>{order.quantity}</div> 
+                                <div>{quantityLabel}</div>
+                                </div>
+                            <div>{food.unit} <span>per order</span> </div>
+                        </div>
+                        <div className='cookordercard-order-exchange'>
+                            <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} time={order.time} />
+                        </div>
+                        <Divider />
+                    </div>
                     <Accordion>
                         <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                            <div className='cookordercard-section cookordercard-details large-font'>
-                                <div> {food.title} </div>
-                                <div className='cookordercard-order-quantity'>
-                                    <div>{order.quantity} {quantityLabel}</div>
-                                    <div>{food.unit} <span>per order</span> </div>
-                                </div>
-                                <div className='cookordercard-order-exchange'>
-                                    <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} time={order.time} />
-                                </div>
-                                <Divider />
-                                <span>Additional details</span>
-                                <Icon name='angle double down' />
+                            <div className='cookordercard-additional-details'>Additional details
+                            <Icon name='angle down' />
                             </div>
+
                         </Accordion.Title>
                         <Accordion.Content active={showDetails}>
                             <div className='cookordercard-section'>
                                 <div>{order.address}</div>
-                                &nbsp; {order.time}
                                 <Divider hidden />
                                 <div>Reservation code: {order.order_id}</div>
                                 <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
+                                {order.accept_message}
                             </div>
                             <Divider />
                             <div className='cookordercard-section normal-font'>
