@@ -234,7 +234,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_ACCEPT_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isAccepting: false,
-                    accept_reason: action.reason,
+                    accept_message: action.reason,
                     status: OrderStatus.Accepted
                 });
 
@@ -255,7 +255,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_DECLINE_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isDeclining: false,
-                    decline_reason: action.reason,
+                    decline_message: action.reason,
                     status: OrderStatus.Declined
                 });
 
@@ -276,7 +276,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_CANCEL_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isCancelling: false,
-                    cancel_reason: action.reason,
+                    cancel_message: action.reason,
                     status: OrderStatus.Cancelled
                 });
 
