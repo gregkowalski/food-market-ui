@@ -4,7 +4,7 @@ import Config from '../../Config'
 class StripeUtil {
 
     getStripeConnectUrl(state) {
-        let url = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${Config.Stripe.ClientId}&scope=read_write`;
+        let url = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${Config.Stripe.ClientId}&scope=read_write&redirect_uri=${Config.Stripe.ConnectOAuthRedirectUri}`;
         if (state) {
             url += '&state=' + state;
         }
