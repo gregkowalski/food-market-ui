@@ -19,6 +19,7 @@
     "jwt-decode": "^2.2.0",
     "libphonenumber-js": "^0.4.49",
     "moment": "^2.20.1",
+    "npm": "^5.8.0",
     "nuka-carousel": "^3.0.1",
     "pluralize": "^7.0.0",
     "prop-types": "^15.6.0",

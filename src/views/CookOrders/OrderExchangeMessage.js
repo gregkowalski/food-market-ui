@@ -7,19 +7,25 @@ import './OrderExchangeMessage.css'
 const OrderExchangeMethod = ({ pickup, buyer, time }) => {
     if (pickup === true) {
         return (
-            <div className='orderexchangemessage-label'>
-               <div>order pickup &nbsp; · </div>
-               <div> {buyer.name} will meet you at {time} </div>
+            <div className='orderexchangemessage-label orderexchangemessage-pickup-spacing'>
+                <div>order pickup
+                   <div>{time}</div> 
+                   <div><Image circular src={buyer.image} /></div></div>
+                <div> {buyer.name} is picking up this order from you </div>
             </div>
         )
     }
     return (
-        <div>delivery order<span> You are delivering this order to <Image size='mini' circular src={buyer.image} /> </span>
-    </div>
+        <div className='orderexchangemessage-label orderexchangemessage-delivery-spacing'>
+            <div>delivery order
+                <div>{time}</div> 
+                <div><Image circular src={buyer.image} /></div></div>
+            <div>You are delivering this order to {buyer.name} </div>
+        </div>
     )
 }
 
 export default OrderExchangeMethod;
 
 
-  
+

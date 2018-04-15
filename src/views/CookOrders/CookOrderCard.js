@@ -105,11 +105,6 @@ class CookOrderCard extends React.Component {
                                 </div>
                                 <div className='cookordercard-order-exchange'>
                                     <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} time={order.time} />
-                                    {/* &nbsp; {order.time} */}
-                                    <Image size='mini' circular src={buyer.image} />
-                                </div>
-                                <div>
-                                    {/* &nbsp; ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency} */}
                                 </div>
                                 <Divider />
                                 <span>Additional details</span>

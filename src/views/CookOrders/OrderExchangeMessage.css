@@ -1,19 +1,54 @@
 .orderexchangemessage-label {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    line-height: 1.2em;
+    justify-content: space-around;
+    color: #3b3b3b;
 }
 
 .orderexchangemessage-label>div:first-child {
     color: #b61095;
     font-size: .7em;
     font-weight: 900;
-    text-transform: uppercase;  
-    margin: 5px 10px 0px 0px;       
+    text-transform: uppercase;
+    min-width: 116px;
+}
+
+.orderexchangemessage-pickup-spacing>div:first-child {
+    margin: 5px 22px 0px 0px;
+}
+
+.orderexchangemessage-delivery-spacing>div:first-child {
+    margin: 5px 18px 0px 0px;
+}
+
+.orderexchangemessage-label>div:first-child>div:first-child{
+    /* color: #3b3b3b; */
+    font-weight: 300;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 .orderexchangemessage-label>div:last-child {
     display: flex;
     justify-content: flex-start;
     flex-flow: row wrap;
-    margin-right: 10px;
+    font-size: .9em;
+    font-weight: 400;
+}
+
+.orderexchangemessage-label img {
+    width: 80px;
+    border: 3px solid #b61095;
+    padding: 3px;
+    background-color: whitesmoke;
+    margin-top: 10px;
+}
+
+@media all and (max-width: 767px) {
+    .orderexchangemessage-label img {
+        width: 50px;
+        border: 2px solid #b61095;
+        padding: 2px;
+    }
 }

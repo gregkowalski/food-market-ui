@@ -43,24 +43,30 @@
 
 .cookordercard-order-quantity {
     display: flex;
-    justify-content: flex-start;
-    flex-flow: row wrap;
     align-items: baseline;
+    line-height: 1.2em;
+    justify-content: flex-start;
     font-size: .75em;
     font-weight: 600;
     text-transform: uppercase;
     color: #757575;
+    margin: 18px 0px 8px 0px;
 }
 
 .cookordercard-order-quantity>div:first-child {
     border: 3px solid #b61095;
-    border-radius: 12px;    
+    border-radius: 12px;
     color: #3b3b3b;
     font-size: 1.28em;
     font-weight: 700;
     padding: 2px 11px 3px 11px;
     margin-right: 5px;
     text-transform: lowercase;
+    min-width: 99px; 
+}
+
+.cookordercard-order-quantity>div:last-child {
+    margin-left: 31px;
 }
 
 .cookordercard-order-quantity>div:last-child>span {
@@ -74,10 +80,7 @@
     justify-content: flex-start;
     flex-flow: row wrap;
     align-items: flex-start;
-}
-
-.cookordercard-order-exchange img {
-    border: 2px solid #b61095;    
+    margin-top: 10px;
 }
 
 .cookordercard-buyer {
@@ -141,12 +144,17 @@
         margin: auto auto;
         margin-top: 15px;
     }
+    .cookordercard-order-quantity {
+        justify-content: flex-start;
+        margin: 18px 0px;
+        font-size: .68em;
+    }
     .cookordercard-order-quantity>div:first-child {
-        font-size: 1.15em;
+        font-size: 1.2em;
     }
     .cookordercard-order-quantity>div:last-child {
         margin-top: 11px;
-        padding-left: 1%;
+        margin-left: 33px;
         line-height: 1.2em;
     }
     .cookordercard-accept {
@@ -158,5 +166,8 @@
     .cookordercard-header>div:first-child {
         width: 100%;
         margin-bottom: 0px;
+    }
+    .cookordercard-section>div:first-child {
+        text-align: center;
     }
 }

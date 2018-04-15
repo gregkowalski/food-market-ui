@@ -280,17 +280,21 @@ class ProfileEdit extends React.Component {
         let stripeComponent;
         if (this.state.stripe_user_id) {
             stripeComponent =
-                <div classname='profileedit-stripe-component-body'>
-                    <div>Sharing your food just got a whole lot easier.</div>                
-                    <div> Your Stripe account is successfully connected to Foodcraft.</div>
+                <div className='profileedit-stripe-component-text'>
+                    <div>Sharing your food just got a whole lot easier.</div>
                     <div className='profileedit-stripe-component-logo'>
-                        <Icon color='green' size='big' name='checkmark' />
-                        <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
+                 
+                            <Icon color='green' size='big' name='checkmark' />
+                            <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
+                        <div> Your Stripe account is successfully connected to Foodcraft.</div>
                     </div>
+                    <Divider hidden />
                     <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
-                    <div> Ready to get started? </div>
+                    <Divider hidden />
+                    <div className='profileedit-stripe-component-ready'> Ready to get started? </div>
+                    <Divider hidden />
                     <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank' rel="noreferrer noopener" >
-                        <Button color='purple' >Add a new food</Button>
+                        <Button basic color='purple'>Add a new food</Button>
                     </a>
                 </div>
 
@@ -453,9 +457,9 @@ class ProfileEdit extends React.Component {
                             <Segment attached >
                                 <div className='profileedit-stripe-box'>{stripeComponent}</div>
                             </Segment>
-                            <div style={{ display: 'flex', marginTop: '20px' }}>
+                            <div className='profileedit-save-button-container'>
                                 <div><Button disabled={!this.state.hasChanges} loading={this.state.saving}
-                                    className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}>Save</Button>
+                                    className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}> Save profile </Button>
                                 </div>
                                 <div>
                                     <Message
