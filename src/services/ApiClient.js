@@ -124,9 +124,9 @@ class ApiClient {
         });
     }
 
-    acceptOrder(order) {
+    acceptOrder(order, reason) {
         if (FeatureToggles.UseOrderBackend) {
-            return this.invokeApi(`/orders/${order.order_id}/accept`, 'POST');
+            return this.invokeApi(`/orders/${order.order_id}/accept`, 'POST', { reason });
         }
 
         return new Promise((resolve, reject) => {
@@ -136,9 +136,9 @@ class ApiClient {
         })
     }
 
-    declineOrder(order) {
+    declineOrder(order, reason) {
         if (FeatureToggles.UseOrderBackend) {
-            return this.invokeApi(`/orders/${order.order_id}/decline`, 'POST');
+            return this.invokeApi(`/orders/${order.order_id}/decline`, 'POST', { reason });
         }
 
         return new Promise((resolve, reject) => {
@@ -148,9 +148,9 @@ class ApiClient {
         })
     }
 
-    cancelOrder(order) {
+    cancelOrder(order, reason) {
         if (FeatureToggles.UseOrderBackend) {
-            return this.invokeApi(`/orders/${order.order_id}/cancel`, 'POST');
+            return this.invokeApi(`/orders/${order.order_id}/cancel`, 'POST', { reason });
         }
 
         return new Promise((resolve, reject) => {
@@ -183,9 +183,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Elliot',
-        image: '/assets/images/users/elliot.jpg',  
+        image: '/assets/images/users/elliot.jpg',
         email: 'elliot@work.com'
-         
+
     }
 },
 {
@@ -210,9 +210,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Jenny',
-        image: '/assets/images/users/jenny.jpg',  
+        image: '/assets/images/users/jenny.jpg',
         email: 'jenny@work.com'
-         
+
     }
 },
 {
@@ -239,7 +239,7 @@ const buyerOrders = [{
         name: 'Matthew',
         image: '/assets/images/users/matthew.png',
         email: 'matthew@work.com'
-           
+
     }
 },
 {
@@ -266,7 +266,7 @@ const buyerOrders = [{
         name: 'Matthew',
         image: '/assets/images/users/matthew.png',
         email: 'matthew@work.com'
-           
+
     }
 },
 {
@@ -291,9 +291,9 @@ const buyerOrders = [{
     },
     buyer: {
         name: 'Jenny',
-        image: '/assets/images/users/jenny.jpg', 
+        image: '/assets/images/users/jenny.jpg',
         email: 'jenny@work.com'
-          
+
     }
 }
 ]

@@ -36,10 +36,11 @@ function requestAcceptOrder(order) {
     };
 }
 
-function receiveAcceptOrderSuccess(order) {
+function receiveAcceptOrderSuccess(order, reason) {
     return {
         type: ActionTypes.COOK_ORDERS_RECEIVE_ACCEPT_ORDER_SUCCESS,
         order,
+        reason,
         receivedAt: Date.now()
     };
 }
@@ -60,10 +61,11 @@ function requestDeclineOrder(order) {
     };
 }
 
-function receiveDeclineOrderSuccess(order) {
+function receiveDeclineOrderSuccess(order, reason) {
     return {
         type: ActionTypes.COOK_ORDERS_RECEIVE_DECLINE_ORDER_SUCCESS,
         order,
+        reason,
         receivedAt: Date.now()
     };
 }
@@ -84,10 +86,11 @@ function requestCancelOrder(order) {
     };
 }
 
-function receiveCancelOrderSuccess(order) {
+function receiveCancelOrderSuccess(order, reason) {
     return {
         type: ActionTypes.COOK_ORDERS_RECEIVE_CANCEL_ORDER_SUCCESS,
         order,
+        reason,
         receivedAt: Date.now()
     };
 }
@@ -122,14 +125,14 @@ export const Actions = {
         };
     },
 
-    acceptOrder: (order) => {
+    acceptOrder: (order, reason) => {
         return (dispatch) => {
             dispatch(requestAcceptOrder(order));
 
-            return ApiClient.acceptOrder(order)
+            return ApiClient.acceptOrder(order, reason)
                 .then(
                     response => {
-                        dispatch(receiveAcceptOrderSuccess(order));
+                        dispatch(receiveAcceptOrderSuccess(order, reason));
                     },
                     error => {
                         dispatch(receiveAcceptOrderError(order, error));
@@ -138,14 +141,14 @@ export const Actions = {
         }
     },
 
-    declineOrder: (order) => {
+    declineOrder: (order, reason) => {
         return (dispatch) => {
             dispatch(requestDeclineOrder(order));
 
-            return ApiClient.declineOrder(order)
+            return ApiClient.declineOrder(order, reason)
                 .then(
                     response => {
-                        dispatch(receiveDeclineOrderSuccess(order));
+                        dispatch(receiveDeclineOrderSuccess(order, reason));
                     },
                     error => {
                         dispatch(receiveDeclineOrderError(order, error));
@@ -154,14 +157,14 @@ export const Actions = {
         }
     },
 
-    cancelOrder: (order) => {
+    cancelOrder: (order, reason) => {
         return (dispatch) => {
             dispatch(requestCancelOrder(order));
 
-            return ApiClient.cancelOrder(order)
+            return ApiClient.cancelOrder(order, reason)
                 .then(
                     response => {
-                        dispatch(receiveCancelOrderSuccess(order));
+                        dispatch(receiveCancelOrderSuccess(order, reason));
                     },
                     error => {
                         dispatch(receiveCancelOrderError(order, error));
@@ -231,6 +234,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_ACCEPT_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isAccepting: false,
+                    accept_reason: action.reason,
                     status: OrderStatus.Accepted
                 });
 
@@ -251,6 +255,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_DECLINE_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isDeclining: false,
+                    decline_reason: action.reason,
                     status: OrderStatus.Declined
                 });
 
@@ -271,6 +276,7 @@ export const Reducers = {
             case ActionTypes.COOK_ORDERS_RECEIVE_CANCEL_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isCancelling: false,
+                    cancel_reason: action.reason,
                     status: OrderStatus.Cancelled
                 });
 

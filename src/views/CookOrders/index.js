@@ -20,8 +20,8 @@ class CookOrders extends React.Component {
         this.props.actions.loadOrders();
     }
 
-    handleAcceptOrder = (order) => {
-        this.props.actions.acceptOrder(order);
+    handleAcceptOrder = (order, reason) => {
+        this.props.actions.acceptOrder(order, reason);
     }
 
     handleDeclineOrder = (order, reason) => {
