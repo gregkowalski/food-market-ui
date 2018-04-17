@@ -1,12 +1,12 @@
 const Config = {
     Api: {
         Region: 'us-west-2',
-        BaseUrl: 'https://api-dev.cosmo-test.com/v1',
+        BaseUrl: 'https://api-test.cosmo-test.com/v1',
     },
     Cognito: {
-        AppWebDomain: 'food-market-dev.auth.us-west-2.amazoncognito.com',
-        ClientAppId: '6n197h69pgu60msn8a8rvvj1u5',
-        UserPoolId: 'us-west-2_lZLhlTHmt',
+        AppWebDomain: 'food-market-test.auth.us-west-2.amazoncognito.com',
+        ClientAppId: '2gglkdlspe1kkl85d5adovviq5',
+        UserPoolId: 'us-west-2_bA5yaUocp',
         RedirectUriSignIn: 'https://www.cosmo-test.com/cognitoCallback',
         RedirectUriSignOut: 'https://www.cosmo-test.com/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']

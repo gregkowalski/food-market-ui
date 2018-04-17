@@ -1,5 +1,5 @@
 {
-    "CallerReference": "greg-dist-www-2018-03-26",
+    "CallerReference": "dist-test-root-2018-03-26",
     "Aliases": {
         "Quantity": 1,
         "Items": [
@@ -72,44 +72,45 @@
             "Quantity": 1,
             "Items": [
                 {
-                    "LambdaFunctionARN": "lambda-arn",
+                    "LambdaFunctionARN": "arn:aws:lambda:us-east-1:774117383394:function:edge-lambda-origin-response-inject-security-headers:10",
                     "EventType": "origin-response"
                 }
             ]
-        },
-        "CustomErrorResponses": {
-            "Quantity": 1,
-            "Items": [
-                {
-                    "ErrorCode": 404,
-                    "ResponsePagePath": "/index.html",
-                    "ResponseCode": "200",
-                    "ErrorCachingMinTTL": 0
-                }
-            ]
-        },
-        "Comment": "",
-        "Logging": {
-            "Enabled": false,
-            "IncludeCookies": false,
-            "Bucket": "",
-            "Prefix": ""
-        },
-        "PriceClass": "PriceClass_100",
-        "Enabled": true,
-        "ViewerCertificate": {
-            "CloudFrontDefaultCertificate": false,
-            "ACMCertificateArn": "arn:aws:acm:us-east-1:774117383394:certificate/e1dcdcd7-32ec-4808-ab6b-289d78a09135",
-            "SSLSupportMethod": "sni-only",
-            "MinimumProtocolVersion": "TLSv1.1_2016"
-        },
-        "Restrictions": {
-            "GeoRestriction": {
-                "RestrictionType": "none",
-                "Quantity": 0
+        }
+    },
+    "CustomErrorResponses": {
+        "Quantity": 1,
+        "Items": [
+            {
+                "ErrorCode": 404,
+                "ResponsePagePath": "/index.html",
+                "ResponseCode": "200",
+                "ErrorCachingMinTTL": 0
             }
-        },
-        "WebACLId": "",
-        "HttpVersion": "http2",
-        "IsIPV6Enabled": true
-    }
+        ]
+    },
+    "Comment": "",
+    "Logging": {
+        "Enabled": false,
+        "IncludeCookies": false,
+        "Bucket": "",
+        "Prefix": ""
+    },
+    "PriceClass": "PriceClass_100",
+    "Enabled": true,
+    "ViewerCertificate": {
+        "CloudFrontDefaultCertificate": false,
+        "ACMCertificateArn": "arn:aws:acm:us-east-1:774117383394:certificate/e1dcdcd7-32ec-4808-ab6b-289d78a09135",
+        "SSLSupportMethod": "sni-only",
+        "MinimumProtocolVersion": "TLSv1.1_2016"
+    },
+    "Restrictions": {
+        "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+        }
+    },
+    "WebACLId": "",
+    "HttpVersion": "http2",
+    "IsIPV6Enabled": true
+}
