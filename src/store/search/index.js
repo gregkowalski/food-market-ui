@@ -94,29 +94,21 @@ export const Actions = {
         };
     },
 
-    requestFoodsInRegion: (geo, region) => {
+    requestFoodsInRegion: (region) => {
 
         return (dispatch) => {
 
-            dispatch(requestFoods());
+            if (!region || !region.id) {
+                return Promise.resolve();
+            }
 
-            return ApiClient.geoSearchFoods(geo)
+            dispatch(requestFoods()); 
+                                            
+            return ApiClient.deliverySearchFoods(region.id)
                 .then(
                     response => {
                         const foods = ApiObjectMapper.mapFoods(response.data);
-
-                        let regionFoods = [];
-                        if (region) {
-                            console.log('search region: ' + region.id);
-                            const polygon = new window.google.maps.Polygon({ paths: region.paths });
-                            regionFoods = foods.filter(food => {
-                                const point = new window.google.maps.LatLng(food.position.lat, food.position.lng);
-                                const contains = window.google.maps.geometry.poly.containsLocation(point, polygon);
-                                console.log(`point=${point} contains: ${contains}`);
-                                return contains;
-                            });
-                        }
-                        dispatch(receiveFoodsSuccess(regionFoods));
+                        dispatch(receiveFoodsSuccess(foods));
                     },
                     error => {
                         dispatch(receiveFoodsError(error));

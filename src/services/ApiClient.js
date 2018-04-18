@@ -100,6 +100,11 @@ class ApiClient {
         return this.invokeApi(requestUrl, 'GET');
     }
 
+    deliverySearchFoods(region) {
+        const requestUrl = `/foods/deliveryByRegion?region_id=${region}`;
+        return this.invokeApi(requestUrl, 'GET');
+    }
+
     getOrdersByBuyerId(buyer_user_id) {
         if (FeatureToggles.UseOrderBackend) {
             return this.invokeApi(`/orders?buyer_user_id=${buyer_user_id}`, 'GET');
