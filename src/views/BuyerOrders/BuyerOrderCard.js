@@ -1,10 +1,10 @@
 import React from 'react'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { withRouter } from 'react-router-dom'
 import { Segment, Divider, Image, Icon, Accordion } from 'semantic-ui-react'
 import './BuyerOrderCard.css'
 import { Constants, Colors } from '../../Constants'
-import { OrderStatus } from '../../Enums'
+import { OrderStatus, DeliveryOptions } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 
@@ -48,25 +48,28 @@ class BuyerOrderCard extends React.Component {
     }
 
     render() {
-        const { order } = this.props;
-        const { food, cook, isCancelling } = order;
-        const date = moment(order.date);
-
         const { showDetails } = this.state;
+        const { order } = this.props;
+        const { food, cook, isCancelling, handoff_start_date, handoff_end_date } = order;
+
+        const timezone = Constants.Timezone;
+        const startDate = moment(handoff_start_date, moment.ISO_8601).tz(timezone);
+        const endDate = moment(handoff_end_date, moment.ISO_8601).tz(timezone);
+
+        const handoffAddress = order.delivery_option === DeliveryOptions.pickup ? order.cook.address : order.buyer_address;
 
         return (
             <Segment raised>
                 <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{order.status}</div>
                 <Image id='buyerordercard-header-cook' src={cook.image} circular />
                 <div className='buyerordercard'>
-                    {/* <Label className='label-dropshadow' size='large' attached='top' color={statusColor}>{order.status}</Label> */}
                     <div className='buyerordercard-header'>
                         <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
                         <div>
                             <div className='larger-font top-spacing mobile-spacing'>{food.title}</div>
                             <div className='buyerordercard-section'>
-                                <div>{date.format('dddd, MMMM D')}</div>
-                                <div>{order.time}</div>
+                                <div>{startDate.format('dddd, MMMM D')}</div>
+                                <div>{startDate.format('h A')} to {endDate.format('h A')}</div>
                                 <div className='bottom-spacing top-spacing'>
                                 </div>
                                 <div className='top-spacing'>Your cook, {cook.name}</div>
@@ -76,7 +79,7 @@ class BuyerOrderCard extends React.Component {
                     <Divider />
                     <div className='top-spacing pickup-font'>{order.pickup ? "You will pick up this order at" : 'Order will be delivered to'}</div>
                     <div className='buyerordercard-address buyerordercard-main large-font'>
-                        <div>{order.address}</div>
+                        <div>{handoffAddress}</div>
                     </div>
                     <Divider />
                     <div className='buyerordercard-additional'>

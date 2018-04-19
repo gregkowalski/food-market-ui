@@ -80,7 +80,6 @@ class CookOrderCard extends React.Component {
         const { showDetails, showConfirmAccept, showConfirmCancel, showConfirmDecline } = this.state;
         const quantityLabel = pluralize('order', order.quantity);
 
-
         return (
             <Segment>
                 <div className='cookordercard'>
@@ -105,7 +104,7 @@ class CookOrderCard extends React.Component {
                             <div>{food.unit} <span>per order</span> </div>
                         </div>
                         <div className='cookordercard-order-exchange'>
-                            <OrderExchangeMessage pickup={order.pickup} buyer={order.buyer} time={order.time} />
+                            <OrderExchangeMessage order={order} />
                         </div>
                         <Divider />
                     </div>
