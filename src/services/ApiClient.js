@@ -1,9 +1,6 @@
 import apigClientFactory from 'aws-api-gateway-client'
-import moment from 'moment'
 import CognitoUtil from './Cognito/CognitoUtil'
 import Config from '../Config'
-import { OrderStatus, DeliveryOptions } from '../Enums'
-import FeatureToggles from '../FeatureToggles'
 
 class ApiClient {
 

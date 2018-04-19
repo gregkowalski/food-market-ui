@@ -11,7 +11,9 @@ const OrderExchangeMethod = ({ pickup, buyer, time }) => {
                 <div>
                     <div>order <span className='orderexchangemessage-pickup'>pickup</span></div>
                     <div>{time}</div>
-                    <div><Image circular src={buyer.image} /></div>
+                    {buyer.image &&
+                        <div><Image circular src={buyer.image} /></div>
+                    }
                 </div>
                 <div> {buyer.name} is picking up this order from you </div>
             </div>
@@ -23,7 +25,10 @@ const OrderExchangeMethod = ({ pickup, buyer, time }) => {
                 <div>
                     <span className='orderexchangemessage-delivery'>delivery</span> order</div>
                 <div>{time}</div>
-                <div><Image circular src={buyer.image} /></div></div>
+                {buyer.image &&
+                    <div><Image circular src={buyer.image} /></div>
+                }
+            </div>
             <div>You are delivering this order to {buyer.name} </div>
         </div>
     )

@@ -5,6 +5,7 @@ import './CookOrderByDateCard.css'
 import PriceCalc from '../../services/PriceCalc'
 import OrderFilters from '../../store/cookOrders/orderFilters'
 import CookOrderCard from './CookOrderCard'
+import * as Enums from '../../Enums'
 
 class CookOrderByDateCard extends React.Component {
 
@@ -16,7 +17,8 @@ class CookOrderByDateCard extends React.Component {
             if (!statusSummary) {
                 summary[order.status] = {
                     total: 0,
-                    count: 0
+                    count: 0,
+                    status: order.status
                 };
                 statusSummary = summary[order.status];
             };
@@ -26,6 +28,13 @@ class CookOrderByDateCard extends React.Component {
             return summary;
         }, {});
         this.setState({ daySummary });
+    }
+
+    addDaySummaries(a, b) {
+        return {
+            total: a ? a.total : 0 + b ? b.total : 0,
+            cound: a ? a.count : 0 + b ? b.count : 0,
+        };
     }
 
     componentWillMount() {
@@ -39,10 +48,9 @@ class CookOrderByDateCard extends React.Component {
     }
 
     render() {
+        const { showDetails, daySummary } = this.state;
         const { orders, day, orderFilter, onAccept, onDecline, onCancel } = this.props;
         const date = moment(day);
-
-        const { showDetails, daySummary } = this.state;
 
         const orderCards = orders.map(order => {
             return (
@@ -58,23 +66,33 @@ class CookOrderByDateCard extends React.Component {
             );
         });
 
-        let summaries = [];
-        for (const key in daySummary) {
-            summaries.push([key, daySummary[key]]);
+        let summary1;
+        let summary2;
+        if (orderFilter === OrderFilters.UPCOMING) {
+            summary1 = Object.assign({
+                status: Enums.OrderStatus.Pending,
+                total: 0
+            }, daySummary[Enums.OrderStatus.Pending]);
+            summary2 = Object.assign({
+                status: Enums.OrderStatus.Accepted,
+                total: 0
+            }, daySummary[Enums.OrderStatus.Accepted]);
         }
-
-        const summaryContent = summaries.map(([status, summary]) => {
-            return (
-                <div key={status} className='cookorderbydatecard-summary-order'>
-                    <div>{status}: {summary.count} order{summary.count > 1 ? 's' : ''}</div>
-                    <div>Total ${summary.total}</div>
-                </div>);
-        });
+        else {
+            const declinedSummary = daySummary[Enums.OrderStatus.Declined];
+            const cancelledSummary = daySummary[Enums.OrderStatus.Cancelled];
+            const failedSummary = daySummary[Enums.OrderStatus.Failed];
+            summary1 = this.addDaySummaries(declinedSummary, cancelledSummary);
+            summary1 = this.addDaySummaries(summary1, failedSummary);
+            summary1.status = 'missed';
+            summary2 = daySummary[Enums.OrderStatus.Transferred];
+            summary2.status = 'completed';
+        }
 
         return (
             <Segment className='cookorderbydatecard'>
                 <Accordion>
-                    <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>                        
+                    <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
                         <Grid stackable>
                             <Grid.Column width={6}>
                                 <div className='cookorderbydatecard-summary'>
@@ -82,22 +100,21 @@ class CookOrderByDateCard extends React.Component {
                                         <Icon color='purple' size='large' name='angle down' />
                                         <div>{date.format('dddd, MMMM D')}</div>
                                     </div>
-                                    {/* {summaryContent} */}
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={5}>
-                                <div className='cookorderbydatecard-summary-order'>
-                                    {Math.random() > 0.5 &&
-                                        <div>Pending: $150</div>
-                                    }
-                                </div>
+                                {summary1 && summary1.total > 0 &&
+                                    < div className='cookorderbydatecard-summary-order'>
+                                        <div>{summary1.status}: ${summary1.total}</div>
+                                    </div>
+                                }
                             </Grid.Column>
                             <Grid.Column width={5}>
-                                <div className='cookorderbydatecard-summary-order'>
-                                    {Math.random() > 0.5 &&
-                                        <div>Accepted: $100</div>
-                                    }
-                                </div>
+                                {summary2 && summary2.total > 0 &&
+                                    <div className='cookorderbydatecard-summary-order'>
+                                        <div>{summary2.status}: ${summary2.total}</div>
+                                    </div>
+                                }
                             </Grid.Column>
                         </Grid>
                     </Accordion.Title>
@@ -105,7 +122,7 @@ class CookOrderByDateCard extends React.Component {
                         {orderCards}
                     </Accordion.Content>
                 </Accordion>
-            </Segment>
+            </Segment >
         )
     }
 }

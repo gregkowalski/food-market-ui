@@ -1,7 +1,7 @@
 import React from 'react'
 import pluralize from 'pluralize'
 import { withRouter } from 'react-router-dom'
-import { Header, Divider, Image, Icon, Accordion, Button, Modal, TextArea, Segment } from 'semantic-ui-react'
+import { Header, Divider, Icon, Accordion, Button, Modal, TextArea, Segment } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import { Constants, Colors } from '../../Constants'
 import { OrderStatus } from '../../Enums'
@@ -127,7 +127,6 @@ class CookOrderCard extends React.Component {
                             <Divider />
                             <div className='cookordercard-section normal-font'>
                                 <div className='cookordercard-buyer'>
-                                    {/* <Image src={buyer.image} circular size='mini' floated='left' /> */}
                                     <Icon name='mail outline' size='large' />
                                     <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
                                 </div>
@@ -165,9 +164,7 @@ class CookOrderCard extends React.Component {
                     />
 
                     <ConfirmModal
-                        // header="Decline this order"
                         header="Roger that. Let your buyer know why you're declining."
-
                         open={showConfirmDecline}
                         isProcessing={isDeclining}
                         onConfirm={this.declineOrder}

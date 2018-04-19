@@ -6,13 +6,13 @@ import { Divider, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
 import crypto from 'crypto'
 import './ProfileEdit.css'
-import Util from '../services/Util'
-import Url from '../services/Url'
-import AppHeader from '../components/AppHeader'
-import LoadingIcon from '../components/LoadingIcon'
-import CognitoUtil from '../services/Cognito/CognitoUtil'
-import StripeUtil from '../services/Stripe/StripeUtil'
-import ApiClient from '../services/ApiClient'
+import Util from '../../services/Util'
+import Url from '../../services/Url'
+import AppHeader from '../../components/AppHeader'
+import LoadingIcon from '../../components/LoadingIcon'
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import StripeUtil from '../../services/Stripe/StripeUtil'
+import ApiClient from '../../services/ApiClient'
 
 const languageOptions = [
     { key: 'en-CA', value: 'en-CA', text: 'English' },
