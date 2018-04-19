@@ -165,7 +165,7 @@ class ProfileEdit extends React.Component {
         hasBlurred[name] = true;
         this.setState({ hasBlurred: hasBlurred }, () => { this.validateField(name) });
     }
-
+ 
     isValid(hasErrors) {
         for (let v in hasErrors) {
             if (hasErrors[v] === true) {
