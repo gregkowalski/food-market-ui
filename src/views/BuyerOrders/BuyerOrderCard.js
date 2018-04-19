@@ -61,7 +61,9 @@ class BuyerOrderCard extends React.Component {
         return (
             <Segment raised>
                 <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{order.status}</div>
-                <Image id='buyerordercard-header-cook' src={cook.image} circular />
+                {cook.image &&
+                    <Image id='buyerordercard-header-cook' src={cook.image} circular />
+                }
                 <div className='buyerordercard'>
                     <div className='buyerordercard-header'>
                         <Image className='top-spacing' src={food.imageUrls[0]} onClick={this.navigateToFoodDetail} />
