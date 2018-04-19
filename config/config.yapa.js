@@ -17,7 +17,7 @@ const Config = {
         ConnectOAuthRedirectUri: 'http://localhost:3000/stripeCallback',
     },
     Foodcraft: {
-        SupportEmail: '	yasin.dev.local@gmail.com'
+        SupportEmail: 'yasin.dev.local@gmail.com'
     }
 }
 

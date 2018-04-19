@@ -55,18 +55,6 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid>
                     </div>
-{/*                     
-                    <div className='home-join'>
-                        <div>Become a cook</div>
-                        <Grid stackable>
-                            <Grid.Column width={5}>
-                                <div className='home-join-item' onClick={this.navigateToSearch}>
-                                    <Image src={joinImg1} />
-                                    <div>Share your food!</div>
-                                </div>
-                            </Grid.Column>
-                        </Grid>
-                    </div> */}
 
                     <div className='home-hoods'>
                         <div>Search by neighbourhood</div>

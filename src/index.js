@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import 'whatwg-fetch'
 import './semantic/semantic.min.css'
+import Url from './services/Url'
 import FoodDetail from './views/FoodDetail'
 import Order from './views/Order'
 import BuyerOrders from './views/BuyerOrders'
@@ -26,6 +27,13 @@ import configureStore from './store/configureStore'
 import Config from './Config'
 import { unregister } from './registerServiceWorker'
 import isAuth from './AuthCheckHoc'
+import About from './views/Info/About'
+import Cookies from './views/Info/Cookies'
+import Help from './views/Info/Help'
+import Policies from './views/Info/Policies'
+import Privacy from './views/Info/Privacy'
+import Terms from './views/Info/Terms'
+import Safety from './views/Info/Safety'
 // import Map2 from './views/map2'
 //import temp from 'temp'
 
@@ -53,6 +61,15 @@ render(
                             <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
                             <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
                             <Route exact path='/login' component={isAuth(Login)} />
+
+                            <Route exact path={Url.about()} component={isAuth(About)} />
+                            <Route exact path={Url.cookies()} component={isAuth(Cookies)} />
+                            <Route exact path={Url.help()} component={isAuth(Help)} />
+                            <Route exact path={Url.policies()} component={isAuth(Policies)} />
+                            <Route exact path={Url.privacy()} component={isAuth(Privacy)} />
+                            <Route exact path={Url.terms()} component={isAuth(Terms)} />
+                            <Route exact path={Url.safety()} component={isAuth(Safety)} />
+
                             <Route component={NotFoundPage} />
 
                             {/* <Route path='/temp' component={temp} /> */}
