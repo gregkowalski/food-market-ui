@@ -40,8 +40,9 @@
 
 #profileedit-grid-label {
     text-align: right;
-    padding-top: 8px;
+    padding: 8px 0px;
     font-weight: 500;
+    min-width: 118px;
 }
 
 .profileedit-grid-body {
@@ -122,12 +123,19 @@
     margin: 0px 10px 0px 55px;
     width: 80%;
 }
+
 .profileedit-save-button-container {
     display: flex;
     margin-top: 20px;
 }
 
-@media all and (max-width: 767px) {
+@media all and (max-width: 1097px) {
+    .profileedit-grid-body {
+       width: 96%;
+    }
+}
+
+@media all and (max-width: 1036px) {
     .profileedit-main {
         width: 90%;
     }
@@ -146,13 +154,19 @@
         margin: 0px 10px 0px 0px;
         width: 98%;
     }
-    .profileedit-stripe-component-text .ui.button {
+    /* .profileedit-stripe-component-text .ui.button {
         width: 100%;
-        /* align-items: center; */
         justify-content: center;
-    }
+    } */
     .profileedit-stripe-component-text>div:nth-child(4) {
         font-size: .9em;
+    }
+
+}
+@media all and (max-width: 767px) {
+    .profileedit-stripe-component-text .ui.button {
+        width: 100%;
+        justify-content: center;
     }
     .profileedit-stripe-component-logo {
         flex-direction: row-reverse;

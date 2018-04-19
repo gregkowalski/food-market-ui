@@ -335,8 +335,8 @@ class ProfileEdit extends React.Component {
                         <Grid.Column>
                             <Header className='profileedit-header' block attached='top'>Required</Header>
                             <Segment attached>
-                                <Grid stackable className='profileedit-grid-body'>
-                                    <Grid.Row>
+                                <Grid stackable className='profileedit-grid-body' columns='equal'>
+                                    <Grid.Row stretched>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>First Name</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Input name='name' value={this.state.name} error={this.state.hasErrors.name}
@@ -438,10 +438,6 @@ class ProfileEdit extends React.Component {
                                                 visible={this.state.hasErrors.address} header='Invalid address' content='Please enter your address' icon='exclamation circle' />
                                             <div className='profileedit-input-descriptions'>We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
                                                 </div>
-                                        </Grid.Column>
-                                        <Grid.Column id='profileedit-grid-label' computer={1}>Apt:</Grid.Column>
-                                        <Grid.Column computer={2} style={{ paddingTop: 0 }}>
-                                            <Input name='apt' placeholder='' onChange={this.handleChange} onBlur={this.handleBlur} value={this.state.apt} />
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
