@@ -32,18 +32,6 @@ class ApiClient {
             { headers: this.jsonHttpHeader() }, body);
     }
 
-    createFoodOrder(jwt, order) {
-        return this.invokeApi('/orders', 'POST', order);
-    }
-
-    confirmFoodOrder(jwt, order_id) {
-        return this.invokeApi(`/orders/${order_id}/confirm`, 'POST');
-    }
-
-    updateUser(jwt, user) {
-        return this.invokeApi('/users', 'PUT', user);
-    }
-
     getCurrentUser() {
         const userId = CognitoUtil.getLoggedInUserId();
         if (!userId) {
@@ -59,6 +47,28 @@ class ApiClient {
     getPublicUser(userId) {
         return this.invokeApi(`/users/${userId}/public`, 'GET');
     }
+
+    loadUserProfile(userId) {
+        return this.invokeApi(`/users/${userId}/private`, 'GET');
+    }
+
+    saveUserProfile(user) {
+        return this.invokeApi(`/users/${user.user_id}/private`, 'PATCH', user);
+    }
+
+    updateUser(jwt, user) {
+        return this.invokeApi('/users', 'PUT', user);
+    }
+
+    connectStripeAccount(code) {
+        const userId = CognitoUtil.getLoggedInUserId();
+        if (!userId) {
+            throw new Error('No user is currently logged in');
+        }
+        return this.invokeApi(`/users/${userId}/connectstripe`, 'POST', { code });
+    }
+
+
 
     getFoods() {
         return this.invokeApi(`/foods`, 'GET');
@@ -76,30 +86,17 @@ class ApiClient {
         return this.invokeApi(`/foods/${reviewId}`, 'GET');
     }
 
-    loadUserProfile(userId) {
-        return this.invokeApi(`/users/${userId}/private`, 'GET');
-    }
-
-    saveUserProfile(user) {
-        return this.invokeApi(`/users/${user.user_id}/private`, 'PATCH', user);
-    }
-
-    connectStripeAccount(code) {
-        const userId = CognitoUtil.getLoggedInUserId();
-        if (!userId) {
-            throw new Error('No user is currently logged in');
-        }
-        return this.invokeApi(`/users/${userId}/connectstripe`, 'POST', { code });
-    }
-
     geoSearchFoods(geo) {
         const requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`;
         return this.invokeApi(requestUrl, 'GET');
     }
 
     deliverySearchFoods(region_id) {
-        const requestUrl = `/foods/deliveryByRegion?region_id=${region_id}`;
-        return this.invokeApi(requestUrl, 'GET');
+        return this.invokeApi(`/foods/deliveryByRegion?region_id=${region_id}`, 'GET');
+    }
+
+    createFoodOrder(jwt, order) {
+        return this.invokeApi('/orders', 'POST', order);
     }
 
     getOrdersByBuyerId(buyer_user_id) {

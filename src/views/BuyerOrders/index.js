@@ -72,4 +72,3 @@ BuyerOrders.propTypes = {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BuyerOrders));
-

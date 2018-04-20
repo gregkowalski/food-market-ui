@@ -1,6 +1,8 @@
 import React from 'react'
-import jwtDecode from 'jwt-decode'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import { Segment, Input, Button, Image, Header, Grid, Message, TextArea, Dropdown } from 'semantic-ui-react'
 import { Divider, Icon } from 'semantic-ui-react'
 import Autocomplete from 'react-google-autocomplete';
@@ -12,7 +14,7 @@ import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
-import ApiClient from '../../services/ApiClient'
+import { Actions, Selectors } from '../../store/currentUser'
 
 const languageOptions = [
     { key: 'en-CA', value: 'en-CA', text: 'English' },
@@ -38,77 +40,19 @@ const languageOptions = [
 class ProfileEdit extends React.Component {
 
     state = {
-        activeItem: 'editProfile',
         hasChanges: false,
         hasErrors: {
             phone: false
         },
-        loading: true,
-        saving: false,
         message: {
             show: false,
         },
     };
 
-    user;
-    isOwnProfile;
-    isExternalIdp;
-
     componentWillMount() {
-        const userId = this.props.match.params.userId;
-
-
-        const jwtToken = CognitoUtil.getLoggedInUserJwtToken();
-        let jwt;
-        if (jwtToken) {
-            jwt = jwtDecode(jwtToken);
-            if (userId === jwt.sub) {
-                this.isOwnProfile = true;
-                this.isExternalIdp = CognitoUtil.isExternalIdp(jwt);
-                let newState = {
-                    email: jwt.email,
-                };
-                this.setState(newState);
-            }
-        }
-        if (!this.isOwnProfile) {
-            return;
-        }
-
-        ApiClient.loadUserProfile(jwt.sub)
-            .then(response => {
-                //console.log(response);
-                let user = response.data;
-                this.user = user;
-                //Util.busySleep(3);
-
-                let phone;
-                if (user.phone) {
-                    phone = Util.getAsYouTypePhone(user.phone.phone);
-                }
-
-                let newState = {
-                    //email: user.email,
-                    name: user.name,
-                    city: user.city,
-                    username: user.username,
-                    info: user.info,
-                    lang: user.lang,
-                    address: user.address,
-                    phone: phone,
-                    apt: user.apt === null ? '' : user.apt,
-                    stripe_user_id: user.stripe_user_id,
-                    loading: false,
-                    certification: 'FOODSAFE Level 1'
-                };
-                this.setState(newState);
-            })
-            .catch(err => {
-                console.error(err);
-            });
+        this.props.actions.loadCurrentUser();
+        this.isExternalIdp = CognitoUtil.isExternalIdp(CognitoUtil.getLoggedInUserJwt());
     }
-
-    handleEditProfile = (e, { name }) => this.setState({ activeItem: name })
 
     handleChange = (e) => {
         const name = e.target.name;
@@ -165,7 +109,7 @@ class ProfileEdit extends React.Component {
         hasBlurred[name] = true;
         this.setState({ hasBlurred: hasBlurred }, () => { this.validateField(name) });
     }
- 
+
     isValid(hasErrors) {
         for (let v in hasErrors) {
             if (hasErrors[v] === true) {
@@ -188,7 +132,7 @@ class ProfileEdit extends React.Component {
 
             case 'phone':
                 hasErrors.phone = false;
-                if (hasBlurred.phone && !this.validatePhoneNumber(state.phone)) {
+                if (hasBlurred.phone && !Util.validatePhoneNumber(state.phone)) {
                     hasErrors.phone = true;
                 }
                 break;
@@ -226,36 +170,32 @@ class ProfileEdit extends React.Component {
         }
 
         let { city, name, username, info, lang, phone, address, apt } = this.state;
-        phone = Util.parsePhone(phone);
-        let newUser = { city, name, username, info, lang, phone, address, apt };
-        Object.assign(this.user, newUser);
-        console.log(this.user);
+        phone = Util.getAsYouTypePhone(phone);
+        const newUser = { city, name, username, info, lang, phone, address, apt };
+        const user = Object.assign({}, this.props.user, newUser);
 
-        this.setState({ saving: true });
+        console.log(user);
         console.log('saving...');
+        this.props.actions.saveUser(user);
 
-        ApiClient.saveUserProfile(this.user)
-            .then(response => {
-                this.setState({
-                    hasChanges: false,
-                    saving: false,
-                    message: {
-                        show: true,
-                        content: "Success! Your profile has been updated."
-                    }
-                });
-                console.log('saved');
-            })
-            .catch(err => {
-                console.error(err);
-                this.setState({
-                    saving: false,
-                    message: {
-                        show: true,
-                        content: "Oops, your profile was not saved."
-                    }
-                });
-            });
+        // this.setState({
+        //     hasChanges: false,
+        //     saving: false,
+        //     message: {
+        //         show: true,
+        //         content: "Success! Your profile has been updated."
+        //     }
+        // });
+        // console.log('saved');
+
+        // console.error(err);
+        // this.setState({
+        //     saving: false,
+        //     message: {
+        //         show: true,
+        //         content: "Oops, your profile was not saved."
+        //     }
+        // });
     }
 
     handleConnectStripeClick(e) {
@@ -268,52 +208,14 @@ class ProfileEdit extends React.Component {
     }
 
     navigateToProfileView = () => {
-        this.props.history.push(Url.profileView(this.user.user_id));
+        this.props.history.push(Url.profileView(this.props.user.user_id));
     }
 
     render() {
-        if (!this.isOwnProfile) {
-            this.props.history.push(Url.home());
-            return;
-        }
-
-        let stripeComponent;
-        if (this.state.stripe_user_id) {
-            stripeComponent =
-                <div className='profileedit-stripe-component-text'>
-                    <div>Sharing your food just got a whole lot easier.</div>
-                    <div className='profileedit-stripe-component-logo'>
-                 
-                            <Icon color='green' size='big' name='checkmark' />
-                            <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
-                        <div> Your Stripe account is successfully connected to Foodcraft.</div>
-                    </div>
-                    <Divider hidden />
-                    <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
-                    <Divider hidden />
-                    <div className='profileedit-stripe-component-ready'> Ready to get started? </div>
-                    <Divider hidden />
-                    <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank' rel="noreferrer noopener" >
-                        <Button basic color='purple'>Add a new food</Button>
-                    </a>
-                </div>
-
-        }
-        else {
-            stripeComponent =
-                <div>
-                    <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in sharing your food and making money with Foodcraft?
-                    <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account!
-                        </div>
-                    </div>
-                    <a href='./' onClick={(e) => this.handleConnectStripeClick(e)}>
-                        <Image src='/assets/images/stripe-blue-on-light.png' />
-                    </a>
-                </div>
-        }
+        const { isSaving, isLoading, user } = this.props;
 
         let content;
-        if (this.state.loading) {
+        if (isLoading) {
             content =
                 <div style={{ marginTop: '70px', width: '100%' }}>
                     <div style={{ margin: '0 auto', width: '100px' }}>
@@ -322,14 +224,47 @@ class ProfileEdit extends React.Component {
                 </div>
         }
         else {
-            // const { activeItem } = this.state
+
+            let stripeComponent;
+            if (user.stripe_account_id) {
+                stripeComponent = (
+                    <div className='profileedit-stripe-component-text'>
+                        <div>Sharing your food just got a whole lot easier.</div>
+                        <div className='profileedit-stripe-component-logo'>
+
+                            <Icon color='green' size='big' name='checkmark' />
+                            <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
+                            <div> Your Stripe account is successfully connected to Foodcraft.</div>
+                        </div>
+                        <Divider hidden />
+                        <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
+                        <Divider hidden />
+                        <div className='profileedit-stripe-component-ready'> Ready to get started? </div>
+                        <Divider hidden />
+                        <a href='https://goo.gl/forms/NxxOMSNXOWESGpsW2' target='_blank' rel="noreferrer noopener" >
+                            <Button basic color='purple'>Add a new food</Button>
+                        </a>
+                    </div>
+                );
+            }
+            else {
+                stripeComponent = (
+                    <div>
+                        <div className='profileedit-menu' style={{ marginBottom: '20px' }}>Interested in sharing your food and making money with Foodcraft?
+                    <div style={{ marginTop: '10px' }}>Get started by creating your own Stripe account!
+                        </div>
+                        </div>
+                        <a href='./' onClick={(e) => this.handleConnectStripeClick(e)}>
+                            <Image src='/assets/images/stripe-blue-on-light.png' />
+                        </a>
+                    </div>
+                );
+            }
             content =
                 <div className='profileedit-main'>
                     <div className='profileedit-title'>
                         <div>Edit Profile</div>
-                        {this.isOwnProfile &&
-                            <Button onClick={this.navigateToProfileView}>View Profile</Button>
-                        }
+                        <Button onClick={this.navigateToProfileView}>View Profile</Button>
                     </div>
                     <Grid>
                         <Grid.Column>
@@ -339,7 +274,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row stretched>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>First Name</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='name' value={this.state.name} error={this.state.hasErrors.name}
+                                            <Input name='name' value={user.name} error={this.state.hasErrors.name}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                             <Message error={this.state.hasErrors.name}
                                                 hidden={!this.state.hasErrors.name}
@@ -351,7 +286,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Username</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='username' value={this.state.username} error={this.state.hasErrors.username}
+                                            <Input name='username' value={user.username} error={this.state.hasErrors.username}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                             <Message error={this.state.hasErrors.username}
                                                 hidden={!this.state.hasErrors.username}
@@ -361,7 +296,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Email <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input disabled={this.isExternalIdp || true} name='email' value={this.state.email} error={this.state.hasErrors.email}
+                                            <Input disabled={this.isExternalIdp} name='email' value={user.email} error={this.state.hasErrors.email}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                             <Message error={this.state.hasErrors.email}
                                                 hidden={!this.state.hasErrors.email}
@@ -373,7 +308,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Neighbourhood</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='Where do you live?' value={this.state.city} error={this.state.hasErrors.city}
+                                            <Input name='Where do you live?' value={user.hood} error={this.state.hasErrors.city}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                             {/* <Message error={this.state.hasErrors.city}
                                                 hidden={!this.state.hasErrors.city}
@@ -385,7 +320,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>About:</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <TextArea name='info' value={this.state.info} autoHeight rows={1}
+                                            <TextArea name='info' value={user.info} autoHeight rows={1}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                             <Message error={this.state.hasErrors.info}
                                                 hidden={!this.state.hasErrors.info}
@@ -412,7 +347,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={this.state.phone}
+                                            <Input name='phone' type='tel' placeholder='Phone' onChange={this.handlePhoneNumberChange} onBlur={this.handleBlur} value={user.phone}
                                                 error={this.state.hasErrors.phone} />
                                             <Message error={this.state.hasErrors.phone}
                                                 hidden={!this.state.hasErrors.phone}
@@ -431,7 +366,7 @@ class ProfileEdit extends React.Component {
                                                 types={['address']}
                                                 placeholder='Address'
                                                 componentRestrictions={{ country: 'ca' }}
-                                                value={this.state.address} />
+                                                value={user.address} />
                                             <Message
                                                 error={this.state.hasErrors.address}
                                                 hidden={!this.state.hasErrors.address}
@@ -443,7 +378,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column id='profileedit-grid-label' computer={3}>Certifications</Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Input name='lang' value={this.state.certification} error={this.state.hasErrors.certification}
+                                            <Input name='certifications' value={user.certifications} error={this.state.hasErrors.certification}
                                                 onChange={this.handleChange} onBlur={this.handleBlur} />
                                         </Grid.Column>
                                     </Grid.Row>
@@ -454,7 +389,7 @@ class ProfileEdit extends React.Component {
                                 <div className='profileedit-stripe-box'>{stripeComponent}</div>
                             </Segment>
                             <div className='profileedit-save-button-container'>
-                                <div><Button disabled={!this.state.hasChanges} loading={this.state.saving}
+                                <div><Button disabled={!this.state.hasChanges} loading={isSaving}
                                     className='profileedit-save-button' type='submit' onClick={(e) => this.handleSave(e)}> Save profile </Button>
                                 </div>
                                 <div>
@@ -463,8 +398,10 @@ class ProfileEdit extends React.Component {
                                         hidden={!this.state.message.show || this.state.hasChanges}
                                         floating
                                         size='tiny'
-                                        onDismiss={() => this.setState({ message: { show: false } })}
-                                    >{this.state.message.content}</Message></div>
+                                        onDismiss={() => this.setState({ message: { show: false } })}>
+                                        {this.state.message.content}
+                                    </Message>
+                                </div>
                             </div>
 
                         </Grid.Column>
@@ -477,9 +414,36 @@ class ProfileEdit extends React.Component {
             <div>
                 <AppHeader fixed />
                 {content}
-            </div >
+            </div>
         )
     }
 }
 
-export default withRouter(ProfileEdit);
+const mapStateToProps = (state) => {
+    return {
+        user: Selectors.currentUser(state),
+        isLoading: Selectors.isLoading(state),
+        isSaving: Selectors.isSaving(state),
+        error: Selectors.error(state)
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+ProfileEdit.propTypes = {
+    user: PropTypes.shape({
+        user_id: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+    }),
+    isLoading: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    error: PropTypes.any,
+    actions: PropTypes.shape({
+        loadCurrentUser: PropTypes.func.isRequired,
+        saveUser: PropTypes.func.isRequired
+    })
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileEdit));

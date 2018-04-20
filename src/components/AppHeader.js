@@ -42,8 +42,7 @@ export class AppHeader extends React.Component {
     }
 
     navigateToEditProfile = () => {
-        const { user } = this.props;
-        this.props.history.push(Url.profileEdit(user.user_id));
+        this.props.history.push(Url.profileEdit());
     }
 
     navigateToMyOrders = () => {
@@ -93,10 +92,10 @@ export class AppHeader extends React.Component {
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
                             <Dropdown.Divider />
-                            {user.stripe_user_id &&
+                            {user.stripe_account_id &&
                                 <Dropdown.Item className='apphead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
                             }
-                            {user.stripe_user_id &&
+                            {user.stripe_account_id &&
                                 <Dropdown.Divider />
                             }
                             <Dropdown.Item className='apphead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
@@ -163,8 +162,8 @@ export class AppHeader extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: Selectors.getCurrentUser(state),
-        isLoading: Selectors.getIsLoading(state)
+        user: Selectors.currentUser(state),
+        isLoading: Selectors.isLoading(state)
     };
 };
 

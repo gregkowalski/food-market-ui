@@ -35,17 +35,32 @@ function shouldLoadCurrentUser(state) {
         return false;
     }
 
-    const isLoading = Selectors.getIsLoading(state);
+    const isLoading = Selectors.isLoading(state);
     if (isLoading) {
         return false;
     }
 
-    const currentUser = Selectors.getCurrentUser(state);
+    const currentUser = Selectors.currentUser(state);
     if (currentUser) {
         return false;
     }
 
     return true;
+}
+
+function requestSaveUser() {
+    return { type: ActionTypes.REQUEST_SAVE_USER };
+}
+
+function receiveSaveUserSuccess() {
+    return { type: ActionTypes.RECEIVE_SAVE_USER_SUCCESS };
+}
+
+function receiveSaveUserError(error) {
+    return {
+        type: ActionTypes.RECEIVE_SAVE_USER_ERROR,
+        error,
+    };
 }
 
 export const Actions = {
@@ -76,24 +91,37 @@ export const Actions = {
                     }
                 );
         };
+    },
+
+    saveUser: (user) => {
+        return (dispatch) => {
+
+            dispatch(requestSaveUser());
+
+            return ApiClient.saveUserProfile(user)
+                .then(
+                    response => {
+                        dispatch(receiveSaveUserSuccess());
+                    },
+                    error => {
+                        dispatch(receiveSaveUserError(error));
+                    }
+                );
+        };
     }
 }
 
 export const Selectors = {
-    getCurrentUser: (state) => {
-        return state.currentUser.user;
-    },
-    getIsLoading: (state) => {
-        return state.currentUser.isLoading;
-    },
-    errorCode: (state) => {
-        return state.currentUser.errorCode;
-    }
+    currentUser: (state) => state.currentUser.user,
+    isLoading: (state) => state.currentUser.isLoading,
+    isSaving: (state) => state.currentUser.isSaving,
+    errorCode: (state) => state.currentUser.errorCode,
+    error: (state) => state.currentUser.error,
 }
 
 const initialState = {
     isLoading: false,
-    user: null
+    isSaving: false
 };
 
 export const Reducers = {
@@ -118,10 +146,31 @@ export const Reducers = {
                     errorCode: ErrorCodes.USER_DOES_NOT_EXIST
                 });
 
+
+
+
             case ActionTypes.CURRENT_USER_LOGOUT:
                 return Object.assign({}, state, {
                     isLoading: false,
                     user: null
+                });
+
+
+
+            case ActionTypes.REQUEST_SAVE_USER:
+                return Object.assign({}, state, {
+                    isSaving: true
+                });
+
+            case ActionTypes.RECEIVE_SAVE_USER_SUCCESS:
+                return Object.assign({}, state, {
+                    isSaving: false
+                });
+
+            case ActionTypes.RECEIVE_SAVE_USER_ERROR:
+                return Object.assign({}, state, {
+                    isSaving: false,
+                    error: action.error,
                 });
 
             default:

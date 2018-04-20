@@ -57,7 +57,7 @@ render(
                             <Route exact path='/cognitoSignout' component={CognitoSignout} />
                             <Route exact path='/stripeCallback' component={StripeCallback} />
                             <Route exact path='/profile/view/:userId' component={isAuth(ProfileView)} />
-                            <Route exact path='/profile/edit/:userId' component={isAuth(ProfileEdit)} />
+                            <Route exact path='/profile/edit' component={isAuth(ProfileEdit)} />
                             <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
                             <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
                             <Route exact path='/login' component={isAuth(Login)} />

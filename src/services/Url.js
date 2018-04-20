@@ -21,8 +21,8 @@ class Url {
         return `/foods/${food_id}/orderSuccess`;
     }
 
-    profileEdit(user_id) {
-        return `/profile/edit/${user_id}`;
+    profileEdit() {
+        return '/profile/edit';
     }
 
     profileView(user_id) {
