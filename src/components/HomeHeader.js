@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Image, Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import './AppHeader.css'
+import './HomeHeader.css'
 import { Constants } from '../Constants'
 import Util from '../services/Util'
 import Url from '../services/Url'
@@ -42,7 +42,8 @@ export class AppHeader extends React.Component {
     }
 
     navigateToEditProfile = () => {
-        this.props.history.push(Url.profileEdit());
+        const { user } = this.props;
+        this.props.history.push(Url.profileEdit(user.user_id));
     }
 
     navigateToMyOrders = () => {
@@ -62,13 +63,7 @@ export class AppHeader extends React.Component {
         const taglines = [
             'handcrafted to taste like home.',
             'homemade + local',
-            'this is...awesomesauce!',
-            'because being hangry was so 2017.',
-            'easy peasy, lemon squeezy!',
-            'so hot right now.',
-            'home of the best kebab.',
             'making good food taste better.',
-            'moo.',
             'eat like family.',
             'good food starts here.',
             'cooking is love you can taste.'
@@ -85,24 +80,24 @@ export class AppHeader extends React.Component {
 
         if (user) {
             sessionElement = (
-                <div className='apphead-sign-in'>
+                <div className='homehead-sign-in'>
                     <Dropdown icon='angle down' text={'Hi, ' + user.username}>
                         <Dropdown.Menu className='left'>
-                            <Dropdown.Item className='apphead-dropdown-link' text='Home' onClick={this.navigateToHome} />
+                            <Dropdown.Item className='homehead-dropdown-link' text='Home' onClick={this.navigateToHome} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
+                            <Dropdown.Item className='homehead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
                             <Dropdown.Divider />
-                            {user.stripe_account_id &&
-                                <Dropdown.Item className='apphead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
+                            {user.stripe_user_id &&
+                                <Dropdown.Item className='homehead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
                             }
-                            {user.stripe_account_id &&
+                            {user.stripe_user_id &&
                                 <Dropdown.Divider />
                             }
-                            <Dropdown.Item className='apphead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
+                            <Dropdown.Item className='homehead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />
+                            <Dropdown.Item className='homehead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-item' text='Log Out' onClick={this.handleLogOut} />
+                            <Dropdown.Item className='homehead-dropdown-item' text='Log Out' onClick={this.handleLogOut} />
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -111,7 +106,7 @@ export class AppHeader extends React.Component {
         else {
             if (isLoading) {
                 sessionElement = (
-                    <div className='apphead-sign-in'>
+                    <div className='homehead-sign-in'>
                         <LoadingIcon />
                     </div>
                 );
@@ -119,9 +114,9 @@ export class AppHeader extends React.Component {
             else {
                 sessionElement = (
                     <div>
-                        <a href={Url.signup()} onClick={this.handleSignUp} className='apphead-sign-in'> Sign Up </a>
+                        <a href={Url.signup()} onClick={this.handleSignUp} className='homehead-sign-in'> Sign Up </a>
                         <span style={{ color: '#2da388', fontSize: '1.5em', marginTop: '2px' }}>|</span>
-                        <a href={Url.login()} onClick={this.handleSignIn} className='apphead-sign-in'> Log In</a>
+                        <a href={Url.login()} onClick={this.handleSignIn} className='homehead-sign-in'> Log In</a>
                     </div>
                 );
             }
@@ -132,24 +127,26 @@ export class AppHeader extends React.Component {
             headerStyle.position = 'fixed';
         }
 
-        headerStyle.borderBottom = '1px solid rgb(201, 199, 199)';
+        headerStyle.borderBottom = '0px solid rgb(201, 199, 199)';
         if (!this.props.noshadow) {
-            headerStyle.boxShadow = '0px 0px 8px rgba(85, 85, 85, 0.603)';
+            headerStyle.boxShadow = '0px 0px 0px rgba(85, 85, 85, 0.603)';
         }
 
         return (
-            <div className='apphead' style={headerStyle}>
-                <div className='apphead-content'>
-                    <div className='apphead-logo'>
+            <div className='homehead' style={headerStyle}>
+                <div className='homehead-content'>
+                    <div className='homehead-logo'>
                         <div onClick={this.navigateToHome}>
                             <Image height='38px' src={Constants.AppLogo} />
-                            <div className='apphead-link'>{Constants.AppName}</div>
+                            <div className='homehead-link'>{Constants.AppName}</div>
                         </div>
-                        <div className="content-desktop">
-                            {this.tagline}
+                        <div className="homehead-desktop">
+                                <div>How it works</div>
+                                <div>·</div>
+                                <div>Become a cook</div>
                         </div>
                     </div>
-                    <div className='apphead-right'>
+                    <div className='homehead-right'>
                         <div style={{ marginTop: '12px' }}>
                             {sessionElement}
                         </div>
@@ -162,8 +159,8 @@ export class AppHeader extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: Selectors.currentUser(state),
-        isLoading: Selectors.isLoading(state)
+        user: Selectors.getCurrentUser(state),
+        isLoading: Selectors.getIsLoading(state)
     };
 };
 

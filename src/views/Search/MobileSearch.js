@@ -196,7 +196,7 @@ class MobileSearch extends Component {
                         onDeliveryClick={this.selectDeliveryFromFilterBar} />
 
                     <div className='mobilesearch-foodgrid'>
-                        <FoodGrid foods={foods} />
+                        <FoodGrid foods={foods} /> 
                         <Icon name='marker' color='purple' onClick={this.showMapSearch} />
                     </div>
 

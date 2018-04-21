@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
-import { Grid, Item, Image, Rating, Icon } from 'semantic-ui-react'
+import { Grid, Item, Image, Rating, Icon, Divider } from 'semantic-ui-react'
 import './FoodGrid.css'
 import CarouselDecorators from './ImageDecorator'
 import PriceCalc from '../../services/PriceCalc'
@@ -58,7 +58,23 @@ export default class FoodGrid extends Component {
 
     render() {
         const { foods, date, pickup } = this.props;
-
+        if (!foods || foods.length <= 0) {
+            return (
+                <div>
+                    <div className='food-no-results'>
+                        <div className='food-no-results-header'>Looks like there's nothing available here...at least not yet!</div>
+                        <Divider hidden />
+                        <div className='food-no-results-body'>Try adjusting your search. Here's what you can do:</div>
+                        <ul>
+                            <li>Change your filters or dates</li>
+                            <li> Zoom out on the map </li>
+                            <li>Search a specific neighbourhood or address</li>
+                        </ul>
+                    </div>
+                    <Divider />
+                </div>
+            )
+        }
         const cards = foods.map((food) => {
             let foodImageComponent = this.getFoodImageComponent(food);
             let foodPrepLabelComponent = this.getFoodPrepLabelComponent(food);

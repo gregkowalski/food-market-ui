@@ -27,7 +27,7 @@ export default class FilterBar extends React.Component {
                 <div className='filterbar-layout'>
                     <SearchBarFilterButton label='Filters' filter={filter} onFilterClick={onFilterClick} />
                     <Button {...this.buttonProps(pickup)} onClick={onPickupClick}>PICKUP</Button>
-                    <Button {...this.buttonProps(!pickup)} onClick={onDeliveryClick}>DELIVER</Button>
+                    <Button {...this.buttonProps(!pickup)} onClick={onDeliveryClick}>DELIVERY</Button>
                 </div>
             </div>
         );

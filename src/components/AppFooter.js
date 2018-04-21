@@ -7,7 +7,7 @@ import Url from '../services/Url'
 import Util from '../services/Util'
 
 class AppFooter extends React.Component {
-
+ 
     render() {
 
         return (

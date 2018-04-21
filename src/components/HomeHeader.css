@@ -1,4 +1,4 @@
-.apphead {
+.homehead {
     height: 59px;
     top: 0;
     left: 0;
@@ -8,17 +8,17 @@
     transition: top 0.2s ease-in-out;
 }
 
-.apphead-logo {
+.homehead-logo {
     display: inline-flex;
     margin-left: 4px;
 }
 
-.apphead-logo > div:first-child {
+.homehead-logo > div:first-child {
     display: flex;
     cursor: pointer;
 }
 
-.apphead-link {
+.homehead-link {
     color: #b61095;
     text-decoration: none;
     padding: 2px 5px 0px 6px;
@@ -29,53 +29,62 @@
     text-shadow: 0 2px 4px rgba(104, 104, 104, 0.479);
 }
 
-.apphead-link:hover {
+.homehead-link:hover {
     color: #a01e88;
 }
 
-.content-desktop {
-    display: block;
-    font-size: 1.2em;
-    color: #2b2b2b;
-    margin-left: 3px;
-    margin-top: 13.75px;
-    font-weight: 400;    
+.homehead-desktop {
+    display: inline-flex;
+    font-size: 1.4em;
+    margin-top: 12px;
+    margin-left: 25px;
+    color: #4e4e4e;
+    font-weight: 400;
+    min-width: 360px;
+    text-transform: uppercase;
     text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);
+    letter-spacing: .6px;
 }
 
-.apphead-content {
+.homehead-desktop>div:nth-child(2) {
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+
+.homehead-content {
     width: 100%;
     height: 100%;
     padding: 12px 28px 10px 16px;
 }
 
-.apphead-right {
+.homehead-right {
     float: right;
 }
 
-.apphead-sign-in {
+.homehead-sign-in {
     color: #3a3a3a;
     font-size: 1.2em;
     margin-top: 13px;
     margin-right: 3px;
 }
 
-.apphead-sign-in:hover {
+.homehead-sign-in:hover {
     color: #b61095;
 }
 
-.apphead-sign-in .ui.dropdown .menu > .divider {
+.homehead-sign-in .ui.dropdown .menu > .divider {
     margin: 0;
 }
 
-.apphead-sign-in .ui.dropdown .menu {
+.homehead-sign-in .ui.dropdown .menu {
     margin-top: 13px;
     width: 200px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-.ui.dropdown .menu > .apphead-dropdown-link.item {
+.ui.dropdown .menu > .homehead-dropdown-link.item {
     color: black;
     font-weight: 300;
     font-size: .95em;
@@ -83,7 +92,7 @@
     padding-bottom: 1em !important;
 }
 
-.ui.dropdown .menu > .apphead-dropdown-item.item {
+.ui.dropdown .menu > .homehead-dropdown-item.item {
     font-weight: 300;
     font-size: .95em;
     padding-top: 1em !important;
@@ -91,15 +100,15 @@
 }
 
 @media all and (max-width: 767px) {
-    .content-desktop {
+    .homehead-desktop {
         display: none;
     }
-    .apphead-content {
+    .homehead-content {
         padding-right: 10px;
         padding-left: 11px;
         text-align: left;
     }
-    .apphead-link {
+    .homehead-link {
     padding-left: 5px;
     }
 }

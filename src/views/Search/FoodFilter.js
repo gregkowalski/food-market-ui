@@ -40,7 +40,7 @@ export default class FoodFilter extends React.Component {
 
         const mobileButtonStyle = {};
         if (!style.height) {
-            style.height = '50px';
+            style.height = '55px';
             if (mobile) {
                 mobileButtonStyle.height = '50px';
             }
@@ -62,8 +62,9 @@ export default class FoodFilter extends React.Component {
                         </div>
                     }
                     <div id={mobile ? 'foodfilter-pickup-mobile' : 'foodfilter-pickup'}>
-                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICKUP</Button>
-                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVER</Button>
+                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(pickup)} onClick={this.props.onPickupClick}>PICK-UP</Button>
+                        <span className='food-filter-or'>or</span>
+                        <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVERY</Button>
                     </div>
 
                     {!mobile &&

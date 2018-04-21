@@ -72,7 +72,11 @@ class OrderHeader extends React.Component {
             'because being hangry was so 2017.',
             'easy peasy, lemon squeezy!',
             'so hot right now.',
-            'home of best kebab.'
+            'making good food taste better.',
+            'eat like family.',
+            'good food starts here.',
+            'cooking is love you can taste.'
+            
         ];
         let index = this.getRandomInt(0, taglines.length - 1);
         return taglines[index];

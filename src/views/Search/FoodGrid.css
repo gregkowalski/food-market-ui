@@ -79,6 +79,23 @@
     font-size: 1.1em !important;
 }
 
+.food-no-results {
+    padding: 70px 10px 20px 30px;
+    font-size: 1.25em;
+    line-height: 1.52em;    
+
+}
+
+.food-no-results-header {
+    font-size: 1.25em;
+    line-height: 1.55em;        
+}
+
+.food-no-results-body {
+    font-weight: 400;
+}
+
+
 @media all and (min-width: 768px) {
     .FoodCard {
         margin-left: 5px;
