@@ -38,7 +38,7 @@ class Home extends React.Component {
     getRandomTagline() {
 
         const taglines = [
-            'Handcrafted to taste like home.',
+            'Handcrafted to taste like home',
             // 'homemade + local',
             // 'Making good food taste better.',
             // 'Eat like family.',
@@ -78,9 +78,7 @@ class Home extends React.Component {
                                 <div>How it works</div>
                                 <div>Become a cook</div>
                             </div>
-
                             <div className='home-tagline'>{this.tagline}</div>
-
                             <div className='home-search-question'>Looking for something good? We got you.</div>
                             <div className='home-search'>
 

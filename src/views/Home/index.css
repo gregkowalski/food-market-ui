@@ -10,8 +10,8 @@
 }
 
 .home-tagline {
-    padding: 45px 0px 30px 0px;
-    font-size: .83em;
+    margin: 80px 0px 30px 0px;
+    font-size: .9em;
     font-weight: 300;
     color: #383838;
 }
@@ -35,7 +35,7 @@
 .home-explore>div:first-child {
     font-size: .63em;
     font-weight: 300;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .home-hoods {
@@ -169,7 +169,7 @@
     width: 45%;
     display: flex;
     align-items: baseline;
-    padding-right: 2%;
+    margin-right: 2%;
     /* justify-content: flex-start; */
     /* flex-flow: wrap; */
 }
@@ -226,7 +226,7 @@
 /* End Google Autocomplete box */
 
 .home-or-spacing {
-    padding: 0px 9px 0px 7px;
+    margin: 0px 9px 0px 7px;
     font-size: .41em;
     font-weight: 300;
 }
@@ -237,10 +237,19 @@
         width: 88px;
     }
     .home-tagline {
-        font-size: .71em;
+        font-size: .65em;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        justify-content: center;
+        display: flex;
+    }
+    .home-search-question {
+        font-size: .45em;
+        justify-content: center;
+        display: flex;
     }
     .home-howto>div:first-child {
-        padding: 0px 3px 20px 0px;
+        margin: 0px 3px 20px 0px;
     }
     .home-howto {
         display: flex;
@@ -249,25 +258,30 @@
         font-weight: 500;
         font-size: .53em;
         justify-content: space-around;
-        padding-bottom: 8px;
-        padding-right: 0px;
-        padding-top: 5px;
+        margin-bottom: 8px;
+        margin-right: 0px;
+        margin-top: 5px;
         letter-spacing: .6px;
         color: #4e4e4e;
     }
     .home-search {
         display: block;
-        /* padding: 20px 0px 10px 30px; */
         border: none;
         box-shadow: none;
-    }
-    .home-search input {
         width: 100%;
+    }
+
+    .home-search>div:first-child {
+        width: 100%;
+    }
+    .home-search>div:last-child {
+        width: 100%;
+        margin-left: -2%;
     }
     .home-hoods .card>div {
         font-weight: 400;
     }
     .home-explore>div:first-child {
-        margin-top: 10px;
+        margin-top: 50px;
     }
 }

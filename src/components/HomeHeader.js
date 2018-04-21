@@ -159,8 +159,8 @@ export class AppHeader extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: Selectors.getCurrentUser(state),
-        isLoading: Selectors.getIsLoading(state)
+        user: Selectors.currentUser(state),
+        isLoading: Selectors.isLoading(state)
     };
 };
 
