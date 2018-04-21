@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { createLogger } from 'redux-logger'
+import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from 'redux-thunk'
 import { persistStore, persistReducer, createTransform } from 'redux-persist'
 import sessionStorage from 'redux-persist/lib/storage/session'
@@ -60,7 +61,15 @@ const configureStore = (options = {}) => {
         ],
     }
 
-    const reducers = Object.assign({}, currentUser, search, order, buyerOrders, cookOrders);
+    const reducers = Object.assign({},
+        currentUser,
+        search,
+        order,
+        buyerOrders,
+        cookOrders,
+        {
+            form: formReducer
+        });
     const rootReducer = combineReducers(reducers);
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(persistedReducer, applyMiddleware(...middlewares));

@@ -52,8 +52,11 @@ function requestSaveUser() {
     return { type: ActionTypes.REQUEST_SAVE_USER };
 }
 
-function receiveSaveUserSuccess() {
-    return { type: ActionTypes.RECEIVE_SAVE_USER_SUCCESS };
+function receiveSaveUserSuccess(user) {
+    return {
+        type: ActionTypes.RECEIVE_SAVE_USER_SUCCESS,
+        user
+    };
 }
 
 function receiveSaveUserError(error) {
@@ -101,7 +104,7 @@ export const Actions = {
             return ApiClient.saveUserProfile(user)
                 .then(
                     response => {
-                        dispatch(receiveSaveUserSuccess());
+                        dispatch(receiveSaveUserSuccess(user));
                     },
                     error => {
                         dispatch(receiveSaveUserError(error));
@@ -130,7 +133,8 @@ export const Reducers = {
         switch (action.type) {
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
-                    isLoading: true
+                    isLoading: true,
+                    error: null
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_SUCCESS:
@@ -159,12 +163,14 @@ export const Reducers = {
 
             case ActionTypes.REQUEST_SAVE_USER:
                 return Object.assign({}, state, {
-                    isSaving: true
+                    isSaving: true,
+                    error: null
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_SUCCESS:
                 return Object.assign({}, state, {
-                    isSaving: false
+                    isSaving: false,
+                    user: action.user
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_ERROR:
