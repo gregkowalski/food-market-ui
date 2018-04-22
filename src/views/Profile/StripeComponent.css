@@ -1,0 +1,60 @@
+.stripecomponent-menu {
+    font-size: 1.2em !important;
+}
+
+.stripecomponent-text {
+    font-size: 1.2em;
+    line-height: 1.42em;
+    color: #555555;
+}
+
+.stripecomponent-text>div:first-child {
+    font-size: 1.25em;
+    font-weight: 500;
+    margin: 20px 0px;
+}
+
+.stripecomponent-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stripecomponent-text .ui.button {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.2em;
+    width: 50%;
+    border: 2px solid;
+    border-radius: 26px;
+    margin-bottom: 16px;
+}
+
+.stripecomponent-ready {
+    font-weight: 500;
+}
+
+.stripecomponent-box {
+    margin: 0px 10px 0px 55px;
+    width: 80%;
+}
+
+@media all and (max-width: 1036px) {
+    .stripecomponent-box {
+        margin: 0px 10px 0px 0px;
+        width: 98%;
+    }
+    .stripecomponent-text>div:nth-child(4) {
+        font-size: .9em;
+    }
+}
+
+@media all and (max-width: 767px) {
+    .stripecomponent-text .ui.button {
+        width: 100%;
+        justify-content: center;
+    }
+    .stripecomponent-logo {
+        flex-direction: row-reverse;
+    }
+}

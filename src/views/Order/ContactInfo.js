@@ -1,5 +1,5 @@
 import React from 'react'
-import Autocomplete from 'react-google-autocomplete';
+import Autocomplete from '../../components/Autocomplete'
 import { Icon, Message, Radio } from 'semantic-ui-react'
 import { Header, Divider, Segment, Input } from 'semantic-ui-react'
 import { ContactMethods } from '../../Enums';

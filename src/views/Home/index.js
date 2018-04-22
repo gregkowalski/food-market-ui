@@ -1,8 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import Autocomplete from 'react-google-autocomplete';
 import { Image, Grid, Card, Button } from 'semantic-ui-react'
 import './index.css'
+import Autocomplete from '../../components/Autocomplete'
 import HomeHeader from '../../components/HomeHeader'
 import AppFooter from '../../components/AppFooter'
 import Url from '../../services/Url'

@@ -34,11 +34,7 @@
     color: #494949 !important;
 }
 
-.profileedit-menu {
-    font-size: 1.2em !important;
-}
-
-#profileedit-grid-label {
+.profileedit-grid-body>.row>.column:first-child {
     text-align: right;
     padding: 8px 0px;
     font-weight: 500;
@@ -50,6 +46,20 @@
     font-size: 1.15em !important;
     color: #494949 !important;
     width: 85%;
+}
+
+.profileedit-checkbox {
+    padding-top: 8px;
+    padding-left: 10px;
+}
+
+.profileedit-checkbox>label, .profileedit-checkbox>input[type='checkbox'] {
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+.profileedit-checkbox>input[type='checkbox'] {
+    transform: scale(2);
 }
 
 .profileedit-save-button {
@@ -83,47 +93,6 @@
     color: #b61095 !important;
 }
 
-.profileedit-stripe-component-text {
-    font-size: 1.2em;
-    line-height: 1.42em;
-    color: #555555;
-}
-
-.profileedit-stripe-component-text>div:first-child {
-    font-size: 1.25em;
-    font-weight: 500;
-    margin: 20px 0px;
-}
-
-/* .profileedit-stripe-component-text>div:nth-child(4) {
-    color: red;
-} */
-
-.profileedit-stripe-component-logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.profileedit-stripe-component-text .ui.button {
-    font-size: 1.1em;
-    font-weight: 500;
-    line-height: 1.2em;
-    width: 50%;
-    border: 2px solid;
-    border-radius: 26px;
-    margin-bottom: 16px;
-}
-
-.profileedit-stripe-component-ready {
-    font-weight: 500;
-}
-
-.profileedit-stripe-box {
-    margin: 0px 10px 0px 55px;
-    width: 80%;
-}
-
 .profileedit-save-button-container {
     display: flex;
     margin-top: 20px;
@@ -131,7 +100,7 @@
 
 @media all and (max-width: 1097px) {
     .profileedit-grid-body {
-       width: 96%;
+        width: 96%;
     }
 }
 
@@ -139,7 +108,7 @@
     .profileedit-main {
         width: 90%;
     }
-    #profileedit-grid-label {
+    .profileedit-grid-body>.row>.column:first-child {
         text-align: left;
         padding-bottom: 0 !important;
     }
@@ -149,27 +118,6 @@
     .profileedit-title>div:first-child {
         font-size: 1.85em;
         margin: 15px 10px 20px 0px;
-    }
-    .profileedit-stripe-box {
-        margin: 0px 10px 0px 0px;
-        width: 98%;
-    }
-    /* .profileedit-stripe-component-text .ui.button {
-        width: 100%;
-        justify-content: center;
-    } */
-    .profileedit-stripe-component-text>div:nth-child(4) {
-        font-size: .9em;
-    }
-
-}
-@media all and (max-width: 767px) {
-    .profileedit-stripe-component-text .ui.button {
-        width: 100%;
-        justify-content: center;
-    }
-    .profileedit-stripe-component-logo {
-        flex-direction: row-reverse;
     }
 }
 
