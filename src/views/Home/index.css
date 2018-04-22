@@ -10,7 +10,7 @@
 }
 
 .home-tagline {
-    margin: 80px 0px 30px 0px;
+    margin: 100px 0px 30px 0px;
     font-size: .9em;
     font-weight: 300;
     color: #383838;
@@ -20,7 +20,6 @@
     border-radius: 2px;
     min-height: 4.2em;
     font-weight: 300;
-    min-width: 145px;
     letter-spacing: .8px;
 }
 
@@ -28,14 +27,12 @@
     display: none;
 }
 
-.home-howto>div:first-child {
-    padding: 0px 68px;
-}
+
 
 .home-explore>div:first-child {
     font-size: .63em;
     font-weight: 300;
-    margin-top: 60px;
+    margin-top: 80px;
 }
 
 .home-hoods {
@@ -66,7 +63,7 @@
 
 .home-explore-item>div {
     font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 400;
     margin: auto 20px;
 }
 
@@ -128,8 +125,9 @@
     bottom: 10px;
     left: 20px;
     color: whitesmoke;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: .25px;
 }
 
 .home-hoods img {
@@ -145,10 +143,10 @@
 /* Google Autocomplete box */
 
 .home-search {
-    width: 72%;
     display: flex;
     transition: none;
-    padding: 20px 0px 0px 30px;
+    padding: 20px 0px 0px 36px;
+    margin-right: 245px;
     margin-top: 10px;
     color: #444444;
     border: 1px solid #e7e7e7;
@@ -156,17 +154,18 @@
 }
 
 .home-search>div:first-child {
-    width: 55%;
+    width: 70%;
+    padding-right: 2px;
 }
 
 .home-search-question {
-    font-size: .45em;
+    font-size: .6em;
     font-weight: 300;
-    padding: 0px 0px 10px 0px;
+    padding: 22px 0px 10px 0px;
 }
 
 .home-search>div:last-child {
-    width: 45%;
+    width: 30%;
     display: flex;
     align-items: baseline;
     margin-right: 2%;
@@ -231,15 +230,21 @@
     font-weight: 300;
 }
 
+@media all and (max-width: 1050px) {
+.home-search {
+    margin-right: 5px;
+}
+}
+
 @media all and (max-width: 767px) {
     .home-explore img {
         height: 73px;
         width: 88px;
     }
     .home-tagline {
-        font-size: .65em;
-        margin-top: 25px;
-        margin-bottom: 15px;
+        font-size: .77em;
+        margin-top: 28px;
+        margin-bottom: 2px;
         justify-content: center;
         display: flex;
     }
@@ -248,8 +253,13 @@
         justify-content: center;
         display: flex;
     }
-    .home-howto>div:first-child {
-        margin: 0px 3px 20px 0px;
+    .home-search {
+        padding: 0px 0px 0px 13px;
+        margin-right: 0px;
+    }
+    .home-search-flex-grow .ui.button {
+        border-radius: 2px;
+        min-height: 4.2em;
     }
     .home-howto {
         display: flex;
@@ -258,30 +268,40 @@
         font-weight: 500;
         font-size: .53em;
         justify-content: space-around;
+        align-items: center;
         margin-bottom: 8px;
         margin-right: 0px;
         margin-top: 5px;
         letter-spacing: .6px;
-        color: #4e4e4e;
+        padding: 5px 0px;
+        color: #b61095;
+        /* border: 2px solid black; */
+        background-color: #ececec;
     }
+
     .home-search {
         display: block;
         border: none;
         box-shadow: none;
         width: 100%;
     }
-
     .home-search>div:first-child {
         width: 100%;
+        /* margin-left: 12px;         */
     }
     .home-search>div:last-child {
         width: 100%;
-        margin-left: -2%;
+        /* margin-left: -3px; */
     }
     .home-hoods .card>div {
-        font-weight: 400;
+        font-weight: 500;
+        letter-spacing: .2px;
     }
     .home-explore>div:first-child {
         margin-top: 50px;
+    }
+    .home-top-content {
+        /* background-color: red; */
+        width: 100%;
     }
 }

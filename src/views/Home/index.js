@@ -16,8 +16,8 @@ import cookImg3 from './home-cook3.jpg'
 // import joinImg1 from './home-join1.jpg'
 import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
-import backgroundImg from './home-background-crop.jpg'
-import backgroundImg1 from './home-background-mid.jpg'
+// import backgroundImg from './home-background-crop.jpg'
+// import backgroundImg1 from './home-background-mid.jpg'
 
 
 
@@ -63,7 +63,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const { pickup, buyerAddress, isBuyerAddressValid, onAddressSelected, onAddressChange, onAddressBlur } = this.props;
+        const { buyerAddress, isBuyerAddressValid, onAddressSelected, onAddressChange, onAddressBlur } = this.props;
 
         return (
             <div>
@@ -76,10 +76,11 @@ class Home extends React.Component {
                         <div className='home-top-content'>
                             <div className='home-howto'>
                                 <div>How it works</div>
+                                <div>|</div>
                                 <div>Become a cook</div>
                             </div>
                             <div className='home-tagline'>{this.tagline}</div>
-                            <div className='home-search-question'>Looking for something good? We got you.</div>
+                            <div className='home-search-question'>Looking for something to eat? We got you.</div>
                             <div className='home-search'>
 
                                 <Autocomplete
@@ -98,7 +99,14 @@ class Home extends React.Component {
                             visible={!isBuyerAddressValid}
                             header='Invalid address'
                             content='Please enter your delivery address' /> */}
+                                
                                 <div>
+                                    <div className='home-search-flex-grow'>
+                                        <Button fluid color='purple' onClick={this.props.onPickupClick}>FIND FOOD NEAR ME</Button>
+                                    </div>
+                                </div>
+
+                                {/* <div>
                                     <div className='home-search-flex-grow'>
                                         <Button fluid color='purple' onClick={this.props.onPickupClick}>PICK-UP</Button>
                                     </div>
@@ -106,7 +114,7 @@ class Home extends React.Component {
                                     <div className='home-search-flex-grow'>
                                         <Button fluid color='purple' onClick={this.props.onDeliveryClick}>DELIVERY</Button>
                                     </div>
-                                </div>
+                                </div> */}
 
                             </div>
 
@@ -139,7 +147,7 @@ class Home extends React.Component {
                     </div>
 
                     <div className='home-hoods'>
-                        <div>Search by neighbourhood</div>
+                        <div>Get food delivered to your neighbourhood</div>
                         <Grid stackable>
                             <Grid.Column width={8}>
                                 <div onClick={this.navigateToSearch}>
