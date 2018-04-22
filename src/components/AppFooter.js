@@ -14,17 +14,21 @@ class AppFooter extends React.Component {
             <div className='appfooter'>
                 <Divider />
                 <Grid verticalAlign='top'>
-                    <Grid.Column width={8}>
-                        <Link to={Url.about()}>About</Link>
+                    <Grid.Column width={5}>
+                        <Link to={Url.about()}>What is foodcraft?</Link>
                         <Link to={Url.policies()}>Policies</Link>
-                        <Link to={Url.terms()}>Terms and conditions</Link>
-                        <Link to={Url.help()}>Help</Link>
+                        <Link to={Url.terms()}>Terms + Conditions</Link>
+                        {/* <Link to={Url.privacy()}>Privacy</Link>                         */}
                     </Grid.Column>
-                    <Grid.Column width={7}>
-                        <Link to={Url.safety()}>Trust &amp; Safety</Link>
-                        <Link to={Url.cookies()}>Cookies</Link>
-                        <Link to={Url.privacy()}>Privacy</Link>
-                        <a href={Util.contactSupportUrl()}>Support</a>
+                    <Grid.Column width={5}>
+                        <Link to={Url.about()}>How It Works</Link> 
+                        <Link to={Url.community()}>Our Community</Link>                                                                                    
+                        <Link to={Url.safety()}>Food Safety</Link>                                                            
+                    </Grid.Column>
+                    <Grid.Column width={5}>
+                    <Link to={Url.help()}>The Help Center</Link>                    
+                        {/* <Link to={Url.cookies()}>Cookies</Link> */}
+                        <a href={Util.contactSupportUrl()}>Contact Support</a>
                     </Grid.Column>
                 </Grid>
                 <Divider />

@@ -64,7 +64,7 @@ class Url {
     about() {
         return '/about';
     }
-
+ 
     policies() {
         return '/policies';
     }
@@ -74,7 +74,7 @@ class Url {
     }
 
     safety() {
-        return '/safety';
+        return '/foodsafety';
     }
 
     terms() {
@@ -87,6 +87,14 @@ class Url {
 
     privacy() {
         return '/privacy';
+    }
+
+    howto() {
+        return '/howto';
+    }
+
+    community() {
+        return '/community';
     }
 }
 

@@ -1,7 +1,8 @@
 .appfooter {
-    font-size: 1.3rem;
-    line-height: 1.3;
+    font-size: 1.2rem;
+    line-height: 1.5;
     background-color: whitesmoke;
+    text-transform: uppercase;
 }
 
 .appfooter .ui.grid {
