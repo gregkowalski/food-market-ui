@@ -41,10 +41,10 @@
     min-width: 118px;
 }
 
-.profileedit-grid-body {
-    margin: 0px 10px 10px 25px !important;
-    font-size: 1.15em !important;
-    color: #494949 !important;
+.profileedit-grid-body.grid {
+    margin: 0px 10px 10px 25px;
+    font-size: 1.15em;
+    color: #494949;
     width: 85%;
 }
 
@@ -53,13 +53,15 @@
     padding-left: 10px;
 }
 
-.profileedit-checkbox>label, .profileedit-checkbox>input[type='checkbox'] {
+.profileedit-checkbox>input[type='checkbox'] {
+    transform: scale(2);
     cursor: pointer;
     padding: 10px 10px;
 }
 
-.profileedit-checkbox>input[type='checkbox'] {
-    transform: scale(2);
+.profileedit-checkbox>label {
+    cursor: pointer;
+    padding: 10px 15px;
 }
 
 .profileedit-save-button {

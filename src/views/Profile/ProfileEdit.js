@@ -133,15 +133,6 @@ class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <Grid.Column computer={3}>Neighbourhood</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='hood' autoComplete='hood' component={renderField} type='text' placeholder='Where do you live?' />
-                                            <div className='profileedit-input-descriptions'>
-                                                Your neck of the woods (i.e. Kitslano, Yaletown, North Burnaby)
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
                                         <Grid.Column computer={3}>About:</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Field name='info' autoComplete='info' component={renderTextArea} rows={2} type='text' placeholder='Tell everyone about yourself' />
@@ -219,10 +210,6 @@ const validate = (values) => {
 
     if (!values.username) {
         errors.username = { header: 'Username is required', message: 'Please enter your username' };
-    }
-
-    if (!values.hood) {
-        errors.hood = { header: 'Neighbourhood is required', message: 'Please enter your neighbourhood' };
     }
 
     if (!values.info) {
