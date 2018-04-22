@@ -134,6 +134,7 @@ export const Reducers = {
 
     currentUser: (state = initialState, action = {}) => {
         switch (action.type) {
+
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
@@ -152,7 +153,6 @@ export const Reducers = {
                     apiError: action.apiError,
                     apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST
                 });
-
 
 
 

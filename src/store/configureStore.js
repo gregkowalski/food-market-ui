@@ -7,6 +7,7 @@ import sessionStorage from 'redux-persist/lib/storage/session'
 import { createBlacklistFilter } from 'redux-persist-transform-filter'
 import moment from 'moment'
 import { Reducers as currentUser } from './currentUser'
+import { Reducers as publicUser } from './publicUser'
 import { Reducers as search } from './search'
 import { Reducers as order } from './order'
 import { Reducers as buyerOrders } from './buyerOrders'
@@ -23,6 +24,7 @@ const configureStore = (options = {}) => {
     // const searchFilter = createFilter('search', ['pickup', 'date']);
     const orderFilter = createBlacklistFilter('order', ['isOrderProcessing', 'paymentError']);
     const currentUserFilter = createBlacklistFilter('currentUser', ['apiErrorCode', 'apiError']);
+    const publicUserFilter = createBlacklistFilter('publicUser');
     const searchFilter = createBlacklistFilter('search', ['region']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
@@ -53,7 +55,7 @@ const configureStore = (options = {}) => {
         key: 'food-market:root',
         storage: sessionStorage,
         // transforms: [searchFilter, orderFilter, myTransform],
-        transforms: [myTransform, orderFilter, currentUserFilter, searchFilter],
+        transforms: [myTransform, orderFilter, currentUserFilter, publicUserFilter, searchFilter],
         whitelist: [
             'order',
             'search',
@@ -67,6 +69,7 @@ const configureStore = (options = {}) => {
         order,
         buyerOrders,
         cookOrders,
+        publicUser,
         {
             form: formReducer
         });

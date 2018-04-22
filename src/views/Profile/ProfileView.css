@@ -1,25 +1,27 @@
+.profileview-container {
+    display: flex;
+    margin-top: 100px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profileview-left {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.profileview-main {
+    margin-top: 20px;
+    width: 100%;
+}
+
 .profileview-header {
     color: #494949 !important;
     font-size: 2.9em !important;
     font-weight: 500 !important;
     line-height: 40px !important;
     margin-top: 2px !important;
-}
-
-.profileview-sub-header {
-    color: #60b0f4;
-    line-height: 20px !important;
-    font-weight: 500 !important;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-}
-
-.profileview-user-info {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-size: 1.35em !important;
-    font-weight: 400;
-    line-height: 26px !important;
 }
 
 .profileview-card {
@@ -31,7 +33,13 @@
     margin: 0px 10px;
     font-size: 1.5em !important;
     font-weight: 500 !important;
-    background-color: #b3dbce60 !important;
+    background-color: #a5a5a560 !important;
+}
+
+.profileview-about-me > div:first-child {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 1.1em;
 }
 
 .profileview-card-items {
@@ -39,29 +47,33 @@
     font-size: 1.2em;
 }
 
+.profileview-card-items > div:not(:first-child) {
+    margin-top: 15px;
+}
+
+.profileview-sub-header {
+    color: #60b0f4;
+    line-height: 20px !important;
+    font-weight: 500 !important;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.profileview-user-info {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 1.35em !important;
+    font-weight: 400;
+    line-height: 26px !important;
+}
+
 @media all and (max-width: 1127px) {
     .profileview-left {
         display: none;
     }
-}
-
-.profileview-container {
-    display: flex;
-    margin-top: 100px;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profileview-container:after {
-    clear: both;
-}
-
-.profileview-left {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-.profileview-main {
-    margin-top: 20px;
+    .profileview-main {
+        width: 85%;
+        margin: inherit auto;
+    }
 }

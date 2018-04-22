@@ -16,14 +16,30 @@ import LoadingIcon from '../../components/LoadingIcon'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
 import { Actions, Selectors } from '../../store/currentUser'
-import { Certifications } from '../../Enums';
+import { Certifications, CertificationLabels } from '../../Enums';
 import StripeComponent from './StripeComponent'
 
 const certificationOptions = [
-    { key: Certifications.foodsafe_level1, value: Certifications.foodsafe_level1, text: 'FoodSafe Level 1' },
-    { key: Certifications.foodsafe_level2, value: Certifications.foodsafe_level2, text: 'FoodSafe Level 2' },
-    { key: Certifications.market_safe, value: Certifications.market_safe, text: 'Market Safe' },
-    { key: Certifications.pro_caterer, value: Certifications.pro_caterer, text: 'Professional Caterer' },
+    {
+        key: Certifications.foodsafe_level1,
+        value: Certifications.foodsafe_level1,
+        text: CertificationLabels.foodsafe_level1
+    },
+    {
+        key: Certifications.foodsafe_level2,
+        value: Certifications.foodsafe_level2,
+        text: CertificationLabels.foodsafe_level2
+    },
+    {
+        key: Certifications.market_safe,
+        value: Certifications.market_safe,
+        text: CertificationLabels.market_safe
+    },
+    {
+        key: Certifications.pro_caterer,
+        value: Certifications.pro_caterer,
+        text: CertificationLabels.pro_caterer
+    },
 ];
 
 class ProfileEdit extends React.Component {
