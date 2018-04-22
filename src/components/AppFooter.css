@@ -1,8 +1,14 @@
 .appfooter {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     line-height: 1.5;
     background-color: whitesmoke;
     text-transform: uppercase;
+}
+
+.appfooter-header {
+    font-weight: 800;
+    margin-bottom: 10px;
+    font-size: 1.18em;
 }
 
 .appfooter .ui.grid {
@@ -33,4 +39,12 @@
 
 .appfooter-logo div {
     margin-top: 5px;
+}
+
+.appfooter-social {
+    display: flex;
+}
+
+.appfooter-social> a {
+    margin-right: 15px;
 }

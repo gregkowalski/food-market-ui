@@ -96,6 +96,10 @@ class Url {
     community() {
         return '/community';
     }
+
+    whycook () {
+        return '/whycook';
+    }
 }
 
 export default new Url();
