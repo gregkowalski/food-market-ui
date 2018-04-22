@@ -27,8 +27,6 @@
     display: none;
 }
 
-
-
 .home-explore>div:first-child {
     font-size: .63em;
     font-weight: 300;
@@ -229,9 +227,9 @@
 }
 
 @media all and (max-width: 1050px) {
-.home-search {
-    margin-right: 5px;
-}
+    .home-search {
+        margin-right: 5px;
+    }
 }
 
 @media all and (max-width: 767px) {
@@ -264,19 +262,26 @@
         flex-flow: row;
         text-transform: uppercase;
         font-weight: 500;
-        font-size: .53em;
-        justify-content: space-around;
+        font-size: .48em;
+        justify-content: center;
         align-items: center;
         margin-bottom: 8px;
         margin-right: 0px;
         margin-top: 5px;
         letter-spacing: .6px;
-        padding: 5px 0px;
         color: #b61095;
-        /* border: 2px solid black; */
         background-color: #ececec;
     }
-
+    .home-howto a {
+        color: #b61095;
+        padding: 14px 2px;
+    }
+    .home-howto a:hover {
+        color: #4e4e4e;
+    }
+    .home-link-separator {
+        padding: 0px 9px;
+    }
     .home-search {
         display: block;
         border: none;

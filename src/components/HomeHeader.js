@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Dropdown } from 'semantic-ui-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './HomeHeader.css'
 import { Constants } from '../Constants'
@@ -141,9 +141,9 @@ export class AppHeader extends React.Component {
                             <div className='homehead-link'>{Constants.AppName}</div>
                         </div>
                         <div className="homehead-desktop">
-                                <div>How it works</div>
-                                <div>·</div>
-                                <div>Become a cook</div>
+                            <Link to={Url.howto()}>How It Works</Link>
+                            <div>·</div>
+                            <Link to={Url.whycook()}>Become A Cook</Link>
                         </div>
                     </div>
                     <div className='homehead-right'>

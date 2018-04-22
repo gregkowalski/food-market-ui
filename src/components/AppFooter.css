@@ -33,8 +33,10 @@
 }
 
 .appfooter-logo img {
-    height: 30px;
+    height: 31px;
     filter: grayscale(100%);
+    margin-right: 8px;
+    margin-top: 2px;
 }
 
 .appfooter-logo div {
@@ -47,4 +49,9 @@
 
 .appfooter-social> a {
     margin-right: 15px;
+}
+
+.appfooter-name {
+    font-size: .95em;
+    text-transform: capitalize;
 }

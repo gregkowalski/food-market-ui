@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { Image, Grid, Card, Button } from 'semantic-ui-react'
 import './index.css'
 import Autocomplete from '../../components/Autocomplete'
@@ -75,9 +75,9 @@ class Home extends React.Component {
                         </div>
                         <div className='home-top-content'>
                             <div className='home-howto'>
-                                <div>How it works</div>
-                                <div>|</div>
-                                <div>Become a cook</div>
+                                <Link to={Url.howto()}>How It Works</Link>
+                                <div className='home-link-separator'>|</div>
+                                <Link to={Url.whycook()}>Become A Cook</Link>
                             </div>
                             <div className='home-tagline'>{this.tagline}</div>
                             <div className='home-search-question'>Looking for something to eat? We got you.</div>
@@ -99,7 +99,7 @@ class Home extends React.Component {
                             visible={!isBuyerAddressValid}
                             header='Invalid address'
                             content='Please enter your delivery address' /> */}
-                                
+
                                 <div>
                                     <div className='home-search-flex-grow'>
                                         <Button fluid color='purple' onClick={this.props.onPickupClick}>FIND FOOD NEAR ME</Button>

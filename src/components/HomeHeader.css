@@ -39,11 +39,21 @@
     margin-top: 12px;
     margin-left: 25px;
     color: #4e4e4e;
-    font-weight: 400;
+    font-weight: 500;
     min-width: 360px;
     text-transform: uppercase;
     text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);
     letter-spacing: .6px;
+}
+
+.homehead-desktop a {
+    color: #4e4e4e;  
+}
+
+.homehead-desktop a:hover {
+    color: #b61095;
+    text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);    
+        
 }
 
 .homehead-desktop>div:nth-child(2) {

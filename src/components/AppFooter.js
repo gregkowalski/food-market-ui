@@ -13,26 +13,26 @@ class AppFooter extends React.Component {
         return (
             <div className='appfooter'>
                 <Divider />
-                <Grid verticalAlign='top'>
-                    <Grid.Column width={4}>
+                <Grid verticalAlign='top' doubling columns={4} >
+                    <Grid.Column>
                         {/* <div className='appfooter-header'>Foodcraft</div> */}
-                        <Link to={Url.about()}>what is foodcraft</Link>
+                        <Link to={Url.about()}>About</Link>
                         <Link to={Url.terms()}>Terms</Link>
                         <Link to={Url.privacy()}>Privacy</Link>  
                         <Link to={Url.policies()}>Policies</Link>                                              
                     </Grid.Column>
-                    <Grid.Column width={4}>
+                    <Grid.Column>
                         <Link to={Url.howto()}>How It Works</Link>
                         <Link to={Url.whycook()}>Become A Cook</Link>                        
                         <Link to={Url.safety()}>Food Safety</Link>
                     </Grid.Column>
-                    <Grid.Column width={4}>
-                    <Link to={Url.community()}>Our Community</Link>                    
+                    <Grid.Column>
+                    <Link to={Url.community()}>Community</Link>                    
                         <Link to={Url.help()}>The Help Center</Link>
                         {/* <Link to={Url.cookies()}>Cookies</Link> */}
                         <a href={Util.contactSupportUrl()}>Support</a>
                     </Grid.Column>
-                    <Grid.Column width={4}>
+                    <Grid.Column>
                     <div className='appfooter-social'>
                     <a href='https://www.instagram.com/foodcraftvancity/'><Icon name='instagram'/></a>
                     <a href='https://twitter.com/foodcraftvan'><Icon name='twitter'/></a>
@@ -43,7 +43,7 @@ class AppFooter extends React.Component {
                 <Divider />
                 <div className='appfooter-logo'>
                     <Image src={Constants.AppLogo} />
-                    <div>&copy; 2018 {Util.titleCase(Constants.AppName)}, Inc.</div>
+                    <div className='appfooter-name'>&copy; 2018 {Constants.AppName}, Inc.</div>
                 </div>
             </div>
         );

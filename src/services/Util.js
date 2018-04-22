@@ -223,10 +223,6 @@ class Util {
         return map;
     }
 
-    titleCase(text) {
-        return text.charAt(0).toUpperCase() + text.slice(1);
-    }
-
     contactSupport() {
         window.location.href = this.contactSupportUrl();
     }

@@ -1,0 +1,17 @@
+.about-header {
+    color: #4e4e4e;
+    font-size: 1.9em;
+    font-weight: 500;
+    margin-top: 50px;
+}
+
+.about-content {
+    font-size: 1.2em;
+    color: #4e4e4e;
+}
+
+@media all and (max-width: 767px) {
+.about-header {
+    margin-top: 35px;
+}
+}
