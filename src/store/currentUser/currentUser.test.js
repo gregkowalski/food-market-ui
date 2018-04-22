@@ -21,15 +21,15 @@ describe('store/currentUser integration', () => {
         ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
         store.dispatch(Actions.loadCurrentUser())
             .then(() => {
-                expect(Selectors.getCurrentUser(store.getState())).toEqual({ email: 'xxx' });
-                expect(Selectors.getIsLoading(store.getState())).toEqual(false);
+                expect(Selectors.currentUser(store.getState())).toEqual({ email: 'xxx' });
+                expect(Selectors.isLoading(store.getState())).toEqual(false);
             })
     });
 
     it('should log out current user', () => {
         store.dispatch(Actions.logOut());
-        expect(Selectors.getCurrentUser(store.getState())).toBeNull();
-        expect(Selectors.getIsLoading(store.getState())).toEqual(false);
+        expect(Selectors.currentUser(store.getState())).toBeNull();
+        expect(Selectors.isLoading(store.getState())).toEqual(false);
     });
 
 });

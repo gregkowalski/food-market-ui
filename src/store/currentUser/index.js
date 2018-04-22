@@ -17,10 +17,10 @@ function receiveCurrentUserSuccess(user) {
     };
 }
 
-function receiveCurrentUserError(error) {
+function receiveCurrentUserError(apiError) {
     return {
         type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
-        error,
+        apiError,
     };
 }
 
@@ -59,10 +59,10 @@ function receiveSaveUserSuccess(user) {
     };
 }
 
-function receiveSaveUserError(error) {
+function receiveSaveUserError(apiError) {
     return {
         type: ActionTypes.RECEIVE_SAVE_USER_ERROR,
-        error,
+        apiError,
     };
 }
 
@@ -107,7 +107,8 @@ export const Actions = {
                         dispatch(receiveSaveUserSuccess(user));
                     },
                     error => {
-                        dispatch(receiveSaveUserError(error));
+                        const err = error && error.response && error.response.data && error.response.data.error;
+                        dispatch(receiveSaveUserError(err));
                     }
                 );
         };
@@ -118,8 +119,10 @@ export const Selectors = {
     currentUser: (state) => state.currentUser.user,
     isLoading: (state) => state.currentUser.isLoading,
     isSaving: (state) => state.currentUser.isSaving,
-    errorCode: (state) => state.currentUser.errorCode,
-    error: (state) => state.currentUser.error,
+    apiErrorCode: (state) => state.currentUser.apiErrorCode,
+    apiError: (state) => {
+        return state.currentUser.apiError;
+    },
 }
 
 const initialState = {
@@ -134,7 +137,7 @@ export const Reducers = {
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    error: null
+                    apiError: null
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_SUCCESS:
@@ -146,8 +149,8 @@ export const Reducers = {
             case ActionTypes.RECEIVE_CURRENT_USER_ERROR:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    error: action.error,
-                    errorCode: ErrorCodes.USER_DOES_NOT_EXIST
+                    apiError: action.apiError,
+                    apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST
                 });
 
 
@@ -164,7 +167,7 @@ export const Reducers = {
             case ActionTypes.REQUEST_SAVE_USER:
                 return Object.assign({}, state, {
                     isSaving: true,
-                    error: null
+                    apiError: null
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_SUCCESS:
@@ -176,7 +179,7 @@ export const Reducers = {
             case ActionTypes.RECEIVE_SAVE_USER_ERROR:
                 return Object.assign({}, state, {
                     isSaving: false,
-                    error: action.error,
+                    apiError: action.apiError,
                 });
 
             default:

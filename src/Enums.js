@@ -22,4 +22,11 @@ export const FoodPrepType = {
     ready: 'cooked',
     ingredient: 'ingredient',
     uncooked: 'uncooked'
-}; 
+};
+
+export const Certifications = {
+    foodsafe_level1: 'foodsafe_level1',
+    foodsafe_level2: 'foodsafe_level2',
+    market_safe: 'market_safe',
+    pro_caterer: 'pro_caterer'
+}

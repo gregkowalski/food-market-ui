@@ -10,11 +10,11 @@ describe('store/currentUser/Selectors', () => {
         }
     };
 
-    it('getCurrentUser should return user', () => {
-        Selector(Selectors.getCurrentUser).expect(state).toReturn({ name: 'xxx' });
+    it('currentUser should return user', () => {
+        Selector(Selectors.currentUser).expect(state).toReturn({ name: 'xxx' });
     });
 
-    it('getIsLoading should return correct value', () => {
-        Selector(Selectors.getIsLoading).expect(state).toReturn(true);
+    it('isLoading should return correct value', () => {
+        Selector(Selectors.isLoading).expect(state).toReturn(true);
     });
 })

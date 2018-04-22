@@ -19,8 +19,8 @@ export default function (ComposedClass) {
         }
 
         componentWillReceiveProps(nextProps) {
-            const { errorCode } = nextProps;
-            if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
+            const { apiErrorCode } = nextProps;
+            if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
                 CognitoUtil.setLastPath(window.location.pathname);
                 CognitoUtil.logOut();
                 CognitoUtil.redirectToLoginIfNoSession();
@@ -33,8 +33,8 @@ export default function (ComposedClass) {
                 return null;
             }
 
-            const { errorCode, ...props } = this.props;
-            if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
+            const { apiErrorCode, ...props } = this.props;
+            if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
                 return null;
             }
 
@@ -44,7 +44,7 @@ export default function (ComposedClass) {
 
     const mapStateToProps = (state) => {
         return {
-            errorCode: Selectors.errorCode(state),
+            apiErrorCode: Selectors.apiErrorCode(state),
         };
     };
 

@@ -51,19 +51,19 @@ describe('store/currentUser/Reducers', () => {
     });
 
     it('should receive current user with error', () => {
-        const error = {};
+        const apiError = {};
         Reducer(Reducers.currentUser)
-            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, error })
-            .toChangeInState({ isLoading: false, error, errorCode: ErrorCodes.USER_DOES_NOT_EXIST });
+            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
+            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST });
     });
 
     it('should not modify state when receiveing current user with error', () => {
         const state = { isLoading: true, user: null };
-        const error = {};
+        const apiError = {};
         Reducer(Reducers.currentUser)
             .withState(state)
-            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, error })
-            .toChangeInState({ isLoading: false, error, errorCode: ErrorCodes.USER_DOES_NOT_EXIST  });
+            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
+            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST  });
         expect(state.isLoading).toEqual(true);
     });
 

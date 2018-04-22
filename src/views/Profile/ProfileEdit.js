@@ -16,6 +16,7 @@ import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
 import { Actions, Selectors } from '../../store/currentUser'
 import { Field, reduxForm } from 'redux-form'
+import { Certifications } from '../../Enums';
 
 const languageOptions = [
     { key: 'en-CA', value: 'en-CA', text: 'English' },
@@ -38,6 +39,13 @@ const languageOptions = [
     { key: 'el-GR', value: 'el-GR', text: 'Greek' }
 ]
 
+const certificationOptions = [
+    { key: Certifications.foodsafe_level1, value: Certifications.foodsafe_level1, text: 'FoodSafe Level 1' },
+    { key: Certifications.foodsafe_level2, value: Certifications.foodsafe_level2, text: 'FoodSafe Level 2' },
+    { key: Certifications.market_safe, value: Certifications.market_safe, text: 'Market Safe' },
+    { key: Certifications.pro_caterer, value: Certifications.pro_caterer, text: 'Professional Caterer' },
+];
+
 class ProfileEdit extends React.Component {
 
     state = {};
@@ -50,9 +58,9 @@ class ProfileEdit extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.isSaving && !nextProps.isSaving) {
             // We finished saving, let's set the appropriate messages
-            if (nextProps.error) {
-                console.log(nextProps.error);
-                this.setState({ message: { show: true, content: "Oops, your profile was not saved." } });
+            if (nextProps.apiError) {
+                console.log(nextProps.apiError);
+                this.setState({ message: { show: true, content: `Oops, your profile was not saved. Error: ${nextProps.apiError}` } });
             }
             else {
                 this.setState({ message: { show: true, content: "Success! Your profile has been updated." } });
@@ -217,7 +225,8 @@ class ProfileEdit extends React.Component {
                                         <Grid.Row>
                                             <Grid.Column id='profileedit-grid-label' computer={3}>Certifications</Grid.Column>
                                             <Grid.Column computer={13}>
-                                                <Field name='certifications' autoComplete='certifications' component={renderField} type='text' placeholder="What are your certifications?" />
+                                                <Field name='certifications' autoComplete='certifications' placeholder="What are your certifications?"
+                                                    options={certificationOptions} component={renderDropdown} normalize={parseCertifications} />
                                             </Grid.Column>
                                         </Grid.Row>
                                     </Grid>
@@ -233,8 +242,7 @@ class ProfileEdit extends React.Component {
                                     </div>
                                     {message && message.show &&
                                         <div>
-                                            <Message className='profileedit-save-confirm'
-                                                floating size='tiny'
+                                            <Message className='profileedit-save-confirm' floating size='tiny'
                                                 onDismiss={() => this.setState({ message: { show: false } })}>
                                                 {message.content}
                                             </Message>
@@ -257,6 +265,11 @@ class ProfileEdit extends React.Component {
             </div>
         )
     }
+}
+
+const parseCertifications = (value) => {
+    console.log(value);
+    return value;
 }
 
 const parseAddress = (value) => {
@@ -307,6 +320,34 @@ const validateEmail = (email) => {
     return pattern.test(email);
 }
 
+
+
+const renderDropdown = ({ input, meta, placeholder, options }) => {
+    const { touched, error } = meta;
+    const dropdown = Object.assign({}, input);
+
+    const dropdownOnChange = (event, data) => {
+        console.log(data);
+        input.onChange(data.value);
+    }
+
+    const dropdownOnBlur = (event, data) => {
+        console.log(data);
+        input.onBlur(data.value);
+    }
+
+    dropdown.onChange = dropdownOnChange;
+    dropdown.onBlur = dropdownOnBlur;
+    return (
+        <div>
+            <Dropdown {...dropdown} fluid multiple search selection options={options} placeholder={placeholder} />
+            {touched && error &&
+                <Message error header={error.header} content={error.message} icon='exclamation circle' />
+            }
+        </div>
+    );
+}
+
 const renderAutocomplete = ({ input, meta, placeholder, autoComplete, className }) => {
     const { touched, error } = meta;
     return (
@@ -325,12 +366,12 @@ const renderAutocomplete = ({ input, meta, placeholder, autoComplete, className 
         </div>
     );
 }
-const renderField = ({ input, type, meta, placeholder, autoComplete }) => {
+const renderField = ({ input, type, meta, placeholder, autoComplete, disabled }) => {
     const { touched, error } = meta;
     const hasError = !(!error); // turn it into a boolean
     return (
         <div>
-            <Input {...input} type={type} placeholder={placeholder} error={hasError} autoComplete={autoComplete} />
+            <Input {...input} disabled={disabled} type={type} placeholder={placeholder} error={hasError} autoComplete={autoComplete} />
             {touched && error &&
                 <Message error header={error.header} content={error.message} icon='exclamation circle' />
             }
@@ -355,7 +396,7 @@ const mapStateToProps = (state) => {
         user: Selectors.currentUser(state),
         isLoading: Selectors.isLoading(state),
         isSaving: Selectors.isSaving(state),
-        error: Selectors.error(state),
+        apiError: Selectors.apiError(state),
         initialValues: Selectors.currentUser(state)
     };
 };
