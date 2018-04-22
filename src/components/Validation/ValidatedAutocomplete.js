@@ -19,8 +19,8 @@ const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, classNa
         return style;
     }
 
-    const { touched, error, invalid } = meta;
-    const hasError = invalid;
+    const { touched, error, visited, invalid } = meta;
+    const hasError = visited && invalid;
     const divClassName = hasError ? 'error' : '';
     return (
         <div className={divClassName}>

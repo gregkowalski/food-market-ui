@@ -303,5 +303,5 @@ Order.propTypes = {
     }).isRequired
 }
 
-const form = reduxForm({ form: 'order', validate, enableReinitialize: true })(Order);
+const form = reduxForm({ form: 'order', validate })(Order);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(form));
