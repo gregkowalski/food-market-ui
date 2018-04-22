@@ -22,7 +22,7 @@ class AppFooter extends React.Component {
                         <Link to={Url.policies()}>Policies</Link>                                              
                     </Grid.Column>
                     <Grid.Column width={4}>
-                        <Link to={Url.about()}>How It Works</Link>
+                        <Link to={Url.howto()}>How It Works</Link>
                         <Link to={Url.whycook()}>Become A Cook</Link>                        
                         <Link to={Url.safety()}>Food Safety</Link>
                     </Grid.Column>

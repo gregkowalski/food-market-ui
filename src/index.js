@@ -34,6 +34,9 @@ import Policies from './views/Info/Policies'
 import Privacy from './views/Info/Privacy'
 import Terms from './views/Info/Terms'
 import Safety from './views/Info/Safety'
+import WhyCook from './views/Info/WhyCook'
+import HowTo from './views/Info/HowTo'
+import Community from './views/Info/Community'
 // import Map2 from './views/map2'
 //import temp from 'temp'
 
@@ -69,6 +72,9 @@ render(
                             <Route exact path={Url.privacy()} component={isAuth(Privacy)} />
                             <Route exact path={Url.terms()} component={isAuth(Terms)} />
                             <Route exact path={Url.safety()} component={isAuth(Safety)} />
+                            <Route exact path={Url.whycook()} component={isAuth(WhyCook)} />
+                            <Route exact path={Url.community()} component={isAuth(Community)} />
+                            <Route exact path={Url.howto()} component={isAuth(HowTo)} />
 
                             <Route component={NotFoundPage} />
 
