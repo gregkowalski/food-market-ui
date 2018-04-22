@@ -17,7 +17,7 @@
     margin-right: 20px;
 }
 
-@media all and (max-width: 1100px) {
+@media all and (max-width: 1200px) {
     .checkout-detail {
         display: block;
     }
@@ -32,11 +32,11 @@
 }
 
 #checkout-card-number .StripeElement {
-    min-width: 180px;
+    min-width: 195px;
 }
 
 #checkout-name {
-    width: 320px;
+    width: 340px;
 }
 
 #checkout-name > div {
@@ -52,7 +52,6 @@
     font-size: 14px;
     font-family: sans-serif;
     letter-spacing: 0.025em;
-    /* color: #424770; */
     color: rgba(0,0,0,.87);
 }
 
@@ -60,18 +59,19 @@
     color: #aab7c4;
 }
 
-
 #checkout-expiry-date .StripeElement {
     width: 100%;
+    min-width: 125px;
 }
 
 #checkout-cvc .StripeElement {
     width: 100%;
+    min-width: 115px;
 }
 
 #checkout-postal-code .StripeElement {
     width: 100%;
-    min-width: 110px;
+    min-width: 115px;
 }
 
 .StripeElement {

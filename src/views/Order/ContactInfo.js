@@ -1,9 +1,10 @@
 import React from 'react'
-import Autocomplete from '../../components/Autocomplete'
-import { Icon, Message, Radio } from 'semantic-ui-react'
-import { Header, Divider, Segment, Input } from 'semantic-ui-react'
-import { ContactMethods } from '../../Enums';
+import { Field } from 'redux-form'
+import { Header, Divider, Segment, Icon } from 'semantic-ui-react'
 import './ContactInfo.css'
+import { ContactMethods } from '../../Enums';
+import { ValidatedField, ValidatedAutocomplete } from '../../components/Validation'
+import Util from '../../services/Util'
 
 class ContactInfo extends React.Component {
 
@@ -11,25 +12,8 @@ class ContactInfo extends React.Component {
         this.props.onContactMethodChange(value);
     }
 
-    autocompleteStyle(isValid) {
-        const style = {};
-        if (isValid) {
-            style.border = '1px solid rgba(34, 36, 38, .15)';
-        }
-        else {
-            style.border = '1px solid #e0b4b4';
-            style.backgroundColor = '#fff6f6';
-        }
-        return style;
-    }
-
     render() {
-        const { pickup, contactMethod,
-            buyerPhone, isBuyerPhoneValid, onPhoneNumberChange, onPhoneNumberBlur,
-            buyerAddress, isBuyerAddressValid, onAddressChange, onAddressSelected, onAddressBlur
-        } = this.props;
-
-        const showPhoneError = contactMethod === ContactMethods.phone && !isBuyerPhoneValid;
+        const { pickup, contactMethod } = this.props;
 
         return (
             <Segment className='contactinfo'>
@@ -44,57 +28,28 @@ class ContactInfo extends React.Component {
                 <div className='contactinfo-contact'>
                     <div>I prefer to be contacted by:</div>
                     <div className='contactinfo-option'>
-                        <Radio
-                            label='Email'
-                            name='contactMethodRadioGroup'
-                            value={ContactMethods.email}
-                            checked={contactMethod === ContactMethods.email}
-                            onChange={this.handleContactMethodChange}
-                        />
+                        <Field id='contactinfo-option-email' name='contactMethod' component='input' type='radio' value={ContactMethods.email} />
+                        <label htmlFor='contactinfo-option-email'>Email</label>
                     </div>
                     <div className='contactinfo-option'>
-                        <Radio
-                            label='Phone'
-                            name='contactMethodRadioGroup'
-                            value={ContactMethods.phone}
-                            checked={contactMethod === ContactMethods.phone}
-                            onChange={this.handleContactMethodChange}
-                        />
+                        <Field id='contactinfo-option-phone' name='contactMethod' component='input' type='radio' value={ContactMethods.phone} />
+                        <label htmlFor='contactinfo-option-phone'>Phone</label>
                     </div>
                 </div>
                 <div className='contactinfo-phone'>
-                    <Input name='phone' type='tel' placeholder='604 111 2222' value={buyerPhone}
-                        disabled={contactMethod !== ContactMethods.phone}
-                        error={showPhoneError}
-                        onChange={onPhoneNumberChange} onBlur={onPhoneNumberBlur} />
-                    <Message header='Invalid phone number' content='Please enter your phone number' icon='exclamation circle'
-                        error={showPhoneError} hidden={!showPhoneError} visible={showPhoneError} />
+                    <Field name='buyerPhone' autoComplete='buyerPhone' type='tel' placeholder="What's your phone number?"
+                        disabled={contactMethod !== ContactMethods.phone} component={ValidatedField} parse={Util.getAsYouTypePhone} />
                 </div>
 
                 {!pickup &&
                     <div className='contactinfo-address'>
                         <div>I chose <span>delivery</span> for my order: </div>
                         <div>Where will the food delivered to?</div>
-                        <Autocomplete
-                            style={this.autocompleteStyle(isBuyerAddressValid)}
-                            name='address'
-                            onPlaceSelected={onAddressSelected}
-                            onChange={onAddressChange}
-                            onBlur={onAddressBlur}
-                            types={['address']}
-                            placeholder='Your delivery address'
-                            componentRestrictions={{ country: 'ca' }}
-                            value={buyerAddress} />
-                        <Message
-                            error={!isBuyerAddressValid}
-                            hidden={isBuyerAddressValid}
-                            visible={!isBuyerAddressValid}
-                            header='Invalid address'
-                            content='Please enter your delivery address' />
+                        <Field name='buyerAddress' autoComplete='buyerAddress' component={ValidatedAutocomplete} type='text' placeholder='Your delivery address' />
                     </div>
                 }
 
-            </Segment >
+            </Segment>
         );
     }
 }

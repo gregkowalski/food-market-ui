@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { reduxForm, formValueSelector } from 'redux-form'
 import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
@@ -9,6 +10,7 @@ import { Constants } from '../../Constants'
 import OrderHeader from '../../components/OrderHeader'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
+import Util from '../../services/Util'
 import Url from '../../services/Url'
 import { Actions, Selectors } from '../../store/order'
 import OrderSummary from './OrderSummary'
@@ -57,6 +59,18 @@ class Order extends React.Component {
             this.props.history.push(Url.foodOrderSuccess(food_id));
             this.redirecting = true;
         }
+
+        if (this.props.contactMethod !== nextProps.contactMethod) {
+            this.props.actions.contactMethodChanged(nextProps.contactMethod);
+        }
+
+        if (this.props.buyerPhone !== nextProps.buyerPhone) {
+            this.props.actions.buyerPhoneChanged(nextProps.buyerPhone);
+        }
+
+        if (this.props.buyerAddress !== nextProps.buyerAddress) {
+            this.props.actions.buyerAddressChanged(nextProps.buyerAddress);
+        }
     }
 
     handleOrderButtonClick = () => {
@@ -88,16 +102,14 @@ class Order extends React.Component {
 
     canSubmitOrder(isValidating = false) {
         const { acceptedTerms, nameOnCard } = this.state;
-        const { isOrderProcessing, buyerAddress, isBuyerAddressValid, isBuyerPhoneValid, pickup, contactMethod } = this.props;
+        const { isOrderProcessing, valid } = this.props;
 
         if (!acceptedTerms || (!isValidating && isOrderProcessing))
             return false;
 
-        if (!pickup && (!isBuyerAddressValid || !buyerAddress))
+        if (!valid) {
             return false;
-
-        if (contactMethod === ContactMethods.phone && !isBuyerPhoneValid)
-            return false;
+        }
 
         if (!nameOnCard) {
             return false;
@@ -126,33 +138,13 @@ class Order extends React.Component {
         return order;
     }
 
-    handleContactMethodChange = (contactMethod) => {
-        this.props.actions.contactMethodChanged(contactMethod);
+    handleCheckoutRef = (ref) => {
+        this.checkout = ref;
     }
 
-    handlePhoneNumberChange = (e) => {
-        this.props.actions.buyerPhoneChanged(e.target.value);
+    handleCardNameChange = (e) => {
+        this.setState({ nameOnCard: e.target.value });
     }
-
-    handleAddressSelected = (place) => {
-        const value = place.formatted_address;
-        this.props.actions.buyerAddressChanged(value);
-    }
-
-    handleAddressChange = (e) => {
-        this.props.actions.buyerAddressChanged(e.target.value);
-    }
-
-    handlePhoneNumberBlur = () => {
-        this.props.actions.buyerPhoneChanged(this.props.buyerPhone);
-    }
-
-    handleAddressBlur = () => {
-        this.props.actions.buyerAddressChanged(this.props.buyerAddress);
-    }
-
-    handleCheckoutRef = ref => this.checkout = ref;
-    handleCardNameChange = e => this.setState({ nameOnCard: e.target.value });
 
     render() {
         if (this.redirecting) {
@@ -160,8 +152,6 @@ class Order extends React.Component {
         }
 
         const { food, pickup, quantity, date, time, contactMethod,
-            buyerPhone, isBuyerPhoneValid,
-            buyerAddress, isBuyerAddressValid,
             isOrderProcessing, paymentError
         } = this.props;
 
@@ -182,23 +172,7 @@ class Order extends React.Component {
                             </div>
                         </div>
                         <div className='order-container-width'>
-                            <ContactInfo
-                                pickup={pickup}
-
-                                contactMethod={contactMethod}
-                                onContactMethodChange={this.handleContactMethodChange}
-
-                                buyerPhone={buyerPhone}
-                                isBuyerPhoneValid={isBuyerPhoneValid}
-                                onPhoneNumberChange={this.handlePhoneNumberChange}
-                                onPhoneNumberBlur={this.handlePhoneNumberBlur}
-
-                                buyerAddress={buyerAddress}
-                                isBuyerAddressValid={isBuyerAddressValid}
-                                onAddressChange={this.handleAddressChange}
-                                onAddressSelected={this.handleAddressSelected}
-                                onAddressBlur={this.handleAddressBlur}
-                            />
+                            <ContactInfo pickup={pickup} contactMethod={contactMethod} />
 
                             <BillingInfo paymentError={paymentError}
                                 onCheckoutRef={this.handleCheckoutRef}
@@ -237,6 +211,28 @@ class Order extends React.Component {
     }
 }
 
+const validate = (values) => {
+    const errors = {}
+
+    if (values.contactMethod === ContactMethods.phone) {
+        if (!values.buyerPhone) {
+            errors.buyerPhone = { header: 'Phone is required', message: 'Please enter your phone number' };
+        }
+        else if (!Util.validatePhoneNumber(values.buyerPhone)) {
+            errors.buyerPhone = { header: 'Invalid phone number', message: 'Please enter your phone number' };
+        }
+    }
+
+    if (!values.pickup) {
+        if (!values.buyerAddress) {
+            errors.buyerAddress = { header: 'Delivery address is required', message: 'Please enter your delivery address' };
+        }
+    }
+
+    return errors;
+}
+
+const formSelector = formValueSelector('order');
 const mapStateToProps = (state) => {
     return {
         food: Selectors.food(state),
@@ -247,15 +243,24 @@ const mapStateToProps = (state) => {
         date: Selectors.date(state),
         time: Selectors.time(state),
         quantity: Selectors.quantity(state),
-        buyerPhone: Selectors.buyerPhone(state),
-        isBuyerPhoneValid: Selectors.isBuyerPhoneValid(state),
-        buyerAddress: Selectors.buyerAddress(state),
-        isBuyerAddressValid: Selectors.isBuyerAddressValid(state),
-        contactMethod: Selectors.contactMethod(state),
+
+        // buyerPhone: Selectors.buyerPhone(state),
+        // buyerAddress: Selectors.buyerAddress(state),
+        // contactMethod: Selectors.contactMethod(state),
+        buyerPhone: formSelector(state, 'buyerPhone'),
+        buyerAddress: formSelector(state, 'buyerAddress'),
+        contactMethod: formSelector(state, 'contactMethod'),
+
         isOrderProcessing: Selectors.isOrderProcessing(state),
         isOrderCompleted: Selectors.isOrderCompleted(state),
         paymentError: Selectors.paymentError(state),
         order_id: Selectors.order_id(state),
+        initialValues: {
+            pickup: Selectors.pickup(state),
+            buyerAddress: Selectors.buyerAddress(state),
+            buyerPhone: Selectors.buyerPhone(state),
+            contactMethod: Selectors.contactMethod(state),
+        }
     };
 };
 
@@ -281,9 +286,7 @@ Order.propTypes = {
     quantity: PropTypes.number.isRequired,
     contactMethod: PropTypes.string,
     buyerPhone: PropTypes.string,
-    isBuyerPhoneValid: PropTypes.bool.isRequired,
     buyerAddress: PropTypes.string,
-    isBuyerAddressValid: PropTypes.bool.isRequired,
     paymentError: PropTypes.string,
     isOrderProcessing: PropTypes.bool,
     isOrderCompleted: PropTypes.bool,
@@ -300,4 +303,5 @@ Order.propTypes = {
     }).isRequired
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Order));
+const form = reduxForm({ form: 'order', validate, enableReinitialize: true })(Order);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(form));

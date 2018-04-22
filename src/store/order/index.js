@@ -1,7 +1,6 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
 import { ContactMethods } from '../../Enums';
-import Util from '../../services/Util'
 import ApiObjectMapper from '../../services/ApiObjectMapper';
 
 function selectPickup() {
@@ -44,19 +43,17 @@ function buyerEmailChanged(buyerEmail) {
     };
 }
 
-function buyerPhoneChanged(buyerPhone, isBuyerPhoneValid) {
+function buyerPhoneChanged(buyerPhone) {
     return {
         type: ActionTypes.BUYER_PHONE_CHANGED,
-        buyerPhone,
-        isBuyerPhoneValid
+        buyerPhone
     };
 }
 
-function buyerAddressChanged(buyerAddress, isBuyerAddressValid) {
+function buyerAddressChanged(buyerAddress) {
     return {
         type: ActionTypes.BUYER_ADDRESS_CHANGED,
-        buyerAddress,
-        isBuyerAddressValid
+        buyerAddress
     };
 }
 
@@ -174,16 +171,13 @@ export const Actions = {
     buyerPhoneChanged: (buyerPhone) => {
         return (dispatch) => {
 
-            const parsedPhone = Util.getAsYouTypePhone(buyerPhone);
-            const isValid = Util.validatePhoneNumber(parsedPhone);
-            dispatch(buyerPhoneChanged(parsedPhone, isValid));
+            dispatch(buyerPhoneChanged(buyerPhone));
         }
     },
 
     buyerAddressChanged: (buyerAddress) => {
         return (dispatch) => {
-            const isValid = buyerAddress ? true : false;
-            dispatch(buyerAddressChanged(buyerAddress, isValid));
+            dispatch(buyerAddressChanged(buyerAddress));
         }
     },
 
@@ -318,9 +312,7 @@ export const Selectors = {
     quantity: (state) => { return state.order.quantity; },
     buyerEmail: (state) => { return state.order.buyerEmail; },
     buyerPhone: (state) => { return state.order.buyerPhone; },
-    isBuyerPhoneValid: (state) => { return state.order.isBuyerPhoneValid; },
     buyerAddress: (state) => { return state.order.buyerAddress; },
-    isBuyerAddressValid: (state) => { return state.order.isBuyerAddressValid; },
     contactMethod: (state) => { return state.order.contactMethod; },
     isOrderProcessing: (state) => { return state.order.isOrderProcessing; },
     isOrderCompleted: (state) => { return state.order.isOrderCompleted; },
@@ -340,8 +332,6 @@ const initialState = {
     contactMethod: ContactMethods.email,
     buyerPhone: '',
     buyerAddress: '',
-    isBuyerPhoneValid: true,
-    isBuyerAddressValid: true,
     isOrderProcessing: false,
 };
 
@@ -434,23 +424,17 @@ export const Reducers = {
             case ActionTypes.BUYER_PHONE_CHANGED:
                 return Object.assign({}, state, {
                     buyerPhone: action.buyerPhone,
-                    isBuyerPhoneValid: action.isBuyerPhoneValid
                 });
 
             case ActionTypes.BUYER_ADDRESS_CHANGED:
                 return Object.assign({}, state, {
                     buyerAddress: action.buyerAddress,
-                    isBuyerAddressValid: action.isBuyerAddressValid
                 });
 
             case ActionTypes.CONTACT_METHOD_CHANGED:
-                const newState = Object.assign({}, state, {
+                return Object.assign({}, state, {
                     contactMethod: action.contactMethod
                 });
-                if (action.contactMethod === ContactMethods.email) {
-                    newState.isBuyerPhoneValid = true;
-                }
-                return newState;
 
             case ActionTypes.SUBMIT_ORDER:
                 return Object.assign({}, state, {
