@@ -17,4 +17,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Config file shouldn't be checked in but only created during build
-/src/Config.js
+src/Config.js
