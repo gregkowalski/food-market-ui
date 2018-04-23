@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import moment from 'moment-timezone'
 import { Segment, Image, Header } from 'semantic-ui-react'
 import './ProfileView.css'
 import { Actions, Selectors } from '../../store/publicUser'
@@ -11,7 +10,7 @@ import FlagUser from '../../components/FlagUser'
 import LoadingIcon from '../../components/LoadingIcon'
 import VerifiedInfo from './VerifiedInfo'
 import { CertificationLabels } from '../../Enums'
-import { Constants } from '../../Constants'
+import Util from '../../services/Util'
 
 class ProfileView extends React.Component {
 
@@ -38,7 +37,7 @@ class ProfileView extends React.Component {
 
         let join_date;
         if (user.join_date) {
-            join_date = moment(user.join_date, moment.ISO_8601).tz(Constants.Timezone);
+            join_date = Util.toCurrentTimezoneMoment(user.join_date);
         }
 
         return (

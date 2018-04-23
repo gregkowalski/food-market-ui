@@ -3,9 +3,11 @@ import { all_boundaries } from './AllRegions'
 
 const google = window.google;
 
+const RegionMap = {};
 const Regions = all_boundaries.features.map(x => {
     const id = `${x.properties.area}-${x.properties.hood_name}`;
     //console.log(id);
+    RegionMap[id] = x;
     return {
         id: id,
         paths: x.geometry.coordinates[0].map(c => {
@@ -13,6 +15,8 @@ const Regions = all_boundaries.features.map(x => {
         })
     }
 });
+
+export { RegionMap };
 export default Regions;
 
 /*

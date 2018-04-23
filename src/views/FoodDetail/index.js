@@ -9,6 +9,7 @@ import Scroll from 'react-scroll'
 import './index.css'
 import { Constants } from '../../Constants'
 import AppHeader from '../../components/AppHeader'
+import AppFooter from '../../components/AppFooter'
 import FoodLightbox from '../../components/FoodLightbox'
 import FlagListingMobile from '../../components/FlagListingMobile'
 import Drawer from '../../components/Drawer'
@@ -102,21 +103,21 @@ class FoodDetail extends React.Component {
                     <div className='detail-head-main'>
                         <div className='detail-container'>
                             <div className='detail-item-main'>
-                                <ScrollLink activeClass='content-link-active' className='content-link' to='overview'
+                                <ScrollLink activeClass='detail-content-link-active' className='detail-content-link' to='overview'
                                     spy={true} smooth={true} container={document}
                                     offset={-65} duration={500}>
                                     Overview
                                 </ScrollLink>
 
-                                <ScrollLink activeClass='content-link-active' className='content-link' to='reviews'
+                                <ScrollLink activeClass='detail-content-link-active' className='detail-content-link' to='reviews'
                                     spy={true} smooth={true} container={document}
                                     offset={-70} duration={500}>
                                     Reviews
                                 </ScrollLink>
 
-                                <ScrollLink activeClass='content-link-active' className='content-link' to='cook'
+                                <ScrollLink activeClass='detail-content-link-active' className='detail-content-link' to='cook'
                                     spy={true} smooth={true} container={document}
-                                    offset={-85} duration={500}>
+                                    offset={-65} duration={500}>
                                     The Cook
                                 </ScrollLink>
                             </div>
@@ -136,7 +137,6 @@ class FoodDetail extends React.Component {
                                 <ScrollElement name='cook'>
                                     <CookSection cook={cook} />
                                 </ScrollElement>
-                                <Divider section />
                             </div>
                         </div>
                         <div className='detail-item-right'>
@@ -179,6 +179,9 @@ class FoodDetail extends React.Component {
                     />
                 </Drawer>
 
+                <div className='detail-appfooter'>
+                    <AppFooter />
+                </div>
             </div>
         )
     }

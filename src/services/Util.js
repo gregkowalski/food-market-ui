@@ -1,9 +1,10 @@
 import queryString from 'query-string'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
 import { FoodPrepType } from '../Enums'
 import Url from '../services/Url'
 import Config from '../Config'
+import { Constants } from '../Constants'
 
 class Util {
 
@@ -241,6 +242,11 @@ class Util {
         const startTime = orderTime.handoff_start_date.format('h A');
         const endTime = orderTime.handoff_end_date.format('h A');
         return `${startTime} - ${endTime}`;
+    }
+
+    toCurrentTimezoneMoment(dateIso8601) {
+        const timezone = Constants.Timezone;
+        return moment(dateIso8601, moment.ISO_8601).tz(timezone);
     }
 }
 

@@ -1,8 +1,7 @@
 import React from 'react'
-import moment from 'moment-timezone'
 import { Image } from 'semantic-ui-react'
 import './OrderExchangeMessage.css'
-import { Constants } from '../../Constants'
+import Util from '../../services/Util'
 
 const OrderExchangeMethod = ({ order }) => {
     const { pickup, buyer, handoff_start_date, handoff_end_date } = order;
@@ -14,9 +13,8 @@ const OrderExchangeMethod = ({ order }) => {
         deliveryInstruction = (<div> {buyer.name} is picking up this order from you </div>);
     }
 
-    const timezone = Constants.Timezone;
-    const startDate = moment(handoff_start_date, moment.ISO_8601).tz(timezone).format('h A');
-    const endDate = moment(handoff_end_date, moment.ISO_8601).tz(timezone).format('h A');
+    const startDate = Util.toCurrentTimezoneMoment(handoff_start_date).format('h A');
+    const endDate = Util.toCurrentTimezoneMoment(handoff_end_date).format('h A');
 
     return (
         <div className='orderexchangemessage-label orderexchangemessage-pickup-spacing'>

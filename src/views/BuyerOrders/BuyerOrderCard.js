@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment-timezone'
 import { withRouter } from 'react-router-dom'
 import { Segment, Divider, Image, Icon, Accordion } from 'semantic-ui-react'
 import './BuyerOrderCard.css'
@@ -7,6 +6,7 @@ import { Constants, Colors } from '../../Constants'
 import { OrderStatus, DeliveryOptions } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
+import Util from '../../services/Util'
 
 class BuyerOrderCard extends React.Component {
 
@@ -52,9 +52,8 @@ class BuyerOrderCard extends React.Component {
         const { order } = this.props;
         const { food, cook, isCancelling, handoff_start_date, handoff_end_date } = order;
 
-        const timezone = Constants.Timezone;
-        const startDate = moment(handoff_start_date, moment.ISO_8601).tz(timezone);
-        const endDate = moment(handoff_end_date, moment.ISO_8601).tz(timezone);
+        const startDate = Util.toCurrentTimezoneMoment(handoff_start_date);
+        const endDate = Util.toCurrentTimezoneMoment(handoff_end_date);
 
         const handoffAddress = order.delivery_option === DeliveryOptions.pickup ? order.cook.address : order.buyer_address;
 

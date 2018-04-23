@@ -6,23 +6,36 @@ import './index.css'
 import FoodOptions from './FoodOptions'
 import FoodPrepSafetyMessage from './FoodPrepSafetyMessage'
 import './OverviewSection.css'
+import RegionUtil from '../../components/Map/RegionUtil'
 
 const OverviewSection = ({ food, cook }) => {
     return (
         <div>
-
             <Header className='detail-main-header' as='h2'>
                 {food.title}
             </Header>
             <div style={{ display: 'inline-block', verticalAlign: 'middle', color: '#4e4e4e', margin: '5px 0px 3px 2px', fontSize: '1.2em' }}>
                 locally handcrafted by
-                <Scroll.Link className='author-link' to='cook'
+                <Scroll.Link className='detail-cook-link' to='cook'
                     spy={true} smooth={true} container={document}
                     offset={-85} duration={500}>
                     {cook ? cook.name : '...'}
                 </Scroll.Link>
             </div>
             <div style={{ clear: 'both' }}></div>
+            <Header as='h3' className='food-detail-header'>Location</Header>
+            <div className='detail-body-text'>
+                {food.regions.length > 0 &&
+                    <div>Available for delivery to these neighbourhoods:
+                        <ul>
+                            {food.regions.map((region, index) => {
+                                return (<li key={index}>{RegionUtil.getRegionNameById(region)}</li>);
+                            })}
+                        </ul>
+                    </div>
+                }
+                <div>Available for pickup from: {RegionUtil.getRegionNameByPosition(food.position)}</div>
+            </div>
             <div style={{ color: '#5e5d5d', marginTop: '20px' }}>
                 <FoodOptions food={food} />
             </div>
@@ -35,13 +48,19 @@ const OverviewSection = ({ food, cook }) => {
                     less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
                     anchorClass='showmore-text'>
 
-                    <div className='user-text'>{food.short_description} </div>
-                    <div>{food.long_desciption}</div>
+                    <div className='user-text' dangerouslySetInnerHTML={{ __html: food.short_description.replace(/\\n/g, "<br />") }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: food.long_description.replace(/\\n/g, "<br />") }}></div>
                 </ShowMore>  </div>
             <Divider section />
 
             <Header as='h3' className='food-detail-header'>Ingredients</Header>
-            <div className='detail-body-text'>{food.title}.</div>
+            <div className='detail-body-text'>
+                <ul>
+                    {food.ingredients.map((ingredient, index) => {
+                        return (<li key={index}>{ingredient}</li>);
+                    })}
+                </ul>
+            </div>
 
             <Divider section />
 
@@ -52,7 +71,13 @@ const OverviewSection = ({ food, cook }) => {
                         May contain one or more of the following allergens:
                     </div>
                 </div>
-                <div style={{ marginLeft: '15px', marginTop: '15px' }}>{food.allergies.join(',')}.</div>
+                <div style={{ marginLeft: '15px', marginTop: '15px' }}>
+                    <ul>
+                        {food.allergies.map((allergy, index) => {
+                            return (<li key={index}>{allergy}</li>);
+                        })}
+                    </ul>
+                </div>
                 <div style={{ marginTop: '15px' }}>
                     <Icon color='teal' name='angle double right' />
                     For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly.
@@ -82,7 +107,13 @@ const OverviewSection = ({ food, cook }) => {
             <Divider section />
 
             <Header as='h3' className='food-detail-header'>Special Features</Header>
-            <div className='detail-body-text'>{food.features.join(', ')}</div>
+            <div className='detail-body-text'>
+                <ul>
+                    {food.features.map((feature, index) => {
+                        return (<li key={index}>{feature}</li>);
+                    })}
+                </ul>
+            </div>
 
             <Divider section hidden />
 
