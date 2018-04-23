@@ -31,6 +31,8 @@ const createOptions = (fontSize) => {
 
 class CheckoutForm extends React.Component {
 
+    state = {};
+
     componentDidMount() {
         if (this.props.onRef) {
             this.props.onRef(this);
@@ -43,27 +45,41 @@ class CheckoutForm extends React.Component {
         }
     }
 
-    handleBlur = () => {
+    handleCardNameBlur = (e) => {
         if (this.props.onBlur) {
-            this.props.onBlur();
+            this.props.onBlur({ elementType: 'cardName' });
         }
     }
 
-    handleChange = change => {
-        // console.log('[change]', change);
+    handleCardNameFocus = (e) => {
+        if (this.props.onFocus) {
+            this.props.onFocus({ elementType: 'cardName' });
+        }
     }
 
-    handleFocus = () => {
-        // console.log('[focus]');
-    }
-
-    handleReady = () => {
-        // console.log('[ready]');
+    handleCardNameChange = (e) => {
+        if (this.props.onChange) {
+            const hasValue = !(!e.target.value);
+            const cardName = {
+                elementType: 'cardName',
+                complete: hasValue,
+                empty: !hasValue,
+                value: e.target.value
+            };
+            if (!hasValue) {
+                cardName.error = {
+                    code: 'incomplete_card_name',
+                    type: 'validation_error',
+                    message: 'You card name is empty'
+                };
+            }
+            this.props.onChange(cardName);
+        }
     }
 
     render() {
         const fontSize = '14px';
-        const { onCardNameChange } = this.props;
+        const { onBlur, onChange, onFocus } = this.props;
 
         return (
             <div className="checkout">
@@ -71,20 +87,18 @@ class CheckoutForm extends React.Component {
                     <div id='checkout-card-number'>
                         <label>Card number</label>
                         <CardNumberElement
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            onReady={this.handleReady}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            onFocus={onFocus}
                             {...createOptions(fontSize)}
                         />
                     </div>
                     <div id='checkout-expiry-date'>
                         <label>Expiration date</label>
                         <CardExpiryElement
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            onReady={this.handleReady}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            onFocus={onFocus}
                             {...createOptions(fontSize)}
                         />
                     </div>
@@ -93,10 +107,9 @@ class CheckoutForm extends React.Component {
                         <label>Security code</label>
 
                         <CardCVCElement
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            onReady={this.handleReady}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            onFocus={onFocus}
                             {...createOptions(fontSize)}
                         />
                     </div>
@@ -107,17 +120,20 @@ class CheckoutForm extends React.Component {
                     <div id='checkout-name'>
                         <label>Name on card</label>
                         <div>
-                            <Input placeholder='John Smith' onChange={onCardNameChange} />
+                            <Input placeholder='John Smith'
+                                onBlur={this.handleCardNameBlur}
+                                onFocus={this.handleCardNameFocus}
+                                onChange={this.handleCardNameChange}
+                            />
                         </div>
                     </div>
 
                     <div id='checkout-postal-code'>
                         <label>Postal code</label>
                         <PostalCodeElement
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            onReady={this.handleReady}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            onFocus={onFocus}
                             placeholder='Postal code'
                             {...createOptions(fontSize)}
                         />

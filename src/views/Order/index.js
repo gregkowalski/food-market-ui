@@ -8,7 +8,6 @@ import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
 import { Constants } from '../../Constants'
 import OrderHeader from '../../components/OrderHeader'
-import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import PriceCalc from '../../services/PriceCalc'
 import Util from '../../services/Util'
 import Url from '../../services/Url'
@@ -20,7 +19,12 @@ import { ContactMethods } from '../../Enums';
 
 class Order extends React.Component {
 
-    state = { acceptedTerms: false };
+    state = {
+        acceptedTerms: false,
+        billing: {},
+        formErrors: {},
+        formErrorList: []
+    };
 
     componentWillMount() {
         let food_id = this.props.match.params.id;
@@ -74,34 +78,32 @@ class Order extends React.Component {
     }
 
     handleOrderButtonClick = () => {
-        const { isOrderProcessing } = this.props;
+        const { isOrderProcessing, touch } = this.props;
 
         if (isOrderProcessing) {
             console.log('Order is already processing...');
             return;
         }
 
-        if (!this.validateSubmitOrder()) {
+        // In case the user hasn't tried filling in the forms at all,
+        // we need to simulat that here.
+        touch('buyerPhone');
+        touch('buyerAddress');
+        touch('contactMethod');
+
+        if (!this.canSubmitOrder(true)) {
             console.log('Order form validation failed.  Please correct your information and try again.');
+            this.setState({ showErrorSummary: true });
             return;
         }
 
-        const jwtToken = CognitoUtil.getLoggedInUserJwtToken();
-        if (!jwtToken) {
-            console.log('Cannot submit order without a logged-in user.  Please log in and try again.');
-            return;
-        }
-
-        const { nameOnCard } = this.state;
-        this.props.actions.submitOrder(this.checkout.props.stripe, nameOnCard, this.createOrderPayload());
-    }
-
-    validateSubmitOrder() {
-        return this.canSubmitOrder(true);
+        const { billing } = this.state;
+        const cardName = billing.values.cardName.value;
+        this.props.actions.submitOrder(this.checkout.props.stripe, cardName, this.createOrderPayload());
     }
 
     canSubmitOrder(isValidating = false) {
-        const { acceptedTerms, nameOnCard } = this.state;
+        const { acceptedTerms, billing } = this.state;
         const { isOrderProcessing, valid } = this.props;
 
         if (!acceptedTerms || (!isValidating && isOrderProcessing))
@@ -111,7 +113,7 @@ class Order extends React.Component {
             return false;
         }
 
-        if (!nameOnCard) {
+        if (!billing.valid) {
             return false;
         }
 
@@ -142,8 +144,72 @@ class Order extends React.Component {
         this.checkout = ref;
     }
 
-    handleCardNameChange = (e) => {
-        this.setState({ nameOnCard: e.target.value });
+    validateBillingInfo = (values) => {
+        const errors = [];
+
+        if (values.cardNumber.error) {
+            errors.push({ header: 'Card number is invalid', message: values.cardNumber.error.message });
+        }
+        else if (!values.cardNumber.complete) {
+            errors.push({ header: 'Card number is required', message: 'Please enter your card number' });
+        }
+
+        if (values.cardExpiry.error) {
+            errors.push({ header: 'Card expiry is invalid', message: values.cardExpiry.error.message });
+        }
+        else if (!values.cardExpiry.complete) {
+            errors.push({ header: 'Card expiry is required', message: 'Please enter your card expiry date' });
+        }
+
+        if (values.cardCvc.error) {
+            errors.push({ header: 'Card security code is invalid', message: values.cardCvc.error.message });
+        }
+        else if (!values.cardCvc.complete) {
+            errors.push({ header: 'Card security code is required', message: 'Please enter your card security code' });
+        }
+
+        if (!values.cardName.complete) {
+            errors.push({ header: 'Card name is required', message: 'Please enter the name as it appears on your card' });
+        }
+
+        if (values.postalCode.error) {
+            errors.push({ header: 'Card postal code is invalid', message: values.postalCode.error.message });
+        }
+        else if (!values.postalCode.complete) {
+            errors.push({ header: 'Card postal code is required', message: 'Please enter your card postal code' });
+        }
+
+        const newState = {
+            billing: {
+                invalid: errors.length > 0,
+                valid: errors.length === 0,
+                values: values,
+                errors: errors
+            }
+        };
+
+        this.setState(newState);
+
+        console.log('card errors');
+        console.log(newState);
+    }
+
+    getBillingErrors() {
+        const { billing } = this.state;
+        return billing.errors ? billing.errors : [];
+    }
+
+    getContactErrors() {
+        const { pickup, buyerAddress, buyerPhone, contactMethod } = this.props;
+        const errors = validate({ pickup, buyerAddress, buyerPhone, contactMethod });
+
+        const contactErrors = [];
+        for (const elementKey in errors) {
+            const error = errors[elementKey];
+            contactErrors.push(error);
+        }
+
+        return contactErrors;
     }
 
     render() {
@@ -152,14 +218,14 @@ class Order extends React.Component {
         }
 
         const { food, pickup, quantity, date, time, contactMethod,
-            isOrderProcessing, paymentError
-        } = this.props;
-
+            isOrderProcessing, paymentError } = this.props;
         if (!food) {
             return null;
         }
-        const { acceptedTerms } = this.state;
-        const hasPaymentError = paymentError ? true : false;
+
+        const { acceptedTerms, showErrorSummary } = this.state;
+        const billingErrors = this.getBillingErrors();
+        const contactErrors = this.getContactErrors();
 
         return (
             <div className='order-all'>
@@ -174,9 +240,35 @@ class Order extends React.Component {
                         <div className='order-container-width'>
                             <ContactInfo pickup={pickup} contactMethod={contactMethod} />
 
-                            <BillingInfo paymentError={paymentError}
-                                onCheckoutRef={this.handleCheckoutRef}
-                                onCardNameChange={this.handleCardNameChange} />
+                            <BillingInfo onCheckoutRef={this.handleCheckoutRef}
+                                onBillingInfoChange={this.validateBillingInfo} />
+
+                            {showErrorSummary && contactErrors.length > 0 &&
+                                <Message error>
+                                    <Message.Header>Contact Information Missing</Message.Header>
+                                    <Message.List>
+                                        {contactErrors.map((err, index) => {
+                                            return (<Message.Item key={index}>{err.message}</Message.Item>);
+                                        })}
+                                    </Message.List>
+                                </Message>
+                            }
+
+                            {showErrorSummary && billingErrors.length > 0 &&
+                                <Message error>
+                                    <Message.Header>Billing Information Missing</Message.Header>
+                                    <Message.List>
+                                        {billingErrors.map((err, index) => {
+                                            return (<Message.Item key={index}>{err.message}</Message.Item>);
+                                        })}
+                                    </Message.List>
+                                </Message>
+                            }
+
+                            {paymentError &&
+                                <Message error header='Order Processing Error' icon='exclamation circle'
+                                    content={paymentError} />
+                            }
 
                             <Segment>
                                 <Checkbox className='order-segment-user-agree-text'
@@ -185,14 +277,8 @@ class Order extends React.Component {
                                     checked={acceptedTerms} />
                             </Segment>
 
-                            <Message header='Order Processing Error' icon='exclamation circle'
-                                content={paymentError}
-                                error={hasPaymentError}
-                                hidden={!hasPaymentError}
-                                visible={hasPaymentError} />
-
                             <Button animated='fade' fluid className='order-confirm-continue-button'
-                                disabled={!this.canSubmitOrder()}
+                                disabled={!acceptedTerms}
                                 loading={isOrderProcessing}
                                 onClick={this.handleOrderButtonClick}>
                                 <Button.Content visible>
@@ -260,7 +346,7 @@ const mapStateToProps = (state) => {
             buyerAddress: Selectors.buyerAddress(state),
             buyerPhone: Selectors.buyerPhone(state),
             contactMethod: Selectors.contactMethod(state),
-        }
+        },
     };
 };
 

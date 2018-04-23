@@ -50,6 +50,10 @@
     margin: 5px 0px 0px 45px;
 }
 
+.contactinfo-phone .ui.input {
+    width: 100%;
+}
+
 /* Google Autocomplete box */
 
 .contactinfo-address {
@@ -59,11 +63,6 @@
     transition: none;
     margin-top: 20px;
     color: #444444;
-}
-
-.contactinfo-address>div {
-    width: 95%;
-    border: none;
 }
 
 .contactinfo-address>div:first-child {
@@ -83,8 +82,12 @@
     margin-top: 15px;
 }
 
+.contactinfo-address .ui.error.message {
+    width: 100%;
+}
+
 .contactinfo-address input {
-    width: 75%;
+    width: 100%;
     line-height: 1.21428571em;
     font-weight: 400;
     font-size: 1em;

@@ -20,7 +20,7 @@ const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, classNa
     }
 
     const { touched, error, visited, invalid } = meta;
-    const hasError = visited && invalid;
+    const hasError = (touched || visited) && invalid;
     const divClassName = hasError ? 'error' : '';
     return (
         <div className={divClassName}>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Message, Header, Divider, Segment } from 'semantic-ui-react'
+import { Image, Header, Divider, Segment } from 'semantic-ui-react'
 import { Elements } from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm';
 import './BillingInfo.css'
@@ -8,18 +8,51 @@ class BillingInfo extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { hasErrors: {} };
+        this.state = {
+            form: {
+                cardNumber: {},
+                cardName: {},
+                cardExpiry: {},
+                cardCvc: {},
+                postalCode: {}
+            }
+        };
     }
 
-    handleCheckoutBlur = () => {
-        if (this.state.hasErrors.payment) {
-            this.setState({ hasErrors: { payment: false } });
+    componentDidMount() {
+        if (this.props.onBillingInfoChange) {
+            this.props.onBillingInfoChange(this.state.form);
         }
-    };
+    }
+
+    updateFormState(e, newState) {
+        const { form } = this.state;
+        const elementState = form[e.elementType];
+        const event = Object.assign({}, elementState, e, newState);
+        const newForm = Object.assign({}, form, {
+            [event.elementType]: event
+        });
+        this.setState({ form: newForm });
+
+        if (this.props.onBillingInfoChange) {
+            this.props.onBillingInfoChange(newForm);
+        }
+    }
+
+    handleFocus = (e) => {
+        this.updateFormState(e, { active: true });
+    }
+
+    handleBlur = (e) => {
+        this.updateFormState(e, { visited: true, active: false });
+    }
+
+    handleChange = (e) => {
+        this.updateFormState(e);
+    }
 
     render() {
-        const { paymentError, onCardNameChange, onCheckoutRef } = this.props;
-        const { hasErrors } = this.state;
+        const { onCheckoutRef } = this.props;
 
         return (
             <Segment padded>
@@ -35,12 +68,13 @@ class BillingInfo extends React.Component {
                 </div>
                 <Divider />
                 <Elements>
-                    <CheckoutForm onRef={onCheckoutRef} onBlur={this.handleCheckoutBlur} onCardNameChange={onCardNameChange} />
+                    <CheckoutForm
+                        onRef={onCheckoutRef}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                    />
                 </Elements>
-                <Message header={paymentError} icon='exclamation circle'
-                    error={hasErrors.payment}
-                    hidden={!hasErrors.payment}
-                    visible={hasErrors.payment} />
             </Segment>
         );
     }
