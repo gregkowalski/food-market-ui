@@ -37,6 +37,8 @@ import Safety from './views/Info/Safety'
 import WhyCook from './views/Info/WhyCook'
 import HowTo from './views/Info/HowTo'
 import Community from './views/Info/Community'
+import Cooks from './views/Info/Cooks'
+
 // import Map2 from './views/map2'
 //import temp from 'temp'
 
@@ -75,6 +77,7 @@ render(
                             <Route exact path={Url.whycook()} component={isAuth(WhyCook)} />
                             <Route exact path={Url.community()} component={isAuth(Community)} />
                             <Route exact path={Url.howto()} component={isAuth(HowTo)} />
+                            <Route exact path={Url.cooks()} component={isAuth(Cooks)} />                            
 
                             <Route component={NotFoundPage} />
 

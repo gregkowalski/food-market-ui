@@ -64,7 +64,12 @@
     font-weight: 400;
     margin: auto 20px;
 }
-
+.home-explore-item a {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: auto 20px;
+    color: #444444;
+}
 .home img {
     overflow: hidden;
     background-position: center center;

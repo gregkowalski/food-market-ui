@@ -1,11 +1,11 @@
-.about-header {
+.howto-header {
     color: #4e4e4e;
     font-size: 1.9em;
     font-weight: 500;
     margin-top: 50px;
 }
 
-.about-content {
+.howto-content {
     font-size: 1.3em;
     line-height: 1.7;
     color: #444444;
@@ -14,10 +14,10 @@
 }
 
 @media all and (max-width: 767px) {
-.about-header {
+.howto-header {
     margin-top: 45px;
 }
-.about-content {
+.howto-content {
     width: 100%;
 }
 }

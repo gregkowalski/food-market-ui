@@ -29,6 +29,10 @@ class Home extends React.Component {
         this.props.history.push(Url.search());
     }
 
+    navigateToCooks = () => {
+        this.props.history.push(Url.cooks());
+    }
+
     componentWillMount() {
         this.homefood = Util.getRandomItem([foodImg1, foodImg2, foodImg3]);
         this.homecook = Util.getRandomItem([cookImg1, cookImg2, cookImg3]);
@@ -132,7 +136,7 @@ class Home extends React.Component {
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={5}>
-                                <div className='home-explore-item' onClick={this.navigateToSearch}>
+                                <div className='home-explore-item' onClick={this.navigateToCooks}>
                                     <Image src={this.homecook} />
                                     <div>Discover local cooks</div>
                                 </div>

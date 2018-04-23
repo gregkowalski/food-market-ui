@@ -100,6 +100,10 @@ class Url {
     whycook () {
         return '/whycook';
     }
+
+    cooks () {
+        return '/cooks';
+    }
 }
 
 export default new Url();

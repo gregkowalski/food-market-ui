@@ -1,8 +1,9 @@
 .appfooter {
     font-size: 1.15rem;
-    line-height: 1.5;
+    line-height: 1.6;
     background-color: whitesmoke;
     text-transform: uppercase;
+    color: #5a5a5a;
 }
 
 .appfooter-header {
@@ -47,11 +48,34 @@
     display: flex;
 }
 
-.appfooter-social> a {
+.appfooter-social>a {
     margin-right: 15px;
 }
 
 .appfooter-name {
     font-size: .95em;
     text-transform: capitalize;
+}
+
+/* .appfooter-mobile-title {
+    display: none;
+} */
+
+#appfooter-divider {
+    margin-left: auto;
+    margin-right: auto;
+    width: 88%;
+    border-top: 2px solid #22242626;
+}
+
+@media all and (max-width: 767px) {
+    .appfooter {
+        line-height: 2;
+    }
+    .appfooter-mobile-title {
+        display: none;
+    }
+    #appfooter-divider {
+        width: 83%;
+    }
 }
