@@ -10,6 +10,7 @@ import Url from '../../services/Url'
 export default class FoodGrid extends Component {
 
     isDebug = false;
+    state = {};
 
     handleMouseLeave(a, b, id) {
         if (this.isDebug) {
@@ -32,13 +33,14 @@ export default class FoodGrid extends Component {
     getFoodImageComponent(food) {
         let imageElement;
         if (food.imageUrls && food.imageUrls.length > 1) {
-            const imageUrls = food.imageUrls.map((current, index) =>
+            const imageUrls = food.imageUrls.map((current, index) => (
                 <Image key={index} className='FoodImage' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
-            );
-            imageElement =
+            ));
+            imageElement = (
                 <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true} decorators={CarouselDecorators}>
                     {imageUrls}
                 </Carousel>
+            );
         }
         else {
             imageElement = <Image className='FoodImage' src={food.imageUrls[0]} />
@@ -50,15 +52,28 @@ export default class FoodGrid extends Component {
         let foodPrepClassName = 'LabelPrep-' + food.states[0];
         let foodPrepIcon = Util.getFoodPrepTypeIcon(food);
 
-        let labelElement =
-            // <Label content={food.prep} icon={foodPrepIcon} className={foodPrepClassName} size='small' />
+        let labelElement = (
             <Icon circular name={foodPrepIcon} className={foodPrepClassName} size='small' />
+        );
         return labelElement;
+    }
+
+    componentDidUpdate() {
+        // This is a bit of a hack to workaround an issue with the nuka carousel and images not re-drawing properly
+        Util.triggerEvent(window, 'resize');
+    }
+
+    componentWillMount() {
+        const delayMs = 2000;
+        setTimeout(() => {
+            this.setState({ showNoResultsMessage: true });
+        }, delayMs);
     }
 
     render() {
         const { foods, date, pickup } = this.props;
-        if (!foods || foods.length <= 0) {
+        const { showNoResultsMessage } = this.state;
+        if (showNoResultsMessage && (!foods || foods.length <= 0)) {
             return (
                 <div>
                     <div className='food-no-results'>
@@ -73,7 +88,7 @@ export default class FoodGrid extends Component {
                     </div>
                     <Divider />
                 </div>
-            )
+            );
         }
         const cards = foods.map((food) => {
             let foodImageComponent = this.getFoodImageComponent(food);

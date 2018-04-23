@@ -72,16 +72,16 @@ export default class DesktopSearch extends React.Component {
                         <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer}
                             style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
-                            {!isLoading &&
+                            <div style={{ display: isLoading ? 'none' : 'inherit' }}>
                                 <FoodGrid foods={foods} pickup={pickup} date={date}
                                     onFoodItemEnter={this.handleFoodItemEnter}
                                     onFoodItemLeave={this.handleFoodItemLeave} />
-                            }
-                            {isLoading &&
+                            </div>
+                            <div style={{ display: !isLoading ? 'none' : 'inherit' }}>
                                 <div className='dtsearch-loading-icon'>
                                     <LoadingIcon size='big' />
                                 </div>
-                            }
+                            </div>
                         </div>
                         <div className='dtsearch-right'>
                             <DesktopMap
