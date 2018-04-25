@@ -16,11 +16,10 @@
     color: #383838;
 }
 
-.home-search-flex-grow .ui.button {
-    border-radius: 2px;
-    min-height: 4.2em;
+.home-search-question {
+    font-size: .6em;
     font-weight: 300;
-    letter-spacing: .8px;
+    padding: 22px 0px 10px 0px;
 }
 
 .home-howto {
@@ -31,10 +30,6 @@
     font-size: .63em;
     font-weight: 300;
     margin-top: 80px;
-}
-
-.home-hoods {
-    margin-top: 30px;
 }
 
 .home-explore .ui.grid, .home-hoods .ui.grid, .home-join .ui.grid {
@@ -52,6 +47,7 @@
     border: 1px solid #e7e7e7;
     border-radius: 2px;
     cursor: pointer;
+    color: #444444;
     box-shadow: 0 1px 5px 0 #44444433, 1px 5px 8px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -64,12 +60,7 @@
     font-weight: 400;
     margin: auto 20px;
 }
-.home-explore-item a {
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin: auto 20px;
-    color: #444444;
-}
+
 .home img {
     overflow: hidden;
     background-position: center center;
@@ -110,10 +101,18 @@
     flex-flow: row-reverse;
 }
 
+.home-hoods {
+    margin-top: 30px;
+}
+
 .home-hoods>div:first-child {
     font-size: .63em;
     font-weight: 300;
     margin-top: 60px;
+}
+
+.home-hoods a {
+    overflow: hidden;
 }
 
 .home-hoods .card {
@@ -136,94 +135,12 @@
 .home-hoods img {
     max-height: 250px;
     width: 100%;
-    transition: all 0.4s;
+    transition: all 0.4s ease-in-out;
 }
 
 .home-hoods img:hover {
-    transform: scale(1.05);
+    transform: scale3d(1.03, 1.03, 1);
 }
-
-/* Google Autocomplete box */
-
-.home-search {
-    display: flex;
-    transition: none;
-    padding: 20px 0px 0px 36px;
-    margin-right: 245px;
-    margin-top: 10px;
-    color: #444444;
-    border: 1px solid #e7e7e7;
-    box-shadow: 0 1px 5px 0 #44444433, 1px 5px 8px 1px rgba(0, 0, 0, 0.1);
-}
-
-.home-search>div:first-child {
-    width: 65%;
-    padding-right: 2px;
-}
-
-.home-search-question {
-    font-size: .6em;
-    font-weight: 300;
-    padding: 22px 0px 10px 0px;
-}
-
-.home-search>div:last-child {
-    width: 30%;
-    display: flex;
-    align-items: baseline;
-    margin-right: 2%;
-}
-
-.home-search-flex-grow {
-    flex-grow: 1;
-}
-
-.home-search input {
-    width: 100%;
-    line-height: 1.36428571em;
-    font-weight: 400;
-    font-size: .4em;
-    font-family: 'Roboto';
-    padding: 19px 10px 19px 18px;
-    border-radius: 2px;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    outline: 0;
-    color: #444444de;
-    margin-left: -15px;
-    margin-bottom: 20px;
-    /* box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 1px 5px 8px 1px rgba(0, 0, 0, 0.1); */
-}
-
-.home-search input::placeholder {
-    color: rgba(34, 36, 38, .3);
-}
-
-.home-search input:focus::placeholder {
-    color: rgba(0, 0, 0, .5);
-}
-
-.pac-container {
-    z-index: 2000;
-}
-
-.pac-item {
-    font-size: 16px;
-    /* font-family: Arial, Helvetica, sans-serif; */
-}
-
-.pac-item-query {
-    font-size: 16px;
-}
-
-.pac-icon {
-    margin-top: 5px;
-}
-
-.pac-logo:after {
-    display: none;
-}
-
-/* End Google Autocomplete box */
 
 .home-or-spacing {
     margin: 0px 9px 0px 7px;
@@ -231,13 +148,12 @@
     font-weight: 300;
 }
 
-@media all and (max-width: 1050px) {
-    .home-search {
-        margin-right: 5px;
-    }
-}
-
 @media all and (max-width: 767px) {
+    .home-search-question {
+        font-size: .45em;
+        justify-content: center;
+        display: flex;
+    }
     .home-explore img {
         height: 73px;
         width: 88px;
@@ -248,19 +164,6 @@
         margin-bottom: 2px;
         justify-content: center;
         display: flex;
-    }
-    .home-search-question {
-        font-size: .45em;
-        justify-content: center;
-        display: flex;
-    }
-    .home-search {
-        padding: 0px 0px 0px 13px;
-        margin-right: 0px;
-    }
-    .home-search-flex-grow .ui.button {
-        border-radius: 2px;
-        min-height: 4.2em;
     }
     .home-howto {
         display: flex;
@@ -286,20 +189,6 @@
     }
     .home-link-separator {
         padding: 0px 9px;
-    }
-    .home-search {
-        display: block;
-        border: none;
-        box-shadow: none;
-        width: 100%;
-    }
-    .home-search>div:first-child {
-        width: 100%;
-        /* margin-left: 12px;         */
-    }
-    .home-search>div:last-child {
-        width: 100%;
-        /* margin-left: -3px; */
     }
     .home-hoods .card>div {
         font-weight: 500;

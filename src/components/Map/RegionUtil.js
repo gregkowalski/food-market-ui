@@ -23,4 +23,10 @@ class RegionUtil {
     }
 }
 
+
+const sw = {lat: 48.997138, lng: -123.324484};
+const ne = {lat: 49.360181, lng: -122.521481};
+const LowerMainlandBounds = new window.google.maps.LatLngBounds(sw, ne);
+
+export { LowerMainlandBounds };
 export default new RegionUtil();

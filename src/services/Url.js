@@ -1,3 +1,5 @@
+import queryString from 'query-string'
+
 class Url {
 
     foodDetail(food_id, pickup, date) {
@@ -33,8 +35,13 @@ class Url {
         return '/';
     }
 
-    search() {
-        return '/search';
+    search(params) {
+        const query = queryString.stringify(params);
+        let url = '/search';
+        if (query) {
+            url += `?${query}`;
+        }
+        return url;
     }
 
     buyerOrders() {
@@ -64,7 +71,7 @@ class Url {
     about() {
         return '/about';
     }
- 
+
     policies() {
         return '/policies';
     }
@@ -97,11 +104,11 @@ class Url {
         return '/community';
     }
 
-    whycook () {
+    whycook() {
         return '/whycook';
     }
 
-    cooks () {
+    cooks() {
         return '/cooks';
     }
 }

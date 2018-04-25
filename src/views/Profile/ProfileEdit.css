@@ -160,8 +160,8 @@
     font-family: inherit;
 }
 
-.pac-logo:after {
-    /* background-image: none; */
-}
+/* .pac-logo:after {
+    display: none;
+} */
 
 /* End Google Autocomplete box */

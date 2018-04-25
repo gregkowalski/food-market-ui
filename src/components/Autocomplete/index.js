@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LowerMainlandBounds } from '../Map/RegionUtil'
 
 export default class ReactGoogleAutocomplete extends React.Component {
     static propTypes = {
@@ -22,6 +23,10 @@ export default class ReactGoogleAutocomplete extends React.Component {
             bounds,
         };
 
+        // Limit search results to Lower Mainlain area for now
+        config.bounds = LowerMainlandBounds;
+        config.strictBounds = true;
+
         if (componentRestrictions) {
             config.componentRestrictions = componentRestrictions;
         }
@@ -42,10 +47,10 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
 
     render() {
-        const { onPlaceSelected, types, componentRestrictions, bounds, ...rest } = this.props;
+        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, ...rest } = this.props;
 
         return (
-            <input
+            <input onKeyDown={onKeyDown}
                 ref="input"
                 {...rest}
             />

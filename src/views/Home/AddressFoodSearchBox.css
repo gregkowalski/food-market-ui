@@ -1,0 +1,90 @@
+/* Google Autocomplete box */
+
+.addressfoodsearchbox {
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    width: 85%;
+    margin-top: 10px;
+    color: #444444;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0 1px 5px 0 #44444433, 1px 5px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.addressfoodsearchbox .ui.button {
+    border-radius: 0 2px 2px 0;
+    min-height: 4.2em;
+    font-weight: 300;
+    letter-spacing: .8px;
+    width: 200px;
+    min-width: 200px;
+}
+
+.addressfoodsearchbox input {
+    width: 100%;
+    line-height: 1.36428571em;
+    font-weight: 400;
+    font-size: .4em;
+    font-family: 'Roboto';
+    padding: 19px 10px 19px 18px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: 2px 0 0 2px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    appearance: none;
+    color: #444444de;
+}
+
+.addressfoodsearchbox input::placeholder {
+    color: rgba(34, 36, 38, .3);
+}
+
+.addressfoodsearchbox input:focus::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.addressfoodsearchbox.addressfoodsearchbox-result input::placeholder {
+    color: #b61095;
+}
+
+.pac-container {
+    z-index: 2000;
+}
+
+.pac-item {
+    font-size: 16px;
+}
+
+.pac-item-query {
+    font-size: 16px;
+}
+
+.pac-icon {
+    margin-top: 5px;
+}
+
+/* .pac-logo:after {
+    display: none;
+} */
+
+/* End Google Autocomplete box */
+
+@media all and (max-width: 767px) {
+    .addressfoodsearchbox {
+        display: block;
+        border: none;
+        box-shadow: none;
+        padding: 0px 0px 0px 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .addressfoodsearchbox .ui.button {
+        width: 100%;
+        border-radius: 2px;
+        margin-top: 20px;
+    }
+
+    .addressfoodsearchbox input {
+        border-radius: 2px;
+    }
+}

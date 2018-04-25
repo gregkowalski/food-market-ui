@@ -40,6 +40,11 @@ export default class MobileMap extends React.Component {
         this.setState({ showDeliveryInstructions: false });
     }
 
+    handleMapReady = (props, map) => {
+        console.log(props);
+        console.log(map);
+    }
+
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
             const geo = Util.getGeoBounds(map);
@@ -191,11 +196,13 @@ export default class MobileMap extends React.Component {
                 scrollwheel={true}
                 gestureHandling={this.props.gestureHandling}
                 center={this.props.center}
+                initialCenter={this.props.initialCenter}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleZoomChanged}
                 onBounds_changed={this.handleBoundsChanged}
+                onReady={this.handleMapReady}
             >
 
                 <CustomControl position={window.google.maps.ControlPosition.BOTTOM}>

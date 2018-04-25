@@ -15,6 +15,9 @@ function selectDelivery() {
     };
 }
 
+
+
+
 function requestFoods() {
     return {
         type: ActionTypes.REQUEST_FOODS,
@@ -35,6 +38,13 @@ function receiveFoodsError(error) {
         receivedAt: Date.now()
     };
 }
+
+function clearFoods() {
+    return {
+        type: ActionTypes.CLEAR_FOODS,
+    };
+}
+
 
 function geoLocationChanged(geo) {
     return {
@@ -71,6 +81,12 @@ export const Actions = {
         }
     },
 
+    clearFoods: () => {
+        return (dispatch) => {
+            dispatch(clearFoods());
+        }
+    },
+
     requestFoods: (geo) => {
         return (dispatch, getState) => {
 
@@ -102,8 +118,8 @@ export const Actions = {
                 return Promise.resolve();
             }
 
-            dispatch(requestFoods()); 
-                                            
+            dispatch(requestFoods());
+
             return ApiClient.deliverySearchFoods(region.id)
                 .then(
                     response => {
@@ -115,35 +131,6 @@ export const Actions = {
                     }
                 );
         };
-    },
-
-    requestCurrentGeoLocation: (navigator) => {
-        return (dispatch) => {
-
-            if (!navigator || !navigator.geolocation) {
-                return Promise.resolve();
-            }
-
-            const promise = new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject);
-            });
-
-            return promise.then(
-                pos => {
-                    const lat = pos.coords.latitude;
-                    const lng = pos.coords.longitude;
-                    const bound = Util.getGeoSearchBoundDegrees();
-                    const geo = {
-                        ne_lat: lat + bound,
-                        ne_lng: lng + bound,
-                        sw_lat: lat - bound,
-                        sw_lng: lng - bound
-                    };
-                    dispatch(geoLocationChanged(geo));
-                },
-                error => console.error(error)
-            );
-        }
     },
 
     geoLocationChanged: (geo) => {
@@ -223,6 +210,11 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isLoading: false,
                     foods: action.foods
+                });
+
+            case ActionTypes.CLEAR_FOODS:
+                return Object.assign({}, state, {
+                    foods: initialState.foods
                 });
 
             case ActionTypes.GEO_LOCATION_CHANGED:

@@ -64,7 +64,7 @@ export default class FoodGrid extends Component {
     }
 
     componentWillMount() {
-        const delayMs = 2000;
+        const delayMs = 1000;
         setTimeout(() => {
             this.setState({ showNoResultsMessage: true });
         }, delayMs);

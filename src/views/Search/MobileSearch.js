@@ -177,7 +177,7 @@ class MobileSearch extends Component {
 
     render() {
         const { mapSearch, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, region, date } = this.props;
+        const { pickup, foods, region, date, searchLocation } = this.props;
 
         this.mapHeight = this.calcMapHeight();
 
@@ -196,7 +196,7 @@ class MobileSearch extends Component {
                         onDeliveryClick={this.selectDeliveryFromFilterBar} />
 
                     <div className='mobilesearch-foodgrid'>
-                        <FoodGrid foods={foods} /> 
+                        <FoodGrid foods={foods} />
                         <Icon name='marker' color='purple' onClick={this.showMapSearch} />
                     </div>
 
@@ -213,6 +213,7 @@ class MobileSearch extends Component {
                         <MobileMap foods={foods}
                             pickup={pickup}
                             center={mapLocation}
+                            initialCenter={searchLocation}
                             selectedRegion={region}
                             selectedFoodId={selectedFoodId}
                             gestureHandling='greedy'

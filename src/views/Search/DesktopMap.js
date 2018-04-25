@@ -188,6 +188,7 @@ export default class DesktopMap extends React.Component {
                 scrollwheel={true}
                 gestureHandling={this.props.gestureHandling}
                 center={this.props.center}
+                initialCenter={this.props.initialCenter}
                 zoom={this.props.zoom}
                 visible={this.props.visible}
                 onClick={this.handleMapClick}

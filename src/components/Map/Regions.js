@@ -16,6 +16,11 @@ const Regions = all_boundaries.features.map(x => {
     }
 });
 
+export const RegionIds = {
+    VancouverWestEnd: 'Vancouver West-West End',
+    VancouverYaletown: 'Vancouver West-Yaletown'
+};
+
 export { RegionMap };
 export default Regions;
 

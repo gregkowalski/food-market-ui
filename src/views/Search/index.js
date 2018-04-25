@@ -9,13 +9,8 @@ import MobileSearch from './MobileSearch'
 
 class SearchContainer extends React.Component {
 
-    componentWillMount() {
-        if (!this.props.geo) {
-            this.props.actions.requestCurrentGeoLocation(navigator);
-        }
-    }
-
     handlePickupClick = () => this.props.actions.selectPickup();
+
     handleDeliveryClick = () => this.props.actions.selectDelivery();
 
     handleGeoLocationChanged = (geo) => {
@@ -58,6 +53,7 @@ class SearchContainer extends React.Component {
         const query = Util.parseQueryString(this.props.location);
         const isMobile = query.mobile || query.m || Util.isMobile();
 
+        // searchLocation
         const searchProps = {
             pickup, isLoading, foods, region, date, geo,
             onGeoLocationChanged: this.handleGeoLocationChanged,
@@ -101,7 +97,6 @@ SearchContainer.propTypes = {
         selectDelivery: PropTypes.func.isRequired,
         requestFoods: PropTypes.func.isRequired,
         requestFoodsInRegion: PropTypes.func.isRequired,
-        requestCurrentGeoLocation: PropTypes.func.isRequired,
         geoLocationChanged: PropTypes.func.isRequired,
         regionChanged: PropTypes.func.isRequired,
         dateChanged: PropTypes.func.isRequired

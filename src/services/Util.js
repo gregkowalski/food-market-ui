@@ -69,10 +69,10 @@ class Util {
         return meters * metersToDegrees;
     }
 
-    getGeoSearchBoundDegrees() {
-        const geoSearchBoundMeters = 4000;
-        return this.convertMetersToDegrees(geoSearchBoundMeters);
-    }
+    // getGeoSearchBoundDegrees() {
+    //     const geoSearchBoundMeters = 4000;
+    //     return this.convertMetersToDegrees(geoSearchBoundMeters);
+    // }
 
     isMobile(userAgent) {
         if (!userAgent) {

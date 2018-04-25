@@ -1,8 +1,8 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { Image, Grid, Card, Button } from 'semantic-ui-react'
+import { Image, Grid, Card } from 'semantic-ui-react'
+import queryString from 'query-string'
 import './index.css'
-import Autocomplete from '../../components/Autocomplete'
 import HomeHeader from '../../components/HomeHeader'
 import AppFooter from '../../components/AppFooter'
 import Url from '../../services/Url'
@@ -18,57 +18,24 @@ import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
 // import backgroundImg from './home-background-crop.jpg'
 // import backgroundImg1 from './home-background-mid.jpg'
-
-
+import AddressFoodSearchBox from './AddressFoodSearchBox'
+import { RegionIds } from '../../components/Map/Regions'
 
 class Home extends React.Component {
-
-    tagline;
-
-    navigateToSearch = () => {
-        this.props.history.push(Url.search());
-    }
-
-    navigateToCooks = () => {
-        this.props.history.push(Url.cooks());
-    }
 
     componentWillMount() {
         this.homefood = Util.getRandomItem([foodImg1, foodImg2, foodImg3]);
         this.homecook = Util.getRandomItem([cookImg1, cookImg2, cookImg3]);
-        this.tagline = this.getRandomTagline();
     }
 
-    getRandomTagline() {
-
-        const taglines = [
-            'Handcrafted to taste like home',
-            // 'homemade + local',
-            // 'Making good food taste better.',
-            // 'Eat like family.',
-            // 'Good food starts here.',
-            // 'cooking is love you can taste.'
-        ];
-
-        let index = Util.getRandomInt(0, taglines.length - 1);
-        return taglines[index];
-    }
-
-    autocompleteStyle(isValid) {
-        const style = {};
-        if (isValid) {
-            style.border = '1px solid rgba(34, 36, 38, .15)';
-        }
-        else {
-            style.border = '1px solid #e0b4b4';
-            style.backgroundColor = '#fff6f6';
-        }
-        return style;
+    searchByLocation = (loc) => {
+        const qs = queryString.parse(this.props.location.search);
+        const query = Object.assign({}, qs, loc);
+        const url = Url.search(query);
+        this.props.history.push(url);
     }
 
     render() {
-        const { buyerAddress, isBuyerAddressValid, onAddressSelected, onAddressChange, onAddressBlur } = this.props;
-
         return (
             <div>
                 <HomeHeader />
@@ -83,45 +50,10 @@ class Home extends React.Component {
                                 <div className='home-link-separator'>|</div>
                                 <Link to={Url.whycook()}>Become A Cook</Link>
                             </div>
-                            <div className='home-tagline'>{this.tagline}</div>
+                            <div className='home-tagline'>Handcrafted to taste like home</div>
+
                             <div className='home-search-question'>Looking for something to eat? We got you.</div>
-                            <div className='home-search'>
-
-                                <Autocomplete
-                                    style={this.autocompleteStyle(isBuyerAddressValid)}
-                                    name='address'
-                                    onPlaceSelected={onAddressSelected}
-                                    onChange={onAddressChange}
-                                    onBlur={onAddressBlur}
-                                    types={['address']}
-                                    placeholder='Enter your street address'
-                                    componentRestrictions={{ country: 'ca' }}
-                                    value={buyerAddress} />
-                                {/* <Message
-                            error={!isBuyerAddressValid}
-                            hidden={isBuyerAddressValid}
-                            visible={!isBuyerAddressValid}
-                            header='Invalid address'
-                            content='Please enter your delivery address' /> */}
-
-                                <div>
-                                    <div className='home-search-flex-grow'>
-                                        <Button fluid color='purple' onClick={this.props.onPickupClick}>FIND FOOD NEAR ME</Button>
-                                    </div>
-                                </div>
-
-                                {/* <div>
-                                    <div className='home-search-flex-grow'>
-                                        <Button fluid color='purple' onClick={this.props.onPickupClick}>PICK-UP</Button>
-                                    </div>
-                                    <span className='home-or-spacing'>or</span>
-                                    <div className='home-search-flex-grow'>
-                                        <Button fluid color='purple' onClick={this.props.onDeliveryClick}>DELIVERY</Button>
-                                    </div>
-                                </div> */}
-
-                            </div>
-
+                            <AddressFoodSearchBox onSearchByLocation={this.searchByLocation} />
 
                         </div>
                     </div>
@@ -130,23 +62,21 @@ class Home extends React.Component {
                         <div>Explore the marketplace</div>
                         <Grid stackable>
                             <Grid.Column width={5}>
-                                <div className='home-explore-item' onClick={this.navigateToSearch}>
-                                    <Image src={this.homefood} />
-                                    <div>See all food</div>
-                                </div>
+                                <Link to={Url.search()}>
+                                    <div className='home-explore-item'>
+                                        <Image src={this.homefood} />
+                                        <div>See all food</div>
+                                    </div>
+                                </Link>
                             </Grid.Column>
                             <Grid.Column width={5}>
-                                <div className='home-explore-item' onClick={this.navigateToCooks}>
-                                    <Image src={this.homecook} />
-                                    <div>Discover local cooks</div>
-                                </div>
+                                <Link to={Url.cooks()}>
+                                    <div className='home-explore-item'>
+                                        <Image src={this.homecook} />
+                                        <div>Discover local cooks</div>
+                                    </div>
+                                </Link>
                             </Grid.Column>
-                            {/* <Grid.Column width={5}>
-                                <div className='home-explore-item' onClick={this.navigateToSearch}>
-                                    <Image src={joinImg1} />
-                                    <div>Become a cook!</div>
-                                </div>
-                            </Grid.Column> */}
                         </Grid>
                     </div>
 
@@ -154,20 +84,20 @@ class Home extends React.Component {
                         <div>Get food delivered to your neighbourhood</div>
                         <Grid stackable>
                             <Grid.Column width={8}>
-                                <div onClick={this.navigateToSearch}>
+                                <Link to={Url.search({ region: RegionIds.VancouverWestEnd })}>
                                     <Card fluid>
                                         <Image src={westendImg} />
                                         <div>West End</div>
                                     </Card>
-                                </div>
+                                </Link>
                             </Grid.Column>
                             <Grid.Column width={8}>
-                                <div onClick={this.navigateToSearch}>
+                                <Link to={Url.search({ region: RegionIds.VancouverYaletown })}>
                                     <Card fluid>
                                         <Image src={yaletownImg} />
                                         <div>Yaletown</div>
                                     </Card>
-                                </div>
+                                </Link>
                             </Grid.Column>
                         </Grid>
                     </div>

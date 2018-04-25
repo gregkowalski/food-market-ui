@@ -52,7 +52,7 @@ export default class DesktopSearch extends React.Component {
 
     render() {
         const { dimmed } = this.state;
-        const { pickup, isLoading, foods, region, date } = this.props;
+        const { pickup, isLoading, foods, region, date, searchLocation } = this.props;
 
         return (
             <div className='dtsearch-wrap' onClick={this.hideDimmer}>
@@ -88,6 +88,7 @@ export default class DesktopSearch extends React.Component {
                                 foods={foods}
                                 pickup={pickup}
                                 date={date}
+                                initialCenter={searchLocation}
                                 selectedRegion={region}
                                 selectedFoodId={this.state.hoveredFoodId}
                                 onGeoLocationChanged={this.props.onGeoLocationChanged}
