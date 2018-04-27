@@ -66,7 +66,7 @@ export default class FoodFilter extends React.Component {
                         <span className='food-filter-or'>or</span>
                         <Button color='purple' style={mobileButtonStyle} {...this.getButtonProps(!pickup)} onClick={this.props.onDeliveryClick}>DELIVERY</Button>
                     </div>
-
+ 
                     {!mobile &&
                         <div id='foodfilter-expand'>
                             Resize window to show map &gt;&gt;

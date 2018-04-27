@@ -88,13 +88,10 @@
 
 .food-no-results-header {
     font-size: 1.25em;
-    line-height: 1.55em;        
+    line-height: 1.55em; 
+    font-weight: 400; 
+    margin-bottom: 25px;          
 }
-
-.food-no-results-body {
-    font-weight: 400;
-}
-
 
 @media all and (min-width: 768px) {
     .FoodCard {

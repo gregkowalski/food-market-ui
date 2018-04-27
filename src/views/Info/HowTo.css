@@ -2,22 +2,38 @@
     color: #4e4e4e;
     font-size: 1.9em;
     font-weight: 500;
-    margin-top: 50px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
 .howto-content {
-    font-size: 1.3em;
+    font-size: 1.4em;
     line-height: 1.7;
-    color: #444444;
+    color: #5e5e5e;
     font-weight: 400;
-    width: 85%;
+    width: 100%;
+}
+
+.howto-cards {
+    margin: 10px 0px;
+}
+
+.howto-cards>div {
+    margin-top: 10px;
+    font-weight: 700;
+    color: #444444;
+    
 }
 
 @media all and (max-width: 767px) {
 .howto-header {
     margin-top: 45px;
+    margin-bottom: 30px;    
 }
 .howto-content {
     width: 100%;
+}
+.howto-cards>div {
+    font-weight: 500;
 }
 }

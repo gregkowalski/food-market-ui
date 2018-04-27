@@ -77,9 +77,7 @@ export default class FoodGrid extends Component {
             return (
                 <div>
                     <div className='food-no-results'>
-                        <div className='food-no-results-header'>Looks like there's nothing available here...at least not yet!</div>
-                        <Divider hidden />
-                        <div className='food-no-results-body'>Try adjusting your search. Here's what you can do:</div>
+                        <div className='food-no-results-header'><Icon color='purple' name='map signs' />Try adjusting your search. Here's what you can do:</div>
                         <ul>
                             <li>Change your filters or dates</li>
                             <li> Zoom out on the map </li>
