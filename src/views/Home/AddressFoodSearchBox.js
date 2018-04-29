@@ -61,6 +61,9 @@ export default class AddressFoodSearchBox extends React.Component {
 
         setTimeout(() => {
             navigator.geolocation.clearWatch(watchId);
+            if (!this.geocoder)
+                return;
+
             this.setState({
                 isSearching: false,
                 addressPlaceholder: unableToGeoSearchPlaceholder

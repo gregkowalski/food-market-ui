@@ -20,6 +20,7 @@ import yaletownImg from './home-yaletown.jpg'
 // import backgroundImg1 from './home-background-mid.jpg'
 import AddressFoodSearchBox from './AddressFoodSearchBox'
 import { RegionIds } from '../../components/Map/Regions'
+import { DeliveryOptions } from '../../Enums'
 
 class Home extends React.Component {
 
@@ -30,7 +31,7 @@ class Home extends React.Component {
 
     searchByLocation = (loc) => {
         const qs = queryString.parse(this.props.location.search);
-        const query = Object.assign({}, qs, loc);
+        const query = Object.assign({ d: DeliveryOptions.pickup }, qs, loc);
         const url = Url.search(query);
         this.props.history.push(url);
     }
@@ -84,7 +85,7 @@ class Home extends React.Component {
                         <div>Get food delivered to your neighbourhood</div>
                         <Grid stackable>
                             <Grid.Column width={8}>
-                                <Link to={Url.search({ region: RegionIds.VancouverWestEnd })}>
+                                <Link to={Url.search({ r: RegionIds.VancouverWestEnd, d: DeliveryOptions.delivery })}>
                                     <Card fluid>
                                         <Image src={westendImg} />
                                         <div>West End</div>
@@ -92,7 +93,7 @@ class Home extends React.Component {
                                 </Link>
                             </Grid.Column>
                             <Grid.Column width={8}>
-                                <Link to={Url.search({ region: RegionIds.VancouverYaletown })}>
+                                <Link to={Url.search({ r: RegionIds.VancouverYaletown, d: DeliveryOptions.delivery })}>
                                     <Card fluid>
                                         <Image src={yaletownImg} />
                                         <div>Yaletown</div>

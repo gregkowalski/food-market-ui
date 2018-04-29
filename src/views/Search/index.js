@@ -6,12 +6,18 @@ import { Actions, Selectors } from '../../store/search'
 import Util from '../../services/Util'
 import DesktopSearch from './DesktopSearch'
 import MobileSearch from './MobileSearch'
+import { DeliveryOptions } from '../../Enums'
+import { RegionMap } from '../../components/Map/Regions'
 
 class SearchContainer extends React.Component {
 
-    handlePickupClick = () => this.props.actions.selectPickup();
+    handlePickupClick = () => {
+        this.props.actions.selectPickup();
+    }
 
-    handleDeliveryClick = () => this.props.actions.selectDelivery();
+    handleDeliveryClick = () => {
+        this.props.actions.selectDelivery();
+    }
 
     handleGeoLocationChanged = (geo) => {
         if (!Util.isEqualGeo(this.props.geo, geo)) {
@@ -28,6 +34,26 @@ class SearchContainer extends React.Component {
     handleRegionSelected = (region) => {
         if (!Util.isEqualRegion(this.props.region, region)) {
             this.props.actions.regionChanged(region);
+        }
+    }
+
+    componentWillMount() {
+        const query = Util.parseQueryString(this.props.location);
+        this.isMobile = query.mobile || query.m || Util.isMobile();
+
+        this.props.actions.clearFoods();
+        if (query.d && query.d.toUpperCase() === DeliveryOptions.delivery.toUpperCase()) {
+            this.props.actions.selectDelivery();
+            if (query.r) {
+                const region = RegionMap[query.r];
+                this.props.actions.regionChanged(region);
+            }
+        }
+        else {
+            this.props.actions.selectPickup();
+            if (query.lat && query.lng) {
+                this.position = { lat: query.lat, lng: query.lng };
+            }
         }
     }
 
@@ -50,10 +76,7 @@ class SearchContainer extends React.Component {
 
     render() {
         const { pickup, isLoading, foods, region, date, geo } = this.props;
-        const query = Util.parseQueryString(this.props.location);
-        const isMobile = query.mobile || query.m || Util.isMobile();
 
-        // searchLocation
         const searchProps = {
             pickup, isLoading, foods, region, date, geo,
             onGeoLocationChanged: this.handleGeoLocationChanged,
@@ -63,7 +86,11 @@ class SearchContainer extends React.Component {
             onDeliveryClick: this.handleDeliveryClick
         }
 
-        return isMobile ? <MobileSearch {...searchProps} /> : <DesktopSearch {...searchProps} />;
+        if (this.position) {
+            searchProps.initialMapCenter = this.position;
+        }
+
+        return this.isMobile ? <MobileSearch {...searchProps} /> : <DesktopSearch {...searchProps} />;
     }
 }
 

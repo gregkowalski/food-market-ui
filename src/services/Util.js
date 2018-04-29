@@ -63,17 +63,6 @@ class Util {
         return -1;
     }
 
-    convertMetersToDegrees(meters) {
-        const earthCircumference = 40075000;
-        const metersToDegrees = 360 / earthCircumference;
-        return meters * metersToDegrees;
-    }
-
-    // getGeoSearchBoundDegrees() {
-    //     const geoSearchBoundMeters = 4000;
-    //     return this.convertMetersToDegrees(geoSearchBoundMeters);
-    // }
-
     isMobile(userAgent) {
         if (!userAgent) {
             userAgent = window.navigator.userAgent;
@@ -93,19 +82,6 @@ class Util {
 
         userAgent = userAgent.toLowerCase();
         return userAgent.indexOf("android") >= 0;
-    }
-
-    getGeoBounds(map) {
-        const bounds = map.getBounds();
-        const ne = bounds.getNorthEast();
-        const sw = bounds.getSouthWest();
-        const geo = {
-            ne_lat: ne.lat(),
-            ne_lng: ne.lng(),
-            sw_lat: sw.lat(),
-            sw_lng: sw.lng(),
-        }
-        return geo;
     }
 
     isDayOutsideRange = (date) => {

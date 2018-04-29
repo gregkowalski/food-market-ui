@@ -177,7 +177,7 @@ const initialState = {
     pickup: true,
     isLoading: false,
     date: null,
-    foods: []
+    foods: null
 };
 
 export const Reducers = {

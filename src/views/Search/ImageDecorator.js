@@ -8,7 +8,7 @@ const CarouselDecorators = [
         component: createReactClass({
             render() {
                 return (
-                    <button className='FoodImageHideDecorator'
+                    <button className='foodgrid-image-hidedecorator'
                         style={this.getButtonStyles(this.props.currentSlide === 0 && !this.props.wrapAround)}
                         onClick={this.handleClick}><Icon size='huge' name='angle left' /></button>
                 )
@@ -36,7 +36,7 @@ const CarouselDecorators = [
         component: createReactClass({
             render() {
                 return (
-                    <button className='FoodImageHideDecorator'
+                    <button className='foodgrid-image-hidedecorator'
                         style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount && !this.props.wrapAround)}
                         onClick={this.handleClick}><Icon size='huge' name='angle right' /></button>
                 )
@@ -71,7 +71,7 @@ const CarouselDecorators = [
                             indexes.map(function (index) {
                                 return (
                                     <li style={self.getListItemStyles()} key={index}>
-                                        <button className='FoodImageHideDecorator'
+                                        <button className='foodgrid-image-hidedecorator'
                                             style={self.getButtonStyles(self.props.currentSlide === index)}
                                             onClick={(e) => self.handleClick(e, index)}>
                                             &bull;

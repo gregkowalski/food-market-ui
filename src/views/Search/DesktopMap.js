@@ -6,6 +6,7 @@ import { Map, Marker, InfoWindow, Polygon, CustomControl } from '../../component
 import Regions from '../../components/Map/Regions'
 import PriceCalc from '../../services/PriceCalc'
 import Util from '../../services/Util'
+import MapUtil from '../../services/MapUtil'
 import Url from '../../services/Url'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
@@ -65,7 +66,7 @@ export default class DesktopMap extends React.Component {
 
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
-            const geo = Util.getGeoBounds(map);
+            const geo = MapUtil.getGeoBounds(map);
             this.props.onGeoLocationChanged(geo);
         }
     }
@@ -139,7 +140,7 @@ export default class DesktopMap extends React.Component {
             })
         }
 
-        const markers = foods.map(foodItem => {
+        const markers = foods && foods.map(foodItem => {
             return (
                 <Marker
                     id={foodItem.food_id}

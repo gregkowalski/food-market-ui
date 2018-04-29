@@ -25,7 +25,7 @@ const configureStore = (options = {}) => {
     const orderFilter = createBlacklistFilter('order', ['isOrderProcessing', 'paymentError']);
     const currentUserFilter = createBlacklistFilter('currentUser', ['apiErrorCode', 'apiError']);
     const publicUserFilter = createBlacklistFilter('publicUser');
-    const searchFilter = createBlacklistFilter('search', ['region']);
+    const searchFilter = createBlacklistFilter('search', ['region', 'geo', 'foods']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
         (inboundState, key) => {

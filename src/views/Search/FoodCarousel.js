@@ -38,19 +38,20 @@ export default class FoodCarousel extends Component {
         }
     }
 
-    componentWillMount() {
-        const self = this;
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                self.forceUpdate();
-            }, 0);
-        });
+    forceUpdateAfterTimeout = () => {
+        setTimeout(() => {
+            this.forceUpdate();
+        }, 0);
+    }
 
-        window.addEventListener('resize', () => {
-            setTimeout(() => {
-                self.forceUpdate();
-            }, 0);
-        });
+    componentDidMount() {
+        window.addEventListener('orientationchange', this.forceUpdateAfterTimeout);
+        window.addEventListener('resize', this.forceUpdateAfterTimeout);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('orientationchange', this.forceUpdateAfterTimeout);
+        window.removeEventListener('resize', this.forceUpdateAfterTimeout);
     }
 
     handleAfterFoodSlide = (index) => {

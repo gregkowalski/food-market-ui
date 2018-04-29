@@ -3,6 +3,7 @@ import './MobileMap.css'
 import { Map, Marker, CustomControl, Polygon } from '../../components/Map'
 import Regions from '../../components/Map/Regions'
 import Util from '../../services/Util'
+import MapUtil from '../../services/MapUtil'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -40,14 +41,9 @@ export default class MobileMap extends React.Component {
         this.setState({ showDeliveryInstructions: false });
     }
 
-    handleMapReady = (props, map) => {
-        console.log(props);
-        console.log(map);
-    }
-
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
-            const geo = Util.getGeoBounds(map);
+            const geo = MapUtil.getMobileGeoBounds(map);
             this.props.onGeoLocationChanged(geo);
         }
     }
@@ -115,7 +111,7 @@ export default class MobileMap extends React.Component {
             })
         }
 
-        const markers = foods.map(foodItem => {
+        const markers = foods && foods.map(foodItem => {
             return (
                 <Marker
                     food_id={foodItem.food_id}
@@ -202,7 +198,6 @@ export default class MobileMap extends React.Component {
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleZoomChanged}
                 onBounds_changed={this.handleBoundsChanged}
-                onReady={this.handleMapReady}
             >
 
                 <CustomControl position={window.google.maps.ControlPosition.BOTTOM}>

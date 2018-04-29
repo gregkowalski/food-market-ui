@@ -52,7 +52,7 @@ export default class DesktopSearch extends React.Component {
 
     render() {
         const { dimmed } = this.state;
-        const { pickup, isLoading, foods, region, date, searchLocation } = this.props;
+        const { pickup, isLoading, foods, region, date, initialMapCenter } = this.props;
 
         return (
             <div className='dtsearch-wrap' onClick={this.hideDimmer}>
@@ -72,23 +72,23 @@ export default class DesktopSearch extends React.Component {
                         <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer}
                             style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
-                            <div style={{ display: isLoading ? 'none' : 'inherit' }}>
+                            {!isLoading &&
                                 <FoodGrid foods={foods} pickup={pickup} date={date}
                                     onFoodItemEnter={this.handleFoodItemEnter}
                                     onFoodItemLeave={this.handleFoodItemLeave} />
-                            </div>
-                            <div style={{ display: !isLoading ? 'none' : 'inherit' }}>
+                            }
+                            {isLoading &&
                                 <div className='dtsearch-loading-icon'>
                                     <LoadingIcon size='big' />
                                 </div>
-                            </div>
+                            }
                         </div>
                         <div className='dtsearch-right'>
                             <DesktopMap
                                 foods={foods}
                                 pickup={pickup}
                                 date={date}
-                                initialCenter={searchLocation}
+                                initialCenter={initialMapCenter}
                                 selectedRegion={region}
                                 selectedFoodId={this.state.hoveredFoodId}
                                 onGeoLocationChanged={this.props.onGeoLocationChanged}

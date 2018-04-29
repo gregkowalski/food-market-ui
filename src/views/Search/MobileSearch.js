@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Icon, Button } from 'semantic-ui-react'
+import queryString from 'query-string'
 import './MobileSearch.css'
 import Util from '../../services/Util'
+import MapUtil from '../../services/MapUtil'
 import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
 import Drawer from '../../components/Drawer'
@@ -25,29 +27,20 @@ class MobileSearch extends Component {
         };
     }
 
-    componentWillMount() {
-        const self = this;
-        window.addEventListener('orientationchange', () => {
-            self.updateMapHeightAndForceUpdate();
-        });
-
-        window.addEventListener('resize', () => {
-            self.updateMapHeightAndForceUpdate();
-        });
-    }
-
-    mapHeightPortraitVH = 0.60;
-    mapHeightLandscapeVH = 0.84;
-
     calcMapHeight() {
-        let mapHeightVH = this.mapHeightPortraitVH;
-        if (window.innerWidth >= window.innerHeight) {
-            mapHeightVH = this.mapHeightLandscapeVH;
-        }
-        return (window.innerHeight * mapHeightVH).toFixed(0) + 'px';
+        const mapHeight = MapUtil.calcMobileMapHeight();
+        return `${mapHeight.toFixed(0)}px`;
     }
 
-    updateMapHeightAndForceUpdate() {
+    isMapSearch(location) {
+        const query = Util.parseQueryString(location);
+        if (query.view && query.view === 'map') {
+            return true;
+        }
+        return false;
+    }
+
+    updateMapHeightAndForceUpdate = () => {
         const prevMapHeight = this.mapHeight;
         this.mapHeight = this.calcMapHeight();
         if (prevMapHeight !== this.mapHeight) {
@@ -57,12 +50,22 @@ class MobileSearch extends Component {
         }
     }
 
-    isMapSearch(location) {
-        const query = Util.parseQueryString(location);
-        if (query.view && query.view === 'map') {
-            return true;
+
+    componentDidMount() {
+        if (!this.state.selectedFoodId) {
+            const { foods } = this.props;
+            if (foods && foods.length > 0) {
+                this.setState({ selectedFoodId: foods[0].food_id });
+            }
         }
-        return false;
+
+        window.addEventListener('orientationchange', this.updateMapHeightAndForceUpdate);
+        window.addEventListener('resize', this.updateMapHeightAndForceUpdate);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('orientationchange', this.updateMapHeightAndForceUpdate);
+        window.removeEventListener('resize', this.updateMapHeightAndForceUpdate);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -85,21 +88,36 @@ class MobileSearch extends Component {
         }
     }
 
-    componentDidMount() {
-        if (!this.state.selectedFoodId) {
-            const { foods } = this.props;
-            if (foods && foods.length > 0) {
-                this.setState({ selectedFoodId: foods[0].food_id });
-            }
-        }
+    showFilter = () => {
+        this.setState({ showFilter: true });
     }
 
-    showFilter = () => this.setState({ showFilter: true });
-    hideFilter = () => this.setState({ showFilter: false });
-    showMapSearch = () => this.props.history.push(Url.search() + '?m=1&view=map');
-    showListView = () => this.props.history.push(Url.search() + '?m=1&view=list');
-    handleSearchFilterChange = (filter) => this.setState({ filter });
-    handleMarkerClick = (selectedFoodId) => this.setState({ mapSelectedFoodId: selectedFoodId });
+    hideFilter = () => {
+        this.setState({ showFilter: false });
+    }
+
+    pushViewToHistory(view) {
+        const qs = queryString.parse(this.props.location.search);
+        const query = Object.assign({}, qs, { m: 1, view });
+        this.props.history.push(Url.search(query));
+    }
+
+    showMapSearch = () => {
+        this.pushViewToHistory('map');
+    }
+
+    showListView = () => {
+        this.pushViewToHistory('list');
+    }
+
+    handleSearchFilterChange = (filter) => {
+        this.setState({ filter });
+    }
+
+    handleMarkerClick = (selectedFoodId) => {
+        this.setState({ mapSelectedFoodId: selectedFoodId });
+    }
+
     handleSelectedFood = (selectedFood) => {
         setTimeout(() => {
             this.setState({
@@ -177,7 +195,7 @@ class MobileSearch extends Component {
 
     render() {
         const { mapSearch, showFilter, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, region, date, searchLocation } = this.props;
+        const { pickup, foods, region, date, initialMapCenter } = this.props;
 
         this.mapHeight = this.calcMapHeight();
 
@@ -213,7 +231,7 @@ class MobileSearch extends Component {
                         <MobileMap foods={foods}
                             pickup={pickup}
                             center={mapLocation}
-                            initialCenter={searchLocation}
+                            initialCenter={initialMapCenter}
                             selectedRegion={region}
                             selectedFoodId={selectedFoodId}
                             gestureHandling='greedy'
