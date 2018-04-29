@@ -71,6 +71,13 @@ class SearchContainer extends React.Component {
         }
         else if (this.props.region !== nextProps.region && !this.props.pickup) {
             this.props.actions.requestFoodsInRegion(nextProps.region);
+        } else if (this.props.date !== nextProps.date) {
+            if (this.props.pickup) {
+                this.props.actions.requestFoods(this.props.geo);
+            }
+            else {
+                this.props.actions.requestFoodsInRegion(this.props.region);
+            }
         }
     }
 

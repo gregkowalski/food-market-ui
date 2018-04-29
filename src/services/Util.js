@@ -224,6 +224,18 @@ class Util {
         const timezone = Constants.Timezone;
         return moment(dateIso8601, moment.ISO_8601).tz(timezone);
     }
+
+    getSelectedDayFromDate(date) {
+        var asd = moment();
+        var currentDay = moment().format('YYYY-MM-DD');
+        var selectedDay = date.format('YYYY-MM-DD');
+        
+        let dateToQuery = selectedDay;
+        if (currentDay === selectedDay) {
+            dateToQuery = moment.utc().format('YYYY-MM-DD');
+        }
+        return dateToQuery;
+    }
 }
 
 export default new Util();

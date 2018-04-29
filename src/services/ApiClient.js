@@ -86,13 +86,15 @@ class ApiClient {
         return this.invokeApi(`/foods/${reviewId}`, 'GET');
     }
 
-    geoSearchFoods(geo) {
-        const requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`;
+    geoSearchFoods(geo, date) {
+        var dateQueryParam = date ? `&date=${date}` : '';
+        const requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}${dateQueryParam}`;
         return this.invokeApi(requestUrl, 'GET');
     }
 
-    deliverySearchFoods(region_id) {
-        return this.invokeApi(`/foods/deliveryByRegion?region_id=${region_id}`, 'GET');
+    deliverySearchFoods(region_id, date) {
+        var dateQueryParam = date ? `&date=${date}` : '';
+        return this.invokeApi(`/foods/deliveryByRegion?region_id=${region_id}${dateQueryParam}`, 'GET');
     }
 
     createFoodOrder(jwt, order) {

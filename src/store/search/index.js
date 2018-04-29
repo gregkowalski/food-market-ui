@@ -2,6 +2,7 @@ import ApiClient from '../../services/ApiClient'
 import ApiObjectMapper from '../../services/ApiObjectMapper'
 import * as ActionTypes from './actionTypes'
 import Util from '../../services/Util'
+import moment from 'moment-timezone'
 
 function selectPickup() {
     return {
@@ -91,10 +92,12 @@ export const Actions = {
         return (dispatch, getState) => {
 
             const prevFoods = getState().search.foods;
+            const date = Selectors.getDate(getState());
+            const day = Util.getSelectedDayFromDate(date);
 
             dispatch(requestFoods());
 
-            return ApiClient.geoSearchFoods(geo)
+            return ApiClient.geoSearchFoods(geo, day)
                 .then(
                     response => {
                         let foods = ApiObjectMapper.mapFoods(response.data);
@@ -112,15 +115,17 @@ export const Actions = {
 
     requestFoodsInRegion: (region) => {
 
-        return (dispatch) => {
+        return (dispatch, getState) => {
 
             if (!region || !region.id) {
                 return Promise.resolve();
             }
+            const date = Selectors.getDate(getState());
+            const day = Util.getSelectedDayFromDate(date);
 
-            dispatch(requestFoods());
-
-            return ApiClient.deliverySearchFoods(region.id)
+            dispatch(requestFoods()); 
+                                            
+            return ApiClient.deliverySearchFoods(region.id, day)
                 .then(
                     response => {
                         const foods = ApiObjectMapper.mapFoods(response.data);
