@@ -101,8 +101,7 @@ export const Actions = {
     requestFoods: (geo) => {
         return (dispatch, getState) => {
 
-            const prevFoods = getState().search.foods;
-
+            const prevFoods = Selectors.foods(getState());
             dispatch(requestFoods());
 
             return ApiClient.geoSearchFoods(geo)
@@ -123,7 +122,7 @@ export const Actions = {
 
     requestFoodsInRegion: (region) => {
 
-        return (dispatch) => {
+        return (dispatch, getState) => {
 
             if (!region || !region.id) {
                 return Promise.resolve();

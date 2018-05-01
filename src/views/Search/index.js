@@ -39,12 +39,9 @@ class SearchContainer extends React.Component {
         const query = Util.parseQueryString(this.props.location);
         this.isMobile = query.mobile || query.m || Util.isMobile();
 
-        this.props.actions.clearFoods();
-        const { pickup, geo, region, actions } = this.props;
-        if (pickup && geo) {
-            actions.requestFoods(geo);
-        }
-        else if (!pickup && region) {
+        const { pickup, region, actions } = this.props;
+        actions.clearFoods();
+        if (!pickup && region) {
             actions.requestFoodsInRegion(region);
         }
     }

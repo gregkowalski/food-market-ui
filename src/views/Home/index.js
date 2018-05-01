@@ -36,7 +36,7 @@ class Home extends React.Component {
         if (value.place) {
             actions.addressChanged(Util.toAddress(value.place));
         }
-        
+
         const pos = Util.toLocation(value.location);
         const region = RegionUtil.getRegionByPosition(pos);
         actions.selectPickup();
@@ -55,6 +55,15 @@ class Home extends React.Component {
         actions.selectDelivery();
         actions.mapCenterChanged(Util.toLocation(region.center));
         actions.regionChanged(region);
+        actions.addressChanged(undefined);
+        this.props.history.push(Url.search());
+    }
+
+    navigateToDefaultSearch = () => {
+        const { actions } = this.props;
+        actions.selectPickup();
+        actions.mapCenterChanged(undefined);
+        actions.regionChanged(undefined);
         actions.addressChanged(undefined);
         this.props.history.push(Url.search());
     }
@@ -93,12 +102,10 @@ class Home extends React.Component {
                         <div>Explore the marketplace</div>
                         <Grid stackable>
                             <Grid.Column width={5}>
-                                <Link to={Url.search()}>
-                                    <div className='home-explore-item'>
-                                        <Image src={this.homefood} />
-                                        <div>See all food</div>
-                                    </div>
-                                </Link>
+                                <div className='home-explore-item' onClick={this.navigateToDefaultSearch}>
+                                    <Image src={this.homefood} />
+                                    <div>See all food</div>
+                                </div>
                             </Grid.Column>
                             <Grid.Column width={5}>
                                 <Link to={Url.cooks()}>
