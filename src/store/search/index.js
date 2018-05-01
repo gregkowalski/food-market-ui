@@ -15,9 +15,6 @@ function selectDelivery() {
     };
 }
 
-
-
-
 function requestFoods() {
     return {
         type: ActionTypes.REQUEST_FOODS,
@@ -64,6 +61,20 @@ function dateChanged(date) {
     return {
         type: ActionTypes.DATE_CHANGED,
         date
+    };
+}
+
+function mapCenterChanged(mapCenter) {
+    return {
+        type: ActionTypes.MAP_CENTER_CHANGED,
+        mapCenter
+    };
+}
+
+function addressChanged(address) {
+    return {
+        type: ActionTypes.ADDRESS_CHANGED,
+        address
     };
 }
 
@@ -149,41 +160,67 @@ export const Actions = {
         return (dispatch) => {
             dispatch(dateChanged(date))
         }
+    },
+
+    mapCenterChanged: (mapCenter) => {
+        return (dispatch) => {
+            dispatch(mapCenterChanged(mapCenter))
+        }
+    },
+
+    addressChanged: (address) => {
+        return (dispatch) => {
+            dispatch(addressChanged(address))
+        }
     }
 }
 
 export const Selectors = {
-    getFoods: (state) => {
+    foods: (state) => {
         return state.search.foods;
     },
-    getIsLoading: (state) => {
+    isLoading: (state) => {
         return state.search.isLoading;
     },
-    getPickup: (state) => {
+    pickup: (state) => {
         return state.search.pickup;
     },
-    getGeoLocation: (state) => {
+    geoLocation: (state) => {
         return state.search.geo;
     },
-    getRegion: (state) => {
+    region: (state) => {
         return state.search.region;
     },
-    getDate: (state) => {
+    date: (state) => {
         return state.search.date;
+    },
+    mapCenter: (state) => {
+        return state.search.mapCenter;
+    },
+    address: (state) => {
+        return state.search.address;
     }
 }
 
 const initialState = {
     pickup: true,
-    isLoading: false,
-    date: null,
-    foods: null
+    isLoading: false
 };
 
 export const Reducers = {
 
     search: (state = initialState, action = {}) => {
         switch (action.type) {
+
+            case ActionTypes.MAP_CENTER_CHANGED:
+                return Object.assign({}, state, {
+                    mapCenter: action.mapCenter
+                });
+
+            case ActionTypes.ADDRESS_CHANGED:
+                return Object.assign({}, state, {
+                    address: action.address
+                });
 
             case ActionTypes.SELECT_PICKUP:
                 return Object.assign({}, state, {

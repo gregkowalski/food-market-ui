@@ -1,0 +1,18 @@
+.foodfilter-deliveryoptions.ui.modal {
+    width: 250px;
+    font-size: 1.2em;
+}
+
+.foodfilter-deliveryoptions .ui.radio {
+    display: block;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.foodfilter-deliveryoptions .ui.radio:hover {
+    border: 1px solid darkslategray;
+    cursor: pointer;
+}

@@ -31,7 +31,7 @@
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     outline: 0;
     appearance: none;
-    color: #444444de;
+    /* color: #444444de; */
 }
 
 .addressfoodsearchbox input::placeholder {

@@ -4,7 +4,7 @@ import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from 'redux-thunk'
 import { persistStore, persistReducer, createTransform } from 'redux-persist'
 import sessionStorage from 'redux-persist/lib/storage/session'
-import { createBlacklistFilter } from 'redux-persist-transform-filter'
+import { createBlacklistFilter, createWhitelistFilter } from 'redux-persist-transform-filter'
 import moment from 'moment'
 import { Reducers as currentUser } from './currentUser'
 import { Reducers as publicUser } from './publicUser'
@@ -22,14 +22,18 @@ const configureStore = (options = {}) => {
     }
 
     // const searchFilter = createFilter('search', ['pickup', 'date']);
-    const orderFilter = createBlacklistFilter('order', ['isOrderProcessing', 'paymentError']);
+    const orderFilter = createWhitelistFilter('order', ['pickup', 'quantity', 'contactMethod', 'email', 'buyerPhone', 'buyerAddress']);
+    const searchFilter = createWhitelistFilter('search', ['pickup', 'region', 'mapCenter', 'address']);
     const currentUserFilter = createBlacklistFilter('currentUser', ['apiErrorCode', 'apiError']);
     const publicUserFilter = createBlacklistFilter('publicUser');
-    const searchFilter = createBlacklistFilter('search', ['region', 'geo', 'foods']);
     const myTransform = createTransform(
         // transform state on its way to being serialized and persisted.
         (inboundState, key) => {
-            return { ...inboundState };
+            const inState = { ...inboundState };
+            if (inState.region) {
+                inState.region = { id: inState.region.id };
+            }
+            return inState;
         },
         // transform state being rehydrated
         (outboundState, key) => {

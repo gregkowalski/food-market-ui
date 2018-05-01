@@ -9,76 +9,33 @@
     transition: top 0.2s ease-in-out;
 }
 
-.foodfilter-layout-mobile {
-    display: table;
-    width: 100%;
-    padding: 0px 0px 0px 0px;
-}
-
-#foodfilter-pickup {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    width: 34%;
-}
-
-#foodfilter-pickup-mobile {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    width: 100%;
-}
-
-#foodfilter-pickup-mobile button {
-    width: 50%;
-    margin: 0;
-    font-size: 18px;
-    border-radius: 0px;
-}
-
-.foodfilter-layout {
-    display: table;
+#foodfilter-filters {
     width: 100%;
     padding: 11px 0px 7px 14px;
+    white-space: nowrap;
 }
 
-#foodfilter-date {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left;
-    width: 63%;
+#foodfilter-filters > * {
+    margin-right: 10px;
 }
 
-#foodfilter-pickup button {
-    width: 44%;
-    border-radius: 3px;
+#foodfilter-address {
+    display: inline-block;
+    width: 350px;
 }
 
-.food-filter-or {
-    padding: 0px 6px 0px 3px;
-    text-shadow: 0 2px 4px rgba(88, 88, 88, 0.144);    
-}
-
-#foodfilter-pickup button:nth-child(2) {
-    margin: 0px 5px 0px 0px;
-}
-
-#foodfilter-pickup button:first-child {
-    margin: 0 1% 0 0;
-}
-
-#foodfilter-pickup button:nth-child(2) {
-    width: 46%;
-    margin: 0 0 0 1%;
-}
-
-#foodfilter-expand {
-    display: none;
-    vertical-align: middle;
-    text-align: right;
-    width: 34%;
-    font-weight: 500;
-    padding-right: 10px;
+#foodfilter-address input {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: 2px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    appearance: none;
+    /* color: #444444de; */
+    /* line-height: 13px; */
+    /* font-weight: 400; */
+    font-family: 'Roboto';
 }
 
 @media all and (max-width: 767px) {
@@ -86,82 +43,20 @@
         display: none;
     }
 
-    #foodfilter-date {
+    #foodfilter-filters {
         width: 40%;
     }
-
-    #foodfilter-pickup {
-        display: none;
-    }
-
-    #foodfilter-expand {
-        display: table-cell;
-        width: 60%;
-    }
 }
 
-/* Date picker */
-#foodfilter-datepicker-actions {
-    position: fixed;
-    top: 355px;
-    left: 20px;
-    display: table;
-    width: 305px;
-}
 
-#foodfilter-datepicker-actions button {
-    margin: 0;
-}
-
-#foodfilter-datepicker-actions div:first-child {
-    display: table-cell;
-    text-align: left;
-    width: 50%;
-}
-
-#foodfilter-datepicker-actions div:nth-child(2) {
-    display: table-cell;
-    text-align: right;
-    width: 50%;
-}
-
-#foodfilter-datepicker {
-    height: 410px;
-    width: 345px;
+.foodfilter-modal.ui.modal {
     z-index: 2000;
     top: 110px;
-    left: 14px;
     margin: 0 !important;
-    font-size: 18px;
 }
 
-#foodfilter-datepicker .content {
-    padding: 1em !important;
-    height: 410px;
-}
-
-#foodfilter-datepicker .SingleDatePickerInput {
-    display: none;
-}
-
-#foodfilter-datepicker .SingleDatePicker__picker {
-    margin-top: -90px;
-}
-
-#foodfilter-datepicker .DayPicker {
-    box-shadow: none;
-}
-
-#foodfilter-datepicker .DayPicker__week-header {
-    top: 55px;
-}
-
-#foodfilter-datepicker .DayPickerKeyboardShortcuts__show {
-    display: none;
-}
-
-#foodfilter-datepicker .CalendarDay--selected {
-    background-color: #b61095;
-    border-color: #b61095;
+.foodfilter-actions {
+    display: flex;
+    justify-content: space-between;
 }
 

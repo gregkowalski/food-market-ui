@@ -28,8 +28,8 @@ const OverviewSection = ({ food, cook }) => {
                 {food.regions.length > 0 &&
                     <div>Available for delivery to these neighbourhoods:
                         <ul>
-                            {food.regions.map((region, index) => {
-                                return (<li key={index}>{RegionUtil.getRegionNameById(region)}</li>);
+                            {food.regions.map((regionId, index) => {
+                                return (<li key={index}>{RegionUtil.getRegionNameById(regionId)}</li>);
                             })}
                         </ul>
                     </div>

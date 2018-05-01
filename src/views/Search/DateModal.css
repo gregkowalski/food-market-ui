@@ -1,0 +1,44 @@
+/* Date picker */
+.foodfilter-datepicker-actions {
+    margin-top: 310px;
+}
+
+.foodfilter-datepicker.ui.modal {
+    height: 410px;
+    width: 345px;
+    z-index: 2000;
+    top: 110px;
+    left: 14px;
+    margin: 0 !important;
+    font-size: 18px;
+}
+
+.foodfilter-datepicker .content {
+    padding: 1em !important;
+    height: 410px;
+}
+
+.foodfilter-datepicker .SingleDatePickerInput {
+    display: none;
+}
+
+.foodfilter-datepicker .SingleDatePicker__picker {
+    margin-top: -90px;
+}
+
+.foodfilter-datepicker .DayPicker {
+    box-shadow: none;
+}
+
+.foodfilter-datepicker .DayPicker__week-header {
+    top: 55px;
+}
+
+.foodfilter-datepicker .DayPickerKeyboardShortcuts__show {
+    display: none;
+}
+
+.foodfilter-datepicker .CalendarDay--selected {
+    background-color: #b61095;
+    border-color: #b61095;
+}

@@ -28,6 +28,11 @@ class ApiClient {
     }
 
     invokeApi(pathTemplate, method, body) {
+        if (!CognitoUtil.isLoggedIn()) {
+            CognitoUtil.redirectToLogin();
+            return Promise.reject();
+        }
+
         return this.apiGatewayClient.invokeApi(null, pathTemplate, method,
             { headers: this.jsonHttpHeader() }, body);
     }

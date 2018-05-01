@@ -224,6 +224,22 @@ class Util {
         const timezone = Constants.Timezone;
         return moment(dateIso8601, moment.ISO_8601).tz(timezone);
     }
+
+    toAddress(place) {
+        const location = this.toLocation(place.geometry.location);
+        const address = {
+            formatted_address: place.formatted_address,
+            geometry: { location }
+        };
+        return address;
+    }
+
+    toLocation(loc) {
+        if (loc instanceof window.google.maps.LatLng) {
+            return { lat: loc.lat(), lng: loc.lng() };
+        }
+        return loc;
+    }
 }
 
 export default new Util();

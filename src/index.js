@@ -7,6 +7,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import 'whatwg-fetch'
 import './semantic/semantic.min.css'
+import './index.css'
+
 import Url from './services/Url'
 import FoodDetail from './views/FoodDetail'
 import Order from './views/Order'

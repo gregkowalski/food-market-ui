@@ -23,25 +23,7 @@ export default class DesktopSearch extends React.Component {
     }
 
     handleFoodItemLeave = (itemId) => {
-        this.setState({ hoveredFoodId: null });
-    }
-
-    handleDateFilterClose = () => {
-        this.hideDimmer();
-    }
-
-    handleDateFilterClear = () => {
-        this.props.onDateChanged(null);
-        this.hideDimmer();
-    }
-
-    handleDateFilterApply = (date) => {
-        this.props.onDateChanged(date);
-        this.hideDimmer();
-    }
-
-    handleDateFilterClick = () => {
-        this.setState({ dimmed: !this.state.dimmed });
+        this.setState({ hoveredFoodId: undefined });
     }
 
     hideDimmer = () => {
@@ -50,23 +32,22 @@ export default class DesktopSearch extends React.Component {
         }
     }
 
+    showDimmer = (show) => {
+        this.setState({ dimmed: show });
+    }
+
     render() {
-        const { dimmed } = this.state;
-        const { pickup, isLoading, foods, region, date, initialMapCenter } = this.props;
+        const { pickup, isLoading, foods, date, mapCenter, onGeoLocationChanged } = this.props;
+        const { dimmed, hoveredFoodId } = this.state;
 
         return (
             <div className='dtsearch-wrap' onClick={this.hideDimmer}>
                 <AppHeader fixed noshadow />
                 <FoodFilter style={{ top: '55px', position: 'fixed' }}
-                    showDateFilter={dimmed}
-                    pickup={pickup}
-                    date={date}
-                    onPickupClick={this.props.onPickupClick}
-                    onDeliveryClick={this.props.onDeliveryClick}
-                    onDateFilterClick={this.handleDateFilterClick}
-                    onDateFilterClose={this.handleDateFilterClose}
-                    onDateFilterClear={this.handleDateFilterClear}
-                    onDateFilterApply={this.handleDateFilterApply} />
+                    show={dimmed}
+                    onShowFilter={this.showDimmer}
+                    onHideFilter={this.hideDimmer}
+                />
                 <div className='dtsearch-bodywrap'>
                     <Dimmer.Dimmable dimmed={dimmed}>
                         <Dimmer active={dimmed} inverted onClickOutside={this.hideDimmer}
@@ -88,11 +69,12 @@ export default class DesktopSearch extends React.Component {
                                 foods={foods}
                                 pickup={pickup}
                                 date={date}
-                                initialCenter={initialMapCenter}
-                                selectedRegion={region}
-                                selectedFoodId={this.state.hoveredFoodId}
-                                onGeoLocationChanged={this.props.onGeoLocationChanged}
-                                onRegionSelected={this.props.onRegionSelected} />
+                                center={mapCenter}
+                                initialCenter={mapCenter}
+                                selectedLocation={mapCenter}
+                                selectedFoodId={hoveredFoodId}
+                                onGeoLocationChanged={onGeoLocationChanged}
+                            />
                         </div>
                     </Dimmer.Dimmable>
                 </div>

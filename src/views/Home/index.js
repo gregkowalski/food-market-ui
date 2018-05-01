@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
+import { Actions, Selectors } from '../../store/search'
 import { withRouter, Link } from 'react-router-dom'
 import { Image, Grid, Card } from 'semantic-ui-react'
 import queryString from 'query-string'
@@ -13,14 +17,11 @@ import foodImg3 from './home-food3.jpg'
 import cookImg1 from './home-cook1.jpg'
 import cookImg2 from './home-cook2.jpg'
 import cookImg3 from './home-cook3.jpg'
-// import joinImg1 from './home-join1.jpg'
 import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
-// import backgroundImg from './home-background-crop.jpg'
-// import backgroundImg1 from './home-background-mid.jpg'
 import AddressFoodSearchBox from './AddressFoodSearchBox'
-import { RegionIds } from '../../components/Map/Regions'
-import { DeliveryOptions } from '../../Enums'
+import { RegionIds, RegionMap } from '../../components/Map/Regions'
+import RegionUtil from '../../components/Map/RegionUtil'
 
 class Home extends React.Component {
 
@@ -29,22 +30,51 @@ class Home extends React.Component {
         this.homecook = Util.getRandomItem([cookImg1, cookImg2, cookImg3]);
     }
 
-    searchByLocation = (loc) => {
+    searchByLocation = (value) => {
+        const { actions } = this.props;
+
+        if (value.place) {
+            actions.addressChanged(Util.toAddress(value.place));
+        }
+        
+        const pos = Util.toLocation(value.location);
+        const region = RegionUtil.getRegionByPosition(pos);
+        actions.selectPickup();
+        actions.mapCenterChanged(pos);
+        actions.regionChanged(region);
+
         const qs = queryString.parse(this.props.location.search);
-        const query = Object.assign({ d: DeliveryOptions.pickup }, qs, loc);
+        const query = Object.assign({}, qs);
         const url = Url.search(query);
         this.props.history.push(url);
     }
 
+    navigateToRegion = (regionId) => {
+        const { actions } = this.props;
+        const region = RegionMap[regionId];
+        actions.selectDelivery();
+        actions.mapCenterChanged(Util.toLocation(region.center));
+        actions.regionChanged(region);
+        actions.addressChanged(undefined);
+        this.props.history.push(Url.search());
+    }
+
+    deliveryWestEnd = () => {
+        this.navigateToRegion(RegionIds.VancouverWestEnd);
+    }
+
+    deliveryYaletown = () => {
+        this.navigateToRegion(RegionIds.VancouverYaletown);
+    }
+
     render() {
+        const { address } = this.props;
+
         return (
             <div>
                 <HomeHeader />
                 <div className='home'>
                     <div className='home-top'>
-                        <div className='home-top-image'>
-                            {/* <Image src={backgroundImg1} /> */}
-                        </div>
                         <div className='home-top-content'>
                             <div className='home-howto'>
                                 <Link to={Url.howto()}>How It Works</Link>
@@ -54,7 +84,7 @@ class Home extends React.Component {
                             <div className='home-tagline'>Handcrafted to taste like home</div>
 
                             <div className='home-search-question'>Looking for something to eat? We got you.</div>
-                            <AddressFoodSearchBox onSearchByLocation={this.searchByLocation} />
+                            <AddressFoodSearchBox onSearchByLocation={this.searchByLocation} address={address} />
 
                         </div>
                     </div>
@@ -85,20 +115,16 @@ class Home extends React.Component {
                         <div>Get food delivered to your neighbourhood</div>
                         <Grid stackable>
                             <Grid.Column width={8}>
-                                <Link to={Url.search({ r: RegionIds.VancouverWestEnd, d: DeliveryOptions.delivery })}>
-                                    <Card fluid>
-                                        <Image src={westendImg} />
-                                        <div>West End</div>
-                                    </Card>
-                                </Link>
+                                <Card fluid onClick={this.deliveryWestEnd}>
+                                    <Image src={westendImg} />
+                                    <div>West End</div>
+                                </Card>
                             </Grid.Column>
                             <Grid.Column width={8}>
-                                <Link to={Url.search({ r: RegionIds.VancouverYaletown, d: DeliveryOptions.delivery })}>
-                                    <Card fluid>
-                                        <Image src={yaletownImg} />
-                                        <div>Yaletown</div>
-                                    </Card>
-                                </Link>
+                                <Card fluid onClick={this.deliveryYaletown}>
+                                    <Image src={yaletownImg} />
+                                    <div>Yaletown</div>
+                                </Card>
                             </Grid.Column>
                         </Grid>
                     </div>
@@ -109,4 +135,27 @@ class Home extends React.Component {
     }
 }
 
-export default withRouter(Home);
+
+const mapStateToProps = (state) => {
+    return {
+        address: Selectors.address(state)
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+Home.propTypes = {
+    address: PropTypes.object,
+
+    actions: PropTypes.shape({
+        selectPickup: PropTypes.func.isRequired,
+        selectDelivery: PropTypes.func.isRequired,
+        mapCenterChanged: PropTypes.func.isRequired,
+        addressChanged: PropTypes.func.isRequired,
+        regionChanged: PropTypes.func.isRequired,
+    }).isRequired
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
-import { Map, Marker, InfoWindow, Polygon, CustomControl } from '../../components/Map'
-import Regions from '../../components/Map/Regions'
+import { Map, Marker, InfoWindow } from '../../components/Map'
 import PriceCalc from '../../services/PriceCalc'
-import Util from '../../services/Util'
 import MapUtil from '../../services/MapUtil'
 import Url from '../../services/Url'
 
@@ -20,7 +18,6 @@ export default class DesktopMap extends React.Component {
             activeMarker: {},
             selectedFood: {},
             selectedFoodId: props.selectedFoodId,
-            showDeliveryInstructions: !props.pickup
         };
     }
 
@@ -53,11 +50,21 @@ export default class DesktopMap extends React.Component {
         })
     }
 
-    getMarkerImage(foodItem, selectedFoodId) {
-        if (foodItem.id === selectedFoodId) {
-            return '/assets/images/food-icon-selected.png';
+    getMarkerImage = (foodItem, selectedFoodId) => {
+        const { pickup } = this.props;
+
+        if (pickup) {
+            if (foodItem.id === selectedFoodId) {
+                return '/assets/images/food-icon-selected.png';
+            }
+            return '/assets/images/food-icon.png';
         }
-        return '/assets/images/food-icon.png';
+        else {
+            if (foodItem.id === selectedFoodId) {
+                return '/assets/images/food-delivery-selected.png';
+            }
+            return '/assets/images/food-delivery.png';
+        }
     }
 
     getZIndex(foodItem, selectedFoodId) {
@@ -90,16 +97,6 @@ export default class DesktopMap extends React.Component {
         this.handleGeoSearch(props, map);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.pickup !== prevProps.pickup) {
-            this.setState({ showDeliveryInstructions: !this.props.pickup });
-        }
-    }
-
-    handleDeliveryInstructionsClick = () => {
-        this.setState({ showDeliveryInstructions: false });
-    }
-
     render() {
         const { selectedFood } = this.state;
 
@@ -108,37 +105,7 @@ export default class DesktopMap extends React.Component {
             selectedFoodId = this.state.selectedFoodId;
         }
 
-        const { pickup, date, selectedRegion, foods } = this.props;
-        const { showDeliveryInstructions } = this.state;
-
-        let polygons;
-        if (!pickup) {
-            polygons = Regions.map(region => {
-                let borderColor = '#2aad8a';
-                let fillColor = '#4cb99e';
-                if (Util.isEqualRegion(selectedRegion, region)) {
-                    borderColor = '#4286f4';
-                    fillColor = '#115dd8';
-                }
-                return (
-                    <Polygon
-                        key={region.id}
-                        id={region.id}
-                        paths={region.paths}
-                        strokeColor={borderColor}
-                        strokeOpacity={0.8}
-                        strokeWeight={2}
-                        fillColor={fillColor}
-                        fillOpacity={0.35}
-                        onClick={(props, map, e) => {
-                            if (this.props.onRegionSelected) {
-                                this.props.onRegionSelected(region);
-                            }
-                            this.setState({ showDeliveryInstructions: false });
-                        }}
-                    />);
-            })
-        }
+        const { pickup, date, foods, selectedLocation } = this.props;
 
         const markers = foods && foods.map(foodItem => {
             return (
@@ -159,21 +126,6 @@ export default class DesktopMap extends React.Component {
                 />
             );
         });
-
-        const infoStyle = {
-            marginTop: '20px',
-            marginLeft: '20px',
-            backgroundColor: '#fff',
-            padding: '5px 5px 5px 5px',
-            color: 'rgb(25,25,25)',
-            fontFamily: 'Roboto,Arial,sans-serif',
-            fontSize: '16px',
-            border: '2px solid #fff',
-            borderRadius: '3px',
-            boxShadow: '0 2px 6px rgba(0,0,0,.3)',
-            textAlign: 'center',
-            cursor: 'pointer'
-        }
 
         return (
             <Map
@@ -196,15 +148,12 @@ export default class DesktopMap extends React.Component {
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleZoomChanged}
                 onBounds_changed={this.handleBoundsChanged}
+                onRecenter={this.handleGeoSearch}
             >
-                {polygons}
                 {markers}
-
-                <CustomControl visible={showDeliveryInstructions} position={window.google.maps.ControlPosition.TOP_CENTER}>
-                    <div style={infoStyle} onClick={this.handleDeliveryInstructionsClick}>
-                        Select a neighbourhood for delivery
-                    </div>
-                </CustomControl>
+                {!pickup &&
+                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
+                }
 
                 <InfoWindow
                     marker={this.state.activeMarker}
@@ -247,9 +196,7 @@ DesktopMap.propTypes = {
         food_id: PropTypes.string.isRequired,
     })),
     pickup: PropTypes.bool.isRequired,
-    selectedRegion: PropTypes.object,
-    onGeoLocationChanged: PropTypes.func.isRequired,
-    onRegionSelected: PropTypes.func.isRequired,
+    onGeoLocationChanged: PropTypes.func.isRequired
 }
 
 // <Map google={this.props.google} />

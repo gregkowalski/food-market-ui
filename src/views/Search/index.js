@@ -6,8 +6,6 @@ import { Actions, Selectors } from '../../store/search'
 import Util from '../../services/Util'
 import DesktopSearch from './DesktopSearch'
 import MobileSearch from './MobileSearch'
-import { DeliveryOptions } from '../../Enums'
-import { RegionMap } from '../../components/Map/Regions'
 
 class SearchContainer extends React.Component {
 
@@ -42,43 +40,39 @@ class SearchContainer extends React.Component {
         this.isMobile = query.mobile || query.m || Util.isMobile();
 
         this.props.actions.clearFoods();
-        if (query.d && query.d.toUpperCase() === DeliveryOptions.delivery.toUpperCase()) {
-            this.props.actions.selectDelivery();
-            if (query.r) {
-                const region = RegionMap[query.r];
-                this.props.actions.regionChanged(region);
-            }
+        const { pickup, geo, region, actions } = this.props;
+        if (pickup && geo) {
+            actions.requestFoods(geo);
         }
-        else {
-            this.props.actions.selectPickup();
-            if (query.lat && query.lng) {
-                this.position = { lat: query.lat, lng: query.lng };
-            }
+        else if (!pickup && region) {
+            actions.requestFoodsInRegion(region);
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.pickup !== nextProps.pickup) {
-            if (nextProps.pickup) {
-                this.props.actions.requestFoods(this.props.geo);
+        const { pickup, geo, region, actions } = this.props;
+
+        if (pickup !== nextProps.pickup) {
+            if (nextProps.pickup && geo) {
+                actions.requestFoods(geo);
             }
-            else {
-                this.props.actions.requestFoodsInRegion(this.props.region);
+            else if (region) {
+                actions.requestFoodsInRegion(region);
             }
         }
-        else if (this.props.geo !== nextProps.geo && this.props.pickup) {
-            this.props.actions.requestFoods(nextProps.geo);
+        else if (geo !== nextProps.geo && pickup) {
+            actions.requestFoods(nextProps.geo);
         }
-        else if (this.props.region !== nextProps.region && !this.props.pickup) {
-            this.props.actions.requestFoodsInRegion(nextProps.region);
+        else if (region !== nextProps.region && !pickup) {
+            actions.requestFoodsInRegion(nextProps.region);
         }
     }
 
     render() {
-        const { pickup, isLoading, foods, region, date, geo } = this.props;
+        const { pickup, isLoading, foods, region, date, geo, mapCenter } = this.props;
 
         const searchProps = {
-            pickup, isLoading, foods, region, date, geo,
+            pickup, isLoading, foods, region, date, geo, mapCenter,
             onGeoLocationChanged: this.handleGeoLocationChanged,
             onRegionSelected: this.handleRegionSelected,
             onDateChanged: this.handleDateChanged,
@@ -96,12 +90,13 @@ class SearchContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        pickup: Selectors.getPickup(state),
-        isLoading: Selectors.getIsLoading(state),
-        foods: Selectors.getFoods(state),
-        geo: Selectors.getGeoLocation(state),
-        region: Selectors.getRegion(state),
-        date: Selectors.getDate(state),
+        pickup: Selectors.pickup(state),
+        isLoading: Selectors.isLoading(state),
+        foods: Selectors.foods(state),
+        geo: Selectors.geoLocation(state),
+        region: Selectors.region(state),
+        date: Selectors.date(state),
+        mapCenter: Selectors.mapCenter(state)
     };
 };
 
@@ -116,7 +111,7 @@ SearchContainer.propTypes = {
     geo: PropTypes.object,
     region: PropTypes.object,
     date: PropTypes.object,
-    isLoading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool,
     pickup: PropTypes.bool.isRequired,
 
     actions: PropTypes.shape({

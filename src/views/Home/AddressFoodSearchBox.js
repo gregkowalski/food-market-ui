@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react'
 import './AddressFoodSearchBox.css'
 import Autocomplete from '../../components/Autocomplete'
 import { LowerMainlandBounds } from '../../components/Map/RegionUtil'
+import Util from '../../services/Util'
 
 const defaultPlaceholder = 'Enter your street address';
 const noResultsPlaceholder = 'No results found';
@@ -17,6 +18,11 @@ export default class AddressFoodSearchBox extends React.Component {
 
     componentWillMount() {
         this.geocoder = new window.google.maps.Geocoder();
+        const { address } = this.props;
+
+        if (address) {
+            this.setState({ place: address, address: address.formatted_address });
+        }
     }
 
     componentWillUnmount() {
@@ -43,7 +49,7 @@ export default class AddressFoodSearchBox extends React.Component {
 
                 const lat = pos.coords.latitude;
                 const lng = pos.coords.longitude;
-                this.onSearchByLocation({ lat, lng });
+                this.onSearchByLocation(undefined, { lat, lng });
             },
             error => {
                 navigator.geolocation.clearWatch(watchId);
@@ -94,8 +100,8 @@ export default class AddressFoodSearchBox extends React.Component {
     handleAddressSelected = (place) => {
         if (!place.geometry) {
             if (this.state.place) {
-                const loc = this.state.place.geometry.location;
-                this.onSearchByLocation({ lat: loc.lat(), lng: loc.lng() });
+                const loc = Util.toLocation(this.state.place.geometry.location);
+                this.onSearchByLocation(this.state.place, loc);
             }
             else {
                 this.setState({ place: null, address: place.name });
@@ -117,8 +123,8 @@ export default class AddressFoodSearchBox extends React.Component {
         }
 
         if (place) {
-            const loc = place.geometry.location;
-            this.onSearchByLocation({ lat: loc.lat(), lng: loc.lng() });
+            const loc = Util.toLocation(place.geometry.location);
+            this.onSearchByLocation(place, loc);
             return;
         }
 
@@ -147,9 +153,9 @@ export default class AddressFoodSearchBox extends React.Component {
         });
     }
 
-    onSearchByLocation(loc) {
+    onSearchByLocation(place, location) {
         if (this.props.onSearchByLocation) {
-            this.props.onSearchByLocation(loc);
+            this.props.onSearchByLocation({ place, location });
         }
     }
 

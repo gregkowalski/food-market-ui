@@ -127,7 +127,7 @@ export const Selectors = {
 
 const initialState = {
     isLoading: false,
-    isSaving: false
+    isSaving: false,
 };
 
 export const Reducers = {

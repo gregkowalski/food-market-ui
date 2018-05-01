@@ -55,7 +55,7 @@ class DateTimeSelector extends React.Component {
                     <div className='datetime-topspacing datetime-bottomspacing'>Date</div>
                     <SingleDatePicker
                         date={date}
-                        isOutsideRange={Util.isDayOutsideRange}
+                        isOutsideRange={this.isDayOutsideRange}
                         onDateChange={onDateChange}
                         focused={this.state.focused}
                         onFocusChange={({ focused }) => this.setState({ focused })}
@@ -77,6 +77,11 @@ class DateTimeSelector extends React.Component {
                 }
             </div>
         );
+    }
+    
+    isDayOutsideRange = (date) => {
+        const day = date.format('YYYY-MM-DD');
+        return (day !== '2018-05-12');
     }
 }
 

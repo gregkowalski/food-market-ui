@@ -7,7 +7,7 @@ describe('store/currentUser/Reducers', () => {
 
     const initialState = {
         isLoading: false,
-        user: null
+        isSaving: false
     };
 
     it('should have initial state', () => {
@@ -19,13 +19,15 @@ describe('store/currentUser/Reducers', () => {
     });
 
     it('should request current user', () => {
+        const state = { isLoading: false, apiError: null };
         Reducer(Reducers.currentUser)
+            .withState(state)
             .expect({ type: ActionTypes.REQUEST_CURRENT_USER })
             .toChangeInState({ isLoading: true });
     });
 
     it('should not modify state when requesting current user', () => {
-        const state = { isLoading: false, user: null };
+        const state = { isLoading: false, apiError: null };
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.REQUEST_CURRENT_USER })
@@ -37,7 +39,7 @@ describe('store/currentUser/Reducers', () => {
         const user = {};
         Reducer(Reducers.currentUser)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user })
-            .toReturnState({ isLoading: false, user });
+            .toReturnState({ isLoading: false, isSaving: false, user });
     });
 
     it('should not modify state when receiveing current user with success', () => {
@@ -63,7 +65,7 @@ describe('store/currentUser/Reducers', () => {
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
-            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST  });
+            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST });
         expect(state.isLoading).toEqual(true);
     });
 
