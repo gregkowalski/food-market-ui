@@ -1,10 +1,10 @@
 .infopage {
     width: 85%;
-    margin: 30px auto 120px auto;
+    margin: 20px auto 120px auto;
 }
 
 @media all and (max-width: 767px) {
 .infopage {
-    width: 85%;
+    width: 90%;
 }
 }

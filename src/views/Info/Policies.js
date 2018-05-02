@@ -4,7 +4,7 @@ import InfoPage from './InfoPage'
 const Policies = () => {
     return (
         <InfoPage>
-            <h2>Policies</h2>
+            <h2>Our Kitchen Rules</h2>
         </InfoPage>
     )
 }

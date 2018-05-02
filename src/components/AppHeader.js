@@ -71,7 +71,8 @@ export class AppHeader extends React.Component {
             'moo.',
             'eat like family.',
             'good food starts here.',
-            'cooking is love you can taste.'
+            'cooking is love you can taste.',
+            'from kitchen to table.'
         ];
 
         let index = Util.getRandomInt(0, taglines.length - 1);
@@ -132,9 +133,9 @@ export class AppHeader extends React.Component {
             headerStyle.position = 'fixed';
         }
 
-        headerStyle.borderBottom = '1px solid rgb(201, 199, 199)';
+        headerStyle.borderBottom = '1px solid rgb(225, 225, 225)';
         if (!this.props.noshadow) {
-            headerStyle.boxShadow = '0px 0px 8px rgba(85, 85, 85, 0.603)';
+            headerStyle.boxShadow = '0px 0px 8px rgba(88, 88, 88, 0.603)';
         }
 
         return (

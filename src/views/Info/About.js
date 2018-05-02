@@ -1,18 +1,26 @@
 import React from 'react'
 import InfoPage from './InfoPage'
-import {  } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import './About.css'
+import aboutImg from './about-img.jpg'
 
 const About = () => {
+    const header = (
+        <div className='about-header'>
+            <Image src={aboutImg} />
+            {/* <div>Photograph by Brooke Lark</div> */}
+            <div className='about-title'>What is Foodcraft?</div>            
+        </div>
+    );
     return (
-        <InfoPage>
-            <div className='about-header'>What is Foodcraft?</div>
+        <InfoPage header={header}>
             <div className='about-content'>
-            <p>Foodcraft is food-sharing marketplace for handmade foods. </p>
-            <p>We believe in a community built by neighbours and the power
-                of quality, small-batch foods. Our goal is to create a space that can uniquely
-                help cooks grow their own business with more ease and convenience.</p>
-                </div>
+            <p>Foodcraft is a food-sharing marketplace for unique handmade foods.</p>
+            <p>Using technology to connect people, Foodcraft creates a space to support 
+                cooks as they grow their own business. 
+                
+                We believe in a community built by neighbours and the irresistable power of quality, small-batch foods.</p>
+            </div>
         </InfoPage>
     )
 }

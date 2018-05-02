@@ -1,29 +1,46 @@
-.howto-header {
-    color: #4e4e4e;
-    font-size: 1.9em;
-    font-weight: 500;
-    margin-top: 80px;
-    margin-bottom: 80px;
+.howto-title {
+    color: #3b3b3b;
+    font-size: 2.1em;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    /* text-transform: uppercase;     */
+    text-align: center;
+}
+
+.howto-header img {
+    margin-top: 60px;
+    max-height: 300px;
+    width: 100%;
+    overflow: hidden;
+    background-position: center right;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.howto-header>div {
+    text-align: right;
+    margin-top: 5px;
+    color: #9c9c9c;
 }
 
 .howto-content {
     font-size: 1.4em;
     line-height: 1.7;
-    color: #5e5e5e;
+    color: #3b3b3b;
     font-weight: 400;
     width: 100%;
 }
 
 .howto-cards {
-    margin: 10px 0px;
+    margin: 15px 0px;
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1.4em;
     color: #444444; 
 }
 
 .howto-cards>div:first-child {
     margin-top: 10px;
-  
 }
 
 .howto-spacing-bottom {
@@ -32,14 +49,23 @@
 
 
 @media all and (max-width: 767px) {
-.howto-header {
-    margin-top: 45px;
-    margin-bottom: 30px;    
+.howto-title {
+    margin-top: 30px;
+    margin-bottom: 50px;  
+    font-weight: 500;
+    font-size: 1.9em;      
 }
 .howto-content {
     width: 100%;
+    font-size: 1.1em;    
 }
 .howto-cards>div {
     font-weight: 500;
+}
+.howto-header>div {
+    font-size: .8em;
+}
+.howto-cards {
+font-weight: 500;
 }
 }

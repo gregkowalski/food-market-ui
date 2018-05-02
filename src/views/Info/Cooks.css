@@ -1,0 +1,77 @@
+.cooks-title {
+    color: #3b3b3b;
+    font-size: 2.1em;
+    line-height: 1.4;
+    font-weight: 700;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.cooks-title>div:first-child {
+    font-size: .8em;
+    font-weight: 400;
+    margin-top: 12px;
+}
+
+.cooks-content {
+    font-size: 1.4em;
+    line-height: 1.6;
+    color: #3b3b3b;
+    font-weight: 400;
+    width: 100%;
+}
+
+.cooks-content i {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.cooks-content .ui.grid .column {
+    padding: 1.7rem;
+}
+
+.cooks-pic {
+    border: 2px solid #d3d3d3;
+    padding: 3px;
+    height: 300px;
+}
+
+.cooks-cards {
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: .9em;
+    color: #444444;
+}
+
+.cooks-cards>div:first-child {
+    font-size: .8em;
+    font-weight: 500;
+    color: #9c9c9c;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+@media all and (max-width: 767px) {
+    .cooks-title {
+        margin-top: 35px;
+        margin-bottom: 30px;
+        font-weight: 500;
+        font-size: 1.9em;
+    }
+    .cooks-content {
+        width: 100%;
+        font-size: 1.1em;
+    }
+    .cooks-content i {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+    .cooks-pic {
+        height: 200px;
+    }
+    .cooks-cards {
+        font-weight: 500;
+        margin-bottom: 40px;
+    }
+}

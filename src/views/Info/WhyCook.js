@@ -1,10 +1,15 @@
 import React from 'react'
 import InfoPage from './InfoPage'
+import { } from 'semantic-ui-react'
+import './WhyCook.css'
+
 
 const WhyCook = () => {
     return (
         <InfoPage>
-            <h2>Become a cook</h2>
+            <div className='whycook-title'>Earn money as a Foodcraft cook</div>
+            <div className='cooks-content'>
+            </div>
         </InfoPage>
     )
 }

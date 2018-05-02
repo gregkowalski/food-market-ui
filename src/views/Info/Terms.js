@@ -4,7 +4,7 @@ import InfoPage from './InfoPage'
 const Terms = () => {
     return (
         <InfoPage>
-            <h2>Terms</h2>
+            <h2>Our Kitchen Rules</h2>
         </InfoPage>
     )
 }
