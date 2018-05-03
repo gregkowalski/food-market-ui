@@ -14,11 +14,21 @@ export default class MobileMap extends React.Component {
         };
     }
 
-    getMarkerImage(foodItem, selectedFoodId) {
-        if (foodItem.food_id === selectedFoodId) {
-            return '/assets/images/food-icon-selected.png';
+    getMarkerImage = (foodItem, selectedFoodId) => {
+        const { pickup } = this.props;
+
+        if (pickup) {
+            if (foodItem.id === selectedFoodId) {
+                return '/assets/images/food-icon-selected.png';
+            }
+            return '/assets/images/food-icon.png';
         }
-        return '/assets/images/food-icon.png';
+        else {
+            if (foodItem.id === selectedFoodId) {
+                return '/assets/images/food-delivery-selected.png';
+            }
+            return '/assets/images/food-delivery.png';
+        }
     }
 
     getZIndex(foodItem, selectedFoodId) {
@@ -64,7 +74,7 @@ export default class MobileMap extends React.Component {
     }
 
     render() {
-        const { foods } = this.props;
+        const { foods, pickup, selectedLocation } = this.props;
         const { selectedFoodId } = this.state;
 
         const markers = foods && foods.map(foodItem => {
@@ -115,7 +125,11 @@ export default class MobileMap extends React.Component {
                         <div className='styleBase styleFilter' onClick={this.props.onFilterClick}>Add Filter</div>
                     </div>
                 </CustomControl>
+
                 {markers}
+                {!pickup &&
+                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
+                }
 
             </Map>
         )

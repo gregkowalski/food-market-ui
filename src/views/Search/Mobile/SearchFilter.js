@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Radio, Message, Input } from 'semantic-ui-react'
+import { Button, Radio, Input } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './SearchFilter.css'
@@ -12,16 +12,17 @@ import { LowerMainlandBounds } from '../../../components/Map/RegionUtil'
 export default class SearchFilter extends React.Component {
 
     state = {
-        address: '',
         footerVisible: true,
-        isValidAddress: false
+        isValidAddress: false,
+        addressText: ''
     };
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.visible && nextProps.visible) {
             const { address, date, pickup } = nextProps;
             this.setState({
-                address: address ? address : '',
+                address: address,
+                addressText: address ? address.formatted_address : '',
                 date: date,
                 pickup: pickup,
                 footerVisible: true,
@@ -51,16 +52,15 @@ export default class SearchFilter extends React.Component {
         this.setState({ pickup: false });
     }
 
-    handleAutocompleteChange = (address) => {
-        this.setState({ address, isValidAddress: false });
+    handleAutocompleteChange = (addressText) => {
+        this.setState({ addressText, isValidAddress: false });
     }
 
-    handleAutocompleteSelect = (address) => {
-        geocodeByAddress(address)
+    handleAutocompleteSelect = (addressText) => {
+        geocodeByAddress(addressText)
             .then(results => {
-                const place = results[0];
-                const addr = this.getAddress(place);
-                this.setState({ place, address: addr, isValidAddress: true });
+                const address = results[0];
+                this.setState({ address, addressText: addressText, isValidAddress: true });
             })
             .catch(error => console.error('geocodeByAddress error', error));
     }
@@ -116,7 +116,6 @@ export default class SearchFilter extends React.Component {
 
     footerVisible(visible) {
         if (!this.props.visible || !this.state.footerVisible) {
-            console.log('not visible yet');
             return { display: 'none' };
         }
         return {};
@@ -124,9 +123,9 @@ export default class SearchFilter extends React.Component {
 
     render() {
         const { onFilterHide } = this.props;
-        const { dateFocused, date, pickup, address, isValidAddress, addressVisited } = this.state;
+        const { dateFocused, date, pickup, addressText, isValidAddress, addressVisited } = this.state;
 
-        const applyFilterDisabled = !pickup && (!address || !isValidAddress);
+        const applyFilterDisabled = !pickup && (!addressText || !isValidAddress);
         const showAddressError = applyFilterDisabled && addressVisited;
 
         return (
@@ -149,16 +148,13 @@ export default class SearchFilter extends React.Component {
                     </div>
 
                     {!pickup &&
-                        <AddressAutocomplete address={address}
+                        <AddressAutocomplete address={addressText}
                             error={showAddressError}
                             onChange={this.handleAutocompleteChange}
                             onSelect={this.handleAutocompleteSelect}
                             onFocus={this.handleAutocompleteFocus}
                             onBlur={this.handleAutocompleteBlur}
                         />
-                    }
-                    {showAddressError &&
-                        <Message error content='Please enter a delivery address' />
                     }
 
                     <div className='searchfilter-date'>
@@ -219,7 +215,9 @@ const AddressAutocomplete = ({ address, error, onChange, onSelect, onFocus, onBl
                     <div>
                         <Input error={error}
                             {...getInputProps({
-                                placeholder: 'Enter delivery address',
+                                placeholder: error
+                                    ? 'Please enter a delivery address'
+                                    : 'Enter delivery address',
                                 // className: 'location-search-input'
                                 onFocus: onFocus,
                                 onBlur: onBlur,

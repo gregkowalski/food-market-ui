@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { Actions, Selectors } from '../../../store/search'
 import { Icon } from 'semantic-ui-react'
 import queryString from 'query-string'
 import './MobileSearch.css'
@@ -10,6 +12,8 @@ import MapUtil from '../../../services/MapUtil'
 import Url from '../../../services/Url'
 import AppHeader from '../../../components/AppHeader'
 import Drawer from '../../../components/Drawer'
+import LoadingIcon from '../../../components/LoadingIcon'
+import RegionUtil from '../../../components/Map/RegionUtil'
 import FoodCarousel from './FoodCarousel';
 import MobileMap from './MobileMap'
 import FoodGrid from '../FoodGrid'
@@ -100,7 +104,22 @@ class MobileSearch extends Component {
     }
 
     applyFilter = (filter) => {
-        this.setState({ filter });
+        const { pickup, date, address } = filter;
+        const { actions } = this.props;
+
+        actions.dateChanged(date);
+        if (pickup) {
+            actions.selectPickup();
+        }
+        else {
+            actions.selectDelivery();
+
+            const selectedLocation = Util.toLocation(address.geometry.location);
+            const region = RegionUtil.getRegionByPosition(selectedLocation);
+            actions.mapCenterChanged(selectedLocation);
+            actions.regionChanged(region);
+            actions.addressChanged(Util.toAddress(address));
+        }
         this.hideFilter();
     }
 
@@ -135,14 +154,6 @@ class MobileSearch extends Component {
                 selectedFoodId: selectedFood.food_id
             });
         }, 200);
-    }
-
-    selectPickup = () => {
-        this.props.onPickupClick();
-    }
-
-    selectDelivery = () => {
-        this.props.onDeliveryClick();
     }
 
     getFilterStyle(showFilter) {
@@ -182,35 +193,43 @@ class MobileSearch extends Component {
     }
 
     render() {
-        const { mapSearch, showFilter, hideFoodGrid, filter, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, date, address, initialMapCenter } = this.props;
-
+        const { mapSearch, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
+        const { pickup, foods, date, address, initialMapCenter, mapCenter, isLoading } = this.props;
         this.mapHeight = this.calcMapHeight();
 
         return (
             <div className='mobilesearch'>
+
+                {isLoading &&
+                    <div className='mobilesearch-loading-icon'>
+                        <LoadingIcon size='big' />
+                    </div>
+                }
 
                 <div style={this.visible(!mapSearch)}>
 
                     <AppHeader fixed noshadow />
 
                     <div className='mobilesearch-filterbar'>
-                        <FilterBar filter={filter} onFilterClick={this.showFilter} />
+                        <FilterBar pickup={pickup} date={date} address={address} onFilterClick={this.showFilter} />
                     </div>
 
-                    <div className='mobilesearch-foodgrid' style={this.visible(!hideFoodGrid)}>
-                        <FoodGrid foods={foods} />
-                        <Icon name='marker' color='purple' onClick={this.showMapSearch} />
-                    </div>
+                    {!isLoading &&
+                        <div className='mobilesearch-foodgrid' style={this.visible(!hideFoodGrid)}>
+                            <FoodGrid foods={foods} />
+                            <Icon name='marker' color='purple' onClick={this.showMapSearch} />
+                        </div>
+                    }
 
                 </div>
 
                 <div style={this.visible(mapSearch)}>
 
                     <div className='mobilesearch-map' style={this.mapStyle()}>
-                        <MobileMap foods={foods}
+                        <MobileMap foods={foods} pickup={pickup}
                             center={mapLocation}
                             initialCenter={initialMapCenter}
+                            selectedLocation={mapCenter}
                             selectedFoodId={selectedFoodId}
                             gestureHandling='greedy'
                             visible={mapSearch}
@@ -253,8 +272,40 @@ class MobileSearch extends Component {
     }
 }
 
-MobileSearch.contextTypes = {
-    store: PropTypes.object
+const mapStateToProps = (state) => {
+    return {
+        pickup: Selectors.pickup(state),
+        isLoading: Selectors.isLoading(state),
+        foods: Selectors.foods(state),
+        geo: Selectors.geoLocation(state),
+        region: Selectors.region(state),
+        date: Selectors.date(state),
+        address: Selectors.address(state),
+        mapCenter: Selectors.mapCenter(state)
+    };
 };
 
-export default withRouter(connect()(MobileSearch));
+const mapDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+MobileSearch.propTypes = {
+    foods: PropTypes.arrayOf(PropTypes.shape({
+        food_id: PropTypes.string.isRequired,
+    })),
+    region: PropTypes.object,
+    date: PropTypes.object,
+    address: PropTypes.object,
+    pickup: PropTypes.bool.isRequired,
+
+    actions: PropTypes.shape({
+        selectPickup: PropTypes.func.isRequired,
+        selectDelivery: PropTypes.func.isRequired,
+        geoLocationChanged: PropTypes.func.isRequired,
+        regionChanged: PropTypes.func.isRequired,
+        dateChanged: PropTypes.func.isRequired,
+        addressChanged: PropTypes.func.isRequired,
+    }).isRequired
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileSearch));

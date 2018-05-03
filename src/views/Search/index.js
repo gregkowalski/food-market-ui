@@ -9,29 +9,9 @@ import MobileSearch from './Mobile/MobileSearch'
 
 class SearchContainer extends React.Component {
 
-    handlePickupClick = () => {
-        this.props.actions.selectPickup();
-    }
-
-    handleDeliveryClick = () => {
-        this.props.actions.selectDelivery();
-    }
-
     handleGeoLocationChanged = (geo) => {
         if (!Util.isEqualGeo(this.props.geo, geo)) {
             this.props.actions.geoLocationChanged(geo);
-        }
-    }
-
-    handleDateChanged = (date) => {
-        if (this.props.date !== date) {
-            this.props.actions.dateChanged(date);
-        }
-    }
-
-    handleRegionSelected = (region) => {
-        if (!Util.isEqualRegion(this.props.region, region)) {
-            this.props.actions.regionChanged(region);
         }
     }
 
@@ -71,10 +51,6 @@ class SearchContainer extends React.Component {
         const searchProps = {
             pickup, isLoading, foods, region, date, geo, mapCenter,
             onGeoLocationChanged: this.handleGeoLocationChanged,
-            onRegionSelected: this.handleRegionSelected,
-            onDateChanged: this.handleDateChanged,
-            onPickupClick: this.handlePickupClick,
-            onDeliveryClick: this.handleDeliveryClick
         }
 
         if (this.position) {
