@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Card, Rating, Divider } from 'semantic-ui-react'
 import './DesktopMap.css'
-import { Map, Marker, InfoWindow } from '../../components/Map'
-import PriceCalc from '../../services/PriceCalc'
-import MapUtil from '../../services/MapUtil'
-import Url from '../../services/Url'
+import { Map, Marker, InfoWindow } from '../../../components/Map'
+import PriceCalc from '../../../services/PriceCalc'
+import MapUtil from '../../../services/MapUtil'
+import Url from '../../../services/Url'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -175,10 +175,14 @@ export default class DesktopMap extends React.Component {
                                             <Rating disabled={true} maxRating={5} rating={selectedFood.rating} size='mini' className='marker-rating-stars' />
                                             <div className='marker-rating-label'>{selectedFood.ratingCount} reviews</div>
                                         </div>
-                                        <div className='marker-ingredients'>Ingredients: {selectedFood.meta}</div>
+                                        {/* {selectedFood.meta &&
+                                            <div className='marker-ingredients' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n/g, "<br />") }}></div>
+                                        } */}
                                     </Card.Meta>
                                     <Card.Description>
-                                        <div className='marker-description'>{selectedFood.description} </div>
+                                        {selectedFood.meta &&
+                                            <div className='marker-description' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n/g, "<br />") }}></div>
+                                        }
                                     </Card.Description>
                                 </Card.Content>
                             </Card>

@@ -4,7 +4,7 @@ import './FoodFilter.css'
 import './DateModal.css'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import Util from '../../services/Util'
+import Util from '../../../services/Util'
 
 export default class DateModal extends React.Component {
 

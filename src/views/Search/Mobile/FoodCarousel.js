@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Carousel from 'nuka-carousel'
 import { Item, Image, Rating, Icon } from 'semantic-ui-react'
 import './FoodCarousel.css'
-import Util from '../../services/Util'
-import Url from '../../services/Url'
-import PriceCalc from '../../services/PriceCalc'
-import { Colors } from '../../Constants'
+import Util from '../../../services/Util'
+import Url from '../../../services/Url'
+import PriceCalc from '../../../services/PriceCalc'
+import { Colors } from '../../../Constants'
 
 export default class FoodCarousel extends Component {
 
@@ -41,7 +41,7 @@ export default class FoodCarousel extends Component {
     forceUpdateAfterTimeout = () => {
         setTimeout(() => {
             this.forceUpdate();
-        }, 0);
+        }, 100);
     }
 
     componentDidMount() {
@@ -129,13 +129,18 @@ export default class FoodCarousel extends Component {
             );
         });
 
+        let slidesToShow = 2.4;
+        if (window.innerWidth >= window.innerHeight) {
+            slidesToShow = 3.8 ;
+        }
+
         return (
             <Carousel
                 dragging={true}
                 cellSpacing={15}
                 edgeEasing='easeInOutQuint'
                 wrapAround={true}
-                slidesToShow={2.4}
+                slidesToShow={slidesToShow}
                 swiping={true}
                 decorators={null}
                 afterSlide={this.handleAfterFoodSlide}

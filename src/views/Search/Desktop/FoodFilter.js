@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Actions, Selectors } from '../../store/search'
+import { Actions, Selectors } from '../../../store/search'
 import { Button } from 'semantic-ui-react'
 import './FoodFilter.css'
 import DeliveryOptionModal from './DeliveryOptionModal'
 import DateModal from './DateModal'
-import Autocomplete from '../../components/Autocomplete'
-import RegionUtil from '../../components/Map/RegionUtil'
-import Util from '../../services/Util'
+import Autocomplete from '../../../components/Autocomplete'
+import RegionUtil from '../../../components/Map/RegionUtil'
+import Util from '../../../services/Util'
 
 class FoodFilter extends React.Component {
 
@@ -22,7 +22,7 @@ class FoodFilter extends React.Component {
         return props;
     }
 
-    state = {};
+    state = { address: '' };
 
     componentWillMount() {
         const { address } = this.props;

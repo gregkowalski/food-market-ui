@@ -44,8 +44,8 @@ class MapUtil {
     }
 
     calcMobileMapHeight() {
-        const mapHeightPortraitViewHeight = 0.60;
-        const mapHeightLandscapeViewHeight = 0.84;
+        const mapHeightPortraitViewHeight = 0.70;
+        const mapHeightLandscapeViewHeight = 0.60;
         let mapHeightViewHeight = mapHeightPortraitViewHeight;
         if (window.innerWidth >= window.innerHeight) {
             mapHeightViewHeight = mapHeightLandscapeViewHeight;

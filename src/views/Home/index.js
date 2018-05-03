@@ -43,10 +43,13 @@ class Home extends React.Component {
         actions.mapCenterChanged(pos);
         actions.regionChanged(region);
 
+        this.navigateToSearch();
+    }
+
+    navigateToSearch = () => {
         const qs = queryString.parse(this.props.location.search);
         const query = Object.assign({}, qs);
-        const url = Url.search(query);
-        this.props.history.push(url);
+        this.props.history.push(Url.search(query));
     }
 
     navigateToRegion = (regionId) => {
@@ -56,7 +59,8 @@ class Home extends React.Component {
         actions.mapCenterChanged(Util.toLocation(region.center));
         actions.regionChanged(region);
         actions.addressChanged(undefined);
-        this.props.history.push(Url.search());
+        
+        this.navigateToSearch();
     }
 
     navigateToDefaultSearch = () => {
@@ -65,7 +69,8 @@ class Home extends React.Component {
         actions.mapCenterChanged(undefined);
         actions.regionChanged(undefined);
         actions.addressChanged(undefined);
-        this.props.history.push(Url.search());
+        
+        this.navigateToSearch();
     }
 
     deliveryWestEnd = () => {

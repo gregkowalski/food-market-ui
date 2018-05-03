@@ -5,7 +5,7 @@
     width: 100%;
     background: #ffffff;
     border-bottom: 1px solid rgb(201, 199, 199);
-    z-index: 1;
+    z-index: 2000;
     transition: top 0.2s ease-in-out;
 }
 

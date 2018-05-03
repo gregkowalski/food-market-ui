@@ -5,8 +5,10 @@
 }
 
 .mobilesearch-filterbar {
-    top: 55px;
     position: fixed;
+    top: 55px;
+    width: 100%;
+    z-index: 1;
 }
 
 .mobilesearch-map {
@@ -15,26 +17,6 @@
     width: 100%;
     border-bottom: 1px solid #DBDBDB;
     border-top: 1px solid #DBDBDB;
-}
-
-.mobilesearch-deliveryoptionfilter {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #fcfcfc;
-    display: table;
-    width: 100%;
-}
-
-.mobilesearch-deliveryoptionfilter .ui.button {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    width: 50%;
-    margin: 0;
-    font-size: 18px;
-    border-radius: 0px;
-    border: 1px solid #b61095;
 }
 
 .mobilesearch-foodgrid {

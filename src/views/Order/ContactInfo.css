@@ -116,10 +116,6 @@
     color: rgba(159, 58, 56, .65);
 }
 
-.pac-container {
-    z-index: 2000;
-}
-
 .pac-item {
     font-size: 16px;
     /* font-family: Arial, Helvetica, sans-serif; */

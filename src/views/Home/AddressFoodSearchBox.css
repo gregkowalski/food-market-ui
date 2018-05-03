@@ -46,10 +46,6 @@
     color: #b61095;
 }
 
-.pac-container {
-    z-index: 2000;
-}
-
 .pac-item {
     font-size: 16px;
 }

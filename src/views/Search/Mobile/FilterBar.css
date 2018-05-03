@@ -1,18 +1,16 @@
 .filterbar {
-    height: 54px;
     width: 100%;
     background: #fcfcfc;
     border-bottom: 1px solid #c9c7c7;
     box-shadow: 0px 0px 8px #44444462;
-    z-index: 1;
-    transition: top 0.2s ease-in-out;
 }
 
 .filterbar-layout {
     width: 100%;
     padding: 11px 0px 7px 14px;
+    display: flex;
 }
 
-.filterbar-layout > .ui.button:first-child {
-    margin-right: 12px;
+.filterbar-layout>div>span:first-child {
+    color: #b61095;
 }

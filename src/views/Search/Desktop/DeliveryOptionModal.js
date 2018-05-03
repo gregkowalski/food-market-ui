@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Checkbox } from 'semantic-ui-react'
 import './FoodFilter.css'
 import './DeliveryOptionModal.css'
-import { DeliveryOptions } from '../../Enums'
+import { DeliveryOptions } from '../../../Enums'
 
 export default class DeliveryOptionModal extends React.Component {
 

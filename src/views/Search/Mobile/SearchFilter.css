@@ -1,0 +1,236 @@
+.searchfilter {
+    font-size: 18px;
+}
+
+/* Header */
+
+.searchfilter-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px;
+    width: 100%;
+    border-bottom: 1px solid #DBDBDB;
+    font-weight: 500;
+}
+
+.searchfilter-header-center {
+    padding-top: 4px;
+}
+
+.searchfilter-header-right {
+    cursor: pointer;
+    font-size: 45px;
+    font-weight: 300;
+    user-select: none;
+}
+
+/* Header */
+
+/* Footer */
+
+.searchfilter-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 80px;
+    width: 100%;
+    padding: 16px 24px 16px 24px;
+    background: whitesmoke;
+    border-top: 1px solid lightgray;
+}
+
+.searchfilter-footer .ui.button {
+    width: 100%;
+    background-color: #b61095;
+    color: white;
+    font-size: 1em;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Footer */
+
+.searchfilter-main {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.searchfilter-deliveryoptions {
+    padding-top: 20px;
+}
+
+.searchfilter-deliveryoptions>div:first-child {
+    margin: 5px 0 5px;
+}
+
+.searchfilter-deliveryoptions .ui.radio {
+    display: block;
+    width: 120px;
+    font-size: 1.2rem;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+/* Address */
+
+.searchfilter-address {
+    margin-top: 5px;
+}
+
+.searchfilter-address .ui.input {
+    width: 100%;
+}
+
+.searchfilter-address input {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: 5px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    appearance: none;
+    color: rgb(15, 15, 15);
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.searchfilter-address input::placeholder {
+    color: rgba(34, 36, 38, .3);
+}
+
+.searchfilter-address input:focus::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.searchfilter-autocomplete-dropdown-container {
+    white-space: nowrap;
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.searchfilter-icon {
+    width: 15px;
+    height: 20px;
+    margin-right: 7px;
+    margin-top: 5px;
+    /* margin-top: 6px; */
+    display: inline-block;
+    vertical-align: top;
+    background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons.png);
+    background-size: 34px;
+}
+
+.searchfilter-icon-marker {
+    background-position: -1px -161px;
+}
+
+.searchfilter-icon-marker--active {
+    background-position: 16px -161px;
+}
+
+.searchfilter-suggestion-item, .searchfilter-suggestion-item--active {
+    cursor: default;
+    padding: 4px 6px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 30px;
+    text-align: left;
+    border-top: 1px solid #e6e6e6;
+    /* font-size: 11px; */
+    /* color: #999; */
+}
+
+/* Address */
+
+/* Date */
+
+.searchfilter-date {
+    padding-top: 35px;
+}
+
+.searchfilter-date .DateInput {
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.searchfilter-date .SingleDatePicker {
+    margin-top: 10px;
+    /* margin-left: 40px; */
+    width: 50%;
+}
+
+.searchfilter-date .SingleDatePickerInput {
+    border-radius: 5px;
+    border-color: #d3d3d3;
+}
+
+.searchfilter-date .SingleDatePicker__picker {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput--with-caret::before {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput--with-caret::after {
+    margin-top: -15px;
+}
+
+.searchfilter-date .DateInput__display-text--has-input {
+    color: rgb(15, 15, 15) !important;
+}
+
+.searchfilter-date .DateInput__display-text--focused {
+    background-color: transparent !important;
+}
+
+.searchfilter-date .DateInput__display-text--focused:not(.DateInput__display-text--has-input) {
+    color: rgba(0, 0, 0, .5) !important;
+}
+
+.searchfilter-date .DateInput__display-text {
+    color: rgba(34, 36, 38, .3);
+    font-weight: 400;
+}
+
+.searchfilter-date #CalendarMonth__caption {
+    margin-bottom: 15px;
+}
+
+.searchfilter-date .DayPickerKeyboardShortcuts__show_span {
+    bottom: -2px !important;
+    right: -30px !important;
+}
+
+.searchfilter-date .DateInput__display-text--focused {
+    background-color: #d3d3d3;
+    border-color: #bebebe;
+}
+
+.searchfilter-date .DayPickerKeyboardShortcuts__show {
+    display: none;
+}
+
+.searchfilter-date .CalendarDay--selected {
+    background-color: #b61095;
+    border-color: #b61095;
+}
+
+.searchfilter-date>span {
+    color: #b61095;
+    cursor: pointer;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.searchfilter-date>span:hover {
+    text-decoration: underline;
+}
+
+/* Date */

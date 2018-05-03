@@ -10,6 +10,31 @@ class Drawer extends React.Component {
         this._renderLayer();
     }
 
+    setInnerDivRef = (innerDiv) => {
+        this.innerDiv = innerDiv;
+
+        const transitionEnd = this.transitionEndEventName();
+        this.innerDiv.addEventListener(transitionEnd, this.props.onTransitionEnd, false);
+    }
+
+    transitionEndEventName() {
+        const el = document.createElement('div');
+        const transitions = {
+            'transition': 'transitionend',
+            'OTransition': 'otransitionend',  // oTransitionEnd in very old Opera
+            'MozTransition': 'transitionend',
+            'WebkitTransition': 'webkitTransitionEnd'
+        };
+
+        for (const i in transitions) {
+            if (transitions.hasOwnProperty(i) && el.style[i] !== undefined) {
+                return transitions[i];
+            }
+        }
+
+        console.error('TransitionEnd event is not supported in this browser');
+    }
+
     componentDidUpdate() {
         this._renderLayer();
     }
@@ -20,7 +45,6 @@ class Drawer extends React.Component {
     }
 
     _renderLayer() {
-
         const { children, visible } = this.props;
 
         const inner = {
@@ -29,15 +53,17 @@ class Drawer extends React.Component {
         if (!visible) {
             inner.transform = 'translate3d(0, 100%, 0)';
             inner.transition = 'all .5s ease';
+            inner.height = 'calc(100% + 100px)';
         }
         else {
             inner.transform = 'translate3d(0, 0, 0)';
             inner.transition = 'all .5s ease';
+            inner.height = '100%';
         }
 
         const content = (
             <div className='drawer-outer' style={{ zIndex: 1000 }}>
-                <div className='drawer-inner' style={inner}>
+                <div className='drawer-inner' style={inner} ref={this.setInnerDivRef}>
                     <div className='drawer-main'>
                         {children}
                     </div>

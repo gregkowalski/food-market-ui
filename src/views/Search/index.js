@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../store/search'
 import Util from '../../services/Util'
-import DesktopSearch from './DesktopSearch'
-import MobileSearch from './MobileSearch'
+import DesktopSearch from './Desktop/DesktopSearch'
+import MobileSearch from './Mobile/MobileSearch'
 
 class SearchContainer extends React.Component {
 
