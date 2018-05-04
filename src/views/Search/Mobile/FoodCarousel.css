@@ -1,5 +1,5 @@
 .foodcarousel-card-image {
-    overflow: hidden; 
+    overflow: hidden;
     background-position: center center;
     background-repeat: no-repeat;
     object-fit: cover;
@@ -26,12 +26,27 @@
     font-size: 1.1em;
 }
 
-.foodcarousel-card-info > div,
-.foodcarousel-card-info > .icon {
+.foodcarousel-card-info>div, .foodcarousel-card-info>.icon {
     margin-top: 3px;
 }
 
 .icon.foodcarousel-card-foodprep {
     font-weight: 600;
     line-height: 1;
+}
+
+.foodcarousel-no-results {
+    width: 95%;
+    margin: 20px auto;
+    font-size: 1.15em;
+    line-height: 1.15em;
+}
+
+.foodcarousel-no-results-header {
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.foodcarousel-no-results>ul {
+    margin-left: -10px;
 }

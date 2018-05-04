@@ -70,8 +70,24 @@ export default class FoodCarousel extends Component {
 
     render() {
         const { foods, pickup, date, selectedFoodId } = this.props;
-        if (!foods || foods.length <= 0) {
+        if (!foods) {
             return null;
+        }
+
+        if (foods.length <= 0) {
+            return (
+                <div className='foodcarousel-no-results'>
+                    <div className='foodcarousel-no-results-header'>
+                        <Icon color='purple' name='map signs' />
+                        Try adjusting your search. Here's what you can do:
+                    </div>
+                    <ul>
+                        <li>Change your filters or dates</li>
+                        <li>Zoom out on the map</li>
+                        <li>Search a specific neighbourhood or address</li>
+                    </ul>
+                </div>
+            );
         }
 
         const { selectedSlideIndex } = this.state;
@@ -131,7 +147,7 @@ export default class FoodCarousel extends Component {
 
         let slidesToShow = 2.4;
         if (window.innerWidth >= window.innerHeight) {
-            slidesToShow = 3.8 ;
+            slidesToShow = 3.8;
         }
 
         return (

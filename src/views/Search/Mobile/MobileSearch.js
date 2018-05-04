@@ -197,12 +197,25 @@ class MobileSearch extends Component {
         const { pickup, foods, date, address, initialMapCenter, mapCenter, isLoading } = this.props;
         this.mapHeight = this.calcMapHeight();
 
+        const loadingIconProps = { size: 'big' };
+        let loadingIconStyle = {
+            top: '50vh',
+            left: '30vw'
+        }
+        if (mapSearch) {
+            loadingIconProps.text = '';
+            loadingIconStyle = {
+                top: '30vh',
+                left: '40vw'
+            };
+        }
+
         return (
             <div className='mobilesearch'>
 
                 {isLoading &&
-                    <div className='mobilesearch-loading-icon'>
-                        <LoadingIcon size='big' />
+                    <div className='mobilesearch-loading-icon' style={loadingIconStyle}>
+                        <LoadingIcon {...loadingIconProps} />
                     </div>
                 }
 
