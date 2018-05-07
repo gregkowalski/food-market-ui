@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Radio, Input } from 'semantic-ui-react'
+import { Button, Radio, Input, Icon } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './SearchFilter.css'
@@ -65,36 +65,6 @@ export default class SearchFilter extends React.Component {
             .catch(error => console.error('geocodeByAddress error', error));
     }
 
-    getAddress = (place) => {
-        if (place && place.geometry) {
-            // const selectedLocation = Util.toLocation(place.geometry.location);
-            // const region = RegionUtil.getRegionByPosition(selectedLocation);
-            // this.props.actions.regionChanged(region);
-            // this.props.actions.mapCenterChanged(selectedLocation);
-            // this.props.actions.addressChanged(Util.toAddress(place));
-
-            const street_number = this.getPart(place.address_components, 'street_number').short_name;
-            const route = this.getPart(place.address_components, 'route').long_name;
-            // const neighborhood = this.getPart(place.address_components, 'neighborhood');
-            const locality = this.getPart(place.address_components, 'locality').short_name;
-            // const administrative_area_level_2 = this.getPart(place.address_components, 'administrative_area_level_2');
-            const administrative_area_level_1 = this.getPart(place.address_components, 'administrative_area_level_1').short_name;
-            const country = this.getPart(place.address_components, 'country').long_name;
-            // const postal_code = this.getPart(place.address_components, 'postal_code');
-
-            const address = `${street_number} ${route}, ${locality}, ${administrative_area_level_1}, ${country}`;
-            return address;
-        }
-    }
-
-    getPart(components, typeName) {
-        const part = components.find(x => x.types.indexOf(typeName) >= 0);
-        if (part) {
-            return part;
-        }
-        return {};
-    }
-
     handleAutocompleteFocus = () => {
         this.setState({ footerVisible: false, addressVisited: false });
     }
@@ -104,9 +74,17 @@ export default class SearchFilter extends React.Component {
         // on android is retracted.  If we don't add a timeout here
         // then the footer flashes right below the autocomplete
         // before being rendered at the bottom of the window
-        setTimeout(() => {
-            this.setState({ footerVisible: true, addressVisited: true });
-        }, 0);
+        this.setState({ addressVisited: true });
+        setTimeout(() => this.setState({ footerVisible: true }), 0);
+    }
+
+    handleAutocompleteClear = () => {
+        // There's a bit of a race condition with the handleAutocompleteBlur
+        // event.  The clear event (triggered by onClick) is fired right after
+        // the blur event (since we're clicking on another div).  This is what
+        // we want but adding the timeout just to ensure this triggers after
+        // the handleAutocompleteBlur method.
+        setTimeout(() => this.setState({ addressText: '', footerVisible: false, addressVisited: false }), 0);
     }
 
     handleFilterApply = () => {
@@ -154,6 +132,7 @@ export default class SearchFilter extends React.Component {
                             onSelect={this.handleAutocompleteSelect}
                             onFocus={this.handleAutocompleteFocus}
                             onBlur={this.handleAutocompleteBlur}
+                            onClear={this.handleAutocompleteClear}
                         />
                     }
 
@@ -193,63 +172,84 @@ SearchFilter.propTypes = {
     onFilterApply: PropTypes.func.isRequired,
 }
 
-const AddressAutocomplete = ({ address, error, onChange, onSelect, onFocus, onBlur }) => {
+class AddressAutocomplete extends React.Component {
 
-    const searchOptions = {
-        bounds: LowerMainlandBounds,
-        strictBounds: true,
-        types: ['address'],
-        componentRestrictions: { country: 'ca' }
+    handleClear = () => {
+        if (this.props.onClear) {
+            this.props.onClear();
+        }
+        this.input.focus();
     }
 
-    return (
-        <div className='searchfilter-address'>
+    setInputRef = (ref) => {
+        this.input = ref;
+    }
 
-            <PlacesAutocomplete
-                value={address}
-                onChange={onChange}
-                onSelect={onSelect}
-                searchOptions={searchOptions}
-            >
-                {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                    <div>
-                        <Input error={error}
-                            {...getInputProps({
-                                placeholder: error
-                                    ? 'Please enter a delivery address'
-                                    : 'Enter delivery address',
-                                // className: 'location-search-input'
-                                onFocus: onFocus,
-                                onBlur: onBlur,
-                            })}
-                        />
-                        {suggestions && suggestions.length > 0 &&
-                            <div className="searchfilter-autocomplete-dropdown-container">
-                                {suggestions.map(suggestion => {
-                                    const className = suggestion.active
-                                        ? 'searchfilter-suggestion-item--active'
-                                        : 'searchfilter-suggestion-item';
+    render() {
+        const { address, error, onChange, onSelect, onFocus, onBlur } = this.props;
 
-                                    const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+        const searchOptions = {
+            bounds: LowerMainlandBounds,
+            strictBounds: true,
+            types: ['address'],
+            componentRestrictions: { country: 'ca' }
+        }
 
-                                    const markerClass = 'searchfilter-icon-marker' + (suggestion.active ? '--active' : '');
-                                    return (
-                                        <div {...getSuggestionItemProps(suggestion, { className, style })}>
-                                            <span className={'searchfilter-icon ' + markerClass} />
-                                            <span>{suggestion.description}</span>
-                                        </div>
-                                    )
-                                })}
+        const clearStyle = {};
+        if (!address) {
+            clearStyle.display = 'none';
+        }
+
+        return (
+            <div className='searchfilter-address'>
+
+                <PlacesAutocomplete
+                    value={address}
+                    onChange={onChange}
+                    onSelect={onSelect}
+                    searchOptions={searchOptions}
+                >
+                    {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+                        <div>
+                            <div className='clearable'>
+                                <Input error={error} ref={this.setInputRef}
+                                    {...getInputProps({
+                                        placeholder: error
+                                            ? 'Please enter a delivery address'
+                                            : 'Enter delivery address',
+                                        onFocus: onFocus,
+                                        onBlur: onBlur,
+                                    })}
+                                />
+                                <Icon name='remove circle' style={clearStyle}
+                                    className='clearable__clear' onClick={this.handleClear} />
                             </div>
-                        }
-                    </div>
-                )}
-            </PlacesAutocomplete>
+                            {suggestions && suggestions.length > 0 &&
+                                <div className="searchfilter-autocomplete-dropdown-container">
+                                    {suggestions.map(suggestion => {
+                                        const className = suggestion.active
+                                            ? 'searchfilter-suggestion-item--active'
+                                            : 'searchfilter-suggestion-item';
 
-        </div>
-    );
+                                        const style = suggestion.active
+                                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                                        const markerClass = 'searchfilter-icon-marker' + (suggestion.active ? '--active' : '');
+                                        return (
+                                            <div {...getSuggestionItemProps(suggestion, { className, style })}>
+                                                <span className={'searchfilter-icon ' + markerClass} />
+                                                <span>{suggestion.description}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            }
+                        </div>
+                    )}
+                </PlacesAutocomplete>
+
+            </div>
+        );
+    }
 }
-
-

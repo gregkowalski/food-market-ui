@@ -16,6 +16,16 @@
     left: 30%;
 }
 
+.dtsearch-foodfilter {
+    position: fixed;
+    top: 55px;
+    width: 100%;
+    z-index: 1;
+    background: #ffffff;
+    border-bottom: 1px solid rgb(201, 199, 199);
+    box-shadow: 0px 0px 8px rgba(85, 85, 85, 0.603);
+}
+
 .dtsearch-center {
     height: 100%;
     width: 66%;

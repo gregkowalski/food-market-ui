@@ -33,9 +33,10 @@ class Home extends React.Component {
     searchByLocation = (value) => {
         const { actions } = this.props;
 
-        if (value.place) {
-            actions.addressChanged(Util.toAddress(value.place));
-        }
+        const address = value.place
+            ? Util.toAddress(value.place)
+            : undefined;
+        actions.addressChanged(address);
 
         const pos = Util.toLocation(value.location);
         const region = RegionUtil.getRegionByPosition(pos);
@@ -46,10 +47,14 @@ class Home extends React.Component {
         this.navigateToSearch();
     }
 
-    navigateToSearch = () => {
-        const qs = queryString.parse(this.props.location.search);
-        const query = Object.assign({}, qs);
-        this.props.history.push(Url.search(query));
+    navigateToDefaultSearch = () => {
+        const { actions } = this.props;
+        actions.selectPickup();
+        actions.mapCenterChanged(undefined);
+        actions.regionChanged(undefined);
+        actions.addressChanged(undefined);
+
+        this.navigateToSearch();
     }
 
     navigateToRegion = (regionId) => {
@@ -59,18 +64,14 @@ class Home extends React.Component {
         actions.mapCenterChanged(Util.toLocation(region.center));
         actions.regionChanged(region);
         actions.addressChanged(undefined);
-        
+
         this.navigateToSearch();
     }
 
-    navigateToDefaultSearch = () => {
-        const { actions } = this.props;
-        actions.selectPickup();
-        actions.mapCenterChanged(undefined);
-        actions.regionChanged(undefined);
-        actions.addressChanged(undefined);
-        
-        this.navigateToSearch();
+    navigateToSearch = () => {
+        const qs = queryString.parse(this.props.location.search);
+        const query = Object.assign({}, qs);
+        this.props.history.push(Url.search(query));
     }
 
     deliveryWestEnd = () => {

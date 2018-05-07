@@ -25,13 +25,16 @@
     font-weight: 400;
     font-size: .4em;
     font-family: 'Roboto';
-    padding: 19px 10px 19px 18px;
+    padding: 19px 40px 19px 18px;
     border: 1px solid rgba(34, 36, 38, .15);
     border-radius: 2px 0 0 2px;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     outline: 0;
     appearance: none;
-    /* color: #444444de; */
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .addressfoodsearchbox input::placeholder {
@@ -40,6 +43,35 @@
 
 .addressfoodsearchbox input:focus::placeholder {
     color: rgba(0, 0, 0, .5);
+}
+
+.addressfoodsearchbox-clearable {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+div.addressfoodsearchbox-clearable__clear {
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    font-style: normal;
+    font-size: 2.2rem;
+    cursor: pointer;
+    user-select: none;
+    color: #aaa;
+}
+
+div.addressfoodsearchbox-clearable__clear:hover {
+    color: #888;
+}
+
+.addressfoodsearchbox-clearable input::-ms-clear {
+    /* Remove IE default X */
+    display: none;
 }
 
 .addressfoodsearchbox.addressfoodsearchbox-result input::placeholder {

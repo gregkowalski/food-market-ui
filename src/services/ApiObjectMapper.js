@@ -32,7 +32,7 @@ class ApiObjectMapper {
 
     mapFoods(foods) {
         if (!foods)
-            return;
+            return foods;
 
         foods.forEach(x => {
             return this.mapFood(x);

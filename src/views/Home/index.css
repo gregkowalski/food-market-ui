@@ -101,6 +101,8 @@
     flex-flow: row-reverse;
 }
 
+/*#region home-hoods*/
+
 .home-hoods {
     margin-top: 30px;
 }
@@ -111,18 +113,22 @@
     margin-top: 60px;
 }
 
-.home-hoods a {
+.home-hoods a.ui.card {
     overflow: hidden;
 }
 
-.home-hoods .card {
+.home-hoods a.ui.card:hover {
+    transform: none;
+}
+
+.home-hoods .ui.card {
     font-size: 1.2rem;
     cursor: pointer;
     position: relative;
     overflow: hidden;
 }
 
-.home-hoods .card>div {
+.home-hoods .ui.card>div {
     position: absolute;
     bottom: 10px;
     left: 20px;
@@ -147,6 +153,8 @@
     font-size: .41em;
     font-weight: 300;
 }
+
+/*#endregion home-hoods*/
 
 @media all and (max-width: 767px) {
     .home-search-question {

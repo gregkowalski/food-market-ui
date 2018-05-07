@@ -17,7 +17,7 @@ export default class DesktopMap extends React.Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedFood: {},
-            selectedFoodId: props.selectedFoodId,
+            hoveredFoodId: props.hoveredFoodId,
         };
     }
 
@@ -26,7 +26,7 @@ export default class DesktopMap extends React.Component {
             selectedFood: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            selectedFoodId: props.id
+            hoveredFoodId: props.id
         });
     }
 
@@ -36,7 +36,7 @@ export default class DesktopMap extends React.Component {
                 showingInfoWindow: false,
                 activeMarker: null,
                 selectedFood: {},
-                selectedFoodId: null
+                hoveredFoodId: null
             });
         }
     }
@@ -46,34 +46,34 @@ export default class DesktopMap extends React.Component {
             showingInfoWindow: false,
             activeMarker: null,
             selectedFood: {},
-            selectedFoodId: null
+            hoveredFoodId: null
         })
     }
 
-    getMarkerImage = (foodItem, selectedFoodId) => {
+    getMarkerImage = (foodItem, hoveredFoodId) => {
         const { pickup } = this.props;
 
         if (pickup) {
-            if (foodItem.id === selectedFoodId) {
+            if (foodItem.id === hoveredFoodId) {
                 return '/assets/images/food-icon-selected.png';
             }
             return '/assets/images/food-icon.png';
         }
         else {
-            if (foodItem.id === selectedFoodId) {
+            if (foodItem.id === hoveredFoodId) {
                 return '/assets/images/food-delivery-selected.png';
             }
             return '/assets/images/food-delivery.png';
         }
     }
 
-    getZIndex(foodItem, selectedFoodId) {
-        return (foodItem.id === selectedFoodId) ? 9999 : null;
+    getZIndex(foodItem, hoveredFoodId) {
+        return (foodItem.id === hoveredFoodId) ? 9999 : null;
     }
 
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
-            const geo = MapUtil.getGeoBounds(map);
+            const geo = MapUtil.getDesktopGeoBounds(map);
             this.props.onGeoLocationChanged(geo);
         }
     }
@@ -100,9 +100,9 @@ export default class DesktopMap extends React.Component {
     render() {
         const { selectedFood } = this.state;
 
-        let selectedFoodId = this.props.selectedFoodId;
-        if (!selectedFoodId) {
-            selectedFoodId = this.state.selectedFoodId;
+        let hoveredFoodId = this.props.hoveredFoodId;
+        if (!hoveredFoodId) {
+            hoveredFoodId = this.state.hoveredFoodId;
         }
 
         const { pickup, date, foods, selectedLocation } = this.props;
@@ -114,8 +114,8 @@ export default class DesktopMap extends React.Component {
                     key={foodItem.food_id}
                     onClick={this.handleMarkerClick}
                     header={foodItem.header}
-                    icon={this.getMarkerImage(foodItem, selectedFoodId)}
-                    zIndex={this.getZIndex(foodItem, selectedFoodId)}
+                    icon={this.getMarkerImage(foodItem, hoveredFoodId)}
+                    zIndex={this.getZIndex(foodItem, hoveredFoodId)}
                     image={foodItem.image}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
@@ -151,6 +151,7 @@ export default class DesktopMap extends React.Component {
                 onRecenter={this.handleGeoSearch}
             >
                 {markers}
+
                 {!pickup &&
                     <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
                 }
@@ -175,9 +176,6 @@ export default class DesktopMap extends React.Component {
                                             <Rating disabled={true} maxRating={5} rating={selectedFood.rating} size='mini' className='marker-rating-stars' />
                                             <div className='marker-rating-label'>{selectedFood.ratingCount} reviews</div>
                                         </div>
-                                        {/* {selectedFood.meta &&
-                                            <div className='marker-ingredients' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n/g, "<br />") }}></div>
-                                        } */}
                                     </Card.Meta>
                                     <Card.Description>
                                         {selectedFood.meta &&

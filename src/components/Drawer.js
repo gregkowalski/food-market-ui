@@ -11,8 +11,11 @@ class Drawer extends React.Component {
     }
 
     setInnerDivRef = (innerDiv) => {
-        this.innerDiv = innerDiv;
+        if (!innerDiv) {
+            return;
+        }
 
+        this.innerDiv = innerDiv;
         const transitionEnd = this.transitionEndEventName();
         this.innerDiv.addEventListener(transitionEnd, this.props.onTransitionEnd, false);
     }

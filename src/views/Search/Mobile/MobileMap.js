@@ -74,7 +74,7 @@ export default class MobileMap extends React.Component {
     }
 
     render() {
-        const { foods, pickup, selectedLocation } = this.props;
+        const { foods, pickup, deliveryLocation } = this.props;
         const { selectedFoodId } = this.state;
 
         const markers = foods && foods.map(foodItem => {
@@ -117,18 +117,18 @@ export default class MobileMap extends React.Component {
                 onDragend={this.handleGeoSearch}
                 onZoom_changed={this.handleZoomChanged}
                 onBounds_changed={this.handleBoundsChanged}
+                onRecenter={this.handleGeoSearch}
             >
-
                 <CustomControl position={window.google.maps.ControlPosition.TOP_CENTER}>
-                    <div className='style1'>
-                        <div className='styleBase styleListView' onClick={this.props.onListViewClick}>List View</div>
-                        <div className='styleBase styleFilter' onClick={this.props.onFilterClick}>Add Filter</div>
+                    <div className='mobilemap-buttons'>
+                        <div className='mobilemap-buttons-listview' onClick={this.props.onListViewClick}>List View</div>
+                        <div className='mobilemap-buttons-filter' onClick={this.props.onFilterClick}>Filters: {pickup ? 'Pickup' : 'Delivery'}</div>
                     </div>
                 </CustomControl>
 
                 {markers}
                 {!pickup &&
-                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
+                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={deliveryLocation} />
                 }
 
             </Map>

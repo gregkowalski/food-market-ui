@@ -1,6 +1,24 @@
 
 class MapUtil {
 
+    getDesktopGeoBounds(map) {
+        const geo = this.getGeoBounds(map);
+        if (geo.ne_lat !== geo.sw_lat && geo.ne_lng !== geo.sw_lng) {
+            return geo;
+        }
+
+        return this.calculateMapGeoBounds(map, window.innerWidth, window.innerHeight);
+    }
+
+    getMobileGeoBounds(map) {
+        const geo = this.getGeoBounds(map);
+        if (geo.ne_lat !== geo.sw_lat && geo.ne_lng !== geo.sw_lng) {
+            return geo;
+        }
+
+        return this.calculateMapGeoBounds(map, window.innerWidth, this.calcMobileMapHeight());
+    }
+
     getGeoBounds(map) {
         const bounds = map.getBounds();
         const ne = bounds.getNorthEast();
@@ -14,27 +32,22 @@ class MapUtil {
         return geo;
     }
 
-    getMobileGeoBounds(map) {
-        let geo = this.getGeoBounds(map);
-        if (geo.ne_lat !== geo.sw_lat && geo.ne_lng !== geo.sw_lng) {
-            return geo;
-        }
-
+    calculateMapGeoBounds(map, boxWidth, boxHeight) {
         const zoom = map.getZoom();
         const center = map.getCenter();
         const lat = center.lat();
         const lng = center.lng();
         
         const mppWidth = this.lookupGoogleMapMetersPerPixel(lat, zoom);
-        const width = Math.round(window.innerWidth / 2 * mppWidth);
+        const width = Math.round(boxWidth / 2 * mppWidth);
 
         // reference: https://groups.google.com/forum/#!topic/google-maps-js-api-v3/hDRO4oHVSeM
         const mppHeight = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom);
-        const height = Math.round(this.calcMobileMapHeight() / 2 * mppHeight);
+        const height = Math.round(boxHeight / 2 * mppHeight);
 
         const widthDegrees = this.convertMetersToDegrees(width);
         const heightDegrees = this.convertMetersToDegrees(height);
-        geo = {
+        const geo = {
             ne_lat: lat + heightDegrees,
             ne_lng: lng + widthDegrees,
             sw_lat: lat - heightDegrees,

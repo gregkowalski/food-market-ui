@@ -108,7 +108,7 @@ export default class AddressFoodSearchBox extends React.Component {
             }
             return;
         }
-        this.setState({ place: place, address: place.formatted_address });
+        this.setState({ place: place, address: Util.toFormattedAddress(place) });
     }
 
     handleAddressChange = (e) => {
@@ -138,8 +138,8 @@ export default class AddressFoodSearchBox extends React.Component {
             const newState = { isSearching: false };
             if (status === 'OK') {
                 const firstPlace = results[0];
-                newState.place = firstPlace
-                newState.address = firstPlace.formatted_address;
+                newState.place = firstPlace;
+                newState.address = Util.toFormattedAddress(firstPlace);
                 newState.addressPlaceholder = defaultPlaceholder;
             }
             else {
@@ -159,6 +159,15 @@ export default class AddressFoodSearchBox extends React.Component {
         }
     }
 
+    handleClear = () => {
+        this.setState({ place: null, address: '' });
+        this.input.focus();
+    }
+
+    setInputRef = (input) => {
+        this.input = input;
+    }
+
     render() {
         const { address, addressPlaceholder, isSearching } = this.state;
 
@@ -168,18 +177,32 @@ export default class AddressFoodSearchBox extends React.Component {
             className += ' addressfoodsearchbox-result';
         }
 
+        const clearStyle = {};
+        if (!address) {
+            clearStyle.display = 'none';
+        }
+
         return (
             <div className={className}>
-                <Autocomplete
-                    onFocus={this.handleAddressFocus}
-                    onPlaceSelected={this.handleAddressSelected}
-                    onChange={this.handleAddressChange}
-                    onKeyDown={this.handleAddressKeyDown}
-                    types={['address']}
-                    placeholder={addressPlaceholder}
-                    componentRestrictions={{ country: 'ca' }}
-                    value={address}
-                />
+
+                <div className='addressfoodsearchbox-clearable'>
+                    <Autocomplete
+                        onRef={this.setInputRef}
+                        onFocus={this.handleAddressFocus}
+                        onPlaceSelected={this.handleAddressSelected}
+                        onChange={this.handleAddressChange}
+                        onKeyDown={this.handleAddressKeyDown}
+                        types={['address']}
+                        placeholder={addressPlaceholder}
+                        componentRestrictions={{ country: 'ca' }}
+                        value={address}
+                    />
+                    <div className='addressfoodsearchbox-clearable__clear' style={clearStyle}
+                        onClick={this.handleClear}>
+                        &times;
+                    </div>
+                </div>
+
                 <Button fluid color='purple' loading={isSearching}
                     onClick={this.handleSearchButtonClick}>FIND FOOD NEAR ME</Button>
             </div>

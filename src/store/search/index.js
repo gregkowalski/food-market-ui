@@ -36,13 +36,6 @@ function receiveFoodsError(error) {
     };
 }
 
-function clearFoods() {
-    return {
-        type: ActionTypes.CLEAR_FOODS,
-    };
-}
-
-
 function geoLocationChanged(geo) {
     return {
         type: ActionTypes.GEO_LOCATION_CHANGED,
@@ -92,12 +85,6 @@ export const Actions = {
         }
     },
 
-    clearFoods: () => {
-        return (dispatch) => {
-            dispatch(clearFoods());
-        }
-    },
-
     requestFoods: (geo) => {
         return (dispatch, getState) => {
 
@@ -125,15 +112,20 @@ export const Actions = {
         return (dispatch, getState) => {
 
             if (!region || !region.id) {
+                dispatch(receiveFoodsSuccess([]));
                 return Promise.resolve();
             }
 
+            const prevFoods = Selectors.foods(getState());
             dispatch(requestFoods());
 
             return ApiClient.deliverySearchFoods(region.id)
                 .then(
                     response => {
-                        const foods = ApiObjectMapper.mapFoods(response.data);
+                        let foods = ApiObjectMapper.mapFoods(response.data);
+                        if (Util.areEqualFoods(prevFoods, foods)) {
+                            foods = prevFoods;
+                        }
                         dispatch(receiveFoodsSuccess(foods));
                     },
                     error => {
@@ -246,11 +238,6 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isLoading: false,
                     foods: action.foods
-                });
-
-            case ActionTypes.CLEAR_FOODS:
-                return Object.assign({}, state, {
-                    foods: initialState.foods
                 });
 
             case ActionTypes.GEO_LOCATION_CHANGED:

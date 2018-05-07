@@ -20,14 +20,18 @@ import FoodGrid from '../FoodGrid'
 import SearchFilter from './SearchFilter'
 import FilterBar from './FilterBar'
 
+const MobileSearchViews = {
+    map: 'map',
+    view: 'view'
+};
+
 class MobileSearch extends Component {
 
     constructor(props) {
         super(props);
 
-        this.mapHeight = this.calcMapHeight();
         this.state = {
-            mapSearch: this.isMapSearch(this.props.location),
+            isMapView: this.isMapView(props.location),
             showFilter: false,
             hideFoodGrid: false
         };
@@ -38,9 +42,9 @@ class MobileSearch extends Component {
         return `${mapHeight.toFixed(0)}px`;
     }
 
-    isMapSearch(location) {
+    isMapView(location) {
         const query = Util.parseQueryString(location);
-        if (query.view && query.view === 'map') {
+        if (query.view && query.view === MobileSearchViews.map) {
             return true;
         }
         return false;
@@ -50,9 +54,19 @@ class MobileSearch extends Component {
         const prevMapHeight = this.mapHeight;
         this.mapHeight = this.calcMapHeight();
         if (prevMapHeight !== this.mapHeight) {
-            setTimeout(() => {
-                this.forceUpdate();
-            }, 0);
+            setTimeout(() => this.forceUpdate(), 0);
+        }
+    }
+
+    componentWillMount() {
+        const { actions, pickup, region, address } = this.props;
+        if (!pickup) {
+            actions.requestFoodsInRegion(region);
+        }
+
+        if (address) {
+            const addressLocation = Util.toLocation(address.geometry.location);
+            this.setState({ mapLocation: addressLocation });
         }
     }
 
@@ -79,7 +93,7 @@ class MobileSearch extends Component {
             // on the Food.js page where the images don't render.  This happens because we show/hide
             // the list view vs. map search using CSS display: none instead of rendering vs. non-rendering
             // using React.  That's done because it's faster to switch views than to re-render the DOM.
-            this.setState({ mapSearch: this.isMapSearch(nextProps.location) }, () => Util.triggerEvent(window, 'resize'));
+            this.setState({ isMapView: this.isMapView(nextProps.location) }, () => Util.triggerEvent(window, 'resize'));
         }
 
         if (this.props.foods !== nextProps.foods) {
@@ -105,22 +119,36 @@ class MobileSearch extends Component {
 
     applyFilter = (filter) => {
         const { pickup, date, address } = filter;
-        const { actions } = this.props;
+        const { actions, geo } = this.props;
 
         actions.dateChanged(date);
         if (pickup) {
             actions.selectPickup();
+            actions.requestFoods(geo);
         }
         else {
             actions.selectDelivery();
 
-            const selectedLocation = Util.toLocation(address.geometry.location);
-            const region = RegionUtil.getRegionByPosition(selectedLocation);
-            actions.mapCenterChanged(selectedLocation);
+            const addressLocation = Util.toLocation(address.geometry.location);
+            const region = RegionUtil.getRegionByPosition(addressLocation);
+            actions.mapCenterChanged(addressLocation);
             actions.regionChanged(region);
             actions.addressChanged(Util.toAddress(address));
+            actions.requestFoodsInRegion(region);
+
+            this.setState({ mapLocation: addressLocation });
         }
         this.hideFilter();
+    }
+
+    handleGeoLocationChanged = (geo) => {
+        const { actions, pickup } = this.props;
+        if (!Util.isEqualGeo(this.props.geo, geo)) {
+            actions.geoLocationChanged(geo);
+            if (pickup) {
+                actions.requestFoods(geo);
+            }
+        }
     }
 
     handleDrawerTransitionEnd = () => {
@@ -135,12 +163,12 @@ class MobileSearch extends Component {
         this.props.history.push(Url.search(query));
     }
 
-    showMapSearch = () => {
-        this.pushViewToHistory('map');
+    showMapView = () => {
+        this.pushViewToHistory(MobileSearchViews.map);
     }
 
     showListView = () => {
-        this.pushViewToHistory('list');
+        this.pushViewToHistory(MobileSearchViews.list);
     }
 
     handleMarkerClick = (selectedFoodId) => {
@@ -150,7 +178,9 @@ class MobileSearch extends Component {
     handleSelectedFood = (selectedFood) => {
         setTimeout(() => {
             this.setState({
-                mapLocation: selectedFood.position,
+                // Removing this effect of centering the map on the
+                // food selected from carousel.  It seems to work well.
+                // mapLocation: selectedFood.position,
                 selectedFoodId: selectedFood.food_id
             });
         }, 200);
@@ -193,8 +223,8 @@ class MobileSearch extends Component {
     }
 
     render() {
-        const { mapSearch, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, date, address, initialMapCenter, mapCenter, isLoading } = this.props;
+        const { isMapView, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
+        const { pickup, foods, date, address, mapCenter, isLoading } = this.props;
         this.mapHeight = this.calcMapHeight();
 
         const loadingIconProps = { size: 'big' };
@@ -202,7 +232,7 @@ class MobileSearch extends Component {
             top: '50vh',
             left: '30vw'
         }
-        if (mapSearch) {
+        if (isMapView) {
             loadingIconProps.text = '';
             loadingIconStyle = {
                 top: '30vh',
@@ -219,7 +249,7 @@ class MobileSearch extends Component {
                     </div>
                 }
 
-                <div style={this.visible(!mapSearch)}>
+                <div style={this.visible(!isMapView)}>
 
                     <AppHeader fixed noshadow />
 
@@ -230,23 +260,23 @@ class MobileSearch extends Component {
                     {!isLoading &&
                         <div className='mobilesearch-foodgrid' style={this.visible(!hideFoodGrid)}>
                             <FoodGrid foods={foods} />
-                            <Icon name='marker' color='purple' onClick={this.showMapSearch} />
+                            <Icon name='marker' color='purple' onClick={this.showMapView} />
                         </div>
                     }
 
                 </div>
 
-                <div style={this.visible(mapSearch)}>
+                <div style={this.visible(isMapView)}>
 
                     <div className='mobilesearch-map' style={this.mapStyle()}>
                         <MobileMap foods={foods} pickup={pickup}
                             center={mapLocation}
-                            initialCenter={initialMapCenter}
-                            selectedLocation={mapCenter}
+                            initialCenter={mapLocation}
+                            deliveryLocation={mapCenter}
                             selectedFoodId={selectedFoodId}
                             gestureHandling='greedy'
-                            visible={mapSearch}
-                            onGeoLocationChanged={this.props.onGeoLocationChanged}
+                            visible={isMapView}
+                            onGeoLocationChanged={this.handleGeoLocationChanged}
                             onListViewClick={this.showListView}
                             onFilterClick={this.showFilter}
                             onMarkerClick={this.handleMarkerClick}

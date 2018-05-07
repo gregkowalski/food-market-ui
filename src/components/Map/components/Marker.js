@@ -38,9 +38,13 @@ export class Marker extends React.Component {
         if ((this.props.map !== prevProps.map) ||
             (this.props.position !== prevProps.position) ||
             (this.props.icon !== prevProps.icon)) {
-            if (this.marker) {
-                this.marker.setMap(null);
+
+            // delay the removal of the old marker to prevent flicker
+            const oldMarker = this.marker;
+            if (oldMarker) {
+                setTimeout(() => oldMarker.setMap(null), 0);
             }
+
             this.renderMarker();
         }
     }
@@ -54,7 +58,7 @@ export class Marker extends React.Component {
     renderMarker() {
         let { map, google, position, mapCenter, icon, label, draggable, title, zIndex } = this.props;
         if (!google) {
-            return null
+            return null;
         }
 
         let pos = position || mapCenter;

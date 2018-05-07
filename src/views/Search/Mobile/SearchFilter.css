@@ -2,7 +2,7 @@
     font-size: 18px;
 }
 
-/* Header */
+/* #region Header */
 
 .searchfilter-header {
     display: flex;
@@ -24,9 +24,9 @@
     user-select: none;
 }
 
-/* Header */
+/* #endregion Header */
 
-/* Footer */
+/* #region Footer */
 
 .searchfilter-footer {
     position: absolute;
@@ -48,12 +48,14 @@
     border-radius: 5px;
 }
 
-/* Footer */
+/* #endregion Footer */
 
 .searchfilter-main {
     width: 90%;
     margin: 0 auto;
 }
+
+/* #region DeliveryOptions */
 
 .searchfilter-deliveryoptions {
     padding-top: 20px;
@@ -72,7 +74,9 @@
     border-radius: 5px;
 }
 
-/* Address */
+/* #endregion DeliveryOptions */
+
+/* #region Address */
 
 .searchfilter-address {
     margin-top: 5px;
@@ -94,6 +98,44 @@
     font-family: 'Roboto';
     font-weight: 400;
     font-size: 1.2rem;
+}
+
+.clearable {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.clearable input[type=text] {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+i.icon.clearable__clear {
+    position: absolute;
+    right: 0;
+    top: 0.5em;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 0.35rem;
+    font-style: normal;
+    font-size: 1.25em;
+    cursor: pointer;
+    user-select: none;
+    color: #aaa;
+}
+
+i.icon.clearable__clear:hover {
+    color: #888;
+}
+
+.clearable input::-ms-clear {
+    /* Remove IE default X */
+    display: none;
 }
 
 .searchfilter-address input::placeholder {
@@ -144,9 +186,9 @@
     /* color: #999; */
 }
 
-/* Address */
+/* #endregion Address */
 
-/* Date */
+/* #region Date */
 
 .searchfilter-date {
     padding-top: 35px;
@@ -233,4 +275,4 @@
     text-decoration: underline;
 }
 
-/* Date */
+/* #endregion Date */

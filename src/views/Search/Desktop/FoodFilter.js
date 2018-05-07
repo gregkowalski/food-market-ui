@@ -1,26 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Actions, Selectors } from '../../../store/search'
 import { Button } from 'semantic-ui-react'
 import './FoodFilter.css'
 import DeliveryOptionModal from './DeliveryOptionModal'
 import DateModal from './DateModal'
 import Autocomplete from '../../../components/Autocomplete'
-import RegionUtil from '../../../components/Map/RegionUtil'
 import Util from '../../../services/Util'
 
-class FoodFilter extends React.Component {
-
-    getButtonProps(active) {
-        const props = {};
-        if (!active) {
-            props.basic = true;
-        }
-        return props;
-    }
+export default class FoodFilter extends React.Component {
 
     state = { address: '' };
 
@@ -71,36 +59,40 @@ class FoodFilter extends React.Component {
         });
     }
 
-    handleDeliveryOptionsApply = (deliveryOptions) => {
-        if (deliveryOptions.pickup) {
-            this.props.actions.selectPickup();
-        }
-        else {
-            this.props.actions.selectDelivery();
-        }
+    handleDeliveryOptionApply = (pickup) => {
+        const { onDeliveryOptionChanged, onShowFilter } = this.props;
         this.hideFilters();
-        this.props.onShowFilter(false);
+        onShowFilter(false);
+        onDeliveryOptionChanged(pickup);
     }
 
     handleDateApply = (date) => {
-        this.props.actions.dateChanged(date);
+        const { onShowFilter, onDateChanged } = this.props;
+
         this.hideFilters();
-        this.props.onShowFilter(false);
+        onShowFilter(false);
+        onDateChanged(date);
     }
 
     handleDeliveryAddressSelected = (place) => {
         if (place && place.geometry) {
-            const selectedLocation = Util.toLocation(place.geometry.location);
-            const region = RegionUtil.getRegionByPosition(selectedLocation);
-            this.props.actions.regionChanged(region);
-            this.props.actions.mapCenterChanged(selectedLocation);
-            this.props.actions.addressChanged(Util.toAddress(place));
-            this.setState({ address: place.formatted_address });
+            const { onDeliveryAddressSelected } = this.props;
+            onDeliveryAddressSelected(place);
+
+            this.setState({ address: Util.toFormattedAddress(place) });
         }
     }
 
     handleDeliveryAddressChange = (event) => {
         this.setState({ address: event.target.value });
+    }
+
+    getButtonProps(active) {
+        const props = {};
+        if (!active) {
+            props.basic = true;
+        }
+        return props;
     }
 
     render() {
@@ -118,7 +110,7 @@ class FoodFilter extends React.Component {
         }
 
         return (
-            <div className='foodfilter' style={style} >
+            <div>
 
                 <div id='foodfilter-filters'>
                     <Button color='grey' {...this.getButtonProps(date)} onClick={this.toggleDateFilter}>
@@ -153,39 +145,18 @@ class FoodFilter extends React.Component {
                     isOpen={showDeliveryOptionFilter}
                     pickup={pickup}
                     onClose={onHideFilter}
-                    onApply={this.handleDeliveryOptionsApply}
+                    onApply={this.handleDeliveryOptionApply}
                 />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        date: Selectors.date(state),
-        pickup: Selectors.pickup(state),
-        address: Selectors.address(state)
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return { actions: bindActionCreators(Actions, dispatch) };
-};
-
 FoodFilter.propTypes = {
-    date: PropTypes.object,
-    pickup: PropTypes.bool.isRequired,
-    address: PropTypes.object,
-
-    actions: PropTypes.shape({
-        selectPickup: PropTypes.func.isRequired,
-        selectDelivery: PropTypes.func.isRequired,
-        dateChanged: PropTypes.func.isRequired,
-        mapCenterChanged: PropTypes.func.isRequired,
-        regionChanged: PropTypes.func.isRequired,
-        addressChanged: PropTypes.func.isRequired,
-    }).isRequired
+    show: PropTypes.bool.isRequired,
+    onShowFilter: PropTypes.func.isRequired,
+    onHideFilter: PropTypes.func.isRequired,
+    onDeliveryOptionChanged: PropTypes.func.isRequired,
+    onDeliveryAddressSelected: PropTypes.func.isRequired,
+    onDateChanged: PropTypes.func.isRequired
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(FoodFilter);
-

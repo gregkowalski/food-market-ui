@@ -225,20 +225,45 @@ class Util {
         return moment(dateIso8601, moment.ISO_8601).tz(timezone);
     }
 
-    toAddress(place) {
-        const location = this.toLocation(place.geometry.location);
-        const address = {
-            formatted_address: place.formatted_address,
-            geometry: { location }
-        };
-        return address;
-    }
-
     toLocation(loc) {
         if (loc instanceof window.google.maps.LatLng) {
             return { lat: loc.lat(), lng: loc.lng() };
         }
         return loc;
+    }
+
+    toAddress(place) {
+        const location = this.toLocation(place.geometry.location);
+        const formatted_address = place.address_components
+            ? this.toFormattedAddress(place)
+            : place.formatted_address;
+        const address = {
+            formatted_address: formatted_address,
+            geometry: { location }
+        };
+        return address;
+    }
+
+    toFormattedAddress(place) {
+        const street_number = this._getAddressPart(place.address_components, 'street_number').short_name;
+        const route = this._getAddressPart(place.address_components, 'route').long_name;
+        // const neighborhood = this.getPart(place.address_components, 'neighborhood');
+        const locality = this._getAddressPart(place.address_components, 'locality').short_name;
+        // const administrative_area_level_2 = this.getPart(place.address_components, 'administrative_area_level_2');
+        const administrative_area_level_1 = this._getAddressPart(place.address_components, 'administrative_area_level_1').short_name;
+        const country = this._getAddressPart(place.address_components, 'country').long_name;
+        // const postal_code = this.getPart(place.address_components, 'postal_code');
+
+        const address = `${street_number} ${route}, ${locality}, ${administrative_area_level_1}, ${country}`;
+        return address;
+    }
+
+    _getAddressPart(components, typeName) {
+        const part = components.find(x => x.types.indexOf(typeName) >= 0);
+        if (part) {
+            return part;
+        }
+        return {};
     }
 }
 

@@ -7,7 +7,7 @@ import { DeliveryOptions } from '../../../Enums'
 export default class DeliveryOptionModal extends React.Component {
 
     handleClick = (e, { value }) => {
-        this.props.onApply({ pickup: value === DeliveryOptions.pickup });
+        this.props.onApply(value === DeliveryOptions.pickup);
     }
 
     render() {

@@ -1,4 +1,4 @@
-.style1 {
+.mobilemap-buttons {
     color: rgb(25, 25, 25);
     font-size: 16px;
     line-height: 24px;
@@ -7,7 +7,7 @@
     display: flex
 }
 
-.styleBase {
+.mobilemap-buttons > div {
     background-color: #fff;
     padding: 3px 15px;
     cursor: pointer;
@@ -15,12 +15,12 @@
     text-align: center;
 }
 
-.styleListView {
+.mobilemap-buttons-listview {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
 }
 
-.styleFilter {
+.mobilemap-buttons-filter {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
     border-left: 1px solid rgba(0, 0, 0, .3)

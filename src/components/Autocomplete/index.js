@@ -31,13 +31,20 @@ export default class ReactGoogleAutocomplete extends React.Component {
             config.componentRestrictions = componentRestrictions;
         }
 
-        this.autocomplete = new window.google.maps.places.Autocomplete(this.refs.input, config);
+        this.autocomplete = new window.google.maps.places.Autocomplete(this.input, config);
 
         this.event = this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
     }
 
     componentWillUnmount() {
         this.event.remove();
+    }
+
+    setInputRef = (input) => {
+        this.input = input;
+        if (this.props.onRef) {
+            this.props.onRef(input);
+        }
     }
 
     onSelected() {
@@ -47,11 +54,11 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
 
     render() {
-        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, ...rest } = this.props;
+        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, onRef, ...rest } = this.props;
 
         return (
             <input onKeyDown={onKeyDown}
-                ref="input"
+                ref={this.setInputRef}
                 {...rest}
             />
         );
