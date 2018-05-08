@@ -6,7 +6,7 @@ import { Segment, Image, Header } from 'semantic-ui-react'
 import './ProfileView.css'
 import { Actions, Selectors } from '../../store/publicUser'
 import AppHeader from '../../components/AppHeader'
-import FlagUser from '../../components/FlagUser'
+// import FlagUser from '../../components/FlagUser'
 import LoadingIcon from '../../components/LoadingIcon'
 import VerifiedInfo from './VerifiedInfo'
 import { CertificationLabels } from '../../Enums'
@@ -75,7 +75,7 @@ class ProfileView extends React.Component {
                                 Joined in {join_date.format('MMMM YYYY')}
                             </div>
                         }
-                        <FlagUser />
+                        {/* <FlagUser /> */}
                         <div style={{ clear: 'both' }}></div>
                         <div className='profileview-user-info'>{user.info}</div>
 

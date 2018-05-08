@@ -11,7 +11,7 @@ import { Constants } from '../../Constants'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import FoodLightbox from '../../components/FoodLightbox'
-import FlagListingMobile from '../../components/FlagListingMobile'
+// import FlagListingMobile from '../../components/FlagListingMobile'
 import Drawer from '../../components/Drawer'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
@@ -129,7 +129,7 @@ class FoodDetail extends React.Component {
                                 <ScrollElement name='overview'>
                                     <OverviewSection food={food} cook={cook} />
                                 </ScrollElement>
-                                <FlagListingMobile />
+                                {/* <FlagListingMobile /> */}
                                 <Divider section hidden />
                                 <ScrollElement name='reviews'>
                                     <ReviewsSection food={food} reviews={reviews} />

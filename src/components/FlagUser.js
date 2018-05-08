@@ -3,7 +3,7 @@ import { Button, Popup, Icon, Modal, Header } from 'semantic-ui-react'
 import './FlagUser.css'
 import { Constants } from '../Constants'
 
-export default class FlagListing extends React.Component {
+export default class FlagUser extends React.Component {
     state = {};
 
     render() {

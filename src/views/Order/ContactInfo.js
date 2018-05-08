@@ -19,7 +19,7 @@ class ContactInfo extends React.Component {
             <Segment className='contactinfo'>
                 <Header>
                     <Icon name='phone' />
-                    Contact Information
+                    Contact
                 </Header>
                 <div className='contactinfo-header'>
                     This will be kept private and will only be used for communication related to this order.

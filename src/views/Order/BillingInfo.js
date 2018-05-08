@@ -59,7 +59,7 @@ class BillingInfo extends React.Component {
                 <div className='billing'>
                     <Image height='42px' src='/assets/images/padlock.png' />
                     <div className='billing-header'>
-                        <Header>Billing Information</Header>
+                        <Header>Billing</Header>
                         <div className='billing-powered-by-stripe'>
                             <div>POWERED BY</div>
                             <Image height='28px' width='75px' src='/assets/images/stripe-logo-blue.png' />

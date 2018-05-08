@@ -3,7 +3,7 @@ import { Button, Icon, Modal, Header, Divider } from 'semantic-ui-react'
 import './FlagListingMobile.css'
 import { Constants } from '../Constants'
 
-const FlagListing = () => {
+const FlagListingMobile = () => {
     return (
         <div className='flag-listing-mobile'>
             <Modal
@@ -39,4 +39,4 @@ const FlagListing = () => {
     )
 }
 
-export default FlagListing;
+export default FlagListingMobile;
