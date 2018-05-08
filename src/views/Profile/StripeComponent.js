@@ -10,11 +10,10 @@ const StripeComponent = ({ stripe_account_id, onConnectStripe }) => {
                 <div className='stripecomponent-text'>
                     <div>Sharing your food just got a whole lot easier.</div>
                     <div className='stripecomponent-logo'>
-
                         <Icon color='green' size='big' name='checkmark' />
                         <Image height='45px' src='/assets/images/stripe-logo-blue.png' />
-                        <div> Your Stripe account is successfully connected to Foodcraft.</div>
                     </div>
+                    <div> Your Stripe account is successfully connected to Foodcraft.</div>
                     <Divider hidden />
                     <div> Be sure to check out the Foodcraft Help Center for more information, tips, and answers to many frequently asked questions.</div>
                     <Divider hidden />

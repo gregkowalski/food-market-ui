@@ -49,19 +49,19 @@
 }
 
 .profileedit-checkbox {
-    padding-top: 8px;
-    padding-left: 10px;
+    padding: 8px 0 0 10px;
+    display: flex;
 }
 
 .profileedit-checkbox>input[type='checkbox'] {
-    transform: scale(2);
+    transform: scale(1.7);
     cursor: pointer;
-    padding: 10px 10px;
 }
 
 .profileedit-checkbox>label {
     cursor: pointer;
-    padding: 10px 15px;
+    margin-top: -2px;
+    padding-left: 10px;
 }
 
 .profileedit-save-button {
@@ -114,6 +114,9 @@
         text-align: left;
         padding-bottom: 0 !important;
     }
+    .ui.stackable.grid.profileedit-grid-body>.row>.column {
+        padding: 0.75rem 1rem 0.5rem 1rem !important;
+    }
     .profileedit-save-button-container {
         justify-content: center;
     }
@@ -123,13 +126,37 @@
     }
 }
 
-.profileedit-main .header {
-    font-size: 1.65em !important;
-    font-weight: 500 !important;
+@media all and (max-width: 767px) {
+    .ui.search.dropdown .menu {
+        max-height: 15rem;
+    }
+    .profileedit-checkbox>input[type='checkbox'] {
+        transform: scale(1);
+        cursor: pointer;
+        padding: 10px 10px;
+    }
+}
+
+.profileedit-main .ui.block.header {
+    font-size: 1.65em;
+    font-weight: 500;
 }
 
 .profileedit-main .input {
     width: 100%;
+}
+
+.profileedit-main input[type='text'],
+.profileedit-main input[type='tel'] {
+    appearance: none;
+}
+
+.profileedit-main .ui.error.message {
+    padding: 1em 1em;
+}
+
+.profileedit-main .ui.error.message>i.icon {
+    font-size: 2rem;
 }
 
 /* Google Autocomplete box */
@@ -149,6 +176,11 @@
     -webkit-box-flex: inherit;
     flex: inherit;
     transition: none;
+    appearance: none;
+}
+
+textarea:focus {
+    border: 1px solid #85b7d9;
 }
 
 .profileedit-address>div {

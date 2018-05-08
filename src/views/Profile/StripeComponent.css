@@ -54,7 +54,4 @@
         width: 100%;
         justify-content: center;
     }
-    .stripecomponent-logo {
-        flex-direction: row-reverse;
-    }
 }

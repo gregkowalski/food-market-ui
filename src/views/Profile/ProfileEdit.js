@@ -102,6 +102,10 @@ class ProfileEdit extends React.Component {
             );
         }
 
+        // Disable all email editing for now as we don't have code
+        // written to update cognito email
+        const emailEditingEnabled = !this.isExternalIdp && false;
+
         return (
             <div>
                 <AppHeader fixed />
@@ -133,7 +137,7 @@ class ProfileEdit extends React.Component {
                                     <Grid.Row>
                                         <Grid.Column computer={3}>Email <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                         <Grid.Column computer={13}>
-                                            <Field disabled={this.isExternalIdp} name='email' autoComplete='email' component={ValidatedField} type='text' placeholder='Enter your email' />
+                                            <Field disabled={!emailEditingEnabled} name='email' autoComplete='email' component={ValidatedField} type='text' placeholder='Enter your email' />
                                             <div className='profileedit-input-descriptions'>
                                                 Your email is never displayed publicly. It is only shared when you have a confirmed order request with another Foodcraft user.
                                             </div>
@@ -149,7 +153,7 @@ class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <Grid.Column computer={3}>About:</Grid.Column>
+                                        <Grid.Column computer={3}>Bio</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Field name='info' autoComplete='info' component={ValidatedTextArea} rows={2} type='text' placeholder='Tell everyone about yourself' />
                                             <div className='profileedit-input-descriptions'>
