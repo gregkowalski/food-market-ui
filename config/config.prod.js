@@ -17,7 +17,7 @@ const Config = {
         ConnectOAuthRedirectUri: 'https://www.foodcraft.ca/stripeCallback',
     },
     Foodcraft: {
-        SupportEmail: 'gregkowalski@hotmail.com'
+        SupportEmail: 'support@foodcraft.ca'
     }
 }
 
