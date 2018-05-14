@@ -254,7 +254,9 @@ class MobileSearch extends Component {
                     <AppHeader fixed noshadow />
 
                     <div className='mobilesearch-filterbar'>
-                        <FilterBar pickup={pickup} date={date} address={address} onFilterClick={this.showFilter} />
+                        <FilterBar pickup={pickup} date={date} address={address}
+                            onFilterClick={this.showFilter}
+                            onMapClick={this.showMapView} />
                     </div>
 
                     {!isLoading &&
