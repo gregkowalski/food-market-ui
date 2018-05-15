@@ -80,11 +80,13 @@ class MobileSearch extends Component {
 
         window.addEventListener('orientationchange', this.updateMapHeightAndForceUpdate);
         window.addEventListener('resize', this.updateMapHeightAndForceUpdate);
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     componentWillUnmount() {
         window.removeEventListener('orientationchange', this.updateMapHeightAndForceUpdate);
         window.removeEventListener('resize', this.updateMapHeightAndForceUpdate);
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -105,6 +107,36 @@ class MobileSearch extends Component {
                 }
             }
         }
+    }
+
+    prevScrollY = 0;
+    handleScroll = (e) => {
+        if (!this.prevScrollY) {
+            this.prevScrollY = window.pageYOffset;
+            return;
+        }
+
+        if (window.pageYOffset > this.prevScrollY) {
+            if (window.pageYOffset < 75) {
+                // you're at the bottom of the page
+                console.log('at top');
+            }
+            else {
+                this.setState({ scroll: 'down' });
+            }
+        }
+        else {
+            if ((window.innerHeight + window.pageYOffset + 75) >= window.document.documentElement.scrollHeight) {
+                // you're at the bottom of the page
+                console.log('at bottom');
+            }
+            else {
+                this.setState({ scroll: 'up' });
+            }
+        }
+        this.prevScrollY = window.scrollY;
+        console.log(window.pageYOffset);
+
     }
 
     showFilter = () => {
@@ -222,6 +254,16 @@ class MobileSearch extends Component {
         return {};
     }
 
+    filterVisible() {
+        const { scroll } = this.state;
+        const { foods } = this.props;
+        if (foods && foods.length > 0 && scroll === 'down') {
+            return { top: -20 };
+        }
+        return {};
+
+    }
+
     render() {
         const { isMapView, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
         const { pickup, foods, date, address, mapCenter, isLoading } = this.props;
@@ -253,7 +295,7 @@ class MobileSearch extends Component {
 
                     <AppHeader fixed noshadow />
 
-                    <div className='mobilesearch-filterbar'>
+                    <div className='mobilesearch-filterbar' style={this.filterVisible()}>
                         <FilterBar pickup={pickup} date={date} address={address}
                             onFilterClick={this.showFilter}
                             onMapClick={this.showMapView} />

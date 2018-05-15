@@ -7,24 +7,24 @@ const FilterBar = ({ pickup, date, address, onFilterClick, onMapClick }) => {
     return (
         <div className='filterbar'>
             <div className='filterbar-layout'>
-                <Button color='grey' basic onClick={onFilterClick}>
-                    Filters
+                <Button basic onClick={onFilterClick}>
+                    {date &&
+                        <span>
+                            {date.format('MMM d')}
+                            <span className='filterbar-bullet'>&bull;</span>
+                        </span>
+                    }
+                    {pickup ? 'Pickup' : 'Delivery'}
+                    {!pickup && address &&
+                        <div>{address.formatted_address}</div>
+                    }
                 </Button>
 
                 <div className='filterbar-map'>
-                    <Button color='grey' basic onClick={onMapClick}>
+                    <Button basic onClick={onMapClick}>
                         <span>Map</span>
                         <Icon name='marker' color='purple' />
                     </Button>
-                </div>
-
-                <div>{pickup ? 'Pickup ' : 'Deliver to '}
-                    {!pickup && address &&
-                        <span>{address.formatted_address}</span>
-                    }
-                    {date &&
-                        <span>{' on ' + date.format('MMM d')}</span>
-                    }
                 </div>
             </div>
         </div>
