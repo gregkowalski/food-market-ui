@@ -7,10 +7,7 @@ import './DateTimeSelector.css'
 
 export default class DateTimeSelector extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+    state = {};
 
     handleTimeChange = (e, { value }) => {
         if (this.foodTimes) {
@@ -66,7 +63,7 @@ export default class DateTimeSelector extends React.Component {
                     <div className='datetime-topspacing datetime-bottomspacing'>Date</div>
                     <SingleDatePicker
                         date={date}
-                        isOutsideRange={this.isDayOutsideRange}
+                        isOutsideRange={Util.isDayOutsideRange}
                         onDateChange={onDateChange}
                         focused={this.state.focused}
                         onFocusChange={({ focused }) => this.setState({ focused })}
@@ -88,10 +85,5 @@ export default class DateTimeSelector extends React.Component {
                 }
             </div>
         );
-    }
-
-    isDayOutsideRange = (date) => {
-        const day = date.format('YYYY-MM-DD');
-        return (day !== '2018-05-12');
     }
 }

@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { reduxForm, formValueSelector } from 'redux-form'
+import { Actions, Selectors } from '../../store/order'
+import { Selectors as CurrentUserSelectors } from '../../store/currentUser'
 import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
@@ -11,7 +13,6 @@ import OrderHeader from '../../components/OrderHeader'
 import PriceCalc from '../../services/PriceCalc'
 import Util from '../../services/Util'
 import Url from '../../services/Url'
-import { Actions, Selectors } from '../../store/order'
 import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
 import BillingInfo from './BillingInfo'
@@ -66,6 +67,12 @@ class Order extends React.Component {
 
         if (this.props.contactMethod !== nextProps.contactMethod) {
             this.props.actions.contactMethodChanged(nextProps.contactMethod);
+        }
+
+        if (this.props.currentUser !== nextProps.currentUser) {
+            if (!this.props.buyerPhone && !nextProps.buyerPhone) {
+                this.props.change('buyerPhone', nextProps.currentUser.phone);
+            }
         }
 
         if (this.props.buyerPhone !== nextProps.buyerPhone) {
@@ -214,7 +221,7 @@ class Order extends React.Component {
             return null;
         }
 
-        const { food, pickup, quantity, date, time, contactMethod,
+        const { food, pickup, quantity, date, time, contactMethod, buyerPhone,
             isOrderProcessing, paymentError } = this.props;
         if (!food) {
             return null;
@@ -235,7 +242,7 @@ class Order extends React.Component {
                             </div>
                         </div>
                         <div className='order-container-width'>
-                            <ContactInfo pickup={pickup} contactMethod={contactMethod} />
+                            <ContactInfo pickup={pickup} contactMethod={contactMethod} buyerPhone={buyerPhone} />
 
                             <BillingInfo onCheckoutRef={this.handleCheckoutRef}
                                 onBillingInfoChange={this.validateBillingInfo} />
@@ -318,6 +325,7 @@ const validate = (values) => {
 const formSelector = formValueSelector('order');
 const mapStateToProps = (state) => {
     return {
+        currentUser: CurrentUserSelectors.currentUser(state),
         food: Selectors.food(state),
         cook: Selectors.cook(state),
         isFoodLoading: Selectors.isFoodLoading(state),
@@ -352,6 +360,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Order.propTypes = {
+    currentUser: PropTypes.object,
     food: PropTypes.shape({
         food_id: PropTypes.string.isRequired,
     }),

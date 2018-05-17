@@ -331,8 +331,8 @@ const initialState = {
     pickup: true,
     quantity: 1,
     contactMethod: ContactMethods.email,
-    buyerPhone: '',
-    buyerAddress: '',
+    buyerPhone: undefined,
+    buyerAddress: undefined,
     isOrderProcessing: false,
 };
 
