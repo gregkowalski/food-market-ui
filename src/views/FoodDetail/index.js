@@ -36,21 +36,23 @@ class FoodDetail extends React.Component {
     }
 
     componentWillMount() {
+        const { actions } = this.props;
+
         // If there already is a submitted order in the current session
         // and the user is on the food detail page then let's clear the
         // previous order before we start.
         if (this.props.order_id) {
-            this.props.actions.clearOrder();
+            actions.clearOrder();
         }
 
-        let food_id = this.props.match.params.id;
-        this.props.actions.loadFood(food_id)
+        const food_id = this.props.match.params.id;
+        actions.loadFood(food_id)
             .then(() => {
                 document.title = this.props.food.title;
-                return this.props.actions.loadCook(this.props.food.user_id);
+                return actions.loadCook(this.props.food.user_id);
             })
             .then(() => {
-                return this.props.actions.loadReviews(this.props.food.food_id);
+                return actions.loadReviews(this.props.food.food_id);
             });
     }
 
@@ -217,9 +219,9 @@ FoodDetail.propTypes = {
     reviews: PropTypes.arrayOf(PropTypes.shape({
         review_id: PropTypes.string.isRequired,
     })),
-    isFoodLoading: PropTypes.bool.isRequired,
-    isCookLoading: PropTypes.bool.isRequired,
-    isReviewsLoading: PropTypes.bool.isRequired,
+    isFoodLoading: PropTypes.bool,
+    isCookLoading: PropTypes.bool,
+    isReviewsLoading: PropTypes.bool,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
     time: PropTypes.shape({

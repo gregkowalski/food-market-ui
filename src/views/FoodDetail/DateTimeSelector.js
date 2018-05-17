@@ -5,7 +5,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Util from '../../services/Util'
 import './DateTimeSelector.css'
 
-class DateTimeSelector extends React.Component {
+export default class DateTimeSelector extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,15 +14,18 @@ class DateTimeSelector extends React.Component {
 
     handleTimeChange = (e, { value }) => {
         if (this.foodTimes) {
-            this.props.onTimeChange(this.foodTimes[value]);
+            const foodTime = this.foodTimes[value];
+            this.props.onTimeChange({
+                handoff_start_date: foodTime.handoff_start_date,
+                handoff_end_date: foodTime.handoff_end_date,
+            });
         }
     }
 
     render() {
         const { date, time, onDateChange } = this.props;
 
-        const timeValue = time ? time.value : null;
-
+        let timeValue;
         let orderTimes;
         if (date) {
             const base = date.clone().hours(14).minutes(0).seconds(0).milliseconds(0);
@@ -43,6 +46,14 @@ class DateTimeSelector extends React.Component {
                     handoff_end_date: base.clone().add(8, 'hour')
                 }
             ];
+
+            if (time) {
+                const foodTime = this.foodTimes.find(x => x.handoff_start_date.isSame(time.handoff_start_date)
+                    && x.handoff_end_date.isSame(time.handoff_end_date));
+                if (foodTime) {
+                    timeValue = foodTime.value;
+                }
+            }
 
             orderTimes = this.foodTimes.map((foodTime, index) => {
                 return { key: index, text: Util.orderTimeToString(foodTime), value: foodTime.value }
@@ -78,11 +89,9 @@ class DateTimeSelector extends React.Component {
             </div>
         );
     }
-    
+
     isDayOutsideRange = (date) => {
         const day = date.format('YYYY-MM-DD');
         return (day !== '2018-05-12');
     }
 }
-
-export default DateTimeSelector

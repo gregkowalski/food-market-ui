@@ -17,6 +17,9 @@ const CookSection = ({ cook }) => {
                 <span style={{ color: '#0fb5c3' }}> Joined in {join_date.format('MMMM YYYY')}</span>
             </div>
             <div style={{ clear: 'both' }}></div>
+            <div style={{ marginTop: '25px' }}>
+                <Image size='small' circular src={cook.image} />
+            </div>
             <div className='detail-cook-text'>
                 {cook.info}
                 {cook.certifications && cook.certifications.length > 0 &&
@@ -32,9 +35,7 @@ const CookSection = ({ cook }) => {
                     </div>
                 }
             </div>
-            <div style={{ marginTop: '25px' }}>
-                <Image size='small' circular src={cook.image} />
-            </div>
+
         </div>
     );
 }

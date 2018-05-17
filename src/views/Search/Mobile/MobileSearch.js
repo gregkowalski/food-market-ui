@@ -117,26 +117,16 @@ class MobileSearch extends Component {
         }
 
         if (window.pageYOffset > this.prevScrollY) {
-            if (window.pageYOffset < 75) {
-                // you're at the bottom of the page
-                console.log('at top');
-            }
-            else {
+            if (window.pageYOffset >= 75) {
                 this.setState({ scroll: 'down' });
             }
         }
         else {
-            if ((window.innerHeight + window.pageYOffset + 75) >= window.document.documentElement.scrollHeight) {
-                // you're at the bottom of the page
-                console.log('at bottom');
-            }
-            else {
+            if ((window.innerHeight + window.pageYOffset + 75) < window.document.documentElement.scrollHeight) {
                 this.setState({ scroll: 'up' });
             }
         }
         this.prevScrollY = window.scrollY;
-        console.log(window.pageYOffset);
-
     }
 
     showFilter = () => {

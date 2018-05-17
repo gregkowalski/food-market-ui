@@ -149,19 +149,19 @@ export const Actions = {
 
     dateChanged: (date) => {
         return (dispatch) => {
-            dispatch(dateChanged(date))
+            dispatch(dateChanged(date));
         }
     },
 
     mapCenterChanged: (mapCenter) => {
         return (dispatch) => {
-            dispatch(mapCenterChanged(mapCenter))
+            dispatch(mapCenterChanged(mapCenter));
         }
     },
 
     addressChanged: (address) => {
         return (dispatch) => {
-            dispatch(addressChanged(address))
+            dispatch(addressChanged(address));
         }
     }
 }

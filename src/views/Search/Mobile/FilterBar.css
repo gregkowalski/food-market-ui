@@ -10,8 +10,9 @@
     padding: 11px 0px 7px 14px;
     display: flex;
 }
-.filterbar-layout > .ui.basic.button > div {
-    white-space: nowrap; 
+
+.filterbar-layout>.ui.basic.button>div {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 220px;
@@ -27,8 +28,7 @@
 }
 
 .filterbar .ui.basic.button:hover {
-    /* background-color: rgba(182, 16, 149, 0.2) !important; */
-    background-color: rgba(161, 161, 161, 0.2) !important;
+    background-color: rgba(161, 161, 161, 0.15) !important;
 }
 
 .filterbar-bullet {
@@ -47,28 +47,8 @@
     padding-right: 35px;
 }
 
-.filterbar-map span {
-    /* margin-right: 15px; */
-}
-
 .filterbar-map>.ui.basic.button>.icon {
     position: absolute;
     right: 5px;
     font-size: 1.5em;
 }
-
-/* .filterbar-map>.ui.button>.icon {
-    position: absolute;
-    top: 27%;
-    background-color: #fff;
-    cursor: pointer;
-    box-shadow: 0px 3px 5px rgba(85, 85, 85, 0.603);
-    border: 1px solid rgba(226, 226, 226, 0.603);
-    border-radius: 500em;
-    padding: .3em 0;
-    width: 1.3em;
-    height: 1.4em;
-    font-size: 1.4em;
-    background-image: url('/assets/images/map.png');
-    background-position: -5px -5px;
-} */

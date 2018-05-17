@@ -1,4 +1,5 @@
 import * as ActionTypes from './actionTypes'
+import * as SearchActionTypes from '../search/actionTypes'
 import ApiClient from '../../services/ApiClient'
 import { ContactMethods } from '../../Enums';
 import ApiObjectMapper from '../../services/ApiObjectMapper';
@@ -324,8 +325,8 @@ const initialState = {
     isFoodLoading: false,
     isCookLoading: false,
     isReviewsLoading: false,
-    food: null,
-    cook: null,
+    food: undefined,
+    cook: undefined,
     reviews: [],
     pickup: true,
     quantity: 1,
