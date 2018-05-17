@@ -113,10 +113,10 @@ export default class FoodFilter extends React.Component {
             <div>
 
                 <div id='foodfilter-filters'>
-                    <Button color='grey' {...this.getButtonProps(date)} onClick={this.toggleDateFilter}>
+                    <Button color='purple' {...this.getButtonProps(date)} onClick={this.toggleDateFilter}>
                         {date ? date.format("MMM D, YYYY") : "Date"}
                     </Button>
-                    <Button ref={this.setDeliveryOptionButtonRef} color='grey' onClick={this.toggleDeliveryOptionFilter}>
+                    <Button color='purple' ref={this.setDeliveryOptionButtonRef} onClick={this.toggleDeliveryOptionFilter}>
                         {pickup ? 'Pickup' : 'Delivery'}
                     </Button>
                     {!pickup &&

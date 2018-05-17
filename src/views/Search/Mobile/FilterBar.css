@@ -18,6 +18,10 @@
     max-width: 220px;
 }
 
+.filterbar .ui.button {
+    font-weight: 500;
+}
+
 .filterbar .ui.basic.button {
     border-color: #b61095;
     box-shadow: 0 0 0 1px #b61095 inset!important;
@@ -25,6 +29,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
     background: transparent none!important;
+    font-weight: 400;
 }
 
 .filterbar .ui.basic.button:hover {
@@ -34,7 +39,8 @@
 .filterbar-bullet {
     font-size: 1.4rem;
     margin: 0 5px;
-    color: #b61095;
+    /* color: #b61095; */
+    color: white;
 }
 
 .filterbar-map {

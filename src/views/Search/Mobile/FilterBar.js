@@ -4,10 +4,11 @@ import './FilterBar.css'
 
 const FilterBar = ({ pickup, date, address, onFilterClick, onMapClick }) => {
 
+    const hasFilters = date || (!pickup && address && address.formatted_address);
     return (
         <div className='filterbar'>
             <div className='filterbar-layout'>
-                <Button basic onClick={onFilterClick}>
+                <Button color='purple' basic={!hasFilters} onClick={onFilterClick}>
                     {date &&
                         <span>
                             {date.format('MMM d')}
@@ -21,7 +22,7 @@ const FilterBar = ({ pickup, date, address, onFilterClick, onMapClick }) => {
                 </Button>
 
                 <div className='filterbar-map'>
-                    <Button basic onClick={onMapClick}>
+                    <Button color='purple' basic onClick={onMapClick}>
                         <span>Map</span>
                         <Icon name='marker' color='purple' />
                     </Button>

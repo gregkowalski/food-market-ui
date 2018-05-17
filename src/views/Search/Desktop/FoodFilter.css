@@ -8,6 +8,14 @@
     margin-right: 10px;
 }
 
+#foodfilter-filters > .ui.basic.button {
+    font-weight: 400;
+}
+
+#foodfilter-filters > .ui.button {
+    font-weight: 500;
+}
+
 #foodfilter-address {
     display: inline-block;
     width: 350px;
