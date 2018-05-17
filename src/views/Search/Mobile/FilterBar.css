@@ -11,7 +11,7 @@
     display: flex;
 }
 
-.filterbar-layout>.ui.basic.button>div {
+.filterbar-layout>.ui.button>div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
