@@ -432,6 +432,13 @@ export const Reducers = {
                     buyerAddress: action.buyerAddress,
                 });
 
+            case SearchActionTypes.ADDRESS_CHANGED:
+                return Object.assign({}, state, {
+                    buyerAddress: action.address
+                        ? action.address.formatted_address
+                        : '',
+                });
+
             case ActionTypes.CONTACT_METHOD_CHANGED:
                 return Object.assign({}, state, {
                     contactMethod: action.contactMethod

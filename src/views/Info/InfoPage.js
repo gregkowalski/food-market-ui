@@ -2,8 +2,6 @@ import React from 'react'
 import './InfoPage.css'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter';
-import { Image } from 'semantic-ui-react'
-import aboutImg from './about-img.jpg'
 
 const InfoPage = (props) => {
 

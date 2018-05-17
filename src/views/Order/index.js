@@ -189,9 +189,6 @@ class Order extends React.Component {
         };
 
         this.setState(newState);
-
-        console.log('card errors');
-        console.log(newState);
     }
 
     getBillingErrors() {
@@ -361,8 +358,8 @@ Order.propTypes = {
     cook: PropTypes.shape({
         user_id: PropTypes.string.isRequired,
     }),
-    isFoodLoading: PropTypes.bool.isRequired,
-    isCookLoading: PropTypes.bool.isRequired,
+    isFoodLoading: PropTypes.bool,
+    isCookLoading: PropTypes.bool,
     pickup: PropTypes.bool.isRequired,
     date: PropTypes.object,
     time: PropTypes.shape({

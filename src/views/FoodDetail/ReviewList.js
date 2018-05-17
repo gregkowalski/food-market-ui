@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feed, Divider, Image, Icon } from 'semantic-ui-react'
+import { Feed, Divider, Image } from 'semantic-ui-react'
 import ShowMore from 'react-show-more'
 import './index.css'
 import Util from '../../services/Util'
