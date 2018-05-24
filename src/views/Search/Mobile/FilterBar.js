@@ -11,7 +11,7 @@ const FilterBar = ({ pickup, date, address, onFilterClick, onMapClick }) => {
                 <Button color='purple' basic={!hasFilters} onClick={onFilterClick}>
                     {date &&
                         <span>
-                            {date.format('MMM d, YYYY')}
+                            {date.format('MMM D, YYYY')}
                             <span className='filterbar-bullet'>&bull;</span>
                         </span>
                     }

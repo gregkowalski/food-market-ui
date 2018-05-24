@@ -303,7 +303,7 @@ class MobileSearch extends Component {
                 <div style={this.visible(isMapView)}>
 
                     <div className='mobilesearch-map' style={this.mapStyle()}>
-                        <MobileMap foods={foods} pickup={pickup}
+                        <MobileMap foods={foods} pickup={pickup} date={date}
                             center={mapLocation}
                             initialCenter={mapLocation}
                             deliveryLocation={mapCenter}

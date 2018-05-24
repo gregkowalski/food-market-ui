@@ -1,27 +1,24 @@
 .mobilemap-buttons {
-    color: rgb(25, 25, 25);
+    display: flex;
+    color: #b61095;
     font-size: 16px;
     line-height: 24px;
     padding-left: 5px;
     padding-right: 5px;
-    display: flex
+    text-align: center;
 }
 
 .mobilemap-buttons > div {
     background-color: #fff;
-    padding: 3px 15px;
-    cursor: pointer;
     margin-top: 10px;
-    text-align: center;
+    margin-left: 10px;
+    padding: 3px 15px;
+    border: 1px solid #b61095;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.mobilemap-buttons-listview {
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-}
-
-.mobilemap-buttons-filter {
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    border-left: 1px solid rgba(0, 0, 0, .3)
+.mobilemap-buttons .icon {
+    margin-left: 5px;
+    margin-right: 0;
 }

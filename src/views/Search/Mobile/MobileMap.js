@@ -1,7 +1,9 @@
 import React from 'react'
+import { Icon } from 'semantic-ui-react'
 import './MobileMap.css'
 import { Map, Marker, CustomControl } from '../../../components/Map'
 import MapUtil from '../../../services/MapUtil'
+import { Colors } from '../../../Constants'
 
 // const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
 
@@ -74,7 +76,7 @@ export default class MobileMap extends React.Component {
     }
 
     render() {
-        const { foods, pickup, deliveryLocation } = this.props;
+        const { foods, pickup, date, deliveryLocation } = this.props;
         const { selectedFoodId } = this.state;
 
         const markers = foods && foods.map(foodItem => {
@@ -101,7 +103,7 @@ export default class MobileMap extends React.Component {
             <Map
                 google={window.google}
                 zoomControl={true}
-                zoomControlOptions={{ position: window.google.maps.ControlPosition.LEFT_TOP }}
+                zoomControlOptions={{ position: window.google.maps.ControlPosition.RIGHT_BOTTOM }}
                 mapTypeControl={false}
                 scaleControl={true}
                 streetViewControl={false}
@@ -121,8 +123,19 @@ export default class MobileMap extends React.Component {
             >
                 <CustomControl position={window.google.maps.ControlPosition.TOP_CENTER}>
                     <div className='mobilemap-buttons'>
-                        <div className='mobilemap-buttons-listview' onClick={this.props.onListViewClick}>List View</div>
-                        <div className='mobilemap-buttons-filter' onClick={this.props.onFilterClick}>Filters: {pickup ? 'Pickup' : 'Delivery'}</div>
+                        <div onClick={this.props.onFilterClick} style={this.filterStyle(pickup, date)}>
+                            {date &&
+                                <span>
+                                    {date.format('MMM D, YYYY')}
+                                    <span className='filterbar-bullet'>&bull;</span>
+                                </span>
+                            }
+                            {pickup ? 'Pickup' : 'Delivery'}
+                        </div>
+                        <div onClick={this.props.onListViewClick}>
+                            <span>List</span>
+                            <Icon name='list layout' color='purple' />
+                        </div>
                     </div>
                 </CustomControl>
 
@@ -133,6 +146,20 @@ export default class MobileMap extends React.Component {
 
             </Map>
         )
+    }
+
+    filterStyle(pickup, date) {
+        if (!pickup || date) {
+            return {
+                backgroundColor: Colors.purple,
+                color: Colors.white,
+                fontWeight: 500
+            }
+        }
+        return {
+            backgroundColor: Colors.white,
+            color: Colors.purple
+        };
     }
 }
 
