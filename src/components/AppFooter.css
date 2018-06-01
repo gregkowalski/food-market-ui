@@ -1,15 +1,19 @@
 .appfooter {
     font-size: 1.15rem;
     line-height: 1.6;
-    background-color: whitesmoke;
-    text-transform: uppercase;
+    background-color: rgb(219, 217, 217);
+    text-transform: capitalize;
     color: #5a5a5a;
+    margin-top: 50px;
+    padding-top: 10px;
+    padding-bottom: 30px;
 }
 
 .appfooter-header {
     font-weight: 800;
     margin-bottom: 10px;
-    font-size: 1.18em;
+    color: #b61095;
+    text-transform: uppercase;
 }
 
 .appfooter .ui.grid {
@@ -30,14 +34,14 @@
 
 .appfooter-logo {
     display: flex;
-    padding: 10px 0px 20px 80px;
+    padding: 3px 0px 20px 140px;
 }
 
 .appfooter-logo img {
-    height: 31px;
+    height: 25px;
     filter: grayscale(100%);
     margin-right: 8px;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .appfooter-logo div {
@@ -77,5 +81,8 @@
     }
     #appfooter-divider {
         width: 83%;
+    }
+    .appfooter-logo {
+        padding: 3px 0px 20px 50px;
     }
 }

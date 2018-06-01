@@ -98,7 +98,7 @@ class Home extends React.Component {
                             </div>
                             <div className='home-tagline'>Handcrafted to taste like home</div>
 
-                            <div className='home-search-question'>Looking for something to eat? We got you.</div>
+                            <div className='home-search-question'>Looking for something to eat?</div>
                             <AddressFoodSearchBox onSearchByLocation={this.searchByLocation} address={address} />
 
                         </div>

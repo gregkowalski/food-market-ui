@@ -12,6 +12,7 @@ const InfoPage = (props) => {
             <div className='infopage'>
                 {props.children}
             </div>
+            {props.fullSizeBlock}
             <AppFooter />
         </div>
     )
