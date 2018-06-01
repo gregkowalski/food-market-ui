@@ -15,11 +15,11 @@ const About = () => {
     return (
         <InfoPage header={header}>
             <div className='about-content'>
-            <p>Foodcraft is a food-sharing marketplace for unique handmade foods.</p>
-            <p>Using technology to connect people, Foodcraft creates a space to support 
-                cooks as they grow their own business. 
+            <p>Foodcraft is a marketplace for unique handmade foods.</p>
+            <p>By connecting our local communities, Foodcraft creates a space to support 
+                cooks as they grow their own business. </p>
                 
-                We believe in a community built by neighbours and the irresistable power of quality, small-batch foods.</p>
+              <p>  We believe in a community built by neighbours and the irresistable power of quality, small-batch foods.</p>
             </div>
         </InfoPage>
     )

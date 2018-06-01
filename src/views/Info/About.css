@@ -55,6 +55,20 @@
         width: 100%;
         font-size: 1.1em;
     }
+    .about-header>div:nth-child(2) {
+        text-align: left;
+    }
+    .about-title {
+        position: absolute;
+        z-index: 1;
+        top: 420px;
+        left: 18px;
+        padding-right: 45%;
+        color: #292929;
+        font-size: 2.9em;
+        font-weight: 500;
+        line-height: 1.3;
+    }
     /* .about-header>div {
         font-size: .8em;
     } */
