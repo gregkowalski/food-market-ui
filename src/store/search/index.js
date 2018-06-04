@@ -1,3 +1,4 @@
+import moment from 'moment'
 import ApiClient from '../../services/ApiClient'
 import ApiObjectMapper from '../../services/ApiObjectMapper'
 import * as ActionTypes from './actionTypes'
@@ -91,7 +92,24 @@ export const Actions = {
             const prevFoods = Selectors.foods(getState());
             dispatch(requestFoods());
 
-            return ApiClient.geoSearchFoods(geo)
+            let beginDate;
+            let endDate;
+
+            const date = Selectors.date(getState());
+            if (date) {
+                beginDate = date.clone().hour(0);
+                endDate = beginDate.clone().add(1, 'days');
+
+                const now = moment();
+                if (beginDate.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
+                    beginDate.hour(now.hour());
+                }
+
+                beginDate = beginDate.toISOString();
+                endDate = endDate.toISOString();
+            }
+
+            return ApiClient.geoSearchFoods(geo, beginDate, endDate)
                 .then(
                     response => {
                         let foods = ApiObjectMapper.mapFoods(response.data);

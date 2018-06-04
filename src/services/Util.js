@@ -86,7 +86,7 @@ class Util {
 
     isDayOutsideRange = (date) => {
 
-        const dateCutoff = moment().add(4, 'hours');
+        const dateCutoff = moment();
 
         const year1 = date.year();
         const month1 = date.month();

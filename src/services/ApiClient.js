@@ -91,8 +91,11 @@ class ApiClient {
         return this.invokeApi(`/foods/${reviewId}`, 'GET');
     }
 
-    geoSearchFoods(geo) {
-        const requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`;
+    geoSearchFoods(geo, beginDate, endDate) {
+        let requestUrl = `/foods/geo?ne_lat=${geo.ne_lat}&ne_lng=${geo.ne_lng}&sw_lat=${geo.sw_lat}&sw_lng=${geo.sw_lng}`;
+        if (beginDate && endDate) {
+            requestUrl += `&beginDate=${beginDate}&endDate=${endDate}`;
+        }
         return this.invokeApi(requestUrl, 'GET');
     }
 
