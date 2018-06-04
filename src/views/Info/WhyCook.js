@@ -1,6 +1,5 @@
 import React from 'react'
-import InfoPage from './InfoPage'
-import { Grid, Image, Icon } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import './WhyCook.css'
 import whyCookImg from './whycook-img.jpg'
 import AppHeader from '../../components/AppHeader'
