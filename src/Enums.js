@@ -37,3 +37,20 @@ export const CertificationLabels = {
     market_safe: 'Market Safe',
     pro_caterer: 'Professional Caterer'
 };
+
+export const FoodFeatureLabels = {
+    all_natural: "All-natural",
+    natural: "Natural",
+    no_shortening: "No shortening",
+    hormone_free: "Hormone-free",
+    hickory_smoked: "Hickory smoked",
+    no_msg: "No MSG",
+    gluten_free: "Gluten-free",
+    smoked: "Smoked",
+    grass_fed: "Grass-fed",
+    ethnic: "Ethnic",
+    gmo_free: "GMO-free",
+    free_range_poultry: "Free range poultry",
+    free_range_eggs: "Free range eggs",
+    pasture_raised_chicken: "Pasture raised chicken"
+};

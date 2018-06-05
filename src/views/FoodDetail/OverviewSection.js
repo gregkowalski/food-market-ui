@@ -7,6 +7,7 @@ import FoodOptions from './FoodOptions'
 import FoodPrepSafetyMessage from './FoodPrepSafetyMessage'
 import './OverviewSection.css'
 import RegionUtil from '../../components/Map/RegionUtil'
+import { FoodFeatureLabels } from '../../Enums'
 
 const OverviewSection = ({ food, cook }) => {
     return (
@@ -110,7 +111,8 @@ const OverviewSection = ({ food, cook }) => {
             <div className='detail-body-text'>
                 <ul>
                     {food.features.map((feature, index) => {
-                        return (<li key={index}>{feature}</li>);
+                        const featureText = FoodFeatureLabels[feature] ? FoodFeatureLabels[feature] : feature;
+                        return (<li key={index}>{featureText}</li>);
                     })}
                 </ul>
             </div>
