@@ -50,7 +50,7 @@ export default class FoodGrid extends Component {
     }
 
     render() {
-        const { foods, date, pickup } = this.props;
+        const { foods } = this.props;
 
         if (!foods) {
             return null;
@@ -81,7 +81,7 @@ export default class FoodGrid extends Component {
                     <div className='foodgrid-card'>
                         <a
                             target='_blank'
-                            href={Url.foodDetail(food.food_id, pickup, date)}
+                            href={Url.foodDetail(food.food_id)}
                             onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.food_id)}
                             onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.food_id)}>
                             <Item style={{ marginBottom: '1px' }}>

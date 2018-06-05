@@ -69,7 +69,7 @@ export default class FoodCarousel extends Component {
     }
 
     render() {
-        const { foods, pickup, date, selectedFoodId } = this.props;
+        const { foods, selectedFoodId } = this.props;
         if (!foods) {
             return null;
         }
@@ -116,7 +116,7 @@ export default class FoodCarousel extends Component {
                 <div key={food.food_id} style={foodCardStyle}>
                     <a style={{ color: 'inherit' }}
                         target='_blank'
-                        href={Url.foodDetail(food.food_id, pickup, date)}>
+                        href={Url.foodDetail(food.food_id)}>
 
                         <Item>
                             <Item.Content>

@@ -321,7 +321,6 @@ class MobileSearch extends Component {
                         <FoodCarousel
                             foods={foods}
                             pickup={pickup}
-                            date={date}
                             selectedFoodId={selectedFoodId}
                             mapSelectedFoodId={mapSelectedFoodId}
                             onSelected={this.handleSelectedFood}

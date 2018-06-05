@@ -72,6 +72,26 @@ function addressChanged(address) {
     };
 }
 
+function getFoodsApiQueryDates(date) {
+    let beginDate;
+    let endDate;
+
+    if (date) {
+        beginDate = date.clone().hour(0);
+        endDate = beginDate.clone().add(1, 'days');
+
+        const now = moment();
+        if (Util.isSameDay(beginDate, now)) {
+            beginDate.hour(now.hour());
+        }
+
+        beginDate = beginDate.toISOString();
+        endDate = endDate.toISOString();
+    }
+
+    return { beginDate, endDate };
+}
+
 export const Actions = {
 
     selectPickup: () => {
@@ -92,22 +112,7 @@ export const Actions = {
             const prevFoods = Selectors.foods(getState());
             dispatch(requestFoods());
 
-            let beginDate;
-            let endDate;
-
-            const date = Selectors.date(getState());
-            if (date) {
-                beginDate = date.clone().hour(0);
-                endDate = beginDate.clone().add(1, 'days');
-
-                const now = moment();
-                if (beginDate.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
-                    beginDate.hour(now.hour());
-                }
-
-                beginDate = beginDate.toISOString();
-                endDate = endDate.toISOString();
-            }
+            const { beginDate, endDate } = getFoodsApiQueryDates(Selectors.date(getState()));
 
             return ApiClient.geoSearchFoods(geo, beginDate, endDate)
                 .then(
@@ -137,7 +142,8 @@ export const Actions = {
             const prevFoods = Selectors.foods(getState());
             dispatch(requestFoods());
 
-            return ApiClient.deliverySearchFoods(region.id)
+            const { beginDate, endDate } = getFoodsApiQueryDates(Selectors.date(getState()));
+            return ApiClient.deliverySearchFoods(region.id, beginDate, endDate)
                 .then(
                     response => {
                         let foods = ApiObjectMapper.mapFoods(response.data);

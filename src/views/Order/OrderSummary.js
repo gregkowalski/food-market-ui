@@ -8,7 +8,7 @@ import OrderPriceSummary from '../FoodDetail/OrderPriceSummary'
 
 const OrderSummary = ({ food, pickup, quantity, date, time }) => {
 
-    const timeText = time ? Util.orderTimeToString(time) : '?';
+    const timeText = time ? Util.orderTimeToLocalTimeString(time) : '?';
     return (
         <Segment padded className='order-summary'>
             <Header>

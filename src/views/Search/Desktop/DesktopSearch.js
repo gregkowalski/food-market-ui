@@ -114,7 +114,7 @@ class DesktopSearch extends React.Component {
                             style={{ position: 'fixed', marginTop: '105px' }} />
                         <div className='dtsearch-center'>
                             {!isLoading &&
-                                <FoodGrid foods={foods} pickup={pickup} date={date}
+                                <FoodGrid foods={foods}
                                     onFoodItemEnter={this.handleFoodItemEnter}
                                     onFoodItemLeave={this.handleFoodItemLeave} />
                             }
@@ -128,7 +128,6 @@ class DesktopSearch extends React.Component {
                             <DesktopMap
                                 foods={foods}
                                 pickup={pickup}
-                                date={date}
                                 center={mapCenter}
                                 initialCenter={mapCenter}
                                 selectedLocation={mapCenter}

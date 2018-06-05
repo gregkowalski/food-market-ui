@@ -105,7 +105,7 @@ export default class DesktopMap extends React.Component {
             hoveredFoodId = this.state.hoveredFoodId;
         }
 
-        const { pickup, date, foods, selectedLocation } = this.props;
+        const { pickup, foods, selectedLocation } = this.props;
 
         const markers = foods && foods.map(foodItem => {
             return (
@@ -163,7 +163,7 @@ export default class DesktopMap extends React.Component {
 
                     <div>
                         <a style={{ cursor: 'pointer' }} target='_blank'
-                            href={Url.foodDetail(selectedFood.id, pickup, date)}>
+                            href={Url.foodDetail(selectedFood.id)}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
                                     <Image width='100%' shape='rounded' src={selectedFood.image} />

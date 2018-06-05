@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { DeliveryOptions } from "../Enums";
 
 class ApiObjectMapper {
@@ -25,8 +26,16 @@ class ApiObjectMapper {
         food.header = food.title;
         food.meta = food.short_description;
         food.description = food.long_desciption;
+
+        if (food.handoff_dates) {
+            food.handoff_dates.sort((a, b) => {
+                return moment.utc(a.start).diff(moment.utc(b.start));
+            });
+        }
+
         food.rating = 5;
         food.ratingCount = 3;
+
         return food;
     }
 

@@ -99,8 +99,12 @@ class ApiClient {
         return this.invokeApi(requestUrl, 'GET');
     }
 
-    deliverySearchFoods(region_id) {
-        return this.invokeApi(`/foods/deliveryByRegion?region_id=${region_id}`, 'GET');
+    deliverySearchFoods(region_id, beginDate, endDate) {
+        let requestUrl = `/foods/deliveryByRegion?region_id=${region_id}`;
+        if (beginDate && endDate) {
+            requestUrl += `&beginDate=${beginDate}&endDate=${endDate}`;
+        }
+        return this.invokeApi(requestUrl, 'GET');
     }
 
     createFoodOrder(jwt, order) {

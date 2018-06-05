@@ -3,16 +3,7 @@ import queryString from 'query-string'
 class Url {
 
     foodDetail(food_id, pickup, date) {
-        let url = `/foods/${food_id}/`;
-        let sep = '?';
-        if (typeof pickup !== 'undefined') {
-            url += `${sep}pickup=${pickup}`;
-            sep = '&';
-        }
-        if (date) {
-            url += `${sep}date=${date.format('YYYY-MM-DD')}`;
-        }
-        return url;
+        return `/foods/${food_id}/`;
     }
 
     foodOrder(food_id) {

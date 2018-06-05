@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { Dropdown } from 'semantic-ui-react'
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -19,43 +20,88 @@ export default class DateTimeSelector extends React.Component {
         }
     }
 
-    render() {
-        const { date, time, onDateChange } = this.props;
-
-        let timeValue;
-        let orderTimes;
-        if (date) {
-            const base = date.clone().hours(14).minutes(0).seconds(0).milliseconds(0);
-            this.foodTimes = [
-                {
-                    value: 0,
-                    handoff_start_date: base.clone(),
-                    handoff_end_date: base.clone().add(2, 'hour')
-                },
-                {
-                    value: 1,
-                    handoff_start_date: base.clone().add(3, 'hour'),
-                    handoff_end_date: base.clone().add(4, 'hour')
-                },
-                {
-                    value: 2,
-                    handoff_start_date: base.clone().add(6, 'hour'),
-                    handoff_end_date: base.clone().add(8, 'hour')
-                }
-            ];
-
-            if (time) {
-                const foodTime = this.foodTimes.find(x => x.handoff_start_date.isSame(time.handoff_start_date)
-                    && x.handoff_end_date.isSame(time.handoff_end_date));
-                if (foodTime) {
-                    timeValue = foodTime.value;
-                }
-            }
-
-            orderTimes = this.foodTimes.map((foodTime, index) => {
-                return { key: index, text: Util.orderTimeToString(foodTime), value: foodTime.value }
-            });
+    handleDateChange = (date) => {
+        if (!Util.isSameDay(this.props.date, date)) {
+            this.props.onTimeChange(undefined);
+            this.props.onDateChange(date);
         }
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        const { date, time, food } = nextProps;
+        this.initFoodTimes(date, time, food);
+    }
+
+    componentWillMount() {
+        const { date, time, food } = this.props;
+        this.initFoodTimes(date, time, food);
+    }
+
+    initFoodTimes(date, time, food) {
+
+        this.timeValue = undefined;
+        this.orderTimes = undefined;
+
+        if (!food || !food.handoff_dates || food.handoff_dates.length <= 0) {
+            return;
+        }
+
+        this.foodTimes = [];
+        let index = 0;
+        const now = moment.utc();
+
+        for (const handoff_date of food.handoff_dates) {
+            const start = moment.utc(handoff_date.start);
+            const end = moment.utc(handoff_date.end);
+            if (now.diff(end) < 0 && Util.isSameLocalDay(start, date)) {
+                this.foodTimes.push({
+                    value: index++,
+                    handoff_start_date: start,
+                    handoff_end_date: end
+                });
+            }
+        }
+
+        if (time) {
+            const foodTime = this.foodTimes.find(x => x.handoff_start_date.isSame(time.handoff_start_date)
+                && x.handoff_end_date.isSame(time.handoff_end_date));
+            if (foodTime) {
+                this.timeValue = foodTime.value;
+            }
+        }
+
+        this.orderTimes = this.foodTimes.map((foodTime, index) => {
+            return { key: index, value: foodTime.value, text: Util.orderTimeToLocalTimeString(foodTime) }
+        });
+    }
+
+    isDayOutsideRange = (date) => {
+        const { food } = this.props;
+        const { handoff_dates } = food;
+
+        if (!handoff_dates || handoff_dates.length <= 0) {
+            return Util.isDayOutsideRange(date);
+        }
+
+        const now = moment.utc();
+        if (now.diff(date) > 0 && !Util.isSameLocalDay(now, date)) {
+            return true;
+        }
+
+        for (const handoff_date of handoff_dates) {
+            const start = moment.utc(handoff_date.start);
+            const end = moment.utc(handoff_date.end);
+
+            if (now.diff(end) < 0 && Util.isSameLocalDay(start, date)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    render() {
+        const { date } = this.props;
 
         return (
             <div className='datetimeselector-datetime'>
@@ -63,8 +109,8 @@ export default class DateTimeSelector extends React.Component {
                     <div className='datetime-topspacing datetime-bottomspacing'>Date</div>
                     <SingleDatePicker
                         date={date}
-                        isOutsideRange={Util.isDayOutsideRange}
-                        onDateChange={onDateChange}
+                        isOutsideRange={this.isDayOutsideRange}
+                        onDateChange={this.handleDateChange}
                         focused={this.state.focused}
                         onFocusChange={({ focused }) => this.setState({ focused })}
                         numberOfMonths={1}
@@ -72,14 +118,14 @@ export default class DateTimeSelector extends React.Component {
                         displayFormat={() => 'MMM D, YYYY'}
                     />
                 </div>
-                {orderTimes &&
+                {this.orderTimes &&
                     <div className='datetimeselector-time'>
                         <div className='datetime-topspacing datetime-bottomspacing'>Time</div>
                         <Dropdown selection
                             placeholder='What time?'
-                            options={orderTimes}
+                            options={this.orderTimes}
                             onChange={this.handleTimeChange}
-                            value={timeValue}
+                            value={this.timeValue}
                         />
                     </div>
                 }

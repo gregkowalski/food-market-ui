@@ -107,6 +107,40 @@ class Util {
         return day1 < day2;
     }
 
+    isSameLocalDay = (date1, date2) => {
+        if (!date1 || !date2)
+            return false;
+
+        if (date1.isUTC()) {
+            date1 = moment(date1).tz(Constants.Timezone);
+        }
+
+        if (date2.isUTC()) {
+            date2 = moment(date2).tz(Constants.Timezone);
+        }
+
+        return (date1.year() === date2.year()
+            && date1.month() === date2.month()
+            && date1.date() === date2.date());
+    }
+
+    isSameDay = (date1, date2) => {
+        if (!date1 || !date2)
+            return false;
+
+        if (!date1.isUTC()) {
+            date1 = moment.utc(date1);
+        }
+
+        if (!date2.isUTC()) {
+            date2 = moment.utc(date2);
+        }
+
+        return (date1.year() === date2.year()
+            && date1.month() === date2.month()
+            && date1.date() === date2.date());
+    }
+
     areEqualFoods(foods1, foods2) {
         if (foods1 === foods2)
             return true;
@@ -220,9 +254,14 @@ class Util {
         return `${startTime} - ${endTime}`;
     }
 
+    orderTimeToLocalTimeString(orderTime) {
+        const handoff_start_date = orderTime.handoff_start_date.tz(Constants.Timezone);
+        const handoff_end_date = orderTime.handoff_end_date.tz(Constants.Timezone);
+        return this.orderTimeToString({ handoff_start_date, handoff_end_date });
+    }
+
     toCurrentTimezoneMoment(dateIso8601) {
-        const timezone = Constants.Timezone;
-        return moment(dateIso8601, moment.ISO_8601).tz(timezone);
+        return moment(dateIso8601, moment.ISO_8601).tz(Constants.Timezone);
     }
 
     toLocation(loc) {
