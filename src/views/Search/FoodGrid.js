@@ -28,7 +28,10 @@ export default class FoodGrid extends Component {
                 <Image key={index} className='foodgrid-image' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             ));
             imageElement = (
-                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true} decorators={CarouselDecorators}>
+                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true} decorators={CarouselDecorators}
+                dots={false}
+                // decorators={[]}
+                >
                     {imageUrls}
                 </Carousel>
             );

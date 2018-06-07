@@ -54,6 +54,20 @@ export default class FoodCarousel extends Component {
         window.removeEventListener('resize', this.forceUpdateAfterTimeout);
     }
 
+    handleBeforeFoodSlide = (currentSlide, nextSlide) => {
+        console.log(`${currentSlide} => ${nextSlide}`);
+        if (nextSlide % 1 !== 0) {
+            let newNextSlide = Math.ceil(nextSlide);
+            if (newNextSlide === this.props.foods.length - 2) {
+                newNextSlide = this.props.foods.length - 1;
+            }
+
+            setTimeout(() => {
+                this.setState({ selectedSlideIndex: newNextSlide });
+            }, 0);
+        }
+    }
+
     handleAfterFoodSlide = (index) => {
         const { onSelected, foods } = this.props;
         if (onSelected) {
@@ -154,13 +168,17 @@ export default class FoodCarousel extends Component {
             <Carousel
                 dragging={true}
                 cellSpacing={15}
-                edgeEasing='easeInOutQuint'
-                wrapAround={true}
+                // edgeEasing='easeInOutQuint'
+                // wrapAround={true}
                 slidesToShow={slidesToShow}
                 swiping={true}
-                decorators={null}
                 afterSlide={this.handleAfterFoodSlide}
+                beforeSlide={this.handleBeforeFoodSlide}
                 slideIndex={selectedSlideIndex}
+                speed={100}
+                renderBottomCenterControls={() => { }}
+                renderCenterLeftControls={() => { }}
+                renderCenterRightControls={() => { }}
             >
                 {slides}
             </Carousel>
