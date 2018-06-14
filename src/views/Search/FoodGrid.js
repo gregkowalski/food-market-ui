@@ -21,6 +21,65 @@ export default class FoodGrid extends Component {
         }
     }
 
+    // goToSlide, nextSlide and previousSlide functions in addition to slideCount and currentSlide
+    carouselLeftButton = ({ previousSlide }) => {
+
+        const getButtonStyles = (disabled) => {
+            return {
+                border: 0,
+                background: 'linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',
+                color: 'white',
+                paddingRight: 10,
+                outline: 0,
+                opacity: disabled ? 0.3 : 1,
+                cursor: 'pointer',
+                height: '100%',
+                zIndex: 5
+            }
+        }
+
+        const handleClick = (e) => {
+            e.preventDefault();
+            previousSlide();
+        }
+
+        return (
+            <button className='foodgrid-image-hidedecorator'
+                // style={getButtonStyles(this.props.currentSlide === 0 && !this.props.wrapAround)}
+                style={getButtonStyles()}
+                onClick={handleClick}>
+                <Icon size='huge' name='angle left' />
+            </button>
+        );
+    }
+
+    carouselRightButton = ({ nextSlide }) => {
+        const getButtonStyles = (disabled) => {
+            return {
+                border: 0,
+                background: 'linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.15), rgba(0,0,0,0.2))',
+                color: 'white',
+                paddingLeft: 10,
+                outline: 0,
+                opacity: disabled ? 0.3 : 1,
+                cursor: 'pointer',
+                height: '100%',
+                zIndex: 1
+            }
+        }
+        const handleClick = (e) => {
+            e.preventDefault();
+            nextSlide();
+        }
+        return (
+            <button className='foodgrid-image-hidedecorator'
+                style={getButtonStyles()}
+                onClick={handleClick}>
+                <Icon size='huge' name='angle right' />
+            </button>
+        );
+    }
+
     getFoodImageComponent(food) {
         let imageElement;
         if (food.imageUrls && food.imageUrls.length > 1) {
@@ -28,9 +87,10 @@ export default class FoodGrid extends Component {
                 <Image key={index} className='foodgrid-image' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             ));
             imageElement = (
-                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true} decorators={CarouselDecorators}
-                dots={false}
-                // decorators={[]}
+                <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}
+                    renderBottomCenterControls={() => { }}
+                    renderCenterLeftControls={this.carouselLeftButton}
+                    renderCenterRightControls={this.carouselRightButton}
                 >
                     {imageUrls}
                 </Carousel>

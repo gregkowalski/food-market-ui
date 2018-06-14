@@ -200,7 +200,7 @@ class MobileSearch extends Component {
     handleSelectedFood = (selectedFood) => {
         setTimeout(() => {
             this.setState({
-                // Removing this effect of centering the map on the
+                // Removing the effect of centering the map on the
                 // food selected from carousel.  It seems to work well.
                 // mapLocation: selectedFood.position,
                 selectedFoodId: selectedFood.food_id

@@ -100,3 +100,8 @@
         transform: scale3d(1.03, 1.03, 1);
     }
 }
+
+.foodgrid-card .slider-control-centerright,
+.foodgrid-card .slider-control-centerleft {
+    height: 100%;
+}
