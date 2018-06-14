@@ -58,8 +58,8 @@ export default class FoodCarousel extends Component {
         console.log(`${currentSlide} => ${nextSlide}`);
         if (nextSlide % 1 !== 0) {
             let newNextSlide = Math.ceil(nextSlide);
-            if (newNextSlide === this.props.foods.length - 2) {
-                newNextSlide = this.props.foods.length - 1;
+            if (newNextSlide === this.props.foods.length - 3) {
+                newNextSlide = this.props.foods.length - 2;
             }
 
             setTimeout(() => {
@@ -105,15 +105,33 @@ export default class FoodCarousel extends Component {
         }
 
         const { selectedSlideIndex } = this.state;
+        let slidesToShow = 2.4;
+        let dummySlidesToAdd = 1;
+        if (window.innerWidth >= window.innerHeight) {
+            slidesToShow = 3.8;
+            dummySlidesToAdd = 2;
+        }
 
+        const carouselFoods = foods.slice(0);
         // this is for a defect in nuka-carousel where if there's only one item
         // it doesn't generate a list element with a margin-left of 7.5px
         let foodCardStyle = {};
-        if (foods.length === 1) {
+        if (carouselFoods.length === 1) {
             foodCardStyle.marginLeft = '7.5px';
         }
+        else {
+            // adding an empty element to get around nuka carousel not being good at
+            // scrolling to the last item in the list otherwise
+            for (let i = 0; i < dummySlidesToAdd; i++) {
+                carouselFoods.push(null);
+            }
+        }
 
-        const slides = foods.map((food, index) => {
+        const slides = carouselFoods.map((food, index) => {
+
+            if (!food) {
+                return null;
+            }
 
             let borderColor = 'transparent';
             if (food.food_id === selectedFoodId) {
@@ -159,10 +177,7 @@ export default class FoodCarousel extends Component {
             );
         });
 
-        let slidesToShow = 2.4;
-        if (window.innerWidth >= window.innerHeight) {
-            slidesToShow = 3.8;
-        }
+        const empty = () => { };
 
         return (
             <Carousel
@@ -175,10 +190,10 @@ export default class FoodCarousel extends Component {
                 afterSlide={this.handleAfterFoodSlide}
                 beforeSlide={this.handleBeforeFoodSlide}
                 slideIndex={selectedSlideIndex}
-                speed={100}
-                renderBottomCenterControls={() => { }}
-                renderCenterLeftControls={() => { }}
-                renderCenterRightControls={() => { }}
+                // speed={100}
+                renderBottomCenterControls={empty}
+                renderCenterLeftControls={empty}
+                renderCenterRightControls={empty}
             >
                 {slides}
             </Carousel>
