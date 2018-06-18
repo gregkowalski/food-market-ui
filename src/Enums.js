@@ -52,5 +52,18 @@ export const FoodFeatureLabels = {
     gmo_free: "GMO-free",
     free_range_poultry: "Free range poultry",
     free_range_eggs: "Free range eggs",
-    pasture_raised_chicken: "Pasture raised chicken"
+    pasture_raised_chicken: "Pasture raised chicken",
+    vegetarian: "Vegetarian"
+};
+
+export const FoodAllergyLabels = {
+    eggs: "Eggs",
+    tree_nuts: "Tree Nuts",
+    wheat: "Wheat",
+    sesame_oil: "Sesame Oil",
+    milk: "Milk",
+    mustard: "Mustard",
+    nuts: "Nuts",
+    gluten: "Gluten",
+    sulphites: "Sulphites",
 };

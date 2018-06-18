@@ -330,11 +330,6 @@ class MobileSearch extends Component {
                 </div>
 
                 <Drawer visible={showFilter} onTransitionEnd={this.handleDrawerTransitionEnd}>
-                    {/*
-                        Drawer gets rendered outside of the react root and thus
-                        it doesn't inherit the redux store.  We need to inject it
-                        into the SearchFilter manually
-                    */}
                     <SearchFilter visible={showFilter}
                         pickup={pickup}
                         date={date}

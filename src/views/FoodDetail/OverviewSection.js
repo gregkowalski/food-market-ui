@@ -7,7 +7,7 @@ import FoodOptions from './FoodOptions'
 import FoodPrepSafetyMessage from './FoodPrepSafetyMessage'
 import './OverviewSection.css'
 import RegionUtil from '../../components/Map/RegionUtil'
-import { FoodFeatureLabels } from '../../Enums'
+import { FoodFeatureLabels, FoodAllergyLabels } from '../../Enums'
 
 const OverviewSection = ({ food, cook }) => {
     return (
@@ -75,7 +75,8 @@ const OverviewSection = ({ food, cook }) => {
                 <div style={{ marginLeft: '15px', marginTop: '15px' }}>
                     <ul>
                         {food.allergies.map((allergy, index) => {
-                            return (<li key={index}>{allergy}</li>);
+                            const allergyText = FoodAllergyLabels[allergy] ? FoodAllergyLabels[allergy] : allergy;
+                            return (<li key={index}>{allergyText}</li>);
                         })}
                     </ul>
                 </div>
