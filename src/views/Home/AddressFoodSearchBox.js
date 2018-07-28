@@ -82,21 +82,6 @@ export default class AddressFoodSearchBox extends React.Component {
         this.setState({ addressPlaceholder: defaultPlaceholder });
     }
 
-    handleAddressKeyDown = (event) => {
-        // This handling is needed for when the user pressed enter to
-        // select the item from google autocomplete box and then
-        // presses enter again to search.
-        if (event.key === 'Enter') {
-            const { place, address } = this.state;
-            if (!address && !place) {
-                this.searchByCurrentLocation();
-            }
-            else {
-                this.handleSearchButtonClick();
-            }
-        }
-    }
-
     handleAddressSelected = (place) => {
         if (!place.geometry) {
             if (this.state.place) {
@@ -117,17 +102,25 @@ export default class AddressFoodSearchBox extends React.Component {
 
     handleSearchButtonClick = () => {
         const { place, address } = this.state;
+
+        // If the user hasn't entered anything in the address search box
+        // then we ask them to search by current GPS location
         if (!place && !address) {
             this.searchByCurrentLocation();
             return;
         }
 
+        // If we already have a place selected (most likely due to the
+        // address dropdown selection) then we just do the search for 
+        // food in that area
         if (place) {
             const loc = Util.toLocation(place.geometry.location);
             this.onSearchByLocation(place, loc);
             return;
         }
 
+        // The user entered an address or a partial address so let's
+        // try to find out whether it's a real address using geocoder
         const request = {
             address,
             bounds: LowerMainlandBounds,
@@ -138,18 +131,32 @@ export default class AddressFoodSearchBox extends React.Component {
             const newState = { isSearching: false };
             if (status === 'OK') {
                 const firstPlace = results[0];
-                newState.place = firstPlace;
-                newState.address = Util.toFormattedAddress(firstPlace);
-                newState.addressPlaceholder = defaultPlaceholder;
+                if (!firstPlace.address_components || firstPlace.address_components.length < 8) {
+                    // there was an address found but it's incomplete so we don't make any
+                    // assumptions and let the user know that we couldn't find the address
+                    status = 'INCOMPLETE_ADDRESS';
+                }
+                else {
+                    // we found an address so let's just search in that area
+                    // using a recursive call to this method
+                    newState.place = firstPlace;
+                    newState.address = Util.toFormattedAddress(firstPlace);
+                    newState.addressPlaceholder = defaultPlaceholder;
+                    this.setState(newState, this.handleSearchButtonClick)
+                }
             }
-            else {
-                if (status !== 'ZERO_RESULTS') {
+
+            if (status !== 'OK') {
+                // We couldn't find an address so let's just let the user know
+                // that we didn't find results.  Also, if it's another error
+                // that was somewhat unexpected, let's write it out to the console.
+                if (status !== 'ZERO_RESULTS' && status !== 'INCOMPLETE_ADDRESS') {
                     console.error(status);
                 }
                 newState.address = '';
                 newState.addressPlaceholder = noResultsPlaceholder;
+                this.setState(newState);
             }
-            this.setState(newState);
         });
     }
 
@@ -191,7 +198,6 @@ export default class AddressFoodSearchBox extends React.Component {
                         onFocus={this.handleAddressFocus}
                         onPlaceSelected={this.handleAddressSelected}
                         onChange={this.handleAddressChange}
-                        onKeyDown={this.handleAddressKeyDown}
                         types={['address']}
                         placeholder={addressPlaceholder}
                         componentRestrictions={{ country: 'ca' }}
