@@ -117,7 +117,6 @@ const FoodImage = ({ food }) => {
 
         return (
             <button className='foodgrid-image-hidedecorator'
-                // style={getButtonStyles(this.props.currentSlide === 0 && !this.props.wrapAround)}
                 style={getButtonStyles()}
                 onClick={handleClick}>
                 <Icon size='huge' name='angle left' />
@@ -136,7 +135,7 @@ const FoodImage = ({ food }) => {
                 opacity: disabled ? 0.3 : 1,
                 cursor: 'pointer',
                 height: '100%',
-                zIndex: 1
+                zIndex: 5
             }
         }
         const handleClick = (e) => {
@@ -152,19 +151,17 @@ const FoodImage = ({ food }) => {
         );
     }
 
-    const emptyFunc = () => { };
+    const none = () => { };
 
     let imageElement;
-    // todo: re-add support for carousel in food grid
-    const showCarousel = 1 > 2;
-    if (showCarousel && food.imageUrls && food.imageUrls.length > 1) {
+    if (food.imageUrls && food.imageUrls.length > 1) {
         const images = food.imageUrls.map((current, index) => (
             <Image key={index} className='foodgrid-image' src={current} onLoad={() => Util.triggerEvent(window, 'resize')} />
             // <div key={index} className='foodgrid-image-bg' onLoad={() => Util.triggerEvent(window, 'resize')} style={{backgroundImage: 'url("' + current + '")'}}></div>
         ));
         imageElement = (
             <Carousel dragging={true} cellSpacing={15} edgeEasing="linear" wrapAround={true}
-                renderBottomCenterControls={emptyFunc}
+                renderBottomCenterControls={none}
                 renderCenterLeftControls={carouselLeftButton}
                 renderCenterRightControls={carouselRightButton}
             >
