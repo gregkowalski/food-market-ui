@@ -16,19 +16,15 @@
     font-weight: 500;
 }
 
-#foodfilter-address {
+.foodfilter-address {
     display: inline-block;
     width: 350px;
 }
 
-#foodfilter-address input {
-    width: 100%;
+.foodfilter-address input {
     padding: 9px;
     border: 1px solid rgba(34, 36, 38, .15);
     border-radius: 2px;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    outline: 0;
-    appearance: none;
     font-family: 'Roboto';
 }
 

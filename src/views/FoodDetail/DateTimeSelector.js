@@ -43,7 +43,22 @@ export default class DateTimeSelector extends React.Component {
         this.orderTimes = undefined;
 
         if (!food || !food.handoff_dates || food.handoff_dates.length <= 0) {
-            return;
+            // TODO: temporary workaround for not having all the handoff_dates
+            // set for all foods.  Let's just generate a few available times
+            // for testing purposes.  This needs to be removed.
+            if (!food.handoff_dates || food.handoff_dates.length === 0) {
+                food.handoff_dates = [];
+                for (let i = 0; i < 4; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        const start = moment.utc().add(i, 'days').add(j * 2, 'hours');
+                        const end = start.clone().add(1, 'hours');
+                        food.handoff_dates.push({ start, end });
+                    }
+                }
+            }
+            else {
+                return;
+            }
         }
 
         this.foodTimes = [];

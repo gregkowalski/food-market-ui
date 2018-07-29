@@ -1,10 +1,16 @@
 import React from 'react'
 import { Message } from 'semantic-ui-react'
-import Autocomplete from '../Autocomplete'
+import ClearableAutocomplete from '../ClearableAutocomplete'
+import Util from '../../services/Util'
 
 const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, className }) => {
-    const onPlaceSelected = (place) => {
-        input.onChange(place.formatted_address);
+    const handlePlaceSelected = (place) => {
+        const address = Util.toFormattedAddress(place);
+        input.onChange(address);
+    }
+
+    const handleClear = () => {
+        input.onChange('');
     }
 
     const autocompleteStyle = (isValid) => {
@@ -23,19 +29,22 @@ const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, classNa
     const hasError = (touched || visited) && invalid;
     const divClassName = hasError ? 'error' : '';
     return (
-        <div className={divClassName}>
-            <Autocomplete className={className} style={autocompleteStyle(!hasError)}
-                {...input}
-                autoComplete={autoComplete}
-                onPlaceSelected={onPlaceSelected}
-                types={['address']}
-                placeholder={placeholder}
-                componentRestrictions={{ country: 'ca' }}
-            />
+        <ClearableAutocomplete
+            style={autocompleteStyle(!hasError)}
+            className={className}
+            divClassName={divClassName}
+            placeholder={placeholder}
+            autoComplete={autoComplete}
+
+            onPlaceSelected={handlePlaceSelected}
+            onClear={handleClear}
+
+            {...input}
+        >
             {touched && invalid &&
                 <Message error header={error.header} content={error.message} icon='exclamation circle' />
             }
-        </div>
+        </ClearableAutocomplete>
     );
 }
 

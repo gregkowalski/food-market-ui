@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LowerMainlandBounds } from '../Map/RegionUtil'
+import { LowerMainlandBounds } from './Map/RegionUtil'
 
 export default class ReactGoogleAutocomplete extends React.Component {
     static propTypes = {
@@ -32,7 +32,6 @@ export default class ReactGoogleAutocomplete extends React.Component {
         }
 
         this.autocomplete = new window.google.maps.places.Autocomplete(this.input, config);
-
         this.event = this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
     }
 

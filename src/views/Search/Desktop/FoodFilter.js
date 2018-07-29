@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react'
 import './FoodFilter.css'
 import DeliveryOptionModal from './DeliveryOptionModal'
 import DateModal from './DateModal'
-import Autocomplete from '../../../components/Autocomplete'
+import ClearableAutocomplete from '../../../components/ClearableAutocomplete'
 import Util from '../../../services/Util'
 
 export default class FoodFilter extends React.Component {
@@ -78,13 +78,16 @@ export default class FoodFilter extends React.Component {
         if (place && place.geometry) {
             const { onDeliveryAddressSelected } = this.props;
             onDeliveryAddressSelected(place);
-
             this.setState({ address: Util.toFormattedAddress(place) });
         }
     }
 
     handleDeliveryAddressChange = (event) => {
         this.setState({ address: event.target.value });
+    }
+
+    handleDeliveryAddressClear = () => {
+        this.setState({ address: '' });
     }
 
     getButtonProps(active) {
@@ -120,13 +123,12 @@ export default class FoodFilter extends React.Component {
                         {pickup ? 'Pickup' : 'Delivery'}
                     </Button>
                     {!pickup &&
-                        <div id='foodfilter-address'>
-                            <Autocomplete
-                                types={['address']}
-                                placeholder='Enter delivery address'
+                        <div className='foodfilter-address'>
+                            <ClearableAutocomplete
                                 onPlaceSelected={this.handleDeliveryAddressSelected}
                                 onChange={this.handleDeliveryAddressChange}
-                                componentRestrictions={{ country: 'ca' }}
+                                onClear={this.handleDeliveryAddressClear}
+                                placeholder='Enter delivery address'
                                 value={address}
                             />
                         </div>

@@ -54,6 +54,10 @@
     width: 100%;
 }
 
+.contactinfo-phone input {
+    appearance: none;
+}
+
 /* Google Autocomplete box */
 
 .contactinfo-address {
@@ -80,6 +84,7 @@
 .contactinfo-address>div:nth-child(2) {
     font-size: 1.1em;
     margin-top: 15px;
+    margin-bottom: 8px;
 }
 
 .contactinfo-address .ui.error.message {
@@ -87,12 +92,10 @@
 }
 
 .contactinfo-address input {
-    width: 100%;
     line-height: 1.21428571em;
     font-weight: 400;
     font-size: 1em;
     font-family: 'Roboto';
-    margin-top: 8px;
     padding: 9.5px 14px;
     border-radius: .28571429rem;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);

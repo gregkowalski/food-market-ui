@@ -284,21 +284,35 @@ class Util {
     }
 
     toFormattedAddress(place) {
-        const street_number = this._getAddressPart(place.address_components, 'street_number').short_name;
-        const route = this._getAddressPart(place.address_components, 'route').long_name;
-        // const neighborhood = this.getPart(place.address_components, 'neighborhood');
-        const locality = this._getAddressPart(place.address_components, 'locality').short_name;
-        // const administrative_area_level_2 = this.getPart(place.address_components, 'administrative_area_level_2');
-        const administrative_area_level_1 = this._getAddressPart(place.address_components, 'administrative_area_level_1').short_name;
-        const country = this._getAddressPart(place.address_components, 'country').long_name;
-        // const postal_code = this.getPart(place.address_components, 'postal_code');
+        const street_number = this._getAddressPart(place, 'street_number').short_name;
+        const route = this._getAddressPart(place, 'route').long_name;
+        // const neighborhood = this.getPart(place, 'neighborhood');
+        const locality = this._getAddressPart(place, 'locality').short_name;
+        // const administrative_area_level_2 = this.getPart(place, 'administrative_area_level_2');
+        const administrative_area_level_1 = this._getAddressPart(place, 'administrative_area_level_1').short_name;
+        const country = this._getAddressPart(place, 'country').long_name;
+        // const postal_code = this.getPart(place, 'postal_code');
 
-        const address = `${street_number} ${route}, ${locality}, ${administrative_area_level_1}, ${country}`;
+        let address = this._appendAddress('', street_number, '');
+        address = this._appendAddress(address, route, ' ');
+        address = this._appendAddress(address, locality, ', ');
+        address = this._appendAddress(address, administrative_area_level_1, ', ');
+        address = this._appendAddress(address, country, ', ');
         return address;
     }
 
-    _getAddressPart(components, typeName) {
-        const part = components.find(x => x.types.indexOf(typeName) >= 0);
+    _appendAddress(address, part, sep) {
+        if (part) {
+            if (address.length > 0) {
+                address += sep;
+            }
+            address += part;
+        }
+        return address;
+    }
+
+    _getAddressPart(place, typeName) {
+        const part = place.address_components.find(x => x.types.indexOf(typeName) >= 0);
         if (part) {
             return part;
         }
