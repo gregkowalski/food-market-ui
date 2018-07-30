@@ -18,6 +18,9 @@ const Config = {
     },
     Foodcraft: {
         SupportEmail: 'gregkowalski@hotmail.com'
+    },
+    GoogleAnalytics: {
+        TrackingId: 'UA-123045559-2'
     }
 }
 

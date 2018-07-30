@@ -5,6 +5,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { StripeProvider } from 'react-stripe-elements'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
+import ReactGA from 'react-ga'
+
 import 'whatwg-fetch'
 import './semantic/semantic.min.css'
 import './index.css'
@@ -28,7 +30,8 @@ import ScrollToTop from './components/ScrollToTop'
 import configureStore from './store/configureStore'
 import Config from './Config'
 import { unregister } from './registerServiceWorker'
-import isAuth from './AuthCheckHoc'
+import isAuth from './hoc/AuthCheckHoc'
+import withTracker from './hoc/WithTrackerHoc'
 import About from './views/Info/About'
 import Cookies from './views/Info/Cookies'
 import Help from './views/Info/Help'
@@ -46,7 +49,13 @@ import Cooks from './views/Info/Cooks'
 
 unregister();
 
+ReactGA.initialize(Config.GoogleAnalytics.TrackingId);
+
 const { store, persistor } = configureStore({ includeLogger: true });
+
+const appPage = (page) => {
+    return isAuth(withTracker(page));
+}
 
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
@@ -55,33 +64,33 @@ render(
                 <BrowserRouter>
                     <ScrollToTop>
                         <Switch>
-                            <Route exact path='/' component={isAuth(Home)} />
-                            <Route exact path='/search' component={isAuth(Search)} />
-                            <Route exact path='/foods/:id/orderSuccess' component={isAuth(OrderSuccess)} />
-                            <Route exact path='/foods/:id/order' component={isAuth(Order)} />
-                            <Route exact path='/foods/:id' component={isAuth(FoodDetail)} />
-                            <Route exact path='/cognitoCallback' component={CognitoCallback} />
-                            <Route exact path='/cognitoSignout' component={CognitoSignout} />
-                            <Route exact path='/stripeCallback' component={StripeCallback} />
-                            <Route exact path='/profile/view/:userId' component={isAuth(ProfileView)} />
-                            <Route exact path='/profile/edit' component={isAuth(ProfileEdit)} />
-                            <Route exact path='/buyerOrders' component={isAuth(BuyerOrders)} />
-                            <Route exact path='/cookOrders' component={isAuth(CookOrders)} />
-                            <Route exact path='/login' component={isAuth(Login)} />
+                            <Route exact path='/' component={appPage(Home)} />
+                            <Route exact path='/search' component={appPage(Search)} />
+                            <Route exact path='/foods/:id/orderSuccess' component={appPage(OrderSuccess)} />
+                            <Route exact path='/foods/:id/order' component={appPage(Order)} />
+                            <Route exact path='/foods/:id' component={appPage(FoodDetail)} />
+                            <Route exact path='/profile/view/:userId' component={appPage(ProfileView)} />
+                            <Route exact path='/profile/edit' component={appPage(ProfileEdit)} />
+                            <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
+                            <Route exact path='/cookOrders' component={appPage(CookOrders)} />
+                            <Route exact path='/login' component={appPage(Login)} />
+                            <Route exact path='/cognitoCallback' component={withTracker(CognitoCallback)} />
+                            <Route exact path='/cognitoSignout' component={withTracker(CognitoSignout)} />
+                            <Route exact path='/stripeCallback' component={withTracker(StripeCallback)} />
 
-                            <Route exact path={Url.about()} component={isAuth(About)} />
-                            <Route exact path={Url.cookies()} component={isAuth(Cookies)} />
-                            <Route exact path={Url.help()} component={isAuth(Help)} />
-                            <Route exact path={Url.policies()} component={isAuth(Policies)} />
-                            <Route exact path={Url.privacy()} component={isAuth(Privacy)} />
-                            <Route exact path={Url.terms()} component={isAuth(Terms)} />
-                            <Route exact path={Url.safety()} component={isAuth(Safety)} />
-                            <Route exact path={Url.whycook()} component={isAuth(WhyCook)} />
-                            <Route exact path={Url.community()} component={isAuth(Community)} />
-                            <Route exact path={Url.howto()} component={isAuth(HowTo)} />
-                            <Route exact path={Url.cooks()} component={isAuth(Cooks)} />                            
+                            <Route exact path={Url.about()} component={appPage(About)} />
+                            <Route exact path={Url.cookies()} component={appPage(Cookies)} />
+                            <Route exact path={Url.help()} component={appPage(Help)} />
+                            <Route exact path={Url.policies()} component={appPage(Policies)} />
+                            <Route exact path={Url.privacy()} component={appPage(Privacy)} />
+                            <Route exact path={Url.terms()} component={appPage(Terms)} />
+                            <Route exact path={Url.safety()} component={appPage(Safety)} />
+                            <Route exact path={Url.whycook()} component={appPage(WhyCook)} />
+                            <Route exact path={Url.community()} component={appPage(Community)} />
+                            <Route exact path={Url.howto()} component={appPage(HowTo)} />
+                            <Route exact path={Url.cooks()} component={appPage(Cooks)} />
 
-                            <Route component={NotFoundPage} />
+                            <Route component={withTracker(NotFoundPage)} />
 
                             {/* <Route path='/temp' component={temp} /> */}
                             {/* <Route exact path='/map2' component={Map2} /> */}

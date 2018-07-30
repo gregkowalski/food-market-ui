@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CognitoUtil from './services/Cognito/CognitoUtil'
-import { Actions, Selectors } from './store/currentUser'
-import ErrorCodes from './services/ErrorCodes';
+import CognitoUtil from '../services/Cognito/CognitoUtil'
+import { Actions, Selectors } from '../store/currentUser'
+import ErrorCodes from '../services/ErrorCodes';
 
 export default function (ComposedClass) {
 

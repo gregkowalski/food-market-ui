@@ -19,11 +19,16 @@ class Util {
         return foodPrepIcon;
     }
 
-    parseQueryString(location) {
-        let query = location.search
+    getQueryString(location) {
+        let query = location.search;
         if (!query) {
             query = location.hash;
         }
+        return query;
+    }
+
+    parseQueryString(location) {
+        let query = this.getQueryString(location);
         if (query && (query[0] === '#' || query[0] === '?')) {
             query = query.substring(1);
         }

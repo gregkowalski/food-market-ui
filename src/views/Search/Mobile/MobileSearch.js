@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 import { Actions, Selectors } from '../../../store/search'
 import { Icon } from 'semantic-ui-react'
 import queryString from 'query-string'
@@ -182,7 +183,9 @@ class MobileSearch extends Component {
     pushViewToHistory(view) {
         const qs = queryString.parse(this.props.location.search);
         const query = Object.assign({}, qs, { m: 1, view });
-        this.props.history.push(Url.search(query));
+        const url = Url.search(query);
+        ReactGA.pageview(url);
+        this.props.history.push(url);
     }
 
     showMapView = () => {
@@ -200,10 +203,11 @@ class MobileSearch extends Component {
     handleSelectedFood = (selectedFood) => {
         setTimeout(() => {
             this.setState({
+                selectedFoodId: selectedFood.food_id
+
                 // Removing the effect of centering the map on the
                 // food selected from carousel.  It seems to work well.
                 // mapLocation: selectedFood.position,
-                selectedFoodId: selectedFood.food_id
             });
         }, 200);
     }

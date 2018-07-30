@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactGA from 'react-ga'
 import Carousel from 'nuka-carousel'
 import { Item, Image, Rating, Icon } from 'semantic-ui-react'
 import './FoodCarousel.css'
@@ -54,31 +55,20 @@ export default class FoodCarousel extends Component {
         window.removeEventListener('resize', this.forceUpdateAfterTimeout);
     }
 
-    handleBeforeFoodSlide = (currentSlide, nextSlide) => {
-        console.log(`${currentSlide} => ${nextSlide}`);
-        if (nextSlide % 1 !== 0) {
-            let newNextSlide = Math.ceil(nextSlide);
-            if (newNextSlide === this.props.foods.length - 3) {
-                newNextSlide = this.props.foods.length - 2;
-            }
-
-            setTimeout(() => {
-                this.setState({ selectedSlideIndex: newNextSlide });
-            }, 0);
-        }
-    }
-
     handleAfterFoodSlide = (index) => {
         const { onSelected, foods } = this.props;
         if (onSelected) {
-            // nuka-carousel can return a decimal is some cases (perhaps this is a bug)
-            // so let's round it
+            // nuka-carousel can return a decimal in some cases (perhaps this is a bug) so let's round it
             index = Math.min(Math.round(index), foods.length - 1);
             const selectedFood = foods[index];
             if (!selectedFood) {
                 throw new Error(`selectedFood at index=${index} is null in foods.length=${foods.length}`);
             }
             onSelected(selectedFood);
+            ReactGA.event({
+                category: 'food-carousel',
+                action: `swipe to ${selectedFood.food_id}`
+            })
         }
     }
 
@@ -177,7 +167,7 @@ export default class FoodCarousel extends Component {
             );
         });
 
-        const empty = () => { };
+        const none = () => { };
 
         return (
             <Carousel
@@ -188,12 +178,11 @@ export default class FoodCarousel extends Component {
                 slidesToShow={slidesToShow}
                 swiping={true}
                 afterSlide={this.handleAfterFoodSlide}
-                beforeSlide={this.handleBeforeFoodSlide}
                 slideIndex={selectedSlideIndex}
                 // speed={100}
-                renderBottomCenterControls={empty}
-                renderCenterLeftControls={empty}
-                renderCenterRightControls={empty}
+                renderBottomCenterControls={none}
+                renderCenterLeftControls={none}
+                renderCenterRightControls={none}
             >
                 {slides}
             </Carousel>

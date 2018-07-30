@@ -18,6 +18,9 @@ const Config = {
     },
     Foodcraft: {
         SupportEmail: 'yasin.dev.local@gmail.com'
+    },
+    GoogleAnalytics: {
+        TrackingId: 'UA-123045559-1'
     }
 }
 

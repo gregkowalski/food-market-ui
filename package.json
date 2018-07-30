@@ -28,6 +28,7 @@
     "react-addons-shallow-compare": "^15.6.2",
     "react-dates": "^12.7.1",
     "react-dom": "^15.6.2",
+    "react-ga": "^2.5.3",
     "react-google-maps": "^9.4.5",
     "react-images": "^0.5.14",
     "react-places-autocomplete": "^7.1.1",
