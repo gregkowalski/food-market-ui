@@ -5,7 +5,7 @@ import Autocomplete from '../../components/Autocomplete'
 import { LowerMainlandBounds } from '../../components/Map/RegionUtil'
 import Util from '../../services/Util'
 
-const defaultPlaceholder = 'Enter your street address';
+const defaultPlaceholder = 'Enter your street address...';
 const noResultsPlaceholder = 'No results found';
 const unableToGeoSearchPlaceholder = 'Unable to find your location, please enter an address';
 

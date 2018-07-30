@@ -211,7 +211,7 @@ class AddressAutocomplete extends React.Component {
                 >
                     {({ getInputProps, suggestions, getSuggestionItemProps }) => (
                         <div>
-                            <div className='clearable'>
+                            <div className='searchfilter-clearable'>
                                 <Input error={error} ref={this.setInputRef}
                                     {...getInputProps({
                                         placeholder: error
@@ -222,7 +222,7 @@ class AddressAutocomplete extends React.Component {
                                     })}
                                 />
                                 <Icon name='remove circle' style={clearStyle}
-                                    className='clearable__clear' onClick={this.handleClear} />
+                                    className='searchfilter-clearable__clear' onClick={this.handleClear} />
                             </div>
                             {suggestions && suggestions.length > 0 &&
                                 <div className="searchfilter-autocomplete-dropdown-container">

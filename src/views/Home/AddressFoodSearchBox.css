@@ -12,7 +12,7 @@
 
 .addressfoodsearchbox .ui.button {
     border-radius: 0 2px 2px 0;
-    min-height: 4.2em;
+    min-height: 4em;
     font-weight: 300;
     letter-spacing: .8px;
     width: 200px;
@@ -21,11 +21,10 @@
 
 .addressfoodsearchbox input {
     width: 100%;
-    line-height: 1.36428571em;
     font-weight: 400;
-    font-size: .4em;
+    font-size: 19px;
     font-family: 'Roboto';
-    padding: 19px 40px 19px 18px;
+    padding: 17px 1.8em 17px 10px;
     border: 1px solid rgba(34, 36, 38, .15);
     border-radius: 2px 0 0 2px;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -39,10 +38,12 @@
 
 .addressfoodsearchbox input::placeholder {
     color: rgba(34, 36, 38, .3);
+    font-weight: 300;
 }
 
 .addressfoodsearchbox input:focus::placeholder {
     color: rgba(0, 0, 0, .5);
+    font-weight: 300;
 }
 
 .addressfoodsearchbox-clearable {
@@ -53,16 +54,17 @@
 
 div.addressfoodsearchbox-clearable__clear {
     position: absolute;
+    top: 0;
     right: 0;
-    top: 1rem;
-    line-height: 1;
-    vertical-align: middle;
-    margin-right: 0.5rem;
+    padding-top: 0.15em;
+    padding-right: 0.2em;
+    height: 100%;
     font-style: normal;
-    font-size: 2.2rem;
+    font-size: 1.1em;
     cursor: pointer;
     user-select: none;
     color: #aaa;
+    -webkit-tap-highlight-color: transparent;
 }
 
 div.addressfoodsearchbox-clearable__clear:hover {

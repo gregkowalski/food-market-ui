@@ -6,7 +6,7 @@
 
 #clearable-autocomplete input {
     width: 100%;
-    padding-right: 40px;
+    padding-right: 2.5em;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;

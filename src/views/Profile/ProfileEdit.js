@@ -178,7 +178,7 @@ class ProfileEdit extends React.Component {
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Column computer={3}>Address <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
-                                        <Grid.Column computer={10}>
+                                        <Grid.Column computer={13}>
                                             <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
                                             <div className='profileedit-input-descriptions'>
                                                 We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.

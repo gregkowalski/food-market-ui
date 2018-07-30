@@ -100,40 +100,41 @@
     font-size: 1.2rem;
 }
 
-.clearable {
+.searchfilter-clearable {
     position: relative;
     display: inline-block;
     width: 100%;
 }
 
-.clearable input[type=text] {
+.searchfilter-clearable input[type=text] {
     width: 100%;
-    padding-right: 40px;
+    padding-right: 2.25em;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    appearance: none;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-i.icon.clearable__clear {
+i.icon.searchfilter-clearable__clear {
     position: absolute;
-    right: 0;
     top: 0.5em;
-    line-height: 1;
-    vertical-align: middle;
-    margin-right: 0.35rem;
+    right: 0.1em;
     font-style: normal;
     font-size: 1.25em;
     cursor: pointer;
     user-select: none;
     color: #aaa;
+    line-height: 1;
 }
 
-i.icon.clearable__clear:hover {
+i.icon.searchfilter-clearable__clear:hover {
     color: #888;
 }
 
-.clearable input::-ms-clear {
+.searchfilter-clearable input::-ms-clear {
     /* Remove IE default X */
     display: none;
 }
