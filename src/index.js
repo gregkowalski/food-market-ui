@@ -44,7 +44,6 @@ import HowTo from './views/Info/HowTo'
 import Community from './views/Info/Community'
 import Cooks from './views/Info/Cooks'
 
-// import Map2 from './views/map2'
 //import temp from 'temp'
 
 unregister();
@@ -93,7 +92,6 @@ render(
                             <Route component={withTracker(NotFoundPage)} />
 
                             {/* <Route path='/temp' component={temp} /> */}
-                            {/* <Route exact path='/map2' component={Map2} /> */}
                         </Switch>
                     </ScrollToTop>
                 </BrowserRouter>
