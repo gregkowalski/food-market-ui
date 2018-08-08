@@ -1,0 +1,6 @@
+{
+    "RedirectAllRequestsTo": {
+        "HostName": "www.fctest.ca",
+        "Protocol": "https"
+    }
+}
