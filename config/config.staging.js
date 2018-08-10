@@ -5,8 +5,8 @@ const Config = {
     },
     Cognito: {
         AppWebDomain: 'fctest.auth.us-west-2.amazoncognito.com',
-        ClientAppId: '4bom4m3bnpqeiii71vipp8k3ga',
-        UserPoolId: 'us-west-2_LosVgCST7',
+        ClientAppId: '4dc5ct4skhajts391ap0ecsu7c',
+        UserPoolId: 'us-west-2_7whlIUqIa',
         RedirectUriSignIn: 'https://www.fctest.ca/cognitoCallback',
         RedirectUriSignOut: 'https://www.fctest.ca/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
