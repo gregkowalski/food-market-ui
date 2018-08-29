@@ -1,6 +1,0 @@
-{
-    "RedirectAllRequestsTo": {
-        "HostName": "www.cosmo-test.com",
-        "Protocol": "https"
-    }
-}

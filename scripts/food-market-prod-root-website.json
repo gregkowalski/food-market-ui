@@ -1,6 +1,0 @@
-{
-    "RedirectAllRequestsTo": {
-        "HostName": "www.foodcraft.ca",
-        "Protocol": "https"
-    }
-}
