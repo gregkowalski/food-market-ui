@@ -5,8 +5,8 @@ const Config = {
     },
     Cognito: {
         AppWebDomain: 'foodcraft.auth.us-west-2.amazoncognito.com',
-        ClientAppId: '4bom4m3bnpqeiii71vipp8k3ga',
-        UserPoolId: 'us-west-2_LosVgCST7',
+        ClientAppId: '6id7k4qe2tk433cbh4e8nf5mth',
+        UserPoolId: 'us-west-2_WdWrx74ZQ',
         RedirectUriSignIn: 'https://www.foodcraft.ca/cognitoCallback',
         RedirectUriSignOut: 'https://www.foodcraft.ca/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
