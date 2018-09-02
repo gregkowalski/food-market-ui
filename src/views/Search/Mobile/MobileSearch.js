@@ -8,6 +8,7 @@ import { Actions, Selectors } from '../../../store/search'
 import { Icon } from 'semantic-ui-react'
 import queryString from 'query-string'
 import './MobileSearch.css'
+import withGoogle from '../../../hoc/WithGoogleHoc'
 import Util from '../../../services/Util'
 import MapUtil from '../../../services/MapUtil'
 import Url from '../../../services/Url'
@@ -60,14 +61,9 @@ class MobileSearch extends Component {
     }
 
     componentWillMount() {
-        const { actions, pickup, region, address } = this.props;
+        const { actions, pickup, region } = this.props;
         if (!pickup) {
             actions.requestFoodsInRegion(region);
-        }
-
-        if (address) {
-            const addressLocation = Util.toLocation(address.geometry.location);
-            this.setState({ mapLocation: addressLocation });
         }
     }
 
@@ -106,6 +102,15 @@ class MobileSearch extends Component {
                 if (!foods.some(food => food.food_id === selectedFoodId)) {
                     this.setState({ selectedFoodId: foods[0].food_id });
                 }
+            }
+        }
+
+        if (!this.props.google && nextProps.google) {
+            const { address } = this.props;
+            const { google } = nextProps;
+            if (address) {
+                const addressLocation = Util.toLocation(google, address.geometry.location);
+                this.setState({ mapLocation: addressLocation });
             }
         }
     }
@@ -152,8 +157,9 @@ class MobileSearch extends Component {
         else {
             actions.selectDelivery();
 
-            const addressLocation = Util.toLocation(address.geometry.location);
-            const region = RegionUtil.getRegionByPosition(addressLocation);
+            const { google } = this.props;
+            const addressLocation = Util.toLocation(google, address.geometry.location);
+            const region = RegionUtil.getRegionByPosition(google, addressLocation);
             actions.mapCenterChanged(addressLocation);
             actions.regionChanged(region);
             actions.addressChanged(Util.toAddress(address));
@@ -260,7 +266,12 @@ class MobileSearch extends Component {
 
     render() {
         const { isMapView, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, date, address, mapCenter, isLoading } = this.props;
+        const { pickup, foods, date, address, mapCenter, isLoading, google } = this.props;
+
+        if (!google) {
+            return null;
+        }
+
         this.mapHeight = this.calcMapHeight();
 
         const loadingIconProps = { size: 'big' };
@@ -308,6 +319,7 @@ class MobileSearch extends Component {
 
                     <div className='mobilesearch-map' style={this.mapStyle()}>
                         <MobileMap foods={foods} pickup={pickup} date={date}
+                            google={google}
                             center={mapLocation}
                             initialCenter={mapLocation}
                             deliveryLocation={mapCenter}
@@ -334,7 +346,8 @@ class MobileSearch extends Component {
                 </div>
 
                 <Drawer visible={showFilter} onTransitionEnd={this.handleDrawerTransitionEnd}>
-                    <SearchFilter visible={showFilter}
+                    <SearchFilter google={google}
+                        visible={showFilter}
                         pickup={pickup}
                         date={date}
                         address={address}
@@ -383,4 +396,4 @@ MobileSearch.propTypes = {
     }).isRequired
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileSearch));
+export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileSearch)));

@@ -19,6 +19,9 @@ const Config = {
     Foodcraft: {
         SupportEmail: 'support@foodcraft.ca'
     },
+    Google: {
+        ApiKey: 'AIzaSyBfMn-NL_oNuejJMLZT1nQdNEKP4o-E9wY'
+    },
     GoogleAnalytics: {
         TrackingId: 'UA-123045559-3'
     }

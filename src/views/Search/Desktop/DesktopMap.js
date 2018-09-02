@@ -7,8 +7,6 @@ import PriceCalc from '../../../services/PriceCalc'
 import MapUtil from '../../../services/MapUtil'
 import Url from '../../../services/Url'
 
-// const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
-
 export default class DesktopMap extends React.Component {
 
     constructor(props) {
@@ -105,11 +103,15 @@ export default class DesktopMap extends React.Component {
             hoveredFoodId = this.state.hoveredFoodId;
         }
 
-        const { pickup, foods, selectedLocation } = this.props;
+        const { pickup, foods, selectedLocation, google } = this.props;
+        if (!google) {
+            return null;
+        }
 
         const markers = foods && foods.map(foodItem => {
             return (
                 <Marker
+                    google={google}
                     id={foodItem.food_id}
                     key={foodItem.food_id}
                     onClick={this.handleMarkerClick}
@@ -129,9 +131,9 @@ export default class DesktopMap extends React.Component {
 
         return (
             <Map
-                google={window.google}
+                google={google}
                 zoomControl={true}
-                zoomControlOptions={{ position: window.google.maps.ControlPosition.LEFT_TOP }}
+                zoomControlOptions={{ position: google.maps.ControlPosition.LEFT_TOP }}
                 mapTypeControl={false}
                 scaleControl={true}
                 streetViewControl={false}
@@ -153,10 +155,11 @@ export default class DesktopMap extends React.Component {
                 {markers}
 
                 {!pickup &&
-                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
+                    <Marker google={google} icon='/assets/images/food-delivery-location.png' zIndex={5000} position={selectedLocation} />
                 }
 
                 <InfoWindow
+                    google={google}
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     onClose={this.handleInfoWindowClose}>
@@ -200,9 +203,3 @@ DesktopMap.propTypes = {
     pickup: PropTypes.bool.isRequired,
     onGeoLocationChanged: PropTypes.func.isRequired
 }
-
-// <Map google={this.props.google} />
-
-// export default GoogleApiWrapper({
-//   apiKey: __GAPI_KEY__
-// })(MapContainer)

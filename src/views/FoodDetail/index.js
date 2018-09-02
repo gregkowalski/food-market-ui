@@ -8,6 +8,7 @@ import { Divider } from 'semantic-ui-react'
 import Scroll from 'react-scroll'
 import './index.css'
 import { Constants } from '../../Constants'
+import withGoogle from '../../hoc/WithGoogleHoc'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import FoodLightbox from '../../components/FoodLightbox'
@@ -90,8 +91,8 @@ class FoodDetail extends React.Component {
     }
 
     render() {
-        const { food, cook, reviews, pickup, quantity, date, time } = this.props;
-        if (!food) {
+        const { google, food, cook, reviews, pickup, quantity, date, time } = this.props;
+        if (!food || !google) {
             return null;
         }
 
@@ -129,7 +130,7 @@ class FoodDetail extends React.Component {
                         <div className='detail-item-main'>
                             <div className='detail-content'>
                                 <ScrollElement name='overview'>
-                                    <OverviewSection food={food} cook={cook} />
+                                    <OverviewSection google={google} food={food} cook={cook} />
                                 </ScrollElement>
                                 {/* <FlagListingMobile /> */}
                                 <Divider section hidden />
@@ -245,4 +246,5 @@ FoodDetail.propTypes = {
     }).isRequired
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FoodDetail));
+
+export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(FoodDetail)));

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LowerMainlandBounds } from './Map/RegionUtil'
+import RegionUtil from './Map/RegionUtil'
 
 export default class ReactGoogleAutocomplete extends React.Component {
     static propTypes = {
@@ -8,6 +8,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
         types: PropTypes.array,
         componentRestrictions: PropTypes.object,
         bounds: PropTypes.object,
+        google: PropTypes.object.isRequired,
     }
 
     constructor(props) {
@@ -17,21 +18,21 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
 
     componentDidMount() {
-        const { types = ['(cities)'], componentRestrictions, bounds, } = this.props;
+        const { types = ['(cities)'], componentRestrictions, bounds, google } = this.props;
         const config = {
             types,
             bounds,
         };
 
         // Limit search results to Lower Mainlain area for now
-        config.bounds = LowerMainlandBounds;
+        config.bounds = RegionUtil.LowerMainlandBounds(google);
         config.strictBounds = true;
 
         if (componentRestrictions) {
             config.componentRestrictions = componentRestrictions;
         }
 
-        this.autocomplete = new window.google.maps.places.Autocomplete(this.input, config);
+        this.autocomplete = new google.maps.places.Autocomplete(this.input, config);
         this.event = this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
     }
 
@@ -53,7 +54,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
 
     render() {
-        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, onRef, ...rest } = this.props;
+        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, google, onRef, ...rest } = this.props;
 
         return (
             <input onKeyDown={onKeyDown}
@@ -69,11 +70,14 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
         input: PropTypes.node.isRequired,
         onOpen: PropTypes.func.isRequired,
         onClose: PropTypes.func.isRequired,
+        google: PropTypes.object.isRequired
     }
 
     constructor(props) {
         super(props);
-        this.service = new window.google.maps.places.AutocompleteService();
+
+        const { google } = props;
+        this.service = new google.maps.places.AutocompleteService();
     }
 
     onChange(e) {
@@ -95,7 +99,8 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
 
     componentDidMount() {
         if (this.props.input.value) {
-            this.placeService = new window.google.maps.places.PlacesService(this.refs.div);
+            const { google } = this.props;
+            this.placeService = new google.maps.places.PlacesService(this.refs.div);
             this.placeService.getDetails({ placeId: this.props.input.value }, (e, status) => {
                 if (status === 'OK') {
                     this.refs.input.value = e.formatted_address;

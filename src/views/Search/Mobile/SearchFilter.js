@@ -7,7 +7,7 @@ import './SearchFilter.css'
 import Util from '../../../services/Util'
 import { DeliveryOptions } from '../../../Enums'
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete'
-import { LowerMainlandBounds } from '../../../components/Map/RegionUtil'
+import RegionUtil from '../../../components/Map/RegionUtil'
 
 export default class SearchFilter extends React.Component {
 
@@ -100,8 +100,12 @@ export default class SearchFilter extends React.Component {
     }
 
     render() {
-        const { onFilterHide } = this.props;
+        const { onFilterHide, google } = this.props;
         const { dateFocused, date, pickup, addressText, isValidAddress, addressVisited } = this.state;
+
+        if (!google) {
+            return null;
+        }
 
         const applyFilterDisabled = !pickup && (!addressText || !isValidAddress);
         const showAddressError = applyFilterDisabled && addressVisited;
@@ -126,7 +130,8 @@ export default class SearchFilter extends React.Component {
                     </div>
 
                     {!pickup &&
-                        <AddressAutocomplete address={addressText}
+                        <AddressAutocomplete google={google}
+                            address={addressText}
                             error={showAddressError}
                             onChange={this.handleAutocompleteChange}
                             onSelect={this.handleAutocompleteSelect}
@@ -170,9 +175,15 @@ SearchFilter.propTypes = {
 
     onFilterHide: PropTypes.func.isRequired,
     onFilterApply: PropTypes.func.isRequired,
+    
+    google: PropTypes.object.isRequired,
 }
 
 class AddressAutocomplete extends React.Component {
+
+    static propTypes = {
+        google: PropTypes.object.isRequired,
+    }
 
     handleClear = () => {
         if (this.props.onClear) {
@@ -186,10 +197,10 @@ class AddressAutocomplete extends React.Component {
     }
 
     render() {
-        const { address, error, onChange, onSelect, onFocus, onBlur } = this.props;
+        const { address, error, onChange, onSelect, onFocus, onBlur, google } = this.props;
 
         const searchOptions = {
-            bounds: LowerMainlandBounds,
+            bounds: RegionUtil.LowerMainlandBounds(google),
             strictBounds: true,
             types: ['address'],
             componentRestrictions: { country: 'ca' }

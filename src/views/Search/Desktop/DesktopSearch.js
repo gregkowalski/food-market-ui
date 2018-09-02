@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../../store/search'
 import { Dimmer } from 'semantic-ui-react'
 import './DesktopSearch.css'
+import withGoogle from '../../../hoc/WithGoogleHoc'
 import Util from '../../../services/Util'
 import LoadingIcon from '../../../components/LoadingIcon'
 import AppHeader from '../../../components/AppHeader'
@@ -78,9 +79,9 @@ class DesktopSearch extends React.Component {
 
     handleDeliveryAddressSelected = (place) => {
         if (place && place.geometry) {
-            const { actions } = this.props;
-            const selectedLocation = Util.toLocation(place.geometry.location);
-            const region = RegionUtil.getRegionByPosition(selectedLocation);
+            const { actions, google } = this.props;
+            const selectedLocation = Util.toLocation(google, place.geometry.location);
+            const region = RegionUtil.getRegionByPosition(google, selectedLocation);
             actions.regionChanged(region);
             actions.mapCenterChanged(selectedLocation);
             actions.addressChanged(Util.toAddress(place));
@@ -89,8 +90,12 @@ class DesktopSearch extends React.Component {
     }
 
     render() {
-        const { pickup, isLoading, foods, date, address, mapCenter } = this.props;
+        const { pickup, isLoading, foods, date, address, mapCenter, google } = this.props;
         const { dimmed, hoveredFoodId } = this.state;
+
+        if (!google) {
+            return null;
+        }
 
         return (
             <div className='dtsearch-wrap' onClick={this.hideDimmer}>
@@ -126,6 +131,7 @@ class DesktopSearch extends React.Component {
                         </div>
                         <div className='dtsearch-right'>
                             <DesktopMap
+                                google={google}
                                 foods={foods}
                                 pickup={pickup}
                                 center={mapCenter}
@@ -183,4 +189,4 @@ DesktopSearch.propTypes = {
     }).isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesktopSearch);
+export default withGoogle(connect(mapStateToProps, mapDispatchToProps)(DesktopSearch));

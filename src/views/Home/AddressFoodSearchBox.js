@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react'
 import './AddressFoodSearchBox.css'
 import Autocomplete from '../../components/Autocomplete'
-import { LowerMainlandBounds } from '../../components/Map/RegionUtil'
+import RegionUtil from '../../components/Map/RegionUtil'
 import Util from '../../services/Util'
 
 const defaultPlaceholder = 'Enter your street address...';
@@ -11,15 +12,17 @@ const unableToGeoSearchPlaceholder = 'Unable to find your location, please enter
 
 export default class AddressFoodSearchBox extends React.Component {
 
+    static propTypes = {
+        google: PropTypes.object.isRequired,
+    }
+
     state = {
         address: '',
         addressPlaceholder: defaultPlaceholder
     };
 
     componentWillMount() {
-        this.geocoder = new window.google.maps.Geocoder();
         const { address } = this.props;
-
         if (address) {
             this.setState({ place: address, address: address.formatted_address });
         }
@@ -85,7 +88,7 @@ export default class AddressFoodSearchBox extends React.Component {
     handleAddressSelected = (place) => {
         if (!place.geometry) {
             if (this.state.place) {
-                const loc = Util.toLocation(this.state.place.geometry.location);
+                const loc = Util.toLocation(this.props.google, this.state.place.geometry.location);
                 this.onSearchByLocation(this.state.place, loc);
             }
             else {
@@ -102,6 +105,7 @@ export default class AddressFoodSearchBox extends React.Component {
 
     handleSearchButtonClick = () => {
         const { place, address } = this.state;
+        const { google } = this.props;
 
         // If the user hasn't entered anything in the address search box
         // then we ask them to search by current GPS location
@@ -114,19 +118,26 @@ export default class AddressFoodSearchBox extends React.Component {
         // address dropdown selection) then we just do the search for 
         // food in that area
         if (place) {
-            const loc = Util.toLocation(place.geometry.location);
+            const loc = Util.toLocation(google, place.geometry.location);
             this.onSearchByLocation(place, loc);
             return;
         }
+
+        
 
         // The user entered an address or a partial address so let's
         // try to find out whether it's a real address using geocoder
         const request = {
             address,
-            bounds: LowerMainlandBounds,
+            bounds: RegionUtil.LowerMainlandBounds(google),
             componentRestrictions: { country: 'ca' }
         };
         this.setState({ isSearching: true });
+
+        if (!this.geocoder) {
+            this.geocoder = new google.maps.Geocoder();
+        }
+
         this.geocoder.geocode(request, (results, status) => {
             const newState = { isSearching: false };
             if (status === 'OK') {
@@ -177,6 +188,9 @@ export default class AddressFoodSearchBox extends React.Component {
 
     render() {
         const { address, addressPlaceholder, isSearching } = this.state;
+        const { google } = this.props;
+        if (!google)
+            return null;
 
         const isDefaultPlaceholder = (addressPlaceholder === defaultPlaceholder);
         let className = 'addressfoodsearchbox';
@@ -194,6 +208,7 @@ export default class AddressFoodSearchBox extends React.Component {
 
                 <div className='addressfoodsearchbox-clearable'>
                     <Autocomplete
+                        google={google}
                         onRef={this.setInputRef}
                         onFocus={this.handleAddressFocus}
                         onPlaceSelected={this.handleAddressSelected}

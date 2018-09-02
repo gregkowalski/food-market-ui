@@ -20,8 +20,8 @@ import cookImg3 from './home-cook3.jpg'
 import westendImg from './home-westend.jpg'
 import yaletownImg from './home-yaletown.jpg'
 import AddressFoodSearchBox from './AddressFoodSearchBox'
-import { RegionIds, RegionMap } from '../../components/Map/Regions'
 import RegionUtil from '../../components/Map/RegionUtil'
+import withGoogle from '../../hoc/WithGoogleHoc'
 
 class Home extends React.Component {
 
@@ -31,15 +31,15 @@ class Home extends React.Component {
     }
 
     searchByLocation = (value) => {
-        const { actions } = this.props;
+        const { actions, google } = this.props;
 
         const address = value.place
             ? Util.toAddress(value.place)
             : undefined;
         actions.addressChanged(address);
 
-        const pos = Util.toLocation(value.location);
-        const region = RegionUtil.getRegionByPosition(pos);
+        const pos = Util.toLocation(google, value.location);
+        const region = RegionUtil.getRegionByPosition(google, pos);
         actions.selectPickup();
         actions.mapCenterChanged(pos);
         actions.regionChanged(region);
@@ -58,10 +58,10 @@ class Home extends React.Component {
     }
 
     navigateToRegion = (regionId) => {
-        const { actions } = this.props;
-        const region = RegionMap[regionId];
+        const { actions, google } = this.props;
+        const region = RegionUtil.RegionMap(google)[regionId];
         actions.selectDelivery();
-        actions.mapCenterChanged(Util.toLocation(region.center));
+        actions.mapCenterChanged(Util.toLocation(google, region.center));
         actions.regionChanged(region);
         actions.addressChanged(undefined);
 
@@ -75,15 +75,18 @@ class Home extends React.Component {
     }
 
     deliveryWestEnd = () => {
-        this.navigateToRegion(RegionIds.VancouverWestEnd);
+        this.navigateToRegion(RegionUtil.RegionIds().VancouverWestEnd);
     }
 
     deliveryYaletown = () => {
-        this.navigateToRegion(RegionIds.VancouverYaletown);
+        this.navigateToRegion(RegionUtil.RegionIds().VancouverYaletown);
     }
 
     render() {
-        const { address } = this.props;
+        const { address, google } = this.props;
+        if (!google) {
+            return null;
+        }
 
         return (
             <div>
@@ -99,7 +102,7 @@ class Home extends React.Component {
                             <div className='home-tagline'>Handcrafted to taste like home</div>
 
                             <div className='home-search-question'>Looking for something to eat?</div>
-                            <AddressFoodSearchBox onSearchByLocation={this.searchByLocation} address={address} />
+                            <AddressFoodSearchBox google={google} onSearchByLocation={this.searchByLocation} address={address} />
 
                         </div>
                     </div>
@@ -148,7 +151,6 @@ class Home extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
     return {
         address: Selectors.address(state)
@@ -171,4 +173,4 @@ Home.propTypes = {
     }).isRequired
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(Home)));

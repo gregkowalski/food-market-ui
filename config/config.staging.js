@@ -5,7 +5,7 @@ const Config = {
     },
     Cognito: {
         AppWebDomain: 'fctest.auth.us-west-2.amazoncognito.com',
-        ClientAppId: '4dc5ct4skhajts391ap0ecsu7c',
+        ClientAppId: '47tiqlvqtjbid9c7eoscsb89pk',
         UserPoolId: 'us-west-2_7whlIUqIa',
         RedirectUriSignIn: 'https://www.fctest.ca/cognitoCallback',
         RedirectUriSignOut: 'https://www.fctest.ca/cognitoSignout',
@@ -18,6 +18,9 @@ const Config = {
     },
     Foodcraft: {
         SupportEmail: 'support@fctest.ca'
+    },
+    Google: {
+        ApiKey: 'AIzaSyD8KTaOmTOlx7_5iSBj3tpm9OlGLR2pVzw'
     },
     GoogleAnalytics: {
         TrackingId: 'UA-123045559-2'

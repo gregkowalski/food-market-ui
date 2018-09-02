@@ -5,8 +5,8 @@ const Config = {
     },
     Cognito: {
         AppWebDomain: 'food-market-dev.auth.us-west-2.amazoncognito.com',
-        ClientAppId: '6n197h69pgu60msn8a8rvvj1u5',
-        UserPoolId: 'us-west-2_lZLhlTHmt',
+        ClientAppId: '6p23mo25qul21p2r26504sjckl',
+        UserPoolId: 'us-west-2_1w2KdAhAq',
         RedirectUriSignIn: 'https://ui-dev-greg.cosmo-test.com:3000/cognitoCallback',
         RedirectUriSignOut: 'https://ui-dev-greg.cosmo-test.com:3000/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
@@ -18,6 +18,9 @@ const Config = {
     },
     Foodcraft: {
         SupportEmail: 'greg+dev@foodcraft.ca'
+    },
+    Google: {
+        ApiKey: 'AIzaSyD4rYJFeUOqrjOSiFme77L0RL-79zsqKvw'
     },
     GoogleAnalytics: {
         TrackingId: 'UA-123045559-1'

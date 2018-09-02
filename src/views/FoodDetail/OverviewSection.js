@@ -9,7 +9,7 @@ import './OverviewSection.css'
 import RegionUtil from '../../components/Map/RegionUtil'
 import { FoodFeatureLabels, FoodAllergyLabels } from '../../Enums'
 
-const OverviewSection = ({ food, cook }) => {
+const OverviewSection = ({ food, cook, google }) => {
     return (
         <div>
             <Header className='detail-main-header' as='h2'>
@@ -30,12 +30,12 @@ const OverviewSection = ({ food, cook }) => {
                     <div>Available for delivery to these neighbourhoods:
                         <ul>
                             {food.regions.map((regionId, index) => {
-                                return (<li key={index}>{RegionUtil.getRegionNameById(regionId)}</li>);
+                                return (<li key={index}>{RegionUtil.getRegionNameById(google, regionId)}</li>);
                             })}
                         </ul>
                     </div>
                 }
-                <div>Available for pickup from: {RegionUtil.getRegionNameByPosition(food.position)}</div>
+                <div>Available for pickup from: {RegionUtil.getRegionNameByPosition(google, food.position)}</div>
             </div>
             <div style={{ color: '#5e5d5d', marginTop: '20px' }}>
                 <FoodOptions food={food} />

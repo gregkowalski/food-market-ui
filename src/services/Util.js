@@ -269,8 +269,8 @@ class Util {
         return moment(dateIso8601, moment.ISO_8601).tz(Constants.Timezone);
     }
 
-    toLocation(loc) {
-        if (loc instanceof window.google.maps.LatLng) {
+    toLocation(google, loc) {
+        if (loc instanceof google.maps.LatLng) {
             return { lat: loc.lat(), lng: loc.lng() };
         }
         return loc;

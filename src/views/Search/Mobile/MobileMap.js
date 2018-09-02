@@ -1,13 +1,16 @@
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 import './MobileMap.css'
 import { Map, Marker, CustomControl } from '../../../components/Map'
 import MapUtil from '../../../services/MapUtil'
 import { Colors } from '../../../Constants'
 
-// const __GAPI_KEY__ = 'AIzaSyBrqSxDb_BPNifobak3Ho02BuZwJ05RKHM';
-
 export default class MobileMap extends React.Component {
+
+    static propTypes = {
+        google: PropTypes.object.isRequired
+    }
 
     constructor(props) {
         super(props);
@@ -76,14 +79,15 @@ export default class MobileMap extends React.Component {
     }
 
     render() {
-        const { foods, pickup, date, deliveryLocation } = this.props;
+        const { foods, pickup, date, deliveryLocation, google } = this.props;
         const { selectedFoodId } = this.state;
 
         const markers = foods && foods.map(foodItem => {
             return (
                 <Marker
-                    food_id={foodItem.food_id}
+                    google={google}
                     key={foodItem.food_id}
+                    food_id={foodItem.food_id}
                     header={foodItem.header}
                     icon={this.getMarkerImage(foodItem, selectedFoodId)}
                     zIndex={this.getZIndex(foodItem, selectedFoodId)}
@@ -101,9 +105,9 @@ export default class MobileMap extends React.Component {
 
         return (
             <Map
-                google={window.google}
+                google={google}
                 zoomControl={true}
-                zoomControlOptions={{ position: window.google.maps.ControlPosition.RIGHT_BOTTOM }}
+                zoomControlOptions={{ position: google.maps.ControlPosition.RIGHT_BOTTOM }}
                 mapTypeControl={false}
                 scaleControl={true}
                 streetViewControl={false}
@@ -121,7 +125,7 @@ export default class MobileMap extends React.Component {
                 onBounds_changed={this.handleBoundsChanged}
                 onRecenter={this.handleGeoSearch}
             >
-                <CustomControl position={window.google.maps.ControlPosition.TOP_CENTER}>
+                <CustomControl position={google.maps.ControlPosition.TOP_CENTER}>
                     <div className='mobilemap-buttons'>
                         <div onClick={this.props.onFilterClick} style={this.filterStyle(pickup, date)}>
                             {date &&
@@ -162,9 +166,3 @@ export default class MobileMap extends React.Component {
         };
     }
 }
-
-// <Map google={this.props.google} />
-
-// export default GoogleApiWrapper({
-//   apiKey: __GAPI_KEY__
-// })(MapContainer)
