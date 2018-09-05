@@ -276,8 +276,8 @@ class Util {
         return loc;
     }
 
-    toAddress(place) {
-        const location = this.toLocation(place.geometry.location);
+    toAddress(google, place) {
+        const location = this.toLocation(google, place.geometry.location);
         const formatted_address = place.address_components
             ? this.toFormattedAddress(place)
             : place.formatted_address;

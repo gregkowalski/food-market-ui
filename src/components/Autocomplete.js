@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RegionUtil from './Map/RegionUtil'
+import withGoogle from '../hoc/WithGoogleHoc'
 
-export default class ReactGoogleAutocomplete extends React.Component {
+class ReactGoogleAutocomplete extends React.Component {
     static propTypes = {
         onPlaceSelected: PropTypes.func,
         types: PropTypes.array,
@@ -54,7 +55,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
 
     render() {
-        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, google, onRef, ...rest } = this.props;
+        const { onPlaceSelected, onKeyDown, types, componentRestrictions, bounds, google, loaded, onRef, ...rest } = this.props;
 
         return (
             <input onKeyDown={onKeyDown}
@@ -64,6 +65,8 @@ export default class ReactGoogleAutocomplete extends React.Component {
         );
     }
 }
+
+export default withGoogle(ReactGoogleAutocomplete);
 
 export class ReactCustomGoogleAutocomplete extends React.Component {
     static propTypes = {

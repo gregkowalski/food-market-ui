@@ -84,7 +84,7 @@ class DesktopSearch extends React.Component {
             const region = RegionUtil.getRegionByPosition(google, selectedLocation);
             actions.regionChanged(region);
             actions.mapCenterChanged(selectedLocation);
-            actions.addressChanged(Util.toAddress(place));
+            actions.addressChanged(Util.toAddress(google, place));
             actions.requestFoodsInRegion(region);
         }
     }

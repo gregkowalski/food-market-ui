@@ -162,7 +162,7 @@ class MobileSearch extends Component {
             const region = RegionUtil.getRegionByPosition(google, addressLocation);
             actions.mapCenterChanged(addressLocation);
             actions.regionChanged(region);
-            actions.addressChanged(Util.toAddress(address));
+            actions.addressChanged(Util.toAddress(google, address));
             actions.requestFoodsInRegion(region);
 
             this.setState({ mapLocation: addressLocation });

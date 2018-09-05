@@ -34,7 +34,7 @@ class Home extends React.Component {
         const { actions, google } = this.props;
 
         const address = value.place
-            ? Util.toAddress(value.place)
+            ? Util.toAddress(google, value.place)
             : undefined;
         actions.addressChanged(address);
 
