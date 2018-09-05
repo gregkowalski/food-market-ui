@@ -120,6 +120,7 @@ InfoWindow.propTypes = {
     marker: PropTypes.object,
     position: PropTypes.object,
     visible: PropTypes.bool,
+    google: PropTypes.object.isRequired,
 
     // callbacks
     onClose: PropTypes.func,

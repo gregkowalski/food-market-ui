@@ -94,6 +94,7 @@ export class Circle extends React.Component {
 }
 
 Circle.propTypes = {
+    google: T.object.isRequired,
     center: T.object,
     radius: T.number,
     strokeColor: T.string,

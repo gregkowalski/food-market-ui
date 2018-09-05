@@ -59,8 +59,8 @@ class ProfileView extends React.Component {
                             <Segment attached>
                                 <div className='profileview-card-items profileview-about-me'>
                                     <div>Certifications</div>
-                                    {user.certifications && user.certifications.map(cert => {
-                                        return (<div>{CertificationLabels[cert]}</div>);
+                                    {user.certifications && user.certifications.map((cert, index) => {
+                                        return (<div key={index}>{CertificationLabels[cert]}</div>);
                                     })}
                                 </div>
                             </Segment>

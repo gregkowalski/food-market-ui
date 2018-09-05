@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 
 const wrappedPromise = function () {
@@ -15,6 +16,10 @@ const wrappedPromise = function () {
 }
 
 export class CustomControl extends React.Component {
+
+    static propTypes = {
+        google: PropTypes.object.isRequired
+    }
 
     constructor(props) {
         super(props);

@@ -93,7 +93,8 @@ export class HeatMap extends React.Component {
 HeatMap.propTypes = {
     position: PropTypes.object,
     map: PropTypes.object,
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    google: PropTypes.object.isRequired
 }
 
 evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func)

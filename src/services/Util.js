@@ -317,6 +317,9 @@ class Util {
     }
 
     _getAddressPart(place, typeName) {
+        if (!place || !place.address_components) {
+            return {};
+        }
         const part = place.address_components.find(x => x.types.indexOf(typeName) >= 0);
         if (part) {
             return part;

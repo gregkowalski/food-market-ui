@@ -125,7 +125,7 @@ export default class MobileMap extends React.Component {
                 onBounds_changed={this.handleBoundsChanged}
                 onRecenter={this.handleGeoSearch}
             >
-                <CustomControl position={google.maps.ControlPosition.TOP_CENTER}>
+                <CustomControl google={google} position={google.maps.ControlPosition.TOP_CENTER}>
                     <div className='mobilemap-buttons'>
                         <div onClick={this.props.onFilterClick} style={this.filterStyle(pickup, date)}>
                             {date &&
@@ -145,7 +145,7 @@ export default class MobileMap extends React.Component {
 
                 {markers}
                 {!pickup &&
-                    <Marker icon='/assets/images/food-delivery-location.png' zIndex={5000} position={deliveryLocation} />
+                    <Marker google={google} icon='/assets/images/food-delivery-location.png' zIndex={5000} position={deliveryLocation} />
                 }
 
             </Map>
