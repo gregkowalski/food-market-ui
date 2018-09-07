@@ -87,10 +87,10 @@ export class AppHeader extends React.Component {
                             <Dropdown.Divider />
                             <Dropdown.Item className='homehead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
                             <Dropdown.Divider />
-                            {user.stripe_user_id &&
+                            {user.stripe_account_id &&
                                 <Dropdown.Item className='homehead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
                             }
-                            {user.stripe_user_id &&
+                            {user.stripe_account_id &&
                                 <Dropdown.Divider />
                             }
                             <Dropdown.Item className='homehead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
