@@ -12,8 +12,8 @@ const Config = {
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
     },
     Stripe: {
-        ClientId: 'ca_DUazTFL4qqqnfMYOrhJniUEGkQG79XS6',
-        PublicApiKey: 'pk_test_2qVqF1wA2aMtED849b9ZYAes',
+        ClientId: 'ca_DUazA1PDmlTRzbLlJqi70Fb2WFmGGTsb',
+        PublicApiKey: 'pk_live_xqxanOaNwa0wzt3N8XCUke5s',
         ConnectOAuthRedirectUri: 'https://www.foodcraft.ca/stripeCallback',
     },
     Foodcraft: {

@@ -12,8 +12,8 @@ const Config = {
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
     },
     Stripe: {
-        ClientId: 'ca_DUbAhQcRoGzFdSDBdoPN604uSmOC2bkg',
-        PublicApiKey: 'pk_test_LaUn1QZEtks832mqWqyFHX7a',
+        ClientId: 'ca_DUzgBfIGr0fEXxmiHwaYPyxMnibYRHTb',
+        PublicApiKey: 'pk_test_wRL1PcbOL0zSI6rJ8L3s5FGk',
         ConnectOAuthRedirectUri: 'https://www.cosmo-test.com/stripeCallback',
     },
     Foodcraft: {
