@@ -4,7 +4,7 @@ const Config = {
         BaseUrl: 'https://api-test.cosmo-test.com/v1',
     },
     Cognito: {
-        AppWebDomain: 'food-market-test.auth.us-west-2.amazoncognito.com',
+        AppWebDomain: 'login.cosmo-test.com',
         ClientAppId: '2i3shou3qubsv33h9ktkscgin5',
         UserPoolId: 'us-west-2_eJOMdl32T',
         RedirectUriSignIn: 'https://www.cosmo-test.com/cognitoCallback',

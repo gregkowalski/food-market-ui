@@ -4,7 +4,7 @@ const Config = {
         BaseUrl: 'https://api.foodcraft.ca/v1',
     },
     Cognito: {
-        AppWebDomain: 'foodcraft.auth.us-west-2.amazoncognito.com',
+        AppWebDomain: 'login.foodcraft.ca',
         ClientAppId: '6id7k4qe2tk433cbh4e8nf5mth',
         UserPoolId: 'us-west-2_WdWrx74ZQ',
         RedirectUriSignIn: 'https://www.foodcraft.ca/cognitoCallback',

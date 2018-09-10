@@ -4,7 +4,7 @@ const Config = {
         BaseUrl: 'https://api.fctest.ca/v1',
     },
     Cognito: {
-        AppWebDomain: 'fctest.auth.us-west-2.amazoncognito.com',
+        AppWebDomain: 'login.fctest.ca',
         ClientAppId: '47tiqlvqtjbid9c7eoscsb89pk',
         UserPoolId: 'us-west-2_7whlIUqIa',
         RedirectUriSignIn: 'https://www.fctest.ca/cognitoCallback',
