@@ -18,6 +18,9 @@ import { Actions, Selectors } from '../../store/currentUser'
 import { Certifications, CertificationLabels } from '../../Enums';
 import StripeComponent from './StripeComponent'
 import { ValidatedAutocomplete, ValidatedDropdown, ValidatedField, ValidatedTextArea } from '../../components/Validation'
+import moment from 'moment'
+import Calendar from 'react-week-calendar'
+import 'react-week-calendar/dist/style.css'
 
 const certificationOptions = [
     {
@@ -44,7 +47,12 @@ const certificationOptions = [
 
 class ProfileEdit extends React.Component {
 
-    state = {};
+    state = {
+        selectedIntervals: undefined,
+        didSelectedIntervalsChange: false
+    };
+
+    availabilityKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
     componentWillMount() {
         this.props.actions.loadCurrentUser();
@@ -63,6 +71,27 @@ class ProfileEdit extends React.Component {
                 this.setState({ message: { show: true, content: "Success! Your profile has been updated." } });
             }
         }
+
+        const{user} = this.props;
+        if(user && this.state.selectedIntervals === undefined) {
+            if(user.availability != undefined) {
+                var selectedIntervals = [];
+                for(var day in user.availability) {
+                    var dayOfWeek = this.availabilityKeys.findIndex((d) => d == day) + 1;
+                    user.availability[day].forEach(function(hour){
+                        var start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
+                        var interval = {
+                            start: start,
+                            end: start.clone().add(1, 'hour'),
+                            uid: dayOfWeek + '-' + hour,
+                            value: ''
+                        };
+                        selectedIntervals.push(interval);
+                    });
+                };
+                this.setState({selectedIntervals: selectedIntervals});
+            }
+        }
     }
 
     navigateToProfileView = () => {
@@ -70,6 +99,21 @@ class ProfileEdit extends React.Component {
     }
 
     handleSave = (user) => {
+        const {selectedIntervals} = this.state;
+        var availability = {};
+        for(var interval of selectedIntervals) {
+            var segments = interval.uid.split('-');
+            var weekday = segments[0];
+            var key = this.availabilityKeys[weekday - 1];
+            if(availability[key] === undefined)
+                availability[key] = [];
+
+            var hour = segments[1];
+            availability[key].push(hour);
+        }
+        user.availability = availability;
+        this.setState({didSelectedIntervalsChange: false});
+
         console.log(user);
         console.log('saving...');
         return this.props.actions.saveUser(user);
@@ -83,6 +127,57 @@ class ProfileEdit extends React.Component {
         StripeUtil.setCsrfState(state);
         window.open(stripeConnectUrl, '_self');
     }
+
+    handleCalendarSelect = (intervals) => {
+        const {selectedIntervals} = this.state;
+
+        var didSelectedIntervalsChange = false;
+        intervals.map((i) => {
+            var addMode = undefined;
+
+            // add or remove 1 hour intervals based on selected range
+            while(i.start < i.end) {
+                var uid = i.start.isoWeekday() + i.start.format('-HH:mm');
+
+                var index = selectedIntervals.findIndex((interval) => interval.uid === uid)
+                if(addMode === undefined)
+                    addMode = (index === -1);
+
+                if(addMode) {
+                    if(index === -1) {
+                        selectedIntervals.push({
+                            start: i.start.clone(),
+                            end: i.start.clone().add(1, 'hour'),
+                            uid: uid,
+                            value: ''
+                        });
+                        didSelectedIntervalsChange = true;
+                    }
+                } else if(index > -1) {
+                    selectedIntervals.splice(index, 1);
+                    didSelectedIntervalsChange = true;
+                }
+                i.start.add(1, 'hour');
+            }
+        });
+    
+        this.setState({
+            selectedIntervals: selectedIntervals,
+            didSelectedIntervalsChange: didSelectedIntervalsChange
+        });
+    }
+
+    handleCalendarEventRemove = (event) => {
+        const {selectedIntervals} = this.state;
+        const index = selectedIntervals.findIndex((interval) => interval.uid === event.uid);
+        if (index > -1) {
+            selectedIntervals.splice(index, 1);
+            this.setState({
+                selectedIntervals: selectedIntervals,
+                didSelectedIntervalsChange: true
+            });
+        }
+    };
 
     render() {
         const { isLoading, user } = this.props;
@@ -198,9 +293,23 @@ class ProfileEdit extends React.Component {
                             <Segment attached >
                                 <StripeComponent stripe_account_id={user.stripe_account_id} onConnectStripe={this.handleConnectStripeClick} />
                             </Segment>
+                            <Header className='profileedit-header' block attached='top'>Availability</Header>
+                            <Segment attached>
+                                <Calendar 
+                                    useModal={false} 
+                                    firstDay={moment('2018-01-01', moment.ISO_8601)}
+                                    startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)} 
+                                    endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)} 
+                                    scaleUnit={60} 
+                                    dayFormat='ddd' 
+                                    selectedIntervals={this.state.selectedIntervals}
+                                    onIntervalSelect={this.handleCalendarSelect}
+                                    onEventClick = {this.handleCalendarEventRemove}
+                                />
+                            </Segment>
                             <div className='profileedit-save-button-container'>
                                 <Button className='profileedit-save-button' type='submit'
-                                    disabled={pristine} loading={submitting} onClick={handleSubmit(this.handleSave)}>Save profile</Button>
+                                    disabled={pristine && !this.state.didSelectedIntervalsChange} loading={submitting} onClick={handleSubmit(this.handleSave)}>Save profile</Button>
                                 {message && message.show &&
                                     <Message className='profileedit-save-confirm' floating size='tiny'
                                         onDismiss={() => this.setState({ message: { show: false } })}>
