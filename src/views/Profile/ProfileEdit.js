@@ -15,7 +15,7 @@ import LoadingIcon from '../../components/LoadingIcon'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
 import { Actions, Selectors } from '../../store/currentUser'
-import { Certifications, CertificationLabels } from '../../Enums';
+import { Certifications, CertificationLabels, DaysOfWeek } from '../../Enums';
 import StripeComponent from './StripeComponent'
 import { ValidatedAutocomplete, ValidatedDropdown, ValidatedField, ValidatedTextArea } from '../../components/Validation'
 import moment from 'moment'
@@ -45,14 +45,17 @@ const certificationOptions = [
     },
 ];
 
+const availabilityKeys = [ 
+    DaysOfWeek.monday, DaysOfWeek.tuesday, DaysOfWeek.wednesday, DaysOfWeek.thursday, 
+    DaysOfWeek.friday, DaysOfWeek.saturday, DaysOfWeek.sunday 
+];
+
 class ProfileEdit extends React.Component {
 
     state = {
         selectedIntervals: undefined,
         didSelectedIntervalsChange: false
     };
-
-    availabilityKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
     componentWillMount() {
         this.props.actions.loadCurrentUser();
@@ -77,8 +80,9 @@ class ProfileEdit extends React.Component {
             if(user.availability != undefined) {
                 var selectedIntervals = [];
                 for(var day in user.availability) {
-                    var dayOfWeek = this.availabilityKeys.findIndex((d) => d == day) + 1;
+                    var dayOfWeek = availabilityKeys.findIndex((d) => d == day) + 1;
                     user.availability[day].forEach(function(hour){
+                        // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
                         var start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
                         var interval = {
                             start: start,
@@ -104,7 +108,7 @@ class ProfileEdit extends React.Component {
         for(var interval of selectedIntervals) {
             var segments = interval.uid.split('-');
             var weekday = segments[0];
-            var key = this.availabilityKeys[weekday - 1];
+            var key = availabilityKeys[weekday - 1];
             if(availability[key] === undefined)
                 availability[key] = [];
 
@@ -139,7 +143,9 @@ class ProfileEdit extends React.Component {
             while(i.start < i.end) {
                 var uid = i.start.isoWeekday() + i.start.format('-HH:mm');
 
+                // check if interval within selected range already exists in previous selected intervals
                 var index = selectedIntervals.findIndex((interval) => interval.uid === uid)
+
                 if(addMode === undefined)
                     addMode = (index === -1);
 
@@ -296,7 +302,8 @@ class ProfileEdit extends React.Component {
                             <Header className='profileedit-header' block attached='top'>Availability</Header>
                             <Segment attached>
                                 <Calendar 
-                                    useModal={false} 
+                                    useModal={false}
+                                    // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
                                     firstDay={moment('2018-01-01', moment.ISO_8601)}
                                     startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)} 
                                     endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)} 
