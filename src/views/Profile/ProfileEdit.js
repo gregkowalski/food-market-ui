@@ -77,11 +77,12 @@ class ProfileEdit extends React.Component {
 
         const{user} = this.props;
         if(user && this.state.selectedIntervals === undefined) {
-            if(user.availability != undefined) {
+            if(user.availability !== undefined) {
                 var selectedIntervals = [];
-                for(var day in user.availability) {
-                    var dayOfWeek = availabilityKeys.findIndex((d) => d == day) + 1;
-                    user.availability[day].forEach(function(hour){
+                for(let day in user.availability) {
+                    var dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
+                    for(let i = 0; i < user.availability[day].length; i++) {
+                        var hour = user.availability[day][i];
                         // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
                         var start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
                         var interval = {
@@ -91,7 +92,7 @@ class ProfileEdit extends React.Component {
                             value: ''
                         };
                         selectedIntervals.push(interval);
-                    });
+                    }
                 };
                 this.setState({selectedIntervals: selectedIntervals});
             }
@@ -134,26 +135,28 @@ class ProfileEdit extends React.Component {
 
     handleCalendarSelect = (intervals) => {
         const {selectedIntervals} = this.state;
-
         var didSelectedIntervalsChange = false;
-        intervals.map((i) => {
+
+        for(let i = 0; i < intervals.length; i++) {
+            var interval = intervals[i];
             var addMode = undefined;
 
-            // add or remove 1 hour intervals based on selected range
-            while(i.start < i.end) {
-                var uid = i.start.isoWeekday() + i.start.format('-HH:mm');
-
-                // check if interval within selected range already exists in previous selected intervals
+            // go through intervals of selected range to check if previously already selected
+            while(interval.start < interval.end) {
+                var uid = interval.start.isoWeekday() + interval.start.format('-HH:mm');
+                
+                // eslint-disable-next-line
                 var index = selectedIntervals.findIndex((interval) => interval.uid === uid)
 
                 if(addMode === undefined)
                     addMode = (index === -1);
 
+                // add or remove 1 hour intervals based on selected range
                 if(addMode) {
                     if(index === -1) {
                         selectedIntervals.push({
-                            start: i.start.clone(),
-                            end: i.start.clone().add(1, 'hour'),
+                            start: interval.start.clone(),
+                            end: interval.start.clone().add(1, 'hour'),
                             uid: uid,
                             value: ''
                         });
@@ -163,9 +166,10 @@ class ProfileEdit extends React.Component {
                     selectedIntervals.splice(index, 1);
                     didSelectedIntervalsChange = true;
                 }
-                i.start.add(1, 'hour');
+
+                interval.start.add(1, 'hour');
             }
-        });
+        };
     
         this.setState({
             selectedIntervals: selectedIntervals,
