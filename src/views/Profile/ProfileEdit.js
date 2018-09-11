@@ -81,8 +81,7 @@ class ProfileEdit extends React.Component {
                 var selectedIntervals = [];
                 for(let day in user.availability) {
                     var dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
-                    for(let i = 0; i < user.availability[day].length; i++) {
-                        var hour = user.availability[day][i];
+                    for(let hour of user.availability[day]) {
                         // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
                         var start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
                         var interval = {
@@ -137,8 +136,7 @@ class ProfileEdit extends React.Component {
         const {selectedIntervals} = this.state;
         var didSelectedIntervalsChange = false;
 
-        for(let i = 0; i < intervals.length; i++) {
-            var interval = intervals[i];
+        for(let interval of intervals) {
             var addMode = undefined;
 
             // go through intervals of selected range to check if previously already selected
