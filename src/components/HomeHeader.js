@@ -4,7 +4,7 @@ import { Image, Dropdown } from 'semantic-ui-react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './HomeHeader.css'
-import { Constants } from '../Constants'
+import { Constants, TagLines } from '../Constants'
 import Util from '../services/Util'
 import Url from '../services/Url'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
@@ -59,18 +59,8 @@ export class AppHeader extends React.Component {
     }
 
     getRandomTagline() {
-
-        const taglines = [
-            'handcrafted to taste like home.',
-            'homemade + local',
-            'making good food taste better.',
-            'eat like family.',
-            'good food starts here.',
-            'cooking is love you can taste.'
-        ];
-
-        let index = Util.getRandomInt(0, taglines.length - 1);
-        return taglines[index];
+        let index = Util.getRandomInt(0, TagLines.length - 1);
+        return TagLines[index];
     }
 
     render() {

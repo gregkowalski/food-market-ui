@@ -4,7 +4,7 @@ import { Image, Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './AppHeader.css'
-import { Constants } from '../Constants'
+import { Constants, TagLines } from '../Constants'
 import Util from '../services/Util'
 import Url from '../services/Url'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
@@ -58,25 +58,8 @@ export class AppHeader extends React.Component {
     }
 
     getRandomTagline() {
-
-        const taglines = [
-            'handcrafted to taste like home.',
-            'homemade + local',
-            'this is...awesomesauce!',
-            'because being hangry was so 2017.',
-            'easy peasy, lemon squeezy!',
-            'so hot right now.',
-            'home of the best kebab.',
-            'making good food taste better.',
-            'moo.',
-            'eat like family.',
-            'good food starts here.',
-            'cooking is love you can taste.',
-            'from kitchen to table.'
-        ];
-
-        let index = Util.getRandomInt(0, taglines.length - 1);
-        return taglines[index];
+        let index = Util.getRandomInt(0, TagLines.length - 1);
+        return TagLines[index];
     }
 
     render() {
@@ -127,14 +110,17 @@ export class AppHeader extends React.Component {
                 );
             }
         }
+
+        const { fixed, noshadow } = this.props;
+
         const headerStyle = {};
         headerStyle.position = 'relative';
-        if (this.props.fixed) {
+        if (fixed) {
             headerStyle.position = 'fixed';
         }
 
         headerStyle.borderBottom = '1px solid rgb(225, 225, 225)';
-        if (!this.props.noshadow) {
+        if (!noshadow) {
             headerStyle.boxShadow = '0px 0px 8px rgba(88, 88, 88, 0.603)';
         }
 

@@ -11,6 +11,7 @@ import Config from '../../Config'
 import { Constants } from '../../Constants'
 import ErrorCodes from '../ErrorCodes'
 import LoadingIcon from '../../components/LoadingIcon'
+import Url from '../../services/Url'
 
 export default class CognitoCallback extends React.Component {
 
@@ -29,11 +30,11 @@ export default class CognitoCallback extends React.Component {
                     email: jwt.email,
                     email_verified: CognitoUtil.isEmailVerified(jwt)
                 };
-                ApiClient.updateUser(jwtToken, user)
+                ApiClient.updateUser(user)
                     .then(x => {
                         let lastPath = CognitoUtil.getLastPath();
                         if (!lastPath) {
-                            lastPath = '/';
+                            lastPath = Url.home();
                         }
                         this.setState({ redirectTo: lastPath });
                     })

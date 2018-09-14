@@ -66,6 +66,24 @@ function receiveSaveUserError(apiError) {
     };
 }
 
+function requestAcceptTerms() {
+    return { type: ActionTypes.REQUEST_ACCEPT_TERMS };
+}
+
+function receiveAcceptTermsSuccess(user) {
+    return {
+        type: ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS,
+        user
+    };
+}
+
+function receiveAcceptTermsError(apiError) {
+    return {
+        type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR,
+        apiError,
+    };
+}
+
 export const Actions = {
 
     logOut: () => {
@@ -112,6 +130,25 @@ export const Actions = {
                     }
                 );
         };
+    },
+
+    acceptTerms: (userId) => {
+        return (dispatch, getState) => {
+
+            dispatch(requestAcceptTerms());
+
+            return ApiClient.acceptTerms(userId)
+                .then(
+                    response => {
+                        const user = Selectors.currentUser(getState());
+                        dispatch(receiveAcceptTermsSuccess(user));
+                    },
+                    error => {
+                        const err = error && error.response && error.response.data && error.response.data.error;
+                        dispatch(receiveAcceptTermsError(err));
+                    }
+                );
+        }
     }
 }
 
@@ -120,14 +157,13 @@ export const Selectors = {
     isLoading: (state) => state.currentUser.isLoading,
     isSaving: (state) => state.currentUser.isSaving,
     apiErrorCode: (state) => state.currentUser.apiErrorCode,
-    apiError: (state) => {
-        return state.currentUser.apiError;
-    },
+    apiError: (state) => state.currentUser.apiError,
+    termsAccepted: (state) => state.currentUser.termsAccepted,
 }
 
 const initialState = {
     isLoading: false,
-    isSaving: false,
+    isSaving: false
 };
 
 export const Reducers = {
@@ -177,6 +213,27 @@ export const Reducers = {
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_ERROR:
+                return Object.assign({}, state, {
+                    isSaving: false,
+                    apiError: action.apiError,
+                });
+
+
+
+            case ActionTypes.REQUEST_ACCEPT_TERMS:
+                return Object.assign({}, state, {
+                    isSaving: true,
+                    apiError: null
+                });
+
+            case ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS:
+                return Object.assign({}, state, {
+                    isSaving: false,
+                    user: Object.assign({}, action.user, { terms_accepted: true }),
+                    termsAccepted: true
+                });
+
+            case ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR:
                 return Object.assign({}, state, {
                     isSaving: false,
                     apiError: action.apiError,

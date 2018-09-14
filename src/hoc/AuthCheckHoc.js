@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import { Actions, Selectors } from '../store/currentUser'
 import ErrorCodes from '../services/ErrorCodes';
+import Url from '../services/Url'
 
 export default function (ComposedClass) {
 
@@ -18,12 +19,25 @@ export default function (ComposedClass) {
             this.props.loadCurrentUser();
         }
 
+        componentDidMount() {
+            const { user } = this.props;
+            if (user && !user.terms_accepted) {
+                Url.open(Url.termsAccept());
+                return;
+            }
+        }
+
         componentWillReceiveProps(nextProps) {
             const { apiErrorCode } = nextProps;
             if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
                 CognitoUtil.setLastPath(window.location.pathname);
                 CognitoUtil.logOut();
                 CognitoUtil.redirectToLoginIfNoSession();
+                return;
+            }
+
+            if (!this.props.user && nextProps.user && !nextProps.user.terms_accepted) {
+                Url.open(Url.termsAccept());
                 return;
             }
         }
@@ -33,8 +47,12 @@ export default function (ComposedClass) {
                 return null;
             }
 
-            const { apiErrorCode, ...props } = this.props;
+            const { apiErrorCode, user, ...props } = this.props;
             if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
+                return null;
+            }
+
+            if (!user || !user.terms_accepted) {
                 return null;
             }
 
@@ -45,6 +63,7 @@ export default function (ComposedClass) {
     const mapStateToProps = (state) => {
         return {
             apiErrorCode: Selectors.apiErrorCode(state),
+            user: Selectors.currentUser(state)
         };
     };
 
