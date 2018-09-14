@@ -33,7 +33,7 @@ class CookOrderByDateCard extends React.Component {
     addDaySummaries(a, b) {
         return {
             total: a ? a.total : 0 + b ? b.total : 0,
-            cound: a ? a.count : 0 + b ? b.count : 0,
+            count: a ? a.count : 0 + b ? b.count : 0,
         };
     }
 
@@ -86,7 +86,9 @@ class CookOrderByDateCard extends React.Component {
             summary1 = this.addDaySummaries(summary1, failedSummary);
             summary1.status = 'missed';
             summary2 = daySummary[Enums.OrderStatus.Transferred];
-            summary2.status = 'completed';
+            if (summary2) {
+                summary2.status = 'completed';
+            }
         }
 
         return (
