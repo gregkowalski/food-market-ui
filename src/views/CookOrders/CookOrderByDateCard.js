@@ -84,10 +84,10 @@ class CookOrderByDateCard extends React.Component {
             const failedSummary = daySummary[Enums.OrderStatus.Failed];
             summary1 = this.addDaySummaries(declinedSummary, cancelledSummary);
             summary1 = this.addDaySummaries(summary1, failedSummary);
-            summary1.status = 'missed';
+            summary1.status = Enums.OrderStatusLabels.missed;
             summary2 = daySummary[Enums.OrderStatus.Transferred];
             if (summary2) {
-                summary2.status = 'completed';
+                summary2.status = Enums.OrderStatusLabels[Enums.OrderStatus.Transferred];
             }
         }
 

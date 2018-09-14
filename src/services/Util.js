@@ -326,6 +326,16 @@ class Util {
         }
         return {};
     }
+
+    firstNonEmptyValue(...args) {
+        for (let i = 0; i < args.length; i++) {
+            const value = args[i];
+            if (value) {
+                return value;
+            }
+        }
+        return undefined;
+    }
 }
 
 export default new Util();

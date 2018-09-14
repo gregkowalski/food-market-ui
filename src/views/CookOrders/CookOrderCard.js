@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Header, Divider, Icon, Accordion, Button, Modal, TextArea, Segment } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import { Constants, Colors } from '../../Constants'
-import { OrderStatus } from '../../Enums'
+import { OrderStatus, OrderStatusLabels } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 import OrderExchangeMessage from './OrderExchangeMessage'
@@ -80,11 +80,14 @@ class CookOrderCard extends React.Component {
         const { showDetails, showConfirmAccept, showConfirmCancel, showConfirmDecline } = this.state;
         const quantityLabel = pluralize('order', order.quantity);
 
+        const handoffAddress = order.pickup ? order.cook.address : order.buyer_address;
+        const handoffAddressLabel = order.pickup ? 'Pickup Address:' : 'Delivery Address:';
+
         return (
             <Segment>
                 <div className='cookordercard'>
                     <div className='cookordercard-header'>
-                        <div style={this.statusStyle(order.status)}>{order.status}</div>
+                        <div style={this.statusStyle(order.status)}>{OrderStatusLabels[order.status]}</div>
                         {order.status === OrderStatus.Pending &&
                             <div className='cookordercard-accept'>
                                 <Button fluid className='box-dropshadow cookordercard-accept' loading={isAccepting} onClick={this.showAcceptConfirmation}>Accept order</Button>
@@ -98,9 +101,9 @@ class CookOrderCard extends React.Component {
                         <div> {food.title} </div>
                         <div className='cookordercard-order-quantity'>
                             <div className='cookordercard-order-size'>
-                                <div>{order.quantity}</div> 
+                                <div>{order.quantity}</div>
                                 <div>{quantityLabel}</div>
-                                </div>
+                            </div>
                             <div>{food.unit} <span>per order</span> </div>
                         </div>
                         <div className='cookordercard-order-exchange'>
@@ -110,35 +113,38 @@ class CookOrderCard extends React.Component {
                     </div>
                     <Accordion>
                         <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                            <div className='cookordercard-additional-details'>Additional details
-                            <Icon name='angle down' />
+                            <div className='cookordercard-additional-details'>
+                                Additional details
+                                <Icon name='angle down' />
                             </div>
-
                         </Accordion.Title>
                         <Accordion.Content active={showDetails}>
                             <div className='cookordercard-section'>
-                                <div>{order.address}</div>
-                                <Divider hidden />
+                                {handoffAddress &&
+                                    <div>
+                                        <div>{handoffAddressLabel} {handoffAddress}</div>
+                                        <Divider hidden />
+                                    </div>
+                                }
                                 <div>Reservation code: {order.order_id}</div>
                                 <div>Total: ${PriceCalc.getTotalPrice(food, order.quantity, order.pickup)} {Constants.Currency}</div>
                                 {order.accept_message}
                             </div>
-                            <Divider />
-                            <div className='cookordercard-section normal-font'>
-                                <div className='cookordercard-buyer'>
-                                    <Icon name='mail outline' size='large' />
-                                    <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
-                                </div>
-                                {order.status === OrderStatus.Accepted &&
-                                    <div style={{ marginTop: '25px' }}>
-                                        <Icon name='calendar' size='big' />
-                                        <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
-                                    </div>
-                                }
-
-                            </div>
                         </Accordion.Content>
                     </Accordion>
+                    <Divider />
+                    <div className='cookordercard-section normal-font'>
+                        <div className='cookordercard-buyer'>
+                            <Icon name='mail outline' size='large' />
+                            <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
+                        </div>
+                        {order.status === OrderStatus.Accepted &&
+                            <div style={{ marginTop: '25px' }}>
+                                <Icon name='calendar' size='big' />
+                                <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
+                            </div>
+                        }
+                    </div>
 
                     <ConfirmModal
                         header="Accept order - your buyer's card will be charged"

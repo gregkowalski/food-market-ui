@@ -105,6 +105,12 @@
     color: #2b65ec;
 }
 
+.buyerordercard-additional-details {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #3b3b3b;
+}
+
 .buyerordercard-footer a {
     color: #555555;
     font-weight: 500;
