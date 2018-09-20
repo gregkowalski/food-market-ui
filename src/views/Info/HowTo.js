@@ -2,8 +2,9 @@ import React from 'react'
 import { Icon, Grid, Image } from 'semantic-ui-react'
 import InfoPage from './InfoPage'
 import './HowTo.css'
-// import howtoImg from './howto-img.jpg'
+import howtoImg from './howto-img.jpg'
 import howtoImg2 from './howto-img2.jpg'
+ 
 
 const HowTo = () => {
     const header = (
