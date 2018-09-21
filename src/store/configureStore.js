@@ -3,7 +3,6 @@ import { createLogger } from 'redux-logger'
 import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from 'redux-thunk'
 import { persistStore, persistReducer, createTransform } from 'redux-persist'
-import sessionStorage from 'redux-persist/lib/storage/session'
 import { createBlacklistFilter, createWhitelistFilter } from 'redux-persist-transform-filter'
 import moment from 'moment'
 import { Reducers as currentUser } from './currentUser'
@@ -19,6 +18,23 @@ const configureStore = (options = {}) => {
     if (options.includeLogger) {
         const loggerMiddleware = createLogger();
         middlewares.push(loggerMiddleware);
+    }
+
+    const reducers = Object.assign({},
+        currentUser,
+        search,
+        order,
+        buyerOrders,
+        cookOrders,
+        publicUser,
+        {
+            form: formReducer
+        });
+    const rootReducer = combineReducers(reducers);
+
+    if (!options.includePersistor) {
+        const store = createStore(rootReducer, applyMiddleware(...middlewares));
+        return { store };
     }
 
     // const searchFilter = createFilter('search', ['pickup', 'date']);
@@ -55,6 +71,7 @@ const configureStore = (options = {}) => {
         { whitelist: ['order', 'search'] }
     );
 
+    const sessionStorage = require('redux-persist/lib/storage/session').default;
     const persistConfig = {
         key: 'food-market:root',
         storage: sessionStorage,
@@ -66,22 +83,9 @@ const configureStore = (options = {}) => {
             // 'buyerOrders'
         ],
     }
-
-    const reducers = Object.assign({},
-        currentUser,
-        search,
-        order,
-        buyerOrders,
-        cookOrders,
-        publicUser,
-        {
-            form: formReducer
-        });
-    const rootReducer = combineReducers(reducers);
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(persistedReducer, applyMiddleware(...middlewares));
     let persistor = persistStore(store);
-
     return { store, persistor };
 }
 

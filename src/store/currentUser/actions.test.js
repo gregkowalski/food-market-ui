@@ -18,12 +18,12 @@ describe('store/currentUser/Actions', () => {
         expect(dispatches.length).toEqual(1);
     });
 
-    it('should NOT dispatch actions without congnito session', () => {
-        Thunk(Actions.loadCurrentUser).execute()
-            .then(dispatches => expect(dispatches.length).toEqual(0));
+    it('should NOT dispatch actions without congnito session', async () => {
+        const dispatches = await Thunk(Actions.loadCurrentUser).execute();
+        expect(dispatches.length).toEqual(0);
     });
 
-    it('should get current user from API', () => {
+    it('should get current user from API', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
         ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
         const state = {
@@ -31,18 +31,16 @@ describe('store/currentUser/Actions', () => {
                 isLoading: false
             }
         }
-        Thunk(Actions.loadCurrentUser).withState(state).execute()
-            .then(dispatches => {
-                expect(dispatches.length).toEqual(2);
-                expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
-                expect(dispatches[1].getAction()).toEqual(expect.objectContaining({
-                    type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS,
-                    user: { email: 'xxx' }
-                }));
-            });
+        const dispatches = await Thunk(Actions.loadCurrentUser).withState(state).execute();
+        expect(dispatches.length).toEqual(2);
+        expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
+        expect(dispatches[1].getAction()).toEqual(expect.objectContaining({
+            type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS,
+            user: { email: 'xxx' }
+        }));
     });
 
-    it('should return error when get current user from API fails', () => {
+    it('should return error when get current user from API fails', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
         ApiClient.getCurrentUser.mockImplementation(() => Promise.reject('crapped out'));
         const state = {
@@ -50,14 +48,12 @@ describe('store/currentUser/Actions', () => {
                 isLoading: false
             }
         }
-        Thunk(Actions.loadCurrentUser).withState(state).execute()
-            .then(dispatches => {
-                expect(dispatches.length).toEqual(2);
-                expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
-                expect(dispatches[1].getAction()).toEqual(expect.objectContaining({
-                    type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
-                    error: 'crapped out'
-                }));
-            });
+        const dispatches = await Thunk(Actions.loadCurrentUser).withState(state).execute();
+        expect(dispatches.length).toEqual(2);
+        expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
+        expect(dispatches[1].getAction()).toEqual(expect.objectContaining({
+            type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
+            apiError: 'crapped out'
+        }));
     });
 })

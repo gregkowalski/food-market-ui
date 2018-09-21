@@ -51,7 +51,7 @@ unregister();
 
 ReactGA.initialize(Config.GoogleAnalytics.TrackingId);
 
-const { store, persistor } = configureStore({ includeLogger: true });
+const { store, persistor } = configureStore({ includeLogger: true, includePersistor: true });
 
 const appPage = (page) => {
     return isAuth(withTracker(page));
