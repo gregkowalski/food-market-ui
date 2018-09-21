@@ -10,6 +10,7 @@ phases:
     commands:
       - echo "Entered the install phase... CI=$CI"
       - npm install
+      - npm run config:test
       - npm run test
       - npm run deploy:test
     finally:
