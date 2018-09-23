@@ -78,13 +78,13 @@ class ProfileEdit extends React.Component {
         const{user} = this.props;
         if(user && this.state.selectedIntervals === undefined) {
             if(user.availability !== undefined) {
-                var selectedIntervals = [];
+                let selectedIntervals = [];
                 for(let day in user.availability) {
-                    var dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
+                    let dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
                     for(let hour of user.availability[day]) {
                         // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
-                        var start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
-                        var interval = {
+                        let start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
+                        let interval = {
                             start: start,
                             end: start.clone().add(1, 'hour'),
                             uid: dayOfWeek + '-' + hour,
@@ -104,15 +104,15 @@ class ProfileEdit extends React.Component {
 
     handleSave = (user) => {
         const {selectedIntervals} = this.state;
-        var availability = {};
-        for(var interval of selectedIntervals) {
-            var segments = interval.uid.split('-');
-            var weekday = segments[0];
-            var key = availabilityKeys[weekday - 1];
+        let availability = {};
+        for(let interval of selectedIntervals) {
+            let segments = interval.uid.split('-');
+            let weekday = segments[0];
+            let key = availabilityKeys[weekday - 1];
             if(availability[key] === undefined)
                 availability[key] = [];
 
-            var hour = segments[1];
+            let hour = segments[1];
             availability[key].push(hour);
         }
         user.availability = availability;
@@ -134,17 +134,17 @@ class ProfileEdit extends React.Component {
 
     handleCalendarSelect = (intervals) => {
         const {selectedIntervals} = this.state;
-        var didSelectedIntervalsChange = false;
+        let didSelectedIntervalsChange = false;
 
         for(let interval of intervals) {
-            var addMode = undefined;
+            let addMode = undefined;
 
             // go through intervals of selected range to check if previously already selected
             while(interval.start < interval.end) {
-                var uid = interval.start.isoWeekday() + interval.start.format('-HH:mm');
+                let uid = interval.start.isoWeekday() + interval.start.format('-HH:mm');
                 
                 // eslint-disable-next-line
-                var index = selectedIntervals.findIndex((interval) => interval.uid === uid)
+                let index = selectedIntervals.findIndex((interval) => interval.uid === uid)
 
                 if(addMode === undefined)
                     addMode = (index === -1);
