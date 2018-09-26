@@ -213,7 +213,3 @@ textarea:focus {
 .profileedit-main .weekCalendar__header {
     padding-left: 90px !important;
 }
-
-.profileedit-main .weekCalendar__headerColumn {
-    width: 90px !important;
-}
