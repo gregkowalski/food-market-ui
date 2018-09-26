@@ -197,3 +197,23 @@ textarea:focus {
 } */
 
 /* End Google Autocomplete box */
+
+.profileedit-main .weekCalendar__scaleHeader {
+    width:90px !important;
+}
+
+.profileedit-main .weekCalendar__scaleColumn {
+    width:90px !important;
+}
+
+.profileedit-main .weekCalendar {
+    padding-left: 90px !important;
+}
+
+.profileedit-main .weekCalendar__header {
+    padding-left: 90px !important;
+}
+
+.profileedit-main .weekCalendar__headerColumn {
+    width: 90px !important;
+}
