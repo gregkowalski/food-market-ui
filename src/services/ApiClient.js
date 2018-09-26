@@ -61,8 +61,12 @@ class ApiClient {
         return this.invokeApi(`/users/${user.user_id}/private`, 'PATCH', user);
     }
 
-    updateUser(jwt, user) {
+    updateUser(user) {
         return this.invokeApi('/users', 'PUT', user);
+    }
+
+    acceptTerms(userId) {
+        return this.invokeApi(`/users/${userId}/acceptTerms`, 'POST');
     }
 
     connectStripeAccount(code) {

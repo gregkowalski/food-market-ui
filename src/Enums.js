@@ -12,6 +12,16 @@ export const OrderStatus = {
     Failed: 'failed',
 }
 
+export const OrderStatusLabels = {
+    pending: 'Pending',
+    charged: 'Accepted',
+    declined: 'Declined',
+    cancelled: 'Cancelled',
+    transferred: 'Completed',
+    failed: 'Failed',
+    missed: 'Missed'
+}
+
 export const ContactMethods = {
     email: 'email',
     phone: 'phone'

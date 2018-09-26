@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Segment, Divider, Image, Icon, Accordion } from 'semantic-ui-react'
 import './BuyerOrderCard.css'
 import { Constants, Colors } from '../../Constants'
-import { OrderStatus, DeliveryOptions } from '../../Enums'
+import { OrderStatus, OrderStatusLabels, DeliveryOptions } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 import Util from '../../services/Util'
@@ -59,7 +59,7 @@ class BuyerOrderCard extends React.Component {
 
         return (
             <Segment raised>
-                <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{order.status}</div>
+                <div id='buyerordercard-status' className='ui segment' style={this.statusStyle(order.status)}>{OrderStatusLabels[order.status]}</div>
                 {cook.image &&
                     <Image id='buyerordercard-header-cook' src={cook.image} circular />
                 }
@@ -73,7 +73,7 @@ class BuyerOrderCard extends React.Component {
                                 <div>{startDate.format('h A')} to {endDate.format('h A')}</div>
                                 <div className='bottom-spacing top-spacing'>
                                 </div>
-                                <div className='top-spacing'>Your cook, {cook.name}</div>
+                                <div className='top-spacing'>Your cook, {Util.firstNonEmptyValue(cook.name, cook.username)}</div>
                             </div>
                         </div>
                     </div>
@@ -86,8 +86,10 @@ class BuyerOrderCard extends React.Component {
                     <div className='buyerordercard-additional'>
                         <Accordion>
                             <Accordion.Title active={showDetails} onClick={() => this.setState({ showDetails: !showDetails })}>
-                                <span>Additional details</span>
-                                <Icon size='large' name='angle double down' />
+                                <div className='buyerordercard-additional-details'>
+                                    Additional details
+                                    <Icon name='angle down' />
+                                </div>
                             </Accordion.Title>
                             <Accordion.Content active={showDetails}>
                                 <div>Reservation code: {order.order_id}</div>
@@ -102,10 +104,12 @@ class BuyerOrderCard extends React.Component {
                             <Icon name='mail outline' size='large' />
                             <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
-                        <div className='buyerordercard-footer'>
-                            <Icon name={isCancelling ? 'circle notched' : 'calendar'} loading={isCancelling} size='large' />
-                            <a href='./' onClick={this.cancelOrder}>Cancel order</a>
-                        </div>
+                        {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) &&
+                            <div className='buyerordercard-footer'>
+                                <Icon name={isCancelling ? 'circle notched' : 'calendar'} loading={isCancelling} size='large' />
+                                <a href='./' onClick={this.cancelOrder}>Cancel order</a>
+                            </div>
+                        }
                     </div>
                 </div>
 

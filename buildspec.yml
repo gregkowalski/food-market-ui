@@ -1,0 +1,17 @@
+#buildspec file for AWS CodeBuild
+version: 0.2
+
+env:
+  variables:
+    CI: "true"
+
+phases:
+  install:
+    commands:
+      - echo "Entered the install phase... CI=$CI"
+      - npm install
+      - npm run config:test
+      - npm run test
+      - npm run deploy:test
+    finally:
+      - echo install phase finished

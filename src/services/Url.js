@@ -2,7 +2,7 @@ import queryString from 'query-string'
 
 class Url {
 
-    foodDetail(food_id, pickup, date) {
+    foodDetail(food_id) {
         return `/foods/${food_id}/`;
     }
 
@@ -79,6 +79,10 @@ class Url {
         return '/terms';
     }
 
+    termsAccept() {
+        return '/termsAccept';
+    }
+
     cookies() {
         return '/cookies';
     }
@@ -101,6 +105,10 @@ class Url {
 
     cooks() {
         return '/cooks';
+    }
+
+    open(url) {
+        window.open(url, '_self');
     }
 }
 

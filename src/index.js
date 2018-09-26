@@ -43,6 +43,7 @@ import WhyCook from './views/Info/WhyCook'
 import HowTo from './views/Info/HowTo'
 import Community from './views/Info/Community'
 import Cooks from './views/Info/Cooks'
+import TermsAccept from './views/TermsAccept';
 
 //import temp from 'temp'
 
@@ -50,7 +51,7 @@ unregister();
 
 ReactGA.initialize(Config.GoogleAnalytics.TrackingId);
 
-const { store, persistor } = configureStore({ includeLogger: true });
+const { store, persistor } = configureStore({ includeLogger: true, includePersistor: true });
 
 const appPage = (page) => {
     return isAuth(withTracker(page));
@@ -76,6 +77,7 @@ render(
                             <Route exact path='/cognitoCallback' component={withTracker(CognitoCallback)} />
                             <Route exact path='/cognitoSignout' component={withTracker(CognitoSignout)} />
                             <Route exact path='/stripeCallback' component={withTracker(StripeCallback)} />
+                            <Route exact path={Url.termsAccept()} component={withTracker(TermsAccept)} />
 
                             <Route exact path={Url.about()} component={appPage(About)} />
                             <Route exact path={Url.cookies()} component={appPage(Cookies)} />

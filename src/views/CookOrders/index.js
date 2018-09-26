@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
+import AppFooter from '../../components/AppFooter'
 import LoadingIcon from '../../components/LoadingIcon'
 import Link from '../../components/Link'
 import Util from '../../services/Util'
@@ -88,6 +89,7 @@ class CookOrders extends React.Component {
                     </div>
                     {content}
                 </div>
+                <AppFooter />
             </div>
         )
     }

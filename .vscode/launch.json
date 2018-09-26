@@ -1,24 +1,20 @@
 {
     "version": "0.2.0",
     "configurations": [
-
         {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Chrome",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceRoot}/src"
-        },
-        {
-            "name": "Debug Tests",
+            "name": "Current Test File",
             "type": "node",
             "request": "launch",
+            "env": {
+                "CI": "true"
+            },
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
             "args": [
                 "test",
                 "--runInBand",
                 "--no-cache",
-                "--env=jsdom"
+                "--env=jsdom",
+                "${relativeFile}"
             ],
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
+import AppFooter from '../../components/AppFooter'
 import LoadingIcon from '../../components/LoadingIcon'
 import { Actions, Selectors } from '../../store/buyerOrders'
 import BuyerOrderCard from './BuyerOrderCard'
@@ -43,6 +44,7 @@ class BuyerOrders extends React.Component {
                     <div className='buyerorders-header'>My Orders</div>
                     {content}
                 </div>
+                <AppFooter />
             </div>
         )
     }
