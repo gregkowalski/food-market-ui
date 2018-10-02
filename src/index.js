@@ -57,6 +57,10 @@ const appPage = (page) => {
     return isAuth(withTracker(page));
 }
 
+const skipTermsAcceptedAppPage = (page) => {
+    return isAuth(withTracker(page), { skipTermsAccepted: true });
+}
+
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
         <Provider store={store}>
@@ -83,8 +87,8 @@ render(
                             <Route exact path={Url.cookies()} component={appPage(Cookies)} />
                             <Route exact path={Url.help()} component={appPage(Help)} />
                             <Route exact path={Url.policies()} component={appPage(Policies)} />
-                            <Route exact path={Url.privacy()} component={appPage(Privacy)} />
-                            <Route exact path={Url.terms()} component={appPage(Terms)} />
+                            <Route exact path={Url.privacy()} component={skipTermsAcceptedAppPage(Privacy)} />
+                            <Route exact path={Url.terms()} component={skipTermsAcceptedAppPage(Terms)} />
                             <Route exact path={Url.safety()} component={appPage(Safety)} />
                             <Route exact path={Url.whycook()} component={appPage(WhyCook)} />
                             <Route exact path={Url.community()} component={appPage(Community)} />

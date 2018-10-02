@@ -4,7 +4,7 @@
 }
 
 @media all and (max-width: 767px) {
-.infopage {
-    width: 90%;
-}
+    .infopage {
+        width: 90%;
+    }
 }

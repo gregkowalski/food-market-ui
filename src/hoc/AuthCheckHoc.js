@@ -5,7 +5,7 @@ import { Actions, Selectors } from '../store/currentUser'
 import ErrorCodes from '../services/ErrorCodes';
 import Url from '../services/Url'
 
-export default function (ComposedClass) {
+export default function (ComposedClass, options = {}) {
 
     class AuthenticatedComponent extends React.Component {
 
@@ -21,7 +21,7 @@ export default function (ComposedClass) {
 
         componentDidMount() {
             const { user } = this.props;
-            if (user && !user.terms_accepted) {
+            if (user && !user.terms_accepted && !options.skipTermsAccepted) {
                 Url.open(Url.termsAccept());
                 return;
             }
@@ -36,7 +36,7 @@ export default function (ComposedClass) {
                 return;
             }
 
-            if (!this.props.user && nextProps.user && !nextProps.user.terms_accepted) {
+            if (!this.props.user && nextProps.user && !nextProps.user.terms_accepted && !options.skipTermsAccepted) {
                 Url.open(Url.termsAccept());
                 return;
             }
@@ -52,7 +52,7 @@ export default function (ComposedClass) {
                 return null;
             }
 
-            if (!user || !user.terms_accepted) {
+            if (!user || (!user.terms_accepted && !options.skipTermsAccepted)) {
                 return null;
             }
 

@@ -1,0 +1,21 @@
+.privacy h1 {
+    font-weight: 500;
+    font-size: 1.9em;
+    color: #505050;
+    font-family: Roboto;
+    margin-top: 80px;
+    margin-bottom: 10px;
+}
+
+.privacy .ui.segment {
+    padding-bottom: 30px;
+}
+
+.privacy li,p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.privacy a {
+    color: #b61095;
+}
