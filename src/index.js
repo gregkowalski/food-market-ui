@@ -31,6 +31,7 @@ import configureStore from './store/configureStore'
 import Config from './Config'
 import { unregister } from './registerServiceWorker'
 import isAuth from './hoc/AuthCheckHoc'
+import isAdmin from './hoc/AdminCheckHoc'
 import withTracker from './hoc/WithTrackerHoc'
 import About from './views/Info/About'
 import Cookies from './views/Info/Cookies'
@@ -43,7 +44,8 @@ import WhyCook from './views/Info/WhyCook'
 import HowTo from './views/Info/HowTo'
 import Community from './views/Info/Community'
 import Cooks from './views/Info/Cooks'
-import TermsAccept from './views/TermsAccept';
+import TermsAccept from './views/TermsAccept'
+import InviteUser from './views/Admin/InviteUser'
 
 //import temp from 'temp'
 
@@ -59,6 +61,10 @@ const appPage = (page) => {
 
 const skipTermsAcceptedAppPage = (page) => {
     return isAuth(withTracker(page), { skipTermsAccepted: true });
+}
+
+const adminPage = (page) => {
+    return isAdmin(appPage(page));
 }
 
 render(
@@ -94,6 +100,8 @@ render(
                             <Route exact path={Url.community()} component={appPage(Community)} />
                             <Route exact path={Url.howto()} component={appPage(HowTo)} />
                             <Route exact path={Url.cooks()} component={appPage(Cooks)} />
+
+                            <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
 
                             <Route component={withTracker(NotFoundPage)} />
 

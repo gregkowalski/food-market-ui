@@ -2,6 +2,7 @@
     "search.exclude": {
         "semantic/**": true,
         "build/**": true,
+        "coverage/**": true,
         "*lock*": true
     },
     "editor.detectIndentation": false,

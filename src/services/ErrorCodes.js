@@ -1,5 +1,7 @@
 const ErrorCodes = {
-    USER_DOES_NOT_EXIST: 'USER_DOES_NOT_EXIST'
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+    USER_DOES_NOT_EXIST: 'USER_DOES_NOT_EXIST',
 }
 
 export default ErrorCodes;

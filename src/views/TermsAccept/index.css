@@ -51,5 +51,3 @@
 .termsaccept-button>.ui.button:hover {
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
-
-@media all and (max-width: 767px) {}

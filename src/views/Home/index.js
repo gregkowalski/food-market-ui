@@ -7,8 +7,8 @@ import { withRouter, Link } from 'react-router-dom'
 import { Image, Grid, Card } from 'semantic-ui-react'
 import queryString from 'query-string'
 import './index.css'
-import HomeHeader from '../../components/HomeHeader'
 import AppFooter from '../../components/AppFooter'
+import AppHeader from '../../components/AppHeader'
 import Url from '../../services/Url'
 import Util from '../../services/Util'
 import foodImg1 from './home-food1.jpg'
@@ -90,7 +90,7 @@ class Home extends React.Component {
 
         return (
             <div>
-                <HomeHeader />
+                <AppHeader home />
                 <div className='home'>
                     <div className='home-top'>
                         <div className='home-top-content'>

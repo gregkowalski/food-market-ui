@@ -134,6 +134,18 @@ class ApiClient {
     cancelOrder(order, reason) {
         return this.invokeApi(`/orders/${order.order_id}/cancel`, 'POST', { reason });
     }
+
+    inviteUser(email) {
+        // return this.invokeApi(`/admin/invites`, 'POST', { email });
+        return new Promise((resolve, reject) => {
+            if (email.indexOf('error') >= 0) {
+                setTimeout(() => reject('things got really fucked up!!!!'), 2000);
+            }
+            else {
+                setTimeout(resolve, 2000);
+            }
+        });
+    }
 }
 
 export default new ApiClient();

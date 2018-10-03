@@ -239,7 +239,7 @@ const validate = (values) => {
     if (!values.email) {
         errors.email = { header: 'Email is required', message: 'Please enter your email address' };
     }
-    else if (!validateEmail(values.email)) {
+    else if (!Util.validateEmail(values.email)) {
         errors.email = { header: 'Invalid email address', message: 'Please enter your email address' };
     }
 
@@ -251,11 +251,6 @@ const validate = (values) => {
     }
 
     return errors;
-}
-
-const validateEmail = (email) => {
-    var pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return pattern.test(email);
 }
 
 const mapStateToProps = (state) => {

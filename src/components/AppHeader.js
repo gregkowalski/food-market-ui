@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Dropdown } from 'semantic-ui-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './AppHeader.css'
 import { Constants, TagLines } from '../Constants'
@@ -41,6 +41,10 @@ export class AppHeader extends React.Component {
         Util.contactSupport();
     }
 
+    navigateToInviteUser = () => {
+        this.props.history.push(Url.admin.inviteUser());
+    }
+
     navigateToEditProfile = () => {
         this.props.history.push(Url.profileEdit());
     }
@@ -62,16 +66,76 @@ export class AppHeader extends React.Component {
         return TagLines[index];
     }
 
+    getHeaderStyle() {
+
+        const { fixed, noshadow, home } = this.props;
+
+        const headerStyle = {};
+
+        headerStyle.position = 'relative';
+        if (fixed) {
+            headerStyle.position = 'fixed';
+        }
+
+        if (home) {
+            headerStyle.borderBottom = '0px solid rgb(201, 199, 199)';
+            if (!noshadow) {
+                headerStyle.boxShadow = '0px 0px 0px rgba(85, 85, 85, 0.603)';
+            }
+        }
+        else {
+            headerStyle.borderBottom = '1px solid rgb(225, 225, 225)';
+            if (!noshadow) {
+                headerStyle.boxShadow = '0px 0px 8px rgba(88, 88, 88, 0.603)';
+            }
+        }
+
+        return headerStyle;
+    }
+
+    getHeaderContent() {
+
+        const { home } = this.props;
+
+        if (!home) {
+            return (
+                <div className="apphead-tagline">
+                    {this.tagline}
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="apphead-home">
+                    <Link to={Url.howto()}>How It Works</Link>
+                    <div>·</div>
+                    <Link to={Url.whycook()}>Become A Cook</Link>
+                </div>
+            );
+        }
+    }
+
     render() {
         const { user, isLoading } = this.props;
 
         let sessionElement;
 
         if (user) {
+            const isAdmin = CognitoUtil.isAdmin();
+            const greetingThreshold = 17;
+            const greeting = user.username && user.username.length < greetingThreshold
+                ? 'Hi, '
+                : '';
             sessionElement = (
                 <div className='apphead-sign-in'>
-                    <Dropdown icon='angle down' text={'Hi, ' + user.username}>
+                    <Dropdown icon='angle down' text={greeting + user.username}>
                         <Dropdown.Menu className='left'>
+                            {isAdmin &&
+                                <Dropdown.Item className='apphead-dropdown-link' text='Admin: Invite User' onClick={this.navigateToInviteUser} />
+                            }
+                            {isAdmin &&
+                                <Dropdown.Divider />
+                            }
                             <Dropdown.Item className='apphead-dropdown-link' text='Home' onClick={this.navigateToHome} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
@@ -111,35 +175,21 @@ export class AppHeader extends React.Component {
             }
         }
 
-        const { fixed, noshadow } = this.props;
-
-        const headerStyle = {};
-        headerStyle.position = 'relative';
-        if (fixed) {
-            headerStyle.position = 'fixed';
-        }
-
-        headerStyle.borderBottom = '1px solid rgb(225, 225, 225)';
-        if (!noshadow) {
-            headerStyle.boxShadow = '0px 0px 8px rgba(88, 88, 88, 0.603)';
-        }
+        const headerStyle = this.getHeaderStyle();
+        const headerContent = this.getHeaderContent();
 
         return (
             <div className='apphead' style={headerStyle}>
                 <div className='apphead-content'>
-                    <div className='apphead-logo'>
-                        <div onClick={this.navigateToHome}>
+                    <div className='apphead-left'>
+                        <div className='apphead-logo' onClick={this.navigateToHome}>
                             <Image height='38px' src={Constants.AppLogo} />
                             <div className='apphead-link'>{Constants.AppName}</div>
                         </div>
-                        <div className="content-desktop">
-                            {this.tagline}
-                        </div>
+                        {headerContent}
                     </div>
                     <div className='apphead-right'>
-                        <div style={{ marginTop: '12px' }}>
-                            {sessionElement}
-                        </div>
+                        {sessionElement}
                     </div>
                 </div>
             </div>

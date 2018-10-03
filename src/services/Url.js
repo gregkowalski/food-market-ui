@@ -110,6 +110,12 @@ class Url {
     open(url) {
         window.open(url, '_self');
     }
+
+    admin = {
+        inviteUser() {
+            return '/admin/inviteUser';
+        }
+    }
 }
 
 export default new Url();

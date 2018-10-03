@@ -11,6 +11,7 @@ import { Reducers as search } from './search'
 import { Reducers as order } from './order'
 import { Reducers as buyerOrders } from './buyerOrders'
 import { Reducers as cookOrders } from './cookOrders'
+import { Reducers as admin } from './admin'
 
 const configureStore = (options = {}) => {
 
@@ -27,6 +28,7 @@ const configureStore = (options = {}) => {
         buyerOrders,
         cookOrders,
         publicUser,
+        admin,
         {
             form: formReducer
         });

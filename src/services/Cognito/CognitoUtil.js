@@ -30,6 +30,20 @@ class CognitoUtil {
         return jwt.sub;
     }
 
+    isAdmin() {
+        const jwt = this.getLoggedInUserJwt();
+        if (!jwt) {
+            return false;
+        }
+        console.log(jwt);
+        const groups = jwt['cognito:groups'];
+        if (!groups) {
+            return false;
+        }
+        const isAdmin = groups.includes('admin');
+        return isAdmin;
+    }
+
     getLoggedInUserJwtToken() {
         let auth = new CognitoAuth(this.getCognitoAuthData());
         let session = auth.getCachedSession();

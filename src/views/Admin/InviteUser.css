@@ -1,0 +1,35 @@
+.inviteuser {
+    width: 95%;
+    margin: 80px auto;
+}
+
+.inviteuser h2 {
+    font-weight: 500;
+}
+
+.inviteuser-form { 
+    width: 70%;
+}
+
+.inviteuser .ui.input {
+    width: 100%;
+}
+
+.inviteuser .ui.button {
+    color: #ffffff;
+    margin-top: 20px;
+    background-color: #b61095;
+    font-size: 1.2em;
+    font-weight: 500;
+    width: 100%;
+}
+
+.inviteuser .ui.button:hover {
+    background-color: #a01e88;
+}
+
+@media all and (max-width: 767px) {
+    .inviteuser-form { 
+        width: 100%;
+    }
+}
