@@ -7,7 +7,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import ReactGA from 'react-ga'
 
-import 'whatwg-fetch'
 import './semantic/semantic.min.css'
 import './index.css'
 

@@ -257,6 +257,7 @@ export const Actions = {
             console.log(order);
             stripe.createSource(
                 {
+                    type: 'card',
                     amount: order.amount,
                     currency: 'cad',
                     usage: 'single_use',
