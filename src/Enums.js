@@ -77,3 +77,13 @@ export const FoodAllergyLabels = {
     gluten: "Gluten",
     sulphites: "Sulphites",
 };
+
+export const DaysOfWeek = {
+    monday: 'monday', 
+    tuesday: 'tuesday', 
+    wednesday: 'wednesday', 
+    thursday: 'thursday', 
+    friday: 'friday', 
+    saturday: 'saturday', 
+    sunday: 'sunday'
+}
