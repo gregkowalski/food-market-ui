@@ -43,7 +43,6 @@ body {
   font-size: @fontSize;
   line-height: @lineHeight;
   color: @textColor;
-  font-weight: @pageFontWeight;
   font-smoothing: @fontSmoothing;
 }
 
@@ -136,6 +135,7 @@ a:hover {
   body ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: @customScrollbarWidth;
+    height: @customScrollbarHeight;
   }
   body ::-webkit-scrollbar-track {
     background: @trackBackground;
