@@ -45,9 +45,9 @@ const certificationOptions = [
     },
 ];
 
-const availabilityKeys = [ 
-    DaysOfWeek.monday, DaysOfWeek.tuesday, DaysOfWeek.wednesday, DaysOfWeek.thursday, 
-    DaysOfWeek.friday, DaysOfWeek.saturday, DaysOfWeek.sunday 
+const availabilityKeys = [
+    DaysOfWeek.monday, DaysOfWeek.tuesday, DaysOfWeek.wednesday, DaysOfWeek.thursday,
+    DaysOfWeek.friday, DaysOfWeek.saturday, DaysOfWeek.sunday
 ];
 
 class ProfileEdit extends React.Component {
@@ -75,13 +75,13 @@ class ProfileEdit extends React.Component {
             }
         }
 
-        const{user} = this.props;
-        if(user && this.state.selectedIntervals === undefined) {
-            if(user.availability !== undefined) {
+        const { user } = this.props;
+        if (user && this.state.selectedIntervals === undefined) {
+            if (user.availability !== undefined) {
                 let selectedIntervals = [];
-                for(let day in user.availability) {
+                for (let day in user.availability) {
                     let dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
-                    for(let hour of user.availability[day]) {
+                    for (let hour of user.availability[day]) {
                         // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
                         let start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
                         let interval = {
@@ -93,7 +93,7 @@ class ProfileEdit extends React.Component {
                         selectedIntervals.push(interval);
                     }
                 };
-                this.setState({selectedIntervals: selectedIntervals});
+                this.setState({ selectedIntervals: selectedIntervals });
             }
         }
     }
@@ -103,20 +103,20 @@ class ProfileEdit extends React.Component {
     }
 
     handleSave = (user) => {
-        const {selectedIntervals} = this.state;
+        const { selectedIntervals } = this.state;
         let availability = {};
-        for(let interval of selectedIntervals) {
+        for (let interval of selectedIntervals) {
             let segments = interval.uid.split('-');
             let weekday = segments[0];
             let key = availabilityKeys[weekday - 1];
-            if(availability[key] === undefined)
+            if (availability[key] === undefined)
                 availability[key] = [];
 
             let hour = segments[1];
             availability[key].push(hour);
         }
         user.availability = availability;
-        this.setState({didSelectedIntervalsChange: false});
+        this.setState({ didSelectedIntervalsChange: false });
 
         console.log(user);
         console.log('saving...');
@@ -133,25 +133,25 @@ class ProfileEdit extends React.Component {
     }
 
     handleCalendarSelect = (intervals) => {
-        const {selectedIntervals} = this.state;
+        const { selectedIntervals } = this.state;
         let didSelectedIntervalsChange = false;
 
-        for(let interval of intervals) {
+        for (let interval of intervals) {
             let addMode = undefined;
 
             // go through intervals of selected range to check if previously already selected
-            while(interval.start < interval.end) {
+            while (interval.start < interval.end) {
                 let uid = interval.start.isoWeekday() + interval.start.format('-HH:mm');
-                
+
                 // eslint-disable-next-line
                 let index = selectedIntervals.findIndex((interval) => interval.uid === uid)
 
-                if(addMode === undefined)
+                if (addMode === undefined)
                     addMode = (index === -1);
 
                 // add or remove 1 hour intervals based on selected range
-                if(addMode) {
-                    if(index === -1) {
+                if (addMode) {
+                    if (index === -1) {
                         selectedIntervals.push({
                             start: interval.start.clone(),
                             end: interval.start.clone().add(1, 'hour'),
@@ -160,7 +160,7 @@ class ProfileEdit extends React.Component {
                         });
                         didSelectedIntervalsChange = true;
                     }
-                } else if(index > -1) {
+                } else if (index > -1) {
                     selectedIntervals.splice(index, 1);
                     didSelectedIntervalsChange = true;
                 }
@@ -168,7 +168,7 @@ class ProfileEdit extends React.Component {
                 interval.start.add(1, 'hour');
             }
         };
-    
+
         this.setState({
             selectedIntervals: selectedIntervals,
             didSelectedIntervalsChange: didSelectedIntervalsChange
@@ -176,7 +176,7 @@ class ProfileEdit extends React.Component {
     }
 
     handleCalendarEventRemove = (event) => {
-        const {selectedIntervals} = this.state;
+        const { selectedIntervals } = this.state;
         const index = selectedIntervals.findIndex((interval) => interval.uid === event.uid);
         if (index > -1) {
             selectedIntervals.splice(index, 1);
@@ -301,21 +301,25 @@ class ProfileEdit extends React.Component {
                             <Segment attached >
                                 <StripeComponent stripe_account_id={user.stripe_account_id} onConnectStripe={this.handleConnectStripeClick} />
                             </Segment>
-                            <Header className='profileedit-header' block attached='top'>Availability</Header>
-                            <Segment attached>
-                                <Calendar 
-                                    useModal={false}
-                                    // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
-                                    firstDay={moment('2018-01-01', moment.ISO_8601)}
-                                    startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)} 
-                                    endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)} 
-                                    scaleUnit={60} 
-                                    dayFormat='ddd' 
-                                    selectedIntervals={this.state.selectedIntervals}
-                                    onIntervalSelect={this.handleCalendarSelect}
-                                    onEventClick = {this.handleCalendarEventRemove}
-                                />
-                            </Segment>
+                            {user.stripe_account_id &&
+                                <Header className='profileedit-header' block attached='top'>Availability</Header>
+                            }
+                            {user.stripe_account_id &&
+                                <Segment attached>
+                                    <Calendar
+                                        useModal={false}
+                                        // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
+                                        firstDay={moment('2018-01-01', moment.ISO_8601)}
+                                        startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)}
+                                        endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)}
+                                        scaleUnit={60}
+                                        dayFormat='ddd'
+                                        selectedIntervals={this.state.selectedIntervals}
+                                        onIntervalSelect={this.handleCalendarSelect}
+                                        onEventClick={this.handleCalendarEventRemove}
+                                    />
+                                </Segment>
+                            }
                             <div className='profileedit-save-button-container'>
                                 <Button className='profileedit-save-button' type='submit'
                                     disabled={pristine && !this.state.didSelectedIntervalsChange} loading={submitting} onClick={handleSubmit(this.handleSave)}>Save profile</Button>
