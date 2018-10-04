@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import moment from 'moment-timezone'
-import { parse as parsePhone, asYouType as asYouTypePhone } from 'libphonenumber-js'
+import { parse as parsePhone, AsYouType as asYouTypePhone } from 'libphonenumber-js'
 import { FoodPrepType } from '../Enums'
 import Url from '../services/Url'
 import Config from '../Config'

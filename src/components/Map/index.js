@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { camelize } from './lib/String';
-import invariant from 'invariant';
 
 const evtNames = [
     'ready',
@@ -37,11 +36,6 @@ export { CustomControl } from './components/CustomControl';
 export class Map extends React.Component {
     constructor(props) {
         super(props);
-
-        invariant(
-            props.hasOwnProperty('google'),
-            'You must include a `google` prop.'
-        );
 
         this.listeners = {};
         this.state = {
