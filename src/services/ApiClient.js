@@ -136,15 +136,12 @@ class ApiClient {
     }
 
     inviteUser(email) {
-        // return this.invokeApi(`/admin/invites`, 'POST', { email });
-        return new Promise((resolve, reject) => {
-            if (email.indexOf('error') >= 0) {
-                setTimeout(() => reject('things got really fucked up!!!!'), 2000);
-            }
-            else {
-                setTimeout(resolve, 2000);
-            }
-        });
+        return this.invokeApi(`/invites`, 'POST', { email });
+    }
+
+    acceptInvite(invite_id) {
+        // don't want to include session info because the user is NOT logged in
+        return this.apiGatewayClient.invokeApi(null, `/invites/${invite_id}/accept`, 'POST');
     }
 }
 

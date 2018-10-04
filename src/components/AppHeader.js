@@ -115,11 +115,10 @@ export class AppHeader extends React.Component {
         }
     }
 
-    render() {
+    getSessionElement() {
         const { user, isLoading } = this.props;
 
         let sessionElement;
-
         if (user) {
             const isAdmin = CognitoUtil.isAdmin();
             const greetingThreshold = 17;
@@ -174,7 +173,13 @@ export class AppHeader extends React.Component {
                 );
             }
         }
+        return sessionElement;
+    }
 
+    render() {
+        const { simple } = this.props;
+
+        const sessionElement = !simple ? this.getSessionElement() : undefined;
         const headerStyle = this.getHeaderStyle();
         const headerContent = this.getHeaderContent();
 

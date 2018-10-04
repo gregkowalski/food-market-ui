@@ -48,10 +48,10 @@ class Invite extends React.Component {
     }
 
     render() {
-        const { email, isEmailValid } = this.state;
+        const { email, isEmailValid, showMessage } = this.state;
         const { isInvitingUser } = this.props;
 
-        const buttonDisabled = isInvitingUser || !isEmailValid;
+        const buttonDisabled = isInvitingUser || !isEmailValid || showMessage;
 
         return (
             <div className='inviteuser'>

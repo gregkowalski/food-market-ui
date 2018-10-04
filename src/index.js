@@ -46,6 +46,7 @@ import Community from './views/Info/Community'
 import Cooks from './views/Info/Cooks'
 import TermsAccept from './views/TermsAccept'
 import InviteUser from './views/Admin/InviteUser'
+import InvitesCallback from './views/Public/InvitesCallback'
 
 //import temp from 'temp'
 
@@ -88,6 +89,9 @@ render(
                             <Route exact path='/cognitoSignout' component={withTracker(CognitoSignout)} />
                             <Route exact path='/stripeCallback' component={withTracker(StripeCallback)} />
                             <Route exact path={Url.termsAccept()} component={withTracker(TermsAccept)} />
+                            <Route exact path={'/invites/:invite_id'} component={withTracker(InvitesCallback)} />
+
+                            <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
 
                             <Route exact path={Url.about()} component={appPage(About)} />
                             <Route exact path={Url.cookies()} component={appPage(Cookies)} />
@@ -100,8 +104,6 @@ render(
                             <Route exact path={Url.community()} component={appPage(Community)} />
                             <Route exact path={Url.howto()} component={appPage(HowTo)} />
                             <Route exact path={Url.cooks()} component={appPage(Cooks)} />
-
-                            <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
 
                             <Route component={withTracker(NotFoundPage)} />
 

@@ -35,7 +35,6 @@ class CognitoUtil {
         if (!jwt) {
             return false;
         }
-        console.log(jwt);
         const groups = jwt['cognito:groups'];
         if (!groups) {
             return false;
