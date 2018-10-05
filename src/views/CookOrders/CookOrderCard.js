@@ -135,12 +135,12 @@ class CookOrderCard extends React.Component {
                     <Divider />
                     <div className='cookordercard-section normal-font'>
                         <div className='cookordercard-buyer'>
-                            <Icon name='mail square' size='large' />
+                            <Icon name='envelope outline' size='large' />
                             <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
                         </div>
                         {order.status === OrderStatus.Accepted &&
                             <div style={{ marginTop: '25px' }}>
-                                <Icon name='calendar' size='big' />
+                                <Icon name='calendar alternate outline' size='big' />
                                 <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
                             </div>
                         }

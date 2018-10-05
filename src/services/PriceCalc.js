@@ -4,7 +4,7 @@ class PriceCalc {
 
     getTotal(unitPrice, quantity) {
         let total = quantity * unitPrice;
-        return parseInt(total.toFixed(0), 10);
+        return parseFloat(total.toFixed(1), 10);
     }
 
     getPrice(unitPrice, quantity) {

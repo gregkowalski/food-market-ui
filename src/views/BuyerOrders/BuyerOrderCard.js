@@ -101,12 +101,12 @@ class BuyerOrderCard extends React.Component {
                     <Divider />
                     <div className='buyerordercard-contact normal-font'>
                         <div className='buyerordercard-footer'>
-                            <Icon name='mail square' size='large' />
+                            <Icon name='envelope outline' size='large' />
                             <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
                         {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) &&
                             <div className='buyerordercard-footer'>
-                                <Icon name={isCancelling ? 'circle notched' : 'calendar'} loading={isCancelling} size='large' />
+                                <Icon name={isCancelling ? 'circle notched' : 'calendar alternate outline'} loading={isCancelling} size='large' />
                                 <a href='./' onClick={this.cancelOrder}>Cancel order</a>
                             </div>
                         }
