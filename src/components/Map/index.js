@@ -256,10 +256,29 @@ Map.propTypes = {
     disableDoubleClickZoom: PropTypes.bool,
     noClear: PropTypes.bool,
     styles: PropTypes.array,
-    gestureHandling: PropTypes.string
-};
+    gestureHandling: PropTypes.string,
 
-evtNames.forEach(e => (Map.propTypes[camelize(e)] = PropTypes.func));
+    ready: PropTypes.func,
+    click: PropTypes.func,
+    dragend: PropTypes.func,
+    recenter: PropTypes.func,
+    bounds_changed: PropTypes.func,
+    center_changed: PropTypes.func,
+    dblclick: PropTypes.func,
+    dragstart: PropTypes.func,
+    heading_change: PropTypes.func,
+    idle: PropTypes.func,
+    maptypeid_changed: PropTypes.func,
+    mousemove: PropTypes.func,
+    mouseout: PropTypes.func,
+    mouseover: PropTypes.func,
+    projection_changed: PropTypes.func,
+    resize: PropTypes.func,
+    rightclick: PropTypes.func,
+    tilesloaded: PropTypes.func,
+    tilt_changed: PropTypes.func,
+    zoom_changed: PropTypes.func,
+};
 
 Map.defaultProps = {
     zoom: 13,

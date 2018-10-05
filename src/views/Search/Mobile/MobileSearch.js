@@ -309,7 +309,7 @@ class MobileSearch extends Component {
                     {!isLoading &&
                         <div className='mobilesearch-foodgrid' style={this.visible(!hideFoodGrid)}>
                             <FoodGrid foods={foods} />
-                            <Icon name='marker' color='purple' onClick={this.showMapView} />
+                            <Icon name='map marker alternate' color='purple' onClick={this.showMapView} />
                         </div>
                     }
 

@@ -49,6 +49,7 @@ export default class FoodGrid extends Component {
                     <div className='foodgrid-card'>
                         <a
                             target='_blank'
+                            rel='noopener noreferrer'
                             href={Url.foodDetail(food.food_id)}
                             onMouseEnter={(a, b) => this.handleMouseEnter(a, b, food.food_id)}
                             onMouseLeave={(a, b) => this.handleMouseLeave(a, b, food.food_id)}>

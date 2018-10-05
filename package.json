@@ -8,9 +8,15 @@
       "html"
     ]
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "amazon-cognito-auth-js": "^1.2.4",
-    "amazon-cognito-identity-js": "^3.0.1",
+    "amazon-cognito-identity-js": "^3.0.2",
     "aws-api-gateway-client": "^0.2.16",
     "google-maps-react": "^2.0.2",
     "jwt-decode": "^2.2.0",
@@ -23,7 +29,7 @@
     "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-addons-shallow-compare": "^15.6.2",
-    "react-dates": "^18.1.0",
+    "react-dates": "^12.7.1",
     "react-dom": "^16.5.2",
     "react-ga": "^2.5.3",
     "react-images": "^0.5.19",

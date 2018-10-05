@@ -165,7 +165,7 @@ export default class DesktopMap extends React.Component {
                     onClose={this.handleInfoWindowClose}>
 
                     <div>
-                        <a style={{ cursor: 'pointer' }} target='_blank'
+                        <a style={{ cursor: 'pointer' }} target='_blank' rel='noopener noreferrer'
                             href={Url.foodDetail(selectedFood.id)}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>

@@ -27,7 +27,7 @@ export default class DateModal extends React.Component {
 
         return (
             <Modal className='foodfilter-datepicker foodfilter-modal'
-                dimmer={false} open={isOpen} onClose={onClose}>
+                dimmer='inverted' open={isOpen} onClose={onClose}>
                 <Modal.Content>
                     <SingleDatePicker
                         date={date}

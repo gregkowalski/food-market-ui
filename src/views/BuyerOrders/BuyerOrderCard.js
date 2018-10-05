@@ -101,7 +101,7 @@ class BuyerOrderCard extends React.Component {
                     <Divider />
                     <div className='buyerordercard-contact normal-font'>
                         <div className='buyerordercard-footer'>
-                            <Icon name='mail outline' size='large' />
+                            <Icon name='mail square' size='large' />
                             <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
                         {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) &&

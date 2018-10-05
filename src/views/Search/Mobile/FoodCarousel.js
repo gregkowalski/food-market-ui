@@ -138,6 +138,7 @@ export default class FoodCarousel extends Component {
                 <div key={food.food_id} style={foodCardStyle}>
                     <a style={{ color: 'inherit' }}
                         target='_blank'
+                        rel='noopener noreferrer'
                         href={Url.foodDetail(food.food_id)}>
 
                         <Item>

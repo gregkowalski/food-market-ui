@@ -101,10 +101,11 @@ Circle.propTypes = {
     strokeOpacity: T.number,
     strokeWeight: T.number,
     fillColor: T.string,
-    fillOpacity: T.number
+    fillOpacity: T.number,
+    click: T.func,
+    mouseout: T.func,
+    mouseover: T.func,
 }
-
-evtNames.forEach(e => Circle.propTypes[e] = T.func)
 
 Circle.defaultProps = {
     name: 'Circle'

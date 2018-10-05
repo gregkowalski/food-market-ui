@@ -94,10 +94,11 @@ HeatMap.propTypes = {
     position: PropTypes.object,
     map: PropTypes.object,
     icon: PropTypes.string,
-    google: PropTypes.object.isRequired
+    google: PropTypes.object.isRequired,
+    click: PropTypes.func,
+    mouseover: PropTypes.func,
+    recenter: PropTypes.func,
 }
-
-evtNames.forEach(e => HeatMap.propTypes[e] = PropTypes.func)
 
 HeatMap.defaultProps = {
     name: 'HeatMap'

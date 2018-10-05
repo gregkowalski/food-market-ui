@@ -135,7 +135,7 @@ class CookOrderCard extends React.Component {
                     <Divider />
                     <div className='cookordercard-section normal-font'>
                         <div className='cookordercard-buyer'>
-                            <Icon name='mail outline' size='large' />
+                            <Icon name='mail square' size='large' />
                             <a href={Url.mailTo(buyer.email, food.title)}>Message {buyer.name}</a>
                         </div>
                         {order.status === OrderStatus.Accepted &&

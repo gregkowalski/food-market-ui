@@ -24,7 +24,7 @@ const FilterBar = ({ pickup, date, address, onFilterClick, onMapClick }) => {
                 <div className='filterbar-map'>
                     <Button color='purple' basic onClick={onMapClick}>
                         <span>Map</span>
-                        <Icon name='marker' color='purple' />
+                        <Icon name='map marker alternate' color='purple' />
                     </Button>
                 </div>
             </div>

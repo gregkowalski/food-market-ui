@@ -98,10 +98,11 @@ Polygon.propTypes = {
     strokeWeight: T.number,
     fillColor: T.string,
     fillOpacity: T.number,
-    google: T.object.isRequired
+    google: T.object.isRequired,
+    click: T.func,
+    mouseout: T.func,
+    mouseover: T.func,
 }
-
-evtNames.forEach(e => Polygon.propTypes[e] = T.func)
 
 Polygon.defaultProps = {
     name: 'Polygon'
