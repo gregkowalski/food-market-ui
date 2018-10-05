@@ -8,10 +8,21 @@ env:
 phases:
   install:
     commands:
-      - echo "Entered the install phase... CI=$CI"
+      - echo Entered the install phase...
+      # Setup for Yarn
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+      # Do it!
+      - apt-get update -y
+      - apt-get install -y yarn
+    finally:
+      - echo install phase finished
+  build:
+    commands:
+      - echo "Entered the build phase... CI=$CI"
       - yarn install
       - yarn run config:test
       - yarn run test
       - yarn run deploy:test
     finally:
-      - echo install phase finished
+      - echo build phase finished
