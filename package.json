@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "gulp": "^3.9.1",
     "jest": "^23.6.0",
     "jest-enzyme": "^6.1.2",
