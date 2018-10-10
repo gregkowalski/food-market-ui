@@ -7,6 +7,7 @@ import { OrderStatus, OrderStatusLabels, DeliveryOptions } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
 import Util from '../../services/Util'
+import ConfirmModal from '../../components/ConfirmModal'
 
 class BuyerOrderCard extends React.Component {
 
@@ -16,11 +17,19 @@ class BuyerOrderCard extends React.Component {
         this.props.history.push(Url.foodDetail(this.props.order.food_id));
     }
 
-    cancelOrder = (e) => {
-        e.preventDefault();
+    cancelOrder = (reason) => {
         if (!this.props.order.isCancelling && this.props.onCancel) {
-            this.props.onCancel(this.props.order);
+            this.props.onCancel(this.props.order, reason);
         }
+    }
+    
+    closeCancelConfirmation = () => {
+        this.setState({ showConfirmCancel: false });
+    }
+
+    showCancelConfirmation = (e) => {
+        e.preventDefault();
+        this.setState({ showConfirmCancel: true });
     }
 
     statusStyle(status) {
@@ -48,7 +57,8 @@ class BuyerOrderCard extends React.Component {
     }
 
     render() {
-        const { showDetails } = this.state;
+        const { showDetails, showConfirmCancel } = this.state;
+
         const { order } = this.props;
         const { food, cook, isCancelling, handoff_start_date, handoff_end_date } = order;
 
@@ -104,13 +114,24 @@ class BuyerOrderCard extends React.Component {
                             <Icon name='envelope outline' size='large' />
                             <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
                         </div>
-                        {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) &&
+                        {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) && this.props.onCancel &&
                             <div className='buyerordercard-footer'>
                                 <Icon name={isCancelling ? 'circle notched' : 'calendar alternate outline'} loading={isCancelling} size='large' />
-                                <a href='./' onClick={this.cancelOrder}>Cancel order</a>
+                                <a href='./' onClick={this.showCancelConfirmation}>Cancel order</a>
                             </div>
                         }
                     </div>
+
+                    <ConfirmModal
+                        header='Cancel this order'
+                        message="Got it. Let your cook know why you're cancelling."
+                        open={showConfirmCancel}
+                        isProcessing={isCancelling}
+                        onConfirm={this.cancelOrder}
+                        onClose={this.closeCancelConfirmation}
+                        confirmButtonLabel='Cancel order'
+                    />
+
                 </div>
 
             </Segment>

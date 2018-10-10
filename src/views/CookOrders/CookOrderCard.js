@@ -1,12 +1,13 @@
 import React from 'react'
 import pluralize from 'pluralize'
 import { withRouter } from 'react-router-dom'
-import { Header, Divider, Icon, Accordion, Button, Modal, TextArea, Segment } from 'semantic-ui-react'
+import { Divider, Icon, Accordion, Button, Segment } from 'semantic-ui-react'
 import './CookOrderCard.css'
 import { Constants, Colors } from '../../Constants'
 import { OrderStatus, OrderStatusLabels } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
+import ConfirmModal from '../../components/ConfirmModal'
 import OrderExchangeMessage from './OrderExchangeMessage'
 
 class CookOrderCard extends React.Component {
@@ -154,7 +155,6 @@ class CookOrderCard extends React.Component {
                         onConfirm={this.acceptOrder}
                         onClose={this.closeAcceptConfirmation}
                         confirmButtonLabel='Accept order'
-
                     />
 
                     <ConfirmModal
@@ -165,7 +165,6 @@ class CookOrderCard extends React.Component {
                         onConfirm={this.cancelOrder}
                         onClose={this.closeCancelConfirmation}
                         confirmButtonLabel='Cancel order'
-
                     />
 
                     <ConfirmModal
@@ -184,43 +183,3 @@ class CookOrderCard extends React.Component {
 }
 
 export default withRouter(CookOrderCard);
-
-class ConfirmModal extends React.Component {
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.isProcessing && !nextProps.isProcessing) {
-            this.props.onClose();
-        }
-    }
-
-    render() {
-
-        const { header, message, open, isProcessing, onConfirm, onClose, confirmButtonLabel } = this.props;
-
-        let reason;
-        const handleReasonChange = (event, data) => {
-            reason = data.value;
-        };
-
-        const handleConfirm = () => {
-            onConfirm(reason);
-        };
-
-        return (
-            <Modal open={open} dimmer='inverted' onClose={onClose}>
-                <Modal.Header>{header}</Modal.Header>
-                <Modal.Content>
-                    <Modal.Description>
-                        <Header>{message}</Header>
-                        <p>Write your message here</p>
-                    </Modal.Description>
-                    <TextArea autoHeight onChange={handleReasonChange} />
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button onClick={onClose}>Back</Button>
-                    <Button loading={isProcessing} onClick={handleConfirm}>{confirmButtonLabel}</Button>
-                </Modal.Actions>
-            </Modal>
-        );
-    }
-}

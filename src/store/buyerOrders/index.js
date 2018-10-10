@@ -35,10 +35,11 @@ function requestCancelOrder(order) {
     };
 }
 
-function receiveCancelOrderSuccess(order) {
+function receiveCancelOrderSuccess(order, reason) {
     return {
         type: ActionTypes.BUYER_ORDERS_RECEIVE_CANCEL_ORDER_SUCCESS,
         order,
+        reason,
         receivedAt: Date.now()
     };
 }
@@ -73,14 +74,14 @@ export const Actions = {
         };
     },
 
-    cancelOrder: (order) => {
+    cancelOrder: (order, reason) => {
         return (dispatch) => {
             dispatch(requestCancelOrder(order));
 
-            return ApiClient.cancelOrder(order)
+            return ApiClient.cancelOrder(order, reason)
                 .then(
                     response => {
-                        dispatch(receiveCancelOrderSuccess(order));
+                        dispatch(receiveCancelOrderSuccess(order, reason));
                     },
                     error => {
                         dispatch(receiveCancelOrderError(order, error));
@@ -122,7 +123,7 @@ export const Reducers = {
                     error: action.error
                 });
 
-            
+
             case ActionTypes.BUYER_ORDERS_REQUEST_CANCEL_ORDER:
                 return updateOrder(state, action, {
                     isCancelling: true
@@ -131,6 +132,7 @@ export const Reducers = {
             case ActionTypes.BUYER_ORDERS_RECEIVE_CANCEL_ORDER_SUCCESS:
                 return updateOrder(state, action, {
                     isCancelling: false,
+                    cancel_message: action.reason,
                     status: OrderStatus.Cancelled
                 });
 

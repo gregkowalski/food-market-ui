@@ -18,8 +18,8 @@ class BuyerOrders extends React.Component {
         this.props.actions.loadOrders();
     } 
 
-    handleCancelOrder = (order) => {
-        this.props.actions.cancelOrder(order);
+    handleCancelOrder = (order, reason) => {
+        this.props.actions.cancelOrder(order, reason);
     }
 
     render() {
