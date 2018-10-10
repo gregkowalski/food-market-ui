@@ -26,7 +26,7 @@ const Help = () => {
                     <div className='help-cards'>What To Expect</div>
                     <div>How do food exchanges happen?</div>
                     <Divider hidden />
-                    <div>What are smmall-batch foods?</div>
+                    <div>What are small-batch foods?</div>
                     <Divider hidden />
                     <div>Proper store and re-heating</div>
                 </Grid.Column>
