@@ -18,7 +18,7 @@ class BuyerOrderCard extends React.Component {
 
     cancelOrder = (e) => {
         e.preventDefault();
-        if (!this.props.order.isCancelling) {
+        if (!this.props.order.isCancelling && this.props.onCancel) {
             this.props.onCancel(this.props.order);
         }
     }

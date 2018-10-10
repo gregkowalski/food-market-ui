@@ -3,12 +3,14 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import LoadingIcon from '../../components/LoadingIcon'
 import { Actions, Selectors } from '../../store/buyerOrders'
 import BuyerOrderCard from './BuyerOrderCard'
+import { OrderStatus } from '../../Enums';
 
 class BuyerOrders extends React.Component {
 
@@ -32,9 +34,28 @@ class BuyerOrders extends React.Component {
             );
         }
         else {
-            content = orders.map(order => {
-                return (<BuyerOrderCard order={order} isCancelling={isCancelling} onCancel={this.handleCancelOrder} key={order.order_id} />);
+            const dateAsc = (a, b) => {
+                return moment(a.handoff_start_date) > moment(b.handoff_start_date);
+            }
+            const isUpcoming = (order) => (order.status === OrderStatus.Pending || order.status === OrderStatus.Accepted);
+            const upcomingOrders = orders.filter(order => isUpcoming(order)).sort(dateAsc);
+            const pastOrders = orders.filter(order => !isUpcoming(order)).sort(dateAsc);
+
+            const upcomingOrdersContent = upcomingOrders.map(order => {
+                return (<BuyerOrderCard key={order.order_id} order={order} isCancelling={isCancelling} onCancel={this.handleCancelOrder} />);
             });
+
+            const historyOrdersContent = pastOrders.map(order => {
+                return (<BuyerOrderCard key={order.order_id} order={order} />);
+            });
+
+            content = (
+                <div>
+                    {upcomingOrdersContent}
+                    <div className='buyerorders-header buyerorders-header-past'>Past Orders</div>
+                    {historyOrdersContent}
+                </div>
+            );
         }
 
         return (

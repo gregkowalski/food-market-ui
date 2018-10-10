@@ -16,6 +16,11 @@
     font-size: 1.8em;
     font-weight: 400;
     padding: 10px 0px;
+    margin-bottom: 0.8em;
+}
+
+.buyerorders-header-past {
+    margin-top: 2.5em;
 }
 
 @media all and (max-width: 767px) {

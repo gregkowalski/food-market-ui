@@ -60,7 +60,7 @@ class CookOrders extends React.Component {
             );
         }
         else {
-            const ordersByDay = Util.groupBy(orders, order => moment(order.handoff_start_date).format('YYYY-MM-DD'));
+            const ordersByDay = Util.groupBy(orders, order => Util.toCurrentTimezoneMoment(order.handoff_start_date).format('YYYY-MM-DD'));
             const ordersByDayArray = Array.from(ordersByDay.entries());
             const sortedOrdersByDay = ordersByDayArray.sort(([a], [b]) => {
                 return moment(a) > moment(b);
