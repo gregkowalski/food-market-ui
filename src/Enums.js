@@ -7,6 +7,7 @@ export const OrderStatus = {
     Pending: 'pending',
     Accepted: 'charged',
     Declined: 'declined',
+    Expired: 'expired',
     Cancelled: 'cancelled',
     Transferred: 'transferred',
     Failed: 'failed',
@@ -19,6 +20,7 @@ export const OrderStatusLabels = {
     cancelled: 'Cancelled',
     transferred: 'Completed',
     failed: 'Failed',
+    expired: 'Expired',
     missed: 'Missed'
 }
 

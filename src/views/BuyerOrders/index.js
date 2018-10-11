@@ -16,7 +16,7 @@ class BuyerOrders extends React.Component {
 
     componentWillMount() {
         this.props.actions.loadOrders();
-    } 
+    }
 
     handleCancelOrder = (order, reason) => {
         this.props.actions.cancelOrder(order, reason);
@@ -41,13 +41,25 @@ class BuyerOrders extends React.Component {
             const upcomingOrders = orders.filter(order => isUpcoming(order)).sort(dateAsc);
             const pastOrders = orders.filter(order => !isUpcoming(order)).sort(dateAsc);
 
-            const upcomingOrdersContent = upcomingOrders.map(order => {
-                return (<BuyerOrderCard key={order.order_id} order={order} isCancelling={isCancelling} onCancel={this.handleCancelOrder} />);
-            });
+            let upcomingOrdersContent;
+            if (!upcomingOrders || upcomingOrders.length <= 0) {
+                upcomingOrdersContent = (<div>No orders...</div>);
+            }
+            else {
+                upcomingOrdersContent = upcomingOrders.map(order => {
+                    return (<BuyerOrderCard key={order.order_id} order={order} isCancelling={isCancelling} onCancel={this.handleCancelOrder} />);
+                });
+            }
 
-            const historyOrdersContent = pastOrders.map(order => {
-                return (<BuyerOrderCard key={order.order_id} order={order} />);
-            });
+            let historyOrdersContent;
+            if (!pastOrders || pastOrders.length <= 0) {
+                historyOrdersContent = (<div>No orders...</div>);
+            }
+            else {
+                historyOrdersContent = pastOrders.map(order => {
+                    return (<BuyerOrderCard key={order.order_id} order={order} />);
+                });
+            }
 
             content = (
                 <div>
