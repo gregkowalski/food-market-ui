@@ -87,12 +87,8 @@ class ApiClient {
         return this.invokeApi(`/foods/${foodId}`, 'GET');
     }
 
-    getReviews() {
-        return this.invokeApi(`/reviews`, 'GET');
-    }
-
-    getReview(reviewId) {
-        return this.invokeApi(`/foods/${reviewId}`, 'GET');
+    getReviews(food_id) {
+        return this.invokeApi(`/reviews?food_id=${food_id}`, 'GET');
     }
 
     geoSearchFoods(geo, beginDate, endDate) {

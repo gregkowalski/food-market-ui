@@ -238,8 +238,8 @@ export const Actions = {
             return ApiClient.getReviews(food_id)
                 .then(
                     response => {
-                        const reviews = response.data;
-                        // const reviews = response.data.filter(r => r.food_id === food_id);
+                        let reviews = response.data;
+                        reviews = response.data.filter(r => r.food_id === food_id);
                         dispatch(receiveReviewsSuccess(reviews));
                     },
                     error => {
