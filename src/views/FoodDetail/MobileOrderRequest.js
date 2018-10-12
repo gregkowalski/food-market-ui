@@ -11,7 +11,16 @@ export default class MobileOrderRequest extends React.Component {
 
     render() {
         const { onOrderButtonClick, onHide, onDateChange, onTimeChange, onQuantityChange, onDeliveryOptionChange } = this.props;
-        const { food, quantity, pickup, date, time, canRequestOrder } = this.props;
+        const { food, cook, quantity, pickup, date, time } = this.props;
+        let { canRequestOrder } = this.props;
+
+        let buttonText = 'Request an Order';
+        let footnote = "You won't be charged yet";
+        if (!cook.has_stripe_account) {
+            canRequestOrder = false;
+            buttonText = 'Coming Soon!';
+            footnote = 'This food is unavailable for now';
+        }
 
         return (
             <div>
@@ -24,8 +33,8 @@ export default class MobileOrderRequest extends React.Component {
                     <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
                     <div className='mobileorder-footer'>
-                        <Button disabled={!canRequestOrder} onClick={onOrderButtonClick}>Request an Order</Button>
-                        <div>You won't be charged yet</div>
+                        <Button disabled={!canRequestOrder} onClick={onOrderButtonClick}>{buttonText}</Button>
+                        <div>{footnote}</div>
                     </div>
 
                 </div>
