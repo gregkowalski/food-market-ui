@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import jwtDecode from 'jwt-decode'
 import { Image } from 'semantic-ui-react'
@@ -13,9 +13,14 @@ import ErrorCodes from '../ErrorCodes'
 import LoadingIcon from '../../components/LoadingIcon'
 import Url from '../../services/Url'
 
-export default class CognitoCallback extends React.Component {
+const Errors = {
+    INVALID_PATH: 'INVALID_PATH'
+};
+
+class CognitoCallback extends React.Component {
 
     state = {};
+    signingOut = false;
 
     componentWillMount() {
         var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
@@ -36,11 +41,16 @@ export default class CognitoCallback extends React.Component {
                         if (!lastPath) {
                             lastPath = Url.home();
                         }
-                        this.setState({ redirectTo: lastPath });
+                        if (lastPath.length > 0 && lastPath[0] === '/') {
+                            this.props.history.push(lastPath);
+                        }
+                        else {
+                            console.error('Invalid redirect path: ' + lastPath);
+                            this.setState({ errorCode: Errors.INVALID_PATH });
+                        }
                     })
                     .catch(err => {
                         console.error(err);
-                        CognitoUtil.logOut();
                         if (err.response && err.response.data) {
                             this.setState({ errorCode: err.response.data.code });
                         }
@@ -53,29 +63,58 @@ export default class CognitoCallback extends React.Component {
 
         let query = Util.parseQueryString(window.location);
         if (!query.state) {
+            this.signOut();
             throw new Error('SECURITY ALERT: CSRF state parameter is missing');
         }
 
         let storedState = CognitoUtil.getCsrfState();
         if (query.state !== storedState) {
+            this.signOut();
             throw new Error('SECURITY ALERT: CSRF state parameter is invalid');
         }
 
         auth.parseCognitoWebResponse(window.location.href);
     }
 
-    render() {
-        const { errorCode, redirectTo } = this.state;
-        if (redirectTo) {
-            // verify redirect link starts with a / to ensure we're not redirecting to another site
-            if (redirectTo.length > 0 && redirectTo[0] === '/') {
-                return <Redirect to={redirectTo} />
-            }
-            console.error('Invalid redirect path');
-            return <div></div>;
+    signOut() {
+        if (this.signingOut) {
+            return;
         }
-        else if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
-            return <div>Foodcraft is a private, invite-only network at this time.  Please contact {Config.Foodcraft.SupportEmail} for more information</div>
+
+        setTimeout(() => {
+            CognitoUtil.logOut()
+        }, 5000);
+        this.signingOut = true;
+    }
+
+    render() {
+        let content;
+
+        const { errorCode } = this.state;
+        if (errorCode) {
+            let message;
+            if (errorCode === Errors.INVALID_PATH) {
+                message = 'Invalid landing page';
+            }
+            else if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
+                message = `Foodcraft is a private, invite-only network at this time.  Please contact ${Config.Foodcraft.SupportEmail} for more information`;
+            }
+            else {
+                message = `Something went wrong, error code: ${errorCode}`;
+            }
+            this.signOut();
+            content = (
+                <div style={{ margin: 20 }}>
+                    {message}
+                </div>
+            );
+        }
+        else {
+            content = (
+                <div className='cognitocallback-loadingicon'>
+                    <LoadingIcon size='large' text='Logging in...' />
+                </div>
+            );
         }
 
         return (
@@ -84,10 +123,10 @@ export default class CognitoCallback extends React.Component {
                     <Image src={Constants.AppLogo} />
                     <div>{Constants.AppName}</div>
                 </div>
-                <div className='cognitocallback-loadingicon'>
-                    <LoadingIcon size='large' text='Logging in...' />
-                </div>
+                {content}
             </div>
         );
     }
 }
+
+export default withRouter(CognitoCallback);

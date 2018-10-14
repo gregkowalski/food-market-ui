@@ -176,21 +176,27 @@ export class AppHeader extends React.Component {
         return sessionElement;
     }
 
+    getLogo() {
+        return (
+            <div className='apphead-logo' onClick={this.navigateToHome}>
+                <Image height='38px' src={Constants.AppLogo} />
+                <div className='apphead-link'>{Constants.AppName}</div>
+            </div>);
+    }
+
     render() {
         const { simple } = this.props;
 
         const sessionElement = !simple ? this.getSessionElement() : undefined;
         const headerStyle = this.getHeaderStyle();
         const headerContent = this.getHeaderContent();
+        const logo = this.getLogo();
 
         return (
             <div className='apphead' style={headerStyle}>
                 <div className='apphead-content'>
                     <div className='apphead-left'>
-                        <div className='apphead-logo' onClick={this.navigateToHome}>
-                            <Image height='38px' src={Constants.AppLogo} />
-                            <div className='apphead-link'>{Constants.AppName}</div>
-                        </div>
+                        {logo}
                         {headerContent}
                     </div>
                     <div className='apphead-right'>
