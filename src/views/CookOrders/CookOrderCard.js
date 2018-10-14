@@ -7,6 +7,7 @@ import { Constants, Colors } from '../../Constants'
 import { OrderStatus, OrderStatusLabels } from '../../Enums'
 import PriceCalc from '../../services/PriceCalc'
 import Url from '../../services/Url'
+import Util from '../../services/Util'
 import ConfirmModal from '../../components/ConfirmModal'
 import OrderExchangeMessage from './OrderExchangeMessage'
 
