@@ -5,10 +5,18 @@ import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Util from '../../services/Util'
 import './DateTimeSelector.css'
+import { CognitoUserPool } from 'amazon-cognito-identity-js';
+import { DaysOfWeek } from '../../Enums';
+
+const availabilityKeys = [
+    DaysOfWeek.monday, DaysOfWeek.tuesday, DaysOfWeek.wednesday, DaysOfWeek.thursday,
+    DaysOfWeek.friday, DaysOfWeek.saturday, DaysOfWeek.sunday
+];
 
 export default class DateTimeSelector extends React.Component {
 
     state = {};
+    localAvailability = undefined;
 
     handleTimeChange = (e, { value }) => {
         if (this.foodTimes) {
@@ -37,44 +45,56 @@ export default class DateTimeSelector extends React.Component {
         this.initFoodTimes(date, time, food);
     }
 
-    initFoodTimes(date, time, food) {
+    initAvailability(food) {
+        if(!food || !food.availability) {
+            return;
+        }
 
+        if(this.localAvailability === undefined) {
+            this.localAvailability = {};
+            for (let day in food.availability) {
+                let dayIndex = availabilityKeys.findIndex((d) => d === day) + 1;
+                for (let hour of food.availability[day]) {
+                    // using 2018-01-0x as the first day happens to be a Monday
+                    let local = moment.utc('2018-01-0' + dayIndex + 'T' + hour + ':00', moment.ISO_8601).local();
+                    let localDayOfWeek = availabilityKeys[local.isoWeekday() - 1];
+                    if(!this.localAvailability[localDayOfWeek]) {
+                        this.localAvailability[localDayOfWeek] = [];
+                    }
+                    this.localAvailability[localDayOfWeek].push(local.hour());
+                }
+            };
+        }
+    }
+
+    initFoodTimes(date, time, food) {
         this.timeValue = undefined;
         this.orderTimes = undefined;
 
-        if (!food || !food.handoff_dates || food.handoff_dates.length <= 0) {
-            // TODO: temporary workaround for not having all the handoff_dates
-            // set for all foods.  Let's just generate a few available times
-            // for testing purposes.  This needs to be removed.
-            if (!food.handoff_dates || food.handoff_dates.length === 0) {
-                food.handoff_dates = [];
-                for (let i = 0; i < 4; i++) {
-                    for (let j = 0; j < 3; j++) {
-                        const start = moment.utc().add(i, 'days').add(j * 2, 'hours');
-                        const end = start.clone().add(1, 'hours');
-                        food.handoff_dates.push({ start, end });
-                    }
-                }
-            }
-            else {
-                return;
-            }
+        if (!food || !date) {
+            return;
+        }
+
+        this.initAvailability(food);
+        if(!this.localAvailability) {
+            return;
+        }
+
+        const hours = this.localAvailability[availabilityKeys[moment(date).isoWeekday() - 1]];
+        if(!hours || hours.length <= 0) {
+            return;
         }
 
         this.foodTimes = [];
         let index = 0;
-        const now = moment.utc();
-
-        for (const handoff_date of food.handoff_dates) {
-            const start = moment.utc(handoff_date.start);
-            const end = moment.utc(handoff_date.end);
-            if (now.diff(end) < 0 && Util.isSameLocalDay(start, date)) {
-                this.foodTimes.push({
-                    value: index++,
-                    handoff_start_date: start,
-                    handoff_end_date: end
-                });
-            }
+        for (let hour of hours) {
+            const start = moment(date).hour(hour);
+            const end = start.clone().add(1, 'hour');
+            this.foodTimes.push({
+                value: index++,
+                handoff_start_date: start,
+                handoff_end_date: end
+            });
         }
 
         if (time) {
@@ -91,25 +111,14 @@ export default class DateTimeSelector extends React.Component {
     }
 
     isDayOutsideRange = (date) => {
-        const { food } = this.props;
-        const { handoff_dates } = food;
-
-        if (!handoff_dates || handoff_dates.length <= 0) {
-            return Util.isDayOutsideRange(date);
-        }
-
         const now = moment.utc();
         if (now.diff(date) > 0 && !Util.isSameLocalDay(now, date)) {
             return true;
         }
 
-        for (const handoff_date of handoff_dates) {
-            const start = moment.utc(handoff_date.start);
-            const end = moment.utc(handoff_date.end);
-
-            if (now.diff(end) < 0 && Util.isSameLocalDay(start, date)) {
-                return false;
-            }
+        const hours = this.localAvailability[availabilityKeys[moment(date).isoWeekday() - 1]];
+        if(hours !== undefined && hours.length > 0) {
+            return false;
         }
 
         return true;

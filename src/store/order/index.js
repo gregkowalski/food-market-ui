@@ -203,6 +203,15 @@ export const Actions = {
                 .then(
                     response => {
                         const food = ApiObjectMapper.mapFood(response.data);
+                        food.availability = {
+                            monday:[],
+                            tuesday:["16:00","17:00","18:00","19:00","20:00","21:00"],
+                            wednesday:["16:00","17:00","18:00","19:00","20:00","21:00"],
+                            thursday:["16:00","17:00","18:00","19:00","20:00","21:00"],
+                            friday:[],
+                            saturday:[],
+                            sunday:[]
+                        };
                         dispatch(receiveFoodSuccess(food));
                     },
                     error => {
