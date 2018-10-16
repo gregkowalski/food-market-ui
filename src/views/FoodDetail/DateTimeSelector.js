@@ -5,7 +5,6 @@ import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Util from '../../services/Util'
 import './DateTimeSelector.css'
-import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import { DaysOfWeek } from '../../Enums';
 
 const availabilityKeys = [
