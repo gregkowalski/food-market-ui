@@ -1,4 +1,4 @@
-.cognitocallback-logo {
+.loadingheader-logo {
     display: flex;
     height: 55px;
     border-bottom: 1px solid rgb(201, 199, 199);
@@ -6,7 +6,7 @@
     padding: 9px 28px 9px 10px;
 }
 
-.cognitocallback-logo > div {
+.loadingheader-logo > div {
     color: #b61095;
     padding: 2px 5px 0px 4px;
     margin-top: 9px;
@@ -16,11 +16,11 @@
     text-shadow: 0 2px 4px rgba(104, 104, 104, 0.479);
 }
 
-.cognitocallback-logo > img {
+.loadingheader-logo > img {
     height: 38px;
 }
 
-.cognitocallback-loadingicon {
+.loadingheader-loadingicon {
     color: #3a3a3a;
     font-size: 1.2em;
     margin-top: 13px;

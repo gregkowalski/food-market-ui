@@ -1,9 +1,10 @@
 import React from 'react'
 import { GoogleApiWrapper } from 'google-maps-react';
 import Config from '../Config'
+import LoadingHeader from '../components/LoadingHeader'
 
 const LoadingContainer = () => (
-    <div></div>
+    <LoadingHeader />
 );
 
 export default function (ComposedClass) {

@@ -2,15 +2,12 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import jwtDecode from 'jwt-decode'
-import { Image } from 'semantic-ui-react'
-import './CognitoCallback.css'
 import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
 import Config from '../../Config'
-import { Constants } from '../../Constants'
 import ErrorCodes from '../ErrorCodes'
-import LoadingIcon from '../../components/LoadingIcon'
+import LoadingHeader from '../../components/LoadingHeader'
 import Url from '../../services/Url'
 
 const Errors = {
@@ -109,24 +106,14 @@ class CognitoCallback extends React.Component {
                 </div>
             );
         }
-        else {
-            content = (
-                <div className='cognitocallback-loadingicon'>
-                    <LoadingIcon size='large' text='Logging in...' />
-                </div>
-            );
-        }
 
         return (
-            <div>
-                <div className='cognitocallback-logo'>
-                    <Image src={Constants.AppLogo} />
-                    <div>{Constants.AppName}</div>
-                </div>
+            <LoadingHeader>
                 {content}
-            </div>
+            </LoadingHeader>
         );
     }
 }
+
 
 export default withRouter(CognitoCallback);
