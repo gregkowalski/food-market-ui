@@ -35,25 +35,27 @@ export default class DateTimeSelector extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        const { date, time, food } = nextProps;
+        const { date, time, food, cook } = nextProps;
+        this.initAvailability(cook);
         this.initFoodTimes(date, time, food);
     }
 
     componentWillMount() {
-        const { date, time, food } = this.props;
+        const { date, time, food, cook } = this.props;
+        this.initAvailability(cook);
         this.initFoodTimes(date, time, food);
     }
 
-    initAvailability(food) {
-        if(!food || !food.availability) {
+    initAvailability(cook) {
+        if(!cook || !cook.availability) {
             return;
         }
 
         if(this.localAvailability === undefined) {
             this.localAvailability = {};
-            for (let day in food.availability) {
+            for (let day in cook.availability) {
                 let dayIndex = availabilityKeys.findIndex((d) => d === day) + 1;
-                for (let hour of food.availability[day]) {
+                for (let hour of cook.availability[day]) {
                     // using 2018-01-0x as the first day happens to be a Monday
                     let local = moment.utc('2018-01-0' + dayIndex + 'T' + hour + ':00', moment.ISO_8601).local();
                     let localDayOfWeek = availabilityKeys[local.isoWeekday() - 1];
@@ -74,7 +76,6 @@ export default class DateTimeSelector extends React.Component {
             return;
         }
 
-        this.initAvailability(food);
         if(!this.localAvailability) {
             return;
         }

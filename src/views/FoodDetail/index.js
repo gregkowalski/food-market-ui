@@ -144,7 +144,7 @@ class FoodDetail extends React.Component {
                         </div>
                         <div className='detail-item-right'>
                             <div className='detail-head-right'>
-                                <OrderSection food={food} quantity={quantity} date={date} time={time} pickup={pickup} canRequestOrder={canRequestOrder}
+                                <OrderSection food={food} cook={cook} quantity={quantity} date={date} time={time} pickup={pickup} canRequestOrder={canRequestOrder}
                                     onQuantityChange={this.handleQuantityChange}
                                     onOrderButtonClick={this.handleOrderButtonClick}
                                     onDateChange={this.handleDateChange}
