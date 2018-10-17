@@ -92,7 +92,7 @@ class FoodDetail extends React.Component {
 
     render() {
         const { google, food, cook, reviews, pickup, quantity, date, time } = this.props;
-        if (!food || !google) {
+        if (!food || !google || !cook) {
             return null;
         }
 
@@ -171,7 +171,13 @@ class FoodDetail extends React.Component {
                 </div>
 
                 <Drawer visible={this.state.showOrderDrawer}>
-                    <MobileOrderRequest food={food} quantity={quantity} date={date} time={time} pickup={pickup}
+                    <MobileOrderRequest
+                        food={food}
+                        cook={cook}
+                        quantity={quantity}
+                        date={date}
+                        time={time}
+                        pickup={pickup}
                         canRequestOrder={canRequestOrder}
                         onDateChange={this.handleDateChange}
                         onTimeChange={this.handleTimeChange}

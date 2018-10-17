@@ -1,6 +1,11 @@
 import React from 'react'
 import { GoogleApiWrapper } from 'google-maps-react';
 import Config from '../Config'
+import LoadingHeader from '../components/LoadingHeader'
+
+const LoadingContainer = () => (
+    <LoadingHeader />
+);
 
 export default function (ComposedClass) {
 
@@ -18,6 +23,7 @@ export default function (ComposedClass) {
     return GoogleApiWrapper({
         version: '3.34',
         apiKey: Config.Google.ApiKey,
-        libraries: ['places', 'geometry']
+        libraries: ['places', 'geometry'],
+        LoadingContainer: LoadingContainer
     })(WithGoogleComponent);
 }

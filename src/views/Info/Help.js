@@ -19,8 +19,6 @@ const Help = () => {
                 <Grid.Column>
                     <div className='help-cards'>Popular Questions</div>
                     <div>Does Foodcraft vet cooks?</div>
-                    <Divider hidden />
-                    <div>Is this legal?</div>
                 </Grid.Column>
                 <Grid.Column>
                     <div className='help-cards'>What To Expect</div>

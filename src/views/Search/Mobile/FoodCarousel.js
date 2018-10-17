@@ -120,7 +120,7 @@ export default class FoodCarousel extends Component {
         const slides = carouselFoods.map((food, index) => {
 
             if (!food) {
-                return null;
+                return <div></div>;
             }
 
             let borderColor = 'transparent';
@@ -180,7 +180,7 @@ export default class FoodCarousel extends Component {
                 swiping={true}
                 afterSlide={this.handleAfterFoodSlide}
                 slideIndex={selectedSlideIndex}
-                // speed={100}
+                speed={200}
                 renderBottomCenterControls={none}
                 renderCenterLeftControls={none}
                 renderCenterRightControls={none}
