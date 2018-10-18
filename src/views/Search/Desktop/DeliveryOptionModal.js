@@ -15,7 +15,7 @@ export default class DeliveryOptionModal extends React.Component {
 
         return (
             <Modal className='foodfilter-deliveryoptions foodfilter-modal'
-                style={style} dimmer={false} open={isOpen} onClose={onClose}>
+                style={style} dimmer='inverted' open={isOpen} onClose={onClose}>
                 <Modal.Content>
                     <Checkbox radio label='Pickup' name='options' checked={pickup} value={DeliveryOptions.pickup} onClick={this.handleClick} />
                     <Checkbox radio label='Delivery' name='options' checked={!pickup} value={DeliveryOptions.delivery} onClick={this.handleClick} />
