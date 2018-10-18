@@ -83,7 +83,7 @@ class ProfileEdit extends React.Component {
                     let dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
                     for (let hour of user.availability[day]) {
                         // using 2018-01-0x as the first day happens to be a Monday and a datetime object is required
-                        let start = moment('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601)
+                        let start = moment.utc('2018-01-0' + dayOfWeek + 'T' + hour + ':00', moment.ISO_8601).local();
                         let interval = {
                             start: start,
                             end: start.clone().add(1, 'hour'),
@@ -141,7 +141,9 @@ class ProfileEdit extends React.Component {
 
             // go through intervals of selected range to check if previously already selected
             while (interval.start < interval.end) {
+                interval.start.utc();
                 let uid = interval.start.isoWeekday() + interval.start.format('-HH:mm');
+                interval.start.local();
 
                 // eslint-disable-next-line
                 let index = selectedIntervals.findIndex((interval) => interval.uid === uid)
