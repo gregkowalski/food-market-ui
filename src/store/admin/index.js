@@ -38,9 +38,10 @@ function requestAcceptInvite() {
     };
 }
 
-function receiveAcceptInviteSuccess() {
+function receiveAcceptInviteSuccess(body) {
     return {
         type: ActionTypes.ADMIN_RECEIVE_ACCEPT_INVITE_SUCCESS,
+        first_time: body.first_time,
         receivedAt: Date.now()
     };
 }
@@ -80,7 +81,7 @@ export const Actions = {
             return ApiClient.acceptInvite(invite_id)
                 .then(
                     response => {
-                        dispatch(receiveAcceptInviteSuccess());
+                        dispatch(receiveAcceptInviteSuccess(response.data));
                     },
                     error => {
                         dispatch(receiveAcceptInviteError(error));
@@ -138,6 +139,7 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isAcceptingInvite: false,
                     acceptInviteResult: {
+                        first_time: action.first_time,
                         code: ErrorCodes.SUCCESS
                     }
                 });

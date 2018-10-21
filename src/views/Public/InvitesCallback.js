@@ -8,6 +8,7 @@ import AppHeader from '../../components/AppHeader'
 import ErrorCodes from '../../services/ErrorCodes';
 import Url from '../../services/Url'
 import LoadingIcon from '../../components/LoadingIcon'
+import CognitoUtil from '../../services/Cognito/CognitoUtil'
 
 class InvitesCallback extends React.Component {
 
@@ -24,6 +25,10 @@ class InvitesCallback extends React.Component {
         let content;
         if (acceptInviteResult) {
             if (acceptInviteResult.code === ErrorCodes.SUCCESS) {
+                if (acceptInviteResult.first_time) {
+                    CognitoUtil.redirectToSignup();
+                    return;
+                }
                 return (<Redirect to={Url.home()} />);
             }
             else {
