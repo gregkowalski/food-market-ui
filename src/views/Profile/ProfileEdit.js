@@ -76,8 +76,8 @@ class ProfileEdit extends React.Component {
         }
 
         const { user } = this.props;
-        if (user && this.state.selectedIntervals === undefined) {
-            if (user.availability !== undefined) {
+        if (user && !this.state.selectedIntervals) {
+            if (user.availability) {
                 let selectedIntervals = [];
                 for (let day in user.availability) {
                     let dayOfWeek = availabilityKeys.findIndex((d) => d === day) + 1;
