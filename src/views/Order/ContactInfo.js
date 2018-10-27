@@ -22,7 +22,7 @@ class ContactInfo extends React.Component {
                     Contact
                 </Header>
                 <div className='contactinfo-header'>
-                    Only be used privately for communication related to this order.
+                    Your info will only be used for communication related to this order.
                 </div>
                 <Divider />
                 <div className='contactinfo-contact'>
