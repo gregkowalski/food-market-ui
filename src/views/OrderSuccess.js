@@ -48,14 +48,14 @@ class OrderSuccess extends React.Component {
                 <Segment padded>
                     <h1><Icon name='food' /> Success</h1>
                     <Divider hidden />
-                    <div>A delicious order request for <span className='ordersuccess-food'>{food.title}</span> has been sent.</div>
+                    <div>A delicious order request for <span className='ordersuccess-food'>{food.title}</span> has been sent!</div>
                     <Divider hidden />
-                    <div>You will get a response from your cook within 24 hours or sooner.
+                    <div>You will get a response from your cook within 24 hours or sooner. 
                     </div>
                     <Divider hidden />                    
                     <div onClick={this.navigateToHome}>
                         <div className='ordersuccess-border'>
-                            Go to<span className='ordersuccess-home-link'>{Constants.AppName}</span>
+                            Take me to<span className='ordersuccess-home-link'>My Foodcraft Orders</span>
                         </div>
                     </div>
                 </Segment >
