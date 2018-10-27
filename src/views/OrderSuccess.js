@@ -7,7 +7,7 @@ import { Segment, Divider, Icon } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
 import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
-import { Constants } from '../Constants'
+// import { Constants } from '../Constants'
 import './OrderSuccess.css'
 
 class OrderSuccess extends React.Component {
