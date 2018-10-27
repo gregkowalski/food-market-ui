@@ -94,6 +94,11 @@
     width: 70%;
     margin: auto;
 }
+.whycook-cooks-pic {
+    border: 2px solid #d3d3d3;
+    padding: 3px;
+    height: 295px;
+}
 
 @media all and (max-width: 767px) {
     .whycook-title {
