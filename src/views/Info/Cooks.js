@@ -10,9 +10,21 @@ const Cooks = () => {
             <div>A community dedicated to sharing handmade foods</div></div>
 
             <div className='cooks-content'>
+            <Grid stackable columns={2} verticalAlign='top' textAlign='left' reversed='mobile'>                    
+                    <Grid.Column>
+                        <Icon size='big' color='purple' name='quote left' />
+                        <div>This is what food means to me. This is why I love to cook and share it with others. </div>
+                        <div className='cooks-cards'>Maria
+                            <div>West End</div>
+                            </div>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <div className='cooks-pic'>Photo coming soon!</div>
+                    </Grid.Column>
+                </Grid>
                 <Grid stackable columns={2} verticalAlign='top' textAlign='left'>
                     <Grid.Column>
-                        <div className='cooks-pic'>Cook IMG</div>
+                        <div className='cooks-pic'>Photo coming soon!</div>
                     </Grid.Column>
                     <Grid.Column>
                         <Icon size='big' color='purple' name='quote left' />
@@ -33,7 +45,7 @@ const Cooks = () => {
                             </div>
                     </Grid.Column>
                     <Grid.Column>
-                        <div className='cooks-pic'>Cook IMG</div>
+                        <div className='cooks-pic'>Photo coming soon!</div>
                     </Grid.Column>
                 </Grid>
             </div>
