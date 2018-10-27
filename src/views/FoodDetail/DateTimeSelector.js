@@ -15,7 +15,7 @@ const availabilityKeys = [
 export default class DateTimeSelector extends React.Component {
 
     state = {};
-    localAvailability = undefined;
+    localAvailability;
 
     handleTimeChange = (e, { value }) => {
         if (this.foodTimes) {
@@ -47,11 +47,11 @@ export default class DateTimeSelector extends React.Component {
     }
 
     initAvailability(cook) {
-        if(!cook || !cook.availability) {
+        if (!cook || !cook.availability) {
             return;
         }
 
-        if(this.localAvailability === undefined) {
+        if (!this.localAvailability) {
             this.localAvailability = {};
             for (let day in cook.availability) {
                 let dayIndex = availabilityKeys.findIndex((d) => d === day) + 1;
@@ -59,7 +59,7 @@ export default class DateTimeSelector extends React.Component {
                     // using 2018-01-0x as the first day happens to be a Monday
                     let local = moment.utc('2018-01-0' + dayIndex + 'T' + hour + ':00', moment.ISO_8601).local();
                     let localDayOfWeek = availabilityKeys[local.isoWeekday() - 1];
-                    if(!this.localAvailability[localDayOfWeek]) {
+                    if (!this.localAvailability[localDayOfWeek]) {
                         this.localAvailability[localDayOfWeek] = [];
                     }
                     this.localAvailability[localDayOfWeek].push(local.hour());
@@ -76,12 +76,12 @@ export default class DateTimeSelector extends React.Component {
             return;
         }
 
-        if(!this.localAvailability) {
+        if (!this.localAvailability) {
             return;
         }
 
         const hours = this.localAvailability[availabilityKeys[moment(date).isoWeekday() - 1]];
-        if(!hours || hours.length <= 0) {
+        if (!hours || hours.length <= 0) {
             return;
         }
 
@@ -116,8 +116,12 @@ export default class DateTimeSelector extends React.Component {
             return true;
         }
 
+        if (!this.localAvailability) {
+            return true;
+        }
+
         const hours = this.localAvailability[availabilityKeys[moment(date).isoWeekday() - 1]];
-        if(hours !== undefined && hours.length > 0) {
+        if (hours !== undefined && hours.length > 0) {
             return false;
         }
 

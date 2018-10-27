@@ -29,7 +29,7 @@ export default class MobileOrderRequest extends React.Component {
                     <OrderRequestHeader food={food} onClose={onHide} />
                     <DeliverySelector pickup={pickup} onChange={onDeliveryOptionChange} />
                     <QuantitySelector food={food} quantity={quantity} onChange={onQuantityChange} />
-                    <DateTimeSelector food={food} date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
+                    <DateTimeSelector food={food} cook={cook} date={date} time={time} onDateChange={onDateChange} onTimeChange={onTimeChange} />
                     <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
                     <div className='mobileorder-footer'>
