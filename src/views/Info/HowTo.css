@@ -2,12 +2,12 @@
     color: #3b3b3b;
     font-size: 2.1em;
     font-weight: 700;
-    margin-top: 30px;
-    margin-bottom: 60px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     /* text-transform: uppercase;     */
     text-align: center;
 }
-
+ 
 .howto-header img {
     margin-top: 60px;
     max-height: 300px;
