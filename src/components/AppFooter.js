@@ -17,7 +17,7 @@ class AppFooter extends React.Component {
                     <Grid.Column>
                         <div className='appfooter-header'>Foodcraft</div>
                         <Link to={Url.about()}>About</Link>
-                        <Link to={Url.policies()}>Policies</Link>  
+                        {/* <Link to={Url.policies()}>Policies</Link>   */}
                         <Link to={Url.terms()}>Terms</Link>
                         <Link to={Url.privacy()}>Privacy</Link>                                              
                     </Grid.Column>
@@ -27,11 +27,11 @@ class AppFooter extends React.Component {
                         <Link to={Url.whycook()}>Be a cook</Link>                                                
                         <Link to={Url.cooks()}>Local Cooks</Link>                        
                     {/* <Link to={Url.community()}><span className='appfooter-mobile-title'>Our </span>Community</Link>                                             */}
-                        <Link to={Url.safety()}>Food Safety</Link>
                     </Grid.Column>
                     <Grid.Column>
                     <div className='appfooter-header'>Help</div>                                                
                         <Link to={Url.help()}><span className='appfooter-mobile-title'>The </span>Help Center</Link>
+                        <Link to={Url.safety()}>Food Safety</Link>                        
                         <a href={Util.contactSupportUrl()}>Support</a>
                     </Grid.Column>
                     <Grid.Column>

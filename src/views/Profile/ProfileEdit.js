@@ -291,7 +291,7 @@ class ProfileEdit extends React.Component {
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <Grid.Column computer={3}>Certifications</Grid.Column>
+                                        <Grid.Column computer={3}>Food Certifications</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Field name='certifications' autoComplete='certifications' placeholder="What are your certifications?"
                                                 options={certificationOptions} component={ValidatedDropdown} />
