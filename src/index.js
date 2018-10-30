@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StripeProvider } from 'react-stripe-elements'
 import { Router, Switch, Route } from 'react-router-dom'
-import createBrowserHistory from 'history/createBrowserHistory'
+import { history } from './History'
 
 import ReactGA from 'react-ga'
 
@@ -72,8 +72,6 @@ const adminPage = (page) => {
 const publicPage = (page) => {
     return withTracker(page);
 }
-
-export const history = createBrowserHistory();
 
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>

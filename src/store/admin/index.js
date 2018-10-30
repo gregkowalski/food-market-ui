@@ -3,7 +3,7 @@ import ApiClient from '../../services/ApiClient'
 import ErrorCodes from '../../services/ErrorCodes'
 import Url from '../../services/Url'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
-import { history } from '../../index'
+import { history } from '../../History'
 
 const ActionTypes = {
     ADMIN_REQUEST_INVITE_USER: 'ADMIN_REQUEST_INVITE_USER',
