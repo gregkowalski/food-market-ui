@@ -3,7 +3,8 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StripeProvider } from 'react-stripe-elements'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
 
 import ReactGA from 'react-ga'
 
@@ -46,6 +47,7 @@ import Cooks from './views/Info/Cooks'
 import TermsAccept from './views/TermsAccept'
 import InviteUser from './views/Admin/InviteUser'
 import InvitesCallback from './views/Public/InvitesCallback'
+import ConfirmEmail from './views/Public/ConfirmEmail'
 
 //import temp from 'temp'
 
@@ -67,11 +69,17 @@ const adminPage = (page) => {
     return isAdmin(appPage(page));
 }
 
+const publicPage = (page) => {
+    return withTracker(page);
+}
+
+export const history = createBrowserHistory();
+
 render(
     <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <BrowserRouter>
+                <Router history={history}>
                     <ScrollToTop>
                         <Switch>
                             <Route exact path='/' component={appPage(Home)} />
@@ -84,11 +92,12 @@ render(
                             <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
                             <Route exact path='/cookOrders' component={appPage(CookOrders)} />
                             <Route exact path='/login' component={appPage(Login)} />
-                            <Route exact path='/cognitoCallback' component={withTracker(CognitoCallback)} />
-                            <Route exact path='/cognitoSignout' component={withTracker(CognitoSignout)} />
-                            <Route exact path='/stripeCallback' component={withTracker(StripeCallback)} />
-                            <Route exact path={Url.termsAccept()} component={withTracker(TermsAccept)} />
-                            <Route exact path={'/invites/:invite_id'} component={withTracker(InvitesCallback)} />
+                            <Route exact path='/cognitoCallback' component={publicPage(CognitoCallback)} />
+                            <Route exact path='/cognitoSignout' component={publicPage(CognitoSignout)} />
+                            <Route exact path='/stripeCallback' component={publicPage(StripeCallback)} />
+                            <Route exact path={Url.termsAccept()} component={publicPage(TermsAccept)} />
+                            <Route exact path={'/invites/:invite_id'} component={publicPage(InvitesCallback)} />
+                            <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
 
                             <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
 
@@ -109,7 +118,7 @@ render(
                             {/* <Route path='/temp' component={temp} /> */}
                         </Switch>
                     </ScrollToTop>
-                </BrowserRouter>
+                </Router>
             </PersistGate>
         </Provider>
     </StripeProvider>,

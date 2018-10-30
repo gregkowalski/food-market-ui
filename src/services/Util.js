@@ -341,6 +341,23 @@ class Util {
         }
         return undefined;
     }
+
+    sanitizeEmail(email) {
+        if (!email)
+            return '';
+
+        const parts = email.split('@');
+        if (!parts || !parts.length >= 2) {
+            return '****';
+        }
+
+        const domainParts = parts[1].split('.');
+        if (!domainParts || !domainParts.length >= 2) {
+            return `${parts[0][0]}*****`;
+        }
+
+        return `${parts[0][0]}*****@${domainParts[0][0]}*****.${domainParts[domainParts.length - 1]}`;
+    }
 }
 
 export default new Util();

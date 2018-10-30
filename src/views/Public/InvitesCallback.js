@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Redirect, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../store/admin'
 import AppHeader from '../../components/AppHeader'
@@ -14,27 +14,21 @@ class InvitesCallback extends React.Component {
 
     componentWillMount() {
         const invite_id = this.props.match.params.invite_id;
-        if (invite_id) {
-            this.props.actions.acceptInvite(invite_id);
+        if (!invite_id) {
+            CognitoUtil.redirectToLogin();
+            return;
         }
+
+        this.props.actions.acceptInvite(invite_id);
     }
 
     render() {
         const { acceptInviteResult } = this.props;
 
         let content;
-        if (acceptInviteResult) {
-            if (acceptInviteResult.code === ErrorCodes.SUCCESS) {
-                if (acceptInviteResult.first_time) {
-                    CognitoUtil.redirectToSignup();
-                    return;
-                }
-                return (<Redirect to={Url.home()} />);
-            }
-            else {
-                const invite_id = this.props.match.params.invite_id;
-                content = (<div>An error has occurred and it is our fault.  Please let us know by contacting <a href={Url.mailTo('support@foodcraft.ca', `Invite error (id=${invite_id})`)}>Foodcraft Support</a></div>);
-            }
+        if (acceptInviteResult && acceptInviteResult.code !== ErrorCodes.SUCCESS) {
+            const invite_id = this.props.match.params.invite_id;
+            content = (<div>An error has occurred.  Please let us know by contacting <a href={Url.mailTo('support@foodcraft.ca', `Invite error (id=${invite_id})`)}>Foodcraft Support</a></div>);
         }
         else {
             content = <LoadingIcon size='large' />;

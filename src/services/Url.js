@@ -26,6 +26,10 @@ class Url {
         return '/';
     }
 
+    confirmEmail() {
+        return '/confirm'
+    }
+
     search(params) {
         const query = queryString.stringify(params);
         let url = '/search';

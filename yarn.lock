@@ -1197,10 +1197,10 @@ amazon-cognito-auth-js@^1.2.4:
   dependencies:
     js-cookie "^2.1.4"
 
-amazon-cognito-identity-js@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.0.2.tgz#7acbe3dda7e3ac06e0dc3289611a923458a7a8ed"
-  integrity sha512-6r0nl6QjAnaLR3jlyztIBBReU5DHSgLiDB7F28+38hM7kfUbDaROftZJSxA2hoMNy3JVcNZGwGQvMIN7AiXvCg==
+amazon-cognito-identity-js@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.0.3.tgz#4095ee649648c10d725517ed82e7b53f19644814"
+  integrity sha512-zRhhJrei4qj5k7obD2B3aCEk06mVoa1yZQk4P+pjHkUfsHSAqewpJ/IhymDYeQjB396evvKIGjxKPjLVguRYRw==
   dependencies:
     buffer "4.9.1"
     crypto-js "^3.1.9-1"
