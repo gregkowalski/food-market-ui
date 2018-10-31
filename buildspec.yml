@@ -24,7 +24,13 @@ phases:
       - echo "Entered the build phase... CI=$CI"
       - yarn install
       - yarn run config:test
-      - yarn run test
+      - yarn run test:cover:text > test_output.txt
+      - cat test_output.txt
+      - cat test_output.txt | tail -n 6 | head -n 4 > coverage.txt
+      - aws s3 cp coverage.txt s3://codepipeline-food-market/food-market-ui/
       - yarn run deploy:test
     finally:
       - echo build phase finished
+artifacts:
+  files:
+      - coverage.txt
