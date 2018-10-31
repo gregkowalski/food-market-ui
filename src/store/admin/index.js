@@ -25,6 +25,16 @@ const ActionTypes = {
     ADMIN_HIDE_RESULT: 'ADMIN_HIDE_RESULT',
 };
 
+const CognitoUserStatus = {
+    CONFIRMED: 'CONFIRMED',
+    UNCONFIRMED: 'UNCONFIRMED',
+    ARCHIVED: 'ARCHIVED',
+    COMPROMISED: 'COMPROMISED',
+    UNKNOWN: 'UNKNOWN',
+    RESET_REQUIRED: 'RESET_REQUIRED',
+    FORCE_CHANGE_PASSWORD: 'FORCE_CHANGE_PASSWORD',
+};
+
 function requestInviteUser() {
     return {
         type: ActionTypes.ADMIN_REQUEST_INVITE_USER
@@ -148,7 +158,7 @@ export const Actions = {
                         if (result.first_time) {
                             CognitoUtil.redirectToSignup();
                         }
-                        else if (result.user_status === 'UNCONFIRMED') {
+                        else if (result.user_status === CognitoUserStatus.UNCONFIRMED) {
                             history.push(Url.confirmEmail());
                         }
                         else {
@@ -365,9 +375,7 @@ export const Reducers = {
 
             case ActionTypes.ADMIN_HIDE_RESULT:
                 return Object.assign({}, state, {
-                    result: {
-                        show: false
-                    }
+                    result: { show: false }
                 });
 
             default:
