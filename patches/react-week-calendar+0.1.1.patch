@@ -1,0 +1,12 @@
+patch-package
+--- a/node_modules/react-week-calendar/dist/WeekCalendar.js
++++ b/node_modules/react-week-calendar/dist/WeekCalendar.js
+@@ -226,7 +226,7 @@ var WeekCalendar = function (_React$Component) {
+               'div',
+               {
+                 className: 'weekCalendar__overlay',
+-                key: dayIndex * 10 + index,
++                key: dayIndex * 10000 + index,
+                 style: eventWrapperStyle,
+                 onClick: _this2.handleEventClick.bind(_this2, interval)
+               },
