@@ -70,10 +70,10 @@ describe('Order workflow', () => {
         };
 
         const browser = await puppeteer.launch({ headless, defaultViewport, args });
-        try {
-            // const page = await browser.newPage();
-            const page = (await browser.pages())[0];
+        // const page = await browser.newPage();
+        const page = (await browser.pages())[0];
 
+        try {
             await page.goto(baseUrl);
 
             await page.waitForSelector(Dom.CognitoLogin.username_selector);
@@ -144,7 +144,7 @@ describe('Order workflow', () => {
 
             await page.waitFor(1500);
             const cardnumber = await frame$(Dom.Order.cardnumber_selector);
-            await cardnumber.type('4242424242424242', { delay });
+            await cardnumber.type('4242424242424242', { delay: 20 });
 
             const exp_month = await frame$(Dom.Order.exp_month_selector);
             await exp_month.type('10', { delay });
@@ -167,7 +167,6 @@ describe('Order workflow', () => {
             const orderConfirmButton = await page.$(button(Dom.Order.confirmButton));
             await orderConfirmButton.click();
 
-            await page.waitFor(5000);
             await page.waitForSelector(div(Dom.OrderSuccess.takeMeHome));
 
             if (!headless) {
@@ -176,6 +175,7 @@ describe('Order workflow', () => {
         }
         catch (ex) {
             console.error(ex);
+            page.screenshot({ path: 'e2e-test-fail-screenshot.png' });
             fail(new Error('End-to-end test failed!!!'));
         }
         finally {
