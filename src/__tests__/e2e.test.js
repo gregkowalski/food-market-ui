@@ -4,8 +4,8 @@ import Dom from '../Dom'
 const Config = {
     dev: {
         baseUrl: 'http://localhost:3000/',
-        email: 'gregkowalski+1@gmail.com',
-        pwd: 'Password1',
+        buyer_email: 'gregkowalski+1@gmail.com',
+        buyer_pwd: 'Password1',
         headless: false,
     },
     test: {
@@ -14,7 +14,7 @@ const Config = {
         buyer_pwd: 'N:&U5G.e>LqQy6vg',
         cook_email: 'cook1@cosmo-test.com',
         cook_pwd: 'B!"Q&=q(]S[9YBhn',
-        headless: false,
+        headless: true,
     },
 }
 
