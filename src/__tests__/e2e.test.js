@@ -167,6 +167,7 @@ describe('Order workflow', () => {
             const orderConfirmButton = await page.$(button(Dom.Order.confirmButton));
             await orderConfirmButton.click();
 
+            await page.waitFor(5000);
             await page.waitForSelector(div(Dom.OrderSuccess.takeMeHome));
 
             if (!headless) {
