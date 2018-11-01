@@ -17,6 +17,8 @@ phases:
       # Do it!
       - apt-get update -y
       - apt-get install -y yarn
+      # Install dependencies for google chrome for the e2e tests
+      - curl https://intoli.com/install-google-chrome.sh | bash
     finally:
       - echo install phase finished
   build:
