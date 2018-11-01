@@ -15,6 +15,7 @@ const Config = {
         cook_email: 'cook1@cosmo-test.com',
         cook_pwd: 'B!"Q&=q(]S[9YBhn',
         headless: true,
+        args: ['--no-sandbox']
     },
 }
 
@@ -56,10 +57,13 @@ describe('Order workflow', () => {
     it('correctly creates an order', async () => {
         jest.setTimeout(jestTimeout);
 
-        const args = [
+        let args = [
             '--window-position=10,10',
             '--window-size=900,1000'
         ];
+        if (config.args) {
+            args = args.concat(config.args);
+        }
         const defaultViewport = {
             width: 900,
             height: 900
