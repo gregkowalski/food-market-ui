@@ -22,6 +22,7 @@ import ReviewsSection from './ReviewsSection'
 import CookSection from './CookSection'
 import OrderSection from './OrderSection'
 import MobileOrderRequest from './MobileOrderRequest'
+import Dom from '../../Dom'
 
 const ScrollLink = Scroll.Link;
 const ScrollElement = Scroll.Element;
@@ -164,7 +165,7 @@ class FoodDetail extends React.Component {
                             </div>
                         </div>
                         <div>
-                            <Button className='detail-footer-button' onClick={() => this.setState({ showOrderDrawer: true })}>Request an Order</Button>
+                            <Button data-qa={Dom.FoodDetail.mobileRequestOrder} className='detail-footer-button' onClick={() => this.setState({ showOrderDrawer: true })}>Request an Order</Button>
                             <div className='detail-footer-text'>You won't be charged yet</div>
                         </div>
                     </div>

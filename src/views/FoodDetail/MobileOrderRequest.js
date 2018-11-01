@@ -6,6 +6,7 @@ import DateTimeSelector from './DateTimeSelector'
 import QuantitySelector from './QuantitySelector'
 import OrderPriceSummary from './OrderPriceSummary'
 import OrderRequestHeader from './OrderRequestHeader'
+import Dom from '../../Dom'
 
 export default class MobileOrderRequest extends React.Component {
 
@@ -33,7 +34,7 @@ export default class MobileOrderRequest extends React.Component {
                     <OrderPriceSummary food={food} quantity={quantity} pickup={pickup} />
 
                     <div className='mobileorder-footer'>
-                        <Button disabled={!canRequestOrder} onClick={onOrderButtonClick}>{buttonText}</Button>
+                        <Button data-qa={Dom.FoodDetail.mobileConfirmOrder} disabled={!canRequestOrder} onClick={onOrderButtonClick}>{buttonText}</Button>
                         <div>{footnote}</div>
                     </div>
 

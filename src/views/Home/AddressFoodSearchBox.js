@@ -5,6 +5,7 @@ import './AddressFoodSearchBox.css'
 import Autocomplete from '../../components/Autocomplete'
 import RegionUtil from '../../components/Map/RegionUtil'
 import Util from '../../services/Util'
+import Dom from '../../Dom'
 
 const defaultPlaceholder = 'Enter your street address...';
 const noResultsPlaceholder = 'No results found';
@@ -217,6 +218,7 @@ export default class AddressFoodSearchBox extends React.Component {
                         placeholder={addressPlaceholder}
                         componentRestrictions={{ country: 'ca' }}
                         value={address}
+                        data-qa={Dom.Home.address}
                     />
                     <div className='addressfoodsearchbox-clearable__clear' style={clearStyle}
                         onClick={this.handleClear}>
@@ -224,7 +226,7 @@ export default class AddressFoodSearchBox extends React.Component {
                     </div>
                 </div>
 
-                <Button fluid color='purple' loading={isSearching}
+                <Button data-qa={Dom.Home.findFoodNearMe} fluid color='purple' loading={isSearching}
                     onClick={this.handleSearchButtonClick}>FIND FOOD NEAR ME</Button>
             </div>
         );

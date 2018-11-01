@@ -1,6 +1,7 @@
 import React from 'react'
 import { Constants, Colors } from '../../Constants'
 import './DeliverySelector.css'
+import Dom from '../../Dom'
 
 const DeliverySelector = ({ pickup, onChange }) => {
 
@@ -22,7 +23,7 @@ const DeliverySelector = ({ pickup, onChange }) => {
             <button style={deliveryProps(pickup)} onClick={selectPickup}>
                 Pickup
             </button>
-            <button style={deliveryProps(!pickup)} onClick={selectDelivery}>
+            <button data-qa={Dom.FoodDetail.deliveryButton} style={deliveryProps(!pickup)} onClick={selectDelivery}>
                 Delivery +${Constants.DeliveryFee}
             </button>
         </div>

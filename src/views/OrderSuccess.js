@@ -7,8 +7,8 @@ import { Segment, Divider, Icon } from 'semantic-ui-react'
 import AppHeader from '../components/AppHeader'
 import Url from '../services/Url'
 import { Actions, Selectors } from '../store/order'
-// import { Constants } from '../Constants'
 import './OrderSuccess.css'
+import Dom from '../Dom'
 
 class OrderSuccess extends React.Component {
 
@@ -53,7 +53,7 @@ class OrderSuccess extends React.Component {
                     <div>You will get a response from your cook within 24 hours or sooner. 
                     </div>
                     <Divider hidden />                    
-                    <div onClick={this.navigateToHome}>
+                    <div onClick={this.navigateToHome} data-qa={Dom.OrderSuccess.takeMeHome}>
                         <div className='ordersuccess-border'>
                             Take me to<span className='ordersuccess-home-link'>My Foodcraft Orders</span>
                         </div>

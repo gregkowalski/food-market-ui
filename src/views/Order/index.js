@@ -17,6 +17,7 @@ import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
 import BillingInfo from './BillingInfo'
 import { ContactMethods } from '../../Enums';
+import Dom from '../../Dom'
 
 class Order extends React.Component {
 
@@ -278,12 +279,16 @@ class Order extends React.Component {
 
                             <Segment>
                                 <Checkbox className='order-segment-user-agree-text'
+                                    data-qa={Dom.Order.userAgreeCheckbox}
                                     label="I am over the age of 18 and I agree to this site's user and customer refund policies."
                                     onChange={() => this.setState({ acceptedTerms: !acceptedTerms })}
                                     checked={acceptedTerms} />
                             </Segment>
 
-                            <Button animated='fade' fluid className='order-confirm-continue-button'
+                            <Button className='order-confirm-continue-button'
+                                data-qa={Dom.Order.confirmButton}
+                                fluid
+                                animated='fade'
                                 disabled={!acceptedTerms}
                                 loading={isOrderProcessing}
                                 onClick={this.handleOrderButtonClick}>

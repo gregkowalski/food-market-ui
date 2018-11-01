@@ -6,6 +6,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Util from '../../services/Util'
 import './DateTimeSelector.css'
 import { DaysOfWeek } from '../../Enums';
+import Dom from '../../Dom'
 
 const availabilityKeys = [
     DaysOfWeek.monday, DaysOfWeek.tuesday, DaysOfWeek.wednesday, DaysOfWeek.thursday,
@@ -149,7 +150,8 @@ export default class DateTimeSelector extends React.Component {
                 {this.orderTimes &&
                     <div className='datetimeselector-time'>
                         <div className='datetime-topspacing datetime-bottomspacing'>Time</div>
-                        <Dropdown selection
+                        <Dropdown data-qa={Dom.FoodDetail.timeDropdown}
+                            selection
                             placeholder='What time?'
                             options={this.orderTimes}
                             onChange={this.handleTimeChange}

@@ -29,6 +29,7 @@ phases:
       - cat test_output.txt | tail -n 6 | head -n 4 > coverage.txt
       - aws s3 cp coverage.txt s3://codepipeline-food-market/food-market-ui/
       - yarn run deploy:test
+      - CI_ENV=test yarn run test:e2e
     finally:
       - echo build phase finished
 artifacts:

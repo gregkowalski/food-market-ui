@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'semantic-ui-react'
 import './QuantitySelector.css'
 import { Constants } from '../../Constants'
+import Dom from '../../Dom'
 
 const QuantitySelector = ({ food, quantity, onChange }) => {
 
@@ -26,9 +27,9 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
             <div className='quantityselector-quantity'>
                 <div>How many orders?</div>
                 <div>
-                    <Button circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
+                    <Button data-qa={Dom.FoodDetail.decrementQuantity} circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
                     <div>{quantity}</div>
-                    <Button circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
+                    <Button data-qa={Dom.FoodDetail.incrementQuantity} circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
                 </div>
             </div>
         </div>
