@@ -66,6 +66,10 @@ export default class DateTimeSelector extends React.Component {
                     this.localAvailability[localDayOfWeek].push(local.hour());
                 }
             };
+
+            for(let day in this.localAvailability) {
+                this.localAvailability[day].sort((a,b) => a - b);
+            }
         }
     }
 
