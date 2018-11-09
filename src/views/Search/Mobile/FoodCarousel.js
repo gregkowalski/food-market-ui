@@ -120,7 +120,7 @@ export default class FoodCarousel extends Component {
         const slides = carouselFoods.map((food, index) => {
 
             if (!food) {
-                return <div></div>;
+                return <div key={index}></div>;
             }
 
             let borderColor = 'transparent';

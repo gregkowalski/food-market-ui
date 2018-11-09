@@ -93,10 +93,6 @@ class DesktopSearch extends React.Component {
         const { pickup, isLoading, foods, date, address, mapCenter, google } = this.props;
         const { dimmed, hoveredFoodId } = this.state;
 
-        if (!google) {
-            return null;
-        }
-
         return (
             <div className='dtsearch-wrap' onClick={this.hideDimmer}>
                 <AppHeader fixed noshadow />
@@ -130,16 +126,18 @@ class DesktopSearch extends React.Component {
                             }
                         </div>
                         <div className='dtsearch-right'>
-                            <DesktopMap
-                                google={google}
-                                foods={foods}
-                                pickup={pickup}
-                                center={mapCenter}
-                                initialCenter={mapCenter}
-                                selectedLocation={mapCenter}
-                                hoveredFoodId={hoveredFoodId}
-                                onGeoLocationChanged={this.handleGeoLocationChanged}
-                            />
+                            {google &&
+                                <DesktopMap
+                                    google={google}
+                                    foods={foods}
+                                    pickup={pickup}
+                                    center={mapCenter}
+                                    initialCenter={mapCenter}
+                                    selectedLocation={mapCenter}
+                                    hoveredFoodId={hoveredFoodId}
+                                    onGeoLocationChanged={this.handleGeoLocationChanged}
+                                />
+                            }
                         </div>
                     </Dimmer.Dimmable>
                 </div>

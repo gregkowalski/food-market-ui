@@ -8,7 +8,6 @@ import { Divider } from 'semantic-ui-react'
 import Scroll from 'react-scroll'
 import './index.css'
 import { Constants } from '../../Constants'
-import withGoogle from '../../hoc/WithGoogleHoc'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import FoodLightbox from '../../components/FoodLightbox'
@@ -46,6 +45,7 @@ class FoodDetail extends React.Component {
         if (this.props.order_id) {
             actions.clearOrder();
         }
+        actions.clearOrder();
 
         const food_id = this.props.match.params.id;
         actions.loadFood(food_id)
@@ -92,9 +92,12 @@ class FoodDetail extends React.Component {
     }
 
     render() {
-        const { google, food, cook, reviews, pickup, quantity, date, time } = this.props;
-        if (!food || !google || !cook) {
-            return null;
+        const { food, cook, reviews, pickup, quantity, date, time } = this.props;
+        if (!food || !cook) {
+            return (
+                <div>
+                    <AppHeader />
+                </div>);
         }
 
         const canRequestOrder = (quantity > 0 && date && time);
@@ -131,7 +134,7 @@ class FoodDetail extends React.Component {
                         <div className='detail-item-main'>
                             <div className='detail-content'>
                                 <ScrollElement name='overview'>
-                                    <OverviewSection google={google} food={food} cook={cook} />
+                                    <OverviewSection food={food} cook={cook} />
                                 </ScrollElement>
                                 {/* <FlagListingMobile /> */}
                                 <Divider section hidden />
@@ -254,4 +257,4 @@ FoodDetail.propTypes = {
 }
 
 
-export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(FoodDetail)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FoodDetail));

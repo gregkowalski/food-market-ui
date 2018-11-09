@@ -1,29 +1,38 @@
 import React from 'react'
-import { GoogleApiWrapper } from 'google-maps-react';
 import Config from '../Config'
-import LoadingHeader from '../components/LoadingHeader'
-
-const LoadingContainer = () => (
-    <LoadingHeader />
-);
+import { connect } from 'react-redux';
+import { Selectors, Actions } from '../store/google'
 
 export default function (ComposedClass) {
 
     class WithGoogleComponent extends React.Component {
 
-        render() {
-            const { google, ...props } = this.props;
+        componentWillMount() {
+            const { google, actions } = this.props;
             if (!google) {
-                return null;
+                actions.loadGoogleApi(Config.Google.ApiKey);
             }
+        }
+
+        render() {
+            const { google, actions, ...props } = this.props;
             return <ComposedClass {...props} google={google} />
         }
     }
 
-    return GoogleApiWrapper({
-        version: '3.34',
-        apiKey: Config.Google.ApiKey,
-        libraries: ['places', 'geometry'],
-        LoadingContainer: LoadingContainer
-    })(WithGoogleComponent);
+    const mapStateToProps = (state) => {
+        return {
+            google: Selectors.google(state),
+        };
+    };
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            actions: {
+                loadGoogleApi: (apiKey) => dispatch(Actions.loadGoogleApi(apiKey)),
+            }
+        };
+    };
+
+    return connect(mapStateToProps, mapDispatchToProps)(WithGoogleComponent);
 }

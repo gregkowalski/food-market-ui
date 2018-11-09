@@ -346,6 +346,10 @@ class MobileSearch extends Component {
                 </div>
 
                 <Drawer visible={showFilter} onTransitionEnd={this.handleDrawerTransitionEnd}>
+                    {/* Drawer is rendered outside of react root inside an added div
+                        so we don't have access to the redux store within its children.
+                        We need to pass google and anything else directly through the parent
+                    */}
                     <SearchFilter google={google}
                         visible={showFilter}
                         pickup={pickup}

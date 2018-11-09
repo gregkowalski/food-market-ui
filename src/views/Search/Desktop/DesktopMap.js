@@ -201,5 +201,6 @@ DesktopMap.propTypes = {
         food_id: PropTypes.string.isRequired,
     })),
     pickup: PropTypes.bool.isRequired,
-    onGeoLocationChanged: PropTypes.func.isRequired
+    onGeoLocationChanged: PropTypes.func.isRequired,
+    google: PropTypes.object.isRequired
 }

@@ -92,7 +92,7 @@ export default class SearchFilter extends React.Component {
         this.props.onFilterApply({ pickup, date, address });
     }
 
-    footerVisible(visible) {
+    footerVisible() {
         if (!this.props.visible || !this.state.footerVisible) {
             return { display: 'none' };
         }

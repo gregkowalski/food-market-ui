@@ -84,9 +84,6 @@ class Home extends React.Component {
 
     render() {
         const { address, google } = this.props;
-        if (!google) {
-            return null;
-        }
 
         return (
             <div>
@@ -102,8 +99,9 @@ class Home extends React.Component {
                             <div className='home-tagline'>Handcrafted to taste like home</div>
 
                             <div className='home-search-question'>Looking for something to eat?</div>
-                            <AddressFoodSearchBox google={google} onSearchByLocation={this.searchByLocation} address={address} />
-
+                            {google &&
+                                <AddressFoodSearchBox google={google} onSearchByLocation={this.searchByLocation} address={address} />
+                            }
                         </div>
                     </div>
 

@@ -49,8 +49,6 @@ import InviteUser from './views/Admin/InviteUser'
 import InvitesCallback from './views/Public/InvitesCallback'
 import ConfirmEmail from './views/Public/ConfirmEmail'
 
-//import temp from 'temp'
-
 unregister();
 
 ReactGA.initialize(Config.GoogleAnalytics.TrackingId);
