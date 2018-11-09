@@ -54,6 +54,14 @@ describe('Order workflow', () => {
         return `.drawer-outer > .drawer-inner > .drawer-main ${child}`;
     }
 
+    const enterAutocompleteAddress = async (page, selector, address) => {
+        await page.waitForSelector(selector);
+        await page.type(selector, address, { delay });
+        await page.waitFor(750);
+        await page.keyboard.press('ArrowDown', { delay });
+        await page.keyboard.press('Enter', { delay });
+    }
+
     it('correctly creates an order', async () => {
         jest.setTimeout(jestTimeout);
 
@@ -85,11 +93,8 @@ describe('Order workflow', () => {
 
             const findFoodNearMe_button = button(Dom.Home.findFoodNearMe);
             const address_input = input(Dom.Home.address);
-            await page.waitForSelector(address_input);
-            await page.type(address_input, '1265 Burnaby St', { delay });
-            await page.waitFor(750);
-            await page.keyboard.press('ArrowDown', { delay });
-            await page.keyboard.press('Enter', { delay });
+            await enterAutocompleteAddress(page, address_input, '1265 Burnaby St');
+
             await page.waitFor(200);
             await page.click(findFoodNearMe_button);
 
@@ -129,6 +134,11 @@ describe('Order workflow', () => {
 
             const confirmOrder = await page.$(drawer(button(Dom.FoodDetail.mobileConfirmOrder)));
             await confirmOrder.click();
+
+            const buyer_address_sel = 'input[name=buyerAddress]';
+            const buyer_address = await page.waitForSelector(buyer_address_sel);
+            await page.evaluate(x => x.value = '', buyer_address);
+            await enterAutocompleteAddress(page, buyer_address_sel, '858 Beatty Str');
 
             const frame$ = async (selector) => {
                 const frames = page.frames();
@@ -175,7 +185,7 @@ describe('Order workflow', () => {
         }
         catch (ex) {
             console.error(ex);
-            page.screenshot({ path: 'e2e-test-fail-screenshot.png' });
+            await page.screenshot({ path: 'e2e-test-fail-screenshot.png' });
             fail(new Error('End-to-end test failed!!!'));
         }
         finally {
