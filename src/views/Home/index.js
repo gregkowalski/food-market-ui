@@ -171,4 +171,4 @@ Home.propTypes = {
     }).isRequired
 }
 
-export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(Home)));
+export default withRouter(withGoogle(connect(mapStateToProps, mapDispatchToProps)(Home)));

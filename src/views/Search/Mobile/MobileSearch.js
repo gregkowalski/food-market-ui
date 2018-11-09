@@ -400,4 +400,4 @@ MobileSearch.propTypes = {
     }).isRequired
 }
 
-export default withGoogle(withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileSearch)));
+export default withRouter(withGoogle(connect(mapStateToProps, mapDispatchToProps)(MobileSearch)));
