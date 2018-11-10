@@ -1,10 +1,9 @@
 import queryString from 'query-string'
-import moment from 'moment-timezone'
+import moment from 'moment'
 import { parse as parsePhone, AsYouType as asYouTypePhone } from 'libphonenumber-js'
 import { FoodPrepType } from '../Enums'
 import Url from '../services/Url'
 import Config from '../Config'
-import { Constants } from '../Constants'
 
 class Util {
 
@@ -117,11 +116,11 @@ class Util {
             return false;
 
         if (date1.isUTC()) {
-            date1 = moment(date1).tz(Constants.Timezone);
+            date1 = moment(date1).local();
         }
 
         if (date2.isUTC()) {
-            date2 = moment(date2).tz(Constants.Timezone);
+            date2 = moment(date2).local();
         }
 
         return (date1.year() === date2.year()
@@ -265,13 +264,13 @@ class Util {
     }
 
     orderTimeToLocalTimeString(orderTime) {
-        const handoff_start_date = orderTime.handoff_start_date.tz(Constants.Timezone);
-        const handoff_end_date = orderTime.handoff_end_date.tz(Constants.Timezone);
+        const handoff_start_date = orderTime.handoff_start_date.local();
+        const handoff_end_date = orderTime.handoff_end_date.local();
         return this.orderTimeToString({ handoff_start_date, handoff_end_date });
     }
 
     toCurrentTimezoneMoment(dateIso8601) {
-        return moment(dateIso8601, moment.ISO_8601).tz(Constants.Timezone);
+        return moment(dateIso8601, moment.ISO_8601).local();
     }
 
     toLocation(google, loc) {

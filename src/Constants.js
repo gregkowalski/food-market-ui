@@ -6,7 +6,6 @@ export const Constants = {
     MaxFoodQuantity: 99,
     DeliveryFee: 5,
     Currency: 'CAD',
-    Timezone: 'America/Vancouver'
 }
 
 export const Colors = {

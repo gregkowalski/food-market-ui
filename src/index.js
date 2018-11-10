@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -12,20 +12,6 @@ import './semantic/semantic.min.css'
 import './index.css'
 
 import Url from './services/Url'
-import FoodDetail from './views/FoodDetail'
-import Order from './views/Order'
-import BuyerOrders from './views/BuyerOrders'
-import CookOrders from './views/CookOrders'
-import OrderSuccess from './views/OrderSuccess'
-import CognitoCallback from './services/Cognito/CognitoCallback'
-import CognitoSignout from './services/Cognito/CognitoSignout'
-import StripeCallback from './services/Stripe/StripeCallback'
-import ProfileEdit from './views/Profile/ProfileEdit'
-import ProfileView from './views/Profile/ProfileView'
-import Home from './views/Home'
-import NotFoundPage from './views/NotFoundPage'
-import Login from './views/Login'
-import Search from './views/Search'
 import ScrollToTop from './components/ScrollToTop'
 import configureStore from './store/configureStore'
 import Config from './Config'
@@ -33,21 +19,37 @@ import { unregister } from './registerServiceWorker'
 import isAuth from './hoc/AuthCheckHoc'
 import isAdmin from './hoc/AdminCheckHoc'
 import withTracker from './hoc/WithTrackerHoc'
-import About from './views/Info/About'
-import Cookies from './views/Info/Cookies'
-import Help from './views/Info/Help'
-import Policies from './views/Info/Policies'
-import Privacy from './views/Info/Privacy'
-import Terms from './views/Info/Terms'
-import Safety from './views/Info/Safety'
-import WhyCook from './views/Info/WhyCook'
-import HowTo from './views/Info/HowTo'
-import Community from './views/Info/Community'
-import Cooks from './views/Info/Cooks'
-import TermsAccept from './views/TermsAccept'
-import InviteUser from './views/Admin/InviteUser'
-import InvitesCallback from './views/Public/InvitesCallback'
-import ConfirmEmail from './views/Public/ConfirmEmail'
+
+const Privacy = lazy(() => import('./views/Info/Privacy'));
+const Terms = lazy(() => import('./views/Info/Terms'));
+const About = lazy(() => import('./views/Info/About'));
+const Cookies = lazy(() => import('./views/Info/Cookies'));
+const Help = lazy(() => import('./views/Info/Help'));
+const Policies = lazy(() => import('./views/Info/Policies'));
+const Safety = lazy(() => import('./views/Info/Safety'));
+const WhyCook = lazy(() => import('./views/Info/WhyCook'));
+const HowTo = lazy(() => import('./views/Info/HowTo'));
+const Community = lazy(() => import('./views/Info/Community'));
+const Cooks = lazy(() => import('./views/Info/Cooks'));
+const TermsAccept = lazy(() => import('./views/TermsAccept'));
+const InviteUser = lazy(() => import('./views/Admin/InviteUser'));
+const InvitesCallback = lazy(() => import('./views/Public/ConfirmEmail'));
+const ConfirmEmail = lazy(() => import('./views/Public/ConfirmEmail'));
+
+const FoodDetail = lazy(() => import('./views/FoodDetail'));
+const Order = lazy(() => import('./views/Order'));
+const BuyerOrders = lazy(() => import('./views/BuyerOrders'));
+const CookOrders = lazy(() => import('./views/CookOrders'));
+const OrderSuccess = lazy(() => import('./views/OrderSuccess'));
+const CognitoCallback = lazy(() => import('./services/Cognito/CognitoCallback'));
+const CognitoSignout = lazy(() => import('./services/Cognito/CognitoSignout'));
+const StripeCallback = lazy(() => import('./services/Stripe/StripeCallback'));
+const ProfileEdit = lazy(() => import('./views/Profile/ProfileEdit'));
+const ProfileView = lazy(() => import('./views/Profile/ProfileView'));
+const Home = lazy(() => import('./views/Home'));
+const NotFoundPage = lazy(() => import('./views/NotFoundPage'));
+const Login = lazy(() => import('./views/Login'));
+const Search = lazy(() => import('./views/Search'));
 
 unregister();
 
@@ -72,51 +74,51 @@ const publicPage = (page) => {
 }
 
 render(
-    <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <Router history={history}>
-                    <ScrollToTop>
-                        <Switch>
-                            <Route exact path='/' component={appPage(Home)} />
-                            <Route exact path='/search' component={appPage(Search)} />
-                            <Route exact path='/foods/:id/orderSuccess' component={appPage(OrderSuccess)} />
-                            <Route exact path='/foods/:id/order' component={appPage(Order)} />
-                            <Route exact path='/foods/:id' component={appPage(FoodDetail)} />
-                            <Route exact path='/profile/view/:userId' component={appPage(ProfileView)} />
-                            <Route exact path='/profile/edit' component={appPage(ProfileEdit)} />
-                            <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
-                            <Route exact path='/cookOrders' component={appPage(CookOrders)} />
-                            <Route exact path='/login' component={appPage(Login)} />
-                            <Route exact path='/cognitoCallback' component={publicPage(CognitoCallback)} />
-                            <Route exact path='/cognitoSignout' component={publicPage(CognitoSignout)} />
-                            <Route exact path='/stripeCallback' component={publicPage(StripeCallback)} />
-                            <Route exact path={Url.termsAccept()} component={publicPage(TermsAccept)} />
-                            <Route exact path={'/invites/:invite_id'} component={publicPage(InvitesCallback)} />
-                            <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
+    <Suspense fallback={<div></div>}>
+        <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <Router history={history}>
+                        <ScrollToTop>
+                            <Switch>
+                                <Route exact path='/' component={appPage(Home)} />
+                                <Route exact path='/search' component={appPage(Search)} />
+                                <Route exact path='/foods/:id/orderSuccess' component={appPage(OrderSuccess)} />
+                                <Route exact path='/foods/:id/order' component={appPage(Order)} />
+                                <Route exact path='/foods/:id' component={appPage(FoodDetail)} />
+                                <Route exact path='/profile/view/:userId' component={appPage(ProfileView)} />
+                                <Route exact path='/profile/edit' component={appPage(ProfileEdit)} />
+                                <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
+                                <Route exact path='/cookOrders' component={appPage(CookOrders)} />
+                                <Route exact path='/login' component={appPage(Login)} />
+                                <Route exact path='/cognitoCallback' component={publicPage(CognitoCallback)} />
+                                <Route exact path='/cognitoSignout' component={publicPage(CognitoSignout)} />
+                                <Route exact path='/stripeCallback' component={publicPage(StripeCallback)} />
+                                <Route exact path={Url.termsAccept()} component={publicPage(TermsAccept)} />
+                                <Route exact path={'/invites/:invite_id'} component={publicPage(InvitesCallback)} />
+                                <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
 
-                            <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
+                                <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
 
-                            <Route exact path={Url.about()} component={appPage(About)} />
-                            <Route exact path={Url.cookies()} component={appPage(Cookies)} />
-                            <Route exact path={Url.help()} component={appPage(Help)} />
-                            <Route exact path={Url.policies()} component={appPage(Policies)} />
-                            <Route exact path={Url.privacy()} component={skipTermsAcceptedAppPage(Privacy)} />
-                            <Route exact path={Url.terms()} component={skipTermsAcceptedAppPage(Terms)} />
-                            <Route exact path={Url.safety()} component={appPage(Safety)} />
-                            <Route exact path={Url.whycook()} component={appPage(WhyCook)} />
-                            <Route exact path={Url.community()} component={appPage(Community)} />
-                            <Route exact path={Url.howto()} component={appPage(HowTo)} />
-                            <Route exact path={Url.cooks()} component={appPage(Cooks)} />
+                                <Route exact path={Url.about()} component={appPage(About)} />
+                                <Route exact path={Url.cookies()} component={appPage(Cookies)} />
+                                <Route exact path={Url.help()} component={appPage(Help)} />
+                                <Route exact path={Url.policies()} component={appPage(Policies)} />
+                                <Route exact path={Url.privacy()} component={skipTermsAcceptedAppPage(Privacy)} />
+                                <Route exact path={Url.terms()} component={skipTermsAcceptedAppPage(Terms)} />
+                                <Route exact path={Url.safety()} component={appPage(Safety)} />
+                                <Route exact path={Url.whycook()} component={appPage(WhyCook)} />
+                                <Route exact path={Url.community()} component={appPage(Community)} />
+                                <Route exact path={Url.howto()} component={appPage(HowTo)} />
+                                <Route exact path={Url.cooks()} component={appPage(Cooks)} />
 
-                            <Route component={withTracker(NotFoundPage)} />
-
-                            {/* <Route path='/temp' component={temp} /> */}
-                        </Switch>
-                    </ScrollToTop>
-                </Router>
-            </PersistGate>
-        </Provider>
-    </StripeProvider>,
+                                <Route component={withTracker(NotFoundPage)} />
+                            </Switch>
+                        </ScrollToTop>
+                    </Router>
+                </PersistGate>
+            </Provider>
+        </StripeProvider>
+    </Suspense>,
     document.getElementById('root')
 )
