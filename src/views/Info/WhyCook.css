@@ -110,6 +110,9 @@
         left: 20px;
         width: 80%;
     }
+    .whycook-top-content {
+        margin-top: 40px;
+    }
     .whycook-content {
         width: 100%;
     }
@@ -137,5 +140,10 @@
     }
     .whycook-content>div:first-child {
         width: 90%;
+    }
+    .whycook-cooks-pic {
+        padding: 2px;
+        height: 200px;
+        margin-top: 20px;
     }
 }

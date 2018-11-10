@@ -57,6 +57,8 @@
     /* background: yellow; */
     background: white;
     border-bottom: 1px solid lightgray;
+    position: -webkit-sticky;
+    position: sticky;
     height: 49px;
     line-height: 50px;
     top: 0px;
@@ -67,6 +69,8 @@
 .detail-head-right {
     margin-top: 20px;
     top: 62px;
+    position: -webkit-sticky;
+    position: sticky;
     z-index: 1;
     box-shadow: 0 2px 6px 0 rgba(117, 117, 117, 0.2), 0 6px 20px 0 rgba(114, 114, 114, 0.19) !important;
 }

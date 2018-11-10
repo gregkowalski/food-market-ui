@@ -136,6 +136,10 @@
     .apphead-tagline {
         display: none;
     }
+    .apphead-sign-in .ui.dropdown .icon {
+        margin-top: 10px;
+   
+    }
     .apphead-sign-in .ui.dropdown .text {
         max-width: 38vw;
         white-space: nowrap;
