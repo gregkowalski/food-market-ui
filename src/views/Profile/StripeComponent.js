@@ -2,9 +2,9 @@ import React from 'react'
 import { Button, Image, Divider, Icon } from 'semantic-ui-react'
 import './StripeComponent.css'
 
-const StripeComponent = ({ stripe_account_id, onConnectStripe }) => {
+const StripeComponent = ({ has_stripe_account, onConnectStripe }) => {
 
-    if (stripe_account_id) {
+    if (has_stripe_account) {
         return (
             <div className='stripecomponent-box'>
                 <div className='stripecomponent-text'>

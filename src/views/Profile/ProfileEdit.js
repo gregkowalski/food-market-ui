@@ -301,12 +301,12 @@ class ProfileEdit extends React.Component {
                             </Segment>
                             <Header className='profileedit-header' block attached='top'>Stripe</Header>
                             <Segment attached >
-                                <StripeComponent stripe_account_id={user.stripe_account_id} onConnectStripe={this.handleConnectStripeClick} />
+                                <StripeComponent has_stripe_account={user.has_stripe_account} onConnectStripe={this.handleConnectStripeClick} />
                             </Segment>
-                            {user.stripe_account_id &&
+                            {user.has_stripe_account &&
                                 <Header className='profileedit-header' block attached='top'>Availability</Header>
                             }
-                            {user.stripe_account_id &&
+                            {user.has_stripe_account &&
                                 <Segment attached>
                                     <Calendar
                                         useModal={false}
