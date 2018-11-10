@@ -20,8 +20,6 @@ export const Actions = {
             tag.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
             window.document.head.append(tag);
             tag.onload = () => {
-                console.log('initialize map');
-                console.log(`window.google=${window.google}`);
                 dispatch({
                     type: ActionTypes.GOOGLE_API_LOADED,
                     google: window.google

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RegionUtil from './Map/RegionUtil'
-import withGoogle from '../hoc/WithGoogleHoc'
 
 class ReactGoogleAutocomplete extends React.Component {
     static propTypes = {
@@ -66,7 +65,7 @@ class ReactGoogleAutocomplete extends React.Component {
     }
 }
 
-export default withGoogle(ReactGoogleAutocomplete);
+export default ReactGoogleAutocomplete;
 
 export class ReactCustomGoogleAutocomplete extends React.Component {
     static propTypes = {

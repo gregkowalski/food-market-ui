@@ -22,6 +22,22 @@ export class AppHeader extends React.Component {
         this.tagline = this.getRandomTagline();
     }
 
+    componentDidMount() {
+        window.addEventListener('orientationchange', this.forceUpdateAfterTimeout);
+        window.addEventListener('resize', this.forceUpdateAfterTimeout);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('orientationchange', this.forceUpdateAfterTimeout);
+        window.removeEventListener('resize', this.forceUpdateAfterTimeout);
+    }
+
+    forceUpdateAfterTimeout = () => {
+        setTimeout(() => {
+            this.forceUpdate();
+        }, 100);
+    }
+
     handleSignIn = (e) => {
         e.preventDefault();
         CognitoUtil.redirectToLoginIfNoSession();
@@ -94,9 +110,7 @@ export class AppHeader extends React.Component {
     }
 
     getHeaderContent() {
-
         const { home } = this.props;
-
         if (!home) {
             return (
                 <div className="apphead-tagline">
@@ -115,19 +129,50 @@ export class AppHeader extends React.Component {
         }
     }
 
+    getGreeting(username) {
+        let greeting;
+        if (username) {
+            let maxGreetingLength = {
+                short: 30,
+                long: 35
+            };
+            if (window.innerWidth <= 665) {
+                maxGreetingLength = {
+                    short: 13,
+                    long: 15
+                }
+            }
+            else if (window.innerWidth <= 767) {
+                maxGreetingLength = {
+                    short: 17,
+                    long: 19
+                }
+            }
+
+            if (username.length > maxGreetingLength.short) {
+                const ellipsis = "\u2026";
+                greeting = username.substr(0, maxGreetingLength.short) + ellipsis;
+            }
+            else if (username.length > maxGreetingLength.long) {
+                greeting = username;
+            }
+            else {
+                greeting = 'Hi, ' + username;
+            }
+            return greeting;
+        }
+    }
+
     getSessionElement() {
         const { user, isLoading } = this.props;
 
         let sessionElement;
         if (user) {
             const isAdmin = CognitoUtil.isAdmin();
-            const greetingThreshold = 17;
-            const greeting = user.username && user.username.length < greetingThreshold
-                ? 'Hi, '
-                : '';
+            const greeting = this.getGreeting(user.username);
             sessionElement = (
                 <div className='apphead-sign-in'>
-                    <Dropdown icon='angle down' text={greeting + user.username}>
+                    <Dropdown icon='angle down' text={greeting}>
                         <Dropdown.Menu className='left'>
                             {isAdmin &&
                                 <Dropdown.Item className='apphead-dropdown-link' text='Admin: Invite User' onClick={this.navigateToInviteUser} />

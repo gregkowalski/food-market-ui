@@ -2,6 +2,7 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import Autocomplete from './Autocomplete'
 import './ClearableAutocomplete.css'
+import withGoogle from '../hoc/WithGoogleHoc'
 
 export class ClearableAutocomplete extends React.Component {
 
@@ -20,7 +21,11 @@ export class ClearableAutocomplete extends React.Component {
     }
 
     render() {
-        const { divClassName, onClear, children, ...rest } = this.props;
+        const { divClassName, onClear, children, google, ...rest } = this.props;
+
+        if (!google) {
+            return null;
+        }
 
         const clearStyle = {};
         if (!rest.value) {
@@ -30,6 +35,7 @@ export class ClearableAutocomplete extends React.Component {
         return (
             <div id='clearable-autocomplete' className={divClassName}>
                 <Autocomplete
+                    google={google}
                     onRef={this.setInputRef}
                     types={['address']}
                     componentRestrictions={{ country: 'ca' }}
@@ -45,4 +51,4 @@ export class ClearableAutocomplete extends React.Component {
     }
 }
 
-export default ClearableAutocomplete;
+export default withGoogle(ClearableAutocomplete);

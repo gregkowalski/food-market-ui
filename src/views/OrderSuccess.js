@@ -12,8 +12,8 @@ import Dom from '../Dom'
 
 class OrderSuccess extends React.Component {
 
-    navigateToHome = () => {
-        this.props.history.push(Url.home());
+    navigateToBuyerOrders = () => {
+        this.props.history.push(Url.buyerOrders());
     }
 
     componentWillMount() {
@@ -52,8 +52,8 @@ class OrderSuccess extends React.Component {
                     <Divider hidden />
                     <div>You will get a response from your cook within 24 hours or sooner. 
                     </div>
-                    <Divider hidden />                    
-                    <div onClick={this.navigateToHome} data-qa={Dom.OrderSuccess.takeMeHome}>
+                    <Divider hidden />
+                    <div onClick={this.navigateToBuyerOrders} data-qa={Dom.OrderSuccess.takeMeHome}>
                         <div className='ordersuccess-border'>
                             Take me to<span className='ordersuccess-home-link'>My Foodcraft Orders</span>
                         </div>
