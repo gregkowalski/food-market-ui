@@ -11,7 +11,10 @@ import LoadingHeader from '../../components/LoadingHeader'
 import Url from '../../services/Url'
 
 const Errors = {
-    INVALID_PATH: 'INVALID_PATH'
+    INVALID_PATH: 'INVALID_PATH',
+    LOGIN_FAILED: 'LOGIN_FAILED',
+    CSRF_STATE_EMPTY: 'CSRF_STATE_EMPTY',
+    CSRF_STATE_INVALID: 'CSRF_STATE_INVALID',
 };
 
 class CognitoCallback extends React.Component {
@@ -55,19 +58,22 @@ class CognitoCallback extends React.Component {
             },
             onFailure: err => {
                 console.error('Login failed: ' + err);
+                this.setState({ errorCode: Errors.LOGIN_FAILED });
             }
         };
 
         let query = Util.parseQueryString(window.location);
         if (!query.state) {
             this.signOut();
-            throw new Error('SECURITY ALERT: CSRF state parameter is missing');
+            console.error('SECURITY ALERT: CSRF state parameter is missing');
+            this.setState({ errorCode: Errors.CSRF_STATE_EMPTY });
         }
 
         let storedState = CognitoUtil.getCsrfState();
         if (query.state !== storedState) {
             this.signOut();
-            throw new Error('SECURITY ALERT: CSRF state parameter is invalid');
+            console.error('SECURITY ALERT: CSRF state parameter is invalid');
+            this.setState({ errorCode: Errors.CSRF_STATE_INVALID });
         }
 
         auth.parseCognitoWebResponse(window.location.href);
@@ -84,21 +90,30 @@ class CognitoCallback extends React.Component {
         this.signingOut = true;
     }
 
+    getErrorMessage(errorCode) {
+        switch (errorCode) {
+            case Errors.INVALID_PATH:
+                return 'Invalid landing page';
+
+            case ErrorCodes.USER_DOES_NOT_EXIST:
+                return `Foodcraft is a private, invite-only network at this time.  Please contact ${Config.Foodcraft.SupportEmail} for more information`;
+
+            case ErrorCodes.LOGIN_FAILED:
+            case ErrorCodes.CSRF_STATE_EMPTY:
+            case ErrorCodes.CSRF_STATE_INVALID:
+                return 'Login failed, please try again.  You will be redirected to login page in few seconds.';
+
+            default:
+                return `Something went wrong, error code: ${errorCode}`;
+        }
+    }
+
     render() {
         let content;
 
         const { errorCode } = this.state;
         if (errorCode) {
-            let message;
-            if (errorCode === Errors.INVALID_PATH) {
-                message = 'Invalid landing page';
-            }
-            else if (errorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
-                message = `Foodcraft is a private, invite-only network at this time.  Please contact ${Config.Foodcraft.SupportEmail} for more information`;
-            }
-            else {
-                message = `Something went wrong, error code: ${errorCode}`;
-            }
+            const message = this.getErrorMessage(errorCode);
             this.signOut();
             content = (
                 <div style={{ margin: 20 }}>
