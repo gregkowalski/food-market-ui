@@ -114,6 +114,16 @@
     padding-bottom: 1em !important;
 }
 
+.apphead-dropdown-admin {
+    width: 100%;
+}
+
+#apphead-downdown-admin-menu {
+    left: 0;
+    top: 30px!important;
+    width: 170px;
+}
+
 @media all and (max-width: 767px) {
     .apphead-home {
         display: none;

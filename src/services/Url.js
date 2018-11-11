@@ -118,6 +118,9 @@ class Url {
     admin = {
         inviteUser() {
             return '/admin/inviteUser';
+        },
+        manageFood() {
+            return '/admin/manageFood';
         }
     }
 }

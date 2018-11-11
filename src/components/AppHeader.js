@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Image, Dropdown } from 'semantic-ui-react'
+import { Image, Dropdown, Icon } from 'semantic-ui-react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './AppHeader.css'
@@ -59,6 +59,10 @@ export class AppHeader extends React.Component {
 
     navigateToInviteUser = () => {
         this.props.history.push(Url.admin.inviteUser());
+    }
+
+    navigateToManageFood = () => {
+        this.props.history.push(Url.admin.manageFood());
     }
 
     navigateToEditProfile = () => {
@@ -175,7 +179,15 @@ export class AppHeader extends React.Component {
                     <Dropdown icon='angle down' text={greeting}>
                         <Dropdown.Menu className='left'>
                             {isAdmin &&
-                                <Dropdown.Item className='apphead-dropdown-link' text='Admin: Invite User' onClick={this.navigateToInviteUser} />
+                                <Dropdown.Item className='apphead-dropdown-link'>
+                                    <Dropdown className='apphead-dropdown-admin' icon='' trigger={<span>Admin <Icon name='angle right' /></span>}>
+                                        <Dropdown.Menu id='apphead-downdown-admin-menu'>
+                                             <Dropdown.Item className='apphead-dropdown-link' text='Invite User' onClick={this.navigateToInviteUser} />
+                                             <Dropdown.Divider />
+                                             <Dropdown.Item className='apphead-dropdown-link' text='Manage Food' onClick={this.navigateToManageFood} />
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Dropdown.Item>
                             }
                             {isAdmin &&
                                 <Dropdown.Divider />

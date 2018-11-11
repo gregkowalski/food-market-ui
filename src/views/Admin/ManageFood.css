@@ -1,0 +1,35 @@
+.managefood {
+    width: 95%;
+    margin: 80px auto;
+}
+
+.managefood h2 {
+    font-weight: 500;
+}
+
+.managefood-form { 
+    width: 70%;
+}
+
+.managefood .ui.input {
+    width: 100%;
+}
+
+.managefood .ui.button {
+    color: #ffffff;
+    margin-top: 20px;
+    background-color: #b61095;
+    font-size: 1.2em;
+    font-weight: 500;
+    width: 100%;
+}
+
+.managefood .ui.button:hover {
+    background-color: #a01e88;
+}
+
+@media all and (max-width: 767px) {
+    .managefood-form { 
+        width: 100%;
+    }
+}

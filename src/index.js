@@ -33,6 +33,7 @@ const Community = lazy(() => import('./views/Info/Community'));
 const Cooks = lazy(() => import('./views/Info/Cooks'));
 const TermsAccept = lazy(() => import('./views/TermsAccept'));
 const InviteUser = lazy(() => import('./views/Admin/InviteUser'));
+const ManageFood = lazy(() => import('./views/Admin/ManageFood'));
 const InvitesCallback = lazy(() => import('./views/Public/ConfirmEmail'));
 const ConfirmEmail = lazy(() => import('./views/Public/ConfirmEmail'));
 
@@ -99,6 +100,7 @@ render(
                                 <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
 
                                 <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
+                                <Route exact path={Url.admin.manageFood()} component={adminPage(ManageFood)} />
 
                                 <Route exact path={Url.about()} component={appPage(About)} />
                                 <Route exact path={Url.cookies()} component={appPage(Cookies)} />
