@@ -1,8 +1,8 @@
 import React from 'react'
 import { Dropdown, Message } from 'semantic-ui-react'
 
-const ValidatedDropdown = ({ input, meta, placeholder, options }) => {
-    const { touched, error } = meta;
+const ValidatedDropdown = ({ input, meta, ...props }) => {
+    const { error } = meta;
     const dropdown = Object.assign({}, input);
 
     const dropdownOnChange = (event, data) => {
@@ -15,10 +15,12 @@ const ValidatedDropdown = ({ input, meta, placeholder, options }) => {
 
     dropdown.onChange = dropdownOnChange;
     dropdown.onBlur = dropdownOnBlur;
+
+    const hasError = !(!error);
     return (
         <div>
-            <Dropdown {...dropdown} fluid multiple search selection options={options} placeholder={placeholder} />
-            {touched && error &&
+            <Dropdown {...dropdown} {...props} error={hasError}/>
+            {error &&
                 <Message error header={error.header} content={error.message} icon='exclamation circle' />
             }
         </div>

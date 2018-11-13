@@ -89,6 +89,10 @@ class ApiClient {
         return this.invokeApi(`/foods/${foodId}`, 'GET');
     }
 
+    saveFood(food) {
+        return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food);
+    }
+
     getReviews(food_id) {
         return this.invokeApi(`/reviews?food_id=${food_id}`, 'GET');
     }

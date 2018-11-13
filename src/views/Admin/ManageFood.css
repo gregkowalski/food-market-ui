@@ -7,22 +7,79 @@
     font-weight: 500;
 }
 
-.managefood input {
-    width: 500px;
+.managefood-save {
+    margin-bottom: 20px;
 }
 
-.managefood .ui.label {
-    width: 150px;
+.managefood-save .ui.message {
+    cursor: pointer;
 }
 
-.managefood-textarea {
-    display: flex;
+.managefood .ui.input {
+    width: 100%;
 }
 
 .managefood textarea {
-    width: 650px;
+    width: 100%;
+    border-radius: .286rem;
+    padding: 5px;
 }
 
-.managefood .ui.fluid.dropdown {
-    width: 500px;
+.managefood .ui.input>input {
+    appearance: none;
+}
+
+.managefood label {
+    font-weight: 700;
+}
+
+.managefood-checkbox {
+    margin-top: 10px;
+}
+
+.managefood-checkbox label {
+    padding-left: 5px;
+}
+
+.managefood-checkbox input, .managefood-checkbox label {
+    cursor: pointer;
+}
+
+.managefood-checkbox label {
+    font-weight: 400;
+}
+
+.managefood-images {
+    margin: 5px 0;
+    display: flex;
+}
+
+.managefood-images>.ui.image {
+    margin-left: 5px;
+}
+
+.managefood-images img {
+    height: 100px;
+}
+
+.managefood .ui.stackable.grid>.row {
+    padding: 0;
+    padding-bottom: 0.5rem;
+}
+
+.managefood .ui.stackable.grid>.row>.column {
+    padding: 0!important;
+    padding-bottom: 0.5rem!important;
+}
+
+.managefood .ui.stackable.grid>.row>.two.wide.column {
+    text-align: right;
+    padding-top: 0.7rem!important;
+    padding-right: 1rem!important;
+}
+
+@media all and (max-width: 767px) {
+    .managefood .ui.stackable.grid>.row>.two.wide.column {
+        text-align: left;
+    }
 }

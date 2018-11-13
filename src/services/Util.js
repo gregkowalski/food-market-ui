@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import moment from 'moment'
 import { parse as parsePhone, AsYouType as asYouTypePhone } from 'libphonenumber-js'
-import { FoodPrepType } from '../Enums'
+import { FoodPrepTypes } from '../Enums'
 import Url from '../services/Url'
 import Config from '../Config'
 
@@ -9,10 +9,10 @@ class Util {
 
     getFoodPrepTypeIcon(food) {
         let foodPrepIcon = 'shopping basket';
-        if (food.states[0] === FoodPrepType.frozen) {
+        if (food.states[0] === FoodPrepTypes.frozen) {
             foodPrepIcon = 'snowflake outline';
         }
-        else if (food.states[0] === FoodPrepType.ready) {
+        else if (food.states[0] === FoodPrepTypes.cooked) {
             foodPrepIcon = 'checkmark box';
         }
         return foodPrepIcon;

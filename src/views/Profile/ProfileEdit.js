@@ -294,6 +294,7 @@ class ProfileEdit extends React.Component {
                                         <Grid.Column computer={3}>Food Certifications</Grid.Column>
                                         <Grid.Column computer={13}>
                                             <Field name='certifications' autoComplete='certifications' placeholder="What are your certifications?"
+                                                fluid multiple search selection
                                                 options={certificationOptions} component={ValidatedDropdown} />
                                         </Grid.Column>
                                     </Grid.Row>

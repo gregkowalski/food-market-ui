@@ -29,16 +29,16 @@ export const ContactMethods = {
     phone: 'phone'
 };
 
-export const FoodPrepType = {
+export const FoodPrepTypes = {
     frozen: 'frozen',
-    ready: 'cooked',
+    cooked: 'cooked',
     ingredient: 'ingredient',
     uncooked: 'uncooked'
 };
 
 export const FoodPrepTypeLabels = {
     frozen: 'frozen',
-    ready: 'ready-to-eat',
+    cooked: 'ready-to-eat',
     ingredient: 'ingredients',
     uncooked: 'raw'
 };
@@ -57,6 +57,24 @@ export const CertificationLabels = {
     pro_caterer: 'Professional Caterer'
 };
 
+export const FoodFeatures = {
+    all_natural: "all_natural",
+    natural: "natural",
+    no_shortening: "no_shortening",
+    hormone_free: "hormone_free",
+    hickory_smoked: "hickory_smoked",
+    no_msg: "no_msg",
+    gluten_free: "gluten_free",
+    smoked: "smoked",
+    grass_fed: "grass_fed",
+    ethnic: "ethnic",
+    gmo_free: "gmo_free",
+    free_range_poultry: "free_range_poultry",
+    free_range_eggs: "free_range_eggs",
+    pasture_raised_chicken: "pasture_raised_chicken",
+    vegetarian: "vegetarian"
+};
+
 export const FoodFeatureLabels = {
     all_natural: "All-natural",
     natural: "Natural",
@@ -73,6 +91,18 @@ export const FoodFeatureLabels = {
     free_range_eggs: "Free range eggs",
     pasture_raised_chicken: "Pasture raised chicken",
     vegetarian: "Vegetarian"
+};
+
+export const FoodAllergies = {
+    eggs: "eggs",
+    tree_nuts: "tree_nuts",
+    wheat: "wheat",
+    sesame_oil: "sesame_oil",
+    milk: "milk",
+    mustard: "mustard",
+    nuts: "nuts",
+    gluten: "gluten",
+    sulphites: "sulphites",
 };
 
 export const FoodAllergyLabels = {

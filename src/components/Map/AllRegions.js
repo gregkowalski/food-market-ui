@@ -1,3 +1,8 @@
+
+export function getRegionId(feature) {
+    return `${feature.properties.area}-${feature.properties.hood_name}`;
+}
+
 export const all_boundaries = {
     "type": "FeatureCollection",
     "id": "all_boundaries",

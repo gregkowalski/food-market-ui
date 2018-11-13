@@ -12,6 +12,14 @@ const ActionTypes = {
     ADMIN_RECEIVE_COOKS_ERROR: 'ADMIN_RECEIVE_COOKS_ERROR',
 
     ADMIN_EDIT_FOOD: 'ADMIN_EDIT_FOOD',
+    ADMIN_ADD_INGREDIENT_OPTION: 'ADMIN_ADD_INGREDIENT_OPTION',
+    ADMIN_ADD_IMAGE_URL_OPTION: 'ADMIN_ADD_IMAGE_URL_OPTION',
+
+    ADMIN_REQUEST_SAVE_FOOD: 'ADMIN_REQUEST_SAVE_FOOD',
+    ADMIN_RECEIVE_SAVE_FOOD_SUCCESS: 'ADMIN_RECEIVE_SAVE_FOOD_SUCCESS',
+    ADMIN_RECEIVE_SAVE_FOOD_ERROR: 'ADMIN_RECEIVE_SAVE_FOOD_ERROR',
+
+    ADMIN_CLEAR_SAVE_FOOD_RESULT: 'ADMIN_CLEAR_SAVE_FOOD_RESULT'
 };
 
 export const Actions = {
@@ -62,28 +70,121 @@ export const Actions = {
         }
     },
 
-    editFood: (food) => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.ADMIN_EDIT_FOOD, food });
+    editFood: (food_id) => {
+        return (dispatch, getState) => {
+
+            const foods = Selectors.foods(getState());
+            if (foods) {
+                const food = foods.find(f => f.food_id === food_id);
+
+                const ingredientOptions = food.ingredients.map(f => {
+                    return { key: f, value: f, text: f };
+                });
+
+                const imageUrlOptions = food.imageUrls.map(x => {
+                    return { key: x, value: x, text: x };
+                })
+
+                dispatch({
+                    type: ActionTypes.ADMIN_EDIT_FOOD,
+                    food,
+                    ingredientOptions,
+                    imageUrlOptions
+                });
+            }
+
         }
-    }
+    },
+
+    addIngredientOption: (value) => {
+        return (dispatch) => {
+
+            const option = {
+                key: value,
+                text: value,
+                value
+            };
+            dispatch({
+                type: ActionTypes.ADMIN_ADD_INGREDIENT_OPTION,
+                option
+            });
+        }
+    },
+
+    addImageUrlOption: (value) => {
+        return (dispatch) => {
+
+            const option = {
+                key: value,
+                text: value,
+                value
+            };
+            dispatch({
+                type: ActionTypes.ADMIN_ADD_IMAGE_URL_OPTION,
+                option
+            });
+        }
+    },
+
+    saveFood: (food) => {
+        return (dispatch) => {
+
+            dispatch({ type: ActionTypes.ADMIN_REQUEST_SAVE_FOOD });
+
+            return ApiClient.saveFood(food)
+                .then(
+                    response => {
+                        dispatch({
+                            type: ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_SUCCESS,
+                            food
+                        });
+                    },
+                    error => {
+                        dispatch({
+                            type: ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_ERROR,
+                            error: error.response.data.error
+                        });
+                    }
+                );
+        }
+    },
+
+    clearSaveFoodResult: (value) => {
+        return (dispatch) => {
+
+            const option = {
+                key: value,
+                text: value,
+                value
+            };
+            dispatch({
+                type: ActionTypes.ADMIN_CLEAR_SAVE_FOOD_RESULT,
+                option
+            });
+        }
+    },
 }
 
 export const Selectors = {
-    isLoadingFoods: (state) => { return state.foodManager.isLoadingFoods; },
-    getFoodsResult: (state) => { return state.foodManager.getFoodsResult; },
-    foods: (state) => { return state.foodManager.foods; },
+    isLoadingFoods: (state) => state.foodManager.isLoadingFoods,
+    isSavingFood: (state) => state.foodManager.isSavingFood,
+    getFoodsResult: (state) => state.foodManager.getFoodsResult,
+    foods: (state) => state.foodManager.foods,
+    saveFoodResult: (state) => state.foodManager.saveFoodResult,
 
-    isLoadingCooks: (state) => { return state.foodManager.isLoadingCooks; },
-    getCooksResult: (state) => { return state.foodManager.getCooksResult; },
-    cooks: (state) => { return state.foodManager.cooks; },
+    isLoadingCooks: (state) => state.foodManager.isLoadingCooks,
+    getCooksResult: (state) => state.foodManager.getCooksResult,
+    cooks: (state) => state.foodManager.cooks,
 
-    food: (state) => { return state.foodManager.food; },
+    food: (state) => state.foodManager.food,
+    ingredientOptions: (state) => state.foodManager.ingredientOptions,
+    imageUrlOptions: (state) => state.foodManager.imageUrlOptions,
 }
 
 const initialState = {
     isLoadingFoods: false,
     isLoadingCooks: false,
+    isSavingFood: false,
 };
 
 export const Reducers = {
@@ -130,10 +231,52 @@ export const Reducers = {
                         message: JSON.stringify(action.error)
                     }
                 });
-    
+
             case ActionTypes.ADMIN_EDIT_FOOD:
                 return Object.assign({}, state, {
-                    food: action.food
+                    food: action.food,
+                    ingredientOptions: action.ingredientOptions,
+                    imageUrlOptions: action.imageUrlOptions,
+                });
+
+            case ActionTypes.ADMIN_ADD_INGREDIENT_OPTION:
+                return Object.assign({}, state,
+                    {
+                        ingredientOptions: [action.option, ...state.ingredientOptions]
+                    });
+
+            case ActionTypes.ADMIN_ADD_IMAGE_URL_OPTION:
+                return Object.assign({}, state,
+                    {
+                        imageUrlOptions: [action.option, ...state.imageUrlOptions]
+                    });
+
+            case ActionTypes.ADMIN_REQUEST_SAVE_FOOD:
+                return Object.assign({}, state, {
+                    isSavingFood: true
+                });
+
+            case ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_SUCCESS:
+                return Object.assign({}, state, {
+                    isSavingFood: false,
+                    food: action.food,
+                    saveFoodResult: {
+                        code: ErrorCodes.SUCCESS
+                    }
+                });
+
+            case ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_ERROR:
+                return Object.assign({}, state, {
+                    isSavingFood: false,
+                    saveFoodResult: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.error)
+                    }
+                });
+
+            case ActionTypes.ADMIN_CLEAR_SAVE_FOOD_RESULT:
+                return Object.assign({}, state, {
+                    saveFoodResult: undefined
                 });
 
             default:

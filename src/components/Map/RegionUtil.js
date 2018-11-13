@@ -1,4 +1,4 @@
-import { all_boundaries } from './AllRegions'
+import { all_boundaries, getRegionId } from './AllRegions'
 
 let _RegionMap;
 let _Regions;
@@ -116,7 +116,7 @@ class RegionUtil {
 
         _RegionMap = {};
         _Regions = all_boundaries.features.map(x => {
-            const id = `${x.properties.area}-${x.properties.hood_name}`;
+            const id = getRegionId(x);
             //console.log(id);
             const region = {
                 id: id,

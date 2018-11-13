@@ -182,7 +182,7 @@ export default class DesktopMap extends React.Component {
                                     </Card.Meta>
                                     <Card.Description>
                                         {selectedFood.meta &&
-                                            <div className='marker-description' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n/g, "<br />") }}></div>
+                                            <div className='marker-description' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n|\n/g, "<br />") }}></div>
                                         }
                                     </Card.Description>
                                 </Card.Content>

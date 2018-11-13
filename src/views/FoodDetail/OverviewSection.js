@@ -56,8 +56,8 @@ class OverviewSection extends React.Component {
                         less={<div style={{ color: '#189da7' }}>Hide <Icon name='angle up' /></div>}
                         anchorClass='showmore-text'>
 
-                        <div className='user-text' dangerouslySetInnerHTML={{ __html: food.short_description.replace(/\\n/g, "<br />") }}></div>
-                        <div dangerouslySetInnerHTML={{ __html: food.long_description.replace(/\\n/g, "<br />") }}></div>
+                        <div className='user-text' dangerouslySetInnerHTML={{ __html: food.short_description.replace(/\\n|\n/g, "<br />") }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: food.long_description.replace(/\\n|\n/g, "<br />") }}></div>
                     </ShowMore>  </div>
                 <Divider section />
 
