@@ -7,7 +7,9 @@ import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
-import LoadingIcon from '../../components/LoadingIcon';
+import LoadingIcon from '../../components/LoadingIcon'
+import { Icon, Divider, Button, List, Image } from 'semantic-ui-react'
+
 
 class ManageFoods extends React.Component {
 
@@ -32,23 +34,44 @@ class ManageFoods extends React.Component {
         let foodItems;
         if (foods) {
             foodItems = foods.map(food => {
+                food.cook = {
+                    id: '1234',
+                    name: 'Johann',
+                    email: 'johannkao@gmail.com'
+                }
                 return (
-                    <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
-                        <FoodItem food={food} />
+                    <div className='managefoods-indent'>
+                        <List divided verticalAlign='middle'>
+                            <List.Item>
+                                <List.Content floated='right'>
+                                    {/* <Button>Edit</Button> */}
+                                    <Button content='Edit' icon='edit outline' labelPosition='left' onClick={() => this.editFood(food.food_id)} />
+                                    {/* <Button content='Delete' icon='trash alternate outline' labelPosition='right' /> */}
+                                </List.Content>
+                                <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
+                                    {/* <div>{food.imageUrls}</div> */}
+                                    <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
+                                    <div className='managefoods-bold-title'>{food.title}</div>
+                                    <div className='managefoods-ID-number'>ID: {food.food_id}</div>
+                                    <div>Cook: {food.cook.name}</div>
+                                </div>
+                            </List.Item>
+                        </List>
+                        <Divider />
                     </div>
                 );
             });
         }
 
         return (
-            <div className='managefoods'>
+            <div className='managefoods' >
                 <AppHeader fixed />
                 <h2>Food Management</h2>
                 {isLoadingFoods &&
                     <LoadingIcon size='large' />
                 }
                 {foodItems}
-            </div>
+            </div >
         );
     }
 }
@@ -78,7 +101,3 @@ ManageFoods.propTypes = {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ManageFoods));
-
-const FoodItem = ({ food }) => {
-    return (<span>ID: {food.food_id} NAME: {food.title}</span>);
-}
