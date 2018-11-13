@@ -8,7 +8,7 @@ import './ManageFoods.css'
 import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import { Icon, Divider, Button, List, Image } from 'semantic-ui-react'
+import { Divider, Button, List, Image } from 'semantic-ui-react'
 
 
 class ManageFoods extends React.Component {
@@ -18,7 +18,7 @@ class ManageFoods extends React.Component {
         if (!foods) {
             actions.getFoods()
                 .then(() => {
-                    const cook_ids = this.props.foods.map(x => x.user_id);
+                    // const cook_ids = this.props.foods.map(x => x.user_id);
                     // return actions.getCooks(cook_ids);
                 });
         }
