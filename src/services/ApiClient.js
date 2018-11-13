@@ -49,6 +49,10 @@ class ApiClient {
         return this.invokeApi(`/users/${userId}`, 'GET');
     }
 
+    getCooks(userIds) {
+        return this.invokeApi(`/public/users?user_ids=${userIds.join('&')}`, 'GET');
+    }
+
     getPublicUser(userId) {
         return this.invokeApi(`/users/${userId}/public`, 'GET');
     }
@@ -76,8 +80,6 @@ class ApiClient {
         }
         return this.invokeApi(`/users/${userId}/connectstripe`, 'POST', { code });
     }
-
-
 
     getFoods() {
         return this.invokeApi(`/foods`, 'GET');

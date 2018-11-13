@@ -1,0 +1,12 @@
+.managefoods {
+    width: 95%;
+    margin: 80px auto;
+}
+
+.managefoods h2 {
+    font-weight: 500;
+}
+
+.managefoods-fooditem {
+    cursor: pointer;
+}

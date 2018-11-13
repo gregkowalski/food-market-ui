@@ -32,9 +32,12 @@ const HowTo = lazy(() => import('./views/Info/HowTo'));
 const Community = lazy(() => import('./views/Info/Community'));
 const Cooks = lazy(() => import('./views/Info/Cooks'));
 const TermsAccept = lazy(() => import('./views/TermsAccept'));
+
 const InviteUser = lazy(() => import('./views/Admin/InviteUser'));
+const ManageFoods = lazy(() => import('./views/Admin/ManageFoods'));
 const ManageFood = lazy(() => import('./views/Admin/ManageFood'));
-const InvitesCallback = lazy(() => import('./views/Public/ConfirmEmail'));
+
+const InvitesCallback = lazy(() => import('./views/Public/InvitesCallback'));
 const ConfirmEmail = lazy(() => import('./views/Public/ConfirmEmail'));
 
 const FoodDetail = lazy(() => import('./views/FoodDetail'));
@@ -48,9 +51,9 @@ const StripeCallback = lazy(() => import('./services/Stripe/StripeCallback'));
 const ProfileEdit = lazy(() => import('./views/Profile/ProfileEdit'));
 const ProfileView = lazy(() => import('./views/Profile/ProfileView'));
 const Home = lazy(() => import('./views/Home'));
-const NotFoundPage = lazy(() => import('./views/NotFoundPage'));
 const Login = lazy(() => import('./views/Login'));
 const Search = lazy(() => import('./views/Search'));
+const NotFoundPage = lazy(() => import('./views/NotFoundPage'));
 
 unregister();
 
@@ -100,7 +103,8 @@ render(
                                 <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
 
                                 <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
-                                <Route exact path={Url.admin.manageFood()} component={adminPage(ManageFood)} />
+                                <Route exact path={Url.admin.manageFoods()} component={adminPage(ManageFoods)} />
+                                <Route exact path={Url.admin.manageFood(':food_id')} component={adminPage(ManageFood)} />
 
                                 <Route exact path={Url.about()} component={appPage(About)} />
                                 <Route exact path={Url.cookies()} component={appPage(Cookies)} />

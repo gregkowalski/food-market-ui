@@ -119,8 +119,11 @@ class Url {
         inviteUser() {
             return '/admin/inviteUser';
         },
-        manageFood() {
-            return '/admin/manageFood';
+        manageFoods() {
+            return '/admin/foods';
+        },
+        manageFood(food_id) {
+            return `/admin/foods/${food_id}`;
         }
     }
 }

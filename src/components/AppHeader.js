@@ -61,8 +61,8 @@ export class AppHeader extends React.Component {
         this.props.history.push(Url.admin.inviteUser());
     }
 
-    navigateToManageFood = () => {
-        this.props.history.push(Url.admin.manageFood());
+    navigateToManageFoods = () => {
+        this.props.history.push(Url.admin.manageFoods());
     }
 
     navigateToEditProfile = () => {
@@ -184,7 +184,7 @@ export class AppHeader extends React.Component {
                                         <Dropdown.Menu id='apphead-downdown-admin-menu'>
                                              <Dropdown.Item className='apphead-dropdown-link' text='Invite User' onClick={this.navigateToInviteUser} />
                                              <Dropdown.Divider />
-                                             <Dropdown.Item className='apphead-dropdown-link' text='Manage Food' onClick={this.navigateToManageFood} />
+                                             <Dropdown.Item className='apphead-dropdown-link' text='Manage Foods' onClick={this.navigateToManageFoods} />
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Dropdown.Item>

@@ -36,6 +36,13 @@ export const FoodPrepType = {
     uncooked: 'uncooked'
 };
 
+export const FoodPrepTypeLabels = {
+    frozen: 'frozen',
+    ready: 'ready-to-eat',
+    ingredient: 'ingredients',
+    uncooked: 'raw'
+};
+
 export const Certifications = {
     foodsafe_level1: 'foodsafe_level1',
     foodsafe_level2: 'foodsafe_level2',
