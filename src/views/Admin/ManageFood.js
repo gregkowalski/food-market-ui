@@ -25,8 +25,8 @@ class ManageFood extends React.Component {
         if (!foods) {
             actions.getFoods()
                 .then(() => {
-                    const cook_ids = this.props.foods.map(x => x.user_id);
-                    return actions.getCooks(cook_ids);
+                    // const cook_ids = this.props.foods.map(x => x.user_id);
+                    // return actions.getCooks(cook_ids);
                 });
         }
     }

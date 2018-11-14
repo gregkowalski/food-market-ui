@@ -131,12 +131,16 @@ export const Actions = {
 
             dispatch({ type: ActionTypes.ADMIN_REQUEST_SAVE_FOOD });
 
-            return ApiClient.saveFood(food)
+            const foodDto = Object.assign({}, food, {
+                handoff_dates: undefined
+            });
+
+            return ApiClient.saveFood(foodDto)
                 .then(
                     response => {
                         dispatch({
                             type: ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_SUCCESS,
-                            food
+                            food: foodDto
                         });
                     },
                     error => {
