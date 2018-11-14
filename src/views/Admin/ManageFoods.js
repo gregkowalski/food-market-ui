@@ -44,16 +44,19 @@ class ManageFoods extends React.Component {
                         <List divided verticalAlign='middle'>
                             <List.Item>
                                 <List.Content floated='right'>
-                                    {/* <Button>Edit</Button> */}
-                                    <Button content='Edit' icon='edit outline' labelPosition='left' onClick={() => this.editFood(food.food_id)} />
+                                    <Button content='Edit' icon='edit outline' labelPosition='right' onClick={() => this.editFood(food.food_id)} />
                                     {/* <Button content='Delete' icon='trash alternate outline' labelPosition='right' /> */}
                                 </List.Content>
                                 <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
-                                    {/* <div>{food.imageUrls}</div> */}
-                                    <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
-                                    <div className='managefoods-bold-title'>{food.title}</div>
-                                    <div className='managefoods-ID-number'>ID: {food.food_id}</div>
-                                    <div>Cook: {food.cook.name}</div>
+                                    <div className='managefoods-mobile'>
+                                        <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
+                                    </div>
+                                    <div className='managefoods-desktop'>
+                                        <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
+                                    </div>
+                                    <div className='managefoods-title'>{food.title}</div>
+                                    <div className='managefoods-small-font'>ID: {food.food_id}</div>
+                                    <div className='managefoods-small-font'>Cook: {food.cook.name}</div>
                                 </div>
                             </List.Item>
                         </List>
