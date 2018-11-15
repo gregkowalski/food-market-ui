@@ -287,7 +287,7 @@ class ProfileEdit extends React.Component {
                                             <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
                                             <div className='profileedit-input-descriptions'>
                                                 We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
-                                                <Divider hidden/>
+                                                <p></p>
                                                 <p><strong>Address is required for cooks.</strong> This address will be used as your default pick-up location for your orders unless otherwise specified.</p>
                                             </div>
                                         </Grid.Column>
@@ -307,10 +307,15 @@ class ProfileEdit extends React.Component {
                                 <StripeComponent has_stripe_account={user.has_stripe_account} onConnectStripe={this.handleConnectStripeClick} />
                             </Segment>
                             {user.has_stripe_account &&
-                                <Header className='profileedit-header' block attached='top'>Availability</Header>
+                                <Header className='profileedit-header' block attached='top'>Availability for Orders</Header>
                             }
                             {user.has_stripe_account &&
                                 <Segment attached>
+                                    <div className="profileedit-availability-text">Select the times for when your food is <strong><i>ready</i></strong> for pick up and delivery.
+                                    <p></p>
+                                    <p>Your customers will be able to request orders from you only during the times you select below. 
+                                    Remember to consider the time it
+                                    takes you to make food (and do delivery if applicable)!</p></div>
                                     <Calendar
                                         useModal={false}
                                         // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
