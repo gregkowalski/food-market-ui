@@ -31,7 +31,7 @@ class AppFooter extends React.Component {
                     <Grid.Column>
                     <div className='appfooter-header'>Help</div>                                                
                         <Link to={Url.help()}><span className='appfooter-mobile-title'>The </span>Help Center</Link>
-                        <Link to={Url.safety()}>Food Safety</Link>                        
+                        {/* <Link to={Url.safety()}>Food Safety</Link>                         */}
                         <a href={Util.contactSupportUrl()}>Support</a>
                     </Grid.Column>
                     <Grid.Column>
