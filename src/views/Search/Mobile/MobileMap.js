@@ -145,7 +145,7 @@ export default class MobileMap extends React.Component {
 
                 {markers}
                 {!pickup &&
-                    <Marker google={google} icon='/assets/images/food-delivery-location.png' zIndex={5000} position={deliveryLocation} />
+                    <Marker google={google} icon='/assets/images/food-delivery-location-v9.png' zIndex={5000} position={deliveryLocation} />
                 }
 
             </Map>
