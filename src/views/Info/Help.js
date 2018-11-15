@@ -19,6 +19,10 @@ const Help = () => {
                 <Grid.Column>
                     <div className='help-cards'>Popular Questions</div>
                     <div>Does Foodcraft vet cooks?</div>
+                    <Divider hidden />
+                    <div>Is there a delivery option?</div>
+                    <Divider hidden />
+                    <div>Can I request an order?</div>
                 </Grid.Column>
                 <Grid.Column>
                     <div className='help-cards'>What To Expect</div>
@@ -26,7 +30,7 @@ const Help = () => {
                     <Divider hidden />
                     <div>What are small-batch foods?</div>
                     <Divider hidden />
-                    <div>Proper store and re-heating</div>
+                    <div>Proper storage and re-heating</div>
                 </Grid.Column>
                 <Grid.Column>
                     <div className='help-cards'>Cancellations and Refunds</div>
