@@ -287,6 +287,8 @@ class ProfileEdit extends React.Component {
                                             <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
                                             <div className='profileedit-input-descriptions'>
                                                 We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                                                <Divider hidden/>
+                                                <p><strong>Address is required for cooks.</strong> This address will be used as your default pick-up location for your orders unless otherwise specified.</p>
                                             </div>
                                         </Grid.Column>
                                     </Grid.Row>
