@@ -6,10 +6,10 @@ import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
+import Util from '../../services/Util'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import { Divider, Button, List, Image } from 'semantic-ui-react'
-
+import { Button, List, Image } from 'semantic-ui-react'
 
 class ManageFoods extends React.Component {
 
@@ -18,8 +18,8 @@ class ManageFoods extends React.Component {
         if (!foods) {
             actions.getFoods()
                 .then(() => {
-                    // const cook_ids = this.props.foods.map(x => x.user_id);
-                    // return actions.getCooks(cook_ids);
+                    const cook_ids = Util.distinct(this.props.foods.map(x => x.user_id));
+                    return actions.getCooks(cook_ids);
                 });
         }
     }
@@ -34,34 +34,25 @@ class ManageFoods extends React.Component {
         let foodItems;
         if (foods) {
             foodItems = foods.map(food => {
-                food.cook = {
-                    id: '1234',
-                    name: 'Johann',
-                    email: 'johannkao@gmail.com'
-                }
                 return (
-                    <div className='managefoods-indent'>
-                        <List divided verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button content='Edit' icon='edit outline' labelPosition='right' onClick={() => this.editFood(food.food_id)} />
-                                    {/* <Button content='Delete' icon='trash alternate outline' labelPosition='right' /> */}
-                                </List.Content>
-                                <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
-                                    <div className='managefoods-mobile'>
-                                        <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
-                                    </div>
-                                    <div className='managefoods-desktop'>
-                                        <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
-                                    </div>
-                                    <div className='managefoods-title'>{food.title}</div>
-                                    <div className='managefoods-small-font'>ID: {food.food_id}</div>
-                                    <div className='managefoods-small-font'>Cook: {food.cook.name}</div>
-                                </div>
-                            </List.Item>
-                        </List>
-                        <Divider />
-                    </div>
+                    <List.Item key={food.food_id}>
+                        <List.Content floated='right'>
+                            <Button content='Edit' icon='edit outline' labelPosition='right' onClick={() => this.editFood(food.food_id)} />
+                            {/* <Button content='Delete' icon='trash alternate outline' labelPosition='right' /> */}
+                        </List.Content>
+                        <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
+                            <div className='managefoods-mobile'>
+                                <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
+                            </div>
+                            <div className='managefoods-desktop'>
+                                <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
+                            </div>
+                            <div className='managefoods-title'>{food.title}</div>
+                            {food.cook &&
+                                <div className='managefoods-small-font'>Cook: {food.cook_name}</div>
+                            }
+                        </div>
+                    </List.Item>
                 );
             });
         }
@@ -73,8 +64,12 @@ class ManageFoods extends React.Component {
                 {isLoadingFoods &&
                     <LoadingIcon size='large' />
                 }
-                {foodItems}
-            </div >
+                <div className='managefoods-indent'>
+                    <List divided verticalAlign='middle'>
+                        {foodItems}
+                    </List>
+                </div>
+            </div>
         );
     }
 }

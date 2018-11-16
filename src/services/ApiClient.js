@@ -49,20 +49,20 @@ class ApiClient {
         return this.invokeApi(`/users/${userId}`, 'GET');
     }
 
-    getCooks(userIds) {
-        return this.invokeApi(`/public/users?user_ids=${userIds.join('&')}`, 'GET');
+    getUsers(userIds) {
+        return this.invokeApi(`/public/users?user_ids=${userIds.join(',')}`, 'GET');
     }
 
     getPublicUser(userId) {
-        return this.invokeApi(`/users/${userId}/public`, 'GET');
+        return this.invokeApi(`/public/users/${userId}`, 'GET');
     }
 
     loadUserProfile(userId) {
-        return this.invokeApi(`/users/${userId}/private`, 'GET');
+        return this.invokeApi(`/private/users/${userId}`, 'GET');
     }
 
     saveUserProfile(user) {
-        return this.invokeApi(`/users/${user.user_id}/private`, 'PATCH', user);
+        return this.invokeApi(`/private/users/${user.user_id}`, 'PATCH', user);
     }
 
     updateUser(user) {

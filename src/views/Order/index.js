@@ -94,7 +94,7 @@ class Order extends React.Component {
         }
 
         // In case the user hasn't tried filling in the forms at all,
-        // we need to simulat that here.
+        // we need to simulate that here.
         touch('buyerPhone');
         touch('buyerAddress');
         touch('contactMethod');

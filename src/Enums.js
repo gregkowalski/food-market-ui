@@ -103,6 +103,10 @@ export const FoodAllergies = {
     nuts: "nuts",
     gluten: "gluten",
     sulphites: "sulphites",
+    peanuts: "peanuts",
+    seafood: "seafood",
+    sesame: "sesame",
+    soy: "soy",
 };
 
 export const FoodAllergyLabels = {
@@ -115,6 +119,10 @@ export const FoodAllergyLabels = {
     nuts: "Nuts",
     gluten: "Gluten",
     sulphites: "Sulphites",
+    peanuts: "Peanuts",
+    seafood: "Seafood",
+    sesame: "Sesame",
+    soy: "Soy",
 };
 
 export const DaysOfWeek = {

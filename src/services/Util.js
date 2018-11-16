@@ -357,6 +357,14 @@ class Util {
 
         return `${parts[0][0]}*****@${domainParts[0][0]}*****.${domainParts[domainParts.length - 1]}`;
     }
+
+    distinct(array) {
+        const onlyUnique = (value, index, self) => {
+            return self.indexOf(value) === index;
+        }
+
+        return array.filter(onlyUnique);
+    }
 }
 
 export default new Util();

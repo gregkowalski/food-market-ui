@@ -17,6 +17,7 @@ import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon';
 import { all_boundaries, getRegionId } from '../../components/Map/AllRegions';
 import ErrorCodes from '../../services/ErrorCodes';
+import Util from '../../services/Util'
 
 class ManageFood extends React.Component {
 
@@ -25,8 +26,8 @@ class ManageFood extends React.Component {
         if (!foods) {
             actions.getFoods()
                 .then(() => {
-                    // const cook_ids = this.props.foods.map(x => x.user_id);
-                    // return actions.getCooks(cook_ids);
+                    const cook_ids = Util.distinct(this.props.foods.map(x => x.user_id));
+                    return actions.getCooks(cook_ids);
                 });
         }
     }
@@ -235,7 +236,7 @@ class FoodEditorForm extends React.Component {
                                 <label>Cook</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
-                                <Field name='user_id' autoComplete='user_id' component={ValidatedField} type='text' placeholder='Enter cook id' />
+                                <Field name='cook_name' autoComplete='cook_name' component={ValidatedField} type='text' placeholder='Enter cook id' />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>

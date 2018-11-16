@@ -1,6 +1,7 @@
 import ApiClient from '../../../services/ApiClient'
 import ApiObjectMapper from '../../../services/ApiObjectMapper'
 import ErrorCodes from '../../../services/ErrorCodes'
+import Util from '../../../services/Util';
 
 const ActionTypes = {
     ADMIN_REQUEST_FOODS: 'ADMIN_REQUEST_FOODS',
@@ -49,22 +50,19 @@ export const Actions = {
     },
 
     getCooks: (cookUserIds) => {
-        return (dispatch) => {
+        return (dispatch, getState) => {
             dispatch({ type: ActionTypes.ADMIN_REQUEST_COOKS });
 
-            return ApiClient.getCooks(cookUserIds)
+            return ApiClient.getUsers(cookUserIds)
                 .then(
                     response => {
-                        dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_COOKS_SUCCESS,
-                            cooks: response.data
-                        });
+                        const foods = Selectors.foods(getState());
+                        const cooks = response.data;
+
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_COOKS_SUCCESS, foods, cooks });
                     },
                     error => {
-                        dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_COOKS_ERROR,
-                            error
-                        });
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_COOKS_ERROR, error });
                     }
                 );
         }
@@ -222,9 +220,22 @@ export const Reducers = {
                 });
 
             case ActionTypes.ADMIN_RECEIVE_COOKS_SUCCESS:
+                const cooks = {};
+                action.cooks.forEach(x => cooks[x.user_id] = x);
+                const foods = [];
+
+                for (let i = 0; i < action.foods.length; i++) {
+                    const food = Object.assign({}, action.foods[i]);
+                    const cook = cooks[food.user_id];
+                    food.cook = cook;
+                    food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
+                    foods.push(food);
+                }
+
                 return Object.assign({}, state, {
                     isLoadingCooks: false,
-                    cooks: action.cooks
+                    cooks: action.cooks,
+                    foods: foods
                 });
 
             case ActionTypes.ADMIN_RECEIVE_COOKS_ERROR:
