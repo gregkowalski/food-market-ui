@@ -78,11 +78,16 @@ class ManageFoods extends React.Component {
         return (
             <div className='managefoods' >
                 <AppHeader fixed />
-                <h2>Food Management</h2>
+                <div className='managefoods-indent'>
+                <h2>Food Management
+                <Button basic floated='right' content='Add new food' icon='plus' labelPosition='left' />
+
+
+                </h2>
                 {isLoadingFoods &&
                     <LoadingIcon size='large' />
                 }
-                <div className='managefoods-indent'>
+                
                     <Divider />
                     <List divided verticalAlign='middle'>
                         {foodItems}
