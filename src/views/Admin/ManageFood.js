@@ -233,7 +233,7 @@ class FoodEditorForm extends React.Component {
                             </Grid.Column>
                             <Grid.Column width={14}>
                                 <Field name='user_id' autoComplete='user_id' placeholder="Who is the cook for this food?"
-                                    fluid selection options={cookOptions} component={ValidatedDropdown} />
+                                    fluid selection search options={cookOptions} component={ValidatedDropdown} />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>

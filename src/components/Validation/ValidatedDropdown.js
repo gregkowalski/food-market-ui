@@ -9,12 +9,17 @@ const ValidatedDropdown = ({ input, meta, ...props }) => {
         input.onChange(data.value);
     }
 
+    const dropdownOnBlur = (event, data) => {
+        input.onBlur(data.value);
+    }
+
     dropdown.onChange = dropdownOnChange;
+    dropdown.onBlur = dropdownOnBlur;
 
     const hasError = !(!error);
     return (
         <div>
-            <Dropdown {...dropdown} {...props} error={hasError}/>
+            <Dropdown {...dropdown} {...props} error={hasError} />
             {error &&
                 <Message error header={error.header} content={error.message} icon='exclamation circle' />
             }
