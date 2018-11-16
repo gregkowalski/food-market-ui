@@ -8,10 +8,6 @@ const ActionTypes = {
     ADMIN_RECEIVE_FOODS_SUCCESS: 'ADMIN_RECEIVE_FOODS_SUCCESS',
     ADMIN_RECEIVE_FOODS_ERROR: 'ADMIN_RECEIVE_FOODS_ERROR',
 
-    ADMIN_REQUEST_COOKS: 'ADMIN_REQUEST_COOKS',
-    ADMIN_RECEIVE_COOKS_SUCCESS: 'ADMIN_RECEIVE_COOKS_SUCCESS',
-    ADMIN_RECEIVE_COOKS_ERROR: 'ADMIN_RECEIVE_COOKS_ERROR',
-
     ADMIN_EDIT_FOOD: 'ADMIN_EDIT_FOOD',
     ADMIN_ADD_INGREDIENT_OPTION: 'ADMIN_ADD_INGREDIENT_OPTION',
     ADMIN_ADD_IMAGE_URL_OPTION: 'ADMIN_ADD_IMAGE_URL_OPTION',
@@ -33,45 +29,33 @@ export const Actions = {
             return ApiClient.getFoods()
                 .then(
                     response => {
-                        let foods = ApiObjectMapper.mapFoods(response.data);
-                        dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_FOODS_SUCCESS,
-                            foods: foods
-                        });
+                        const foods = ApiObjectMapper.mapFoods(response.data);
+                        const cook_ids = Util.distinct(foods.map(x => x.user_id));
+
+                        return ApiClient.getUsers(cook_ids)
+                            .then(
+                                response => {
+                                    const cooks = response.data;
+                                    dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_SUCCESS, foods, cooks })
+                                },
+                                error => {
+                                    dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_ERROR, error });
+                                }
+                            );
                     },
                     error => {
-                        dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_FOODS_ERROR,
-                            error
-                        });
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_ERROR, error });
                     }
                 );
         };
     },
 
-    getCooks: (cookUserIds) => {
-        return (dispatch, getState) => {
-            dispatch({ type: ActionTypes.ADMIN_REQUEST_COOKS });
-
-            return ApiClient.getUsers(cookUserIds)
-                .then(
-                    response => {
-                        const foods = Selectors.foods(getState());
-                        const cooks = response.data;
-
-                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_COOKS_SUCCESS, foods, cooks });
-                    },
-                    error => {
-                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_COOKS_ERROR, error });
-                    }
-                );
-        }
-    },
-
     editFood: (food_id) => {
         return (dispatch, getState) => {
 
-            const foods = Selectors.foods(getState());
+            const state = getState();
+            const foods = Selectors.foods(state);
+            const cooks = Selectors.cooks(state);
             if (foods) {
                 const food = foods.find(f => f.food_id === food_id);
 
@@ -81,13 +65,18 @@ export const Actions = {
 
                 const imageUrlOptions = food.imageUrls.map(x => {
                     return { key: x, value: x, text: x };
+                });
+
+                const cookOptions = cooks.map(x => {
+                    return { key: x.user_id, value: x.user_id, text: Util.firstNonEmptyValue(x.name, x.username, x.email) };
                 })
 
                 dispatch({
                     type: ActionTypes.ADMIN_EDIT_FOOD,
                     food,
                     ingredientOptions,
-                    imageUrlOptions
+                    imageUrlOptions,
+                    cookOptions
                 });
             }
 
@@ -174,18 +163,16 @@ export const Selectors = {
     foods: (state) => state.foodManager.foods,
     saveFoodResult: (state) => state.foodManager.saveFoodResult,
 
-    isLoadingCooks: (state) => state.foodManager.isLoadingCooks,
-    getCooksResult: (state) => state.foodManager.getCooksResult,
     cooks: (state) => state.foodManager.cooks,
 
     food: (state) => state.foodManager.food,
     ingredientOptions: (state) => state.foodManager.ingredientOptions,
     imageUrlOptions: (state) => state.foodManager.imageUrlOptions,
+    cookOptions: (state) => state.foodManager.cookOptions,
 }
 
 const initialState = {
     isLoadingFoods: false,
-    isLoadingCooks: false,
     isSavingFood: false,
 };
 
@@ -200,26 +187,6 @@ export const Reducers = {
                 });
 
             case ActionTypes.ADMIN_RECEIVE_FOODS_SUCCESS:
-                return Object.assign({}, state, {
-                    isLoadingFoods: false,
-                    foods: action.foods
-                });
-
-            case ActionTypes.ADMIN_RECEIVE_FOODS_ERROR:
-                return Object.assign({}, state, {
-                    isLoadingFoods: false,
-                    getFoodsResult: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.error)
-                    }
-                });
-
-            case ActionTypes.ADMIN_REQUEST_COOKS:
-                return Object.assign({}, state, {
-                    isLoadingCooks: true
-                });
-
-            case ActionTypes.ADMIN_RECEIVE_COOKS_SUCCESS:
                 const cooks = {};
                 action.cooks.forEach(x => cooks[x.user_id] = x);
                 const foods = [];
@@ -233,25 +200,27 @@ export const Reducers = {
                 }
 
                 return Object.assign({}, state, {
-                    isLoadingCooks: false,
-                    cooks: action.cooks,
-                    foods: foods
+                    isLoadingFoods: false,
+                    foods: foods,
+                    cooks: action.cooks
                 });
 
-            case ActionTypes.ADMIN_RECEIVE_COOKS_ERROR:
+            case ActionTypes.ADMIN_RECEIVE_FOODS_ERROR:
                 return Object.assign({}, state, {
-                    isLoadingCooks: false,
-                    getCooksResult: {
+                    isLoadingFoods: false,
+                    getFoodsResult: {
                         code: ErrorCodes.ERROR,
                         message: JSON.stringify(action.error)
                     }
                 });
+
 
             case ActionTypes.ADMIN_EDIT_FOOD:
                 return Object.assign({}, state, {
                     food: action.food,
                     ingredientOptions: action.ingredientOptions,
                     imageUrlOptions: action.imageUrlOptions,
+                    cookOptions: action.cookOptions,
                 });
 
             case ActionTypes.ADMIN_ADD_INGREDIENT_OPTION:

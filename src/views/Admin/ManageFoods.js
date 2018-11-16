@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
-import Util from '../../services/Util'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
 import { Button, List, Image } from 'semantic-ui-react'
@@ -16,11 +15,7 @@ class ManageFoods extends React.Component {
     componentWillMount() {
         const { foods, actions } = this.props;
         if (!foods) {
-            actions.getFoods()
-                .then(() => {
-                    const cook_ids = Util.distinct(this.props.foods.map(x => x.user_id));
-                    return actions.getCooks(cook_ids);
-                });
+            actions.getFoods();
         }
     }
 

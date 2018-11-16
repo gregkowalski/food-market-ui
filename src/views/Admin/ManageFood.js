@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm, getFormSyncErrors, isValid } from 'redux-form'
+import { Field, reduxForm, getFormSyncErrors, isValid, formValueSelector } from 'redux-form'
 import PropTypes from 'prop-types'
-import { Grid, Input, Segment, Header, Image, Button, Message } from 'semantic-ui-react'
+import { Grid, Segment, Header, Image, Button, Message } from 'semantic-ui-react'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFood.css'
 import { ValidatedDropdown, ValidatedField, ValidatedTextArea, ValidatedCheckbox } from '../../components/Validation'
@@ -17,18 +17,13 @@ import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon';
 import { all_boundaries, getRegionId } from '../../components/Map/AllRegions';
 import ErrorCodes from '../../services/ErrorCodes';
-import Util from '../../services/Util'
 
 class ManageFood extends React.Component {
 
     componentWillMount() {
         const { foods, actions } = this.props;
         if (!foods) {
-            actions.getFoods()
-                .then(() => {
-                    const cook_ids = Util.distinct(this.props.foods.map(x => x.user_id));
-                    return actions.getCooks(cook_ids);
-                });
+            actions.getFoods();
         }
     }
 
@@ -56,9 +51,9 @@ class ManageFood extends React.Component {
 const mapStateToProps = (state) => {
     return {
         isLoadingFoods: Selectors.isLoadingFoods(state),
+        getFoodsResult: Selectors.getFoodsResult(state),
         foods: Selectors.foods(state),
         food: Selectors.food(state),
-        getFoodsResult: Selectors.getFoodsResult(state),
     };
 };
 
@@ -193,17 +188,18 @@ class FoodEditorForm extends React.Component {
     }
 
     render() {
-        const { food, ingredientOptions, imageUrlOptions, saveFoodResult, formSyncErrors, formIsValid } = this.props;
+        const { food, ingredientOptions, imageUrlOptions, cookOptions, saveFoodResult } = this.props;
         if (!food) {
             return null;
         }
 
-        const { handleSubmit, pristine, isSavingFood } = this.props;
+        const { handleSubmit, pristine, formSyncErrors, formIsValid, isSavingFood } = this.props;
         const errors = [];
         for (const key in formSyncErrors) {
             errors.push(formSyncErrors[key]);
         }
 
+        const { pickup, delivery } = this.props;
         return (
             <div>
                 <div className='managefood-save'>
@@ -236,7 +232,8 @@ class FoodEditorForm extends React.Component {
                                 <label>Cook</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
-                                <Field name='cook_name' autoComplete='cook_name' component={ValidatedField} type='text' placeholder='Enter cook id' />
+                                <Field name='user_id' autoComplete='user_id' placeholder="Who is the cook for this food?"
+                                    fluid selection options={cookOptions} component={ValidatedDropdown} />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -291,30 +288,36 @@ class FoodEditorForm extends React.Component {
                                 </div>
                             </Grid.Column>
                         </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
-                                <label>Location Lat</label>
-                            </Grid.Column>
-                            <Grid.Column width={14}>
-                                <Input disabled value={food.position.lat} />
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                                <label>Location Lng</label>
-                            </Grid.Column>
-                            <Grid.Column width={14}>
-                                <Input disabled value={food.position.lng} />
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
-                                <label>Delivery Regions</label>
-                            </Grid.Column>
-                            <Grid.Column width={14}>
-                                <Field name='regions' autoComplete='regions' placeholder="What are the delivery regions?"
-                                    fluid multiple search selection
-                                    options={regionOptions} component={ValidatedDropdown} />
-                            </Grid.Column>
-                        </Grid.Row>
+                        {pickup &&
+                            <Grid.Row>
+                                <Grid.Column width={2}>
+                                    <label>Pickup Lat</label>
+                                </Grid.Column>
+                                <Grid.Column width={14}>
+                                    <Field name='position.lat' autoComplete='position.lat' component={ValidatedField}
+                                        type='number' placeholder='Enter position latitude' />
+                                </Grid.Column>
+                                <Grid.Column width={2}>
+                                    <label>Pickup Lng</label>
+                                </Grid.Column>
+                                <Grid.Column width={14}>
+                                    <Field name='position.lng' autoComplete='position.lng' component={ValidatedField}
+                                        type='number' placeholder='Enter position longitude' />
+                                </Grid.Column>
+                            </Grid.Row>
+                        }
+                        {delivery &&
+                            <Grid.Row>
+                                <Grid.Column width={2}>
+                                    <label>Delivery Regions</label>
+                                </Grid.Column>
+                                <Grid.Column width={14}>
+                                    <Field name='regions' autoComplete='regions' placeholder="What are the delivery regions?"
+                                        fluid multiple search selection
+                                        options={regionOptions} component={ValidatedDropdown} />
+                                </Grid.Column>
+                            </Grid.Row>
+                        }
                     </Grid>
                 </Segment>
                 <Header block attached='top'>Food Details</Header>
@@ -336,7 +339,6 @@ class FoodEditorForm extends React.Component {
                                     ))}
                                 </div>
                             </Grid.Column>
-
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={2}>
@@ -405,23 +407,28 @@ class FoodEditorForm extends React.Component {
     }
 }
 
-
+const reduxFormName = 'manageFood';
+const selector = formValueSelector(reduxFormName)
 const foodEditorMapStateToProps = (state) => {
     return {
         food: Selectors.food(state),
         initialValues: Selectors.food(state),
         ingredientOptions: Selectors.ingredientOptions(state),
         imageUrlOptions: Selectors.imageUrlOptions(state),
+        cookOptions: Selectors.cookOptions(state),
         isSavingFood: Selectors.isSavingFood(state),
         saveFoodResult: Selectors.saveFoodResult(state),
 
-        formSyncErrors: getFormSyncErrors('manageFood')(state),
-        formIsValid: isValid('manageFood')(state),
+        formSyncErrors: getFormSyncErrors(reduxFormName)(state),
+        formIsValid: isValid(reduxFormName)(state),
+
+        pickup: selector(state, 'pickup'),
+        delivery: selector(state, 'delivery'),
     };
 };
 
 const foodEditorMapDispatchToProps = (dispatch) => {
     return { actions: bindActionCreators(Actions, dispatch) };
 };
-const foodEditorForm = reduxForm({ form: 'manageFood', validate, enableReinitialize: true })(FoodEditorForm);
+const foodEditorForm = reduxForm({ form: reduxFormName, validate, enableReinitialize: true })(FoodEditorForm);
 const FoodEditor = connect(foodEditorMapStateToProps, foodEditorMapDispatchToProps)(foodEditorForm);

@@ -90,7 +90,28 @@ class ApiClient {
     }
 
     saveFood(food) {
-        return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food);
+        const food_dto = {
+            food_id: food.food_id,
+            user_id: food.user_id,
+            title: food.title,
+            imageUrls: food.imageUrls,
+            ingredients: food.ingredients,
+            short_description: food.short_description,
+            long_description: food.long_description,
+            price: food.price,
+            price_currency: food.price_currency,
+            features: food.features,
+            unit: food.unit,
+            feed: food.feed,
+            states: food.states,
+            allergies: food.allergies,
+            delivery: food.delivery,
+            pickup: food.pickup,
+            regions: food.regions,
+            position: food.position,
+            handoff_dates: food.handoff_dates,
+        }
+        return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food_dto);
     }
 
     getReviews(food_id) {

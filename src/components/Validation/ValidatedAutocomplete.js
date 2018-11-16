@@ -3,7 +3,7 @@ import { Message } from 'semantic-ui-react'
 import ClearableAutocomplete from '../ClearableAutocomplete'
 import Util from '../../services/Util'
 
-const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, className }) => {
+const ValidatedAutocomplete = ({ input, meta, ...props }) => {
     const handlePlaceSelected = (place) => {
         const address = Util.toFormattedAddress(place);
         input.onChange(address);
@@ -31,13 +31,11 @@ const ValidatedAutocomplete = ({ input, meta, placeholder, autoComplete, classNa
     return (
         <ClearableAutocomplete
             style={autocompleteStyle(!hasError)}
-            className={className}
             divClassName={divClassName}
-            placeholder={placeholder}
-            autoComplete={autoComplete}
-
             onPlaceSelected={handlePlaceSelected}
             onClear={handleClear}
+
+            {...props}
 
             {...input}
         >

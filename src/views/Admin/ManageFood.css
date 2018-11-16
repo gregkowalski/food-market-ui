@@ -29,6 +29,51 @@
     appearance: none;
 }
 
+/* Autocomplete */
+
+.contactinfo-address input {
+    line-height: 1.21428571em;
+    font-weight: 400;
+    font-size: 1em;
+    font-family: 'Roboto';
+    padding: 9.5px 14px;
+    border-radius: .28571429rem;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    color: rgba(0, 0, 0, .87);
+}
+
+.contactinfo-address input::placeholder {
+    color: rgba(34, 36, 38, .3);
+}
+
+.contactinfo-address input:focus::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.contactinfo-address .error input::placeholder {
+    color: #e0b4b4;
+}
+
+.contactinfo-address .error input:focus::placeholder {
+    color: rgba(159, 58, 56, .65);
+}
+
+.pac-item {
+    font-size: 16px;
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.pac-item-query {
+    font-size: 16px;
+}
+
+.pac-icon {
+    margin-top: 5px;
+}
+
+/* Autocomplete */
+
 .managefood label {
     font-weight: 700;
 }
