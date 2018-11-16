@@ -89,7 +89,8 @@ class OverviewSection extends React.Component {
                     </div>
                     <div style={{ marginTop: '15px' }}>
                         <Icon color='teal' name='angle double right' />
-                        For any questions regarding allergens or other specific contents, please contact your neighbourhood cook directly.
+                        For any questions regarding allergens or other specific contents, please contact your 
+                        neighbourhood cook directly.
                 </div>
                 </div>
 

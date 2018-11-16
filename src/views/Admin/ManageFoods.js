@@ -8,7 +8,7 @@ import './ManageFoods.css'
 import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import { Button, List, Image } from 'semantic-ui-react'
+import { Button, List, Image, Modal, Icon, Header, Divider, Form } from 'semantic-ui-react'
 
 class ManageFoods extends React.Component {
 
@@ -23,8 +23,12 @@ class ManageFoods extends React.Component {
         this.props.history.push(Url.admin.manageFood(food_id));
     }
 
+    deleteFood = (food_id) => {
+
+    }
+
     render() {
-        const { isLoadingFoods, foods } = this.props;
+        const { isLoadingFoods, foods, onClose } = this.props;
 
         let foodItems;
         if (foods) {
@@ -32,19 +36,38 @@ class ManageFoods extends React.Component {
                 return (
                     <List.Item key={food.food_id}>
                         <List.Content floated='right'>
-                            <Button content='Edit' icon='edit outline' labelPosition='right' onClick={() => this.editFood(food.food_id)} />
-                            {/* <Button content='Delete' icon='trash alternate outline' labelPosition='right' /> */}
+                            <div className='managefoods-button'>
+                                <Button content='Edit' icon='edit outline' labelPosition='left' onClick={() => this.editFood(food.food_id)} />
+                                <Modal className='managefoods-delete-modal' dimmer='inverted' centered={false} trigger={<Button><Icon name='trash alternate outline' />Delete</Button>}>
+                                    <Modal.Header><Icon name='trash alternate outline' />Are you sure? </Modal.Header>
+                                    <Modal.Content> <div className='managefoods-title'>You are about to delete this food listing.</div></Modal.Content>
+                                    <Modal.Content image>
+                                        <Image wrapped size='small' src={food.imageUrls[0]} />
+                                        <Modal.Description>
+                                            <Header>{food.title}</Header>
+                                            <Form>
+                                                <Form.Field>
+                                                    <label>Type DELETE to confirm</label>
+                                                    <input placeholder='DELETE' />
+                                                </Form.Field>
+                                                <div className='managefoods-delete-error-message'>Please enter the text exactly as it is displayed.</div>
+                                            </Form>
+                                        </Modal.Description>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button floated='left' basic onClick={onClose}>Cancel</Button>
+                                        <Button content='Delete' onClick={() => this.deleteFood(food.food_id)} />
+                                    </Modal.Actions>
+                                </Modal>
+                            </div>
                         </List.Content>
                         <div className='managefoods-fooditem' key={food.food_id} onClick={() => this.editFood(food.food_id)}>
-                            <div className='managefoods-mobile'>
+                            <div id='managefoods-image'>
                                 <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
-                            </div>
-                            <div className='managefoods-desktop'>
-                                <Image floated='left' verticalAlign='middle' size='tiny' src={food.imageUrls[0]} rounded />
                             </div>
                             <div className='managefoods-title'>{food.title}</div>
                             {food.cook &&
-                                <div className='managefoods-small-font'>Cook: {food.cook_name}</div>
+                                <div>by {food.cook_name}</div>
                             }
                         </div>
                     </List.Item>
@@ -60,6 +83,7 @@ class ManageFoods extends React.Component {
                     <LoadingIcon size='large' />
                 }
                 <div className='managefoods-indent'>
+                    <Divider />
                     <List divided verticalAlign='middle'>
                         {foodItems}
                     </List>

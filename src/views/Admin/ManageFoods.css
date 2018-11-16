@@ -15,13 +15,10 @@
 }
 
 .managefoods-title {
-    font-weight: 500;
-    font-size: 1.2em;
-    /* color: #b61095; */
-}
-
-.managefoods-small-font {
-    font-size: .89em;
+    font-weight: 400;
+    font-size: 1.4em;
+    margin-top: 15px;
+    /* color: #2b65ec; */
 }
 
 .managefoods-indent {
@@ -29,15 +26,30 @@
     margin-left: 40px;
 }
 
-.managefoods-mobile {
-    display: none;
+#managefoods-image {
+    width: 150px;
+    height: auto;
+}
+
+.managefoods-button {
+    margin-top: 15px;
+}
+
+#managefoods-image img.ui.image {
+    margin: 0 1em 1em 0;
+}
+
+.managefoods-delete-modal.ui.modal {
+    top: 15%;
+}
+
+.managefoods-delete-error-message {
+    color: #DC143C; 
+    margin: -8px 0px 0px 1px;
 }
 
 @media all and (max-width: 767px) {
-    .managefoods-desktop {
-        display: none;
-    }
-    .managefoods-mobile {
+    #managefoods-image {
         display: inline-block;
         width: 55px;
         padding-bottom: 10px;
