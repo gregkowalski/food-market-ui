@@ -193,17 +193,18 @@ class FoodEditorForm extends React.Component {
             return null;
         }
 
-        const { handleSubmit, pristine, formSyncErrors, formIsValid, isSavingFood } = this.props;
+        const { handleSubmit, pristine, formSyncErrors, formIsValid, isSavingFood, submitting } = this.props;
         const errors = [];
         for (const key in formSyncErrors) {
             errors.push(formSyncErrors[key]);
         }
 
         const { pickup, delivery } = this.props;
+        const loading = isSavingFood || submitting;
         return (
             <div>
                 <div className='managefood-save'>
-                    <Button color='purple' disabled={pristine || !formIsValid} loading={isSavingFood} onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
+                    <Button color='purple' disabled={pristine || !formIsValid} loading={loading} onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
 
                     {!formIsValid && errors.map(x => (
                         <Message error header={x.header} content={x.message} />
