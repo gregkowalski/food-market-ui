@@ -9,10 +9,11 @@
 }
 
 .cooks-title>div:first-child {
-    font-size: .8em;
+    font-size: .75em;
     font-weight: 400;
     margin-top: 12px;
 }
+
 
 .cooks-content {
     font-size: 1.4em;
@@ -31,11 +32,17 @@
     padding: 1.7rem;
 }
 
-.cooks-pic {
-    border: 2px solid #d3d3d3;
-    /* padding: 3px; */
-    padding: 20px;
+#cooks-pic {
+    /* border: 2px solid #d3d3d3; */
     height: 300px;
+    margin-bottom: 20px;
+}
+
+#cooks-pic > img {
+    display: block;
+    margin-left: auto;
+    /* margin-right: auto; */
+    /* width: 70%; */
 }
 
 .cooks-cards {
@@ -55,8 +62,8 @@
 
 @media all and (max-width: 767px) {
     .cooks-title {
-        margin-top: 35px;
-        margin-bottom: 30px;
+        margin-top: 95px;
+        margin-bottom: 50px;
         font-weight: 500;
         font-size: 1.9em;
     }
