@@ -24,6 +24,10 @@
     justify-content: center;
 }
 
+.cookorders-no-orders-message {
+    font-size: 1.25em;
+}
+
 @media all and (max-width: 767px) {
     .cookorders {
         width: 100%;

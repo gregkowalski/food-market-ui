@@ -11,6 +11,8 @@ import LoadingIcon from '../../components/LoadingIcon'
 import { Actions, Selectors } from '../../store/buyerOrders'
 import BuyerOrderCard from './BuyerOrderCard'
 import { OrderStatus } from '../../Enums';
+import { Divider, Button } from 'semantic-ui-react'
+import Url from '../../services/Url'
 
 class BuyerOrders extends React.Component {
 
@@ -20,6 +22,10 @@ class BuyerOrders extends React.Component {
 
     handleCancelOrder = (order, reason) => {
         this.props.actions.cancelOrder(order, reason);
+    }
+
+    navigateToDefaultSearch = () => {
+        this.props.history.push(Url.search());
     }
 
     render() {
@@ -43,7 +49,11 @@ class BuyerOrders extends React.Component {
 
             let upcomingOrdersContent;
             if (!upcomingOrders || upcomingOrders.length <= 0) {
-                upcomingOrdersContent = (<div>No orders...</div>);
+                upcomingOrdersContent = (<div id='buyerorders-no-orders-message'>
+                    <Divider hidden />None at the moment.  Let's see what else is cooking!
+                        <Divider hidden />
+                        <Button color='purple' onClick={this.navigateToDefaultSearch}>Explore Foodcraft</Button>
+                </div>);
             }
             else {
                 upcomingOrdersContent = upcomingOrders.map(order => {
@@ -53,7 +63,7 @@ class BuyerOrders extends React.Component {
 
             let historyOrdersContent;
             if (!pastOrders || pastOrders.length <= 0) {
-                historyOrdersContent = (<div>No orders...</div>);
+                historyOrdersContent = (<div><Divider hidden />No orders yet...</div>);
             }
             else {
                 historyOrdersContent = pastOrders.map(order => {

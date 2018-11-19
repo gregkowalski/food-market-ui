@@ -14,6 +14,8 @@ import { Actions, Selectors } from '../../store/cookOrders'
 import OrderFilters from '../../store/cookOrders/orderFilters'
 import CookOrderByDateCard from './CookOrderByDateCard'
 import { OrderStatus } from '../../Enums'
+import { Divider } from 'semantic-ui-react'
+
 
 class CookOrders extends React.Component {
 
@@ -54,8 +56,9 @@ class CookOrders extends React.Component {
         }
         else if (orders.length <= 0) {
             content = (
-                <div>
-                    No orders...
+                <div className='cookorders-no-orders-message'>
+                <Divider hidden />
+                    No orders yet...
                 </div>
             );
         }
