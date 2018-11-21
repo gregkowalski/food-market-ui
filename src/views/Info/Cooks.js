@@ -13,7 +13,8 @@ const Cooks = () => {
             <div className='cooks-content'>
             <Grid stackable columns={2} verticalAlign='middle' textAlign='left'>
                     <Grid.Column>
-                        <div id='cooks-pic'><Image size='medium' rounded src="/assets/images/users/shaynaB.jpg" /></div>
+                        <div id='cooks-pic'><Image size='medium' circular src="/assets/images/users/shaynaB_full.jpg" /></div>
+                        <div id='cooks-pic-mobile'><Image circular src="/assets/images/users/shaynaB_full.jpg" /></div>
                     </Grid.Column>
                     <Grid.Column>
                         <Icon size='big' color='purple' name='quote left' />
@@ -27,9 +28,9 @@ const Cooks = () => {
                 <Grid stackable columns={2} verticalAlign='middle' textAlign='right' reversed='mobile'>                    
                     <Grid.Column>
                         <Icon size='big' color='purple' name='quote left' />
-                        <div>Filipino food is meant to be shared.</div>
-                        <div className='cooks-cards'>Missy
-                            <div>Burnaby</div>
+                        <div>This is what food means to me. This is why I love to cook and share it with others.</div>
+                        <div className='cooks-cards'>Necole
+                            <div>Joyce-Collingwood</div>
                             </div>
                     </Grid.Column>
                     <Grid.Column>
@@ -42,9 +43,11 @@ const Cooks = () => {
                     </Grid.Column>
                     <Grid.Column>
                         <Icon size='big' color='purple' name='quote left' />
-                        <div>This is what food means to me. This is why I share my cooking.</div>
-                        <div className='cooks-cards'>Necole
-                            <div>Joyce-Collingwood</div>
+                        <div>One of the things that I really love about Turkish food
+                        is that it’s very honest and humble. Simple ingredients are transformed into visual
+                        masterpieces that sing with flavour.</div>
+                        <div className='cooks-cards'>Ayesegul
+                            <div>North Vancouver</div>
                         </div>
                     </Grid.Column>
                 </Grid>
@@ -66,11 +69,9 @@ const Cooks = () => {
                     </Grid.Column>
                     <Grid.Column>
                         <Icon size='big' color='purple' name='quote left' />
-                        <div>One of the things that I really love about Turkish food
-                        is that it’s very honest and humble. Simple ingredients are transformed into visual
-                        masterpieces that sing with flavour. </div>
-                        <div className='cooks-cards'>Ayesegul
-                            <div>North Vancouver</div>
+                        <div>Filipino food is meant to be shared!</div>
+                        <div className='cooks-cards'>Missy
+                            <div>Burnaby</div>
                         </div>
                     </Grid.Column>
                 </Grid>

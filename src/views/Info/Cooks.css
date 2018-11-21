@@ -14,7 +14,6 @@
     margin-top: 12px;
 }
 
-
 .cooks-content {
     font-size: 1.4em;
     line-height: 1.6;
@@ -33,16 +32,15 @@
 }
 
 #cooks-pic {
-    /* border: 2px solid #d3d3d3; */
     height: 300px;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
 }
 
-#cooks-pic > img {
+#cooks-pic>img {
     display: block;
     margin-left: auto;
-    /* margin-right: auto; */
-    /* width: 70%; */
+    border: 2px solid #d3d3d3;
+    padding: 3px;
 }
 
 .cooks-cards {
@@ -60,6 +58,10 @@
     letter-spacing: .5px;
 }
 
+#cooks-pic-mobile > img {
+    display: none;
+}
+
 @media all and (max-width: 767px) {
     .cooks-title {
         margin-top: 95px;
@@ -75,11 +77,19 @@
         margin-top: 0px;
         margin-bottom: 10px;
     }
-    .cooks-pic {
-        height: 200px;
+    #cooks-pic {
+        display: none;
     }
     .cooks-cards {
         font-weight: 500;
         margin-bottom: 40px;
+    }
+    #cooks-pic-mobile > img {
+        display: block;
+        border: 2px solid #d3d3d3;
+        padding: 3px;
+        height: auto;
+        width: 200px;
+        margin: auto;
     }
 }
