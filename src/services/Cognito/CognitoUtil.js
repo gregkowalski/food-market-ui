@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../../Config'
 import { Constants } from '../../Constants'
+import AWS from 'aws-sdk'
 
 class CognitoUtil {
 
@@ -41,6 +42,30 @@ class CognitoUtil {
         }
         const isAdmin = groups.includes('admin');
         return isAdmin;
+    }
+
+    getCredentials(jwtToken) {
+        if (!jwtToken) {
+            jwtToken = this.getLoggedInUserJwtToken();
+        }
+        const identityPoolId = Config.Cognito.IdentityPoolId;
+        const userPoolId = Config.Cognito.UserPoolId;
+        const region = Config.Api.Region;
+
+        AWS.config.region = region;
+        
+        const jwt = jwtDecode(jwtToken);
+
+        const options = {
+            IdentityPoolId: identityPoolId,
+            Logins: {
+                [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: jwtToken
+            },
+            LoginId: jwt.sub
+        }
+
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials(options);
+        return AWS.config.credentials;
     }
 
     getLoggedInUserJwtToken() {
@@ -87,6 +112,11 @@ class CognitoUtil {
     }
 
     logOut() {
+        if (AWS.config.credentials && AWS.config.credentials.clearCachedId) {
+            AWS.config.credentials.clearCachedId();
+            AWS.config.credentials = null;
+        }
+
         const auth = new CognitoAuth(this.getCognitoAuthData());
         const session = auth.getCachedSession();
         if (session && session.isValid()) {
@@ -171,4 +201,4 @@ class CognitoUtil {
         return window.sessionStorage.getItem(key);
     }
 }
- export default new CognitoUtil();
+export default new CognitoUtil();

@@ -8,11 +8,16 @@
 }
 
 .managefood-save {
+    display: flex;
     margin-bottom: 20px;
 }
 
 .managefood-save .ui.message {
     cursor: pointer;
+    margin-top: 0;
+    margin-left: 10px;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
 }
 
 .managefood .ui.input {
@@ -94,19 +99,6 @@
     font-weight: 400;
 }
 
-.managefood-images {
-    margin: 5px 0;
-    display: flex;
-}
-
-.managefood-images>.ui.image {
-    margin-left: 5px;
-}
-
-.managefood-images img {
-    height: 100px;
-}
-
 .managefood .ui.stackable.grid>.row {
     padding: 0;
     padding-bottom: 0.5rem;
@@ -127,4 +119,33 @@
     .managefood .ui.stackable.grid>.row>.two.wide.column {
         text-align: left;
     }
+}
+
+.imagemanager-images {
+    margin: 5px 0;
+    display: flex;
+}
+
+.imagemanager-images>.ui.image {
+    cursor: pointer;
+    margin-left: 5px;
+    height: 100px;
+}
+
+.imagemanager input[type="file"] {
+    margin: 10px 0;
+}
+
+.ReactCrop {
+    margin-right: 10px;
+}
+
+.ReactCrop img {
+    width: 250px;
+    height: auto;
+}
+
+#imagemanager-croppedimg {
+    width: 250px;
+    height: auto;
 }

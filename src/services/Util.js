@@ -365,6 +365,13 @@ class Util {
 
         return array.filter(onlyUnique);
     }
+
+    remove(array, value) {
+        const index = array.indexOf(value);
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+    }
 }
 
 export default new Util();

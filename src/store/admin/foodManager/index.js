@@ -1,30 +1,153 @@
 import ApiClient from '../../../services/ApiClient'
 import ApiObjectMapper from '../../../services/ApiObjectMapper'
 import ErrorCodes from '../../../services/ErrorCodes'
-import Util from '../../../services/Util';
+import Util from '../../../services/Util'
+import Config from '../../../Config'
+import AWS from 'aws-sdk'
+import CognitoUtil from '../../../services/Cognito/CognitoUtil'
 
 const ActionTypes = {
-    ADMIN_REQUEST_FOODS: 'ADMIN_REQUEST_FOODS',
-    ADMIN_RECEIVE_FOODS_SUCCESS: 'ADMIN_RECEIVE_FOODS_SUCCESS',
-    ADMIN_RECEIVE_FOODS_ERROR: 'ADMIN_RECEIVE_FOODS_ERROR',
+    FOODMANAGER_REQUEST_FOODS: 'FOODMANAGER_REQUEST_FOODS',
+    FOODMANAGER_RECEIVE_FOODS_SUCCESS: 'FOODMANAGER_RECEIVE_FOODS_SUCCESS',
+    FOODMANAGER_RECEIVE_FOODS_ERROR: 'FOODMANAGER_RECEIVE_FOODS_ERROR',
 
-    ADMIN_EDIT_FOOD: 'ADMIN_EDIT_FOOD',
-    ADMIN_ADD_INGREDIENT_OPTION: 'ADMIN_ADD_INGREDIENT_OPTION',
-    ADMIN_ADD_IMAGE_URL_OPTION: 'ADMIN_ADD_IMAGE_URL_OPTION',
+    FOODMANAGER_EDIT_FOOD: 'FOODMANAGER_EDIT_FOOD',
+    FOODMANAGER_ADD_INGREDIENT_OPTION: 'FOODMANAGER_ADD_INGREDIENT_OPTION',
 
-    ADMIN_REQUEST_SAVE_FOOD: 'ADMIN_REQUEST_SAVE_FOOD',
-    ADMIN_RECEIVE_SAVE_FOOD_SUCCESS: 'ADMIN_RECEIVE_SAVE_FOOD_SUCCESS',
-    ADMIN_RECEIVE_SAVE_FOOD_ERROR: 'ADMIN_RECEIVE_SAVE_FOOD_ERROR',
+    FOODMANAGER_REQUEST_SAVE_FOOD: 'FOODMANAGER_REQUEST_SAVE_FOOD',
+    FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS: 'FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS',
+    FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR: 'FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR',
 
-    ADMIN_CLEAR_SAVE_FOOD_RESULT: 'ADMIN_CLEAR_SAVE_FOOD_RESULT'
+    FOODMANAGER_CLEAR_SAVE_FOOD_RESULT: 'FOODMANAGER_CLEAR_SAVE_FOOD_RESULT',
+
+
+    FOODMANAGER_SELECT_IMAGE: 'FOODMANAGER_SELECT_IMAGE',
+
+    FOODMANAGER_REQUEST_UPLOAD_IMAGE: 'FOODMANAGER_REQUEST_UPLOAD_IMAGE',
+    FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS: 'FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS',
+    FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR: 'FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR',
+
+    FOODMANAGER_REQUEST_DELETE_IMAGE: 'FOODMANAGER_REQUEST_DELETE_IMAGE',
+    FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS: 'FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS',
+    FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR: 'FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR',
+
+    FOODMANAGER_LOAD_IMAGE_FILE: 'FOODMANAGER_LOAD_IMAGE_FILE',
+    FOODMANAGER_CHANGE_IMAGE_CROP: 'FOODMANAGER_CHANGE_IMAGE_CROP',
+    FOODMANAGER_CHANGE_CROPPED_IMAGE_URL: 'FOODMANAGER_CHANGE_CROPPED_IMAGE_URL',
 };
+
+function getImageKey(user_identity_id, food_id, fileName) {
+    return `${user_identity_id}/${food_id}/${fileName}`;
+}
 
 export const Actions = {
 
+    selectImage: (imageUrl) => {
+        return (dispatch) => {
+            if (!imageUrl) {
+                return;
+            }
+
+            dispatch({ type: ActionTypes.FOODMANAGER_SELECT_IMAGE, imageUrl });
+        }
+    },
+
+    deleteImage: (imageUrl, updateFormValueFunc) => {
+        return (dispatch, getState) => {
+            if (!imageUrl) {
+                return;
+            }
+
+            // Don't attempt to delete legacy images such as /assets/images/my_food_image.png from AWS S3
+            if (imageUrl.startsWith('/')) {
+                updateFormValueFunc(imageUrl);
+                dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS, imageUrl });
+                return;
+            }
+
+            dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_DELETE_IMAGE });
+
+            const creds = CognitoUtil.getCredentials();
+            creds.get((error) => {
+                if (error) {
+                    dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR, error });
+                    return;
+                }
+
+                const s3 = new AWS.S3({
+                    region: Config.Api.Region,
+                    credentials: creds
+                });
+
+                const food = Selectors.food(getState());
+
+                const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+                const user_identity_id = creds.data.IdentityId;
+                const key = getImageKey(user_identity_id, food.food_id, imageName);
+
+                s3.deleteObject({
+                    Bucket: Config.Assets.S3Bucket,
+                    Key: key
+                }, (error, data) => {
+                    if (error) {
+                        dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR, error });
+                        return;
+                    }
+
+                    const assetUrl = `${Config.Assets.AssetsBaseUrl}/${key}`;
+                    updateFormValueFunc(assetUrl);
+                    dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS, assetUrl });
+                });
+            });
+        }
+    },
+
+    uploadImage: (imageUrl, imageBlob, updateFormValueFunc) => {
+        return (dispatch, getState) => {
+            if (!imageUrl || !imageBlob) {
+                return;
+            }
+
+            dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_UPLOAD_IMAGE });
+
+            const creds = CognitoUtil.getCredentials();
+            creds.get((error) => {
+                if (error) {
+                    dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR, error });
+                    return;
+                }
+
+                const s3 = new AWS.S3({
+                    region: Config.Api.Region,
+                    credentials: creds
+                });
+
+                const food = Selectors.food(getState());                
+                const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) + '.' + imageBlob.type.substring(imageBlob.type.lastIndexOf('/') + 1);
+                const user_identity_id = creds.data.IdentityId;
+                const key = getImageKey(user_identity_id, food.food_id, imageName);
+                s3.putObject({
+                    Bucket: Config.Assets.S3Bucket,
+                    Key: key,
+                    Body: imageBlob,
+                    ContentType: imageBlob.type
+                }, (error, data) => {
+                    if (error) {
+                        dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR, error });
+                        return;
+                    }
+
+                    const assetUrl = `${Config.Assets.AssetsBaseUrl}/${key}`;
+                    updateFormValueFunc(assetUrl);
+                    dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS, assetUrl });
+                });
+            });
+        }
+    },
+
     getFoods: () => {
         return (dispatch) => {
-
-            dispatch({ type: ActionTypes.ADMIN_REQUEST_FOODS });
+            dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_FOODS });
 
             return ApiClient.getFoods()
                 .then(
@@ -36,15 +159,15 @@ export const Actions = {
                             .then(
                                 response => {
                                     const cooks = response.data;
-                                    dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_SUCCESS, foods, cooks })
+                                    dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_FOODS_SUCCESS, foods, cooks })
                                 },
                                 error => {
-                                    dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_ERROR, error });
+                                    dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_FOODS_ERROR, error });
                                 }
                             );
                     },
                     error => {
-                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_FOODS_ERROR, error });
+                        dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_FOODS_ERROR, error });
                     }
                 );
         };
@@ -55,7 +178,6 @@ export const Actions = {
 
             const state = getState();
             const foods = Selectors.foods(state);
-            const cooks = Selectors.cooks(state);
             if (foods) {
                 const food = foods.find(f => f.food_id === food_id);
 
@@ -63,20 +185,10 @@ export const Actions = {
                     return { key: f, value: f, text: f };
                 });
 
-                const imageUrlOptions = food.imageUrls.map(x => {
-                    return { key: x, value: x, text: x };
-                });
-
-                const cookOptions = cooks.map(x => {
-                    return { key: x.user_id, value: x.user_id, text: Util.firstNonEmptyValue(x.name, x.username, x.email) };
-                })
-
                 dispatch({
-                    type: ActionTypes.ADMIN_EDIT_FOOD,
+                    type: ActionTypes.FOODMANAGER_EDIT_FOOD,
                     food,
                     ingredientOptions,
-                    imageUrlOptions,
-                    cookOptions
                 });
             }
 
@@ -86,37 +198,15 @@ export const Actions = {
     addIngredientOption: (value) => {
         return (dispatch) => {
 
-            const option = {
-                key: value,
-                text: value,
-                value
-            };
-            dispatch({
-                type: ActionTypes.ADMIN_ADD_INGREDIENT_OPTION,
-                option
-            });
-        }
-    },
-
-    addImageUrlOption: (value) => {
-        return (dispatch) => {
-
-            const option = {
-                key: value,
-                text: value,
-                value
-            };
-            dispatch({
-                type: ActionTypes.ADMIN_ADD_IMAGE_URL_OPTION,
-                option
-            });
+            const option = { key: value, text: value, value };
+            dispatch({ type: ActionTypes.FOODMANAGER_ADD_INGREDIENT_OPTION, option });
         }
     },
 
     saveFood: (food) => {
         return (dispatch) => {
 
-            dispatch({ type: ActionTypes.ADMIN_REQUEST_SAVE_FOOD });
+            dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_SAVE_FOOD });
 
             const foodDto = Object.assign({}, food, {
                 handoff_dates: undefined
@@ -126,13 +216,13 @@ export const Actions = {
                 .then(
                     response => {
                         dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_SUCCESS,
+                            type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS,
                             food: foodDto
                         });
                     },
                     error => {
                         dispatch({
-                            type: ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_ERROR,
+                            type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR,
                             error: error.response.data.error
                         });
                     }
@@ -149,11 +239,38 @@ export const Actions = {
                 value
             };
             dispatch({
-                type: ActionTypes.ADMIN_CLEAR_SAVE_FOOD_RESULT,
+                type: ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT,
                 option
             });
         }
     },
+
+    loadImageFile: (imageSource) => {
+        return (dispatch) => {
+            dispatch({
+                type: ActionTypes.FOODMANAGER_LOAD_IMAGE_FILE,
+                imageSource
+            });
+        }
+    },
+
+    changeImageCrop: (imageCrop) => {
+        return (dispatch) => {
+            dispatch({
+                type: ActionTypes.FOODMANAGER_CHANGE_IMAGE_CROP,
+                imageCrop
+            });
+        }
+    },
+
+    changeCroppedImageUrl: (croppedImageUrl) => {
+        return (dispatch) => {
+            dispatch({
+                type: ActionTypes.FOODMANAGER_CHANGE_CROPPED_IMAGE_URL,
+                croppedImageUrl
+            })
+        }
+    }
 }
 
 export const Selectors = {
@@ -167,13 +284,29 @@ export const Selectors = {
 
     food: (state) => state.foodManager.food,
     ingredientOptions: (state) => state.foodManager.ingredientOptions,
-    imageUrlOptions: (state) => state.foodManager.imageUrlOptions,
+    selectedImageUrl: (state) => state.foodManager.selectedImageUrl,
     cookOptions: (state) => state.foodManager.cookOptions,
+
+    isUploadingImage: (state) => state.foodManager.isUploadingImage,
+    uploadImageResult: (state) => state.foodManager.uploadImageResult,
+    isDeletingImage: (state) => state.foodManager.isDeletingImage,
+    deleteImageResult: (state) => state.foodManager.deleteImageResult,
+
+    imageSource: (state) => state.foodManager.imageSource,
+    imageCrop: (state) => state.foodManager.imageCrop,
+    croppedImageUrl: (state) => state.foodManager.croppedImageUrl,
 }
 
 const initialState = {
     isLoadingFoods: false,
     isSavingFood: false,
+    isUploadingImage: false,
+    isDeletingImage: false,
+    imageCrop: {
+        x: 10,
+        y: 10,
+        aspect: 3 / 2,
+    }
 };
 
 export const Reducers = {
@@ -181,12 +314,12 @@ export const Reducers = {
     foodManager: (state = initialState, action = {}) => {
         switch (action.type) {
 
-            case ActionTypes.ADMIN_REQUEST_FOODS:
+            case ActionTypes.FOODMANAGER_REQUEST_FOODS:
                 return Object.assign({}, state, {
                     isLoadingFoods: true
                 });
 
-            case ActionTypes.ADMIN_RECEIVE_FOODS_SUCCESS:
+            case ActionTypes.FOODMANAGER_RECEIVE_FOODS_SUCCESS:
                 const cooks = {};
                 action.cooks.forEach(x => cooks[x.user_id] = x);
                 const foods = [];
@@ -205,7 +338,7 @@ export const Reducers = {
                     cooks: action.cooks
                 });
 
-            case ActionTypes.ADMIN_RECEIVE_FOODS_ERROR:
+            case ActionTypes.FOODMANAGER_RECEIVE_FOODS_ERROR:
                 return Object.assign({}, state, {
                     isLoadingFoods: false,
                     getFoodsResult: {
@@ -214,33 +347,24 @@ export const Reducers = {
                     }
                 });
 
-
-            case ActionTypes.ADMIN_EDIT_FOOD:
+            case ActionTypes.FOODMANAGER_EDIT_FOOD:
                 return Object.assign({}, state, {
                     food: action.food,
                     ingredientOptions: action.ingredientOptions,
-                    imageUrlOptions: action.imageUrlOptions,
-                    cookOptions: action.cookOptions,
                 });
 
-            case ActionTypes.ADMIN_ADD_INGREDIENT_OPTION:
+            case ActionTypes.FOODMANAGER_ADD_INGREDIENT_OPTION:
                 return Object.assign({}, state,
                     {
                         ingredientOptions: [action.option, ...state.ingredientOptions]
                     });
 
-            case ActionTypes.ADMIN_ADD_IMAGE_URL_OPTION:
-                return Object.assign({}, state,
-                    {
-                        imageUrlOptions: [action.option, ...state.imageUrlOptions]
-                    });
-
-            case ActionTypes.ADMIN_REQUEST_SAVE_FOOD:
+            case ActionTypes.FOODMANAGER_REQUEST_SAVE_FOOD:
                 return Object.assign({}, state, {
                     isSavingFood: true
                 });
 
-            case ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_SUCCESS:
+            case ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS:
                 return Object.assign({}, state, {
                     isSavingFood: false,
                     food: action.food,
@@ -249,7 +373,7 @@ export const Reducers = {
                     }
                 });
 
-            case ActionTypes.ADMIN_RECEIVE_SAVE_FOOD_ERROR:
+            case ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR:
                 return Object.assign({}, state, {
                     isSavingFood: false,
                     saveFoodResult: {
@@ -258,9 +382,76 @@ export const Reducers = {
                     }
                 });
 
-            case ActionTypes.ADMIN_CLEAR_SAVE_FOOD_RESULT:
+            case ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT:
                 return Object.assign({}, state, {
                     saveFoodResult: undefined
+                });
+
+            case ActionTypes.FOODMANAGER_SELECT_IMAGE:
+                return Object.assign({}, state, {
+                    selectedImageUrl: action.imageUrl
+                });
+
+            case ActionTypes.FOODMANAGER_REQUEST_DELETE_IMAGE:
+                return Object.assign({}, state, {
+                    isDeletingImage: true
+                });
+
+            case ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR:
+                return Object.assign({}, state, {
+                    isDeletingImage: false,
+                    deleteImageResult: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.error)
+                    }
+                });
+
+            case ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS:
+                return Object.assign({}, state, {
+                    isDeletingImage: false,
+                    selectedImageUrl: undefined,
+                    deleteImageResult: {
+                        code: ErrorCodes.SUCCESS,
+                    }
+                });
+
+            case ActionTypes.FOODMANAGER_REQUEST_UPLOAD_IMAGE:
+                return Object.assign({}, state, {
+                    isUploadingImage: true,
+                    imageCrop: initialState.imageCrop,
+                    croppedImageUrl: undefined
+                });
+
+            case ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR:
+                return Object.assign({}, state, {
+                    isUploadingImage: false,
+                    uploadImageResult: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.error)
+                    }
+                });
+
+            case ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS:
+                return Object.assign({}, state, {
+                    isUploadingImage: false,
+                    uploadImageResult: {
+                        code: ErrorCodes.SUCCESS,
+                    }
+                });
+
+            case ActionTypes.FOODMANAGER_LOAD_IMAGE_FILE:
+                return Object.assign({}, state, {
+                    imageSource: action.imageSource
+                });
+
+            case ActionTypes.FOODMANAGER_CHANGE_IMAGE_CROP:
+                return Object.assign({}, state, {
+                    imageCrop: action.imageCrop
+                });
+
+            case ActionTypes.FOODMANAGER_CHANGE_CROPPED_IMAGE_URL:
+                return Object.assign({}, state, {
+                    croppedImageUrl: action.croppedImageUrl
                 });
 
             default:

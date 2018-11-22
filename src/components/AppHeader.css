@@ -119,9 +119,9 @@
 }
 
 #apphead-downdown-admin-menu {
-    left: 0;
-    top: 30px!important;
-    width: 170px;
+    left: -5px;
+    top: 35px!important;
+    width: 188px;
 }
 
 @media all and (max-width: 767px) {

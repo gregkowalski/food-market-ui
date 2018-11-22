@@ -17,6 +17,10 @@ import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon';
 import { all_boundaries, getRegionId } from '../../components/Map/AllRegions';
 import ErrorCodes from '../../services/ErrorCodes';
+import Util from '../../services/Util';
+
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 class ManageFood extends React.Component {
 
@@ -74,7 +78,6 @@ ManageFood.propTypes = {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ManageFood));
-
 
 const createOptions = (keys, labels) => {
     const options = [];
@@ -171,12 +174,37 @@ class FoodEditorForm extends React.Component {
         actions.editFood(food_id);
     }
 
-    handleAddIngredientItem = (e, { value }) => {
-        this.props.actions.addIngredientOption(value);
+    handleUploadImage = (imageUrl, imageBlob) => {
+        const { change, imageUrls } = this.props;
+
+        const updateFormValue = (assetUrl) => {
+            const newImageUrls = [...imageUrls, assetUrl];
+            change('imageUrls', newImageUrls);
+        }
+
+        this.props.actions.uploadImage(imageUrl, imageBlob, updateFormValue);
     }
 
-    handleAddImageUrlItem = (e, { value }) => {
-        this.props.actions.addImageUrlOption(value);
+    handleDeleteImage = () => {
+        const { change, imageUrls, selectedImageUrl } = this.props;
+        if (!selectedImageUrl)
+            return;
+
+        const updateFormValue = (assetUrl) => {
+            const newImageUrls = [...imageUrls];
+            Util.remove(newImageUrls, assetUrl);
+            change('imageUrls', newImageUrls);
+        }
+
+        this.props.actions.deleteImage(selectedImageUrl, updateFormValue);
+    }
+
+    handleSelectImage = (imageUrl) => {
+        this.props.actions.selectImage(imageUrl);
+    }
+
+    handleAddIngredientItem = (e, { value }) => {
+        this.props.actions.addIngredientOption(value);
     }
 
     handleSaveClick = (food) => {
@@ -187,24 +215,30 @@ class FoodEditorForm extends React.Component {
         this.props.actions.clearSaveFoodResult();
     }
 
+    parseFloat = (val) => {
+        return isNaN(parseFloat(val)) ? null : parseFloat(val);
+    }
+
     render() {
-        const { food, ingredientOptions, imageUrlOptions, cookOptions, saveFoodResult } = this.props;
+        const { food, ingredientOptions, saveFoodResult } = this.props;
         if (!food) {
             return null;
         }
 
-        const { handleSubmit, pristine, formSyncErrors, formIsValid, isSavingFood, submitting } = this.props;
+        const { handleSubmit, pristine, formSyncErrors, formIsValid, isSavingFood } = this.props;
         const errors = [];
         for (const key in formSyncErrors) {
             errors.push(formSyncErrors[key]);
         }
 
-        const { pickup, delivery } = this.props;
-        const loading = isSavingFood || submitting;
+        const { pickup, delivery, imageUrls, selectedImageUrl, isUploadingImage, isDeletingImage } = this.props;
         return (
             <div>
                 <div className='managefood-save'>
-                    <Button color='purple' disabled={pristine || !formIsValid} loading={loading} onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
+                    <Button color='purple'
+                        disabled={pristine || !formIsValid}
+                        loading={isSavingFood}
+                        onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
 
                     {!formIsValid && errors.map(x => (
                         <Message error header={x.header} content={x.message} />
@@ -233,8 +267,7 @@ class FoodEditorForm extends React.Component {
                                 <label>Cook</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
-                                <Field name='user_id' autoComplete='user_id' placeholder="Who is the cook for this food?"
-                                    fluid selection search options={cookOptions} component={ValidatedDropdown} />
+                                <Field disabled name='cook_name' autoComplete='cook_name' component={ValidatedField} type='text' />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -243,9 +276,7 @@ class FoodEditorForm extends React.Component {
                             </Grid.Column>
                             <Grid.Column width={14}>
                                 <Field name='price' autoComplete='price' component={ValidatedField}
-                                    type='number' placeholder='Enter food price'
-                                    parse={val => isNaN(parseFloat(val)) ? null : parseFloat(val)}
-                                />
+                                    type='number' placeholder='Enter food price' parse={this.parseFloat} />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -296,14 +327,14 @@ class FoodEditorForm extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column width={14}>
                                     <Field name='position.lat' autoComplete='position.lat' component={ValidatedField}
-                                        type='number' placeholder='Enter position latitude' />
+                                        type='number' placeholder='Enter position latitude' parse={this.parseFloat} />
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                     <label>Pickup Lng</label>
                                 </Grid.Column>
                                 <Grid.Column width={14}>
                                     <Field name='position.lng' autoComplete='position.lng' component={ValidatedField}
-                                        type='number' placeholder='Enter position longitude' />
+                                        type='number' placeholder='Enter position longitude' parse={this.parseFloat} />
                                 </Grid.Column>
                             </Grid.Row>
                         }
@@ -329,16 +360,15 @@ class FoodEditorForm extends React.Component {
                                 <label>Image URLs</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
-                                <Field name='imageUrls' autoComplete='imageUrls' component={ValidatedDropdown}
-                                    placeholder="Enter image URLs for this food"
-                                    fluid multiple search selection allowAdditions
-                                    onAddItem={this.handleAddImageUrlItem}
-                                    options={imageUrlOptions} />
-                                <div className='managefood-images'>
-                                    {food.imageUrls && food.imageUrls.map((imageUrl, index) => (
-                                        <Image key={index} src={imageUrl} />
-                                    ))}
-                                </div>
+                                <ImageManager
+                                    imageUrls={imageUrls}
+                                    selectedImageUrl={selectedImageUrl}
+                                    isUploadingImage={isUploadingImage}
+                                    isDeletingImage={isDeletingImage}
+                                    onUploadImage={this.handleUploadImage}
+                                    onDeleteImage={this.handleDeleteImage}
+                                    onSelectImage={this.handleSelectImage}
+                                />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -415,16 +445,20 @@ const foodEditorMapStateToProps = (state) => {
         food: Selectors.food(state),
         initialValues: Selectors.food(state),
         ingredientOptions: Selectors.ingredientOptions(state),
-        imageUrlOptions: Selectors.imageUrlOptions(state),
+        selectedImageUrl: Selectors.selectedImageUrl(state),
         cookOptions: Selectors.cookOptions(state),
         isSavingFood: Selectors.isSavingFood(state),
         saveFoodResult: Selectors.saveFoodResult(state),
+
+        isUploadingImage: Selectors.isUploadingImage(state),
+        isDeletingImage: Selectors.isDeletingImage(state),
 
         formSyncErrors: getFormSyncErrors(reduxFormName)(state),
         formIsValid: isValid(reduxFormName)(state),
 
         pickup: selector(state, 'pickup'),
         delivery: selector(state, 'delivery'),
+        imageUrls: selector(state, 'imageUrls'),
     };
 };
 
@@ -433,3 +467,152 @@ const foodEditorMapDispatchToProps = (dispatch) => {
 };
 const foodEditorForm = reduxForm({ form: reduxFormName, validate, enableReinitialize: true })(FoodEditorForm);
 const FoodEditor = connect(foodEditorMapStateToProps, foodEditorMapDispatchToProps)(foodEditorForm);
+
+class ImageManagerComponent extends React.Component {
+
+    onSelectFile = e => {
+        if (e.target.files && e.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                this.props.actions.loadImageFile(reader.result);
+            });
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+
+    onImageLoaded = (image, pixelCrop) => {
+        this.imageRef = image;
+    };
+
+    onCropComplete = async (crop, pixelCrop) => {
+        const croppedImageUrl = await this.getCroppedImg(
+            this.imageRef,
+            pixelCrop,
+            "newFile.jpeg"
+        );
+        this.props.actions.changeCroppedImageUrl(croppedImageUrl);
+    };
+
+    onCropChange = crop => {
+        this.props.actions.changeImageCrop(crop);
+    };
+
+    getCroppedImg(image, pixelCrop, fileName) {
+        const ImageWidth = 600;
+        const ImageHeight = 400;
+
+        const canvas = document.createElement("canvas");
+        // canvas.width = pixelCrop.width;
+        // canvas.height = pixelCrop.height;
+        canvas.width = ImageWidth;
+        canvas.height = ImageHeight;
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+            image,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            ImageWidth,
+            ImageHeight
+            // pixelCrop.width,
+            // pixelCrop.height
+        );
+
+        return new Promise((resolve, reject) => {
+            canvas.toBlob(blob => {
+                blob.name = fileName;
+                window.URL.revokeObjectURL(this.fileUrl);
+                this.fileUrl = window.URL.createObjectURL(blob);
+                this.fileBlob = blob;
+                resolve(this.fileUrl);
+            }, "image/jpeg");
+        });
+    }
+
+    uploadImage = () => {
+        this.props.onUploadImage(this.fileUrl, this.fileBlob);
+    }
+
+    deleteImage = () => {
+        this.props.onDeleteImage();
+    }
+
+    selectImage = (imageUrl) => {
+        this.props.onSelectImage(imageUrl);
+    }
+
+    render() {
+        const { imageUrls, selectedImageUrl, isUploadingImage, isDeletingImage } = this.props;
+        const { imageSource, imageCrop, croppedImageUrl } = this.props;
+
+        return (
+            <div className='imagemanager'>
+                {imageUrls &&
+                    <div>{imageUrls.join(',')}</div>
+                }
+                <div className='imagemanager-images'>
+                    {imageUrls && imageUrls.map((imageUrl, index) => (
+                        <Image key={index} src={imageUrl}
+                            onClick={() => this.selectImage(imageUrl)}
+                            style={{
+                                border: (imageUrl === selectedImageUrl ? '2px solid blue' : '2px solid transparent')
+                            }} />
+                    ))}
+                </div>
+                <div>
+                    <Button color='purple' onClick={this.uploadImage} disabled={!croppedImageUrl} loading={isUploadingImage}>Upload</Button>
+                    <Button color='purple' onClick={this.deleteImage} disabled={!selectedImageUrl} loading={isDeletingImage}>Delete</Button>
+                </div>
+                <input type="file" onChange={this.onSelectFile} />
+                <div>
+                    {imageSource &&
+                        <ReactCrop
+                            src={imageSource}
+                            crop={imageCrop}
+                            onImageLoaded={this.onImageLoaded}
+                            onComplete={this.onCropComplete}
+                            onChange={this.onCropChange}
+                        />
+                    }
+                    {croppedImageUrl &&
+                        <img id='imagemanager-croppedimg' alt="Crop" src={croppedImageUrl} />
+                    }
+                </div>
+            </div>
+        );
+    }
+}
+
+const mapImageManagerStateToProps = (state) => {
+    return {
+        isLoadingFoods: Selectors.isLoadingFoods(state),
+        getFoodsResult: Selectors.getFoodsResult(state),
+        foods: Selectors.foods(state),
+        food: Selectors.food(state),
+        imageSource: Selectors.imageSource(state),
+        imageCrop: Selectors.imageCrop(state),
+        croppedImageUrl: Selectors.croppedImageUrl(state),
+    };
+};
+
+const mapImageManagerDispatchToProps = (dispatch) => {
+    return { actions: bindActionCreators(Actions, dispatch) };
+};
+
+ImageManagerComponent.propTypes = {
+    isLoadingFoods: PropTypes.bool,
+    getFoodsResult: PropTypes.shape({
+        code: PropTypes.string.isRequired,
+        message: PropTypes.string
+    }),
+
+    actions: PropTypes.shape({
+        getFoods: PropTypes.func.isRequired,
+    }).isRequired
+}
+
+const ImageManager = connect(mapImageManagerStateToProps, mapImageManagerDispatchToProps)(ImageManagerComponent);
