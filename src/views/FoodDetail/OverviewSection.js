@@ -75,9 +75,16 @@ class OverviewSection extends React.Component {
                 <Header as='h3' className='food-detail-header'>Allergy Information</Header>
                 <div className='detail-body-text'>
                     <div className='user-text'>
-                        <div className='user-text-weight'>
-                            May contain one or more of the following allergens:
-                    </div>
+                        {food.allergies && food.allergies.length > 0 &&
+                            <div className='user-text-weight'>
+                                May contain one or more of the following allergens:
+                            </div>
+                        }
+                        {(!food.allergies || food.allergies.length <= 0) &&
+                            <div className='user-text-weight'>
+                                This food does not contain any allergens.
+                            </div>
+                        }
                     </div>
                     <div style={{ marginLeft: '15px', marginTop: '15px' }}>
                         <ul>
@@ -89,7 +96,7 @@ class OverviewSection extends React.Component {
                     </div>
                     <div style={{ marginTop: '15px' }}>
                         <Icon color='teal' name='angle double right' />
-                        For any questions regarding allergens or other specific contents, please contact your 
+                        For any questions regarding allergens or other specific contents, please contact your
                         neighbourhood cook directly.
                 </div>
                 </div>
