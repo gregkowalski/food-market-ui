@@ -18,7 +18,7 @@ class AppFooter extends React.Component {
                         <div className='appfooter-header'>Foodcraft</div>
                         <Link to={Url.about()}>About</Link>
                         {/* <Link to={Url.policies()}>Policies</Link>   */}
-                        <Link to={Url.terms()}>Terms</Link>
+                        <Link to={Url.terms()}>Legal Soup</Link>
                         <Link to={Url.privacy()}>Privacy</Link>                                              
                     </Grid.Column>
                     <Grid.Column>
