@@ -7,14 +7,14 @@ const Config = {
         AppWebDomain: 'login-yapa.cosmo-test.com',
         ClientAppId: '74veuhqkoj4k72gdn0j8dpnf9b',
         UserPoolId: 'us-west-2_qrGwsBKOq',
-        RedirectUriSignIn: 'http://localhost:3000/cognitoCallback',
-        RedirectUriSignOut: 'http://localhost:3000/cognitoSignout',
+        RedirectUriSignIn: 'https://ui-yapa.cosmo-test.com:3000/cognitoCallback',
+        RedirectUriSignOut: 'https://ui-yapa.cosmo-test.com:3000/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email']
     },
     Stripe: {
         ClientId: 'ca_DUbAhQcRoGzFdSDBdoPN604uSmOC2bkg',
         PublicApiKey: 'pk_test_LaUn1QZEtks832mqWqyFHX7a',
-        ConnectOAuthRedirectUri: 'http://localhost:3000/stripeCallback',
+        ConnectOAuthRedirectUri: 'https://ui-yapa.cosmo-test.com:3000/stripeCallback',
     },
     Foodcraft: {
         SupportEmail: 'yasin+dev@foodcraft.ca'
