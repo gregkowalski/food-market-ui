@@ -18,7 +18,7 @@
     "amazon-cognito-auth-js": "^1.2.4",
     "amazon-cognito-identity-js": "^3.0.3",
     "aws-api-gateway-client": "^0.2.16",
-    "aws-sdk": "^2.358.0",
+    "axios": "^0.18.0",
     "jwt-decode": "^2.2.0",
     "libphonenumber-js": "^1.6.5",
     "moment": "^2.22.2",

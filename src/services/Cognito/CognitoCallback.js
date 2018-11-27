@@ -9,7 +9,6 @@ import Config from '../../Config'
 import ErrorCodes from '../ErrorCodes'
 import LoadingHeader from '../../components/LoadingHeader'
 import Url from '../../services/Url'
-import AWS from 'aws-sdk'
 
 const Errors = {
     INVALID_PATH: 'INVALID_PATH',
@@ -37,31 +36,19 @@ class CognitoCallback extends React.Component {
                     email_verified: CognitoUtil.isEmailVerified(jwt)
                 };
                 ApiClient.updateUser(user)
-                    .then(x => {
+                    .then(() => {
+                        let lastPath = CognitoUtil.getLastPath();
+                        if (!lastPath) {
+                            lastPath = Url.home();
+                        }
 
-                        const creds = CognitoUtil.getCredentials(jwtToken);
-                        creds.refresh((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                            else {
-                                console.log(AWS.config.credentials);
-                                console.log(creds);
-
-                                let lastPath = CognitoUtil.getLastPath();
-                                if (!lastPath) {
-                                    lastPath = Url.home();
-                                }
-
-                                if (lastPath.length > 0 && lastPath[0] === '/') {
-                                    this.props.history.push(lastPath);
-                                }
-                                else {
-                                    console.error('Invalid redirect path: ' + lastPath);
-                                    this.setState({ errorCode: Errors.INVALID_PATH });
-                                }
-                            }
-                        });
+                        if (lastPath.length > 0 && lastPath[0] === '/') {
+                            this.props.history.push(lastPath);
+                        }
+                        else {
+                            console.error('Invalid redirect path: ' + lastPath);
+                            this.setState({ errorCode: Errors.INVALID_PATH });
+                        }
                     })
                     .catch(err => {
                         console.error(err);

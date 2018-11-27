@@ -3,10 +3,6 @@ const Config = {
         Region: 'us-west-2',
         BaseUrl: 'https://api-dev.cosmo-test.com/v1',
     },
-    Assets: {
-        S3Bucket: 'food-market-dev-assets',
-        AssetsBaseUrl: 'https://assets-dev.cosmo-test.com',
-    },
     Cognito: {
         AppWebDomain: 'login-dev.cosmo-test.com',
         ClientAppId: '6p23mo25qul21p2r26504sjckl',
@@ -14,7 +10,6 @@ const Config = {
         RedirectUriSignIn: 'https://ui-dev-greg.cosmo-test.com:3000/cognitoCallback',
         RedirectUriSignOut: 'https://ui-dev-greg.cosmo-test.com:3000/cognitoSignout',
         TokenScopesArray: ['openid', 'aws.cognito.signin.user.admin', 'email'],
-        IdentityPoolId: 'us-west-2:27f73d48-a7e8-47d2-8c39-c14bea8b51d6'
     },
     Stripe: {
         ClientId: 'ca_DUbAhQcRoGzFdSDBdoPN604uSmOC2bkg',

@@ -2,9 +2,7 @@ import ApiClient from '../../../services/ApiClient'
 import ApiObjectMapper from '../../../services/ApiObjectMapper'
 import ErrorCodes from '../../../services/ErrorCodes'
 import Util from '../../../services/Util'
-import Config from '../../../Config'
-import AWS from 'aws-sdk'
-import CognitoUtil from '../../../services/Cognito/CognitoUtil'
+import axios from 'axios'
 
 const ActionTypes = {
     FOODMANAGER_REQUEST_FOODS: 'FOODMANAGER_REQUEST_FOODS',
@@ -36,10 +34,6 @@ const ActionTypes = {
     FOODMANAGER_CHANGE_CROPPED_IMAGE_URL: 'FOODMANAGER_CHANGE_CROPPED_IMAGE_URL',
 };
 
-function getImageKey(user_identity_id, food_id, fileName) {
-    return `${user_identity_id}/${food_id}/${fileName}`;
-}
-
 export const Actions = {
 
     selectImage: (imageUrl) => {
@@ -67,38 +61,28 @@ export const Actions = {
 
             dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_DELETE_IMAGE });
 
-            const creds = CognitoUtil.getCredentials();
-            creds.get((error) => {
-                if (error) {
-                    dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR, error });
-                    return;
-                }
+            const food = Selectors.food(getState());
+            const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
 
-                const s3 = new AWS.S3({
-                    region: Config.Api.Region,
-                    credentials: creds
-                });
+            return ApiClient.createSignedUrl('deleteObject', food.user_id, food.food_id, imageName)
+                .then(
+                    async response => {
+                        const url = response.data.signedUrl;
+                        const assetUrl = response.data.assetUrl;
+                        try {
+                            const data = await axios.delete(url)
+                            console.log(data);
 
-                const food = Selectors.food(getState());
-
-                const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-                const user_identity_id = creds.data.IdentityId;
-                const key = getImageKey(user_identity_id, food.food_id, imageName);
-
-                s3.deleteObject({
-                    Bucket: Config.Assets.S3Bucket,
-                    Key: key
-                }, (error, data) => {
-                    if (error) {
+                            updateFormValueFunc(assetUrl);
+                            dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS, assetUrl });
+                        }
+                        catch (ex) {
+                            dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR, error: ex });
+                        }
+                    },
+                    error => {
                         dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_ERROR, error });
-                        return;
-                    }
-
-                    const assetUrl = `${Config.Assets.AssetsBaseUrl}/${key}`;
-                    updateFormValueFunc(assetUrl);
-                    dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS, assetUrl });
-                });
-            });
+                    })
         }
     },
 
@@ -110,38 +94,28 @@ export const Actions = {
 
             dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_UPLOAD_IMAGE });
 
-            const creds = CognitoUtil.getCredentials();
-            creds.get((error) => {
-                if (error) {
-                    dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR, error });
-                    return;
-                }
+            const food = Selectors.food(getState());
+            const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) + '.' + imageBlob.type.substring(imageBlob.type.lastIndexOf('/') + 1);
+            return ApiClient.createSignedUrl('putObject', food.user_id, food.food_id, imageName)
+                .then(
+                    async (response) => {
+                        const url = response.data.signedUrl;
+                        const assetUrl = response.data.assetUrl;
+                        try {
+                            await axios.put(url, imageBlob, {
+                                headers: { 'Content-Type': imageBlob.type }
+                            });
 
-                const s3 = new AWS.S3({
-                    region: Config.Api.Region,
-                    credentials: creds
-                });
-
-                const food = Selectors.food(getState());                
-                const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) + '.' + imageBlob.type.substring(imageBlob.type.lastIndexOf('/') + 1);
-                const user_identity_id = creds.data.IdentityId;
-                const key = getImageKey(user_identity_id, food.food_id, imageName);
-                s3.putObject({
-                    Bucket: Config.Assets.S3Bucket,
-                    Key: key,
-                    Body: imageBlob,
-                    ContentType: imageBlob.type
-                }, (error, data) => {
-                    if (error) {
+                            updateFormValueFunc(assetUrl);
+                            dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS, assetUrl });
+                        }
+                        catch (ex) {
+                            dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR, error: ex });
+                        }
+                    },
+                    error => {
                         dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_ERROR, error });
-                        return;
-                    }
-
-                    const assetUrl = `${Config.Assets.AssetsBaseUrl}/${key}`;
-                    updateFormValueFunc(assetUrl);
-                    dispatch({ type: ActionTypes.FOODMANAGER_UPLOAD_IMAGE_RECEIVE_SUCCESS, assetUrl });
-                });
-            });
+                    })
         }
     },
 

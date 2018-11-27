@@ -3,10 +3,6 @@ const Config = {
         Region: 'us-west-2',
         BaseUrl: 'https://api-dev.cosmo-test.com/v1',
     },
-    Assets: {
-        S3Bucket: 'food-market-dev-assets',
-        AssetsBaseUrl: 'https://assets-dev.cosmo-test.com',
-    },
     Cognito: {
         AppWebDomain: 'login-dev.cosmo-test.com',
         ClientAppId: '6p23mo25qul21p2r26504sjckl',

@@ -166,6 +166,10 @@ class ApiClient {
         // don't want to include session info because the user is NOT logged in
         return this.apiGatewayClient.invokeApi(null, `/invites/${invite_id}/accept`, 'POST');
     }
+
+    createSignedUrl(action, user_id, food_id, object_id) {
+        return this.invokeApi(`/assets/presign`, 'POST', { action, user_id, food_id, object_id });
+    }
 }
 
 export default new ApiClient();
