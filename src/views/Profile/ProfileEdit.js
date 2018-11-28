@@ -315,7 +315,7 @@ class ProfileEdit extends React.Component {
                                     <p></p>
                                     <p>Your customers will be able to request orders from you only during the times you select below. 
                                     Remember to consider the time it
-                                    takes you to make food (and do delivery if applicable)!</p></div>
+                                    takes you to make food (and to complete delivery if applicable)!</p></div>
                                     <Calendar
                                         useModal={false}
                                         // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 

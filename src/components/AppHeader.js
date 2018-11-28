@@ -194,14 +194,14 @@ export class AppHeader extends React.Component {
                             }
                             <Dropdown.Item className='apphead-dropdown-link' text='Home' onClick={this.navigateToHome} />
                             <Dropdown.Divider />
-                            <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
-                            <Dropdown.Divider />
                             {user.has_stripe_account &&
                                 <Dropdown.Item className='apphead-dropdown-link' text='My Cooking Requests' onClick={this.navigateToMyCookingRequests} />
                             }
                             {user.has_stripe_account &&
                                 <Dropdown.Divider />
                             }
+                            <Dropdown.Item className='apphead-dropdown-link' text='My Orders' onClick={this.navigateToMyOrders} />
+                            <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-link' text='Edit Profile' onClick={this.navigateToEditProfile} />
                             <Dropdown.Divider />
                             <Dropdown.Item className='apphead-dropdown-item' text='Contact Support' onClick={this.handleContactSupport} />

@@ -248,7 +248,7 @@ class Util {
     }
 
     contactSupportUrl() {
-        return Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Feedback');
+        return Url.mailTo(Config.Foodcraft.SupportEmail, 'Foodcraft Support');
     }
 
     toArray(obj) {

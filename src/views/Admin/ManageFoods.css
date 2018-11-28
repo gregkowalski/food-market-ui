@@ -16,14 +16,14 @@
 
 .managefoods-title {
     font-weight: 400;
-    font-size: 1.4em;
+    font-size: 1.2em;
     margin-top: 15px;
-    /* color: #2b65ec; */
 }
 
 .managefoods-indent {
     width: 90%;
     margin-left: 40px;
+    padding-top: 5px;
 }
 
 #managefoods-image {
@@ -31,8 +31,24 @@
     height: auto;
 }
 
-.managefoods-button {
+.managefoods-buttons {
     margin-top: 15px;
+}
+
+.managefoods-buttons>.ui.button {
+    background-color: #ffffff;
+    font-weight: 400;
+    margin-right: 15px;
+    color: #b61095;
+    border: 2px solid #b61095;
+    /* box-shadow: 1px 6px 6px 1px rgba(157, 160, 159, 0.24), 1px 8px 12px 1px rgba(167, 167, 167, 0.144); */
+}
+
+.managefoods-buttons>.ui.button:hover {
+    background-color: #b61095;
+    border: 2px solid #b61095;
+    color: #ffffff;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
 }
 
 #managefoods-image img.ui.image {
@@ -40,12 +56,38 @@
 }
 
 .managefoods-delete-modal.ui.modal {
-    top: 15%;
+    top: 12%;
 }
 
 .managefoods-delete-error-message {
     color: #DC143C; 
     margin: -8px 0px 0px 1px;
+}
+.managefoods-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.managefoods-header:first-child {
+    color: #424242;  
+    font-size: 2em;  
+    font-weight: 500;
+    margin: 0px 15px 35px 5px;
+}
+
+.managefoods-header>.ui.button {
+    background-color: #b61095;
+    font-size: .6em;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.25;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+}
+
+.managefoods-header>.ui.button:hover {
+    background-color: #a01e88;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
 
 @media all and (max-width: 767px) {
@@ -56,7 +98,7 @@
     }
     .managefoods-indent {
         width: 100%;
-        margin-left: 3px;
+        margin: 0px 3px;
     }
     .managefoods h2 {
         font-weight: 400;
@@ -65,4 +107,5 @@
     .managefoods-title {
         padding-bottom: 5px;
     }
+    
 }

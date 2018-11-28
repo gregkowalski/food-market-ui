@@ -7,6 +7,7 @@ import './OrderHeader.css'
 import { Constants } from '../Constants'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Url from '../services/Url'
+import Util from '../services/Util'
 
 class OrderHeader extends React.Component {
 
@@ -106,7 +107,7 @@ class OrderHeader extends React.Component {
                         <div style={{ display: 'inline-flex' }}>
                             <div className="order-content-desktop">
                                 <div className='orderhead-contact-support'>
-                                    <a href={Url.home()} className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
+                                    <a href={Util.contactSupportUrl()} className='orderhead-contact-support-link'><Icon name='conversation' size='large' />
                                         Support
                                     </a>
                                 </div>

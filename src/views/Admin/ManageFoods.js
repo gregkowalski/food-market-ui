@@ -36,13 +36,13 @@ class ManageFoods extends React.Component {
                 return (
                     <List.Item key={food.food_id}>
                         <List.Content floated='right'>
-                            <div className='managefoods-button'>
-                                <Button content='Edit' icon='edit outline' labelPosition='left' onClick={() => this.editFood(food.food_id)} />
+                            <div className='managefoods-buttons'>
+                                <Button onClick={() => this.editFood(food.food_id)}><Icon name='edit outline' />Edit</Button> 
                                 <Modal className='managefoods-delete-modal' dimmer='inverted' centered={false} trigger={<Button><Icon name='trash alternate outline' />Delete</Button>}>
                                     <Modal.Header><Icon name='trash alternate outline' />Are you sure? </Modal.Header>
                                     <Modal.Content> <div className='managefoods-title'>You are about to delete this food listing.</div></Modal.Content>
                                     <Modal.Content image>
-                                        <Image wrapped size='small' src={food.imageUrls[0]} />
+                                        <Image wrapped size='medium' src={food.imageUrls[0]} />
                                         <Modal.Description>
                                             <Header>{food.title}</Header>
                                             <Form>
@@ -78,16 +78,15 @@ class ManageFoods extends React.Component {
         return (
             <div className='managefoods' >
                 <AppHeader fixed />
-                <div className='managefoods-indent'>
-                <h2>Food Management
-                <Button basic floated='right' content='Add new food' icon='plus' labelPosition='left' />
-
-
-                </h2>
                 {isLoadingFoods &&
-                    <LoadingIcon size='large' />
-                }
-                
+                        <LoadingIcon size='large' />
+                    }
+                    <Divider hidden />
+                <div className='managefoods-indent'>
+                    <div className='managefoods-header'>
+                            <span>Edit Foods</span>
+                            <Button floated='right' content='Add food' icon='plus circle' labelPosition='right' />
+                    </div>
                     <Divider />
                     <List divided verticalAlign='middle'>
                         {foodItems}

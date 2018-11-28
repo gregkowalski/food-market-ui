@@ -26,7 +26,6 @@ export const TagLines = [
     'because being hangry was so 2017.',
     'easy peasy, lemon squeezy!',
     'so hot right now.',
-    'home of the best kebab.',
     'making good food taste better.',
     'moo.',
     'eat like family.',
