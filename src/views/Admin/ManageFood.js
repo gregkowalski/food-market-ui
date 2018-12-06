@@ -14,13 +14,13 @@ import {
     FoodAllergies, FoodAllergyLabels,
 } from '../../Enums';
 import AppHeader from '../../components/AppHeader'
-import LoadingIcon from '../../components/LoadingIcon';
-import { all_boundaries, getRegionId } from '../../components/Map/AllRegions';
-import ErrorCodes from '../../services/ErrorCodes';
-import Util from '../../services/Util';
+import LoadingIcon from '../../components/LoadingIcon'
+import { all_boundaries, getRegionId } from '../../components/Map/AllRegions'
+import ErrorCodes from '../../services/ErrorCodes'
+import Util from '../../services/Util'
 
-import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
+import ReactCrop from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 
 class ManageFood extends React.Component {
 

@@ -114,6 +114,20 @@ class ApiClient {
         return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food_dto);
     }
 
+    deleteFood(food_id) {
+        // return this.invokeApi(`/foods/${food_id}`, 'DELETE');
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (Math.random() > 0.5) {
+                    resolve('success');
+                }
+                else {
+                    reject({ response: { data: { error: 'shit failed' } } });
+                }
+            }, 2000)
+        })
+    }
+
     getReviews(food_id) {
         return this.invokeApi(`/reviews?food_id=${food_id}`, 'GET');
     }

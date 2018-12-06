@@ -32,6 +32,11 @@ const ActionTypes = {
     FOODMANAGER_LOAD_IMAGE_FILE: 'FOODMANAGER_LOAD_IMAGE_FILE',
     FOODMANAGER_CHANGE_IMAGE_CROP: 'FOODMANAGER_CHANGE_IMAGE_CROP',
     FOODMANAGER_CHANGE_CROPPED_IMAGE_URL: 'FOODMANAGER_CHANGE_CROPPED_IMAGE_URL',
+
+    FOODMANAGER_REQUEST_DELETE_FOOD: 'FOODMANAGER_REQUEST_DELETE_FOOD',
+    FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS: 'FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS',
+    FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR: 'FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR',
+    FOODMANAGER_CLEAR_DELETE_FOOD_RESULT: 'FOODMANAGER_CLEAR_DELETE_FOOD_RESULT'
 };
 
 export const Actions = {
@@ -212,10 +217,7 @@ export const Actions = {
                 text: value,
                 value
             };
-            dispatch({
-                type: ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT,
-                option
-            });
+            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT, option });
         }
     },
 
@@ -244,7 +246,38 @@ export const Actions = {
                 croppedImageUrl
             })
         }
-    }
+    },
+
+    deleteFood: (food_id) => {
+        return (dispatch) => {
+
+            dispatch({ type: ActionTypes.FOODMANAGER_REQUEST_DELETE_FOOD, food_id });
+
+            return ApiClient.deleteFood(food_id)
+                .then(
+                    response => {
+                        window.scrollTo(0, 0);
+                        dispatch({
+                            type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS,
+                            food_id
+                        });
+                    },
+                    error => {
+                        window.scrollTo(0, 0);
+                        dispatch({
+                            type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR,
+                            error: error.response.data.error
+                        });
+                    }
+                );
+        }
+    },
+
+    clearDeleteFoodResult: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_DELETE_FOOD_RESULT });
+        }
+    },
 }
 
 export const Selectors = {
@@ -269,6 +302,9 @@ export const Selectors = {
     imageSource: (state) => state.foodManager.imageSource,
     imageCrop: (state) => state.foodManager.imageCrop,
     croppedImageUrl: (state) => state.foodManager.croppedImageUrl,
+
+    deletingFoodId: (state) => state.foodManager.deletingFoodId,
+    deleteFoodResult: (state) => state.foodManager.deleteFoodResult,
 }
 
 const initialState = {
@@ -294,24 +330,25 @@ export const Reducers = {
                 });
 
             case ActionTypes.FOODMANAGER_RECEIVE_FOODS_SUCCESS:
-                const cooks = {};
-                action.cooks.forEach(x => cooks[x.user_id] = x);
-                const foods = [];
+                {
+                    const cooks = {};
+                    action.cooks.forEach(x => cooks[x.user_id] = x);
+                    const foods = [];
 
-                for (let i = 0; i < action.foods.length; i++) {
-                    const food = Object.assign({}, action.foods[i]);
-                    const cook = cooks[food.user_id];
-                    food.cook = cook;
-                    food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
-                    foods.push(food);
+                    for (let i = 0; i < action.foods.length; i++) {
+                        const food = Object.assign({}, action.foods[i]);
+                        const cook = cooks[food.user_id];
+                        food.cook = cook;
+                        food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
+                        foods.push(food);
+                    }
+
+                    return Object.assign({}, state, {
+                        isLoadingFoods: false,
+                        foods: foods,
+                        cooks: action.cooks
+                    });
                 }
-
-                return Object.assign({}, state, {
-                    isLoadingFoods: false,
-                    foods: foods,
-                    cooks: action.cooks
-                });
-
             case ActionTypes.FOODMANAGER_RECEIVE_FOODS_ERROR:
                 return Object.assign({}, state, {
                     isLoadingFoods: false,
@@ -426,6 +463,44 @@ export const Reducers = {
             case ActionTypes.FOODMANAGER_CHANGE_CROPPED_IMAGE_URL:
                 return Object.assign({}, state, {
                     croppedImageUrl: action.croppedImageUrl
+                });
+
+            case ActionTypes.FOODMANAGER_REQUEST_DELETE_FOOD:
+                return Object.assign({}, state, {
+                    deletingFoodId: action.food_id,
+                });
+
+            case ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS:
+                {
+                    let foods = state.foods;
+                    const index = foods.findIndex(f => f.food_id === action.food_id);
+                    if (index >= 0) {
+                        const newFoods = [...foods.slice(0, index), ...foods.slice(index + 1)];
+                        foods = newFoods;
+                    }
+
+                    return Object.assign({}, state, {
+                        deletingFoodId: undefined,
+                        deleteFoodResult: {
+                            code: ErrorCodes.SUCCESS,
+                        },
+                        foods
+                    });
+                }
+
+            case ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR:
+                return Object.assign({}, state, {
+                    deletingFoodId: undefined,
+                    deleteFoodResult: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.error)
+                    },
+                });
+
+            case ActionTypes.FOODMANAGER_CLEAR_DELETE_FOOD_RESULT:
+                return Object.assign({}, state, {
+                    deletingFoodId: undefined,
+                    deleteFoodResult: undefined
                 });
 
             default:

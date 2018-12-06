@@ -41,7 +41,6 @@
     margin-right: 15px;
     color: #b61095;
     border: 2px solid #b61095;
-    /* box-shadow: 1px 6px 6px 1px rgba(157, 160, 159, 0.24), 1px 8px 12px 1px rgba(167, 167, 167, 0.144); */
 }
 
 .managefoods-buttons>.ui.button:hover {
@@ -55,14 +54,6 @@
     margin: 0 1em 1em 0;
 }
 
-.managefoods-delete-modal.ui.modal {
-    top: 12%;
-}
-
-.managefoods-delete-error-message {
-    color: #DC143C; 
-    margin: -8px 0px 0px 1px;
-}
 .managefoods-header {
     display: flex;
     align-items: center;
@@ -93,8 +84,7 @@
 @media all and (max-width: 767px) {
     #managefoods-image {
         display: inline-block;
-        width: 55px;
-        padding-bottom: 10px;
+        width: 30%;
     }
     .managefoods-indent {
         width: 100%;
@@ -106,6 +96,31 @@
     }
     .managefoods-title {
         padding-bottom: 5px;
+        margin-top: 0;
     }
-    
+    .managefoods-buttons {
+        margin-top: 5px;
+    }
+}
+
+
+
+.managefoods-delete-modal.ui.modal {
+    top: 12%;
+    min-height: 381px;
+}
+
+.managefoods-delete-modal .ui.image {
+    width: 200px;
+}
+
+@media all and (max-width: 767px) {
+    .managefoods-delete-modal.ui.modal {
+        top: 5%;
+        min-height: 462px;
+    }
+
+    .managefoods-delete-modal .ui.image {
+        width: 200px;
+    }
 }
