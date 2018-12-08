@@ -89,7 +89,21 @@ class ApiClient {
         return this.invokeApi(`/foods/${foodId}`, 'GET');
     }
 
+    deleteFood(food_id) {
+        return this.invokeApi(`/foods/${food_id}`, 'DELETE');
+    }
+
     saveFood(food) {
+        const food_dto = this.toFoodDto(food);
+        return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food_dto);
+    }
+
+    createFood(food) {
+        const food_dto = this.toFoodDto(food);
+        return this.invokeApi(`/foods`, 'POST', food_dto);
+    }
+
+    toFoodDto(food) {
         const food_dto = {
             food_id: food.food_id,
             user_id: food.user_id,
@@ -111,21 +125,7 @@ class ApiClient {
             position: food.position,
             handoff_dates: food.handoff_dates,
         }
-        return this.invokeApi(`/foods/${food.food_id}`, 'PUT', food_dto);
-    }
-
-    deleteFood(food_id) {
-        // return this.invokeApi(`/foods/${food_id}`, 'DELETE');
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (Math.random() > 0.5) {
-                    resolve('success');
-                }
-                else {
-                    reject({ response: { data: { error: 'shit failed' } } });
-                }
-            }, 2000)
-        })
+        return food_dto;
     }
 
     getReviews(food_id) {

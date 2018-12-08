@@ -103,8 +103,6 @@
     }
 }
 
-
-
 .managefoods-delete-modal.ui.modal {
     top: 12%;
     min-height: 381px;
@@ -123,4 +121,10 @@
     .managefoods-delete-modal .ui.image {
         width: 200px;
     }
+}
+
+
+.managefoods-add-modal.ui.modal {
+    top: 20%;
+    min-height: 241px;
 }

@@ -115,6 +115,10 @@ class Url {
         window.open(url, '_self');
     }
 
+    notFound() {
+        return '/notfound';
+    }
+
     admin = {
         inviteUser() {
             return '/admin/inviteUser';

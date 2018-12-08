@@ -3,15 +3,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Button, List, Image, Modal, Icon, Header, Divider, Input, Message } from 'semantic-ui-react'
+import { Button, List, Image, Modal, Icon, Header, Divider, Input, Message, Dropdown } from 'semantic-ui-react'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
 import ErrorCodes from '../../services/ErrorCodes'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-
-
 
 class ManageFoods extends React.Component {
 
@@ -22,24 +20,16 @@ class ManageFoods extends React.Component {
         }
     }
 
-    handleEditFood = (food) => {
-        this.props.history.push(Url.admin.manageFood(food.food_id));
-    }
-
-    handleClose = (food) => {
-        console.log(food);
-    }
-
-    handleDeleteFood = (food) => {
-        this.props.actions.deleteFood(food.food_id);
-    }
-
     handleToastDismiss = () => {
-        this.props.actions.clearDeleteFoodResult();
+        this.props.actions.clearResult();
+    }
+
+    handleAddFood = () => {
+        this.props.actions.openAddFoodModal();
     }
 
     render() {
-        const { isLoadingFoods, foods, deletingFoodId, deleteFoodResult } = this.props;
+        const { isLoadingFoods, foods, result } = this.props;
 
         return (
             <div className='managefoods' >
@@ -51,33 +41,119 @@ class ManageFoods extends React.Component {
                 <div className='managefoods-indent'>
                     <div className='managefoods-header'>
                         <span>Edit Foods</span>
-                        <Button floated='right' content='Add food' icon='plus circle' labelPosition='right' />
+                        <Button floated='right' content='Add food' icon='plus circle' labelPosition='right' onClick={this.handleAddFood} />
                     </div>
-                    {deletingFoodId &&
-                        <LoadingIcon text='Deleting...' size='big' />
-                    }
-                    <Toast result={deleteFoodResult}
+                    <Toast result={result}
                         successMessage='Food deleted successfully'
                         errorHeader='Error deleting food'
                         onDismiss={this.handleToastDismiss}
                     />
+                    <AddFoodModal />
                     <Divider />
                     <List divided verticalAlign='middle'>
                         {foods && foods.map(food => (
-                            <FoodListItem key={food.food_id}
-                                isDeleting={food.food_id === deletingFoodId}
-                                food={food}
-                                onDelete={this.handleDeleteFood}
-                                onEdit={this.handleEditFood}
-                                onClose={this.handleClose} />
+                            <FoodListItem key={food.food_id} food={food} />
                         ))
                         }
                     </List>
                 </div>
-            </div >
+            </div>
         );
     }
+
+    static mapStateToProps = (state) => {
+        return {
+            isLoadingFoods: Selectors.isLoadingFoods(state),
+            foods: Selectors.foods(state),
+            getFoodsResult: Selectors.getFoodsResult(state),
+            result: Selectors.result(state),
+        };
+    };
+
+    static mapDispatchToProps = (dispatch) => {
+        return { actions: bindActionCreators(Actions, dispatch) };
+    };
+
+    static propTypes = {
+        isLoadingFoods: PropTypes.bool,
+        result: PropTypes.shape({
+            code: PropTypes.string.isRequired,
+            message: PropTypes.string
+        }),
+
+        actions: PropTypes.shape({
+            getFoods: PropTypes.func.isRequired,
+            clearResult: PropTypes.func.isRequired,
+        }).isRequired
+    }
 }
+
+export default withRouter(connect(ManageFoods.mapStateToProps, ManageFoods.mapDispatchToProps)(ManageFoods));
+
+class AddFoodModalComponent extends React.Component {
+
+    handleAdd = () => {
+        this.props.actions.addFood(this.props.addFoodCookId);
+    }
+
+    handleClose = () => {
+        if (this.props.isAddingFood)
+            return;
+
+        this.props.actions.closeAddFoodModal();
+    }
+
+    handleUserDropdownChange = (event, data) => {
+        this.props.actions.addFoodModalSelectCook(data.value);
+    }
+
+    handleUserDropdownSelection = (event, data) => {
+        this.props.actions.addFoodModalSelectCook(data.value);
+    }
+
+    render() {
+        const { isAddFoodModalOpen, cookOptions, addFoodCookId, isAddingFood } = this.props;
+        if (!cookOptions)
+            return null;
+
+        return (
+            <Modal className='managefoods-add-modal' open={isAddFoodModalOpen} onClose={this.handleClose}>
+                <Modal.Header><Icon name='plus circle' color='purple' />Add New Food</Modal.Header>
+                <Modal.Content>
+                    <Modal.Description>
+                        <Header>Select Cook</Header>
+                        <Dropdown placeholder='Who is the cook?'
+                            fluid search selection
+                            disabled={isAddingFood}
+                            options={cookOptions}
+                            value={addFoodCookId}
+                            onChange={this.handleUserDropdownSelection}
+                            onBlur={this.handleUserDropdownSelection} />
+                    </Modal.Description>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button floated='left' basic onClick={this.handleClose}>Cancel</Button>
+                    <Button color='purple' disabled={!addFoodCookId} loading={isAddingFood} onClick={this.handleAdd}>Add</Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
+
+    static mapStateToProps = (state) => {
+        return {
+            isAddFoodModalOpen: Selectors.isAddFoodModalOpen(state),
+            cookOptions: Selectors.cookOptions(state),
+            addFoodCookId: Selectors.addFoodCookId(state),
+            isAddingFood: Selectors.isAddingFood(state)
+        };
+    };
+
+    static mapDispatchToProps = (dispatch) => {
+        return { actions: bindActionCreators(Actions, dispatch) };
+    };
+}
+
+const AddFoodModal = connect(AddFoodModalComponent.mapStateToProps, AddFoodModalComponent.mapDispatchToProps)(AddFoodModalComponent);
 
 class Toast extends React.Component {
 
@@ -102,72 +178,18 @@ class Toast extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isLoadingFoods: Selectors.isLoadingFoods(state),
-        foods: Selectors.foods(state),
-        getFoodsResult: Selectors.getFoodsResult(state),
-        deletingFoodId: Selectors.deletingFoodId(state),
-        deleteFoodResult: Selectors.deleteFoodResult(state),
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return { actions: bindActionCreators(Actions, dispatch) };
-};
-
-ManageFoods.propTypes = {
-    isLoadingFoods: PropTypes.bool,
-    getFoodsResult: PropTypes.shape({
-        code: PropTypes.string.isRequired,
-        message: PropTypes.string
-    }),
-
-    actions: PropTypes.shape({
-        getFoods: PropTypes.func.isRequired,
-    }).isRequired
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ManageFoods));
-
-
-
 class FoodListItemComponent extends React.Component {
 
-    state = {}
-
     handleEditClick = () => {
-        if (this.props.isDeleting)
-            return;
-
-        this.props.onEdit(this.props.food);
+        this.props.history.push(Url.admin.manageFood(this.props.food.food_id));
     }
 
     handleDeleteClick = () => {
-        if (this.props.isDeleting)
-            return;
-
-        this.setState({ open: true });
-    }
-
-    handleDelete = () => {
-        if (this.props.isDeleting)
-            return;
-
-        // this.setState({ open: false });
-        this.props.onDelete(this.props.food);
-    }
-
-    handleClose = () => {
-        this.setState({ open: false });
+        this.props.actions.openDeleteFoodModal(this.props.food.food_id);
     }
 
     render() {
-        const { food, deletingFoodId } = this.props;
-        const { open } = this.state;
-
-        const isDeleting = (food.food_id === deletingFoodId);
-        console.log(`deletingFoodId=${deletingFoodId}`);
+        const { food } = this.props;
 
         return (
             <List.Item>
@@ -175,10 +197,10 @@ class FoodListItemComponent extends React.Component {
                     <div className='managefoods-buttons'>
                         <Button onClick={this.handleEditClick}><Icon name='edit outline' />Edit</Button>
                         <Button onClick={this.handleDeleteClick}><Icon name='trash alternate outline' />Delete</Button>
-                        <DeleteFoodModal food={food} isDeleting={isDeleting} onDelete={this.handleDelete} onClose={this.handleClose} open={open} />
+                        <DeleteFoodModal food={food} />
                     </div>
                 </List.Content>
-                <div className='managefoods-fooditem' key={food.food_id} onClick={this.handleEditClick}>
+                <div className='managefoods-fooditem' onClick={this.handleEditClick}>
                     <div id='managefoods-image'>
                         <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
                     </div>
@@ -191,57 +213,43 @@ class FoodListItemComponent extends React.Component {
         );
     }
 
-    static mapStateToProps = (state) => {
-        return {
-            deletingFoodId: Selectors.deletingFoodId(state),
-        };
-    };
-
     static mapDispatchToProps = (dispatch) => {
         return { actions: bindActionCreators(Actions, dispatch) };
     };
 }
 
-const FoodListItem = connect(FoodListItemComponent.mapStateToProps, FoodListItemComponent.mapDispatchToProps)(FoodListItemComponent);
+const FoodListItem = withRouter(connect(null, FoodListItemComponent.mapDispatchToProps)(FoodListItemComponent));
 
 class DeleteFoodModalComponent extends React.Component {
 
-    state = {
-        confirm: '',
-        allowDelete: false
-    };
-
-    handleConfirmChange = (e, data) => {
-        this.setState({ confirm: data.value, allowDelete: data.value === 'DELETE' });
+    handleConfirmTextChange = (e, data) => {
+        this.props.actions.changeDeleteFoodConfirmText(data.value);
     }
 
     handleDelete = () => {
-        if (this.props.isDeleting)
+        const { deletingFoodId, food } = this.props;
+        const isDeleting = food.food_id === deletingFoodId;
+        if (isDeleting)
             return;
 
-        this.setState({ confirm: '' });
-        this.props.actions.deleteFood(this.props.food.food_id);
+        this.props.actions.deleteFood(food.food_id);
     }
 
     handleClose = () => {
-        if (this.props.isDeleting)
+        const { deletingFoodId, food } = this.props;
+        const isDeleting = food.food_id === deletingFoodId;
+        if (isDeleting)
             return;
 
-        this.setState({ confirm: '' });
-        this.props.onClose();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.isDeleting && !nextProps.isDeleting) {
-            // this.props.onClose();
-        }
+        this.props.actions.closeDeleteFoodModal();
     }
 
     render() {
-        const { food, open, isDeleting } = this.props;
-        const { confirm, allowDelete } = this.state;
+        const { food, deleteModalFoodId, deletingFoodId, deleteFoodConfirmText } = this.props;
 
-        console.log(`isDeleting: ${isDeleting}`);
+        const open = (food.food_id === deleteModalFoodId);
+        const isDeleting = (food.food_id === deletingFoodId);
+        const allowDelete = (deleteFoodConfirmText === 'DELETE');
 
         return (
             <Modal className='managefoods-delete-modal' open={open} onClose={this.handleClose}>
@@ -254,12 +262,12 @@ class DeleteFoodModalComponent extends React.Component {
                     <Modal.Description>
                         <Header>{food.title}</Header>
                         <div>Type DELETE to confirm</div>
-                        <Input placeholder='DELETE' disabled={isDeleting} value={confirm} onChange={this.handleConfirmChange} />
+                        <Input placeholder='DELETE' disabled={isDeleting} value={deleteFoodConfirmText} onChange={this.handleConfirmTextChange} />
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button floated='left' basic disabled={isDeleting} onClick={this.handleClose}>Cancel</Button>
-                    <Button disabled={!allowDelete || isDeleting} loading={isDeleting} onClick={this.handleDelete}>Delete</Button>
+                    <Button floated='left' basic onClick={this.handleClose}>Cancel</Button>
+                    <Button disabled={!allowDelete} loading={isDeleting} onClick={this.handleDelete}>Delete</Button>
                 </Modal.Actions>
             </Modal>
         );
@@ -268,6 +276,8 @@ class DeleteFoodModalComponent extends React.Component {
     static mapStateToProps = (state) => {
         return {
             deletingFoodId: Selectors.deletingFoodId(state),
+            deleteModalFoodId: Selectors.deleteModalFoodId(state),
+            deleteFoodConfirmText: Selectors.deleteFoodConfirmText(state)
         };
     };
 

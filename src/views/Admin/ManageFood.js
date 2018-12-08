@@ -144,6 +144,21 @@ const validate = (values) => {
         errors.delivery = { header: 'Pickup and/or delivery option must be selected', message: 'Please make the food available for pickup or delivery' };
     }
 
+    if (values.pickup) {
+        if (!values.position.lat) {
+            if (!errors.position) {
+                errors.position = {};
+            }
+            errors.position.lat = { header: 'Pickup location latitude is required', message: 'Please provide pickup location latitude' };
+        }
+        if (!values.position.lng) {
+            if (!errors.position) {
+                errors.position = {};
+            }
+            errors.position.lng = { header: 'Pickup location longitude is required', message: 'Please provide pickup location longitude' };
+        }
+    }
+
     if (values.delivery && isEmpty(values.regions)) {
         errors.regions = { header: 'Delivery regions are required', message: 'When the food is available for delivery, please select delivery regions' };
     }
@@ -240,16 +255,17 @@ class FoodEditorForm extends React.Component {
                         loading={isSavingFood}
                         onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
 
-                    {!formIsValid && errors.map(x => (
-                        <Message error header={x.header} content={x.message} />
-                    ))}
-
                     {saveFoodResult && saveFoodResult.code === ErrorCodes.ERROR &&
                         <Message error header='Error saving food' content={saveFoodResult.message} onClick={this.handleMessageClick} />
                     }
                     {saveFoodResult && saveFoodResult.code === ErrorCodes.SUCCESS &&
                         <Message success content='Food saved successfully' onClick={this.handleMessageClick} />
                     }
+                </div>
+                <div>
+                    {!formIsValid && errors.map((error, key) => (
+                        <Message key={key} error header={error.header} content={error.message} />
+                    ))}
                 </div>
                 <Header block attached='top' as='h3'>Main</Header>
                 <Segment attached padded>
@@ -446,7 +462,6 @@ const foodEditorMapStateToProps = (state) => {
         initialValues: Selectors.food(state),
         ingredientOptions: Selectors.ingredientOptions(state),
         selectedImageUrl: Selectors.selectedImageUrl(state),
-        cookOptions: Selectors.cookOptions(state),
         isSavingFood: Selectors.isSavingFood(state),
         saveFoodResult: Selectors.saveFoodResult(state),
 

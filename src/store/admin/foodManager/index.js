@@ -1,8 +1,12 @@
+import axios from 'axios'
 import ApiClient from '../../../services/ApiClient'
 import ApiObjectMapper from '../../../services/ApiObjectMapper'
 import ErrorCodes from '../../../services/ErrorCodes'
 import Util from '../../../services/Util'
-import axios from 'axios'
+import Url from '../../../services/Url'
+import { FoodPrepTypes } from '../../../Enums';
+import { Constants } from '../../../Constants';
+import { history } from '../../../History'
 
 const ActionTypes = {
     FOODMANAGER_REQUEST_FOODS: 'FOODMANAGER_REQUEST_FOODS',
@@ -36,7 +40,21 @@ const ActionTypes = {
     FOODMANAGER_REQUEST_DELETE_FOOD: 'FOODMANAGER_REQUEST_DELETE_FOOD',
     FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS: 'FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS',
     FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR: 'FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR',
-    FOODMANAGER_CLEAR_DELETE_FOOD_RESULT: 'FOODMANAGER_CLEAR_DELETE_FOOD_RESULT'
+
+    FOODMANAGER_OPEN_DELETE_FOOD_MODAL: 'FOODMANAGER_OPEN_DELETE_FOOD_MODAL',
+    FOODMANAGER_CLOSE_DELETE_FOOD_MODAL: 'FOODMANAGER_CLOSE_DELETE_FOOD_MODAL',
+    FOODMANAGER_DELETE_FOOD_CONFIRM_TEXT_CHANGE: 'FOODMANAGER_DELETE_FOOD_CONFIRM_TEXT_CHANGE',
+
+
+    FOODMANAGER_ADD_FOOD_MODAL_OPEN: 'FOODMANAGER_ADD_FOOD_MODAL_OPEN',
+    FOODMANAGER_ADD_FOOD_MODAL_CLOSE: 'FOODMANAGER_ADD_FOOD_MODAL_CLOSE',
+
+    FOODMANAGER_ADD_FOOD_MODAL_SELECT_COOK: 'FOODMANAGER_ADD_FOOD_MODAL_SELECT_COOK',
+    FOODMANAGER_ADD_FOOD_REQUEST: 'FOODMANAGER_ADD_FOOD_REQUEST',
+    FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS: 'FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS',
+    FOODMANAGER_ADD_FOOD_RECEIVE_ERROR: 'FOODMANAGER_ADD_FOOD_RECEIVE_ERROR',
+
+    FOODMANAGER_CLEAR_FOOD_RESULT: 'FOODMANAGER_CLEAR_FOOD_RESULT',
 };
 
 export const Actions = {
@@ -158,7 +176,7 @@ export const Actions = {
             const state = getState();
             const foods = Selectors.foods(state);
             if (foods) {
-                const food = foods.find(f => f.food_id === food_id);
+                let food = foods.find(f => f.food_id === food_id);
 
                 const ingredientOptions = food.ingredients.map(f => {
                     return { key: f, value: f, text: f };
@@ -212,11 +230,7 @@ export const Actions = {
     clearSaveFoodResult: (value) => {
         return (dispatch) => {
 
-            const option = {
-                key: value,
-                text: value,
-                value
-            };
+            const option = { key: value, text: value, value };
             dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT, option });
         }
     },
@@ -273,9 +287,99 @@ export const Actions = {
         }
     },
 
-    clearDeleteFoodResult: () => {
+    clearResult: () => {
         return (dispatch) => {
-            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_DELETE_FOOD_RESULT });
+            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_FOOD_RESULT });
+        }
+    },
+
+    openDeleteFoodModal: (food_id) => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_OPEN_DELETE_FOOD_MODAL, food_id });
+        }
+    },
+
+    closeDeleteFoodModal: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_CLOSE_DELETE_FOOD_MODAL });
+        }
+    },
+
+    changeDeleteFoodConfirmText: (text) => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_DELETE_FOOD_CONFIRM_TEXT_CHANGE, text });
+        }
+    },
+
+    openAddFoodModal: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_OPEN });
+        }
+    },
+
+    closeAddFoodModal: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_CLOSE });
+        }
+    },
+
+    addFoodModalSelectCook: (cook_id) => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_SELECT_COOK, cook_id });
+        }
+    },
+
+    addFood: (cook_id) => {
+        return (dispatch, getState) => {
+            const food = {
+                user_id: cook_id,
+                title: 'Delicious snack',
+                imageUrls: ['/assets/images/new-food.png'],
+                ingredients: ['taste'],
+                short_description: 'This snack is delicious',
+                long_description: 'This snack is amazing',
+                price: 10,
+                price_currency: Constants.Currency,
+                features: [],
+                unit: '1 unit',
+                feed: '1',
+                states: [FoodPrepTypes.cooked],
+                allergies: [],
+                pickup: true,
+                delivery: false,
+                regions: [],
+                position: {
+                    lat: 49.2609098,
+                    lng: -123.114073
+                },
+                handoff_dates: undefined,
+            };
+
+            const cooks = Selectors.cooks(getState());
+            const cook = cooks.find(x => x.user_id === cook_id);
+            food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
+            food.cook = cook;
+
+            dispatch({ type: ActionTypes.FOODMANAGER_ADD_FOOD_REQUEST });
+
+            return ApiClient.createFood(food)
+                .then(
+                    response => {
+                        food.food_id = response.data.food_id;
+                        dispatch({
+                            type: ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS,
+                            food
+                        });
+                        history.push(Url.admin.manageFood(food.food_id));
+                    },
+                    error => {
+                        dispatch({
+                            type: ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_ERROR,
+                            error: error.response.data.error
+                        });
+                        window.scrollTo(0, 0);
+                    }
+                );
         }
     },
 }
@@ -303,8 +407,15 @@ export const Selectors = {
     imageCrop: (state) => state.foodManager.imageCrop,
     croppedImageUrl: (state) => state.foodManager.croppedImageUrl,
 
+    deleteModalFoodId: (state) => state.foodManager.deleteModalFoodId,
     deletingFoodId: (state) => state.foodManager.deletingFoodId,
-    deleteFoodResult: (state) => state.foodManager.deleteFoodResult,
+    result: (state) => state.foodManager.result,
+    deleteFoodConfirmText: (state) => state.foodManager.deleteFoodConfirmText,
+
+    isAddFoodModalOpen: (state) => state.foodManager.isAddFoodModalOpen,
+    addFoodCookId: (state) => state.foodManager.addFoodCookId,
+
+    isAddingFood: (state) => state.foodManager.isAddingFood,
 }
 
 const initialState = {
@@ -316,7 +427,8 @@ const initialState = {
         x: 10,
         y: 10,
         aspect: 3 / 2,
-    }
+    },
+    deleteFoodConfirmText: ''
 };
 
 export const Reducers = {
@@ -343,10 +455,19 @@ export const Reducers = {
                         foods.push(food);
                     }
 
+                    const cookOptions = action.cooks.map(cook => {
+                        return {
+                            key: cook.user_id,
+                            value: cook.user_id,
+                            text: Util.firstNonEmptyValue(cook.name, cook.username, cook.email)
+                        };
+                    });
+
                     return Object.assign({}, state, {
                         isLoadingFoods: false,
                         foods: foods,
-                        cooks: action.cooks
+                        cooks: action.cooks,
+                        cookOptions
                     });
                 }
             case ActionTypes.FOODMANAGER_RECEIVE_FOODS_ERROR:
@@ -481,7 +602,8 @@ export const Reducers = {
 
                     return Object.assign({}, state, {
                         deletingFoodId: undefined,
-                        deleteFoodResult: {
+                        deleteModalFoodId: undefined,
+                        result: {
                             code: ErrorCodes.SUCCESS,
                         },
                         foods
@@ -491,16 +613,76 @@ export const Reducers = {
             case ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR:
                 return Object.assign({}, state, {
                     deletingFoodId: undefined,
-                    deleteFoodResult: {
+                    deleteModalFoodId: undefined,
+                    result: {
                         code: ErrorCodes.ERROR,
                         message: JSON.stringify(action.error)
                     },
                 });
 
-            case ActionTypes.FOODMANAGER_CLEAR_DELETE_FOOD_RESULT:
+            case ActionTypes.FOODMANAGER_CLEAR_FOOD_RESULT:
                 return Object.assign({}, state, {
-                    deletingFoodId: undefined,
-                    deleteFoodResult: undefined
+                    result: undefined,
+                });
+
+            case ActionTypes.FOODMANAGER_OPEN_DELETE_FOOD_MODAL:
+                return Object.assign({}, state, {
+                    deleteModalFoodId: action.food_id,
+                    deleteFoodConfirmText: '',
+                });
+
+            case ActionTypes.FOODMANAGER_CLOSE_DELETE_FOOD_MODAL:
+                return Object.assign({}, state, {
+                    deleteModalFoodId: undefined,
+                });
+
+            case ActionTypes.FOODMANAGER_DELETE_FOOD_CONFIRM_TEXT_CHANGE:
+                return Object.assign({}, state, {
+                    deleteFoodConfirmText: action.text,
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_OPEN:
+                return Object.assign({}, state, {
+                    isAddFoodModalOpen: true
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_CLOSE:
+                return Object.assign({}, state, {
+                    isAddFoodModalOpen: false
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_MODAL_SELECT_COOK:
+                return Object.assign({}, state, {
+                    addFoodCookId: action.cook_id
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_REQUEST:
+                return Object.assign({}, state, {
+                    isAddingFood: true
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS:
+                const foods = [action.food, ...state.foods];
+                return Object.assign({}, state, {
+                    isAddingFood: false,
+                    isAddFoodModalOpen: false,
+                    result: undefined,
+                    foods
+                });
+
+            case ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_ERROR:
+                return Object.assign({}, state, {
+                    isAddingFood: false,
+                    isAddFoodModalOpen: false,
+                    result: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.error)
+                    },
+                });
+
+            case ActionTypes.FOODMANAGER_CLEAR_ADD_FOOD_RESULT:
+                return Object.assign({}, state, {
+                    result: undefined,
                 });
 
             default:
