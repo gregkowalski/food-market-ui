@@ -40,13 +40,15 @@ class ManageFood extends React.Component {
         }
 
         return (
-            <div className='managefood'>
-                <AppHeader fixed />
-                <h2>Food Editor</h2>
-                {isLoadingFoods &&
-                    <LoadingIcon size='large' />
-                }
-                {foodEditor}
+            <div>
+                <AppHeader />
+                <div className='managefood'>
+                    <h2>Food Editor</h2>
+                    {isLoadingFoods &&
+                        <LoadingIcon size='large' />
+                    }
+                    {foodEditor}
+                </div>
             </div>
         );
     }
