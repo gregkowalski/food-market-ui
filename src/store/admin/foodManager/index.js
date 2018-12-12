@@ -352,6 +352,7 @@ export const Actions = {
                     lat: 49.2609098,
                     lng: -123.114073
                 },
+                hidden: true,
                 handoff_dates: undefined,
             };
 

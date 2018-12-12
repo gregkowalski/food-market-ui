@@ -272,18 +272,18 @@ class FoodEditorForm extends React.Component {
                     <Grid stackable>
                         <Grid.Row>
                             <Grid.Column width={2}>
-                                <label>Title</label>
-                            </Grid.Column>
-                            <Grid.Column width={14}>
-                                <Field name='title' autoComplete='title' component={ValidatedField} type='text' placeholder='Enter food title' />
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={2}>
                                 <label>Cook</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
                                 <Field disabled name='cook_name' autoComplete='cook_name' component={ValidatedField} type='text' />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={2}>
+                                <label>Title</label>
+                            </Grid.Column>
+                            <Grid.Column width={14}>
+                                <Field name='title' autoComplete='title' component={ValidatedField} type='text' placeholder='Enter food title' />
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -311,9 +311,19 @@ class FoodEditorForm extends React.Component {
                                 <Field name='unit' autoComplete='unit' component={ValidatedField} type='text' placeholder='Please enter how many people each portion can feed' />
                             </Grid.Column>
                         </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={2}>
+                                <label>Hidden</label>
+                            </Grid.Column>
+                            <Grid.Column width={14}>
+                                <div className='managefood-checkbox'>
+                                    <Field id='hidden' name='hidden' component={ValidatedCheckbox} label='Hide this food from search' />
+                                </div>
+                            </Grid.Column>
+                        </Grid.Row>
                     </Grid>
                 </Segment>
-                <Header block attached='top'>Pickup and Delivery</Header>
+                <Header block attached='top' as='h3'>Pickup and Delivery</Header>
                 <Segment attached padded>
                     <Grid stackable>
                         <Grid.Row>
@@ -368,7 +378,7 @@ class FoodEditorForm extends React.Component {
                         }
                     </Grid>
                 </Segment>
-                <Header block attached='top'>Food Details</Header>
+                <Header block attached='top' as='h3'>Food Details</Header>
                 <Segment attached padded>
                     <Grid stackable>
                         <Grid.Row>

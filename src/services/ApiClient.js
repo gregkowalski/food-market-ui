@@ -124,6 +124,7 @@ class ApiClient {
             regions: food.regions,
             position: food.position,
             handoff_dates: food.handoff_dates,
+            hidden: food.hidden,
         }
         return food_dto;
     }
