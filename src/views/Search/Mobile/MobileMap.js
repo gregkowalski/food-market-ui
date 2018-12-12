@@ -49,7 +49,9 @@ export default class MobileMap extends React.Component {
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
             const geo = MapUtil.getMobileGeoBounds(map);
-            this.props.onGeoLocationChanged(geo);
+            if (geo) {
+                this.props.onGeoLocationChanged(geo);
+            }
         }
     }
 

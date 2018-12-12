@@ -90,7 +90,7 @@ class DesktopSearch extends React.Component {
     }
 
     render() {
-        const { pickup, isLoading, foods, date, address, mapCenter, google } = this.props;
+        const { pickup, isLoading, foods, date, address, mapCenter, google, zoom } = this.props;
         const { dimmed, hoveredFoodId } = this.state;
 
         return (
@@ -129,6 +129,7 @@ class DesktopSearch extends React.Component {
                             {google &&
                                 <DesktopMap
                                     google={google}
+                                    zoom={zoom}
                                     foods={foods}
                                     pickup={pickup}
                                     center={mapCenter}

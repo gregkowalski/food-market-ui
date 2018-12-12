@@ -47,14 +47,14 @@ class Home extends React.Component {
         this.navigateToSearch();
     }
 
-    navigateToDefaultSearch = () => {
+    navigateToAllFoodSearch = () => {
         const { actions } = this.props;
         actions.selectPickup();
         actions.mapCenterChanged(undefined);
         actions.regionChanged(undefined);
         actions.addressChanged(undefined);
 
-        this.navigateToSearch();
+        this.navigateToSearch({ z: 11 });
     }
 
     navigateToRegion = (regionId) => {
@@ -68,9 +68,9 @@ class Home extends React.Component {
         this.navigateToSearch();
     }
 
-    navigateToSearch = () => {
+    navigateToSearch = (queryParams) => {
         const qs = queryString.parse(this.props.location.search);
-        const query = Object.assign({}, qs);
+        const query = Object.assign({}, qs, queryParams);
         this.props.history.push(Url.search(query));
     }
 
@@ -109,7 +109,7 @@ class Home extends React.Component {
                         <div>Explore the marketplace</div>
                         <Grid stackable>
                             <Grid.Column width={5}>
-                                <div className='home-explore-item' onClick={this.navigateToDefaultSearch}>
+                                <div className='home-explore-item' onClick={this.navigateToAllFoodSearch}>
                                     <Image src={this.homefood} />
                                     <div>See all food</div>
                                 </div>

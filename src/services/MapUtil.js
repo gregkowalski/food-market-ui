@@ -3,6 +3,9 @@ class MapUtil {
 
     getDesktopGeoBounds(map) {
         const geo = this.getGeoBounds(map);
+        if (!geo)
+            return undefined;
+
         if (geo.ne_lat !== geo.sw_lat && geo.ne_lng !== geo.sw_lng) {
             return geo;
         }
@@ -12,6 +15,9 @@ class MapUtil {
 
     getMobileGeoBounds(map) {
         const geo = this.getGeoBounds(map);
+        if (!geo)
+            return undefined;
+
         if (geo.ne_lat !== geo.sw_lat && geo.ne_lng !== geo.sw_lng) {
             return geo;
         }
@@ -21,6 +27,9 @@ class MapUtil {
 
     getGeoBounds(map) {
         const bounds = map.getBounds();
+        if (!bounds)
+            return undefined;
+
         const ne = bounds.getNorthEast();
         const sw = bounds.getSouthWest();
         const geo = {
@@ -37,7 +46,7 @@ class MapUtil {
         const center = map.getCenter();
         const lat = center.lat();
         const lng = center.lng();
-        
+
         const mppWidth = this.lookupGoogleMapMetersPerPixel(lat, zoom);
         const width = Math.round(boxWidth / 2 * mppWidth);
 

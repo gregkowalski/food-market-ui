@@ -266,7 +266,7 @@ class MobileSearch extends Component {
 
     render() {
         const { isMapView, showFilter, hideFoodGrid, selectedFoodId, mapSelectedFoodId, mapLocation } = this.state;
-        const { pickup, foods, date, address, mapCenter, isLoading, google } = this.props;
+        const { pickup, foods, date, address, mapCenter, isLoading, google, zoom } = this.props;
 
         if (!google) {
             return null;
@@ -320,6 +320,7 @@ class MobileSearch extends Component {
                     <div className='mobilesearch-map' style={this.mapStyle()}>
                         <MobileMap foods={foods} pickup={pickup} date={date}
                             google={google}
+                            zoom={zoom}
                             center={mapLocation}
                             initialCenter={mapLocation}
                             deliveryLocation={mapCenter}

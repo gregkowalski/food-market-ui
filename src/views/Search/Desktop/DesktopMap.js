@@ -72,7 +72,9 @@ export default class DesktopMap extends React.Component {
     handleGeoSearch = (props, map) => {
         if (this.props.onGeoLocationChanged) {
             const geo = MapUtil.getDesktopGeoBounds(map);
-            this.props.onGeoLocationChanged(geo);
+            if (geo) {
+                this.props.onGeoLocationChanged(geo);
+            }
         }
     }
 
