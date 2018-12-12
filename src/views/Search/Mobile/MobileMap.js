@@ -88,15 +88,15 @@ export default class MobileMap extends React.Component {
                     google={google}
                     key={foodItem.food_id}
                     food_id={foodItem.food_id}
-                    header={foodItem.header}
+                    title={foodItem.title}
                     icon={this.getMarkerImage(foodItem, selectedFoodId)}
                     zIndex={this.getZIndex(foodItem, selectedFoodId)}
-                    image={foodItem.image}
+                    imageUrls={foodItem.imageUrls}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
                     price={foodItem.price}
-                    meta={foodItem.meta}
-                    description={foodItem.description}
+                    short_description={foodItem.short_description}
+                    long_description={foodItem.long_description}
                     position={foodItem.position}
                     onClick={this.handleMarkerClick}
                 />

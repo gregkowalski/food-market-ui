@@ -385,7 +385,7 @@ class FoodEditorForm extends React.Component {
                     <Grid stackable>
                         <Grid.Row>
                             <Grid.Column width={2}>
-                                <label>Image URLs</label>
+                                <label>Images</label>
                             </Grid.Column>
                             <Grid.Column width={14}>
                                 <ImageManager
@@ -578,9 +578,6 @@ class ImageManagerComponent extends React.Component {
 
         return (
             <div className='imagemanager'>
-                {imageUrls &&
-                    <div>{imageUrls.join(',')}</div>
-                }
                 <div className='imagemanager-images'>
                     {imageUrls && imageUrls.map((imageUrl, index) => (
                         <Image key={index} src={imageUrl}

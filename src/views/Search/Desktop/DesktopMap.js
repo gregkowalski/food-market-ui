@@ -115,15 +115,15 @@ export default class DesktopMap extends React.Component {
                     id={foodItem.food_id}
                     key={foodItem.food_id}
                     onClick={this.handleMarkerClick}
-                    header={foodItem.header}
+                    title={foodItem.title}
                     icon={this.getMarkerImage(foodItem, hoveredFoodId)}
                     zIndex={this.getZIndex(foodItem, hoveredFoodId)}
-                    image={foodItem.image}
+                    imageUrls={foodItem.imageUrls}
                     rating={foodItem.rating}
                     ratingCount={foodItem.ratingCount}
                     price={foodItem.price}
-                    meta={foodItem.meta}
-                    description={foodItem.description}
+                    short_description={foodItem.short_description}
+                    long_description={foodItem.long_description}
                     position={foodItem.position}
                 />
             );
@@ -169,20 +169,22 @@ export default class DesktopMap extends React.Component {
                             href={Url.foodDetail(selectedFood.id)}>
                             <Card style={{ border: 'solid 2px grey', margin: '4px 4px 4px 4px' }}>
                                 <Card.Content>
-                                    <Image width='100%' shape='rounded' src={selectedFood.image} />
+                                    {selectedFood.imageUrls &&
+                                        <Image width='100%' shape='rounded' src={selectedFood.imageUrls[0]} />
+                                    }
                                     <Card.Header className='mapcontainer-foodcard-header'>
-                                        <div className='marker-header'>${PriceCalc.getPrice(selectedFood.price)} · {selectedFood.header}</div>
+                                        <div className='marker-header'>${PriceCalc.getPrice(selectedFood.price)} · {selectedFood.title}</div>
                                         <div style={{ clear: 'both' }}></div>
                                     </Card.Header>
                                     <Card.Meta>
                                         <div style={{ display: 'inline-flex' }}>
-                                            <Rating disabled={true} maxRating={5} rating={selectedFood.rating} size='mini' className='marker-rating-stars' />
+                                            <Rating className='marker-rating-stars' disabled={true} maxRating={5} rating={selectedFood.rating} size='mini' />
                                             <div className='marker-rating-label'>{selectedFood.ratingCount} reviews</div>
                                         </div>
                                     </Card.Meta>
                                     <Card.Description>
-                                        {selectedFood.meta &&
-                                            <div className='marker-description' dangerouslySetInnerHTML={{ __html: selectedFood.meta.replace(/\\n|\n/g, "<br />") }}></div>
+                                        {selectedFood.short_description &&
+                                            <div className='marker-description' dangerouslySetInnerHTML={{ __html: selectedFood.short_description.replace(/\\n|\n/g, "<br />") }}></div>
                                         }
                                     </Card.Description>
                                 </Card.Content>

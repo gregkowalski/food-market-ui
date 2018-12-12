@@ -23,9 +23,6 @@ class ApiObjectMapper {
         food.id = food.food_id;
         food.images = food.imageUrls;
         food.image = food.imageUrls[0];
-        food.header = food.title;
-        food.meta = food.short_description;
-        food.description = food.long_desciption;
 
         if (food.handoff_dates) {
             food.handoff_dates.sort((a, b) => {
