@@ -498,14 +498,24 @@ export const Reducers = {
                 });
 
             case ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS:
-                return Object.assign({}, state, {
-                    isSavingFood: false,
-                    food: action.food,
-                    saveFoodResult: {
-                        code: ErrorCodes.SUCCESS
+                {
+                    const food = action.food;
+                    let foods = state.foods;
+                    const index = foods.findIndex(f => f.food_id === food.food_id);
+                    if (index >= 0) {
+                        const newFoods = [...foods.slice(0, index), food, ...foods.slice(index + 1)];
+                        foods = newFoods;
                     }
-                });
 
+                    return Object.assign({}, state, {
+                        isSavingFood: false,
+                        food,
+                        foods,
+                        saveFoodResult: {
+                            code: ErrorCodes.SUCCESS
+                        }
+                    });
+                }
             case ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR:
                 return Object.assign({}, state, {
                     isSavingFood: false,

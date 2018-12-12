@@ -204,6 +204,9 @@ class FoodListItemComponent extends React.Component {
                     <div id='managefoods-image'>
                         <Image floated='left' verticalAlign='middle' src={food.imageUrls[0]} rounded />
                     </div>
+                    {food.hidden &&
+                        <div className='managefoods-hidden'>HIDDEN</div>
+                    }
                     <div className='managefoods-title'>{food.title}</div>
                     {food.cook &&
                         <div>by {food.cook_name}</div>

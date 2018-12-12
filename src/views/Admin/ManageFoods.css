@@ -20,6 +20,12 @@
     margin-top: 15px;
 }
 
+.managefoods-hidden {
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
 .managefoods-indent {
     width: 90%;
     margin-left: 40px;
@@ -95,6 +101,10 @@
         padding-bottom: 2px;
     }
     .managefoods-title {
+        padding-bottom: 5px;
+        margin-top: 0;
+    }
+    .managefoods-hidden {
         padding-bottom: 5px;
         margin-top: 0;
     }
