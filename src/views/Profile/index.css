@@ -1,0 +1,42 @@
+
+.profile-side {
+    top: 80px;
+    left: 30px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-side div {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.profile-side .ui.button {
+    margin: 20px 10px 20px 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: 1.3em !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-save-button:hover {
+    background-color: #a01e88 !important;
+    box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
+}
+
+@media all and (max-width: 1036px) {
+    .profile-side {
+        top: 55px;
+        padding-top: 15px;
+        padding-left: 26px;
+        left: 0;
+        flex-direction: row;
+        background: white;
+        z-index: 1;
+        width: 100%;
+        border-bottom: solid 1px lightgray;
+    }
+}

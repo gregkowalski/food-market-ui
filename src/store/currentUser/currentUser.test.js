@@ -1,8 +1,7 @@
-import * as ActionTypes from './actionTypes'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import ApiClient from '../../services/ApiClient'
 import configureStore from '../configureStore'
-import { Selectors, Actions } from './index'
+import { Selectors, Actions, ActionTypes } from './index'
 
 jest.mock('../../services/Cognito/CognitoUtil')
 jest.mock('../../services/ApiClient')

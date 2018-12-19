@@ -50,6 +50,7 @@ const CognitoSignout = lazy(() => import('./services/Cognito/CognitoSignout'));
 const StripeCallback = lazy(() => import('./services/Stripe/StripeCallback'));
 const ProfileEdit = lazy(() => import('./views/Profile/ProfileEdit'));
 const ProfileView = lazy(() => import('./views/Profile/ProfileView'));
+const Profile = lazy(() => import('./views/Profile'));
 const Home = lazy(() => import('./views/Home'));
 const Login = lazy(() => import('./views/Login'));
 const Search = lazy(() => import('./views/Search'));
@@ -92,6 +93,7 @@ render(
                                 <Route exact path='/foods/:id' component={appPage(FoodDetail)} />
                                 <Route exact path='/profile/view/:userId' component={appPage(ProfileView)} />
                                 <Route exact path='/profile/edit' component={appPage(ProfileEdit)} />
+                                <Route exact path='/profile' component={appPage(Profile)} />
                                 <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
                                 <Route exact path='/cookOrders' component={appPage(CookOrders)} />
                                 <Route exact path='/login' component={appPage(Login)} />

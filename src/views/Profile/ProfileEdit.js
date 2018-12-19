@@ -2,9 +2,9 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import PropTypes from 'prop-types'
-import { Segment, Button, Header, Grid, Message } from 'semantic-ui-react'
+import { Segment, Button, Header, Grid, Message, Input } from 'semantic-ui-react'
 import { Divider, Icon } from 'semantic-ui-react'
 import crypto from 'crypto'
 import './ProfileEdit.css'
@@ -54,7 +54,7 @@ class ProfileEdit extends React.Component {
 
     state = {
         selectedIntervals: undefined,
-        didSelectedIntervalsChange: false
+        didSelectedIntervalsChange: false,
     };
 
     componentWillMount() {
@@ -187,11 +187,49 @@ class ProfileEdit extends React.Component {
                 didSelectedIntervalsChange: true
             });
         }
-    };
+    }
+
+    handleSendCodeClick = () => {
+        const { actions, phone, change } = this.props;
+        actions.sendPhoneVerificationCode(phone, () => {
+            change('phone_verified', false);
+        });
+    }
+
+    handleVerifyCodeClick = () => {
+        const { actions, phoneVerificationCode, change } = this.props;
+        actions.verifyPhoneVerificationCode(phoneVerificationCode, () => {
+            change('phone_verified', true);
+        });
+    }
+
+    handleVerificationCodeChange = (event, data) => {
+        this.props.actions.changePhoneVerificationCode(data.value);
+    }
+
+    handlePhoneChange = (event, newValue, previousValue, name) => {
+        const { user, change } = this.props;
+        if (newValue !== user.phone) {
+            change('phone_verified', false);
+        }
+        else {
+            change('phone_verified', user.phone_verified);
+        }
+    }
+
+    handleSelectEditProfile = () => {
+        this.props.history.push(Url.profileEdit(this.props.user.user_id));
+    }
+
+    handleSelectViewProfile = () => {
+        this.navigateToProfileView();
+    }
+
+
 
     render() {
-        const { isLoading, user } = this.props;
-        const { handleSubmit, pristine, submitting } = this.props;
+        const { isLoading, user, isVerifyingPhone, isVerifyingCode, phone_verified } = this.props;
+        const { handleSubmit, pristine, submitting, phoneVerificationCode } = this.props;
         const { message } = this.state;
 
         if (isLoading) {
@@ -211,14 +249,36 @@ class ProfileEdit extends React.Component {
         // written to update cognito email
         const emailEditingEnabled = !this.isExternalIdp && false;
 
+        const editStyle = {
+            textDecoration: 'underline'
+        }
+
+        const viewStyle = {
+            textDecoration: 'none'
+        }
+
         return (
             <div>
-                <AppHeader fixed />
+                {/* <AppHeader fixed /> */}
+                {/* <div className='profileedit-side'>
+                    <a style={editStyle} onClick={this.handleSelectEditProfile}>Edit Profile</a>
+                    <a style={viewStyle} onClick={this.handleSelectViewProfile}>View Profile</a> */}
+                    {/* <Button color='purple' className='profileedit-view-button' onClick={this.navigateToProfileView}>View Profile</Button> */}
+                    {/* <Button color='purple' className='profileedit-save-button' type='submit'
+                        disabled={pristine && !this.state.didSelectedIntervalsChange}
+                        loading={submitting}
+                        onClick={handleSubmit(this.handleSave)}>Save profile</Button>
+                    {message && message.show &&
+                        <Message className='profileedit-save-confirm' floating size='tiny'
+                            onDismiss={() => this.setState({ message: { show: false } })}>
+                            {message.content}
+                        </Message>
+                    }
+                </div> */}
                 <div className='profileedit-main'>
-                    <div className='profileedit-title'>
+                    {/* <div className='profileedit-title'>
                         <div>Edit Profile</div>
-                        <Button onClick={this.navigateToProfileView}>View Profile</Button>
-                    </div>
+                    </div> */}
                     <Grid>
                         <Grid.Column>
                             <Header className='profileedit-header' block attached='top'>Required</Header>
@@ -276,9 +336,30 @@ class ProfileEdit extends React.Component {
                                 <Grid stackable className='profileedit-grid-body'>
                                     <Grid.Row>
                                         <Grid.Column computer={3}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='phone' autoComplete='phone' component={ValidatedField} type='tel' parse={parsePhone} placeholder="What's your phone number?" />
+                                        <Grid.Column computer={5}>
+                                            <Field name='phone' autoComplete='phone' component={ValidatedField}
+                                                type='tel' parse={parsePhone} placeholder="What's your phone number?"
+                                                onChange={this.handlePhoneChange} />
                                             <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.</div>
+                                        </Grid.Column>
+                                        <Grid.Column computer={2}>
+                                            <span>{phone_verified ? 'Verified' : 'Not verified'} </span>
+                                        </Grid.Column>
+                                        <Grid.Column computer={3}>
+                                            <Button color='purple' loading={isVerifyingPhone} onClick={this.handleSendCodeClick}>Send Code</Button>
+                                            <Button color='purple' loading={isVerifyingCode} onClick={this.handleVerifyCodeClick}>Verify Code</Button>
+                                        </Grid.Column>
+                                        <Grid.Column computer={3}>
+                                            <Input value={phoneVerificationCode} onChange={this.handleVerificationCodeChange} type='text' maxLength={6} />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Column computer={3}>Phone Notifications</Grid.Column>
+                                        <Grid.Column computer={13}>
+                                            <div className='profileedit-checkbox'>
+                                                <Field id='phone_notifications' name='phone_notifications' component='input' type='checkbox' />
+                                                <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>Check the box to enable phone notifications about your orders</label>
+                                            </div>
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
@@ -313,8 +394,8 @@ class ProfileEdit extends React.Component {
                                 <Segment attached>
                                     <div className="profileedit-availability-text">Select the times for when your food is <strong><i>ready</i></strong> for pick up and delivery.
                                     <p></p>
-                                    <p>Your customers will be able to request orders from you only during the times you select below. 
-                                    Remember to consider the time it
+                                        <p>Your customers will be able to request orders from you only during the times you select below.
+                                        Remember to consider the time it
                                     takes you to make food (and to complete delivery if applicable)!</p></div>
                                     <Calendar
                                         useModal={false}
@@ -330,17 +411,6 @@ class ProfileEdit extends React.Component {
                                     />
                                 </Segment>
                             }
-                            <div className='profileedit-save-button-container'>
-                                <Button className='profileedit-save-button' type='submit'
-                                    disabled={pristine && !this.state.didSelectedIntervalsChange} loading={submitting} onClick={handleSubmit(this.handleSave)}>Save profile</Button>
-                                {message && message.show &&
-                                    <Message className='profileedit-save-confirm' floating size='tiny'
-                                        onDismiss={() => this.setState({ message: { show: false } })}>
-                                        {message.content}
-                                    </Message>
-                                }
-                            </div>
-
                         </Grid.Column>
                     </Grid>
                     <Divider hidden />
@@ -381,25 +451,12 @@ const validate = (values) => {
     else if (!Util.validatePhoneNumber(values.phone)) {
         errors.phone = { header: 'Invalid phone number', message: 'Please enter your phone number' };
     }
+    else if (!values.phone_verified) {
+        errors.phone = { header: 'Unverified phone number', message: 'Please verify your phone number' };
+    }
 
     return errors;
 }
-
-const mapStateToProps = (state) => {
-    return {
-        user: Selectors.currentUser(state),
-        isLoading: Selectors.isLoading(state),
-        isSaving: Selectors.isSaving(state),
-        apiError: Selectors.apiError(state),
-        initialValues: Selectors.currentUser(state)
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(Actions, dispatch),
-    };
-};
 
 ProfileEdit.propTypes = {
     user: PropTypes.shape({
@@ -415,6 +472,31 @@ ProfileEdit.propTypes = {
     })
 }
 
-const form = reduxForm({ form: 'profileEdit', validate, enableReinitialize: true })(ProfileEdit);
+const mapStateToProps = (state) => {
+    return {
+        user: Selectors.currentUser(state),
+        isLoading: Selectors.isLoading(state),
+        isSaving: Selectors.isSaving(state),
+        apiError: Selectors.apiError(state),
+
+        isVerifyingPhone: Selectors.isVerifyingPhone(state),
+        isVerifyingCode: Selectors.isVerifyingCode(state),
+        phoneVerificationCode: Selectors.phoneVerificationCode(state),
+
+        initialValues: Selectors.currentUser(state),
+        phone: selector(state, 'phone'),
+        phone_verified: selector(state, 'phone_verified'),
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch),
+    };
+};
+
+const reduxFormName = 'profileEdit';
+const selector = formValueSelector(reduxFormName)
+const form = reduxForm({ form: reduxFormName, validate, enableReinitialize: true })(ProfileEdit);
 const connectedForm = connect(mapStateToProps, mapDispatchToProps)(form);
 export default withRouter(connectedForm);

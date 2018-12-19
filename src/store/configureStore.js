@@ -14,6 +14,7 @@ import { Reducers as cookOrders } from './cookOrders'
 import { Reducers as admin } from './admin'
 import { Reducers as foodManager } from './admin/foodManager'
 import { Reducers as google } from './google'
+import { Reducers as profile } from '../views/Profile/redux'
 
 const configureStore = (options = {}) => {
 
@@ -33,6 +34,7 @@ const configureStore = (options = {}) => {
         admin,
         foodManager,
         google,
+        profile,
         {
             form: formReducer
         });

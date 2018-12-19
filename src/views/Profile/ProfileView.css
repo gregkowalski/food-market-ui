@@ -1,3 +1,13 @@
+.profileview-loading {
+    margin-top: 70px;
+    width: 100%;
+}
+
+.profileview-loading > div {
+    margin: 0 auto;
+    width: 100px;
+}
+
 .profileview-container {
     display: flex;
     margin-top: 100px;

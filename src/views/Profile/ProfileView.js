@@ -26,8 +26,8 @@ class ProfileView extends React.Component {
             return (
                 <div>
                     <AppHeader fixed />
-                    <div style={{ marginTop: '70px', width: '100%' }}>
-                        <div style={{ margin: '0 auto', width: '100px' }}>
+                    <div className='profileview-loading'>
+                        <div>
                             <LoadingIcon />
                         </div>
                     </div>
@@ -35,54 +35,7 @@ class ProfileView extends React.Component {
             );
         }
 
-        let join_date;
-        if (user.join_date) {
-            join_date = Util.toCurrentTimezoneMoment(user.join_date);
-        }
-
-        return (
-            <div>
-                <AppHeader fixed />
-                <div className='profileview-container'>
-                    <div className='profileview-left'>
-                        <div className='profileview-card'>
-                            <Header className='profileview-card-header' block attached='top'>Verified Info</Header>
-                            <Segment attached>
-                                <div className='profileview-card-items'>
-                                    <VerifiedInfo label='Email' isVerified={user.email_verified} />
-                                    <VerifiedInfo label='Phone Number' isVerified={user.phone_verified} />
-                                </div>
-                            </Segment>
-                        </div>
-                        <div className='profileview-card' style={{ marginTop: '20px' }}>
-                            <Header className='profileview-card-header' block attached='top'>About Me</Header>
-                            <Segment attached>
-                                <div className='profileview-card-items profileview-about-me'>
-                                    <div>Certifications</div>
-                                    {user.certifications && user.certifications.map((cert, index) => {
-                                        return (<div key={index}>{CertificationLabels[cert]}</div>);
-                                    })}
-                                </div>
-                            </Segment>
-                        </div>
-                    </div>
-                    <div className='profileview-main'>
-
-                        <Image floated='left' verticalAlign='middle' size='small' circular src={user.image} />
-                        <div className='profileview-header'>Hi, I'm {user.name}!</div>
-                        {join_date &&
-                            <div className='profileview-sub-header'>
-                                Joined in {join_date.format('MMMM YYYY')}
-                            </div>
-                        }
-                        {/* <FlagUser /> */}
-                        <div style={{ clear: 'both' }}></div>
-                        <div className='profileview-user-info'>{user.info}</div>
-
-                    </div>
-                </div>
-            </div >
-        );
+        return <ProfileViewComponent user={user} />
     }
 }
 
@@ -113,3 +66,55 @@ ProfileView.propTypes = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
+
+export const ProfileViewComponent = ({ user }) => {
+
+    let join_date;
+    if (user.join_date) {
+        join_date = Util.toCurrentTimezoneMoment(user.join_date);
+    }
+
+    return (
+        <div>
+            <AppHeader fixed />
+            <div className='profileview-container'>
+                <div className='profileview-left'>
+                    <div className='profileview-card'>
+                        <Header className='profileview-card-header' block attached='top'>Verified Info</Header>
+                        <Segment attached>
+                            <div className='profileview-card-items'>
+                                <VerifiedInfo label='Email' isVerified={user.email_verified} />
+                                <VerifiedInfo label='Phone Number' isVerified={user.phone_verified} />
+                            </div>
+                        </Segment>
+                    </div>
+                    <div className='profileview-card' style={{ marginTop: '20px' }}>
+                        <Header className='profileview-card-header' block attached='top'>About Me</Header>
+                        <Segment attached>
+                            <div className='profileview-card-items profileview-about-me'>
+                                <div>Certifications</div>
+                                {user.certifications && user.certifications.map((cert, index) => {
+                                    return (<div key={index}>{CertificationLabels[cert]}</div>);
+                                })}
+                            </div>
+                        </Segment>
+                    </div>
+                </div>
+                <div className='profileview-main'>
+
+                    <Image floated='left' verticalAlign='middle' size='small' circular src={user.image} />
+                    <div className='profileview-header'>Hi, I'm {user.name}!</div>
+                    {join_date &&
+                        <div className='profileview-sub-header'>
+                            Joined in {join_date.format('MMMM YYYY')}
+                        </div>
+                    }
+                    {/* <FlagUser /> */}
+                    <div style={{ clear: 'both' }}></div>
+                    <div className='profileview-user-info'>{user.info}</div>
+
+                </div>
+            </div>
+        </div >
+    );
+}

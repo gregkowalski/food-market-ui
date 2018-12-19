@@ -1,7 +1,25 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
-import * as ActionTypes from './actionTypes'
 import ErrorCodes from '../../services/ErrorCodes'
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+
+export const ActionTypes = {
+    REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
+    RECEIVE_CURRENT_USER_SUCCESS: 'RECEIVE_CURRENT_USER_SUCCESS',
+    RECEIVE_CURRENT_USER_ERROR: 'RECEIVE_CURRENT_USER_ERROR',
+
+    CURRENT_USER_LOGOUT: 'CURRENT_USER_LOGOUT',
+
+    REQUEST_SAVE_USER: 'REQUEST_SAVE_USER',
+    RECEIVE_SAVE_USER_SUCCESS: 'RECEIVE_SAVE_USER_SUCCESS',
+    RECEIVE_SAVE_USER_ERROR: 'RECEIVE_SAVE_USER_ERROR',
+
+    REQUEST_ACCEPT_TERMS: 'REQUEST_ACCEPT_TERMS',
+    RECEIVE_ACCEPT_TERMS_SUCCESS: 'RECEIVE_ACCEPT_TERMS_SUCCESS',
+    RECEIVE_ACCEPT_TERMS_ERROR: 'RECEIVE_ACCEPT_TERMS_ERROR',
+
+    CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE: 'CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE'
+}
 
 function requestCurrentUser() {
     return {
@@ -149,6 +167,108 @@ export const Actions = {
                     }
                 );
         }
+    },
+
+    changePhoneVerificationCode: (code) => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE, code });
+        }
+    },
+
+    sendPhoneVerificationCode: (phone, onSuccess) => {
+        return (dispatch) => {
+
+            const promise = new Promise((resolve, reject) => {
+
+                const cognitoUser = CognitoUtil.getCognitoUser();
+                cognitoUser.getSession((err, session) => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                        return;
+                    }
+
+                    phone = phone.replace(/ /g, '');
+                    const attributes = [
+                        new CognitoUserAttribute({
+                            Name: 'phone_number',
+                            Value: phone
+                        })
+                    ];
+                    cognitoUser.updateAttributes(attributes, (err, result) => {
+                        if (err) {
+                            console.error(err)
+                            reject(err);
+                            return;
+                        }
+
+                        cognitoUser.getAttributeVerificationCode('phone_number',
+                            {
+                                onSuccess: () => {
+                                    console.log('success');
+                                },
+                                onFailure: (error) => {
+                                    console.error(error);
+                                    reject(error);
+                                },
+                                inputVerificationCode: (data) => {
+                                    console.log(data);
+                                    resolve(data);
+                                }
+                            });
+                    });
+
+                })
+
+            });
+
+            return promise.then(
+                response => {
+                    console.log(response);
+                    onSuccess();
+                },
+                error => {
+                    console.error(error);
+                });
+        }
+    },
+
+    verifyPhoneVerificationCode: (code, onSuccess) => {
+        return (dispatch) => {
+
+            const promise = new Promise((resolve, reject) => {
+
+                const cognitoUser = CognitoUtil.getCognitoUser();
+                cognitoUser.getSession((err, session) => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                        return;
+                    }
+
+                    cognitoUser.verifyAttribute('phone_number', code,
+                        {
+                            onSuccess: (success) => {
+                                console.log(success);
+                                resolve(success);
+                            },
+                            onFailure: (error) => {
+                                console.log(error);
+                                reject(error);
+                            }
+                        });
+                });
+            });
+
+            return promise.then(
+                response => {
+                    console.log(response);
+                    onSuccess();
+                },
+                error => {
+                    console.error(error);
+                });
+        }
     }
 }
 
@@ -159,6 +279,9 @@ export const Selectors = {
     apiErrorCode: (state) => state.currentUser.apiErrorCode,
     apiError: (state) => state.currentUser.apiError,
     termsAccepted: (state) => state.currentUser.termsAccepted,
+    isVerifyingPhone: (state) => state.currentUser.isVerifyingPhone,
+    isVerifyingCode: (state) => state.currentUser.isVerifyingCode,
+    phoneVerificationCode: (state) => state.currentUser.phoneVerificationCode,
 }
 
 const initialState = {
@@ -237,6 +360,11 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isSaving: false,
                     apiError: action.apiError,
+                });
+
+            case ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE:
+                return Object.assign({}, state, {
+                    phoneVerificationCode: action.code,
                 });
 
             default:

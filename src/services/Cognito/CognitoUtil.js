@@ -1,4 +1,5 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
+import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../../Config'
@@ -16,6 +17,16 @@ class CognitoUtil {
             UserPoolId: Config.Cognito.UserPoolId,
         };
         return authData;
+    }
+
+    getCognitoUser() {
+        const jwt = this.getLoggedInUserJwt();
+        const userPool = new CognitoUserPool(this.getUserPoolData());
+        const userData = {
+            Pool: userPool,
+            Username: jwt['cognito:username']
+        };
+        return new CognitoUser(userData);
     }
 
     getTokenScopesQueryParam() {
