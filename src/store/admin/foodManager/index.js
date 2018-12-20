@@ -7,6 +7,7 @@ import Url from '../../../services/Url'
 import { FoodPrepTypes } from '../../../Enums';
 import { Constants } from '../../../Constants';
 import { history } from '../../../History'
+import { toast } from 'react-toastify'
 
 const ActionTypes = {
     FOODMANAGER_REQUEST_FOODS: 'FOODMANAGER_REQUEST_FOODS',
@@ -53,8 +54,6 @@ const ActionTypes = {
     FOODMANAGER_ADD_FOOD_REQUEST: 'FOODMANAGER_ADD_FOOD_REQUEST',
     FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS: 'FOODMANAGER_ADD_FOOD_RECEIVE_SUCCESS',
     FOODMANAGER_ADD_FOOD_RECEIVE_ERROR: 'FOODMANAGER_ADD_FOOD_RECEIVE_ERROR',
-
-    FOODMANAGER_CLEAR_FOOD_RESULT: 'FOODMANAGER_CLEAR_FOOD_RESULT',
 };
 
 export const Actions = {
@@ -270,26 +269,21 @@ export const Actions = {
             return ApiClient.deleteFood(food_id)
                 .then(
                     response => {
-                        window.scrollTo(0, 0);
                         dispatch({
                             type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS,
                             food_id
                         });
+                        toast.success('Food deleted successfully');
                     },
                     error => {
-                        window.scrollTo(0, 0);
-                        dispatch({
+                        const action = {
                             type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR,
                             error: error.response.data.error
-                        });
+                        };
+                        dispatch(action);
+                        toast.error(`Food deleted successfully: ${action.error}`);
                     }
                 );
-        }
-    },
-
-    clearResult: () => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_FOOD_RESULT });
         }
     },
 
@@ -374,11 +368,12 @@ export const Actions = {
                         history.push(Url.admin.manageFood(food.food_id));
                     },
                     error => {
-                        dispatch({
+                        const action = {
                             type: ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_ERROR,
                             error: error.response.data.error
-                        });
-                        window.scrollTo(0, 0);
+                        };
+                        dispatch(action);
+                        toast.error(`Unable to delete food: ${action.error}`);
                     }
                 );
         }
@@ -410,7 +405,6 @@ export const Selectors = {
 
     deleteModalFoodId: (state) => state.foodManager.deleteModalFoodId,
     deletingFoodId: (state) => state.foodManager.deletingFoodId,
-    result: (state) => state.foodManager.result,
     deleteFoodConfirmText: (state) => state.foodManager.deleteFoodConfirmText,
 
     isAddFoodModalOpen: (state) => state.foodManager.isAddFoodModalOpen,
@@ -614,9 +608,6 @@ export const Reducers = {
                     return Object.assign({}, state, {
                         deletingFoodId: undefined,
                         deleteModalFoodId: undefined,
-                        result: {
-                            code: ErrorCodes.SUCCESS,
-                        },
                         foods
                     });
                 }
@@ -625,15 +616,6 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     deletingFoodId: undefined,
                     deleteModalFoodId: undefined,
-                    result: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.error)
-                    },
-                });
-
-            case ActionTypes.FOODMANAGER_CLEAR_FOOD_RESULT:
-                return Object.assign({}, state, {
-                    result: undefined,
                 });
 
             case ActionTypes.FOODMANAGER_OPEN_DELETE_FOOD_MODAL:
@@ -677,7 +659,6 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isAddingFood: false,
                     isAddFoodModalOpen: false,
-                    result: undefined,
                     foods
                 });
 
@@ -685,15 +666,6 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isAddingFood: false,
                     isAddFoodModalOpen: false,
-                    result: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.error)
-                    },
-                });
-
-            case ActionTypes.FOODMANAGER_CLEAR_ADD_FOOD_RESULT:
-                return Object.assign({}, state, {
-                    result: undefined,
                 });
 
             default:

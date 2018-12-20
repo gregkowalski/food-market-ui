@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     background: #ffffff;
-    z-index: 20;
+    z-index: 25;
     transition: top 0.2s ease-in-out;
 }
 

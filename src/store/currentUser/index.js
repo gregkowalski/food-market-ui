@@ -1,7 +1,8 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import ErrorCodes from '../../services/ErrorCodes'
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js'
+import { toast } from 'react-toastify'
 
 export const ActionTypes = {
     REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
@@ -150,10 +151,12 @@ export const Actions = {
                 .then(
                     response => {
                         dispatch(receiveSaveUserSuccess(user));
+                        toast.success('Profile saved', { autoClose: false });
                     },
                     error => {
                         const err = error && error.response && error.response.data && error.response.data.error;
                         dispatch(receiveSaveUserError(err));
+                        toast.error('Profile not saved');
                     }
                 );
         };
@@ -198,6 +201,9 @@ export const Actions = {
 
     sendPhoneVerificationCode: (phone, onSuccess) => {
         return (dispatch) => {
+
+            toast.success(`Verification code sent successfully to ${phone}`, { autoClose: false });
+            return;
 
             const promise = new Promise((resolve, reject) => {
 
@@ -247,15 +253,22 @@ export const Actions = {
                 response => {
                     console.log(response);
                     onSuccess();
+                    toast.info(`Verification code sent successfully to ${phone}`,
+                        { autoClose: false, closeButton: false });
                 },
                 error => {
                     console.error(error);
+                    toast.error(`Unable to send verification code to ${phone}`,
+                        { autoClose: false, closeButton: false });
                 });
         }
     },
 
     verifyPhoneVerificationCode: (code, onSuccess) => {
         return (dispatch) => {
+
+            toast.error(`Things just didn't work here`, { autoClose: false });
+            return;
 
             const promise = new Promise((resolve, reject) => {
 
@@ -285,9 +298,13 @@ export const Actions = {
                 response => {
                     console.log(response);
                     onSuccess();
+                    toast.success(`Phone code was verified successfully`,
+                        { autoClose: false, closeButton: false });
                 },
                 error => {
                     console.error(error);
+                    toast.error(`Unable to verify phone code: ${error}`,
+                        { autoClose: false, closeButton: false });
                 });
         }
     },

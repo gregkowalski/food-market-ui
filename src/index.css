@@ -11,3 +11,29 @@ body {
         background-color: white;
     }
 }
+
+.toast-body {
+    padding: 1em;
+    font-size: 1.3em;
+    line-height: 1.2;
+}
+
+.Toastify__toast--success {
+    box-shadow: 0 0 0 1px #a3c293 inset, 0 0 0 0 transparent;
+    background-color: #f5ffdd;
+    color: #1a531b;
+}
+
+.Toastify__close-button--success {
+    color: #1a531b;
+}
+
+.Toastify__toast--error {
+    box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 0 0 transparent;
+    background-color: #fff6f6;
+    color: #912d2b;
+}
+
+.Toastify__close-button--error {
+    color: #912d2b;
+}

@@ -8,6 +8,9 @@ import { history } from './History'
 
 import ReactGA from 'react-ga'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './semantic/semantic.min.css'
 import './index.css'
 
@@ -82,6 +85,11 @@ render(
         <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
+                    <ToastContainer
+                        position={toast.POSITION.TOP_CENTER}
+                        hideProgressBar={true}
+                        draggablePercent={35}
+                        bodyClassName='toast-body' />
                     <Router history={history}>
                         <ScrollToTop>
                             <Switch>

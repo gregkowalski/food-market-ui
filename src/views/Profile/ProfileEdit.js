@@ -10,7 +10,6 @@ import './ProfileEdit.css'
 import Util from '../../services/Util'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import Toast from '../../components/Toast'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
 import { Actions, Selectors, ProfileViews } from '../../store/currentUser'
@@ -216,7 +215,7 @@ class ProfileEdit extends React.Component {
 
     render() {
         const { isLoading, user, isVerifyingPhone, isVerifyingCode, phone_verified } = this.props;
-        const { handleSubmit, pristine, submitting, phoneVerificationCode, currentView, result } = this.props;
+        const { handleSubmit, pristine, submitting, phoneVerificationCode, currentView } = this.props;
 
         if (isLoading) {
             return (
@@ -242,17 +241,10 @@ class ProfileEdit extends React.Component {
                     onViewProfile={this.handleSelectViewProfile}
                 >
                     {currentView === ProfileViews.EDIT &&
-                        <div className='profileedit-actions'>
-                            <Button color='purple' className='profileedit-save-button' type='submit'
-                                disabled={pristine && !this.state.didSelectedIntervalsChange}
-                                loading={submitting}
-                                onClick={handleSubmit(this.handleSave)}>Save profile</Button>
-                            <Toast result={result} className='profileedit-toast'
-                                successMessage='Profile saved'
-                                errorHeader='Oops, your profile was not saved'
-                                onDismiss={this.handleToastDismiss}
-                            />
-                        </div>
+                        <Button color='purple' type='submit'
+                            disabled={pristine && !this.state.didSelectedIntervalsChange}
+                            loading={submitting}
+                            onClick={handleSubmit(this.handleSave)}>Save profile</Button>
                     }
                 </ProfileSideView>
                 <div className='profileedit-main'>
@@ -405,10 +397,11 @@ const ProfileSideView = ({ currentView, onEditProfile, onViewProfile, children }
 
     const style = (isActive) => {
         const props = {
-            fontSize: '1.2em'
+            display: 'inline-block'
         };
         if (isActive) {
-            props.textDecoration = 'underline';
+            // props.textDecoration = 'underline';
+            props.borderBottom = `2px solid ${Colors.purple}`;
             props.color = Colors.purple;
             props.fontWeight = 500;
         }
@@ -420,8 +413,12 @@ const ProfileSideView = ({ currentView, onEditProfile, onViewProfile, children }
 
     return (
         <div className='profileedit-side'>
-            <span style={editStyle} className='profileedit-side-link' onClick={onEditProfile}>Edit Profile</span>
-            <span style={viewStyle} className='profileedit-side-link' onClick={onViewProfile}>View Profile</span>
+            <div className='profileedit-side-link'>
+                <div style={editStyle} onClick={onEditProfile}>Edit Profile</div>
+            </div>
+            <div className='profileedit-side-link'>
+                <div style={viewStyle} onClick={onViewProfile}>View Profile</div>
+            </div>
             {children}
         </div>
     );

@@ -9,7 +9,6 @@ import './ManageFoods.css'
 import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
-import Toast from '../../components/Toast'
 
 class ManageFoods extends React.Component {
 
@@ -20,16 +19,12 @@ class ManageFoods extends React.Component {
         }
     }
 
-    handleToastDismiss = () => {
-        this.props.actions.clearResult();
-    }
-
     handleAddFood = () => {
         this.props.actions.openAddFoodModal();
     }
 
     render() {
-        const { isLoadingFoods, foods, result } = this.props;
+        const { isLoadingFoods, foods } = this.props;
 
         return (
             <div className='managefoods' >
@@ -43,11 +38,6 @@ class ManageFoods extends React.Component {
                         <span>Edit Foods</span>
                         <Button floated='right' content='Add food' icon='plus circle' labelPosition='right' onClick={this.handleAddFood} />
                     </div>
-                    <Toast result={result}
-                        successMessage='Food deleted successfully'
-                        errorHeader='Error deleting food'
-                        onDismiss={this.handleToastDismiss}
-                    />
                     <AddFoodModal />
                     <Divider />
                     <List divided verticalAlign='middle'>
@@ -66,7 +56,6 @@ class ManageFoods extends React.Component {
             isLoadingFoods: Selectors.isLoadingFoods(state),
             foods: Selectors.foods(state),
             getFoodsResult: Selectors.getFoodsResult(state),
-            result: Selectors.result(state),
         };
     };
 
@@ -76,14 +65,9 @@ class ManageFoods extends React.Component {
 
     static propTypes = {
         isLoadingFoods: PropTypes.bool,
-        result: PropTypes.shape({
-            code: PropTypes.string.isRequired,
-            message: PropTypes.string
-        }),
 
         actions: PropTypes.shape({
-            getFoods: PropTypes.func.isRequired,
-            clearResult: PropTypes.func.isRequired,
+            getFoods: PropTypes.func.isRequired
         }).isRequired
     }
 }

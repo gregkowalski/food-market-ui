@@ -9,11 +9,6 @@
     width: 100%;
 }
 
-.profileedit-toast {
-    max-width: 180px;
-    position: fixed;
-}
-
 .profileedit-view-container {
     display: flex;
     width: 100%;
@@ -56,7 +51,7 @@
 }
 
 .profileedit-side {
-    top: 80px;
+    top: 90px;
     left: 30px;
     position: fixed;
     display: flex;
@@ -66,31 +61,21 @@
 .profileedit-side-link {
     cursor: pointer;
     margin-bottom: 5px;
+    font-size: 1.5rem;
 }
 
-.profileedit-side-link:hover {
-    text-decoration: underline;
+.profileedit-side .profileedit-side-link {
+    margin-bottom: 10px;
 }
 
 .profileedit-side .ui.button {
-    /* margin: 20px 10px 20px 0; */
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-size: 1.3em !important;
-    font-weight: 500 !important;
-    color: #ffffff !important;
+    margin-top: 20px;
+    height: 2.6em;
+    width: 120px;
     box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1) !important;
 }
 
-.profileedit-actions {
-    margin-top: 15px;
-}
-
-.profileedit-save-button {
-    width: 120px;
-}
-
-.profileedit-save-button:hover {
+.profileedit-side .ui.button:hover {
     background-color: #a01e88 !important;
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144) !important;
 }
@@ -109,16 +94,10 @@
     padding-bottom: 12px;
 }
 
-@media all and (max-width: 1097px) {
-    .profileedit-grid-body {
-        width: 96%;
-    }
-}
-
 @media all and (max-width: 1036px) {
     .profileedit-main {
         width: 90%;
-        margin: 175px auto;
+        margin: 130px auto;
     }
     .profileedit-grid-body>.row>.column:first-child {
         text-align: left;
@@ -133,25 +112,30 @@
     }
     .profileedit-side {
         top: 55px;
-        padding-top: 15px;
-        padding-left: 26px;
-        padding-bottom: 10px;
+        padding-top: 20px;
+        padding-bottom: 8px;
         left: 0;
-        display: block;
-        background: white;
         z-index: 20;
         width: 100%;
+        flex-direction: row;
+        background: white;
         border-bottom: solid 1px lightgray;
     }
+    .profileedit-side .ui.button {
+        margin-left: auto;
+        margin-right: 5%;
+        margin-top: -5px;
+        width: 110px;
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+    }
+    .profileedit-side .profileedit-side-link:first-child {
+        margin-left: 5%;
+        margin-right: 15px;
+    }
     .profileedit-side-link {
-        margin-right: 10px;
-    }
-    .profileedit-actions {
-        margin-top: 15px;
-        display: flex;
-    }
-    .profileedit-toast.ui.message {
-        margin: 0;
+        margin-top: 2px;
+        font-size: 1.3em;
     }
 }
 
@@ -177,14 +161,6 @@
 
 .profileedit-main input[type='text'], .profileedit-main input[type='tel'] {
     appearance: none;
-}
-
-.profileedit-main .ui.error.message {
-    padding: 1em 1em;
-}
-
-.profileedit-main .ui.error.message>i.icon {
-    font-size: 2rem;
 }
 
 /* Google Autocomplete box */
