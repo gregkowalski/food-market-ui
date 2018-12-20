@@ -15,7 +15,7 @@ class Url {
     }
 
     profileEdit() {
-        return '/profile/edit';
+        return '/profile';
     }
 
     profileView(user_id) {

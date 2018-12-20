@@ -4,23 +4,24 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import PropTypes from 'prop-types'
-import { Segment, Button, Header, Grid, Message, Input } from 'semantic-ui-react'
-import { Divider, Icon } from 'semantic-ui-react'
+import { Segment, Button, Header, Grid, Input, Icon } from 'semantic-ui-react'
 import crypto from 'crypto'
 import './ProfileEdit.css'
 import Util from '../../services/Util'
-import Url from '../../services/Url'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
+import Toast from '../../components/Toast'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import StripeUtil from '../../services/Stripe/StripeUtil'
-import { Actions, Selectors } from '../../store/currentUser'
+import { Actions, Selectors, ProfileViews } from '../../store/currentUser'
 import { Certifications, CertificationLabels, DaysOfWeek } from '../../Enums';
 import StripeComponent from './StripeComponent'
 import { ValidatedAutocomplete, ValidatedDropdown, ValidatedField, ValidatedTextArea } from '../../components/Validation'
 import moment from 'moment'
 import Calendar from 'react-week-calendar'
 import 'react-week-calendar/dist/style.css'
+import { ProfileViewComponent } from './ProfileView'
+import { Colors } from '../../Constants'
 
 const certificationOptions = [
     {
@@ -63,18 +64,6 @@ class ProfileEdit extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.isSaving && !nextProps.isSaving) {
-
-            // We finished saving, let's set the appropriate success or error messages
-            if (nextProps.apiError) {
-                console.log(nextProps.apiError);
-                this.setState({ message: { show: true, content: `Oops, your profile was not saved. Error: ${nextProps.apiError}` } });
-            }
-            else {
-                this.setState({ message: { show: true, content: "Success! Your profile has been updated." } });
-            }
-        }
-
         const { user } = this.props;
         if (user && !this.state.selectedIntervals) {
             if (user.availability) {
@@ -96,10 +85,6 @@ class ProfileEdit extends React.Component {
                 this.setState({ selectedIntervals: selectedIntervals });
             }
         }
-    }
-
-    navigateToProfileView = () => {
-        this.props.history.push(Url.profileView(this.props.user.user_id));
     }
 
     handleSave = (user) => {
@@ -218,28 +203,27 @@ class ProfileEdit extends React.Component {
     }
 
     handleSelectEditProfile = () => {
-        this.props.history.push(Url.profileEdit(this.props.user.user_id));
+        this.props.actions.editProfile();
     }
 
     handleSelectViewProfile = () => {
-        this.navigateToProfileView();
+        this.props.actions.viewProfile();
     }
 
-
+    handleToastDismiss = () => {
+        this.props.actions.clearResult();
+    }
 
     render() {
         const { isLoading, user, isVerifyingPhone, isVerifyingCode, phone_verified } = this.props;
-        const { handleSubmit, pristine, submitting, phoneVerificationCode } = this.props;
-        const { message } = this.state;
+        const { handleSubmit, pristine, submitting, phoneVerificationCode, currentView, result } = this.props;
 
         if (isLoading) {
             return (
                 <div>
                     <AppHeader fixed />
-                    <div style={{ marginTop: '70px', width: '100%' }}>
-                        <div style={{ margin: '0 auto', width: '100px' }}>
-                            <LoadingIcon />
-                        </div>
+                    <div className='profileedit-loading'>
+                        <LoadingIcon size='large' />
                     </div>
                 </div>
             );
@@ -249,175 +233,198 @@ class ProfileEdit extends React.Component {
         // written to update cognito email
         const emailEditingEnabled = !this.isExternalIdp && false;
 
-        const editStyle = {
-            textDecoration: 'underline'
-        }
-
-        const viewStyle = {
-            textDecoration: 'none'
-        }
-
         return (
             <div>
-                {/* <AppHeader fixed /> */}
-                {/* <div className='profileedit-side'>
-                    <a style={editStyle} onClick={this.handleSelectEditProfile}>Edit Profile</a>
-                    <a style={viewStyle} onClick={this.handleSelectViewProfile}>View Profile</a> */}
-                    {/* <Button color='purple' className='profileedit-view-button' onClick={this.navigateToProfileView}>View Profile</Button> */}
-                    {/* <Button color='purple' className='profileedit-save-button' type='submit'
-                        disabled={pristine && !this.state.didSelectedIntervalsChange}
-                        loading={submitting}
-                        onClick={handleSubmit(this.handleSave)}>Save profile</Button>
-                    {message && message.show &&
-                        <Message className='profileedit-save-confirm' floating size='tiny'
-                            onDismiss={() => this.setState({ message: { show: false } })}>
-                            {message.content}
-                        </Message>
+                <AppHeader fixed />
+                <ProfileSideView
+                    currentView={currentView}
+                    onEditProfile={this.handleSelectEditProfile}
+                    onViewProfile={this.handleSelectViewProfile}
+                >
+                    {currentView === ProfileViews.EDIT &&
+                        <div className='profileedit-actions'>
+                            <Button color='purple' className='profileedit-save-button' type='submit'
+                                disabled={pristine && !this.state.didSelectedIntervalsChange}
+                                loading={submitting}
+                                onClick={handleSubmit(this.handleSave)}>Save profile</Button>
+                            <Toast result={result} className='profileedit-toast'
+                                successMessage='Profile saved'
+                                errorHeader='Oops, your profile was not saved'
+                                onDismiss={this.handleToastDismiss}
+                            />
+                        </div>
                     }
-                </div> */}
+                </ProfileSideView>
                 <div className='profileedit-main'>
-                    {/* <div className='profileedit-title'>
-                        <div>Edit Profile</div>
-                    </div> */}
-                    <Grid>
-                        <Grid.Column>
-                            <Header className='profileedit-header' block attached='top'>Required</Header>
-                            <Segment attached>
-                                <Grid stackable className='profileedit-grid-body' columns='equal'>
-                                    <Grid.Row stretched>
-                                        <Grid.Column computer={3}>First Name</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='name' autoComplete='name' component={ValidatedField} type='text' placeholder='Enter your name' />
-                                            <div className='profileedit-input-descriptions'>
-                                                Your public profile only shows your first name. When you order food, your cook will see your first and last name.
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Username</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='username' autoComplete='username' component={ValidatedField} type='text' placeholder='Enter your username' />
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Email <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field disabled={!emailEditingEnabled} name='email' autoComplete='email' component={ValidatedField} type='text' placeholder='Enter your email' />
-                                            <div className='profileedit-input-descriptions'>
-                                                Your email is never displayed publicly. It is only shared when you have a confirmed order request with another Foodcraft user.
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Email Notifications</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <div className='profileedit-checkbox'>
-                                                <Field id='email_notifications' name='email_notifications' component='input' type='checkbox' />
-                                                <label className='profileedit-input-descriptions' htmlFor='email_notifications'>Check the box to enable email notifications about your orders</label>
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Bio</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='info' autoComplete='info' component={ValidatedTextArea} rows={2} type='text' placeholder='Tell everyone about yourself' />
-                                            <div className='profileedit-input-descriptions'>
-                                                Let other people in the Foodcraft community get to know you.
-                                                <div style={{ marginTop: '5px' }}>
-                                                    What are some things you like to do? Or share the 5 foods you can't live without. Do you have a food philosophy? Share your life motto!
-                                                </div>
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                </Grid>
-                            </Segment>
-                            <Header className='profileedit-header' block attached='top'>Optional</Header>
-                            <Segment attached>
-                                <Grid stackable className='profileedit-grid-body'>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
-                                        <Grid.Column computer={5}>
-                                            <Field name='phone' autoComplete='phone' component={ValidatedField}
-                                                type='tel' parse={parsePhone} placeholder="What's your phone number?"
-                                                onChange={this.handlePhoneChange} />
-                                            <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.</div>
-                                        </Grid.Column>
-                                        <Grid.Column computer={2}>
-                                            <span>{phone_verified ? 'Verified' : 'Not verified'} </span>
-                                        </Grid.Column>
-                                        <Grid.Column computer={3}>
-                                            <Button color='purple' loading={isVerifyingPhone} onClick={this.handleSendCodeClick}>Send Code</Button>
-                                            <Button color='purple' loading={isVerifyingCode} onClick={this.handleVerifyCodeClick}>Verify Code</Button>
-                                        </Grid.Column>
-                                        <Grid.Column computer={3}>
-                                            <Input value={phoneVerificationCode} onChange={this.handleVerificationCodeChange} type='text' maxLength={6} />
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Phone Notifications</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <div className='profileedit-checkbox'>
-                                                <Field id='phone_notifications' name='phone_notifications' component='input' type='checkbox' />
-                                                <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>Check the box to enable phone notifications about your orders</label>
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Address <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
-                                            <div className='profileedit-input-descriptions'>
-                                                We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
-                                                <p></p>
-                                                <p><strong>Address is required for cooks.</strong> This address will be used as your default pick-up location for your orders unless otherwise specified.</p>
-                                            </div>
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                    <Grid.Row>
-                                        <Grid.Column computer={3}>Food Certifications</Grid.Column>
-                                        <Grid.Column computer={13}>
-                                            <Field name='certifications' autoComplete='certifications' placeholder="What are your certifications?"
-                                                fluid multiple search selection
-                                                options={certificationOptions} component={ValidatedDropdown} />
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                </Grid>
-                            </Segment>
-                            <Header className='profileedit-header' block attached='top'>Stripe</Header>
-                            <Segment attached >
-                                <StripeComponent has_stripe_account={user.has_stripe_account} onConnectStripe={this.handleConnectStripeClick} />
-                            </Segment>
-                            {user.has_stripe_account &&
-                                <Header className='profileedit-header' block attached='top'>Availability for Orders</Header>
-                            }
-                            {user.has_stripe_account &&
+                    {currentView === ProfileViews.VIEW &&
+                        <ProfileViewComponent className='profileedit-view-container' user={user} />
+                    }
+                    {currentView === ProfileViews.EDIT &&
+                        <Grid>
+                            <Grid.Column>
+                                <Header className='profileedit-header' block attached='top'>Required</Header>
                                 <Segment attached>
-                                    <div className="profileedit-availability-text">Select the times for when your food is <strong><i>ready</i></strong> for pick up and delivery.
-                                    <p></p>
-                                        <p>Your customers will be able to request orders from you only during the times you select below.
-                                        Remember to consider the time it
-                                    takes you to make food (and to complete delivery if applicable)!</p></div>
-                                    <Calendar
-                                        useModal={false}
-                                        // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
-                                        firstDay={moment('2018-01-01', moment.ISO_8601)}
-                                        startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)}
-                                        endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)}
-                                        scaleUnit={60}
-                                        dayFormat='ddd'
-                                        selectedIntervals={this.state.selectedIntervals}
-                                        onIntervalSelect={this.handleCalendarSelect}
-                                        onEventClick={this.handleCalendarEventRemove}
-                                    />
+                                    <Grid stackable className='profileedit-grid-body' columns='equal'>
+                                        <Grid.Row stretched>
+                                            <Grid.Column computer={3}>First Name</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field name='name' autoComplete='name' component={ValidatedField} type='text' placeholder='Enter your name' />
+                                                <div className='profileedit-input-descriptions'>
+                                                    Your public profile only shows your first name. When you order food, your cook will see your first and last name.
+                                            </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Username</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field name='username' autoComplete='username' component={ValidatedField} type='text' placeholder='Enter your username' />
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Email <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field disabled={!emailEditingEnabled} name='email' autoComplete='email' component={ValidatedField} type='text' placeholder='Enter your email' />
+                                                <div className='profileedit-input-descriptions'>
+                                                    Your email is never displayed publicly. It is only shared when you have a confirmed order request with another Foodcraft user.
+                                            </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Email Notifications</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <div className='profileedit-checkbox'>
+                                                    <Field id='email_notifications' name='email_notifications' component='input' type='checkbox' />
+                                                    <label className='profileedit-input-descriptions' htmlFor='email_notifications'>Check the box to enable email notifications about your orders</label>
+                                                </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Bio</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field name='info' autoComplete='info' component={ValidatedTextArea} rows={2} type='text' placeholder='Tell everyone about yourself' />
+                                                <div className='profileedit-input-descriptions'>
+                                                    Let other people in the Foodcraft community get to know you.
+                                                <div style={{ marginTop: '5px' }}>
+                                                        What are some things you like to do? Or share the 5 foods you can't live without. Do you have a food philosophy? Share your life motto!
+                                                </div>
+                                                </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
                                 </Segment>
-                            }
-                        </Grid.Column>
-                    </Grid>
-                    <Divider hidden />
+                                <Header className='profileedit-header' block attached='top'>Optional</Header>
+                                <Segment attached>
+                                    <Grid stackable className='profileedit-grid-body'>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                            <Grid.Column computer={5}>
+                                                <Field name='phone' autoComplete='phone' component={ValidatedField}
+                                                    type='tel' parse={parsePhone} placeholder="What's your phone number?"
+                                                    onChange={this.handlePhoneChange} />
+                                                <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.</div>
+                                            </Grid.Column>
+                                            <Grid.Column computer={2}>
+                                                <span>{phone_verified ? 'Verified' : 'Not verified'} </span>
+                                            </Grid.Column>
+                                            <Grid.Column computer={3}>
+                                                <Button color='purple' loading={isVerifyingPhone} onClick={this.handleSendCodeClick}>Send Code</Button>
+                                                <Button color='purple' loading={isVerifyingCode} onClick={this.handleVerifyCodeClick}>Verify Code</Button>
+                                            </Grid.Column>
+                                            <Grid.Column computer={3}>
+                                                <Input value={phoneVerificationCode} onChange={this.handleVerificationCodeChange} type='text' maxLength={6} />
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Phone Notifications</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <div className='profileedit-checkbox'>
+                                                    <Field id='phone_notifications' name='phone_notifications' component='input' type='checkbox' />
+                                                    <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>Check the box to enable phone notifications about your orders</label>
+                                                </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Address <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
+                                                <div className='profileedit-input-descriptions'>
+                                                    We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
+                                                <p></p>
+                                                    <p><strong>Address is required for cooks.</strong> This address will be used as your default pick-up location for your orders unless otherwise specified.</p>
+                                                </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column computer={3}>Food Certifications</Grid.Column>
+                                            <Grid.Column computer={13}>
+                                                <Field name='certifications' autoComplete='certifications' placeholder="What are your certifications?"
+                                                    fluid multiple search selection
+                                                    options={certificationOptions} component={ValidatedDropdown} />
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+                                </Segment>
+                                <Header className='profileedit-header' block attached='top'>Stripe</Header>
+                                <Segment attached >
+                                    <StripeComponent has_stripe_account={user.has_stripe_account} onConnectStripe={this.handleConnectStripeClick} />
+                                </Segment>
+                                {user.has_stripe_account &&
+                                    <Header className='profileedit-header' block attached='top'>Availability for Orders</Header>
+                                }
+                                {user.has_stripe_account &&
+                                    <Segment attached>
+                                        <div className="profileedit-availability-text">Select the times for when your food is <strong><i>ready</i></strong> for pick up and delivery.
+                                    <p></p>
+                                            <p>Your customers will be able to request orders from you only during the times you select below.
+                                            Remember to consider the time it
+                                    takes you to make food (and to complete delivery if applicable)!</p></div>
+                                        <Calendar
+                                            useModal={false}
+                                            // using 2018-01-01 to 2018-01-07 as they happen to be Monday to Friday, and datetime objects are needed 
+                                            firstDay={moment('2018-01-01', moment.ISO_8601)}
+                                            startTime={moment('2018-01-01T06:00:00', moment.ISO_8601)}
+                                            endTime={moment('2018-01-07T20:00:00', moment.ISO_8601)}
+                                            scaleUnit={60}
+                                            dayFormat='ddd'
+                                            selectedIntervals={this.state.selectedIntervals}
+                                            onIntervalSelect={this.handleCalendarSelect}
+                                            onEventClick={this.handleCalendarEventRemove}
+                                        />
+                                    </Segment>
+                                }
+                            </Grid.Column>
+                        </Grid>
+                    }
                 </div>
             </div>
         );
     }
+}
+
+const ProfileSideView = ({ currentView, onEditProfile, onViewProfile, children }) => {
+
+    const style = (isActive) => {
+        const props = {
+            fontSize: '1.2em'
+        };
+        if (isActive) {
+            props.textDecoration = 'underline';
+            props.color = Colors.purple;
+            props.fontWeight = 500;
+        }
+        return props;
+    }
+
+    const editStyle = style(currentView === ProfileViews.EDIT);
+    const viewStyle = style(currentView === ProfileViews.VIEW);
+
+    return (
+        <div className='profileedit-side'>
+            <span style={editStyle} className='profileedit-side-link' onClick={onEditProfile}>Edit Profile</span>
+            <span style={viewStyle} className='profileedit-side-link' onClick={onViewProfile}>View Profile</span>
+            {children}
+        </div>
+    );
 }
 
 const parsePhone = (value) => {
@@ -478,6 +485,8 @@ const mapStateToProps = (state) => {
         isLoading: Selectors.isLoading(state),
         isSaving: Selectors.isSaving(state),
         apiError: Selectors.apiError(state),
+        currentView: Selectors.currentView(state),
+        result: Selectors.result(state),
 
         isVerifyingPhone: Selectors.isVerifyingPhone(state),
         isVerifyingCode: Selectors.isVerifyingCode(state),

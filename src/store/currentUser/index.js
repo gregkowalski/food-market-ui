@@ -18,7 +18,16 @@ export const ActionTypes = {
     RECEIVE_ACCEPT_TERMS_SUCCESS: 'RECEIVE_ACCEPT_TERMS_SUCCESS',
     RECEIVE_ACCEPT_TERMS_ERROR: 'RECEIVE_ACCEPT_TERMS_ERROR',
 
-    CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE: 'CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE'
+    CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE: 'CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE',
+
+    PROFILE_EDIT: 'PROFILE_EDIT',
+    PROFILE_VIEW: 'PROFILE_VIEW',
+    PROFILE_CLEAR_RESULT: 'PROFILE_CLEAR_RESULT'
+}
+
+export const ProfileViews = {
+    EDIT: 'EDIT',
+    VIEW: 'VIEW'
 }
 
 function requestCurrentUser() {
@@ -169,6 +178,18 @@ export const Actions = {
         }
     },
 
+    editProfile: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.PROFILE_EDIT });
+        }
+    },
+
+    viewProfile: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.PROFILE_VIEW });
+        }
+    },
+
     changePhoneVerificationCode: (code) => {
         return (dispatch) => {
             dispatch({ type: ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE, code });
@@ -269,6 +290,12 @@ export const Actions = {
                     console.error(error);
                 });
         }
+    },
+
+    clearResult: () => {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.PROFILE_CLEAR_RESULT });
+        }
     }
 }
 
@@ -282,11 +309,15 @@ export const Selectors = {
     isVerifyingPhone: (state) => state.currentUser.isVerifyingPhone,
     isVerifyingCode: (state) => state.currentUser.isVerifyingCode,
     phoneVerificationCode: (state) => state.currentUser.phoneVerificationCode,
+
+    currentView: (state) => state.currentUser.currentView,
+    result: (state) => state.currentUser.result,
 }
 
 const initialState = {
     isLoading: false,
-    isSaving: false
+    isSaving: false,
+    currentView: ProfileViews.EDIT,
 };
 
 export const Reducers = {
@@ -297,28 +328,26 @@ export const Reducers = {
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    apiError: null
+                    apiError: undefined
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_SUCCESS:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    user: action.user
+                    user: action.user,
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_ERROR:
                 return Object.assign({}, state, {
                     isLoading: false,
                     apiError: action.apiError,
-                    apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST
+                    apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST,
                 });
-
-
 
             case ActionTypes.CURRENT_USER_LOGOUT:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    user: null
+                    user: undefined
                 });
 
 
@@ -326,27 +355,32 @@ export const Reducers = {
             case ActionTypes.REQUEST_SAVE_USER:
                 return Object.assign({}, state, {
                     isSaving: true,
-                    apiError: null
+                    apiError: undefined
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_SUCCESS:
                 return Object.assign({}, state, {
                     isSaving: false,
-                    user: action.user
+                    user: action.user,
+                    result: {
+                        code: ErrorCodes.SUCCESS
+                    }
                 });
 
             case ActionTypes.RECEIVE_SAVE_USER_ERROR:
                 return Object.assign({}, state, {
                     isSaving: false,
                     apiError: action.apiError,
+                    result: {
+                        code: ErrorCodes.ERROR,
+                        message: JSON.stringify(action.apiError)
+                    }
                 });
-
-
 
             case ActionTypes.REQUEST_ACCEPT_TERMS:
                 return Object.assign({}, state, {
                     isSaving: true,
-                    apiError: null
+                    apiError: undefined
                 });
 
             case ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS:
@@ -365,6 +399,21 @@ export const Reducers = {
             case ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE:
                 return Object.assign({}, state, {
                     phoneVerificationCode: action.code,
+                });
+
+            case ActionTypes.PROFILE_EDIT:
+                return Object.assign({}, state, {
+                    currentView: ProfileViews.EDIT,
+                });
+
+            case ActionTypes.PROFILE_VIEW:
+                return Object.assign({}, state, {
+                    currentView: ProfileViews.VIEW,
+                });
+
+            case ActionTypes.PROFILE_CLEAR_RESULT:
+                return Object.assign({}, state, {
+                    result: undefined
                 });
 
             default:

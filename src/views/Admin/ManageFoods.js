@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Button, List, Image, Modal, Icon, Header, Divider, Input, Message, Dropdown } from 'semantic-ui-react'
+import { Button, List, Image, Modal, Icon, Header, Divider, Input, Dropdown } from 'semantic-ui-react'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
-import ErrorCodes from '../../services/ErrorCodes'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
+import Toast from '../../components/Toast'
 
 class ManageFoods extends React.Component {
 
@@ -154,29 +154,6 @@ class AddFoodModalComponent extends React.Component {
 }
 
 const AddFoodModal = connect(AddFoodModalComponent.mapStateToProps, AddFoodModalComponent.mapDispatchToProps)(AddFoodModalComponent);
-
-class Toast extends React.Component {
-
-    style = {
-        cursor: 'pointer'
-    }
-
-    render() {
-        const { result, onDismiss, successHeader, successMessage, errorMessage, errorHeader } = this.props;
-        if (!result)
-            return null;
-
-        if (result.code === ErrorCodes.ERROR) {
-            return (<Message error style={this.style} header={errorHeader} content={errorMessage || result.message} onClick={onDismiss} />);
-        }
-
-        if (result.code === ErrorCodes.SUCCESS) {
-            return (<Message success style={this.style} header={successHeader} content={successMessage || result.message} onClick={onDismiss} />);
-        }
-
-        return null;
-    }
-}
 
 class FoodListItemComponent extends React.Component {
 
