@@ -46,7 +46,7 @@ class AppFooter extends React.Component {
                 <Divider id='appfooter-divider'/>
                 <div className='appfooter-logo'>
                     <Image src={Constants.AppLogo} />
-                    <div className='appfooter-name'>&copy; 2018 {Constants.AppName}, Inc.</div>
+                    <div className='appfooter-name'>&copy; 2019 {Constants.AppName}, Inc.</div>
                 </div>
             </div>
         );

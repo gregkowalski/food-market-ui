@@ -1,7 +1,6 @@
 import * as ActionTypes from './actionTypes'
 import ApiClient from '../../services/ApiClient'
 import ApiObjectMapper from '../../services/ApiObjectMapper'
-import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import Util from '../../services/Util'
 import { OrderStatus } from '../../Enums'
 import { updateOrder } from '../orderHelper'
@@ -60,8 +59,7 @@ export const Actions = {
 
             dispatch(requestOrders());
 
-            const user_id = CognitoUtil.getLoggedInUserId();
-            return ApiClient.getOrdersByBuyerId(user_id)
+            return ApiClient.getOrdersByBuyerId()
                 .then(
                     response => {
                         const orders = ApiObjectMapper.mapOrders(Util.toArray(response.data));

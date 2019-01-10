@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
-import jwtDecode from 'jwt-decode'
 import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
 import ApiClient from '../ApiClient'
@@ -26,16 +25,7 @@ class CognitoCallback extends React.Component {
         var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         auth.userhandler = {
             onSuccess: session => {
-                console.log('Login success');
-                const jwtToken = session.getIdToken().getJwtToken();
-                const jwt = jwtDecode(jwtToken);
-                let user = {
-                    user_id: jwt.sub,
-                    idp_name: jwt['custom:idp:name'],
-                    email: jwt.email,
-                    email_verified: CognitoUtil.isEmailVerified(jwt)
-                };
-                ApiClient.updateUser(user)
+                ApiClient.verifyUser()
                     .then(() => {
                         let lastPath = CognitoUtil.getLastPath();
                         if (!lastPath) {
@@ -50,10 +40,10 @@ class CognitoCallback extends React.Component {
                             this.setState({ errorCode: Errors.INVALID_PATH });
                         }
                     })
-                    .catch(err => {
-                        console.error(err);
-                        if (err.response && err.response.data) {
-                            this.setState({ errorCode: err.response.data.code });
+                    .catch(ex => {
+                        console.error(ex);
+                        if (ex.response && ex.response.data) {
+                            this.setState({ errorCode: ex.response.data.code });
                         }
                     });
             },
@@ -85,9 +75,7 @@ class CognitoCallback extends React.Component {
             return;
         }
 
-        setTimeout(() => {
-            CognitoUtil.logOut()
-        }, 5000);
+        setTimeout(() => { CognitoUtil.logOut() }, 5000);
         this.signingOut = true;
     }
 
@@ -130,6 +118,5 @@ class CognitoCallback extends React.Component {
         );
     }
 }
-
 
 export default withRouter(CognitoCallback);

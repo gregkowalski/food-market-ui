@@ -1,7 +1,20 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
-import * as ActionTypes from './actionTypes'
 import ErrorCodes from '../../services/ErrorCodes'
+
+export const ActionTypes = {
+    REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
+    RECEIVE_CURRENT_USER_SUCCESS: 'RECEIVE_CURRENT_USER_SUCCESS',
+    RECEIVE_CURRENT_USER_ERROR: 'RECEIVE_CURRENT_USER_ERROR',
+
+    CURRENT_USER_LOGOUT: 'CURRENT_USER_LOGOUT',
+    REQUEST_SAVE_USER: 'REQUEST_SAVE_USER',
+    RECEIVE_SAVE_USER_SUCCESS: 'RECEIVE_SAVE_USER_SUCCESS',
+    RECEIVE_SAVE_USER_ERROR: 'RECEIVE_SAVE_USER_ERROR',
+    REQUEST_ACCEPT_TERMS: 'REQUEST_ACCEPT_TERMS',
+    RECEIVE_ACCEPT_TERMS_SUCCESS: 'RECEIVE_ACCEPT_TERMS_SUCCESS',
+    RECEIVE_ACCEPT_TERMS_ERROR: 'RECEIVE_ACCEPT_TERMS_ERROR',
+}
 
 function requestCurrentUser() {
     return {
@@ -101,7 +114,7 @@ export const Actions = {
 
             dispatch(requestCurrentUser());
 
-            return ApiClient.getCurrentUser()
+            return ApiClient.getUser()
                 .then(
                     response => {
                         const user = response.data;
@@ -119,7 +132,7 @@ export const Actions = {
 
             dispatch(requestSaveUser());
 
-            return ApiClient.saveUserProfile(user)
+            return ApiClient.saveUser(user)
                 .then(
                     response => {
                         dispatch(receiveSaveUserSuccess(user));
@@ -132,12 +145,12 @@ export const Actions = {
         };
     },
 
-    acceptTerms: (userId) => {
+    acceptTerms: () => {
         return (dispatch, getState) => {
 
             dispatch(requestAcceptTerms());
 
-            return ApiClient.acceptTerms(userId)
+            return ApiClient.acceptTerms()
                 .then(
                     response => {
                         const user = Selectors.currentUser(getState());

@@ -37,19 +37,7 @@ class ApiClient {
             { headers: this.jsonHttpHeader() }, body);
     }
 
-    getCurrentUser() {
-        const userId = CognitoUtil.getLoggedInUserId();
-        if (!userId) {
-            throw new Error('No user is currently logged in');
-        }
-        return this.getUser(userId);
-    }
-
-    getUser(userId) {
-        return this.invokeApi(`/users/${userId}`, 'GET');
-    }
-
-    getUsers(userIds) {
+    getPublicUsers(userIds) {
         return this.invokeApi(`/public/users?user_ids=${userIds.join(',')}`, 'GET');
     }
 
@@ -57,28 +45,24 @@ class ApiClient {
         return this.invokeApi(`/public/users/${userId}`, 'GET');
     }
 
-    loadUserProfile(userId) {
-        return this.invokeApi(`/private/users/${userId}`, 'GET');
+    getUser() {
+        return this.invokeApi(`/users/me`, 'GET');
     }
 
-    saveUserProfile(user) {
-        return this.invokeApi(`/private/users/${user.user_id}`, 'PATCH', user);
+    saveUser(user) {
+        return this.invokeApi(`/users/me`, 'PATCH', user);
     }
 
-    updateUser(user) {
-        return this.invokeApi('/users', 'PUT', user);
+    verifyUser() {
+        return this.invokeApi('/users/me/verify', 'POST');
     }
 
-    acceptTerms(userId) {
-        return this.invokeApi(`/users/${userId}/acceptTerms`, 'POST');
+    acceptTerms() {
+        return this.invokeApi(`/users/me/acceptTerms`, 'POST');
     }
 
     connectStripeAccount(code) {
-        const userId = CognitoUtil.getLoggedInUserId();
-        if (!userId) {
-            throw new Error('No user is currently logged in');
-        }
-        return this.invokeApi(`/users/${userId}/connectstripe`, 'POST', { code });
+        return this.invokeApi(`/users/me/connectstripe`, 'POST', { code });
     }
 
     getFoods() {
@@ -153,12 +137,12 @@ class ApiClient {
         return this.invokeApi('/orders', 'POST', order);
     }
 
-    getOrdersByBuyerId(buyer_user_id) {
-        return this.invokeApi(`/orders?buyer_user_id=${buyer_user_id}`, 'GET');
+    getOrdersByBuyerId() {
+        return this.invokeApi(`/orders?buyer_user_id=me`, 'GET');
     }
 
-    getOrdersByCookId(cook_user_id) {
-        return this.invokeApi(`/orders?cook_user_id=${cook_user_id}`, 'GET');
+    getOrdersByCookId() {
+        return this.invokeApi(`/orders?cook_user_id=me`, 'GET');
     }
 
     acceptOrder(order, reason) {

@@ -42,7 +42,7 @@ class TermsAccept extends React.Component {
     }
 
     handleAccept = () => {
-        this.props.actions.acceptTerms(this.props.user.user_id);
+        this.props.actions.acceptTerms();
     }
 
     handleDecline = () => {

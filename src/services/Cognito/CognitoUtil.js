@@ -22,14 +22,6 @@ class CognitoUtil {
         return this.getCognitoAuthData().TokenScopesArray.join('+');
     }
 
-    getLoggedInUserId() {
-        const jwt = this.getLoggedInUserJwt();
-        if (!jwt) {
-            return null;
-        }
-        return jwt.sub;
-    }
-
     isAdmin() {
         const jwt = this.getLoggedInUserJwt();
         if (!jwt) {
