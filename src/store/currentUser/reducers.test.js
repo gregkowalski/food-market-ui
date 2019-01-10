@@ -1,6 +1,5 @@
 import { Reducer } from 'redux-testkit'
-import { Reducers } from './index'
-import * as ActionTypes from './actionTypes'
+import { Reducers, ActionTypes } from './index'
 import ErrorCodes from '../../services/ErrorCodes'
 
 describe('store/currentUser/Reducers', () => {
