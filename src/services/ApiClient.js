@@ -65,6 +65,12 @@ class ApiClient {
         return this.invokeApi(`/users/me/connectstripe`, 'POST', { code });
     }
 
+    confirmUser(client_id, username, confirmation_code) {
+        const headers = { 'Content-Type': 'application/json' };
+        const body = { client_id, username, confirmation_code };
+        return this.apiGatewayClient.invokeApi(null, `/confirmUser`, 'POST', headers, body);
+    }
+
     getFoods() {
         return this.invokeApi(`/foods`, 'GET');
     }

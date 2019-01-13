@@ -38,7 +38,7 @@ const ManageFoods = lazy(() => import('./views/Admin/ManageFoods'));
 const ManageFood = lazy(() => import('./views/Admin/ManageFood'));
 
 const InvitesCallback = lazy(() => import('./views/Public/InvitesCallback'));
-const ConfirmEmail = lazy(() => import('./views/Public/ConfirmEmail'));
+const ConfirmUser = lazy(() => import('./views/Public/ConfirmUser'));
 
 const FoodDetail = lazy(() => import('./views/FoodDetail'));
 const Order = lazy(() => import('./views/Order'));
@@ -100,7 +100,7 @@ render(
                                 <Route exact path='/stripeCallback' component={publicPage(StripeCallback)} />
                                 <Route exact path={Url.termsAccept()} component={publicPage(TermsAccept)} />
                                 <Route exact path={'/invites/:invite_id'} component={publicPage(InvitesCallback)} />
-                                <Route exact path={Url.confirmEmail()} component={publicPage(ConfirmEmail)} />
+                                <Route exact path={Url.confirmUser()} component={publicPage(ConfirmUser)} />
 
                                 <Route exact path={Url.admin.inviteUser()} component={adminPage(InviteUser)} />
                                 <Route exact path={Url.admin.manageFoods()} component={adminPage(ManageFoods)} />

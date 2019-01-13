@@ -26,8 +26,8 @@ class Url {
         return '/';
     }
 
-    confirmEmail() {
-        return '/confirm'
+    confirmUser() {
+        return '/confirmUser'
     }
 
     search(params) {
