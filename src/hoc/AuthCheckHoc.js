@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import { Actions, Selectors } from '../store/currentUser'
-import ErrorCodes from '../services/ErrorCodes';
 import Url from '../services/Url'
 
 export default function (ComposedClass, options = {}) {
@@ -28,14 +27,6 @@ export default function (ComposedClass, options = {}) {
         }
 
         componentWillReceiveProps(nextProps) {
-            const { apiErrorCode } = nextProps;
-            if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
-                CognitoUtil.setLastPath(window.location.pathname);
-                CognitoUtil.logOut();
-                CognitoUtil.redirectToLoginIfNoSession();
-                return;
-            }
-
             if (!this.props.user && nextProps.user && !nextProps.user.terms_accepted && !options.skipTermsAccepted) {
                 Url.open(Url.termsAccept());
                 return;
@@ -47,11 +38,7 @@ export default function (ComposedClass, options = {}) {
                 return null;
             }
 
-            const { apiErrorCode, user, ...props } = this.props;
-            if (apiErrorCode === ErrorCodes.USER_DOES_NOT_EXIST) {
-                return null;
-            }
-
+            const { user, ...props } = this.props;
             if (!user || (!user.terms_accepted && !options.skipTermsAccepted)) {
                 return null;
             }
@@ -62,7 +49,6 @@ export default function (ComposedClass, options = {}) {
 
     const mapStateToProps = (state) => {
         return {
-            apiErrorCode: Selectors.apiErrorCode(state),
             user: Selectors.currentUser(state)
         };
     };

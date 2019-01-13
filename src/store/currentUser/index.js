@@ -1,6 +1,5 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
-import ErrorCodes from '../../services/ErrorCodes'
 
 export const ActionTypes = {
     REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
@@ -169,7 +168,6 @@ export const Selectors = {
     currentUser: (state) => state.currentUser.user,
     isLoading: (state) => state.currentUser.isLoading,
     isSaving: (state) => state.currentUser.isSaving,
-    apiErrorCode: (state) => state.currentUser.apiErrorCode,
     apiError: (state) => state.currentUser.apiError,
     termsAccepted: (state) => state.currentUser.termsAccepted,
 }
@@ -200,7 +198,6 @@ export const Reducers = {
                 return Object.assign({}, state, {
                     isLoading: false,
                     apiError: action.apiError,
-                    apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST
                 });
 
 

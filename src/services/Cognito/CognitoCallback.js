@@ -3,8 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import CognitoUtil from './CognitoUtil'
 import Util from '../Util'
-import ApiClient from '../ApiClient'
-import Config from '../../Config'
 import ErrorCodes from '../ErrorCodes'
 import LoadingHeader from '../../components/LoadingHeader'
 import Url from '../../services/Url'
@@ -22,51 +20,49 @@ class CognitoCallback extends React.Component {
     signingOut = false;
 
     componentWillMount() {
-        var auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
-        auth.userhandler = {
-            onSuccess: session => {
-                ApiClient.verifyUser()
-                    .then(() => {
-                        let lastPath = CognitoUtil.getLastPath();
-                        if (!lastPath) {
-                            lastPath = Url.home();
-                        }
+        const query = Util.parseQueryString(window.location);
+        if (!query.state) {
+            this.signOut();
+            console.error('SECURITY ALERT: CSRF state parameter is missing');
+            this.setState({ errorCode: Errors.CSRF_STATE_EMPTY });
+            return;
+        }
 
-                        if (lastPath.length > 0 && lastPath[0] === '/') {
-                            this.props.history.push(lastPath);
-                        }
-                        else {
-                            console.error('Invalid redirect path: ' + lastPath);
-                            this.setState({ errorCode: Errors.INVALID_PATH });
-                        }
-                    })
-                    .catch(ex => {
-                        console.error(ex);
-                        if (ex.response && ex.response.data) {
-                            this.setState({ errorCode: ex.response.data.code });
-                        }
-                    });
+        const storedState = CognitoUtil.getCsrfState();
+        if (query.state !== storedState) {
+            this.signOut();
+            console.error('SECURITY ALERT: CSRF state parameter is invalid');
+            this.setState({ errorCode: Errors.CSRF_STATE_INVALID });
+            return;
+        }
+
+        if (query.error) {
+            this.signOut();
+            this.setState({ errorCode: Errors.LOGIN_FAILED, errorMessage: query.error_description });
+            return;
+        }
+
+        const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
+        auth.userhandler = {
+            onSuccess: () => {
+                let lastPath = CognitoUtil.getLastPath();
+                if (!lastPath) {
+                    lastPath = Url.home();
+                }
+
+                if (lastPath.length > 0 && lastPath[0] === '/') {
+                    this.props.history.push(lastPath);
+                }
+                else {
+                    console.error('Invalid redirect path: ' + lastPath);
+                    this.setState({ errorCode: Errors.INVALID_PATH });
+                }
             },
             onFailure: err => {
                 console.error('Login failed: ' + err);
                 this.setState({ errorCode: Errors.LOGIN_FAILED });
             }
         };
-
-        let query = Util.parseQueryString(window.location);
-        if (!query.state) {
-            this.signOut();
-            console.error('SECURITY ALERT: CSRF state parameter is missing');
-            this.setState({ errorCode: Errors.CSRF_STATE_EMPTY });
-        }
-
-        let storedState = CognitoUtil.getCsrfState();
-        if (query.state !== storedState) {
-            this.signOut();
-            console.error('SECURITY ALERT: CSRF state parameter is invalid');
-            this.setState({ errorCode: Errors.CSRF_STATE_INVALID });
-        }
-
         auth.parseCognitoWebResponse(window.location.href);
     }
 
@@ -84,9 +80,6 @@ class CognitoCallback extends React.Component {
             case Errors.INVALID_PATH:
                 return 'Invalid landing page';
 
-            case ErrorCodes.USER_DOES_NOT_EXIST:
-                return `Foodcraft is a private, invite-only network at this time.  Please contact ${Config.Foodcraft.SupportEmail} for more information`;
-
             case ErrorCodes.LOGIN_FAILED:
             case ErrorCodes.CSRF_STATE_EMPTY:
             case ErrorCodes.CSRF_STATE_INVALID:
@@ -100,9 +93,12 @@ class CognitoCallback extends React.Component {
     render() {
         let content;
 
-        const { errorCode } = this.state;
+        const { errorCode, errorMessage } = this.state;
         if (errorCode) {
-            const message = this.getErrorMessage(errorCode);
+            let message = errorMessage;
+            if (!message) {
+                message = this.getErrorMessage(errorCode);
+            }
             this.signOut();
             content = (
                 <div style={{ margin: 20 }}>

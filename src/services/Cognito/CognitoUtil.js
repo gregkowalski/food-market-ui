@@ -84,6 +84,9 @@ class CognitoUtil {
         if (session && session.isValid()) {
             auth.signOut();
         }
+        else {
+            this.redirectToLogin();
+        }
     }
 
     redirectToLoginIfNoSession() {

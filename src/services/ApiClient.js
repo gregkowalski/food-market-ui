@@ -53,10 +53,6 @@ class ApiClient {
         return this.invokeApi(`/users/me`, 'PATCH', user);
     }
 
-    verifyUser() {
-        return this.invokeApi('/users/me/verify', 'POST');
-    }
-
     acceptTerms() {
         return this.invokeApi(`/users/me/acceptTerms`, 'POST');
     }
