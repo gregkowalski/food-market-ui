@@ -33,14 +33,6 @@ class CognitoUtil {
         return this.getCognitoAuthData().TokenScopesArray.join('+');
     }
 
-    getLoggedInUserId() {
-        const jwt = this.getLoggedInUserJwt();
-        if (!jwt) {
-            return null;
-        }
-        return jwt.sub;
-    }
-
     isAdmin() {
         const jwt = this.getLoggedInUserJwt();
         if (!jwt) {
@@ -102,6 +94,9 @@ class CognitoUtil {
         const session = auth.getCachedSession();
         if (session && session.isValid()) {
             auth.signOut();
+        }
+        else {
+            this.redirectToLogin();
         }
     }
 

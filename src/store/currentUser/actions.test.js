@@ -1,6 +1,5 @@
 import { Thunk } from 'redux-testkit'
-import { Actions } from './index'
-import * as ActionTypes from './actionTypes'
+import { Actions, ActionTypes } from './index'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import ApiClient from '../../services/ApiClient'
 jest.mock('../../services/Cognito/CognitoUtil')
@@ -25,7 +24,7 @@ describe('store/currentUser/Actions', () => {
 
     it('should get current user from API', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
-        ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
+        ApiClient.getUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
         const state = {
             currentUser: {
                 isLoading: false
@@ -42,7 +41,7 @@ describe('store/currentUser/Actions', () => {
 
     it('should return error when get current user from API fails', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
-        ApiClient.getCurrentUser.mockImplementation(() => Promise.reject('crapped out'));
+        ApiClient.getUser.mockImplementation(() => Promise.reject('crapped out'));
         const state = {
             currentUser: {
                 isLoading: false

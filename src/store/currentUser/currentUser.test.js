@@ -17,7 +17,7 @@ describe('store/currentUser integration', () => {
 
     it('should load current user', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
-        ApiClient.getCurrentUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
+        ApiClient.getUser.mockImplementation(() => Promise.resolve({ data: { email: 'xxx' } }));
         await store.dispatch(Actions.loadCurrentUser());
         expect(Selectors.currentUser(store.getState())).toEqual({ email: 'xxx' });
         expect(Selectors.isLoading(store.getState())).toEqual(false);

@@ -151,7 +151,7 @@ export const Actions = {
                         const foods = ApiObjectMapper.mapFoods(response.data);
                         const cook_ids = Util.distinct(foods.map(x => x.user_id));
 
-                        return ApiClient.getUsers(cook_ids)
+                        return ApiClient.getPublicUsers(cook_ids)
                             .then(
                                 response => {
                                     const cooks = response.data;

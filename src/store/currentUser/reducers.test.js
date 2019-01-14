@@ -1,6 +1,5 @@
 import { Reducer } from 'redux-testkit'
 import { Reducers, ActionTypes } from './index'
-import ErrorCodes from '../../services/ErrorCodes'
 
 describe('store/currentUser/Reducers', () => {
 
@@ -55,7 +54,7 @@ describe('store/currentUser/Reducers', () => {
         const apiError = {};
         Reducer(Reducers.currentUser)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
-            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST });
+            .toChangeInState({ isLoading: false, apiError });
     });
 
     it('should not modify state when receiveing current user with error', () => {
@@ -64,7 +63,7 @@ describe('store/currentUser/Reducers', () => {
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
-            .toChangeInState({ isLoading: false, apiError, apiErrorCode: ErrorCodes.USER_DOES_NOT_EXIST });
+            .toChangeInState({ isLoading: false, apiError });
         expect(state.isLoading).toEqual(true);
     });
 
