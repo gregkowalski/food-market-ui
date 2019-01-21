@@ -103,7 +103,7 @@ export const Reducers = {
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    apiError: undefined
+                    apiError: null
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_SUCCESS:
@@ -121,13 +121,13 @@ export const Reducers = {
             case ActionTypes.CURRENT_USER_LOGOUT:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    user: undefined
+                    user: null
                 });
 
             case ActionTypes.REQUEST_ACCEPT_TERMS:
                 return Object.assign({}, state, {
                     isSaving: true,
-                    apiError: undefined
+                    apiError: null
                 });
 
             case ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS:
