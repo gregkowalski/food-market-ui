@@ -12,6 +12,13 @@ body {
     }
 }
 
+@media all and (min-width: 992px) {
+    .Toastify__toast-container--top-center {
+        width: 600px;
+        margin-left: -300px;
+    }
+}
+
 .toast-body {
     padding: 1em;
     font-size: 1.3em;

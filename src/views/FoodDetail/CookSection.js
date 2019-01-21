@@ -20,7 +20,7 @@ const CookSection = ({ cook }) => {
             </div>
             <div className='detail-cook-image'>
                 <a target='_blank' rel='noopener noreferrer' href={Url.profileView(cook.user_id)}>
-                    <Image size='small' circular src={cook.image} />
+                    <Image size='small' circular src={cook.image || '/assets/images/new-food.png'} />
                 </a>
             </div>
             <div className='detail-cook-text'>
