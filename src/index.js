@@ -88,6 +88,7 @@ render(
                     <ToastContainer
                         position={toast.POSITION.TOP_CENTER}
                         hideProgressBar={true}
+                        autoClose={2500}
                         draggablePercent={35}
                         bodyClassName='toast-body' />
                     <Router history={history}>

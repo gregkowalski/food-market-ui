@@ -23,7 +23,7 @@ export const TagLines = [
     'handcrafted to taste like home.',
     'homemade + local',
     'this is...awesomesauce!',
-    'because being hangry was so 2017.',
+    'because being hangry was so 2018.',
     'easy peasy, lemon squeezy!',
     'so hot right now.',
     'making good food taste better.',

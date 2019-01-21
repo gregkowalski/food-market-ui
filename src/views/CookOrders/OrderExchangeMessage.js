@@ -7,10 +7,10 @@ const OrderExchangeMethod = ({ order }) => {
     const { pickup, buyer, handoff_start_date, handoff_end_date } = order;
 
     let deliveryOptionLabel = (<div><span className='orderexchangemessage-delivery'>delivery</span> order</div>);
-    let deliveryInstruction = (<div>You are delivering this order to {Util.firstNonEmptyValue(buyer.name, buyer.username)} </div>);
+    let deliveryInstruction = (<div>You are delivering this order to {Util.firstNonEmptyValue(buyer.username, buyer.name)} </div>);
     if (pickup) {
         deliveryOptionLabel = (<div>order <span className='orderexchangemessage-pickup'>pickup</span></div>);
-        deliveryInstruction = (<div> {Util.firstNonEmptyValue(buyer.name, buyer.username)} is picking up this order from you </div>);
+        deliveryInstruction = (<div> {Util.firstNonEmptyValue(buyer.username, buyer.name)} is picking up this order from you </div>);
     }
 
     const startDate = Util.toCurrentTimezoneMoment(handoff_start_date).format('h A');

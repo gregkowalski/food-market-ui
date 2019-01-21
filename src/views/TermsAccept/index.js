@@ -62,7 +62,7 @@ class TermsAccept extends React.Component {
             <div className='termsaccept'>
                 <AppHeader fixed />
                 <div className='termsaccept-header'>Foodcraft Terms of Use and Privacy Policy</div>
-                <Checkbox checked={checkedTerms} onChange={this.changeCheckbox} label={<label>Check here to indicate that you have read and agree to the <a target='_blank' href='/terms'>Foodcraft Terms of Use</a> and <a target='_blank' href='/privacy'>Privacy Policy</a></label>} />
+                <Checkbox checked={checkedTerms} onChange={this.changeCheckbox} label={<label>Check here to indicate that you have read and agree to the <a target='_blank' rel='noopener noreferrer' href='/terms'>Foodcraft Terms of Use</a> and <a target='_blank' rel='noopener noreferrer' href='/privacy'>Privacy Policy</a></label>} />
                 <div className='termsaccept-button'>
                     <Button id='termsaccept-button-cancel' onClick={this.handleDecline}>Decline</Button>
                     <Button id='termsaccept-button-accept' disabled={!checkedTerms} loading={isSaving} onClick={this.handleAccept}>Accept</Button>

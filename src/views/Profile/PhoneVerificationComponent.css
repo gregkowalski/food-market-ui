@@ -1,0 +1,81 @@
+.phoneverify.ui.attached.segment {
+    margin-top: 10px;
+}
+
+.phoneverify-enter-number>div {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.phoneverify-enter-number>.ui.input {
+    width: 155px;
+    font-size: 1.1em;
+}
+
+.phoneverify-enter-number>.ui.button {
+    margin-left: 20px;
+}
+
+@media all and (max-width: 767px) {
+    .phoneverify-enter-number {
+        text-align: center;
+    }
+}
+
+.phoneverify-code-message>div {
+    display: inline-block;
+    font-weight: 500;
+    color: #b61095;
+}
+
+.phoneverify-code-verify {
+    display: flex;
+    margin-top: 20px;
+}
+
+.phoneverify-code-verify .ui.input {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.phoneverify-code-verify .ui.button {
+    width: 120px;
+}
+
+.phoneverify-resend {
+    margin-top: 20px;
+}
+
+.phoneverify-resend span {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.phoneverify-resend .ui.inline.loader {
+    margin-left: 5px;
+}
+
+@media all and (max-width: 767px) {
+    .phoneverify-code {
+        text-align: center;
+    }
+    .phoneverify-code-message>div {
+        display: block;
+        margin-top: 5px;
+    }
+    .phoneverify-code-verify {
+        display: block;
+    }
+    .phoneverify-code-verify .ui.input {
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+    .phoneverify-code-verify .ui.input>input {
+        padding-left: 2.3em;
+        padding-right: 2.3em;
+    }
+    .phoneverify-code-verify .ui.button {
+        margin: 0;
+    }
+}

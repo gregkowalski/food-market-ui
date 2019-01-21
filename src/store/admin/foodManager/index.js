@@ -352,7 +352,7 @@ export const Actions = {
 
             const cooks = Selectors.cooks(getState());
             const cook = cooks.find(x => x.user_id === cook_id);
-            food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
+            food.cook_name = Util.firstNonEmptyValue(cook.username, cook.name, cook.email);
             food.cook = cook;
 
             dispatch({ type: ActionTypes.FOODMANAGER_ADD_FOOD_REQUEST });
@@ -446,7 +446,7 @@ export const Reducers = {
                         const food = Object.assign({}, action.foods[i]);
                         const cook = cooks[food.user_id];
                         food.cook = cook;
-                        food.cook_name = Util.firstNonEmptyValue(cook.name, cook.username, cook.email);
+                        food.cook_name = Util.firstNonEmptyValue(cook.username, cook.name, cook.email);
                         foods.push(food);
                     }
 
@@ -454,7 +454,7 @@ export const Reducers = {
                         return {
                             key: cook.user_id,
                             value: cook.user_id,
-                            text: Util.firstNonEmptyValue(cook.name, cook.username, cook.email)
+                            text: Util.firstNonEmptyValue(cook.username, cook.name, cook.email)
                         };
                     });
 

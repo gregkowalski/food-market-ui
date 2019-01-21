@@ -18,7 +18,7 @@ const Privacy = () => {
                     <h5>1.1.1 Information that is necessary for the use of the Foodcraft Platform.</h5>
                     <p>We ask for and collect the following personal information about you when you use the Foodcraft Platform. This information is necessary for the adequate performance of the contract between you and us and to allow us to comply with our legal obligations. Without it, we may not be able to provide you with all the requested services.</p>
                     <ul>
-                        <li><strong>Account Information.</strong> When you sign up for an Foodcraft Account, we require certain information such as your first name, last name, email address, and date of birth.</li>
+                        <li><strong>Account Information.</strong> When you sign up for an Foodcraft Account, we may require certain information such as your first name, last name, email address, and date of birth.</li>
                         <li><strong>Profile and Listing Information.</strong> To use certain features of the Foodcraft Platform (such as order or creating a Listing), we may ask you to provide additional information, which may include your address, phone number, and a profile picture.</li>
                         <li><strong>Communications with Foodcraft and other Members.</strong> When you communicate with Foodcraft or use the Foodcraft Platform to communicate with other Members, we collect information about your communication and any information you choose to provide.</li>
                     </ul>

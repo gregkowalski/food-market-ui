@@ -1,5 +1,5 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth'
-import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
+import { CognitoUserPool, CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../../Config'
@@ -175,6 +175,72 @@ class CognitoUtil {
     getCsrfState() {
         let key = this.getStorageKey('cognito-csrf-state')
         return window.sessionStorage.getItem(key);
+    }
+
+    verifyPhoneVerificationCode(code) {
+        return new Promise((resolve, reject) => {
+            const cognitoUser = this.getCognitoUser();
+            cognitoUser.getSession((err, session) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                cognitoUser.verifyAttribute('phone_number', code,
+                    {
+                        onSuccess: (success) => {
+                            resolve(success);
+                        },
+                        onFailure: (error) => {
+                            reject(error);
+                        }
+                    });
+            });
+        });
+    }
+
+    sendPhoneVerificationCode(phone) {
+
+        if (!this.isLoggedIn()) {
+            this.redirectToLogin();
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            const cognitoUser = this.getCognitoUser();
+            cognitoUser.getSession((err, session) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                phone = phone.replace(/ /g, '');
+                const attributes = [
+                    new CognitoUserAttribute({
+                        Name: 'phone_number',
+                        Value: phone
+                    })
+                ];
+                cognitoUser.updateAttributes(attributes, (err, result) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    cognitoUser.getAttributeVerificationCode('phone_number',
+                        {
+                            onSuccess: () => {
+                            },
+                            onFailure: (error) => {
+                                reject(error);
+                            },
+                            inputVerificationCode: (data) => {
+                                resolve(data);
+                            }
+                        });
+                });
+            })
+        });
     }
 }
 export default new CognitoUtil();

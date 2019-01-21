@@ -1,0 +1,22 @@
+.detail-cook-joindate {
+    color: #b61095;
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.detail-cook-image {
+    width: 150px;
+}
+
+.detail-cook-text {
+    margin-top: 15px;
+    font-size: 1.3em;
+    line-height: 22px;
+}
+
+.detail-cook-certs {
+    padding-top: 15px;
+    font-size: 1.3em;
+}

@@ -1,7 +1,14 @@
 .profileedit-main {
     width: 80%;
     margin-top: 75px;
-    margin-left: 15%;
+    margin-left: 17%;
+}
+
+@media all and (min-width: 1198px) {
+    .profileedit-main {
+        width: 70%;
+        margin-left: 20%;
+    }
 }
 
 .profileedit-loading {
@@ -25,6 +32,10 @@
     padding: 8px 0px;
     font-weight: 500;
     min-width: 118px;
+}
+
+.profileedit-grid-body>.row>.column>label {
+    font-weight: 500;
 }
 
 .profileedit-grid-body.grid {
@@ -94,7 +105,16 @@
     padding-bottom: 12px;
 }
 
-@media all and (max-width: 1036px) {
+.profileedit-phone {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profileedit-phone .ui.input {
+    width: 65%;
+}
+
+@media all and (max-width: 992px) {
     .profileedit-main {
         width: 90%;
         margin: 130px auto;

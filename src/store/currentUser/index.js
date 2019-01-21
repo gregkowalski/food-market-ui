@@ -1,8 +1,6 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
-import ErrorCodes from '../../services/ErrorCodes'
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js'
-import { toast } from 'react-toastify'
+import { ActionTypes as ProfileActionTypes } from '../profile'
 
 export const ActionTypes = {
     REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
@@ -10,44 +8,10 @@ export const ActionTypes = {
     RECEIVE_CURRENT_USER_ERROR: 'RECEIVE_CURRENT_USER_ERROR',
 
     CURRENT_USER_LOGOUT: 'CURRENT_USER_LOGOUT',
-    REQUEST_SAVE_USER: 'REQUEST_SAVE_USER',
-    RECEIVE_SAVE_USER_SUCCESS: 'RECEIVE_SAVE_USER_SUCCESS',
-    RECEIVE_SAVE_USER_ERROR: 'RECEIVE_SAVE_USER_ERROR',
+
     REQUEST_ACCEPT_TERMS: 'REQUEST_ACCEPT_TERMS',
     RECEIVE_ACCEPT_TERMS_SUCCESS: 'RECEIVE_ACCEPT_TERMS_SUCCESS',
     RECEIVE_ACCEPT_TERMS_ERROR: 'RECEIVE_ACCEPT_TERMS_ERROR',
-}
-
-export const ProfileViews = {
-    EDIT: 'EDIT',
-    VIEW: 'VIEW'
-}
-
-function requestCurrentUser() {
-    return {
-        type: ActionTypes.REQUEST_CURRENT_USER
-    };
-}
-
-function receiveCurrentUserSuccess(user) {
-    return {
-        type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS,
-        user,
-        receivedAt: Date.now()
-    };
-}
-
-function receiveCurrentUserError(apiError) {
-    return {
-        type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
-        apiError,
-    };
-}
-
-function logOutCurrentUser() {
-    return {
-        type: ActionTypes.CURRENT_USER_LOGOUT
-    };
 }
 
 function shouldLoadCurrentUser(state) {
@@ -68,47 +32,11 @@ function shouldLoadCurrentUser(state) {
     return true;
 }
 
-function requestSaveUser() {
-    return { type: ActionTypes.REQUEST_SAVE_USER };
-}
-
-function receiveSaveUserSuccess(user) {
-    return {
-        type: ActionTypes.RECEIVE_SAVE_USER_SUCCESS,
-        user
-    };
-}
-
-function receiveSaveUserError(apiError) {
-    return {
-        type: ActionTypes.RECEIVE_SAVE_USER_ERROR,
-        apiError,
-    };
-}
-
-function requestAcceptTerms() {
-    return { type: ActionTypes.REQUEST_ACCEPT_TERMS };
-}
-
-function receiveAcceptTermsSuccess(user) {
-    return {
-        type: ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS,
-        user
-    };
-}
-
-function receiveAcceptTermsError(apiError) {
-    return {
-        type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR,
-        apiError,
-    };
-}
-
 export const Actions = {
 
     logOut: () => {
         return (dispatch) => {
-            dispatch(logOutCurrentUser())
+            dispatch({ type: ActionTypes.CURRENT_USER_LOGOUT });
         }
     },
 
@@ -119,36 +47,17 @@ export const Actions = {
                 return Promise.resolve();
             }
 
-            dispatch(requestCurrentUser());
+            dispatch({ type: ActionTypes.REQUEST_CURRENT_USER });
 
             return ApiClient.getUser()
                 .then(
                     response => {
                         const user = response.data;
-                        dispatch(receiveCurrentUserSuccess(user));
+                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user });
+
                     },
                     error => {
-                        dispatch(receiveCurrentUserError(error));
-                    }
-                );
-        };
-    },
-
-    saveUser: (user) => {
-        return (dispatch) => {
-
-            dispatch(requestSaveUser());
-
-            return ApiClient.saveUser(user)
-                .then(
-                    response => {
-                        dispatch(receiveSaveUserSuccess(user));
-                        toast.success('Profile saved', { autoClose: false });
-                    },
-                    error => {
-                        const err = error && error.response && error.response.data && error.response.data.error;
-                        dispatch(receiveSaveUserError(err));
-                        toast.error('Profile not saved');
+                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError: error });
                     }
                 );
         };
@@ -157,175 +66,33 @@ export const Actions = {
     acceptTerms: () => {
         return (dispatch, getState) => {
 
-            dispatch(requestAcceptTerms());
+            dispatch({ type: ActionTypes.REQUEST_ACCEPT_TERMS });
 
             return ApiClient.acceptTerms()
                 .then(
                     response => {
                         const user = Selectors.currentUser(getState());
-                        dispatch(receiveAcceptTermsSuccess(user));
+                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS, user });
                     },
                     error => {
                         const err = error && error.response && error.response.data && error.response.data.error;
-                        dispatch(receiveAcceptTermsError(err));
+                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR, apiError: err });
                     }
                 );
         }
     },
-
-    editProfile: () => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.PROFILE_EDIT });
-        }
-    },
-
-    viewProfile: () => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.PROFILE_VIEW });
-        }
-    },
-
-    changePhoneVerificationCode: (code) => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE, code });
-        }
-    },
-
-    sendPhoneVerificationCode: (phone, onSuccess) => {
-        return (dispatch) => {
-
-            toast.success(`Verification code sent successfully to ${phone}`, { autoClose: false });
-            return;
-
-            const promise = new Promise((resolve, reject) => {
-
-                const cognitoUser = CognitoUtil.getCognitoUser();
-                cognitoUser.getSession((err, session) => {
-                    if (err) {
-                        console.error(err);
-                        reject(err);
-                        return;
-                    }
-
-                    phone = phone.replace(/ /g, '');
-                    const attributes = [
-                        new CognitoUserAttribute({
-                            Name: 'phone_number',
-                            Value: phone
-                        })
-                    ];
-                    cognitoUser.updateAttributes(attributes, (err, result) => {
-                        if (err) {
-                            console.error(err)
-                            reject(err);
-                            return;
-                        }
-
-                        cognitoUser.getAttributeVerificationCode('phone_number',
-                            {
-                                onSuccess: () => {
-                                    console.log('success');
-                                },
-                                onFailure: (error) => {
-                                    console.error(error);
-                                    reject(error);
-                                },
-                                inputVerificationCode: (data) => {
-                                    console.log(data);
-                                    resolve(data);
-                                }
-                            });
-                    });
-
-                })
-
-            });
-
-            return promise.then(
-                response => {
-                    console.log(response);
-                    onSuccess();
-                    toast.info(`Verification code sent successfully to ${phone}`,
-                        { autoClose: false, closeButton: false });
-                },
-                error => {
-                    console.error(error);
-                    toast.error(`Unable to send verification code to ${phone}`,
-                        { autoClose: false, closeButton: false });
-                });
-        }
-    },
-
-    verifyPhoneVerificationCode: (code, onSuccess) => {
-        return (dispatch) => {
-
-            toast.error(`Things just didn't work here`, { autoClose: false });
-            return;
-
-            const promise = new Promise((resolve, reject) => {
-
-                const cognitoUser = CognitoUtil.getCognitoUser();
-                cognitoUser.getSession((err, session) => {
-                    if (err) {
-                        console.error(err);
-                        reject(err);
-                        return;
-                    }
-
-                    cognitoUser.verifyAttribute('phone_number', code,
-                        {
-                            onSuccess: (success) => {
-                                console.log(success);
-                                resolve(success);
-                            },
-                            onFailure: (error) => {
-                                console.log(error);
-                                reject(error);
-                            }
-                        });
-                });
-            });
-
-            return promise.then(
-                response => {
-                    console.log(response);
-                    onSuccess();
-                    toast.success(`Phone code was verified successfully`,
-                        { autoClose: false, closeButton: false });
-                },
-                error => {
-                    console.error(error);
-                    toast.error(`Unable to verify phone code: ${error}`,
-                        { autoClose: false, closeButton: false });
-                });
-        }
-    },
-
-    clearResult: () => {
-        return (dispatch) => {
-            dispatch({ type: ActionTypes.PROFILE_CLEAR_RESULT });
-        }
-    }
 }
 
 export const Selectors = {
     currentUser: (state) => state.currentUser.user,
     isLoading: (state) => state.currentUser.isLoading,
-    isSaving: (state) => state.currentUser.isSaving,
     apiError: (state) => state.currentUser.apiError,
     termsAccepted: (state) => state.currentUser.termsAccepted,
-    isVerifyingPhone: (state) => state.currentUser.isVerifyingPhone,
-    isVerifyingCode: (state) => state.currentUser.isVerifyingCode,
-    phoneVerificationCode: (state) => state.currentUser.phoneVerificationCode,
-
-    currentView: (state) => state.currentUser.currentView,
-    result: (state) => state.currentUser.result,
 }
 
 const initialState = {
     isLoading: false,
     isSaving: false,
-    currentView: ProfileViews.EDIT,
 };
 
 export const Reducers = {
@@ -357,33 +124,6 @@ export const Reducers = {
                     user: undefined
                 });
 
-
-
-            case ActionTypes.REQUEST_SAVE_USER:
-                return Object.assign({}, state, {
-                    isSaving: true,
-                    apiError: undefined
-                });
-
-            case ActionTypes.RECEIVE_SAVE_USER_SUCCESS:
-                return Object.assign({}, state, {
-                    isSaving: false,
-                    user: action.user,
-                    result: {
-                        code: ErrorCodes.SUCCESS
-                    }
-                });
-
-            case ActionTypes.RECEIVE_SAVE_USER_ERROR:
-                return Object.assign({}, state, {
-                    isSaving: false,
-                    apiError: action.apiError,
-                    result: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.apiError)
-                    }
-                });
-
             case ActionTypes.REQUEST_ACCEPT_TERMS:
                 return Object.assign({}, state, {
                     isSaving: true,
@@ -403,24 +143,18 @@ export const Reducers = {
                     apiError: action.apiError,
                 });
 
-            case ActionTypes.CURRENT_USER_CHANGE_PHONE_VERIFICATION_CODE:
+            case ProfileActionTypes.PROFILE_VERIFY_CODE_SUCCESS:
                 return Object.assign({}, state, {
-                    phoneVerificationCode: action.code,
+                    user: {
+                        ...state.user,
+                        phone: action.phone,
+                        phone_verified: action.phone_verified
+                    }
                 });
 
-            case ActionTypes.PROFILE_EDIT:
+            case ProfileActionTypes.PROFILE_RECEIVE_SAVE_USER_SUCCESS:
                 return Object.assign({}, state, {
-                    currentView: ProfileViews.EDIT,
-                });
-
-            case ActionTypes.PROFILE_VIEW:
-                return Object.assign({}, state, {
-                    currentView: ProfileViews.VIEW,
-                });
-
-            case ActionTypes.PROFILE_CLEAR_RESULT:
-                return Object.assign({}, state, {
-                    result: undefined
+                    user: action.user,
                 });
 
             default:

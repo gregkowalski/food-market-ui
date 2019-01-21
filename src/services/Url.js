@@ -19,7 +19,7 @@ class Url {
     }
 
     profileView(user_id) {
-        return `/profile/view/${user_id}`;
+        return `/profile/${user_id}`;
     }
 
     home() {

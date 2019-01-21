@@ -83,7 +83,7 @@ class BuyerOrderCard extends React.Component {
                                 <div>{startDate.format('h A')} to {endDate.format('h A')}</div>
                                 <div className='bottom-spacing top-spacing'>
                                 </div>
-                                <div className='top-spacing'>Your cook, {Util.firstNonEmptyValue(cook.name, cook.username)}</div>
+                                <div className='top-spacing'>Your cook, {Util.firstNonEmptyValue(cook.username, cook.name)}</div>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@ class BuyerOrderCard extends React.Component {
                     <div className='buyerordercard-contact normal-font'>
                         <div className='buyerordercard-footer'>
                             <Icon name='envelope outline' size='large' />
-                            <a href={Url.mailTo(cook.email, food.title)}>Message {cook.name}</a>
+                            <a href={Url.mailTo(cook.email, food.title)}>Message {cook.username}</a>
                         </div>
                         {(order.status === OrderStatus.Accepted || order.status === OrderStatus.Pending) && this.props.onCancel &&
                             <div className='buyerordercard-footer'>
