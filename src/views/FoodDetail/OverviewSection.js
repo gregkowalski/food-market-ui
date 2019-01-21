@@ -24,8 +24,8 @@ class OverviewSection extends React.Component {
                     locally handcrafted by
                 <Scroll.Link className='detail-cook-link' to='cook'
                         spy={true} smooth={true} container={document}
-                        offset={-85} duration={500}>
-                        {cook ? cook.name : '...'}
+                        offset={-65} duration={500}>
+                        {cook ? cook.username : '...'}
                     </Scroll.Link>
                 </div>
                 <div style={{ clear: 'both' }}></div>

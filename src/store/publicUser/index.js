@@ -61,7 +61,7 @@ export const Reducers = {
             case ActionTypes.REQUEST_PUBLIC_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    apiError: null
+                    apiError: undefined
                 });
 
 

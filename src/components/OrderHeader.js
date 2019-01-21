@@ -4,7 +4,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { withRouter } from 'react-router-dom'
 import { Image, Icon } from 'semantic-ui-react'
 import './OrderHeader.css'
-import { Constants } from '../Constants'
+import { Constants, TagLines } from '../Constants'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import Url from '../services/Url'
 import Util from '../services/Util'
@@ -65,22 +65,8 @@ class OrderHeader extends React.Component {
     }
 
     getRandomTagline() {
-
-        const taglines = [
-            'handcrafted to taste like home',
-            'homemade + local',
-            'this is...awesomesauce!',
-            'because being hangry was so 2017.',
-            'easy peasy, lemon squeezy!',
-            'so hot right now.',
-            'making good food taste better.',
-            'eat like family.',
-            'good food starts here.',
-            'cooking is love you can taste.'
-            
-        ];
-        let index = this.getRandomInt(0, taglines.length - 1);
-        return taglines[index];
+        let index = Util.getRandomInt(0, TagLines.length - 1);
+        return TagLines[index];
     }
 
     render() {

@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Button, List, Image, Modal, Icon, Header, Divider, Input, Message, Dropdown } from 'semantic-ui-react'
+import { Button, List, Image, Modal, Icon, Header, Divider, Input, Dropdown } from 'semantic-ui-react'
 import { Actions, Selectors } from '../../store/admin/foodManager'
 import './ManageFoods.css'
 import Url from '../../services/Url'
-import ErrorCodes from '../../services/ErrorCodes'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
 
@@ -20,16 +19,12 @@ class ManageFoods extends React.Component {
         }
     }
 
-    handleToastDismiss = () => {
-        this.props.actions.clearResult();
-    }
-
     handleAddFood = () => {
         this.props.actions.openAddFoodModal();
     }
 
     render() {
-        const { isLoadingFoods, foods, result } = this.props;
+        const { isLoadingFoods, foods } = this.props;
 
         return (
             <div className='managefoods' >
@@ -43,11 +38,6 @@ class ManageFoods extends React.Component {
                         <span>Edit Foods</span>
                         <Button floated='right' content='Add food' icon='plus circle' labelPosition='right' onClick={this.handleAddFood} />
                     </div>
-                    <Toast result={result}
-                        successMessage='Food deleted successfully'
-                        errorHeader='Error deleting food'
-                        onDismiss={this.handleToastDismiss}
-                    />
                     <AddFoodModal />
                     <Divider />
                     <List divided verticalAlign='middle'>
@@ -66,7 +56,6 @@ class ManageFoods extends React.Component {
             isLoadingFoods: Selectors.isLoadingFoods(state),
             foods: Selectors.foods(state),
             getFoodsResult: Selectors.getFoodsResult(state),
-            result: Selectors.result(state),
         };
     };
 
@@ -76,14 +65,9 @@ class ManageFoods extends React.Component {
 
     static propTypes = {
         isLoadingFoods: PropTypes.bool,
-        result: PropTypes.shape({
-            code: PropTypes.string.isRequired,
-            message: PropTypes.string
-        }),
 
         actions: PropTypes.shape({
-            getFoods: PropTypes.func.isRequired,
-            clearResult: PropTypes.func.isRequired,
+            getFoods: PropTypes.func.isRequired
         }).isRequired
     }
 }
@@ -154,29 +138,6 @@ class AddFoodModalComponent extends React.Component {
 }
 
 const AddFoodModal = connect(AddFoodModalComponent.mapStateToProps, AddFoodModalComponent.mapDispatchToProps)(AddFoodModalComponent);
-
-class Toast extends React.Component {
-
-    style = {
-        cursor: 'pointer'
-    }
-
-    render() {
-        const { result, onDismiss, successHeader, successMessage, errorMessage, errorHeader } = this.props;
-        if (!result)
-            return null;
-
-        if (result.code === ErrorCodes.ERROR) {
-            return (<Message error style={this.style} header={errorHeader} content={errorMessage || result.message} onClick={onDismiss} />);
-        }
-
-        if (result.code === ErrorCodes.SUCCESS) {
-            return (<Message success style={this.style} header={successHeader} content={successMessage || result.message} onClick={onDismiss} />);
-        }
-
-        return null;
-    }
-}
 
 class FoodListItemComponent extends React.Component {
 

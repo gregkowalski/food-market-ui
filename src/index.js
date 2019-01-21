@@ -8,6 +8,9 @@ import { history } from './History'
 
 import ReactGA from 'react-ga'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './semantic/semantic.min.css'
 import './index.css'
 
@@ -82,6 +85,12 @@ render(
         <StripeProvider apiKey={Config.Stripe.PublicApiKey}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
+                    <ToastContainer
+                        position={toast.POSITION.TOP_CENTER}
+                        hideProgressBar={true}
+                        autoClose={2500}
+                        draggablePercent={35}
+                        bodyClassName='toast-body' />
                     <Router history={history}>
                         <ScrollToTop>
                             <Switch>
@@ -90,8 +99,8 @@ render(
                                 <Route exact path='/foods/:id/orderSuccess' component={appPage(OrderSuccess)} />
                                 <Route exact path='/foods/:id/order' component={appPage(Order)} />
                                 <Route exact path='/foods/:id' component={appPage(FoodDetail)} />
-                                <Route exact path='/profile/view/:userId' component={appPage(ProfileView)} />
-                                <Route exact path='/profile/edit' component={appPage(ProfileEdit)} />
+                                <Route exact path={Url.profileView(':userId')} component={appPage(ProfileView)} />
+                                <Route exact path={Url.profileEdit()} component={appPage(ProfileEdit)} />
                                 <Route exact path='/buyerOrders' component={appPage(BuyerOrders)} />
                                 <Route exact path='/cookOrders' component={appPage(CookOrders)} />
                                 <Route exact path='/login' component={appPage(Login)} />

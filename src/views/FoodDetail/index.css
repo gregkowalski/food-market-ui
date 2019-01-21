@@ -98,20 +98,6 @@
     line-height: 22px !important;
 }
 
-.detail-cook-sub-header {
-    color: #60b0f4;
-    line-height: 20px !important;
-    font-weight: 500 !important;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-}
-
-.detail-cook-text {
-    margin-top: 15px;
-    font-size: 1.3em !important;
-    line-height: 22px !important;
-}
-
 .detail-card-charged-footnote {
     text-align: center;
     margin-top: 10px;

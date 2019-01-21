@@ -2,13 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Segment, Image, Header } from 'semantic-ui-react'
+import { Segment, Image, Header, Grid, Icon } from 'semantic-ui-react'
 import './ProfileView.css'
 import { Actions, Selectors } from '../../store/publicUser'
 import AppHeader from '../../components/AppHeader'
-// import FlagUser from '../../components/FlagUser'
 import LoadingIcon from '../../components/LoadingIcon'
-import VerifiedInfo from './VerifiedInfo'
 import { CertificationLabels } from '../../Enums'
 import Util from '../../services/Util'
 
@@ -26,62 +24,18 @@ class ProfileView extends React.Component {
             return (
                 <div>
                     <AppHeader fixed />
-                    <div style={{ marginTop: '70px', width: '100%' }}>
-                        <div style={{ margin: '0 auto', width: '100px' }}>
-                            <LoadingIcon />
-                        </div>
+                    <div className='profileview-loading'>
+                        <LoadingIcon size='large' />
                     </div>
-                </div >
+                </div>
             );
-        }
-
-        let join_date;
-        if (user.join_date) {
-            join_date = Util.toCurrentTimezoneMoment(user.join_date);
         }
 
         return (
             <div>
                 <AppHeader fixed />
-                <div className='profileview-container'>
-                    <div className='profileview-left'>
-                        <div className='profileview-card'>
-                            <Header className='profileview-card-header' block attached='top'>Verified Info</Header>
-                            <Segment attached>
-                                <div className='profileview-card-items'>
-                                    <VerifiedInfo label='Email' isVerified={user.email_verified} />
-                                    <VerifiedInfo label='Phone Number' isVerified={user.phone_verified} />
-                                </div>
-                            </Segment>
-                        </div>
-                        <div className='profileview-card' style={{ marginTop: '20px' }}>
-                            <Header className='profileview-card-header' block attached='top'>About Me</Header>
-                            <Segment attached>
-                                <div className='profileview-card-items profileview-about-me'>
-                                    <div>Certifications</div>
-                                    {user.certifications && user.certifications.map((cert, index) => {
-                                        return (<div key={index}>{CertificationLabels[cert]}</div>);
-                                    })}
-                                </div>
-                            </Segment>
-                        </div>
-                    </div>
-                    <div className='profileview-main'>
-
-                        <Image floated='left' verticalAlign='middle' size='small' circular src={user.image} />
-                        <div className='profileview-header'>Hi, I'm {user.name}!</div>
-                        {join_date &&
-                            <div className='profileview-sub-header'>
-                                Joined in {join_date.format('MMMM YYYY')}
-                            </div>
-                        }
-                        {/* <FlagUser /> */}
-                        <div style={{ clear: 'both' }}></div>
-                        <div className='profileview-user-info'>{user.info}</div>
-
-                    </div>
-                </div>
-            </div >
+                <ProfileViewComponent user={user} className='profileview-container' />
+            </div>
         );
     }
 }
@@ -95,9 +49,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(Actions, dispatch),
-    };
+    return { actions: bindActionCreators(Actions, dispatch) };
 };
 
 ProfileView.propTypes = {
@@ -113,3 +65,150 @@ ProfileView.propTypes = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
+
+export const ProfileViewComponent = ({ user, className }) => {
+
+    return (
+        <div className={className}>
+            <Grid className='profileview'>
+                <Grid.Column computer={6} only='computer tablet'>
+                    <Grid.Row>
+                        <ImageSection user={user} />
+                    </Grid.Row>
+                    <Grid.Row>
+                        <VerifiedInfoSection user={user} />
+                    </Grid.Row>
+                    <Grid.Row>
+                        <CertificationsSection user={user} />
+                    </Grid.Row>
+                </Grid.Column>
+                <Grid.Column computer={10} only='computer tablet'>
+                    <UserHeaderSection user={user} greeting />
+                    <UserInfoSection user={user} simple />
+                </Grid.Column>
+                <Grid.Column mobile={16} only='mobile'>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column mobile={5}>
+                                <ImageSection user={user} />
+                            </Grid.Column>
+                            <Grid.Column mobile={11}>
+                                <UserHeaderSection user={user} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={16}>
+                                <UserInfoSection user={user} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={16}>
+                                <VerifiedInfoSection user={user} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={16}>
+                                <CertificationsSection user={user} />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Column>
+            </Grid>
+        </div>
+    );
+}
+
+
+const ImageSection = ({ user }) => {
+    return (
+        <Image src={user.image || '/assets/images/new-food.png'} />
+    )
+}
+
+const VerifiedInfoSection = ({ user }) => {
+    return (
+        <div>
+            <Header className='profileview-card-header' block attached='top'>Verified Info</Header>
+            <Segment attached>
+                <div className='profileview-card-items'>
+                    <VerifiedInfo label='Email' isVerified={user.email_verified} />
+                    <VerifiedInfo label='Phone Number' isVerified={user.phone_verified} />
+                </div>
+            </Segment>
+        </div>
+    )
+}
+
+const VerifiedInfo = ({ isVerified, label }) => {
+
+    if (!isVerified) {
+        return null;
+    }
+
+    let iconName = isVerified ? 'check circle outline' : 'remove circle outline';
+    let iconColor = isVerified ? 'teal' : 'red';
+    return (
+        <div className='profileview-verifiedinfo'>
+            <div>{label}</div>
+            <Icon size='large' color={iconColor} name={iconName} />
+        </div>);
+}
+
+const CertificationsSection = ({ user }) => {
+    return (
+        <div>
+            <Header className='profileview-card-header' block attached='top'>Certifications</Header>
+            <Segment attached>
+                <div className='profileview-card-items'>
+                    {user.certifications && user.certifications.map((cert, index) => {
+                        return (<div key={index}>{CertificationLabels[cert]}</div>);
+                    })}
+                </div>
+            </Segment>
+        </div>
+    )
+}
+
+const UserInfoSection = ({ user, simple }) => {
+    if (!user.info)
+        return null;
+
+    if (simple) {
+        return (
+            <div className='profileview-user-info'>{user.info}</div>
+        );
+    }
+
+    return (
+        <div>
+            <Header className='profileview-card-header' block attached='top'>About Me</Header>
+            <Segment attached>
+                <div className='profileview-user-info'>{user.info}</div>
+            </Segment>
+        </div>
+    )
+}
+
+const UserHeaderSection = ({ user, greeting }) => {
+
+    let join_date;
+    if (user.join_date) {
+        join_date = Util.toCurrentTimezoneMoment(user.join_date);
+    }
+
+    let greetingText = user.username;
+    if (greeting) {
+        greetingText = `Hi, I'm ${user.username}!`;
+    }
+
+    return (
+        <div>
+            <div className='profileview-user-greeting'>{greetingText}</div>
+            {join_date &&
+                <div className='profileview-user-joindate'>
+                    Joined in {join_date.format('MMMM YYYY')}
+                </div>
+            }
+        </div>
+    )
+}

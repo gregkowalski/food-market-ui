@@ -1,45 +1,58 @@
-.profileview-container {
-    display: flex;
-    margin-top: 100px;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profileview-left {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-.profileview-main {
-    margin-top: 20px;
+.profileview-loading {
+    margin-top: 70px;
     width: 100%;
 }
 
-.profileview-header {
-    color: #494949 !important;
-    font-size: 2.9em !important;
-    font-weight: 500 !important;
-    line-height: 40px !important;
-    margin-top: 2px !important;
+.profileview-container {
+    margin: 75px auto;
+    width: 90%;
 }
 
-.profileview-card {
-    width: 262px;
-    vertical-align: middle;
+.profileview.ui.grid .row {
+    padding-bottom: 0;
+}
+
+.profileview.ui.grid .only.computer.tablet.column .row {
+    padding-bottom: 20px;
+}
+
+/* .profileview.ui.grid .row {
+    border: solid 1px blue;
+}
+
+.profileview.ui.grid .column {
+    border: solid 1px red;
+} */
+
+.profileview-user-greeting {
+    color: #494949;
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 25px;
+    margin-top: 2px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.profileview-user-joindate {
+    color: #b61095;
+    font-weight: 500;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.profileview-user-info {
+    font-size: 1.25em;
+    line-height: 1.3em;
+    font-weight: 400;
 }
 
 .profileview-card-header {
     margin: 0px 10px;
-    font-size: 1.5em !important;
+    font-size: 1.5rem !important;
     font-weight: 500 !important;
     background-color: #a5a5a560 !important;
-}
-
-.profileview-about-me > div:first-child {
-    margin-top: 10px;
-    font-weight: 600;
-    font-size: 1.1em;
 }
 
 .profileview-card-items {
@@ -48,32 +61,23 @@
 }
 
 .profileview-card-items > div:not(:first-child) {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
-.profileview-sub-header {
-    color: #60b0f4;
-    line-height: 20px !important;
-    font-weight: 500 !important;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    margin-top: 10px;
+.profileview-verifiedinfo {
+    display: flex;
+    justify-content: space-between;
 }
 
-.profileview-user-info {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-size: 1.35em !important;
-    font-weight: 400;
-    line-height: 26px !important;
-}
-
-@media all and (max-width: 1127px) {
-    .profileview-left {
-        display: none;
-    }
-    .profileview-main {
-        width: 85%;
-        margin: inherit auto;
+@media all and (min-width: 1127px) {
+    .profileview-container {
+        width: 65%;
     }
 }
+
+@media all and (max-width: 767px) {
+    .profileview-card-items > div:not(:first-child) {
+        margin-top: 5px;
+    }
+}
+

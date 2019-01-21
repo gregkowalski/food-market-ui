@@ -138,7 +138,7 @@ class CookOrderCard extends React.Component {
                     <div className='cookordercard-section normal-font'>
                         <div className='cookordercard-buyer'>
                             <Icon name='envelope outline' size='large' />
-                            <a href={Url.mailTo(buyer.email, food.title)}>Message {Util.firstNonEmptyValue(buyer.name, buyer.username)}</a>
+                            <a href={Url.mailTo(buyer.email, food.title)}>Message {Util.firstNonEmptyValue(buyer.username, buyer.name)}</a>
                         </div>
                         {order.status === OrderStatus.Accepted &&
                             <div style={{ marginTop: '25px' }}>

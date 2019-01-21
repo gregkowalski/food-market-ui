@@ -15,11 +15,11 @@ class Url {
     }
 
     profileEdit() {
-        return '/profile/edit';
+        return '/profile';
     }
 
     profileView(user_id) {
-        return `/profile/view/${user_id}`;
+        return `/profile/${user_id}`;
     }
 
     home() {
