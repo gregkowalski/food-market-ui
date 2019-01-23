@@ -121,7 +121,7 @@ export const ProfileViewComponent = ({ user, className }) => {
 
 const ImageSection = ({ user }) => {
     return (
-        <Image src={user.image || '/assets/images/new-food.png'} />
+        <Image className='profileview-image' src={user.image || '/assets/images/new-food.png'} />
     )
 }
 
@@ -155,12 +155,15 @@ const VerifiedInfo = ({ isVerified, label }) => {
 }
 
 const CertificationsSection = ({ user }) => {
+    if (!user.certifications || user.certifications.length === 0)
+        return null;
+
     return (
         <div>
             <Header className='profileview-card-header' block attached='top'>Certifications</Header>
             <Segment attached>
                 <div className='profileview-card-items'>
-                    {user.certifications && user.certifications.map((cert, index) => {
+                    {user.certifications.map((cert, index) => {
                         return (<div key={index}>{CertificationLabels[cert]}</div>);
                     })}
                 </div>

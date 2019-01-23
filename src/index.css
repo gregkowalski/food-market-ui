@@ -17,6 +17,9 @@ body {
         width: 600px;
         margin-left: -300px;
     }
+    .Toastify__toast {
+        border-radius: 0.3rem !important;
+    }
 }
 
 .toast-body {
@@ -28,7 +31,8 @@ body {
 
 .Toastify__toast--success {
     box-shadow: 0 0 0 1px #2b65ec inset, 0 0 0 0 transparent;
-    background-color: #d9e2ff;
+    /* background-color: #e0e8fd; */
+    background: linear-gradient(235deg, rgba(2,0,36,1) 0%, rgba(209,221,255,1) 0%, rgba(224,232,253,1) 65%);
     color: #2b65ec;
     font-weight: 500;
 }

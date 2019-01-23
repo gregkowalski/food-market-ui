@@ -16,13 +16,9 @@
     padding-bottom: 20px;
 }
 
-/* .profileview.ui.grid .row {
-    border: solid 1px blue;
+.profileview-image {
+    border-radius: .28571429rem;
 }
-
-.profileview.ui.grid .column {
-    border: solid 1px red;
-} */
 
 .profileview-user-greeting {
     color: #494949;

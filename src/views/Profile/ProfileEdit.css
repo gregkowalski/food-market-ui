@@ -92,7 +92,7 @@
 }
 
 .profileedit-input-descriptions {
-    color: rgb(131, 131, 131) !important;
+    color: rgb(95, 95, 95);
     margin: 5px 0px 0px 0px;
     font-size: .95em;
 }
@@ -112,6 +112,10 @@
 
 .profileedit-phone .ui.input {
     width: 65%;
+}
+
+.profileedit-phone .ui.button {
+    width: 100px;
 }
 
 @media all and (max-width: 992px) {

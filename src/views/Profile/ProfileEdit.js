@@ -205,6 +205,8 @@ class ProfileEdit extends React.Component {
             );
         }
 
+        const hasValidPhone = user.phone && user.phone_verified;
+
         return (
             <div>
                 <AppHeader fixed />
@@ -243,8 +245,15 @@ class ProfileEdit extends React.Component {
                                             <Grid.Column computer={3} tablet={16}>Phone <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                             <Grid.Column computer={13} tablet={16}>
                                                 <div className='profileedit-phone'>
-                                                    <Input value={user.phone} disabled={true} />
-                                                    <Button color='purple' onClick={this.handleChangePhoneClick}>Change</Button>
+                                                    <Input value={user.phone} disabled={true} placeholder='Add your phone number' />
+                                                    <Button color='purple' onClick={this.handleChangePhoneClick}>
+                                                        {hasValidPhone &&
+                                                            <div>Change</div>
+                                                        }
+                                                        {!hasValidPhone &&
+                                                            <div>Add</div>
+                                                        }
+                                                    </Button>
                                                 </div>
                                                 <div className='profileedit-input-descriptions'>We will never share your private phone number without your permission.</div>
                                             </Grid.Column>
@@ -267,8 +276,18 @@ class ProfileEdit extends React.Component {
                                             <Grid.Column computer={3} tablet={16}>Phone Notifications</Grid.Column>
                                             <Grid.Column computer={13} tablet={16}>
                                                 <div className='profileedit-checkbox'>
-                                                    <Field id='phone_notifications' name='phone_notifications' component='input' type='checkbox' />
-                                                    <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>Check the box to enable phone SMS notifications about your orders (provider charges may apply)</label>
+                                                    <Field id='phone_notifications' name='phone_notifications' component='input' type='checkbox'
+                                                        disabled={!hasValidPhone} />
+                                                    {hasValidPhone &&
+                                                        <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>
+                                                            Check the box to enable phone SMS notifications about your orders (provider charges may apply)
+                                                        </label>
+                                                    }
+                                                    {!hasValidPhone &&
+                                                        <label className='profileedit-input-descriptions' htmlFor='phone_notifications'>
+                                                            To enable SMS notifications about your orders, first add a phone number under <strong>Contact Info</strong>
+                                                        </label>
+                                                    }
                                                 </div>
                                             </Grid.Column>
                                         </Grid.Row>
@@ -326,7 +345,7 @@ class ProfileEdit extends React.Component {
                                                     <div style={{ marginTop: '5px' }}>
                                                         What are some things you like to do? Or share the 5 foods you can't live without. Do you have a food philosophy? Share your life motto!
                                                     </div>
-                                                </div> 
+                                                </div>
                                             </Grid.Column>
                                         </Grid.Row>
                                         <Grid.Row>
