@@ -377,6 +377,21 @@ class Util {
         const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
         return regex.test(value);
     }
+
+    scrollToElement(element, offset) {
+        const body = window.document.body;
+        const html = window.document.documentElement;
+        const elementRect = element.getBoundingClientRect();
+        const clientHeight = html.clientHeight;
+        const documentHeight = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+        offset = offset || 0;
+        const scrollPosition = elementRect.top;
+
+        const maxScrollPosition = documentHeight - clientHeight;
+        const scrollTop = Math.min(scrollPosition + offset + window.pageYOffset, maxScrollPosition);
+        window.scroll({ top: scrollTop, behavior: 'smooth' });
+    }
 }
 
 export default new Util();

@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, getFormValues } from 'redux-form'
 import PropTypes from 'prop-types'
 import { Segment, Button, Header, Grid, Input, Icon } from 'semantic-ui-react'
 import crypto from 'crypto'
@@ -10,6 +10,7 @@ import './ProfileEdit.css'
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
 import StripeUtil from '../../services/Stripe/StripeUtil'
+import Util from '../../services/Util'
 import { Actions as CurrentUserActions, Selectors as CurrentUserSelectors } from '../../store/currentUser'
 import { Actions, Selectors, ProfileViews } from '../../store/profile'
 import { Certifications, CertificationLabels, DaysOfWeek } from '../../Enums';
@@ -86,36 +87,6 @@ class ProfileEdit extends React.Component {
         }
     }
 
-    handleSave = (user) => {
-        const { selectedIntervals } = this.state;
-        let availability = {};
-        for (let interval of selectedIntervals) {
-            let segments = interval.uid.split('-');
-            let weekday = segments[0];
-            let key = availabilityKeys[weekday - 1];
-            if (availability[key] === undefined)
-                availability[key] = [];
-
-            let hour = segments[1];
-            availability[key].push(hour);
-        }
-        user.availability = availability;
-        this.setState({ didSelectedIntervalsChange: false });
-
-        console.log(user);
-        console.log('saving...');
-        return this.props.actions.saveUser(user);
-    }
-
-    handleConnectStripeClick = (e) => {
-        e.preventDefault();
-
-        const state = crypto.randomBytes(64).toString('hex');
-        let stripeConnectUrl = StripeUtil.getStripeConnectUrl(state);
-        StripeUtil.setCsrfState(state);
-        window.open(stripeConnectUrl, '_self');
-    }
-
     handleCalendarSelect = (intervals) => {
         const { selectedIntervals } = this.state;
         let didSelectedIntervalsChange = false;
@@ -173,6 +144,34 @@ class ProfileEdit extends React.Component {
         }
     }
 
+    handleSave = (user) => {
+        const { selectedIntervals } = this.state;
+        let availability = {};
+        for (let interval of selectedIntervals) {
+            let segments = interval.uid.split('-');
+            let weekday = segments[0];
+            let key = availabilityKeys[weekday - 1];
+            if (availability[key] === undefined)
+                availability[key] = [];
+
+            let hour = segments[1];
+            availability[key].push(hour);
+        }
+        user.availability = availability;
+        this.setState({ didSelectedIntervalsChange: false });
+
+        return this.props.actions.saveUser(user);
+    }
+
+    handleConnectStripeClick = (e) => {
+        e.preventDefault();
+
+        const state = crypto.randomBytes(64).toString('hex');
+        let stripeConnectUrl = StripeUtil.getStripeConnectUrl(state);
+        StripeUtil.setCsrfState(state);
+        window.open(stripeConnectUrl, '_self');
+    }
+
     handleSelectEditProfile = () => {
         this.props.actions.editProfile();
     }
@@ -190,8 +189,40 @@ class ProfileEdit extends React.Component {
         }
     }
 
+    handleSubmit = (event, data) => {
+        const { handleSubmit, formValues } = this.props;
+
+        let saveHandled = false;
+        handleSubmit((values) => {
+            this.handleSave(values);
+            saveHandled = true;
+        })(event, data);
+
+        if (saveHandled)
+            return;
+
+        const errors = validate(formValues, this.props);
+        if (errors.username) {
+            this.scrollToProfileEditElement(this.usernameNode);
+        }
+        else if (errors.name) {
+            this.scrollToProfileEditElement(this.nameNode);
+        }
+        else if (errors.address) {
+            this.scrollToProfileEditElement(this.addressNode);
+        }
+    }
+
+    scrollToProfileEditElement(element) {
+        let offset = -80;
+        if (window.document.documentElement.clientWidth <= 992) {
+            offset -= 80;
+        }
+        Util.scrollToElement(element, offset);
+    }
+
     render() {
-        const { handleSubmit, pristine, submitting } = this.props;
+        const { pristine, submitting } = this.props;
         const { isLoadingProfile, isSavingProfile, user, currentView, showChangePhoneView } = this.props;
 
         if (isLoadingProfile) {
@@ -219,7 +250,7 @@ class ProfileEdit extends React.Component {
                         <Button color='purple' type='submit'
                             disabled={pristine && !this.state.didSelectedIntervalsChange}
                             loading={submitting || isSavingProfile}
-                            onClick={handleSubmit(this.handleSave)}>Save profile</Button>
+                            onClick={this.handleSubmit}>Save profile</Button>
                     }
                 </ProfileSideView>
                 <div className='profileedit-main'>
@@ -310,6 +341,7 @@ class ProfileEdit extends React.Component {
                                         <Grid.Row>
                                             <Grid.Column computer={3} tablet={16}>Profile Name</Grid.Column>
                                             <Grid.Column computer={13} tablet={16}>
+                                                <div ref={node => this.usernameNode = node} />
                                                 <Field name='username' autoComplete='username' component={ValidatedField} type='text' placeholder='Enter your public name' />
                                                 <div className='profileedit-input-descriptions'>
                                                     This is the name shown on your public profile.
@@ -319,6 +351,7 @@ class ProfileEdit extends React.Component {
                                         <Grid.Row>
                                             <Grid.Column computer={3} tablet={16}>Full Name <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                             <Grid.Column computer={13} tablet={16}>
+                                                <div ref={node => this.nameNode = node} />
                                                 <Field name='name' autoComplete='name' component={ValidatedField} type='text' placeholder='Enter your full name' />
                                                 <div className='profileedit-input-descriptions'>
                                                     Your full name is never shown publicly. When you order food, your cook will see your full name.
@@ -328,7 +361,10 @@ class ProfileEdit extends React.Component {
                                         <Grid.Row>
                                             <Grid.Column computer={3} tablet={16}>Address <Icon className='profileedit-secured-input' name='lock' /></Grid.Column>
                                             <Grid.Column computer={13} tablet={16}>
-                                                <Field name='address' className='profileedit-address' autoComplete='address' component={ValidatedAutocomplete} type='text' placeholder="What is your address?" />
+                                                <div ref={node => this.addressNode = node} />
+                                                <Field name='address' className='profileedit-address' autoComplete='address'
+                                                    component={ValidatedAutocomplete} type='text' placeholder="What is your address?"
+                                                />
                                                 <div className='profileedit-input-descriptions'>
                                                     <p>We take your privacy seriously. Your address is never shown publicly. We use this data to improve our geosearch and matching.
                                                     </p>
@@ -465,6 +501,8 @@ ProfileEdit.propTypes = {
     })
 }
 
+const reduxFormName = 'profileEdit';
+
 const mapStateToProps = (state) => {
     return {
         user: CurrentUserSelectors.currentUser(state),
@@ -475,6 +513,7 @@ const mapStateToProps = (state) => {
         showChangePhoneView: Selectors.showChangePhoneView(state),
 
         initialValues: CurrentUserSelectors.currentUser(state),
+        formValues: getFormValues(reduxFormName)(state),
     };
 };
 
@@ -485,7 +524,6 @@ const mapDispatchToProps = (dispatch) => {
     return { actions };
 };
 
-const reduxFormName = 'profileEdit';
 const form = reduxForm({ form: reduxFormName, validate, enableReinitialize: true })(ProfileEdit);
 const connectedForm = connect(mapStateToProps, mapDispatchToProps)(form);
 export default withRouter(connectedForm);
