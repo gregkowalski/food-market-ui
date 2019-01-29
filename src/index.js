@@ -15,6 +15,7 @@ import './semantic/semantic.min.css'
 import './index.css'
 
 import Url from './services/Url'
+import AutoLogoutService from './services/AutoLogoutService'
 import ScrollToTop from './components/ScrollToTop'
 import configureStore from './store/configureStore'
 import Config from './Config'
@@ -59,8 +60,8 @@ const Search = lazy(() => import('./views/Search'));
 const NotFoundPage = lazy(() => import('./views/NotFoundPage'));
 
 unregister();
-
 ReactGA.initialize(Config.GoogleAnalytics.TrackingId);
+AutoLogoutService.init();
 
 const { store, persistor } = configureStore({ includeLogger: true, includePersistor: true });
 

@@ -6,6 +6,7 @@ import Util from '../Util'
 import ErrorCodes from '../ErrorCodes'
 import LoadingHeader from '../../components/LoadingHeader'
 import Url from '../../services/Url'
+import AutoLogoutService from '../../services/AutoLogoutService'
 
 const Errors = {
     INVALID_PATH: 'INVALID_PATH',
@@ -45,6 +46,8 @@ class CognitoCallback extends React.Component {
         const auth = new CognitoAuth(CognitoUtil.getCognitoAuthData());
         auth.userhandler = {
             onSuccess: () => {
+                AutoLogoutService.initSession();
+
                 let lastPath = CognitoUtil.getLastPath();
                 if (!lastPath) {
                     lastPath = Url.home();

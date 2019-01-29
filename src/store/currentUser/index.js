@@ -1,6 +1,9 @@
 import ApiClient from '../../services/ApiClient'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
+import Url from '../../services/Url'
 import { ActionTypes as ProfileActionTypes } from '../profile'
+import { toast } from 'react-toastify'
+import { history } from '../../History'
 
 export const ActionTypes = {
     REQUEST_CURRENT_USER: 'REQUEST_CURRENT_USER',
@@ -54,7 +57,6 @@ export const Actions = {
                     response => {
                         const user = response.data;
                         dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user });
-
                     },
                     error => {
                         dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError: error });
@@ -64,19 +66,20 @@ export const Actions = {
     },
 
     acceptTerms: () => {
-        return (dispatch, getState) => {
+        return (dispatch) => {
 
             dispatch({ type: ActionTypes.REQUEST_ACCEPT_TERMS });
 
             return ApiClient.acceptTerms()
                 .then(
-                    response => {
-                        const user = Selectors.currentUser(getState());
-                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS, user });
+                    () => {
+                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS });
+                        history.push(Url.home());
                     },
                     error => {
+                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR });
                         const err = error && error.response && error.response.data && error.response.data.error;
-                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR, apiError: err });
+                        toast.error(`Unable to accept terms at this time, please try again later. Error: ${err}`, { autoClose: false });
                     }
                 );
         }
@@ -86,13 +89,13 @@ export const Actions = {
 export const Selectors = {
     currentUser: (state) => state.currentUser.user,
     isLoading: (state) => state.currentUser.isLoading,
+    isAcceptingTerms: (state) => state.currentUser.isAcceptingTerms,
     apiError: (state) => state.currentUser.apiError,
-    termsAccepted: (state) => state.currentUser.termsAccepted,
 }
 
 const initialState = {
     isLoading: false,
-    isSaving: false,
+    isAcceptingTerms: false,
 };
 
 export const Reducers = {
@@ -126,21 +129,18 @@ export const Reducers = {
 
             case ActionTypes.REQUEST_ACCEPT_TERMS:
                 return Object.assign({}, state, {
-                    isSaving: true,
-                    apiError: null
+                    isAcceptingTerms: true,
                 });
 
             case ActionTypes.RECEIVE_ACCEPT_TERMS_SUCCESS:
                 return Object.assign({}, state, {
-                    isSaving: false,
-                    user: Object.assign({}, action.user, { terms_accepted: true }),
-                    termsAccepted: true
+                    isAcceptingTerms: false,
+                    user: Object.assign({}, state.user, { terms_accepted: true }),
                 });
 
             case ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR:
                 return Object.assign({}, state, {
-                    isSaving: false,
-                    apiError: action.apiError,
+                    isAcceptingTerms: false,
                 });
 
             case ProfileActionTypes.PROFILE_VERIFY_CODE_SUCCESS:

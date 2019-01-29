@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Actions, Selectors } from '../../store/currentUser'
 import { withRouter } from 'react-router-dom'
-import { Button, Message, Checkbox } from 'semantic-ui-react'
+import { Button, Checkbox } from 'semantic-ui-react'
 import './index.css'
 import AppHeader from '../../components/AppHeader'
 import Url from '../../services/Url'
@@ -22,25 +22,6 @@ class TermsAccept extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (!this.props.termsAccepted && nextProps.termsAccepted) {
-            this.props.history.push(Url.home());
-            return;
-        }
-
-        if (this.props.isSaving && !nextProps.isSaving) {
-
-            // We finished saving, let's set the appropriate success or error messages
-            if (nextProps.apiError) {
-                console.log(nextProps.apiError);
-                this.setState({ message: { show: true, content: `Unable to accept terms at this time, please try again later. Error: ${nextProps.apiError}` } });
-            }
-            else {
-                this.setState({ message: { show: false } });
-            }
-        }
-    }
-
     handleAccept = () => {
         this.props.actions.acceptTerms();
     }
@@ -55,8 +36,8 @@ class TermsAccept extends React.Component {
     }
 
     render() {
-        const { isSaving } = this.props;
-        const { message, checkedTerms } = this.state;
+        const { isAcceptingTerms } = this.props;
+        const { checkedTerms } = this.state;
 
         return (
             <div className='termsaccept'>
@@ -65,11 +46,8 @@ class TermsAccept extends React.Component {
                 <Checkbox checked={checkedTerms} onChange={this.changeCheckbox} label={<label>Check here to indicate that you have read and agree to the <a target='_blank' rel='noopener noreferrer' href='/terms'>Foodcraft Terms of Use</a> and <a target='_blank' rel='noopener noreferrer' href='/privacy'>Privacy Policy</a></label>} />
                 <div className='termsaccept-button'>
                     <Button id='termsaccept-button-cancel' onClick={this.handleDecline}>Decline</Button>
-                    <Button id='termsaccept-button-accept' disabled={!checkedTerms} loading={isSaving} onClick={this.handleAccept}>Accept</Button>
+                    <Button id='termsaccept-button-accept' disabled={!checkedTerms} loading={isAcceptingTerms} onClick={this.handleAccept}>Accept</Button>
                 </div>
-                {message && message.show &&
-                    <Message error header='Error' content={message.content} icon='exclamation circle' />
-                }
             </div>
         );
     }
@@ -78,8 +56,7 @@ class TermsAccept extends React.Component {
 const mapStateToProps = (state) => {
     return {
         user: Selectors.currentUser(state),
-        isSaving: Selectors.isSaving(state),
-        termsAccepted: Selectors.termsAccepted(state),
+        isAcceptingTerms: Selectors.isAcceptingTerms(state),
     };
 };
 
@@ -89,7 +66,7 @@ const mapDispatchToProps = (dispatch) => {
 
 TermsAccept.propTypes = {
     user: PropTypes.object,
-    termsAccepted: PropTypes.bool,
+    isAcceptingTerms: PropTypes.bool,
 
     actions: PropTypes.shape({
         acceptTerms: PropTypes.func.isRequired,
