@@ -21,8 +21,6 @@ const ActionTypes = {
     FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS: 'FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS',
     FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR: 'FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR',
 
-    FOODMANAGER_CLEAR_SAVE_FOOD_RESULT: 'FOODMANAGER_CLEAR_SAVE_FOOD_RESULT',
-
 
     FOODMANAGER_SELECT_IMAGE: 'FOODMANAGER_SELECT_IMAGE',
 
@@ -210,27 +208,20 @@ export const Actions = {
 
             return ApiClient.saveFood(foodDto)
                 .then(
-                    response => {
+                    () => {
                         dispatch({
                             type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS,
                             food: foodDto
                         });
+                        toast.success('Food saved Successfully');
                     },
                     error => {
-                        dispatch({
-                            type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR,
-                            error: error.response.data.error
-                        });
+                        dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR });
+
+                        const err = error.response.data.error;
+                        toast.error(`Error saving food: ${err}`, { autoClose: false });
                     }
                 );
-        }
-    },
-
-    clearSaveFoodResult: (value) => {
-        return (dispatch) => {
-
-            const option = { key: value, text: value, value };
-            dispatch({ type: ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT, option });
         }
     },
 
@@ -268,7 +259,7 @@ export const Actions = {
 
             return ApiClient.deleteFood(food_id)
                 .then(
-                    response => {
+                    () => {
                         dispatch({
                             type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS,
                             food_id
@@ -385,7 +376,6 @@ export const Selectors = {
     isSavingFood: (state) => state.foodManager.isSavingFood,
     getFoodsResult: (state) => state.foodManager.getFoodsResult,
     foods: (state) => state.foodManager.foods,
-    saveFoodResult: (state) => state.foodManager.saveFoodResult,
 
     cooks: (state) => state.foodManager.cooks,
 
@@ -504,24 +494,12 @@ export const Reducers = {
                     return Object.assign({}, state, {
                         isSavingFood: false,
                         food,
-                        foods,
-                        saveFoodResult: {
-                            code: ErrorCodes.SUCCESS
-                        }
+                        foods
                     });
                 }
             case ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR:
                 return Object.assign({}, state, {
                     isSavingFood: false,
-                    saveFoodResult: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.error)
-                    }
-                });
-
-            case ActionTypes.FOODMANAGER_CLEAR_SAVE_FOOD_RESULT:
-                return Object.assign({}, state, {
-                    saveFoodResult: undefined
                 });
 
             case ActionTypes.FOODMANAGER_SELECT_IMAGE:

@@ -16,7 +16,6 @@ import {
 import AppHeader from '../../components/AppHeader'
 import LoadingIcon from '../../components/LoadingIcon'
 import { all_boundaries, getRegionId } from '../../components/Map/AllRegions'
-import ErrorCodes from '../../services/ErrorCodes'
 import Util from '../../services/Util'
 
 import ReactCrop from 'react-image-crop'
@@ -228,16 +227,12 @@ class FoodEditorForm extends React.Component {
         this.props.actions.saveFood(food);
     }
 
-    handleMessageClick = () => {
-        this.props.actions.clearSaveFoodResult();
-    }
-
     parseFloat = (val) => {
         return isNaN(parseFloat(val)) ? null : parseFloat(val);
     }
 
     render() {
-        const { food, ingredientOptions, saveFoodResult } = this.props;
+        const { food, ingredientOptions } = this.props;
         if (!food) {
             return null;
         }
@@ -251,19 +246,10 @@ class FoodEditorForm extends React.Component {
         const { pickup, delivery, imageUrls, selectedImageUrl, isUploadingImage, isDeletingImage } = this.props;
         return (
             <div>
-                <div className='managefood-save'>
-                    <Button color='purple'
-                        disabled={pristine || !formIsValid}
-                        loading={isSavingFood}
-                        onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
-
-                    {saveFoodResult && saveFoodResult.code === ErrorCodes.ERROR &&
-                        <Message error header='Error saving food' content={saveFoodResult.message} onClick={this.handleMessageClick} />
-                    }
-                    {saveFoodResult && saveFoodResult.code === ErrorCodes.SUCCESS &&
-                        <Message success content='Food saved successfully' onClick={this.handleMessageClick} />
-                    }
-                </div>
+                <Button className='managefood-save' color='purple'
+                    disabled={pristine || !formIsValid}
+                    loading={isSavingFood}
+                    onClick={handleSubmit(this.handleSaveClick)}>Save</Button>
                 <div>
                     {!formIsValid && errors.map((error, key) => (
                         <Message key={key} error header={error.header} content={error.message} />
@@ -475,7 +461,6 @@ const foodEditorMapStateToProps = (state) => {
         ingredientOptions: Selectors.ingredientOptions(state),
         selectedImageUrl: Selectors.selectedImageUrl(state),
         isSavingFood: Selectors.isSavingFood(state),
-        saveFoodResult: Selectors.saveFoodResult(state),
 
         isUploadingImage: Selectors.isUploadingImage(state),
         isDeletingImage: Selectors.isDeletingImage(state),

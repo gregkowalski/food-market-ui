@@ -8,16 +8,8 @@
 }
 
 .managefood-save {
-    display: flex;
     margin-bottom: 20px;
-}
-
-.managefood-save .ui.message {
-    cursor: pointer;
-    margin-top: 0;
-    margin-left: 10px;
-    padding-top: 0.6em;
-    padding-bottom: 0.6em;
+    width: 100px;
 }
 
 .managefood .ui.input {

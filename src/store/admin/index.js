@@ -3,6 +3,7 @@ import ErrorCodes from '../../services/ErrorCodes'
 import Url from '../../services/Url'
 import CognitoUtil from '../../services/Cognito/CognitoUtil'
 import { history } from '../../History'
+import { toast } from 'react-toastify'
 
 const ActionTypes = {
     ADMIN_REQUEST_INVITE_USER: 'ADMIN_REQUEST_INVITE_USER',
@@ -13,27 +14,6 @@ const ActionTypes = {
     ADMIN_RECEIVE_ACCEPT_INVITE_SUCCESS: 'ADMIN_RECEIVE_ACCEPT_INVITE_SUCCESS',
     ADMIN_RECEIVE_ACCEPT_INVITE_ERROR: 'ADMIN_RECEIVE_ACCEPT_INVITE_ERROR',
 };
-
-function requestInviteUser() {
-    return {
-        type: ActionTypes.ADMIN_REQUEST_INVITE_USER
-    };
-}
-
-function receiveInviteUserSuccess() {
-    return {
-        type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_SUCCESS,
-        receivedAt: Date.now()
-    };
-}
-
-function receiveInviteUserError(error) {
-    return {
-        type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_ERROR,
-        error,
-        receivedAt: Date.now()
-    };
-}
 
 function requestAcceptInvite() {
     return {
@@ -62,19 +42,19 @@ export const Actions = {
 
     inviteUser: (email) => {
         return (dispatch) => {
-
-            dispatch(requestInviteUser());
+            dispatch({ type: ActionTypes.ADMIN_REQUEST_INVITE_USER });
 
             return ApiClient.inviteUser(email)
                 .then(
-                    response => {
-                        dispatch(receiveInviteUserSuccess());
+                    () => {
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_SUCCESS });
+                        toast.success('User was invited successfully');
                     },
                     error => {
-                        dispatch(receiveInviteUserError(error));
-                    }
-                );
-        };
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_ERROR });
+                        toast.error(`User invitation error: ${error}`, { autoClose: false });
+                    });
+        }
     },
 
     acceptInvite: (invite_id) => {
@@ -105,7 +85,6 @@ export const Actions = {
 
 export const Selectors = {
     isInvitingUser: (state) => { return state.admin.isInvitingUser; },
-    inviteUserResult: (state) => { return state.admin.inviteUserResult; },
 
     isAcceptingInvite: (state) => { return state.admin.isAcceptingInvite; },
     acceptInviteResult: (state) => { return state.admin.acceptInviteResult; },
@@ -129,18 +108,11 @@ export const Reducers = {
             case ActionTypes.ADMIN_RECEIVE_INVITE_USER_SUCCESS:
                 return Object.assign({}, state, {
                     isInvitingUser: false,
-                    inviteUserResult: {
-                        code: ErrorCodes.SUCCESS
-                    }
                 });
 
             case ActionTypes.ADMIN_RECEIVE_INVITE_USER_ERROR:
                 return Object.assign({}, state, {
                     isInvitingUser: false,
-                    inviteUserResult: {
-                        code: ErrorCodes.ERROR,
-                        message: JSON.stringify(action.error)
-                    }
                 });
 
             case ActionTypes.ADMIN_REQUEST_ACCEPT_INVITE:
