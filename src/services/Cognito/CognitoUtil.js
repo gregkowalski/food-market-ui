@@ -4,7 +4,6 @@ import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import Config from '../../Config'
 import { Constants } from '../../Constants'
-import store from 'store'
 
 class CognitoUtil {
 
@@ -52,29 +51,6 @@ class CognitoUtil {
         }
         const isAdmin = groups.includes('admin');
         return isAdmin;
-    }
-
-    getSessionKey(jwt) {
-        return `CognitoIdentityServiceProvider.${Config.Cognito.ClientAppId}.${jwt['cognito:username']}.sessionExpiry`;
-    }
-
-    storeSessionExpiry() {
-        const jwt = this.getLoggedInUserJwt();
-        if (!jwt)
-            return;
-
-        const key = this.getSessionKey(jwt);
-        store.set(key, jwt.exp);
-    }
-
-    hasSessionExpiry() {
-        const jwt = this.getLoggedInUserJwt();
-        if (!jwt)
-            return false;
-
-        const key = this.getSessionKey(jwt);
-        const value = store.get(key);
-        return value !== undefined;
     }
 
     getLoggedInUserJwtToken() {

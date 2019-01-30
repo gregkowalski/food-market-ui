@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CognitoUtil from '../services/Cognito/CognitoUtil'
 import { Actions, Selectors } from '../store/currentUser'
 import Url from '../services/Url'
+import AutoLogoutService from '../services/AutoLogoutService'
 
 export default function (ComposedClass, options = {}) {
 
@@ -13,6 +14,9 @@ export default function (ComposedClass, options = {}) {
                 CognitoUtil.setLastPath(window.location.pathname);
                 CognitoUtil.redirectToLogin();
                 return;
+            }
+            else {
+                AutoLogoutService.init();
             }
 
             this.props.loadCurrentUser();

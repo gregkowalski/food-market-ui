@@ -1,23 +1,20 @@
 import CognitoUtil from './Cognito/CognitoUtil';
 
-const CheckIntervalMs = 10000 // in ms
+const CheckIntervalMs = 5000 // in ms
 
 class AutoLogoutService {
 
+    static intervalTimerId;
+
     init() {
-        setInterval(() => {
-            this.check();
-        }, CheckIntervalMs);
+        if (AutoLogoutService.intervalTimerId)
+            return;
+
+        AutoLogoutService.intervalTimerId = setInterval(this.check, CheckIntervalMs);
     }
 
-    initSession() {
-        CognitoUtil.storeSessionExpiry();
-    }
-
-    check() {
-        if (CognitoUtil.hasSessionExpiry()) {
-            CognitoUtil.redirectToLoginIfNoSession();
-        }
+    check = () => {
+        CognitoUtil.redirectToLoginIfNoSession();
     }
 }
 
