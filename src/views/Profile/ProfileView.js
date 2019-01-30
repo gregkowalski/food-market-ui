@@ -43,8 +43,7 @@ class ProfileView extends React.Component {
 const mapStateToProps = (state) => {
     return {
         user: Selectors.user(state),
-        isLoading: Selectors.isLoading(state),
-        apiError: Selectors.apiError(state),
+        isLoading: Selectors.isLoading(state)
     };
 };
 
@@ -58,7 +57,6 @@ ProfileView.propTypes = {
         username: PropTypes.string.isRequired,
     }),
     isLoading: PropTypes.bool.isRequired,
-    apiError: PropTypes.any,
     actions: PropTypes.shape({
         loadPublicUser: PropTypes.func.isRequired,
     })

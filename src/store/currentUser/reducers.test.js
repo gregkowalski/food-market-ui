@@ -5,7 +5,7 @@ describe('store/currentUser/Reducers', () => {
 
     const initialState = {
         isLoading: false,
-        isSaving: false
+        isAcceptingTerms: false
     };
 
     it('should have initial state', () => {
@@ -17,7 +17,7 @@ describe('store/currentUser/Reducers', () => {
     });
 
     it('should request current user', () => {
-        const state = { isLoading: false, apiError: null };
+        const state = { isLoading: false };
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.REQUEST_CURRENT_USER })
@@ -25,7 +25,7 @@ describe('store/currentUser/Reducers', () => {
     });
 
     it('should not modify state when requesting current user', () => {
-        const state = { isLoading: false, apiError: null };
+        const state = { isLoading: false };
         Reducer(Reducers.currentUser)
             .withState(state)
             .expect({ type: ActionTypes.REQUEST_CURRENT_USER })
@@ -37,7 +37,7 @@ describe('store/currentUser/Reducers', () => {
         const user = {};
         Reducer(Reducers.currentUser)
             .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user })
-            .toReturnState({ isLoading: false, isSaving: false, user });
+            .toReturnState({ isLoading: false, isAcceptingTerms: false, user });
     });
 
     it('should not modify state when receiveing current user with success', () => {
@@ -51,19 +51,17 @@ describe('store/currentUser/Reducers', () => {
     });
 
     it('should receive current user with error', () => {
-        const apiError = {};
         Reducer(Reducers.currentUser)
-            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
-            .toChangeInState({ isLoading: false, apiError });
+            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR })
+            .toChangeInState({ isLoading: false });
     });
 
     it('should not modify state when receiveing current user with error', () => {
         const state = { isLoading: true, user: null };
-        const apiError = {};
         Reducer(Reducers.currentUser)
             .withState(state)
-            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError })
-            .toChangeInState({ isLoading: false, apiError });
+            .expect({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR })
+            .toChangeInState({ isLoading: false });
         expect(state.isLoading).toEqual(true);
     });
 

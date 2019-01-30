@@ -92,14 +92,15 @@
     "deploy:test": "yarn run build:test && sh scripts/deploy_test.sh",
     "deploy:prod": "yarn run build:prod && sh scripts/deploy_prod.sh",
     "deploy:staging": "yarn run build:staging && sh scripts/deploy_staging.sh",
-    "test": "CI=true react-scripts test --env=jsdom --testPathIgnorePatterns=__tests__",
+    "test": "yarn run prepare:test && CI=true react-scripts test --env=jsdom --testPathIgnorePatterns=__tests__",
     "test:e2e": "CI=true react-scripts test --testPathPattern=__tests__",
-    "test:cover": "yarn run test --coverage",
-    "test:cover:text": "yarn run test --coverage --coverageReporters=text-summary",
+    "test:cover": "yarn run prepare:test && yarn run test --coverage",
+    "test:cover:text": "yarn run prepare:test && yarn run test --coverage --coverageReporters=text-summary",
     "analyze": "yarn run analyze:js",
     "analyze:js": "source-map-explorer build/static/js/main.*",
     "analyze:css": "source-map-explorer build/static/css/main.*",
     "eject": "react-scripts eject",
-    "prepare": "patch-package"
+    "prepare": "patch-package",
+    "prepare:test": "(cd node_modules/babel-preset-react-app && yarn install)"
   }
 }

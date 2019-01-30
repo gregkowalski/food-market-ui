@@ -1,25 +1,10 @@
 import ApiClient from '../../services/ApiClient'
-import * as ActionTypes from './actionTypes'
+import { toast } from 'react-toastify'
 
-function requestPublicUser() {
-    return {
-        type: ActionTypes.REQUEST_PUBLIC_USER
-    };
-}
-
-function receivePublicUserSuccess(user) {
-    return {
-        type: ActionTypes.RECEIVE_PUBLIC_USER_SUCCESS,
-        user,
-        receivedAt: Date.now()
-    };
-}
-
-function receivePublicUserError(apiError) {
-    return {
-        type: ActionTypes.RECEIVE_PUBLIC_USER_ERROR,
-        apiError,
-    };
+const ActionTypes = {
+    REQUEST_PUBLIC_USER: 'REQUEST_PUBLIC_USER',
+    RECEIVE_PUBLIC_USER_SUCCESS: 'RECEIVE_PUBLIC_USER_SUCCESS',
+    RECEIVE_PUBLIC_USER_ERROR: 'RECEIVE_PUBLIC_USER_ERROR',
 }
 
 export const Actions = {
@@ -27,16 +12,18 @@ export const Actions = {
     loadPublicUser: (userId) => {
         return (dispatch) => {
 
-            dispatch(requestPublicUser());
+            dispatch({ type: ActionTypes.REQUEST_PUBLIC_USER });
 
             return ApiClient.getPublicUser(userId)
                 .then(
                     response => {
                         const user = response.data;
-                        dispatch(receivePublicUserSuccess(user));
+                        dispatch({ type: ActionTypes.RECEIVE_PUBLIC_USER_SUCCESS, user });
                     },
                     error => {
-                        dispatch(receivePublicUserError(error));
+                        console.error(error);
+                        dispatch({ type: ActionTypes.RECEIVE_PUBLIC_USER_ERROR });
+                        toast.error(`Unable to load user profile, please try again later`);
                     }
                 );
         }
@@ -46,7 +33,6 @@ export const Actions = {
 export const Selectors = {
     user: (state) => state.publicUser.user,
     isLoading: (state) => state.publicUser.isLoading,
-    apiError: (state) => state.currentUser.apiError,
 }
 
 const initialState = {
@@ -61,7 +47,6 @@ export const Reducers = {
             case ActionTypes.REQUEST_PUBLIC_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    apiError: undefined
                 });
 
 
@@ -74,7 +59,6 @@ export const Reducers = {
             case ActionTypes.RECEIVE_PUBLIC_USER_ERROR:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    apiError: action.apiError
                 });
 
             default:

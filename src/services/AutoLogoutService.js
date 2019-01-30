@@ -1,6 +1,6 @@
 import CognitoUtil from './Cognito/CognitoUtil';
 
-const CheckIntervalMs = 5000 // in ms
+const CheckIntervalMs = 5000;
 
 class AutoLogoutService {
 

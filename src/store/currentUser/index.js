@@ -59,7 +59,8 @@ export const Actions = {
                         dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user });
                     },
                     error => {
-                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR, apiError: error });
+                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR });
+                        toast.error(`Unable to load current user, please refresh the page. Error: ${error}`, { autoClose: false });
                     }
                 );
         };
@@ -90,7 +91,6 @@ export const Selectors = {
     currentUser: (state) => state.currentUser.user,
     isLoading: (state) => state.currentUser.isLoading,
     isAcceptingTerms: (state) => state.currentUser.isAcceptingTerms,
-    apiError: (state) => state.currentUser.apiError,
 }
 
 const initialState = {
@@ -106,7 +106,6 @@ export const Reducers = {
             case ActionTypes.REQUEST_CURRENT_USER:
                 return Object.assign({}, state, {
                     isLoading: true,
-                    apiError: null
                 });
 
             case ActionTypes.RECEIVE_CURRENT_USER_SUCCESS:
@@ -118,7 +117,6 @@ export const Reducers = {
             case ActionTypes.RECEIVE_CURRENT_USER_ERROR:
                 return Object.assign({}, state, {
                     isLoading: false,
-                    apiError: action.apiError,
                 });
 
             case ActionTypes.CURRENT_USER_LOGOUT:

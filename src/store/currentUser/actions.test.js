@@ -41,7 +41,7 @@ describe('store/currentUser/Actions', () => {
 
     it('should return error when get current user from API fails', async () => {
         CognitoUtil.isLoggedIn.mockImplementation(() => true);
-        ApiClient.getUser.mockImplementation(() => Promise.reject('crapped out'));
+        ApiClient.getUser.mockImplementation(() => Promise.reject());
         const state = {
             currentUser: {
                 isLoading: false
@@ -50,9 +50,6 @@ describe('store/currentUser/Actions', () => {
         const dispatches = await Thunk(Actions.loadCurrentUser).withState(state).execute();
         expect(dispatches.length).toEqual(2);
         expect(dispatches[0].getAction()).toEqual({ type: ActionTypes.REQUEST_CURRENT_USER });
-        expect(dispatches[1].getAction()).toEqual(expect.objectContaining({
-            type: ActionTypes.RECEIVE_CURRENT_USER_ERROR,
-            apiError: 'crapped out'
-        }));
+        expect(dispatches[1].getAction()).toEqual(expect.objectContaining({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR }));
     });
 })
