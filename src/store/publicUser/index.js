@@ -20,10 +20,9 @@ export const Actions = {
                         const user = response.data;
                         dispatch({ type: ActionTypes.RECEIVE_PUBLIC_USER_SUCCESS, user });
                     },
-                    error => {
-                        console.error(error);
-                        dispatch({ type: ActionTypes.RECEIVE_PUBLIC_USER_ERROR });
+                    () => {
                         toast.error(`Unable to load user profile, please try again later`);
+                        dispatch({ type: ActionTypes.RECEIVE_PUBLIC_USER_ERROR });
                     }
                 );
         }

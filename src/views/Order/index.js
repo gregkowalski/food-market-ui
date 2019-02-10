@@ -16,8 +16,10 @@ import Url from '../../services/Url'
 import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
 import BillingInfo from './BillingInfo'
+import PaymentInfo from './PaymentInfo'
 import { ContactMethods } from '../../Enums';
 import Dom from '../../Dom'
+import DeliveryInfo from './DeliveryInfo';
 
 class Order extends React.Component {
 
@@ -224,8 +226,7 @@ class Order extends React.Component {
             return null;
         }
 
-        const { food, pickup, quantity, date, time, contactMethod, buyerPhone,
-            isOrderProcessing, paymentError } = this.props;
+        const { food, pickup, quantity, date, time, contactMethod, buyerPhone, isOrderProcessing } = this.props;
         if (!food) {
             return null;
         }
@@ -245,14 +246,18 @@ class Order extends React.Component {
                             </div>
                         </div>
                         <div className='order-container-width'>
-                            <ContactInfo pickup={pickup} contactMethod={contactMethod} buyerPhone={buyerPhone} />
+                            {!pickup &&
+                                <DeliveryInfo />
+                            }
+                            {/* <ContactInfo pickup={pickup} contactMethod={contactMethod} buyerPhone={buyerPhone} /> */}
+                            <PaymentInfo food={food} pickup={pickup} quantity={quantity} />
 
                             <BillingInfo onCheckoutRef={this.handleCheckoutRef}
                                 onBillingInfoChange={this.validateBillingInfo} />
 
                             {showErrorSummary && contactErrors.length > 0 &&
                                 <Message error>
-                                    <Message.Header>Contact Information Missing</Message.Header>
+                                    <Message.Header>Delivery Information Missing</Message.Header>
                                     <Message.List>
                                         {contactErrors.map((err, index) => {
                                             return (<Message.Item key={index}>{err.message}</Message.Item>);
@@ -270,11 +275,6 @@ class Order extends React.Component {
                                         })}
                                     </Message.List>
                                 </Message>
-                            }
-
-                            {paymentError &&
-                                <Message error header='Order Processing Error' icon='exclamation circle'
-                                    content={paymentError} />
                             }
 
                             <Segment>
@@ -296,7 +296,7 @@ class Order extends React.Component {
                                     <Icon name='lock' />Confirm and Pay
                                 </Button.Content>
                                 <Button.Content hidden>
-                                    <Icon name='lock' />${PriceCalc.getTotal(food.price, quantity)} {Constants.Currency}
+                                    <Icon name='lock' />${PriceCalc.getTotalPrice(food, quantity, pickup)} {Constants.Currency}
                                 </Button.Content>
                             </Button>
 
@@ -351,7 +351,6 @@ const mapStateToProps = (state) => {
 
         isOrderProcessing: Selectors.isOrderProcessing(state),
         isOrderCompleted: Selectors.isOrderCompleted(state),
-        paymentError: Selectors.paymentError(state),
         order_id: Selectors.order_id(state),
         initialValues: {
             pickup: Selectors.pickup(state),
@@ -386,7 +385,6 @@ Order.propTypes = {
     contactMethod: PropTypes.string,
     buyerPhone: PropTypes.string,
     buyerAddress: PropTypes.string,
-    paymentError: PropTypes.string,
     isOrderProcessing: PropTypes.bool,
     isOrderCompleted: PropTypes.bool,
     order_id: PropTypes.string,

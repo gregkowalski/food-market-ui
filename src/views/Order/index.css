@@ -8,7 +8,7 @@
 .order-all {
     background-color: #f5fcff;
     padding-top: 12px;
-    padding-bottom: 20px;    
+    padding-bottom: 20px;
 }
 
 .order-container {
@@ -63,22 +63,21 @@
     box-shadow: 1px 6px 10px 1px rgba(0, 0, 0, 0.24), 1px 8px 22px 1px rgba(0, 0, 0, 0.144);
 }
 
-.order-segment-user-agree-text.ui.checkbox > label {
+.order-segment-user-agree-text.ui.checkbox>label {
     font-size: 1.1em;
     margin: 10px;
-    width: 80%;    
+    width: 80%;
 }
 
 .order-right .input {
     width: 100%;
 }
 
-
 @media all and (max-width: 767px) {
-.order-body {
-    width: 92%;
-}
-.order-segment-user-agree-text.ui.checkbox > label {
-    width: 96%;    
-}
+    .order-body {
+        width: 92%;
+    }
+    .order-segment-user-agree-text.ui.checkbox>label {
+        width: 96%;
+    }
 }

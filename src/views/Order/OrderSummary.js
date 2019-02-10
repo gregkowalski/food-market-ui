@@ -17,7 +17,7 @@ const OrderSummary = ({ food, pickup, quantity, date, time }) => {
             </Header>
             <div className='order-summary-blurb'>
                 Review the details of your order request.
-                </div>
+            </div>
             <Divider />
             <div className='order-summary-header'>
                 <div>{food.title}</div>

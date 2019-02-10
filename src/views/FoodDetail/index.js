@@ -45,7 +45,6 @@ class FoodDetail extends React.Component {
         if (this.props.order_id) {
             actions.clearOrder();
         }
-        actions.clearOrder();
 
         const food_id = this.props.match.params.id;
         actions.loadFood(food_id)

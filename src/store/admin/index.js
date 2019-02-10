@@ -47,12 +47,12 @@ export const Actions = {
             return ApiClient.inviteUser(email)
                 .then(
                     () => {
-                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_SUCCESS });
                         toast.success('User was invited successfully');
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_SUCCESS });
                     },
                     error => {
-                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_ERROR });
                         toast.error(`User invitation error: ${error}`, { autoClose: false });
+                        dispatch({ type: ActionTypes.ADMIN_RECEIVE_INVITE_USER_ERROR });
                     });
         }
     },

@@ -1,0 +1,126 @@
+.payguest {
+    width: 100%;
+    display: table;
+    margin-bottom: 20px;
+}
+
+.payguest-email {
+    width: 65%;
+    display: table-cell;
+}
+
+.payguest-header {
+    font-size: 1.15em;
+}
+
+.payguest-email i.icon.check.circle {
+    font-size: 1.5em;
+    margin-left: 5px;
+    line-height: 2em;
+}
+
+.payguest-email .validatedfield {
+    width: 85%;
+}
+
+.payguest-email .validatedfield .ui.input {
+    width: 100%;
+}
+
+.payguest-email>.ui.input {
+    width: 85%;
+}
+
+.payguest-portion {
+    display: table-cell;
+    width: 35%;
+}
+
+.payguest-portion>div:first-child {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payguest-portion-selector {
+    display: flex;
+    justify-content: center;
+}
+
+.payguest-portion-selector .ui.icon.button:active {
+    box-shadow: 0px 0px 4px 4px #b60f95bf !important;
+    -webkit-box-shadow: 0px 0px 4px 4px rgba(182, 15, 149, 0.75) !important;
+}
+
+.payguest-portion-num {
+    line-height: 36px;
+    margin-left: 4px;
+    margin-right: 6px;
+    font-size: 1.5em;
+}
+
+.payguest-price {
+    line-height: 38px;
+    font-size: 1.2em;
+}
+
+.payguest-email-currentuser {
+    font-size: 1.2em;
+}
+
+@media all and (max-width: 1200px) and (min-width: 1075px) {
+    .payguest {
+        display: block;
+    }
+    .payguest-email {
+        width: 100%;
+        display: flex;
+    }
+    .payguest-email .validatedfield {
+        width: 100%;
+    }
+    .payguest-email>.ui.input {
+        width: 100%;
+    }
+    .payguest-portion {
+        display: block;
+        width: 100%;
+        padding-top: 15px;
+        padding-left: 10px;
+    }
+    .payguest-portion>div:first-child {
+        display: flex;
+        justify-content: space-between;
+    }
+    .payguest-portion-selector {
+        margin-left: 40%;
+    }
+}
+
+@media all and (max-width: 767px) {
+    .payguest {
+        display: block;
+    }
+    .payguest-email {
+        width: 100%;
+        display: flex;
+    }
+    .payguest-email .validatedfield {
+        width: 100%;
+    }
+    .payguest-email>.ui.input {
+        width: 100%;
+    }
+    .payguest-portion {
+        display: block;
+        width: 100%;
+        padding-top: 15px;
+        padding-left: 10px;
+    }
+    .payguest-portion>div:first-child {
+        display: flex;
+        justify-content: space-between;
+    }
+    .payguest-portion-selector {
+        margin-left: 40%;
+    }
+}

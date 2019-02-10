@@ -1,0 +1,113 @@
+.deliveryinfo {
+    font-size: 1.3em;
+    font-weight: 400;
+}
+
+.deliveryinfo>.ui.header {
+    color: #494949;
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-left: 5px;
+    line-height: 1.1;
+    padding-top: 10px;
+}
+
+.deliveryinfo-header {
+    font-size: 1em;
+    margin-left: 61px;
+    margin-top: -15px;
+    width: 79%;
+}
+
+/* Google Autocomplete box */
+
+.deliveryinfo-address {
+    width: 100%;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+    transition: none;
+    margin-top: 20px;
+    color: #444444;
+}
+
+.deliveryinfo-address>div:first-child {
+    margin-top: 23px;
+    font-size: 1.3em;
+}
+
+.deliveryinfo-address>div:first-child>span {
+    color: #b61095;
+    text-transform: uppercase;
+    font-size: .95em;
+    font-weight: 700;
+}
+
+.deliveryinfo-address>div:nth-child(2) {
+    font-size: 1.1em;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+.deliveryinfo-address .ui.error.message {
+    width: 100%;
+}
+
+.deliveryinfo-address input {
+    line-height: 1.21428571em;
+    font-weight: 400;
+    font-size: 1em;
+    font-family: 'Roboto';
+    padding: 9.5px 14px;
+    border-radius: .28571429rem;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    color: rgba(0, 0, 0, .87);
+}
+
+.deliveryinfo-address input::placeholder {
+    color: rgba(34, 36, 38, .3);
+}
+
+.deliveryinfo-address input:focus::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.deliveryinfo-address .error input::placeholder {
+    color: #e0b4b4;
+}
+
+.deliveryinfo-address .error input:focus::placeholder {
+    color: rgba(159, 58, 56, .65);
+}
+
+.pac-item {
+    font-size: 16px;
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.pac-item-query {
+    font-size: 16px;
+}
+
+.pac-icon {
+    margin-top: 5px;
+}
+
+/* .pac-logo:after {
+    display: none;
+} */
+
+/* End Google Autocomplete box */
+
+@media all and (max-width: 767px) {
+    .deliveryinfo-header {
+        width: 80%;
+        font-size: 1.15em;
+    }
+    .deliveryinfo-address input {
+        width: 100%;
+    }
+    .deliveryinfo-address>div:first-child>span {
+        font-weight: 500;
+    }
+}

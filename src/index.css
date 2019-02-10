@@ -1,5 +1,6 @@
 body {
     overflow-y: scroll;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .ui.page.modals.dimmer.transition.visible.active:not(.inverted) {
@@ -9,6 +10,7 @@ body {
 .ui.icon.message>.icon:not(.close) {
     font-size: 1.7em;
 }
+
 .ui.message {
     padding-left: 1em;
     padding-right: 1em;
@@ -40,7 +42,7 @@ body {
 .Toastify__toast--success {
     box-shadow: 0 0 0 1px #2b65ec inset, 0 0 0 0 transparent;
     /* background-color: #e0e8fd; */
-    background: linear-gradient(235deg, rgba(2,0,36,1) 0%, rgba(209,221,255,1) 0%, rgba(224,232,253,1) 65%);
+    background: linear-gradient(235deg, rgba(2, 0, 36, 1) 0%, rgba(209, 221, 255, 1) 0%, rgba(224, 232, 253, 1) 65%);
     color: #2b65ec;
     font-weight: 500;
 }

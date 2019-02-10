@@ -209,17 +209,13 @@ export const Actions = {
             return ApiClient.saveFood(foodDto)
                 .then(
                     () => {
-                        dispatch({
-                            type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS,
-                            food: foodDto
-                        });
                         toast.success('Food saved Successfully');
+                        dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_SUCCESS, food: foodDto });
                     },
                     error => {
-                        dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR });
-
                         const err = error.response.data.error;
                         toast.error(`Error saving food: ${err}`, { autoClose: false });
+                        dispatch({ type: ActionTypes.FOODMANAGER_RECEIVE_SAVE_FOOD_ERROR });
                     }
                 );
         }
@@ -260,19 +256,19 @@ export const Actions = {
             return ApiClient.deleteFood(food_id)
                 .then(
                     () => {
+                        toast.success('Food deleted successfully');
                         dispatch({
                             type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_SUCCESS,
                             food_id
                         });
-                        toast.success('Food deleted successfully');
                     },
                     error => {
                         const action = {
                             type: ActionTypes.FOODMANAGER_RECEIVE_DELETE_FOOD_ERROR,
                             error: error.response.data.error
                         };
-                        dispatch(action);
                         toast.error(`Food deleted successfully: ${action.error}`);
+                        dispatch(action);
                     }
                 );
         }
@@ -363,8 +359,8 @@ export const Actions = {
                             type: ActionTypes.FOODMANAGER_ADD_FOOD_RECEIVE_ERROR,
                             error: error.response.data.error
                         };
-                        dispatch(action);
                         toast.error(`Unable to delete food: ${action.error}`);
+                        dispatch(action);
                     }
                 );
         }

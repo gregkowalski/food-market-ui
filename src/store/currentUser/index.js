@@ -59,8 +59,8 @@ export const Actions = {
                         dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_SUCCESS, user });
                     },
                     error => {
-                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR });
                         toast.error(`Unable to load current user, please refresh the page. Error: ${error}`, { autoClose: false });
+                        dispatch({ type: ActionTypes.RECEIVE_CURRENT_USER_ERROR });
                     }
                 );
         };
@@ -78,9 +78,9 @@ export const Actions = {
                         history.push(Url.home());
                     },
                     error => {
-                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR });
                         const err = error && error.response && error.response.data && error.response.data.error;
                         toast.error(`Unable to accept terms at this time, please try again later. Error: ${err}`, { autoClose: false });
+                        dispatch({ type: ActionTypes.RECEIVE_ACCEPT_TERMS_ERROR });
                     }
                 );
         }

@@ -40,13 +40,13 @@ export const Actions = {
             return ApiClient.saveUser(user)
                 .then(
                     () => {
-                        dispatch({ type: ActionTypes.PROFILE_RECEIVE_SAVE_USER_SUCCESS, user });
                         toast.success('Profile saved successfully');
+                        dispatch({ type: ActionTypes.PROFILE_RECEIVE_SAVE_USER_SUCCESS, user });
                     },
                     error => {
                         const err = error && error.response && error.response.data && error.response.data.error;
-                        dispatch({ type: ActionTypes.PROFILE_RECEIVE_SAVE_USER_ERROR });
                         toast.error(`Profile not saved: ${err}`, { autoClose: false });
+                        dispatch({ type: ActionTypes.PROFILE_RECEIVE_SAVE_USER_ERROR });
                     }
                 );
         };
@@ -70,14 +70,14 @@ export const Actions = {
 
             return CognitoUtil.sendPhoneVerificationCode(phone).then(
                 () => {
-                    dispatch({ type: ActionTypes.PROFILE_SEND_CODE_SUCCESS });
                     if (showSuccessToast) {
                         toast.success(`Verification code sent successfully to ${phone}`);
                     }
+                    dispatch({ type: ActionTypes.PROFILE_SEND_CODE_SUCCESS });
                 },
                 error => {
-                    dispatch({ type: ActionTypes.PROFILE_SEND_CODE_ERROR });
                     toast.error(`Unable to send verification code to ${phone}: ${error && error.message}`, { autoClose: false });
+                    dispatch({ type: ActionTypes.PROFILE_SEND_CODE_ERROR });
                 });
         }
     },
@@ -93,13 +93,12 @@ export const Actions = {
                     return ApiClient.saveUser({ phone, phone_verified: true });
                 })
                 .then(() => {
-                    dispatch({ type: ActionTypes.PROFILE_VERIFY_CODE_SUCCESS, phone, phone_verified: true });
                     toast.success(`Phone updated successfully`);
+                    dispatch({ type: ActionTypes.PROFILE_VERIFY_CODE_SUCCESS, phone, phone_verified: true });
                 })
                 .catch(error => {
-                    console.error(error)
-                    dispatch({ type: ActionTypes.PROFILE_VERIFY_CODE_ERROR });
                     toast.error(`Unable to verify code: ${error && error.message}`, { autoClose: false });
+                    dispatch({ type: ActionTypes.PROFILE_VERIFY_CODE_ERROR });
                 })
         }
     },

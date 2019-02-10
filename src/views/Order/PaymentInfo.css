@@ -1,0 +1,54 @@
+.payinfo .ui.radio.checkbox {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+}
+
+.payinfo-option {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+
+.payinfo-share {
+    padding: 10px;
+}
+
+.payinfo-share-add>.ui.button {
+    background-color: #ffffff;
+    font-weight: 400;
+    margin-right: 15px;
+    color: #b61095;
+    border: 2px solid #b61095;
+}
+
+@media all and (max-width: 1200px) and (min-width: 1075px) {
+    .payinfo-share {
+        padding-left: 0;
+    }
+}
+
+@media all and (min-width: 768px) {
+    .payinfo-share-add>.ui.button:hover {
+        background-color: #b61095;
+        border: 2px solid #b61095;
+        color: #ffffff;
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media all and (max-width: 767px) {
+    .payinfo-share {
+        padding-left: 0;
+    }
+    .payinfo-share-add>.ui.button:active {
+        background-color: #b61095;
+        border: 2px solid #b61095;
+        color: #ffffff;
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 1px 6px 20px 1px rgba(0, 0, 0, 0.1);
+    }
+}

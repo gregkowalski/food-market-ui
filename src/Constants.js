@@ -16,7 +16,10 @@ export const Colors = {
     grey: '#424242',
     green: '#8ad7c64f',
     blue: '#2b65ec4f',
-    white: '#fff'
+    white: '#fff',
+    Alpha: {
+        purple: (alpha) => `${Colors.purple}${alpha}`
+    }
 }
 
 export const TagLines = [

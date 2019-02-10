@@ -27,9 +27,10 @@ const QuantitySelector = ({ food, quantity, onChange }) => {
             <div className='quantityselector-quantity'>
                 <div>How many orders?</div>
                 <div>
-                    <Button data-qa={Dom.FoodDetail.decrementQuantity} circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
+                    {/* an empty onTouchStart causes :active to work on mobile iOS */}
+                    <Button onTouchStart={() => { }} data-qa={Dom.FoodDetail.decrementQuantity} circular basic {...buttonProps(quantity <= min)} size='huge' icon='minus' onClick={handleQuantityDecrement} />
                     <div>{quantity}</div>
-                    <Button data-qa={Dom.FoodDetail.incrementQuantity} circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
+                    <Button onTouchStart={() => { }} data-qa={Dom.FoodDetail.incrementQuantity} circular basic {...buttonProps(quantity >= max)} size='huge' icon='plus' onClick={handleQuantityIncrement} />
                 </div>
             </div>
         </div>

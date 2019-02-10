@@ -8,10 +8,6 @@ import Util from '../../services/Util'
 
 class ContactInfo extends React.Component {
 
-    handleContactMethodChange = (e, { value }) => {
-        this.props.onContactMethodChange(value);
-    }
-
     render() {
         const { pickup, contactMethod } = this.props;
 

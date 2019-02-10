@@ -46,7 +46,19 @@ const configureStore = (options = {}) => {
     }
 
     // const searchFilter = createFilter('search', ['pickup', 'date']);
-    const orderFilter = createWhitelistFilter('order', ['pickup', 'date', 'time', 'quantity', 'contactMethod', 'email', 'buyerPhone', 'buyerAddress']);
+    const orderFilter = createWhitelistFilter('order',
+        [
+            'pickup',
+            'date',
+            'time',
+            'quantity',
+            'contactMethod',
+            'email',
+            'buyerPhone',
+            'buyerAddress',
+            'payOption',
+            'payGuests'
+        ]);
     const searchFilter = createWhitelistFilter('search', ['pickup', 'region', 'mapCenter', 'address', 'date']);
     const currentUserFilter = createBlacklistFilter('currentUser');
     const publicUserFilter = createBlacklistFilter('publicUser');
