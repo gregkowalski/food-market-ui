@@ -111,15 +111,15 @@ export const Actions = {
         }
     },
 
-    addPayGuest: () => {
+    addPayGuest: (arrayHelpers) => {
         return (dispatch) => {
-            dispatch({ type: ActionTypes.ORDER_PAYGUEST_ADD });
+            dispatch({ type: ActionTypes.ORDER_PAYGUEST_ADD, arrayHelpers });
         }
     },
 
-    removePayGuest: (index) => {
+    removePayGuest: (arrayHelpers, index) => {
         return (dispatch) => {
-            dispatch({ type: ActionTypes.ORDER_PAYGUEST_REMOVE, index });
+            dispatch({ type: ActionTypes.ORDER_PAYGUEST_REMOVE, arrayHelpers, index });
         }
     },
 
@@ -430,13 +430,17 @@ export const Reducers = {
                 });
 
             case ActionTypes.ORDER_PAYGUEST_ADD: {
-                const newPayGuests = [...state.payGuests, Object.assign({}, emptyPayGuest)];
+                const newPayGuest = Object.assign({}, emptyPayGuest);
+                action.arrayHelpers.push(newPayGuest);
+
+                const newPayGuests = [...state.payGuests, newPayGuest];
                 return Object.assign({}, state, {
                     payGuests: newPayGuests
                 });
             }
 
             case ActionTypes.ORDER_PAYGUEST_REMOVE: {
+                action.arrayHelpers.remove(action.index);
                 const newPayGuests = [
                     ...state.payGuests.slice(0, action.index),
                     ...state.payGuests.slice(action.index + 1),
@@ -459,6 +463,7 @@ export const Reducers = {
             }
 
             case ActionTypes.ORDER_PAYGUEST_PORTION_INCREASE: {
+
                 const payGuest = Object.assign({}, state.payGuests[action.index]);
                 if (payGuest.portion < 9) {
                     payGuest.portion++;

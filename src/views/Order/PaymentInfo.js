@@ -4,13 +4,12 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Actions, Selectors, PayOptions } from '../../store/order'
 import { Selectors as CurrentUserSelectors } from '../../store/currentUser'
-import { Field } from 'redux-form'
 import { Header, Segment, Radio, Input, Icon, Button, Divider } from 'semantic-ui-react'
 import './PaymentInfo.css'
 import PriceCalc from '../../services/PriceCalc'
 import { Colors } from '../../Constants'
-import { ValidatedField } from '../../components/Validation'
 import PaymentGuest from './PaymentGuest'
+import { Formik, FieldArray } from 'formik'
 
 class PaymentInfo extends React.Component {
 
@@ -59,63 +58,91 @@ class PaymentInfo extends React.Component {
             return style;
         }
 
-        return (
-            <Segment className='payinfo'>
-                <Header>How do you want to pay for this order?</Header>
-                <Radio
-                    style={selectedStyle(payOption === PayOptions.full)}
-                    label={payInFullLabel}
-                    name='payoption-group'
-                    value={PayOptions.full}
-                    checked={payOption === PayOptions.full}
-                    onChange={this.handlePayOptionChange} />
-                <Radio
-                    style={selectedStyle(payOption === PayOptions.split)}
-                    label={payPortionLabel}
-                    name='payoption-group'
-                    value={PayOptions.split}
-                    checked={payOption === PayOptions.split}
-                    onChange={this.handlePayOptionChange}
-                />
-                {payOption === PayOptions.split &&
-                    <div className='payinfo-share'>
-                        <PaymentGuest 
-                            // email={'YOU: ' + currentUser.email}
-                            email='Change your portion'
-                            amount={currentUserAmount}
-                            portion={currentUserPortion}
-                            onPortionUp={this.handleCurrentUserPortionUp}
-                            onPortionDown={this.handleCurrentUserPortionDown}
-                            isCurrentUser={true}
-                        />
-                        <Divider />
-                        <div className='payinfo-guest-header'>Enter email address(es):</div>
-                        <Divider hidden />
-                        {payGuests.map((payGuest, index) =>
-                            <div key={index}>
-                                <PaymentGuest
-                                    index={index} email={payGuest.email} amount={amounts[index]} portion={payGuest.portion}
-                                    onEmailChange={this.handleEmailChange}
-                                    onEmailRemove={this.handleEmailRemove}
-                                    onEmailAdd={this.handleEmailAdd}
-                                    onPortionUp={this.handlePortionUp}
-                                    onPortionDown={this.handlePortionDown}
-                                />
-                                {index + 1 < payGuests.length &&
-                                    <Divider section />
-                                }
-                            </div>
-                        )}
-                        <Divider />
-                        <div className='payinfo-share-add'>
-                            <Button onTouchStart={() => { }} onClick={this.handleEmailAdd}>
-                                <Icon name='plus' />
-                                Add another email
-                            </Button>
-                        </div>
+        const onSubmit = (values) => {
+            setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+            }, 500);
+        }
+
+        const renderPayGuests = (arrayHelpers, values) => {
+
+            const payGuests = values.payGuests.map((payGuest, index) => (
+                <div key={index}>
+                    <PaymentGuest
+                        index={index} email={payGuest.email} amount={amounts[index]} portion={payGuest.portion}
+                        onEmailChange={this.handleEmailChange}
+                        onEmailRemove={(index) => this.handleEmailRemove(arrayHelpers, index)}
+                        onPortionUp={this.handlePortionUp}
+                        onPortionDown={this.handlePortionDown}
+                    />
+                    {index + 1 < values.payGuests.length &&
+                        <Divider section />
+                    }
+                </div>)
+            );
+
+            return (
+                <div>
+                    {payGuests}
+
+                    <Divider />
+
+                    <div className='payinfo-share-add'>
+                        <Button onTouchStart={() => { }} onClick={() => this.handleEmailAdd(arrayHelpers)}>
+                            <Icon name='plus' />
+                            Add another email
+                        </Button>
                     </div>
-                }
-            </Segment>
+                </div>
+            );
+        }
+
+        const renderForm = ({ values, handleSubmit, handleBlur, handleChange }) => {
+            return (
+                <Segment className='payinfo'>
+                    <Header>How do you want to pay for this order?</Header>
+                    <Radio
+                        style={selectedStyle(payOption === PayOptions.full)}
+                        label={payInFullLabel}
+                        name='payoption-group'
+                        value={PayOptions.full}
+                        checked={payOption === PayOptions.full}
+                        onChange={this.handlePayOptionChange} />
+                    <Radio
+                        style={selectedStyle(payOption === PayOptions.split)}
+                        label={payPortionLabel}
+                        name='payoption-group'
+                        value={PayOptions.split}
+                        checked={payOption === PayOptions.split}
+                        onChange={this.handlePayOptionChange}
+                    />
+                    {payOption === PayOptions.split &&
+                        <div className='payinfo-share'>
+                            <PaymentGuest
+                                // email={'YOU: ' + currentUser.email}
+                                email='Change your portion'
+                                amount={currentUserAmount}
+                                portion={currentUserPortion}
+                                onPortionUp={this.handleCurrentUserPortionUp}
+                                onPortionDown={this.handleCurrentUserPortionDown}
+                                isCurrentUser={true}
+                            />
+                            <Divider />
+                            <div className='payinfo-guest-header'>Enter email address(es):</div>
+                            <Divider hidden />
+                            <FieldArray name='payGuests' render={(arrayHelpers) => renderPayGuests(arrayHelpers, values)} />
+                        </div>
+                    }
+                </Segment>
+            );
+        }
+
+        return (
+            <Formik
+                initialValues={{ payGuests: payGuests }}
+                onSubmit={onSubmit}
+                render={renderForm}
+            />
         );
     }
 
@@ -127,12 +154,12 @@ class PaymentInfo extends React.Component {
         this.props.actions.changePayGuestEmail(index, value);
     }
 
-    handleEmailRemove = (index) => {
-        this.props.actions.removePayGuest(index);
+    handleEmailRemove = (arrayHelpers, index) => {
+        this.props.actions.removePayGuest(arrayHelpers, index);
     }
 
-    handleEmailAdd = () => {
-        this.props.actions.addPayGuest();
+    handleEmailAdd = (arrayHelpers) => {
+        this.props.actions.addPayGuest(arrayHelpers);
     }
 
     handlePortionDown = (index) => {
