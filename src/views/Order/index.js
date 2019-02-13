@@ -2,13 +2,14 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { reduxForm, formValueSelector } from 'redux-form'
-import { Actions, Selectors } from '../../store/order'
+// import { reduxForm, formValueSelector } from 'redux-form'
+import { Actions, Selectors, PayOptions, EmptyPayGuest } from '../../store/order'
 import { Selectors as CurrentUserSelectors } from '../../store/currentUser'
 import PropTypes from 'prop-types'
 import { Button, Icon, Checkbox, Segment, Message } from 'semantic-ui-react'
 import './index.css'
 import { Constants } from '../../Constants'
+import { DeliveryOptions } from '../../Enums'
 import OrderHeader from '../../components/OrderHeader'
 import PriceCalc from '../../services/PriceCalc'
 import Util from '../../services/Util'
@@ -17,18 +18,13 @@ import OrderSummary from './OrderSummary'
 import ContactInfo from './ContactInfo'
 import BillingInfo from './BillingInfo'
 import PaymentInfo from './PaymentInfo'
-import { ContactMethods } from '../../Enums';
+import { ContactMethods } from '../../Enums'
 import Dom from '../../Dom'
-import DeliveryInfo from './DeliveryInfo';
+import DeliveryInfo from './DeliveryInfo'
+import { Formik } from 'formik'
+import FormikEffects from './FormikEffects'
 
 class Order extends React.Component {
-
-    state = {
-        acceptedTerms: false,
-        billing: {},
-        formErrors: {},
-        formErrorList: []
-    };
 
     componentWillMount() {
         let food_id = this.props.match.params.id;
@@ -44,7 +40,7 @@ class Order extends React.Component {
         // Validate the order here.  If no date, time, quantity has been selected then bail.
         // The user most likely navigated directly to this order page.
         const { date, time, quantity } = this.props;
-        if (date == null || time == null || quantity == null) {
+        if (!date || !time || !quantity) {
             this.props.history.push(Url.foodDetail(food_id));
             this.redirecting = true;
             return;
@@ -67,158 +63,10 @@ class Order extends React.Component {
             this.props.history.push(Url.foodOrderSuccess(food_id));
             this.redirecting = true;
         }
-
-        if (this.props.contactMethod !== nextProps.contactMethod) {
-            this.props.actions.contactMethodChanged(nextProps.contactMethod);
-        }
-
-        if (this.props.currentUser !== nextProps.currentUser) {
-            if (!this.props.buyerPhone && !nextProps.buyerPhone) {
-                this.props.change('buyerPhone', nextProps.currentUser.phone);
-            }
-        }
-
-        if (this.props.buyerPhone !== nextProps.buyerPhone) {
-            this.props.actions.buyerPhoneChanged(nextProps.buyerPhone);
-        }
-
-        if (this.props.buyerAddress !== nextProps.buyerAddress) {
-            this.props.actions.buyerAddressChanged(nextProps.buyerAddress);
-        }
-    }
-
-    handleOrderButtonClick = () => {
-        const { isOrderProcessing, touch } = this.props;
-
-        if (isOrderProcessing) {
-            console.log('Order is already processing...');
-            return;
-        }
-
-        // In case the user hasn't tried filling in the forms at all,
-        // we need to simulate that here.
-        touch('buyerPhone');
-        touch('buyerAddress');
-        touch('contactMethod');
-
-        if (!this.canSubmitOrder(true)) {
-            console.log('Order form validation failed.  Please correct your information and try again.');
-            this.setState({ showErrorSummary: true });
-            return;
-        }
-
-        const { billing } = this.state;
-        const cardName = billing.values.cardName.value;
-        this.props.actions.submitOrder(this.checkout.props.stripe, cardName, this.createOrderPayload());
-    }
-
-    canSubmitOrder(isValidating = false) {
-        const { acceptedTerms, billing } = this.state;
-        const { isOrderProcessing, valid } = this.props;
-
-        if (!acceptedTerms || (!isValidating && isOrderProcessing))
-            return false;
-
-        if (!valid) {
-            return false;
-        }
-
-        if (!billing.valid) {
-            return false;
-        }
-
-        return true;
-    }
-
-    createOrderPayload() {
-        const { currentUser } = this.props;
-        const { food, quantity, time, pickup, contactMethod, buyerPhone, buyerEmail, buyerAddress } = this.props;
-
-        const paymentAmount = PriceCalc.getPaymentAmount(food, quantity, pickup);
-        const order = {
-            food_id: food.food_id,
-            cook_user_id: food.user_id,
-            buyer_user_id: currentUser.user_id,
-            buyer_phone: buyerPhone,
-            buyer_email: buyerEmail,
-            buyer_address: buyerAddress,
-            delivery_option: pickup ? 'pickup' : 'delivery',
-            quantity: quantity,
-            handoff_start_date: time.handoff_start_date.toISOString(),
-            handoff_end_date: time.handoff_end_date.toISOString(),
-            contact_method: contactMethod,
-            amount: paymentAmount
-        };
-        return order;
     }
 
     handleCheckoutRef = (ref) => {
         this.checkout = ref;
-    }
-
-    validateBillingInfo = (values) => {
-        const errors = [];
-
-        if (values.cardNumber.error) {
-            errors.push({ header: 'Card number is invalid', message: values.cardNumber.error.message });
-        }
-        else if (!values.cardNumber.complete) {
-            errors.push({ header: 'Card number is required', message: 'Please enter your card number' });
-        }
-
-        if (values.cardExpiry.error) {
-            errors.push({ header: 'Card expiry is invalid', message: values.cardExpiry.error.message });
-        }
-        else if (!values.cardExpiry.complete) {
-            errors.push({ header: 'Card expiry is required', message: 'Please enter your card expiry date' });
-        }
-
-        if (values.cardCvc.error) {
-            errors.push({ header: 'Card security code is invalid', message: values.cardCvc.error.message });
-        }
-        else if (!values.cardCvc.complete) {
-            errors.push({ header: 'Card security code is required', message: 'Please enter your card security code' });
-        }
-
-        if (!values.cardName.complete) {
-            errors.push({ header: 'Card name is required', message: 'Please enter the name as it appears on your card' });
-        }
-
-        if (values.postalCode.error) {
-            errors.push({ header: 'Card postal code is invalid', message: values.postalCode.error.message });
-        }
-        else if (!values.postalCode.complete) {
-            errors.push({ header: 'Card postal code is required', message: 'Please enter your card postal code' });
-        }
-
-        const newState = {
-            billing: {
-                invalid: errors.length > 0,
-                valid: errors.length === 0,
-                values: values,
-                errors: errors
-            }
-        };
-
-        this.setState(newState);
-    }
-
-    getBillingErrors() {
-        const { billing } = this.state;
-        return billing.errors ? billing.errors : [];
-    }
-
-    getContactErrors() {
-        const { pickup, buyerAddress, buyerPhone, contactMethod } = this.props;
-        const errors = validate({ pickup, buyerAddress, buyerPhone, contactMethod });
-
-        const contactErrors = [];
-        for (const elementKey in errors) {
-            const error = errors[elementKey];
-            contactErrors.push(error);
-        }
-
-        return contactErrors;
     }
 
     render() {
@@ -226,14 +74,10 @@ class Order extends React.Component {
             return null;
         }
 
-        const { food, pickup, quantity, date, time, contactMethod, buyerPhone, isOrderProcessing } = this.props;
+        const { food, pickup, quantity, date, time, currentUser } = this.props;
         if (!food) {
             return null;
         }
-
-        const { acceptedTerms, showErrorSummary } = this.state;
-        const billingErrors = this.getBillingErrors();
-        const contactErrors = this.getContactErrors();
 
         return (
             <div className='order-all'>
@@ -245,91 +89,254 @@ class Order extends React.Component {
                                 <OrderSummary food={food} pickup={pickup} quantity={quantity} date={date} time={time} />
                             </div>
                         </div>
-                        <div className='order-container-width'>
-                            {!pickup &&
-                                <DeliveryInfo />
+                        <Formik initialValues={{
+                            pickup: pickup,
+                            acceptedTerms: false,
+                            buyerAddress: currentUser.address ? currentUser.address : '',
+                            payGuests: [Object.assign({}, EmptyPayGuest)],
+                            currentUserPayGuest: Object.assign({}, EmptyPayGuest, { email: currentUser.email }),
+                            payOption: PayOptions.full,
+                            billing: {
+                                cardNumber: {},
+                                cardName: {},
+                                cardExpiry: {},
+                                cardCvc: {},
+                                postalCode: {}
                             }
-                            {/* <ContactInfo pickup={pickup} contactMethod={contactMethod} buyerPhone={buyerPhone} /> */}
-                            <PaymentInfo food={food} pickup={pickup} quantity={quantity} />
-
-                            <BillingInfo onCheckoutRef={this.handleCheckoutRef}
-                                onBillingInfoChange={this.validateBillingInfo} />
-
-                            {showErrorSummary && contactErrors.length > 0 &&
-                                <Message error>
-                                    <Message.Header>Delivery Information Missing</Message.Header>
-                                    <Message.List>
-                                        {contactErrors.map((err, index) => {
-                                            return (<Message.Item key={index}>{err.message}</Message.Item>);
-                                        })}
-                                    </Message.List>
-                                </Message>
-                            }
-
-                            {showErrorSummary && billingErrors.length > 0 &&
-                                <Message error>
-                                    <Message.Header>Billing Information Missing</Message.Header>
-                                    <Message.List>
-                                        {billingErrors.map((err, index) => {
-                                            return (<Message.Item key={index}>{err.message}</Message.Item>);
-                                        })}
-                                    </Message.List>
-                                </Message>
-                            }
-
-                            <Segment>
-                                <Checkbox className='order-segment-user-agree-text'
-                                    data-qa={Dom.Order.userAgreeCheckbox}
-                                    label="I am over the age of 18 and I agree to this site's user and customer refund policies."
-                                    onChange={() => this.setState({ acceptedTerms: !acceptedTerms })}
-                                    checked={acceptedTerms} />
-                            </Segment>
-
-                            <Button className='order-confirm-continue-button'
-                                data-qa={Dom.Order.confirmButton}
-                                fluid
-                                animated='fade'
-                                disabled={!acceptedTerms}
-                                loading={isOrderProcessing}
-                                onClick={this.handleOrderButtonClick}>
-                                <Button.Content visible>
-                                    <Icon name='lock' />Confirm and Pay
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    <Icon name='lock' />${PriceCalc.getTotalPrice(food, quantity, pickup)} {Constants.Currency}
-                                </Button.Content>
-                            </Button>
-
-                        </div>
+                        }}
+                            onSubmit={this.submit}
+                            validate={this.validate}
+                            children={props => (
+                                <OrderForm {...props}
+                                    food={food}
+                                    pickup={pickup}
+                                    quantity={quantity}
+                                    onCheckoutRef={this.handleCheckoutRef}
+                                />
+                            )}
+                        />
                     </div>
                 </div>
-            </div >
+            </div>
+        );
+    }
+
+    submit = (values, actions) => {
+        const cardName = values.billing.cardName.value;
+        this.props.actions.submitOrder(this.checkout.props.stripe, cardName, this.createOrderPayload())
+            .then(() => {
+                actions.setSubmitting(false);
+            })
+            .catch(() => {
+                actions.setSubmitting(false);
+            });
+    }
+
+    createOrderPayload() {
+        const { currentUser, food, quantity, time, pickup, contactMethod, buyerAddress } = this.props;
+
+        const paymentAmount = PriceCalc.getPaymentAmount(food, quantity, pickup);
+        const order = {
+            food_id: food.food_id,
+            cook_user_id: food.user_id,
+            buyer_user_id: currentUser.user_id,
+            // buyer_phone: buyerPhone,
+            buyer_email: currentUser.email,
+            buyer_address: buyerAddress,
+            delivery_option: pickup ? DeliveryOptions.pickup : DeliveryOptions.delivery,
+            quantity: quantity,
+            handoff_start_date: time.handoff_start_date.toISOString(),
+            handoff_end_date: time.handoff_end_date.toISOString(),
+            contact_method: contactMethod,
+            amount: paymentAmount
+        };
+        return order;
+    }
+
+    validate = (values) => {
+
+        const errors = {};
+
+        if (!values.pickup) {
+            if (!values.buyerAddress) {
+                errors.buyerAddress = { header: 'Delivery address is required', message: 'Please enter your delivery address' };
+            }
+        }
+
+        if (values.payOption === PayOptions.split) {
+            for (const key in values.payGuests) {
+                const payGuest = values.payGuests[key];
+                if (!payGuest.email) {
+                    errors[`payGuests.${key}.email`] = { type: 'empty', message: 'Please enter an email' };
+                }
+                else if (!Util.validateEmail(payGuest.email)) {
+                    errors[`payGuests.${key}.email`] = { type: 'invalid', message: 'Please enter a valid email' };
+                }
+            }
+        }
+
+        const billingErrors = [];
+
+        if (values.billing.cardNumber.error) {
+            billingErrors.push({ header: 'Card number is invalid', message: values.cardNumber.error.message });
+        }
+        else if (!values.billing.cardNumber.complete) {
+            billingErrors.push({ header: 'Card number is required', message: 'Please enter your card number' });
+        }
+
+        if (values.billing.cardExpiry.error) {
+            billingErrors.push({ header: 'Card expiry is invalid', message: values.cardExpiry.error.message });
+        }
+        else if (!values.billing.cardExpiry.complete) {
+            billingErrors.push({ header: 'Card expiry is required', message: 'Please enter your card expiry date' });
+        }
+
+        if (values.billing.cardCvc.error) {
+            billingErrors.push({ header: 'Card security code is invalid', message: values.cardCvc.error.message });
+        }
+        else if (!values.billing.cardCvc.complete) {
+            billingErrors.push({ header: 'Card security code is required', message: 'Please enter your card security code' });
+        }
+
+        if (!values.billing.cardName.complete) {
+            billingErrors.push({ header: 'Card name is required', message: 'Please enter the name as it appears on your card' });
+        }
+
+        if (values.billing.postalCode.error) {
+            billingErrors.push({ header: 'Card postal code is invalid', message: values.postalCode.error.message });
+        }
+        else if (!values.billing.postalCode.complete) {
+            billingErrors.push({ header: 'Card postal code is required', message: 'Please enter your card postal code' });
+        }
+
+        if (billingErrors.length > 0) {
+            errors.billing = billingErrors;
+        }
+
+        return errors;
+    }
+}
+
+class OrderForm extends React.Component {
+
+    handleBillingInfoChange = (values) => {
+        const { setFieldValue } = this.props;
+        setFieldValue('billing', values);
+    }
+
+    handleAcceptTermsClick = () => {
+        const { values, setFieldValue } = this.props;
+        setFieldValue('acceptedTerms', !values.acceptedTerms);
+    }
+
+    updatePayGuestAmounts = (values) => {
+        const { food, pickup, quantity, setFieldValue } = this.props;
+        const { currentUserPayGuest, payGuests } = values;
+
+        const totalAmount = PriceCalc.getTotalPrice(food, quantity, pickup);
+        const totalPortions = currentUserPayGuest.portion + payGuests.reduce((total, payGuest) => total + payGuest.portion, 0);
+        const amount = totalAmount / totalPortions;
+        currentUserPayGuest.amount = amount * currentUserPayGuest.portion;
+        payGuests.forEach(payGuest => {
+            payGuest.amount = payGuest.portion * amount;
+        });
+        setFieldValue('payGuests', payGuests);
+        setFieldValue('currentUserPayGuest', currentUserPayGuest);
+    }
+
+    hasMissingEmails(errors) {
+        for (const key in errors) {
+            if (key.startsWith('payGuests'))
+                return true;
+        }
+
+        return false;
+    }
+
+    render() {
+        const { food, pickup, quantity, onCheckoutRef, ...form } = this.props;
+        const { values, errors, handleSubmit, isSubmitting, submitCount } = form;
+
+        let currentUserAmount;
+        let hasMissingEmails = false;
+        if (values.payOption === PayOptions.full) {
+            currentUserAmount = PriceCalc.getTotalPrice(food, quantity, pickup);
+        }
+        else {
+            currentUserAmount = values.currentUserPayGuest.amount.toFixed(2);
+            hasMissingEmails = submitCount > 0 && this.hasMissingEmails(errors);
+        }
+
+        return (
+            <div className='order-container-width'>
+
+                <FormikEffects onChange={this.updatePayGuestAmounts} />
+
+                {!pickup &&
+                    <DeliveryInfo />
+                }
+                {/* <ContactInfo pickup={pickup} contactMethod={contactMethod} buyerPhone={buyerPhone} /> */}
+                <PaymentInfo food={food} pickup={pickup} quantity={quantity} form={form} />
+
+                <BillingInfo onCheckoutRef={onCheckoutRef} onBillingInfoChange={this.handleBillingInfoChange} />
+
+                {submitCount > 0 && errors && errors.buyerAddress &&
+                    <Message error>
+                        <Message.Header>Delivery Information Missing</Message.Header>
+                        <Message.List>
+                            <Message.Item>{errors.buyerAddress.message}</Message.Item>
+                        </Message.List>
+                    </Message>
+                }
+
+                {submitCount > 0 && hasMissingEmails &&
+                    <Message error>
+                        <Message.Header>Payment Information Missing</Message.Header>
+                        <Message.List>
+                            <Message.Item>Missing or invalid payment guest emails</Message.Item>
+                        </Message.List>
+                    </Message>
+                }
+
+                {submitCount > 0 && errors && errors.billing && errors.billing.length > 0 &&
+                    <Message error>
+                        <Message.Header>Billing Information Missing</Message.Header>
+                        <Message.List>
+                            {errors.billing.map((err, index) => {
+                                return (<Message.Item key={index}>{err.message}</Message.Item>);
+                            })}
+                        </Message.List>
+                    </Message>
+                }
+
+                <Segment>
+                    <Checkbox className='order-segment-user-agree-text'
+                        data-qa={Dom.Order.userAgreeCheckbox}
+                        label="I am over the age of 18 and I agree to this site's user and customer refund policies."
+                        onChange={this.handleAcceptTermsClick}
+                        checked={values.acceptedTerms} />
+                </Segment>
+
+                <Button className='order-confirm-continue-button'
+                    data-qa={Dom.Order.confirmButton}
+                    fluid
+                    animated='fade'
+                    disabled={!values.acceptedTerms}
+                    loading={isSubmitting}
+                    onClick={handleSubmit}>
+                    <Button.Content visible>
+                        <Icon name='lock' />Confirm and Pay
+                    </Button.Content>
+                    <Button.Content hidden>
+                        <Icon name='lock' />${currentUserAmount} {Constants.Currency}
+                    </Button.Content>
+                </Button>
+
+            </div>
         );
     }
 }
 
-const validate = (values) => {
-    const errors = {}
-
-    if (values.contactMethod === ContactMethods.phone) {
-        if (!values.buyerPhone) {
-            errors.buyerPhone = { header: 'Phone is required', message: 'Please enter your phone number' };
-        }
-        else if (!Util.validatePhoneNumber(values.buyerPhone)) {
-            errors.buyerPhone = { header: 'Invalid phone number', message: 'Please enter your phone number' };
-        }
-    }
-
-    if (!values.pickup) {
-        if (!values.buyerAddress) {
-            errors.buyerAddress = { header: 'Delivery address is required', message: 'Please enter your delivery address' };
-        }
-    }
-
-    return errors;
-}
-
-const formSelector = formValueSelector('order');
 const mapStateToProps = (state) => {
     return {
         currentUser: CurrentUserSelectors.currentUser(state),
@@ -341,23 +348,8 @@ const mapStateToProps = (state) => {
         date: Selectors.date(state),
         time: Selectors.time(state),
         quantity: Selectors.quantity(state),
-
-        // buyerPhone: Selectors.buyerPhone(state),
-        // buyerAddress: Selectors.buyerAddress(state),
-        // contactMethod: Selectors.contactMethod(state),
-        buyerPhone: formSelector(state, 'buyerPhone'),
-        buyerAddress: formSelector(state, 'buyerAddress'),
-        contactMethod: formSelector(state, 'contactMethod'),
-
         isOrderProcessing: Selectors.isOrderProcessing(state),
-        isOrderCompleted: Selectors.isOrderCompleted(state),
         order_id: Selectors.order_id(state),
-        initialValues: {
-            pickup: Selectors.pickup(state),
-            buyerAddress: Selectors.buyerAddress(state),
-            buyerPhone: Selectors.buyerPhone(state),
-            contactMethod: Selectors.contactMethod(state),
-        },
     };
 };
 
@@ -382,11 +374,7 @@ Order.propTypes = {
         handoff_end_date: PropTypes.object
     }),
     quantity: PropTypes.number.isRequired,
-    contactMethod: PropTypes.string,
-    buyerPhone: PropTypes.string,
-    buyerAddress: PropTypes.string,
     isOrderProcessing: PropTypes.bool,
-    isOrderCompleted: PropTypes.bool,
     order_id: PropTypes.string,
 
     actions: PropTypes.shape({
@@ -400,5 +388,4 @@ Order.propTypes = {
     }).isRequired
 }
 
-const form = reduxForm({ form: 'order', validate })(Order);
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(form));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Order));

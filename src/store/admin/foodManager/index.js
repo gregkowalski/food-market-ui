@@ -90,8 +90,7 @@ export const Actions = {
                         const url = response.data.signedUrl;
                         const assetUrl = response.data.assetUrl;
                         try {
-                            const data = await axios.delete(url)
-                            console.log(data);
+                            await axios.delete(url);
 
                             updateFormValueFunc(assetUrl);
                             dispatch({ type: ActionTypes.FOODMANAGER_DELETE_IMAGE_RECEIVE_SUCCESS, assetUrl });

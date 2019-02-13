@@ -1,8 +1,8 @@
 import React from 'react'
-import { Field } from 'redux-form'
 import { Header, Segment, Icon } from 'semantic-ui-react'
 import './DeliveryInfo.css'
-import { ValidatedAutocomplete } from '../../components/Validation'
+import { Field } from 'formik'
+import AutocompleteField from './AutocompleteField'
 
 class DeliveryInfo extends React.Component {
 
@@ -16,8 +16,10 @@ class DeliveryInfo extends React.Component {
                 <div className='deliveryinfo-address'>
                         <div>I chose <span>delivery</span> for my order: </div>
                         <div>Where will the food delivered to?</div>
-                        <Field name='buyerAddress' autoComplete='buyerAddress' component={ValidatedAutocomplete}
-                            type='text' placeholder='Your delivery address' />
+                        <Field name='buyerAddress'
+                            component={AutocompleteField}
+                            autoComplete='buyerAddress'
+                            placeholder='Your delivery address' />
                     </div>
 
             </Segment>

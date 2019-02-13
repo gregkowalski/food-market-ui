@@ -2,194 +2,35 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Actions, Selectors, PayOptions } from '../../store/order'
+import { Actions, Selectors, PayOptions, EmptyPayGuest } from '../../store/order'
 import { Selectors as CurrentUserSelectors } from '../../store/currentUser'
-import { Header, Segment, Radio, Input, Icon, Button, Divider } from 'semantic-ui-react'
+import { Header, Segment, Radio, Icon, Button, Divider, Message } from 'semantic-ui-react'
 import './PaymentInfo.css'
 import PriceCalc from '../../services/PriceCalc'
 import { Colors } from '../../Constants'
 import PaymentGuest from './PaymentGuest'
-import { Formik, FieldArray } from 'formik'
+import { FieldArray, Field } from 'formik'
+import PortionUpButton from './PortionUpButton'
+import PortionDownButton from './PortionDownButton'
 
 class PaymentInfo extends React.Component {
 
-    state = {
-        currentUserPortion: 1
-    };
-
     render() {
-
-        const { food, quantity, pickup } = this.props;
-        const { currentUserPortion } = this.state;
-
-        const { payOption, payGuests } = this.props;
+        const { food, quantity, pickup, currentUser, form } = this.props;
+        if (!food || !currentUser)
+            return null;
 
         const totalAmount = PriceCalc.getTotalPrice(food, quantity, pickup);
-        const amount = totalAmount / (currentUserPortion + payGuests.reduce((total, payGuest) => total + payGuest.portion, 0));
-        const currentUserAmount = amount * currentUserPortion;
-        const amounts = payGuests.map(payGuest => payGuest.portion * amount);
-
-        const payInFullLabel = (
-            <label>
-                <div className='payinfo-option'>
-                    <div>Pay in full</div>
-                    <div>${totalAmount}</div>
-                </div>
-            </label>
-        );
-
-        const payPortionLabel = (
-            <label>
-                <div className='payinfo-option'>
-                    <div>Split order</div>
-                    {payOption === PayOptions.split &&
-                        <div>Your portion: ${currentUserAmount.toFixed(2)}</div>
-                    }
-                </div>
-            </label>
-        );
-
-        const selectedStyle = (isSelected) => {
-            const style = {};
-            if (isSelected) {
-                style.backgroundColor = Colors.Alpha.purple('10');
-                style.border = `solid 2px ${Colors.Alpha.purple('80')}`;
-            }
-            return style;
-        }
-
-        const onSubmit = (values) => {
-            setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-            }, 500);
-        }
-
-        const renderPayGuests = (arrayHelpers, values) => {
-
-            const payGuests = values.payGuests.map((payGuest, index) => (
-                <div key={index}>
-                    <PaymentGuest
-                        index={index} email={payGuest.email} amount={amounts[index]} portion={payGuest.portion}
-                        onEmailChange={this.handleEmailChange}
-                        onEmailRemove={(index) => this.handleEmailRemove(arrayHelpers, index)}
-                        onPortionUp={this.handlePortionUp}
-                        onPortionDown={this.handlePortionDown}
-                    />
-                    {index + 1 < values.payGuests.length &&
-                        <Divider section />
-                    }
-                </div>)
-            );
-
-            return (
-                <div>
-                    {payGuests}
-
-                    <Divider />
-
-                    <div className='payinfo-share-add'>
-                        <Button onTouchStart={() => { }} onClick={() => this.handleEmailAdd(arrayHelpers)}>
-                            <Icon name='plus' />
-                            Add another email
-                        </Button>
-                    </div>
-                </div>
-            );
-        }
-
-        const renderForm = ({ values, handleSubmit, handleBlur, handleChange }) => {
-            return (
-                <Segment className='payinfo'>
-                    <Header>How do you want to pay for this order?</Header>
-                    <Radio
-                        style={selectedStyle(payOption === PayOptions.full)}
-                        label={payInFullLabel}
-                        name='payoption-group'
-                        value={PayOptions.full}
-                        checked={payOption === PayOptions.full}
-                        onChange={this.handlePayOptionChange} />
-                    <Radio
-                        style={selectedStyle(payOption === PayOptions.split)}
-                        label={payPortionLabel}
-                        name='payoption-group'
-                        value={PayOptions.split}
-                        checked={payOption === PayOptions.split}
-                        onChange={this.handlePayOptionChange}
-                    />
-                    {payOption === PayOptions.split &&
-                        <div className='payinfo-share'>
-                            <PaymentGuest
-                                // email={'YOU: ' + currentUser.email}
-                                email='Change your portion'
-                                amount={currentUserAmount}
-                                portion={currentUserPortion}
-                                onPortionUp={this.handleCurrentUserPortionUp}
-                                onPortionDown={this.handleCurrentUserPortionDown}
-                                isCurrentUser={true}
-                            />
-                            <Divider />
-                            <div className='payinfo-guest-header'>Enter email address(es):</div>
-                            <Divider hidden />
-                            <FieldArray name='payGuests' render={(arrayHelpers) => renderPayGuests(arrayHelpers, values)} />
-                        </div>
-                    }
-                </Segment>
-            );
-        }
 
         return (
-            <Formik
-                initialValues={{ payGuests: payGuests }}
-                onSubmit={onSubmit}
-                render={renderForm}
-            />
+            <MainForm {...form} totalAmount={totalAmount} />
         );
-    }
-
-    handlePayOptionChange = (e, { value }) => {
-        this.props.actions.selectPayOption(value);
-    }
-
-    handleEmailChange = (index, value) => {
-        this.props.actions.changePayGuestEmail(index, value);
-    }
-
-    handleEmailRemove = (arrayHelpers, index) => {
-        this.props.actions.removePayGuest(arrayHelpers, index);
-    }
-
-    handleEmailAdd = (arrayHelpers) => {
-        this.props.actions.addPayGuest(arrayHelpers);
-    }
-
-    handlePortionDown = (index) => {
-        this.props.actions.decreasePayGuestPortion(index);
-    }
-
-    handlePortionUp = (index) => {
-        this.props.actions.increasePayGuestPortion(index);
-    }
-
-    handleCurrentUserPortionUp = () => {
-        const { currentUserPortion } = this.state;
-        if (currentUserPortion < 9) {
-            this.setState({ currentUserPortion: currentUserPortion + 1 });
-        }
-    }
-
-    handleCurrentUserPortionDown = () => {
-        const { currentUserPortion } = this.state;
-        if (currentUserPortion > 1) {
-            this.setState({ currentUserPortion: currentUserPortion - 1 });
-        }
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         currentUser: CurrentUserSelectors.currentUser(state),
-        payOption: Selectors.payOption(state),
-        payGuests: Selectors.payGuests(state)
     };
 };
 
@@ -204,9 +45,190 @@ PaymentInfo.propTypes = {
     }),
     pickup: PropTypes.bool.isRequired,
     quantity: PropTypes.number.isRequired,
-    payOption: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentInfo);
 
+const MainForm = ({ totalAmount, values }) => {
 
+    const { currentUserPayGuest, payOption } = values;
+    return (
+        <Segment className='payinfo'>
+            <Header>How do you want to pay for this order?</Header>
+            <PayOptionField name='payOption' totalAmount={totalAmount} userAmount={currentUserPayGuest.amount} />
+
+            {payOption === PayOptions.split &&
+                <div className='payinfo-share'>
+                    <CurrentUserPaymentField name='currentUserPayGuest' />
+
+                    <Divider />
+                    <div className='payinfo-guest-header'>Enter email address(es):</div>
+                    <Divider hidden />
+                    <PayGuestsFieldArray name='payGuests' payGuests={values.payGuests} />
+                </div>
+            }
+        </Segment>
+    );
+}
+
+const PayGuestsFieldArray = ({ name, payGuests }) => {
+    return (
+        <FieldArray name={name} render={(arrayHelpers) => {
+
+            const payGuestsComponentList = payGuests.map((payGuest, index) => {
+
+                const handleEmailRemove = () => {
+                    arrayHelpers.remove(index);
+                }
+
+                return (
+                    <div key={index}>
+                        <PaymentGuest
+                            index={index}
+                            payGuest={payGuest}
+                            arrayHelpers={arrayHelpers}
+                            onEmailRemove={handleEmailRemove}
+                        />
+                        {index + 1 < payGuests.length &&
+                            <Divider section />
+                        }
+                    </div>
+                );
+            });
+
+            const handleEmailAdd = () => {
+                arrayHelpers.push(Object.assign({}, EmptyPayGuest));
+            }
+
+            return (
+                <div>
+                    {payGuestsComponentList}
+
+                    <Divider />
+
+                    <div className='payinfo-share-add'>
+                        {/* an empty onTouchStart causes :active to work on mobile iOS */}
+                        <Button onTouchStart={() => { }} onClick={handleEmailAdd}>
+                            <Icon name='plus' />
+                            Add another email
+                    </Button>
+                    </div>
+                </div>
+            );
+        }} />
+    );
+}
+
+const CurrentUserPaymentField = ({ name }) => {
+    return (
+        <Field name={name} render={({ field, form }) => {
+
+            const payGuest = field.value;
+
+            const handlePortionUp = () => {
+                if (payGuest.portion < 9) {
+                    form.setFieldValue(`${name}.portion`, payGuest.portion + 1);
+                }
+            }
+
+            const handlePortionDown = () => {
+                if (payGuest.portion > 1) {
+                    form.setFieldValue(`${name}.portion`, payGuest.portion - 1);
+                }
+            }
+
+            return (
+                <CurrentUserPayment
+                    payGuest={payGuest}
+                    onPortionUp={handlePortionUp}
+                    onPortionDown={handlePortionDown}
+                />
+            );
+        }} />
+    )
+}
+const CurrentUserPayment = ({ onPortionUp, onPortionDown, payGuest }) => {
+    return (
+        <div className='payguest'>
+            <div className='payguest-email'>
+                <div className='payguest-header'>Change your portion</div>
+            </div>
+            <div className='payguest-portion'>
+                <div>
+                    <div className='payguest-portion-selector'>
+                        <PortionDownButton onClick={onPortionDown} portion={payGuest.portion} />
+                        <div className='payguest-portion-num'>{payGuest.portion}</div>
+                        <PortionUpButton onClick={onPortionUp} portion={payGuest.portion} />
+                    </div>
+                    <div className='payguest-price'>${payGuest.amount.toFixed(2)}</div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const PayOptionField = ({ name, totalAmount, userAmount }) => {
+
+    return (
+        <Field name={name} render={({ field, form }) => {
+
+            const payOption = field.value;
+
+            const payInFullLabel = (
+                <label>
+                    <div className='payinfo-option'>
+                        <div>Pay in full</div>
+                        <div>${totalAmount}</div>
+                    </div>
+                </label>
+            );
+
+            const payPortionLabel = (
+                <label>
+                    <div className='payinfo-option'>
+                        <div>Split order</div>
+                        {payOption === PayOptions.split &&
+                            <div>Your portion: ${userAmount.toFixed(2)}</div>
+                        }
+                    </div>
+                </label>
+            );
+
+            const selectedStyle = (isSelected) => {
+                const style = {};
+                if (isSelected) {
+                    style.backgroundColor = Colors.Alpha.purple('10');
+                    style.border = `solid 2px ${Colors.Alpha.purple('80')}`;
+                }
+                return style;
+            }
+
+            const handlePayOptionChange = (e, { value }) => {
+                form.setFieldValue(name, value);
+            }
+
+            return (
+                <div>
+                    {form.touched && form.errors && form.errors.payOption &&
+                        <Message error content={form.errors.payOption} icon='exclamation circle' />
+                    }
+                    <Radio
+                        style={selectedStyle(payOption === PayOptions.full)}
+                        label={payInFullLabel}
+                        name='payoption-group'
+                        value={PayOptions.full}
+                        checked={payOption === PayOptions.full}
+                        onChange={handlePayOptionChange} />
+                    <Radio
+                        style={selectedStyle(payOption === PayOptions.split)}
+                        label={payPortionLabel}
+                        name='payoption-group'
+                        value={PayOptions.split}
+                        checked={payOption === PayOptions.split}
+                        onChange={handlePayOptionChange}
+                    />
+                </div>
+            );
+        }} />
+    )
+}

@@ -2,7 +2,9 @@ import * as SearchActionTypes from '../search/actionTypes'
 import ApiClient from '../../services/ApiClient'
 import { ContactMethods } from '../../Enums';
 import ApiObjectMapper from '../../services/ApiObjectMapper';
+import Url from '../../services/Url';
 import { toast } from 'react-toastify'
+import { history } from '../../History'
 
 const ActionTypes = {
     SELECT_PICKUP: 'SELECT_PICKUP',
@@ -36,6 +38,11 @@ const ActionTypes = {
     ORDER_PAYGUEST_PORTION_DECREASE: 'ORDER_PAYGUEST_PORTION_DECREASE',
 }
 
+export const EmptyPayGuest = {
+    email: '',
+    portion: 1,
+    amount: 0
+};
 
 export const PayOptions = {
     full: 'full',
@@ -111,15 +118,15 @@ export const Actions = {
         }
     },
 
-    addPayGuest: (arrayHelpers) => {
+    addPayGuest: () => {
         return (dispatch) => {
-            dispatch({ type: ActionTypes.ORDER_PAYGUEST_ADD, arrayHelpers });
+            dispatch({ type: ActionTypes.ORDER_PAYGUEST_ADD });
         }
     },
 
-    removePayGuest: (arrayHelpers, index) => {
+    removePayGuest: (index) => {
         return (dispatch) => {
-            dispatch({ type: ActionTypes.ORDER_PAYGUEST_REMOVE, arrayHelpers, index });
+            dispatch({ type: ActionTypes.ORDER_PAYGUEST_REMOVE, index });
         }
     },
 
@@ -202,7 +209,7 @@ export const Actions = {
 
             dispatch({ type: ActionTypes.SUBMIT_ORDER });
 
-            stripe.createSource(
+            return stripe.createSource(
                 {
                     type: 'card',
                     amount: order.amount,
@@ -229,6 +236,7 @@ export const Actions = {
                             type: ActionTypes.SUBMIT_ORDER_SUCCESS,
                             order_id: response.data.order_id
                         });
+                        history.push(Url.foodOrderSuccess(order.food_id));
                     },
                     ex => {
                         let paymentError = 'Payment failed.'
@@ -273,11 +281,6 @@ export const Selectors = {
     payGuests: state => { return state.order.payGuests; },
 }
 
-const emptyPayGuest = {
-    email: '',
-    portion: 1
-};
-
 const initialState = {
     isFoodLoading: false,
     isCookLoading: false,
@@ -293,7 +296,7 @@ const initialState = {
     isOrderProcessing: false,
 
     payOption: PayOptions.full,
-    payGuests: [Object.assign({}, emptyPayGuest)]
+    payGuests: [Object.assign({}, EmptyPayGuest)]
 };
 
 export const Reducers = {
@@ -430,9 +433,7 @@ export const Reducers = {
                 });
 
             case ActionTypes.ORDER_PAYGUEST_ADD: {
-                const newPayGuest = Object.assign({}, emptyPayGuest);
-                action.arrayHelpers.push(newPayGuest);
-
+                const newPayGuest = Object.assign({}, EmptyPayGuest);
                 const newPayGuests = [...state.payGuests, newPayGuest];
                 return Object.assign({}, state, {
                     payGuests: newPayGuests
@@ -440,7 +441,6 @@ export const Reducers = {
             }
 
             case ActionTypes.ORDER_PAYGUEST_REMOVE: {
-                action.arrayHelpers.remove(action.index);
                 const newPayGuests = [
                     ...state.payGuests.slice(0, action.index),
                     ...state.payGuests.slice(action.index + 1),

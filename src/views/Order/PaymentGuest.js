@@ -1,21 +1,12 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { Actions, Selectors } from '../../store/order'
-import { Selectors as CurrentUserSelectors } from '../../store/currentUser'
 import { Field } from 'formik'
 import { Icon, Button, Input, Message } from 'semantic-ui-react'
 import './PaymentGuest.css'
+import PortionUpButton from './PortionUpButton'
+import PortionDownButton from './PortionDownButton'
 
 export default class PaymentGuest extends React.Component {
-
-    handleEmailChange = (event, data) => {
-        const { index, onEmailChange } = this.props;
-        if (onEmailChange) {
-            onEmailChange(index, data.value);
-        }
-    }
 
     handleEmailRemove = () => {
         const { onEmailRemove, index } = this.props;
@@ -24,95 +15,90 @@ export default class PaymentGuest extends React.Component {
         }
     }
 
-    handlePortionDown = () => {
-        const { onPortionDown, index } = this.props;
-        if (onPortionDown) {
-            onPortionDown(index);
-        }
-    }
-
-    handlePortionUp = () => {
-        const { onPortionUp, index } = this.props;
-        if (onPortionUp) {
-            onPortionUp(index);
-        }
-    }
-
-    upButtonProps = (portion) => {
-        if (portion < 9) {
-            return { color: 'purple' };
-        }
-        return { color: 'black', disabled: true };
-    }
-
-    downButtonProps = (portion) => {
-        if (portion > 1) {
-            return { color: 'purple' };
-        }
-        return { color: 'black', disabled: true };
-    }
-
     render() {
-        const { index, amount, portion, onEmailRemove, onEmailChange, isCurrentUser, email } = this.props;
-
-        const action = onEmailRemove && index > 0 && (
-            <Button icon onClick={this.handleEmailRemove} basic>
-                <Icon name='remove' color='grey' />
-            </Button>
-        );
-
-        const renderField = ({ field, form: { touched, errors } }) => {
-            const payGuest = field.value;
-            const fieldWrapper = Object.assign({}, field);
-            fieldWrapper.onChange = (event, data) => {
-                const fieldData = Object.assign({}, data, {
-                    value: Object.assign({}, payGuest, { email: data.value })
-                });
-                field.onChange(event, fieldData);
-                this.handleEmailChange(event, data);
-            }
-            fieldWrapper.value = payGuest.email;
-
-            return (
-                <div className='validatedfield'>
-                    <Input
-                        {...fieldWrapper}
-                        type='text'
-                        disabled={!onEmailChange}
-                        placeholder="Enter foodcraft user's email..."
-                        action={action} />
-                    {touched && errors && errors.length > 0 &&
-                        <Message error content={errors[field.name]} icon='exclamation circle' />
-                    }
-                </div>
-            );
-        }
+        const { index } = this.props;
 
         return (
             <div className='payguest'>
                 <div className='payguest-email'>
-                    {isCurrentUser &&
-                        // <Input value={email} disabled={!onEmailChange} />
-                        <div className='payguest-header'>{email}</div>
-                    }
-                    {!isCurrentUser &&
-                        <Field name={`payGuests.${index}`} render={renderField} />
-                    }
+                    <Field name={`payGuests.${index}.email`} render={this.renderEmail} />
                 </div>
                 <div className='payguest-portion'>
                     <div>
-                        <div className='payguest-portion-selector'>
-                            {/* an empty onTouchStart causes :active to work on mobile iOS */}
-                            <Button basic circular icon='minus' {...this.downButtonProps(portion)}
-                                onClick={this.handlePortionDown} onTouchStart={() => { }} />
-                            <div className='payguest-portion-num'>{portion}</div>
-                            <Button basic circular icon='plus' {...this.upButtonProps(portion)}
-                                onClick={this.handlePortionUp} onTouchStart={() => { }} />
-                        </div>
-                        <div className='payguest-price'>${amount.toFixed(2)}</div>
+                        <Field name={`payGuests.${index}.portion`} render={({ field, form }) => {
+                            const down = () => {
+                                if (field.value > 1) {
+                                    form.setFieldValue(`payGuests.${index}.portion`, field.value - 1);
+                                }
+                            }
+
+                            const up = () => {
+                                if (field.value < 9) {
+                                    form.setFieldValue(`payGuests.${index}.portion`, field.value + 1);
+                                }
+                            }
+
+                            return (
+                                <div className='payguest-portion-selector'>
+                                    {/* an empty onTouchStart causes :active to work on mobile iOS */}
+                                    <PortionDownButton onClick={down} portion={field.value} />
+                                    <div className='payguest-portion-num'>{field.value}</div>
+                                    <PortionUpButton onClick={up} portion={field.value} />
+                                </div>
+                            );
+                        }} />
+                        <Field name={`payGuests.${index}.amount`} render={({ field }) => {
+                            return (
+                                <div className='payguest-price'>${field.value.toFixed(2)}</div>
+                            );
+                        }} />
                     </div>
                 </div>
             </div>
         );
     }
+
+    renderEmail = ({ field, form: { touched, errors } }) => {
+
+        const { index } = this.props;
+
+        const action = index > 0 && (
+            <Button icon onClick={this.handleEmailRemove} basic>
+                <Icon name='remove' color='grey' />
+            </Button>
+        );
+
+        const parts = field.name.split('.');
+        let isTouched = touched;
+        for (let i = 0; i < parts.length && isTouched; i++) {
+            isTouched = isTouched[parts[i]];
+        }
+        const error = errors[field.name];
+        const inputProps = {};
+        if (isTouched && error) {
+            inputProps.error = true;
+        }
+
+        return (
+            <div className='validatedfield'>
+                <Input
+                    {...field}
+                    {...inputProps}
+                    type='text'
+                    placeholder="Enter foodcraft user's email..."
+                    action={action} />
+                {isTouched && error &&
+                    <Message error content={error.message} icon='exclamation circle' />
+                }
+            </div>
+        );
+    }
+}
+
+PaymentGuest.propTypes = {
+    payGuest: PropTypes.shape({
+        email: PropTypes.string.isRequired,
+        portion: PropTypes.number.isRequired,
+        amount: PropTypes.number.isRequired,
+    }),
 }
